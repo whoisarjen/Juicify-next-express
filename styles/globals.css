@@ -2,7 +2,7 @@
 
 body{
   margin: 0;
-  font-family: Quicksand;
+  font-family: 'Quicksand', sans-serif;
 }
 
 .layout{
@@ -15,7 +15,8 @@ body{
 .content{
   width: 100%;
   margin: 0 auto;
-  max-width: 760px;
+  max-width: 702px;
+  padding: 12px 12px 0;
 }
 
 .navbar{
