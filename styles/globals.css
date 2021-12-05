@@ -4,3 +4,30 @@ body{
   margin: 0;
   font-family: Quicksand;
 }
+
+.layout{
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.content{
+  width: 100%;
+  margin: 0 auto;
+  max-width: 760px;
+}
+
+.navbar{
+  width: 100%;
+  min-height: 43px;
+  color: #fff;
+  border-bottom: 1px solid #e4e4e4;
+}
+
+.footer{
+  width: 100%;
+  min-height: 43px;
+  color: #fff;
+  border-top: 1px solid #e4e4e4;
+}
