@@ -2,8 +2,8 @@ import Head from 'next/head'
 import '../styles/globals.css'
 import { store } from '../redux/store'
 import { Provider } from 'react-redux'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
+import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
 
 function MyApp({ Component, pageProps }) {
   return (
