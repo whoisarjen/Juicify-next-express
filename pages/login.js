@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack';
 import useTranslation from 'next-translate/useTranslation'
 
 const Login = () => {
-    const { t } = useTranslation('login')
+    const { t } = useTranslation()
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false);
@@ -34,27 +34,27 @@ const Login = () => {
         <div className="login">
             <Stack direction="column" spacing={2}>
                 <TextField
-                    label={t('Login')}
+                    label={t('login:Login')}
                     value={login}
                     variant="outlined"
                     onChange={(e) => setLogin(e.target.value)}
                     error={login.length > 0 && !requiredBasicInputLength(login).status}
-                    helperText={login.length > 0 && !requiredBasicInputLength(login).status ? requiredBasicInputLength(login).message : ''}
+                    helperText={login.length > 0 && !requiredBasicInputLength(login).status ? t('home:requiredBasicInputLength') : ''}
                 />
                 <TextField
-                    label={t('Password')}
+                    label={t('login:Password')}
                     type="password"
                     value={password}
                     variant="outlined"
                     onChange={(e) => setPassword(e.target.value)}
                     error={password.length > 0 && !requiredBasicInputLength(password).status}
-                    helperText={password.length > 0 && !requiredBasicInputLength(password).status ? requiredBasicInputLength(password).message : ''}
+                    helperText={password.length > 0 && !requiredBasicInputLength(password).status ? t('home:requiredBasicInputLength') : ''}
                 />
                 <LoadingButton
                     loading={loading}
                     variant="contained"
                     onClick={handleLogin}
-                >{t('Sign in')}</LoadingButton>
+                >{t('login:Sign in')}</LoadingButton>
             </Stack>
         </div>
     );

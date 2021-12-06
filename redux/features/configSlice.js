@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import useTranslation from 'next-translate/useTranslation'
 
 
 const initialState = {
@@ -7,14 +6,11 @@ const initialState = {
   requiredBasicInputLength: (value) => {
     if(2 < value.length && value.length < 41){
       return {
-        status: true,
-        message: ''
+        status: true
       }
     }else{
-      const { t } = useTranslation('home')
       return {
-        status: false,
-        message: t('Expect 3 to 40 letters')
+        status: false
       }
     }
   }

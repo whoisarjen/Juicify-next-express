@@ -5,5 +5,5 @@
     "Sign in": "Logowanie",
     "Language": "Język",
     "Something went wrong": "Operacja zakończona niepowodzeniem!",
-    "Expect 3 to 40 letters": "Musi zawierać 3 do 40 znaków!"
+    "requiredBasicInputLength": "Musi zawierać 3 do 40 znaków!"
 }
