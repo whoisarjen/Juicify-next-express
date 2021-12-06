@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import TextField from '@mui/material/TextField';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Stack from '@mui/material/Stack';
+import useTranslation from 'next-translate/useTranslation'
 
 const Login = () => {
-    // const dispatch = useDispatch()
+    const { t } = useTranslation('login')
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false);
@@ -13,6 +14,7 @@ const Login = () => {
 
     const handleLogin = async () => {
         if(requiredBasicInputLength(login).status && requiredBasicInputLength(password).status){
+            setLoading(true)
             console.log("Signing in...")
             // TO THE HOOOOOOOOK!
 
@@ -24,7 +26,7 @@ const Login = () => {
             //         setNotificationMessage('Account does NOT exists!!')
             //         setOpenNotification(true)
             //     })
-            //     .finally(() => setLoading(false))
+            setLoading(false)
         }
     }
 
@@ -32,7 +34,7 @@ const Login = () => {
         <div className="login">
             <Stack direction="column" spacing={2}>
                 <TextField
-                    label="Login"
+                    label={t('Login')}
                     value={login}
                     variant="outlined"
                     onChange={(e) => setLogin(e.target.value)}
@@ -40,7 +42,7 @@ const Login = () => {
                     helperText={login.length > 0 && !requiredBasicInputLength(login).status ? requiredBasicInputLength(login).message : ''}
                 />
                 <TextField
-                    label="Password"
+                    label={t('Password')}
                     type="password"
                     value={password}
                     variant="outlined"
@@ -52,7 +54,7 @@ const Login = () => {
                     loading={loading}
                     variant="contained"
                     onClick={handleLogin}
-                >Sign in</LoadingButton>
+                >{t('Sign in')}</LoadingButton>
             </Stack>
         </div>
     );

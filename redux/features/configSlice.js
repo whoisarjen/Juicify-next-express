@@ -1,4 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
+import useTranslation from 'next-translate/useTranslation'
+
 
 const initialState = {
   domain: 'https://juicify.app',
@@ -9,9 +11,10 @@ const initialState = {
         message: ''
       }
     }else{
+      const { t } = useTranslation('home')
       return {
         status: false,
-        message: 'Expect 3 to 40 letters!'
+        message: t('Expect 3 to 40 letters')
       }
     }
   }

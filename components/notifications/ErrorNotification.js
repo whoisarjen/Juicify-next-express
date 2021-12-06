@@ -1,8 +1,10 @@
 import Snackbar from '@mui/material/Snackbar';
 import { useState } from 'react'
 import Alert from '@mui/material/Alert';
+import useTranslation from 'next-translate/useTranslation'
 
 const ErrorNotification = ({ notificationMessage, openNotification, closeNotification }) => {
+    const { t } = useTranslation('home')
     const [snackBarValues] = useState({
       vertical: 'bottom',
       horizontal: 'right'
@@ -18,7 +20,7 @@ const ErrorNotification = ({ notificationMessage, openNotification, closeNotific
         anchorOrigin={{ vertical, horizontal }}
       >
         <Alert onClose={closeNotification} severity="error" sx={{ width: '100%' }}>
-          { notificationMessage || 'Something went wrong!'}
+          { notificationMessage || t('Something went wrong')}
         </Alert>
       </Snackbar>
     );
