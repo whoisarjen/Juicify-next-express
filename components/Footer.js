@@ -1,7 +1,7 @@
 const Footer = () => {
     return (
         <footer className="footer">
-            Footer
+            ©2022 Juicify.app
         </footer>
     );
 }

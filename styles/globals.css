@@ -5,6 +5,10 @@ body{
   font-family: 'Quicksand', sans-serif;
 }
 
+a{
+  text-decoration: none;
+}
+
 .layout{
   width: 100%;
   min-height: 100vh;
@@ -26,9 +30,24 @@ body{
   border-bottom: 1px solid #e4e4e4;
 }
 
+.navbar ul{
+  list-style-type: none;
+  width: 100%;
+  display: grid;
+  padding: 0;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.navbar ul li{
+  color: rgba(0,0,0,.87);
+  text-align: center;
+}
+
 .footer{
   width: 100%;
   min-height: 43px;
-  color: #fff;
+  line-height: 43px;
+  color: rgba(0,0,0,.87);
   border-top: 1px solid #e4e4e4;
+  text-align: center;
 }

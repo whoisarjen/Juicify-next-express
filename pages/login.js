@@ -1,25 +1,19 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import TextField from '@mui/material/TextField';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Stack from '@mui/material/Stack';
 
 const Login = () => {
     // const dispatch = useDispatch()
-    const [loading, setLoading] = useState(false);
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
-    const [errorLogin, setLoginError] = useState(false)
-    const [errorPassword, setPasswordError] = useState(false)
+    const [loading, setLoading] = useState(false);
+    const requiredBasicInputLength = useSelector((state) => state.config.requiredBasicInputLength)
 
     const handleLogin = async () => {
-        setLoginError(false)
-        setPasswordError(false)
-
-        if(login.length < 3) setLoginError(true)
-        else if(password.length < 3) setPasswordError(true)
-        else{
-
+        if(requiredBasicInputLength(login).status && requiredBasicInputLength(password).status){
+            console.log("Signing in...")
             // TO THE HOOOOOOOOK!
 
             // setLoading(true)
@@ -38,25 +32,25 @@ const Login = () => {
         <div className="login">
             <Stack direction="column" spacing={2}>
                 <TextField
-                    error={errorLogin}
-                    helperText={errorLogin ? 'Expect at least 3 letters!' : ''}
                     label="Login"
-                    variant="outlined"
                     value={login}
+                    variant="outlined"
                     onChange={(e) => setLogin(e.target.value)}
+                    error={login.length > 0 && !requiredBasicInputLength(login).status}
+                    helperText={login.length > 0 && !requiredBasicInputLength(login).status ? requiredBasicInputLength(login).message : ''}
                 />
                 <TextField
-                    error={errorPassword}
-                    helperText={errorPassword ? 'Expect at least 3 letters!' : ''}
                     label="Password"
                     type="password"
-                    variant="outlined"
                     value={password}
+                    variant="outlined"
                     onChange={(e) => setPassword(e.target.value)}
+                    error={password.length > 0 && !requiredBasicInputLength(password).status}
+                    helperText={password.length > 0 && !requiredBasicInputLength(password).status ? requiredBasicInputLength(password).message : ''}
                 />
                 <LoadingButton
-                    variant="contained"
                     loading={loading}
+                    variant="contained"
                     onClick={handleLogin}
                 >Sign in</LoadingButton>
             </Stack>
