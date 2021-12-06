@@ -4,8 +4,10 @@ import TextField from '@mui/material/TextField';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Stack from '@mui/material/Stack';
 import useTranslation from 'next-translate/useTranslation'
+import '../styles/Login.module.css'
 
 const Login = () => {
+    const serverAdress = useSelector((state) => state.config.serverAdress)
     const { t } = useTranslation()
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
@@ -16,22 +18,29 @@ const Login = () => {
         if(requiredBasicInputLength(login).status && requiredBasicInputLength(password).status){
             setLoading(true)
             console.log("Signing in...")
+            console.log(serverAdress)
             // TO THE HOOOOOOOOK!
 
-            // setLoading(true)
-            // fetch('https://jsonplaceholder.typicode.com/todos/1')
-            //     .then(response => response.json())
-            //     .then(json => console.log(json))
+            fetch(`${serverAdress}/`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({a: 7, str: 'Some string: &=&'})
+            })
+                .then(res => res.json())
+                .then(res => console.log(res));
             //     .catch(() => {
             //         setNotificationMessage('Account does NOT exists!!')
             //         setOpenNotification(true)
             //     })
-            setLoading(false)
+            setTimeout(() => setLoading(false), 1500)
         }
     }
 
     return (
-        <div className="login">
+        <div className="login marginAutoVertical">
             <Stack direction="column" spacing={2}>
                 <TextField
                     label={t('login:Login')}

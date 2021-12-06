@@ -21,6 +21,7 @@ a{
   margin: 0 auto;
   max-width: 702px;
   padding: 12px 12px 0;
+  display: grid;
 }
 
 .navbar{
@@ -32,18 +33,18 @@ a{
 
 .navbar ul{
   max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
   list-style-type: none;
   width: 100%;
   display: grid;
   padding: 0;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  margin: 5px auto;
 }
 
 .navbar ul li{
   color: rgba(0,0,0,.87);
   text-align: center;
+  margin: auto;
 }
 
 .footer{
@@ -53,4 +54,18 @@ a{
   color: rgba(0,0,0,.87);
   border-top: 1px solid #e4e4e4;
   text-align: center;
+}
+
+.marginAuto{
+  margin: auto;
+}
+
+.marginAutoVertical{
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.marginAutoHorizontal{
+  margin-left: auto;
+  margin-right: auto;
 }
