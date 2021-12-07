@@ -8,7 +8,7 @@ import styles from '../styles/Login.module.css'
 import TextField from '@mui/material/TextField';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useDispatch, useSelector } from 'react-redux'
-import { loadToken } from '../redux/features/tokenSlice'
+import { setToken } from '../redux/features/tokenSlice'
 import useTranslation from 'next-translate/useTranslation'
 
 const Login = () => {
@@ -50,7 +50,7 @@ const Login = () => {
                         expires: new Date((new Date).setFullYear((new Date).getFullYear() + 20))
                     }
                 )
-                dispatch(loadToken(response.token))
+                dispatch(setToken(response.token))
                 router.push('/nutrition-diary')
             }
             setLoading(false)
