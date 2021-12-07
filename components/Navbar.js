@@ -8,11 +8,20 @@ import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import IconButton from '@mui/material/IconButton';
+import Paper from '@mui/material/Paper';
+import InputBase from '@mui/material/InputBase';
+import SearchIcon from '@mui/icons-material/Search';
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router'
 import { removeToken } from '../redux/features/tokenSlice'
+import HomeIcon from '@mui/icons-material/Home';
+import LoginIcon from '@mui/icons-material/Login';
+import ContactPageIcon from '@mui/icons-material/ContactPage';
+import BookIcon from '@mui/icons-material/Book';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
 const Navbar = () => {
     const router = useRouter()
@@ -43,15 +52,30 @@ const Navbar = () => {
         <nav className="navbar">
             <ul>
                 <li><Link href="/"><Avatar alt={logoAlt} src={logoAdress}/></Link></li>
-                <li><Link href="/">{t('Home')}</Link></li>
-                <li><Link href="/blog">{t('Blog')}</Link></li>
-                <li><Link href="/contact">{t('Contact')}</Link></li>
-                <li><Link href="/login">{t('Sign in')}</Link></li>
                 <li>
-                    <IconButton onClick={handleOpenExtraMenu} size="small" sx={{ ml: 2 }}>
-                        <Avatar alt="Juicify.app" src="https://juicify.app:4000/server/avatar/60ba774fe0ecd72587eeaa29.jpg"/>
-                    </IconButton>
+                    <Paper
+                        component="form"
+                        sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400, boxShadow: 0, border: 1, borderColor: '#e4e4e4' }}
+                    >
+                        <InputBase
+                            sx={{ ml: 1, flex: 1 }}
+                            placeholder="Search Something Awesome!"
+                            inputProps={{ 'aria-label': 'search something awesome!' }}
+                        />
+                        <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
+                            <SearchIcon />
+                        </IconButton>
+                    </Paper>
                 </li>
+                <li>
+                    <Tabs aria-label="icon label tabs example">
+                        <Link href="/"><a><Tab icon={<HomeIcon />} wrapped label="Home" /></a></Link>
+                        <Link href="/blog"><a><Tab icon={<BookIcon />} wrapped label="Blog" /></a></Link>
+                        <Link href="/contact"><a><Tab icon={<ContactPageIcon />} wrapped label="Contact" /></a></Link>
+                        <Link href="/login"><a><Tab icon={<LoginIcon />} wrapped label="Sign in" /></a></Link>
+                    </Tabs>
+                </li>
+
                 <Menu
                     anchorEl={anchorEl}
                     open={open}
