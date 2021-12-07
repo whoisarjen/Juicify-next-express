@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import Avatar from '@mui/material/Avatar';
 import useTranslation from 'next-translate/useTranslation'
-import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import Menu from '@mui/material/Menu';
@@ -10,10 +9,13 @@ import Divider from '@mui/material/Divider';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import IconButton from '@mui/material/IconButton';
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 const Navbar = () => {
     const { t } = useTranslation('home')
     const [anchorEl, setAnchorEl] = useState(null);
+    const logoAlt = useSelector((state) => state.config.logoAlt)
+    const logoAdress = useSelector((state) => state.config.logoAdress)
     const open = Boolean(anchorEl);
     const handleClose = () => {
       setAnchorEl(null);
@@ -24,7 +26,7 @@ const Navbar = () => {
     return (
         <nav className="navbar">
             <ul>
-                <li><Link href="/"><Avatar alt="Juicify.app" src="https://juicify.app/img/logo.png"/></Link></li>
+                <li><Link href="/"><Avatar alt={logoAlt} src={logoAdress}/></Link></li>
                 <li><Link href="/">{t('Home')}</Link></li>
                 <li><Link href="/blog">{t('Blog')}</Link></li>
                 <li><Link href="/contact">{t('Contact')}</Link></li>

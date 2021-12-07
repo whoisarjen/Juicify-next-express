@@ -19,6 +19,8 @@ const Login = () => {
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false);
     const [cookies, setCookie] = useCookies(['token']);
+    const logoAlt = useSelector((state) => state.config.logoAlt)
+    const logoAdress = useSelector((state) => state.config.logoAdress)
     const requiredBasicInputLength = useSelector((state) => state.config.requiredBasicInputLength)
 
     const handleLogin = async () => {
@@ -52,7 +54,7 @@ const Login = () => {
     return (
         <div className="login">
             <div className={styles.loginBox}>
-                <div/>
+                <img alt={logoAlt} className={styles.loginLogo} src={logoAdress}/>
                 <div>
                     <Stack direction="column" spacing={2}>
                         <TextField
