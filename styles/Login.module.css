@@ -1,0 +1,11 @@
+.loginBox{
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 1fr auto 1fr;
+}
+
+.loginBox a{
+    color: #121212;
+    text-align: center;
+}

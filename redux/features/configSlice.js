@@ -3,7 +3,6 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   domainAdress: 'https://juicify.app',
-  serverAdress: 'http://localhost:4000',
   requiredBasicInputLength: (value) => {
     if(2 < value.length && value.length < 41){
       return {

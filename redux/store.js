@@ -7,4 +7,8 @@ export const store = configureStore({
         token: tokenReducer,
         config: configReducer
     },
+    middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+        serializableCheck: false,
+    }),
 })

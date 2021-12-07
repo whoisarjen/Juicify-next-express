@@ -11,7 +11,7 @@ export const tokenSlice = createSlice({
     loadToken: (state, action) => {
       state.value = JSON.parse(Buffer.from(action.payload.split('.')[1], 'base64').toString())
     }
-  },
+  }
 })
 
 export const { loadToken } = tokenSlice.actions

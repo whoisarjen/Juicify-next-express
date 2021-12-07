@@ -24,6 +24,12 @@ a{
   display: grid;
 }
 
+@media (max-width: 726px){
+  .content{
+    width: calc( 100% - 24px )
+  }
+}
+
 .navbar{
   width: 100%;
   min-height: 43px;
@@ -37,7 +43,7 @@ a{
   width: 100%;
   display: grid;
   padding: 0;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   margin: 5px auto;
 }
 
@@ -68,4 +74,8 @@ a{
 .marginAutoHorizontal{
   margin-left: auto;
   margin-right: auto;
+}
+
+.displayGrid{
+  display: grid;
 }
