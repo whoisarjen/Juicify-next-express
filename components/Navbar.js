@@ -22,6 +22,7 @@ import ContactPageIcon from '@mui/icons-material/ContactPage';
 import BookIcon from '@mui/icons-material/Book';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const Navbar = () => {
     const router = useRouter()
@@ -30,6 +31,7 @@ const Navbar = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const logoAlt = useSelector((state) => state.config.logoAlt)
     const [cookies, setCookie, removeCookie] = useCookies(['token']);
+    const userIsLoggedIn = cookies.token || false
     const logoAdress = useSelector((state) => state.config.logoAdress)
     const open = Boolean(anchorEl);
 
@@ -68,11 +70,20 @@ const Navbar = () => {
                     </Paper>
                 </li>
                 <li>
-                    <Tabs aria-label="icon label tabs example">
-                        <Link href="/"><a><Tab icon={<HomeIcon />} wrapped label="Home" /></a></Link>
-                        <Link href="/blog"><a><Tab icon={<BookIcon />} wrapped label="Blog" /></a></Link>
-                        <Link href="/contact"><a><Tab icon={<ContactPageIcon />} wrapped label="Contact" /></a></Link>
-                        <Link href="/login"><a><Tab icon={<LoginIcon />} wrapped label="Sign in" /></a></Link>
+                    <Tabs
+                        aria-label="Top menu"
+                        value={0}
+                        TabIndicatorProps={{
+                            style: {
+                                display: "none",
+                            },
+                        }}
+                    >
+                        <Link href="/"><a><Tab icon={<HomeIcon />} wrapped label="Home"/></a></Link>
+                        <Link href="/blog"><a><Tab icon={<BookIcon />} wrapped label="Blog"/></a></Link>
+                        <Link href="/contact"><a><Tab icon={<ContactPageIcon />} wrapped label="Contact"/></a></Link>
+                        {!userIsLoggedIn && <Link href="/login"><a><Tab icon={<LoginIcon />} wrapped label="Sign in"/></a></Link>}
+                        {userIsLoggedIn && <Tab icon={<AccountCircleIcon />} wrapped label="Account" onClick={handleOpenExtraMenu}/>}
                     </Tabs>
                 </li>
 
