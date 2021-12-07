@@ -23,6 +23,12 @@ const Login = () => {
     const logoAdress = useSelector((state) => state.config.logoAdress)
     const requiredBasicInputLength = useSelector((state) => state.config.requiredBasicInputLength)
 
+    const handleKeyPress = (event) => {
+        if(event.key === 'Enter'){
+            handleLogin()
+        }
+    }
+
     const handleLogin = async () => {
         if(requiredBasicInputLength(login).status && requiredBasicInputLength(password).status){
             setLoading(true)
@@ -58,18 +64,20 @@ const Login = () => {
                 <div>
                     <Stack direction="column" spacing={2}>
                         <TextField
-                            label={t('login:Login')}
                             value={login}
                             variant="outlined"
+                            label={t('login:Login')}
+                            onKeyPress={handleKeyPress}
                             onChange={(e) => setLogin(e.target.value)}
                             error={login.length > 0 && !requiredBasicInputLength(login).status}
                             helperText={login.length > 0 && !requiredBasicInputLength(login).status ? t('home:requiredBasicInputLength') : ''}
                         />
                         <TextField
-                            label={t('login:Password')}
                             type="password"
                             value={password}
                             variant="outlined"
+                            label={t('login:Password')}
+                            onKeyPress={handleKeyPress}
                             onChange={(e) => setPassword(e.target.value)}
                             error={password.length > 0 && !requiredBasicInputLength(password).status}
                             helperText={password.length > 0 && !requiredBasicInputLength(password).status ? t('home:requiredBasicInputLength') : ''}
@@ -85,7 +93,6 @@ const Login = () => {
                 <div className="displayGrid">
                     <Link href="/register">
                         <LoadingButton
-                            disabled={loading}
                             color="success"
                             className="marginAutoVertical"
                             variant="contained"
