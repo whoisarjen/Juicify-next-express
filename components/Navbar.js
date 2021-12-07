@@ -86,21 +86,43 @@ const Navbar = () => {
                     transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                     anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                 >
-                    <MenuItem>
-                    <Avatar /> Profile
-                    </MenuItem>
-                    <MenuItem>
-                    <ListItemIcon>
-                        <Settings fontSize="small" />
-                    </ListItemIcon>
-                    Nutrition diary
-                    </MenuItem>
-                    <MenuItem>
-                    <ListItemIcon>
-                        <Settings fontSize="small" />
-                    </ListItemIcon>
-                    Workout
-                    </MenuItem>
+                    <Link href="/profile">
+                        <a>
+                            <MenuItem>
+                                <Avatar /> Profile
+                            </MenuItem>
+                        </a>
+                    </Link>
+                    <Link href="/nutrition-diary">
+                        <a>
+                            <MenuItem>
+                                <ListItemIcon>
+                                    <Settings fontSize="small" />
+                                </ListItemIcon>
+                                Diary
+                            </MenuItem>
+                        </a>
+                    </Link>
+                    <Link href="/workout-plans">
+                        <a>
+                            <MenuItem>
+                                <ListItemIcon>
+                                    <Settings fontSize="small" />
+                                </ListItemIcon>
+                                Plans
+                            </MenuItem>
+                        </a>
+                    </Link>
+                    <Link href="/workout-results">
+                        <a>
+                            <MenuItem>
+                                <ListItemIcon>
+                                    <Settings fontSize="small" />
+                                </ListItemIcon>
+                                Results
+                            </MenuItem>
+                        </a>
+                    </Link>
 
                     <Divider />
 
