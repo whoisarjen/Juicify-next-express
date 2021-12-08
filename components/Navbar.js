@@ -11,18 +11,18 @@ import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router'
 import { removeToken } from '../redux/features/tokenSlice'
 import HomeIcon from '@mui/icons-material/Home';
 import LoginIcon from '@mui/icons-material/Login';
-import ContactPageIcon from '@mui/icons-material/ContactPage';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
+import BookIcon from '@mui/icons-material/Book';
 
 const Navbar = () => {
     const router = useRouter('Home')
@@ -81,11 +81,18 @@ const Navbar = () => {
                     >
                         <Link href="/"><a><Tab icon={<HomeIcon />} wrapped label={t('Home')}/></a></Link>
                         <Link href="/blog"><a><Tab icon={<AutoStoriesIcon />} wrapped label={t('Blog')}/></a></Link>
-                        <Link href="/contact"><a><Tab icon={<ContactPageIcon />} wrapped label={t('Contact')}/></a></Link>
+                        {
+                            login ? (
+                                <Link href={`/${login}/nutrition-diary`}><a><Tab icon={<BookIcon />} wrapped label={t('Diary')}/></a></Link>
+                            ) : (
+                                <Link href="/login"><a><Tab icon={<BookIcon />} wrapped label={t('Diary')}/></a></Link>
+                            )
+                        }
                         {
                             login ? (
                                 <Tab icon={<AccountCircleIcon />} wrapped label={t('Account')} onClick={handleOpenExtraMenu}/>
                             ) : (
+                                
                                 <Link href="/login"><a><Tab icon={<LoginIcon />} wrapped label={t('Sign in')}/></a></Link>
                             )
                         }

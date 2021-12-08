@@ -51,7 +51,7 @@ const Login = () => {
                     }
                 )
                 dispatch(setToken(response.token))
-                router.push('/nutrition-diary')
+                router.push('/login')
             }
             setLoading(false)
         }
