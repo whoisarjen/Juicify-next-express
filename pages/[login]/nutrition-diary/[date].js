@@ -1,4 +1,4 @@
-import NutritionDiaryBox from "../../components/nutritionDiary/NutitionDiaryBox";
+import NutritionDiaryBox from "../../../components/nutritionDiary/NutitionDiaryBox";
 
 const NutritionDiary = () => {
     return (

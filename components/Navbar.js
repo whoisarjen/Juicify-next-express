@@ -23,6 +23,7 @@ import Tab from '@mui/material/Tab';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import BookIcon from '@mui/icons-material/Book';
+import { getCurrentDate } from '../hooks/useDate'
 
 const Navbar = () => {
     const router = useRouter('Home')
@@ -83,7 +84,7 @@ const Navbar = () => {
                         <Link href="/blog"><a><Tab icon={<AutoStoriesIcon />} wrapped label={t('Blog')}/></a></Link>
                         {
                             login ? (
-                                <Link href={`/${login}/nutrition-diary`}><a><Tab icon={<BookIcon />} wrapped label={t('Diary')}/></a></Link>
+                                <Link href={`/${login}/nutrition-diary/${getCurrentDate()}`}><a><Tab icon={<BookIcon />} wrapped label={t('Diary')}/></a></Link>
                             ) : (
                                 <Link href="/login"><a><Tab icon={<BookIcon />} wrapped label={t('Diary')}/></a></Link>
                             )
