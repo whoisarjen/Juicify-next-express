@@ -10,8 +10,10 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { useDispatch, useSelector } from 'react-redux'
 import { setToken } from '../redux/features/tokenSlice'
 import useTranslation from 'next-translate/useTranslation'
+import { expectLoggedOUT } from '../hooks/useAuth'
 
 const Login = () => {
+    expectLoggedOUT()
     const router = useRouter()
     const {t} = useTranslation()
     const dispatch = useDispatch()
