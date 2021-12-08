@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useCookies } from 'react-cookie';
 import { useSelector } from 'react-redux';
+import { getCurrentDate } from '../hooks/useDate'
 
 const expectLoggedIN = () => {
   const router = useRouter()
@@ -21,7 +22,7 @@ const expectLoggedOUT = () => {
 
   useEffect(() => {
     if(cookies.token){
-      router.push(`/${login}/nutrition-diary`)
+      router.push(`/${login}/nutrition-diary/${getCurrentDate()}`)
     }
   }, [])
 }

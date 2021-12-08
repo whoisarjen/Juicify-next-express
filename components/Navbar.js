@@ -48,7 +48,7 @@ const Navbar = () => {
         dispatch(removeToken())
         removeCookie('token')
         removeCookie('refresh_token')
-        router.push('/login')
+        router.push('/')
     }
 
     return (

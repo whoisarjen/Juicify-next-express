@@ -1,6 +1,8 @@
 The future version of Juicify (https://github.com/whoisarjen/Juicify), hopyle better and cleaner wrote.
 
-Technology: React, Next.js, Redux toolkit, MUI
+Technology: 
+    Client: React, Next.js, Redux toolkit, MUI
+    Server: Express, node, socket.io, mongodb, redis
 
 -----
 

@@ -5,7 +5,7 @@ const NutritionDiary = () => {
         <div className="NutritionDiary">
             {
                 [...Array(5)].map((x, i) =>
-                    <NutritionDiaryBox index={i} key={i}/>
+                    <NutritionDiaryBox index={i} products={[{ name: '123' }, { name: '123' }, { name: '123' }]} key={i}/>
                 )
             }
         </div>

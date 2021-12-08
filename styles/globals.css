@@ -26,6 +26,7 @@
 body{
   margin: 0;
   font-family: 'Quicksand', sans-serif;
+  color: #7a7a7a;
 }
 
 a, a:hover, a:focus, a:active {
@@ -103,4 +104,22 @@ a, a:hover, a:focus, a:active {
 
 .displayGrid{
   display: grid;
+}
+
+.footerMenu{
+  height: 44px;
+  box-shadow: 0 2px 4px -1px rgb(0 0 0 / 20%), 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%);
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  z-index: 2;
+  background: #fff;
+}
+
+.footerMenuElement{
+  margin: auto;
+  display: grid;
+  cursor: pointer;
 }

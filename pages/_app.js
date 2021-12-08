@@ -6,8 +6,8 @@ import Layout from '../components/Layout'
 
 const theme = createTheme({
   typography: {
-    fontFamily: 'Quicksand, sans-serif',
-  },
+    fontFamily: 'Quicksand, sans-serif'
+  }
 });
 
 function MyApp({ Component, pageProps }) {

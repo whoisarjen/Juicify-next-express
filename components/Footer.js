@@ -1,7 +1,28 @@
+import { useSelector } from 'react-redux'
+import SmartToyIcon from '@mui/icons-material/SmartToy';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import BookIcon from '@mui/icons-material/Book';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { getCurrentDate } from '../hooks/useDate'
+import Link from 'next/link'
+
 const Footer = () => {
+    const token = useSelector(state => state.token.value)
+    
     return (
         <footer className="footer">
-            ©2022 Juicify.app
+            <div className="">©2022 Juicify.app</div>
+            {
+                token.login &&
+                <div className="footerMenu">
+                    <Link href="/coach/"><a className="footerMenuElement"><SmartToyIcon/></a></Link>
+                    <div className="footerMenuElement"><FitnessCenterIcon/></div>
+                    <div className="footerMenuElement"><PhotoCameraIcon/></div>
+                    <Link href={`/${token.login}/nutrition-diary/${getCurrentDate()}`}><a className="footerMenuElement"><BookIcon/></a></Link>
+                    <Link href={`/${token.login}`}><a className="footerMenuElement"><AccountCircleIcon/></a></Link>
+                </div>
+            }
         </footer>
     );
 }
