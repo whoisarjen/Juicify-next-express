@@ -11,7 +11,7 @@ import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router'
@@ -19,19 +19,19 @@ import { removeToken } from '../redux/features/tokenSlice'
 import HomeIcon from '@mui/icons-material/Home';
 import LoginIcon from '@mui/icons-material/Login';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
-import BookIcon from '@mui/icons-material/Book';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 
 const Navbar = () => {
-    const router = useRouter()
+    const router = useRouter('Home')
     const dispatch = useDispatch()
     const { t } = useTranslation('home')
     const [anchorEl, setAnchorEl] = useState(null);
     const logoAlt = useSelector((state) => state.config.logoAlt)
-    const [cookies, setCookie, removeCookie] = useCookies(['token']);
-    const userIsLoggedIn = cookies.token || false
+    const login = useSelector((state) => state.token.value.login)
+    const [cookies, setCookie, removeCookie] = useCookies(['token'])
     const logoAdress = useSelector((state) => state.config.logoAdress)
     const open = Boolean(anchorEl);
 
@@ -42,7 +42,7 @@ const Navbar = () => {
     const handleOpenExtraMenu = (event) => {
         setAnchorEl(event.currentTarget);
     };
-
+    
     const handleLogout = () => {
         dispatch(removeToken())
         removeCookie('token')
@@ -61,8 +61,8 @@ const Navbar = () => {
                     >
                         <InputBase
                             sx={{ ml: 1, flex: 1 }}
-                            placeholder="Search Something Awesome!"
-                            inputProps={{ 'aria-label': 'search something awesome!' }}
+                            placeholder={t('Search Something Awesome')}
+                            inputProps={{ 'aria-label': t('Search Something Awesome') }}
                         />
                         <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
                             <SearchIcon />
@@ -79,11 +79,17 @@ const Navbar = () => {
                             },
                         }}
                     >
-                        <Link href="/"><a><Tab icon={<HomeIcon />} wrapped label="Home"/></a></Link>
-                        <Link href="/blog"><a><Tab icon={<BookIcon />} wrapped label="Blog"/></a></Link>
-                        <Link href="/contact"><a><Tab icon={<ContactPageIcon />} wrapped label="Contact"/></a></Link>
-                        {!userIsLoggedIn && <Link href="/login"><a><Tab icon={<LoginIcon />} wrapped label="Sign in"/></a></Link>}
-                        {userIsLoggedIn && <Tab icon={<AccountCircleIcon />} wrapped label="Account" onClick={handleOpenExtraMenu}/>}
+                        <Link href="/"><a><Tab icon={<HomeIcon />} wrapped label={t('Home')}/></a></Link>
+                        <Link href="/blog"><a><Tab icon={<AutoStoriesIcon />} wrapped label={t('Blog')}/></a></Link>
+                        <Link href="/contact"><a><Tab icon={<ContactPageIcon />} wrapped label={t('Contact')}/></a></Link>
+                        {
+                            login ? (
+                                <Tab icon={<AccountCircleIcon />} wrapped label={t('Account')} onClick={handleOpenExtraMenu}/>
+                            ) : (
+                                <Link href="/login"><a><Tab icon={<LoginIcon />} wrapped label={t('Sign in')}/></a></Link>
+                            )
+                        }
+                        
                     </Tabs>
                 </li>
 
@@ -121,14 +127,14 @@ const Navbar = () => {
                     transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                     anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                 >
-                    <Link href="/profile">
+                    <Link href={`/${login}`}>
                         <a>
                             <MenuItem>
                                 <Avatar /> Profile
                             </MenuItem>
                         </a>
                     </Link>
-                    <Link href="/nutrition-diary">
+                    <Link href={`/${login}/nutrition-diary`}>
                         <a>
                             <MenuItem>
                                 <ListItemIcon>
@@ -138,7 +144,7 @@ const Navbar = () => {
                             </MenuItem>
                         </a>
                     </Link>
-                    <Link href="/workout-plans">
+                    <Link href={`/${login}/workout-plans`}>
                         <a>
                             <MenuItem>
                                 <ListItemIcon>
@@ -148,7 +154,7 @@ const Navbar = () => {
                             </MenuItem>
                         </a>
                     </Link>
-                    <Link href="/workout-results">
+                    <Link href={`/${login}/workout-results`}>
                         <a>
                             <MenuItem>
                                 <ListItemIcon>

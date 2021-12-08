@@ -1,1 +1,3 @@
 - head href language flag
+rethink time for cookie of login for synchro issues...
+Site 404

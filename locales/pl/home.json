@@ -1,9 +1,11 @@
 {
-    "Home": "Strona główna",
+    "Home": "Główna",
     "Blog": "Blog",
     "Contact": "Kontakt",
     "Sign in": "Logowanie",
+    "Account": "Konto",
     "Language": "Język",
+    "Search Something Awesome": "Wyszukaj coś niesamowitego...",
     "Something went wrong": "Operacja zakończona niepowodzeniem!",
     "requiredBasicInputLength": "Musi zawierać 3 do 40 znaków!"
 }

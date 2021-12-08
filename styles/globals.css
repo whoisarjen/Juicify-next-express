@@ -1,4 +1,3 @@
-/* quicksand-regular - latin-ext */
 @font-face {
   font-family: 'Quicksand';
   font-style: normal;
@@ -11,7 +10,6 @@
        url('../public/fonts/quicksand/quicksand-v24-latin-ext-regular.ttf') format('truetype'), /* Safari, Android, iOS */
        url('../public/fonts/quicksand/quicksand-v24-latin-ext-regular.svg#Quicksand') format('svg'); /* Legacy iOS */
 }
-/* quicksand-700 - latin-ext */
 @font-face {
   font-family: 'Quicksand';
   font-style: normal;

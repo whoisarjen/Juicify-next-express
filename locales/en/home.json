@@ -3,7 +3,9 @@
     "Blog": "Blog",
     "Contact": "Contact",
     "Sign in": "Sign in",
+    "Account": "Account",
     "Language": "Language",
+    "Search Something Awesome": "Search something awesome...",
     "Something went wrong": "Something went wrong!",
     "requiredBasicInputLength": "Expect 3 to 40 symbols!"
 }
