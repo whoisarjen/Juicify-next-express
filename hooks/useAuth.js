@@ -27,4 +27,8 @@ const expectLoggedOUT = () => {
   }, [])
 }
 
-export { expectLoggedIN, expectLoggedOUT }
+const readToken = (token) => {
+  return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString())
+}
+
+export { expectLoggedIN, expectLoggedOUT, readToken }

@@ -10,7 +10,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { useDispatch, useSelector } from 'react-redux'
 import { setToken } from '../redux/features/tokenSlice'
 import useTranslation from 'next-translate/useTranslation'
-import { expectLoggedOUT } from '../hooks/useAuth'
+import { expectLoggedOUT, readToken } from '../hooks/useAuth'
 import { getCurrentDate } from '../hooks/useDate'
 
 const Login = () => {
@@ -54,7 +54,7 @@ const Login = () => {
                     }
                 )
                 dispatch(setToken(response.token))
-                router.push(`/${JSON.parse(Buffer.from(response.token.split('.')[1], 'base64').toString()).login}/nutrition-diary/${getCurrentDate()}`)
+                router.push(`/${readToken(response.token).login}/nutrition-diary/${getCurrentDate()}`)
             }
             setLoading(false)
         }
