@@ -12,6 +12,7 @@ import { setToken } from '../redux/features/tokenSlice'
 import useTranslation from 'next-translate/useTranslation'
 import { expectLoggedOUT, readToken } from '../hooks/useAuth'
 import { getCurrentDate } from '../hooks/useDate'
+import { createIndexedDB } from '../hooks/useIndexedDB'
 
 const Login = () => {
     expectLoggedOUT()
@@ -54,6 +55,7 @@ const Login = () => {
                     }
                 )
                 dispatch(setToken(response.token))
+                await createIndexedDB()
                 router.push(`/${readToken(response.token).login}/nutrition-diary/${getCurrentDate()}`)
             }
             setLoading(false)

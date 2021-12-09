@@ -9,7 +9,7 @@ const expectLoggedIN = () => {
   const [cookies] = useCookies(['token']);
 
   useEffect(() => {
-    if(!cookies.token){
+    if (!cookies.token) {
       router.push('/login')
     }
   }, [])
@@ -21,7 +21,7 @@ const expectLoggedOUT = () => {
   const login = useSelector((state) => state.token.value.login)
 
   useEffect(() => {
-    if(cookies.token){
+    if (cookies.token) {
       router.push(`/${login}/nutrition-diary/${getCurrentDate()}`)
     }
   }, [])
