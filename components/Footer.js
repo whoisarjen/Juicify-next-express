@@ -8,43 +8,43 @@ import { getCurrentDate } from "../hooks/useDate";
 import Link from "next/link";
 
 const Footer = () => {
-    const token = useSelector((state) => state.token.value);
+  const token = useSelector((state) => state.token.value);
 
-    return (
-        <footer className="footer">
-            <div className="">©2022 Juicify.app</div>
-            {token.login && (
-                // <div className="footerMenu mobileOnly">
-                <div className="footerMenu">
-                    <Link href="/coach/">
-                        <a className="footerMenuElement">
-                            <SmartToyIcon />
-                        </a>
-                    </Link>
-                    <Link href="/workout">
-                        <div className="footerMenuElement">
-                            <FitnessCenterIcon />
-                        </div>
-                    </Link>
-                    <Link href="/barcode">
-                        <div className="footerMenuElement">
-                            <PhotoCameraIcon />
-                        </div>
-                    </Link>
-                    <Link href={`/${token.login}/nutrition-diary/${getCurrentDate()}`}>
-                        <a className="footerMenuElement">
-                            <BookIcon />
-                        </a>
-                    </Link>
-                    <Link href={`/${token.login}`}>
-                        <a className="footerMenuElement">
-                            <AccountCircleIcon />
-                        </a>
-                    </Link>
-                </div>
-            )}
-        </footer>
-    );
+  return (
+    <footer className="footer">
+      <div className="">©2022 Juicify.app</div>
+      {token.login && (
+        // <div className="footerMenu mobileOnly">
+        <div className="footerMenu">
+          <Link href="/coach/">
+            <a className="footerMenuElement">
+              <SmartToyIcon />
+            </a>
+          </Link>
+          <Link href="/workout">
+            <div className="footerMenuElement">
+              <FitnessCenterIcon />
+            </div>
+          </Link>
+          <Link href="/barcode">
+            <div className="footerMenuElement">
+              <PhotoCameraIcon />
+            </div>
+          </Link>
+          <Link href={`/${token.login}/nutrition-diary/${getCurrentDate()}`}>
+            <a className="footerMenuElement">
+              <BookIcon />
+            </a>
+          </Link>
+          <Link href={`/${token.login}`}>
+            <a className="footerMenuElement">
+              <AccountCircleIcon />
+            </a>
+          </Link>
+        </div>
+      )}
+    </footer>
+  );
 };
 
 export default Footer;

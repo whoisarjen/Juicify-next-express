@@ -1,13 +1,9 @@
-import { expectLoggedIN } from '../hooks/useAuth'
+import { expectLoggedIN } from "../hooks/useAuth";
 
 const Workout = () => {
-    expectLoggedIN()
+  expectLoggedIN();
 
-    return (
-        <div className="workout">
-            Workout
-        </div>
-    );
-}
- 
+  return <div className="workout">Workout</div>;
+};
+
 export default Workout;

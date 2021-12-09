@@ -1,40 +1,43 @@
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import { useRouter } from 'next/router'
-import useTranslation from 'next-translate/useTranslation'
-import { useCookies } from 'react-cookie';
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { useRouter } from "next/router";
+import useTranslation from "next-translate/useTranslation";
+import { useCookies } from "react-cookie";
 
 export default function Home() {
-  const router = useRouter()
-  const { t } = useTranslation('home')
-  const [cookies, setCookie] = useCookies(['NEXT_LOCALE']);
+  const router = useRouter();
+  const { t } = useTranslation("home");
+  const [cookies, setCookie] = useCookies(["NEXT_LOCALE"]);
 
   const handleChange = (e) => {
-    setCookie('NEXT_LOCALE', e.target.value, { path: '/', expires: new Date((new Date).setFullYear((new Date).getFullYear() + 20)) })
-    router.push(router.asPath, router.asPath, { locale: e.target.value })
-  }
+    setCookie("NEXT_LOCALE", e.target.value, {
+      path: "/",
+      expires: new Date(new Date().setFullYear(new Date().getFullYear() + 20)),
+    });
+    router.push(router.asPath, router.asPath, { locale: e.target.value });
+  };
 
   return (
     <div className="home">
       <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">{t('Language')}</InputLabel>
-          <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={router.locale}
-              autoWidth
-              onChange={(e) => handleChange(e)}
-              label={t('Language')}
-          >
-              {
-                  router.locales.map(locale => (
-                      <MenuItem key={locale} value={locale}>{locale}</MenuItem>
-                  ))
-              }
-          </Select>
+        <InputLabel id="demo-simple-select-label">{t("Language")}</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={router.locale}
+          autoWidth
+          onChange={(e) => handleChange(e)}
+          label={t("Language")}
+        >
+          {router.locales.map((locale) => (
+            <MenuItem key={locale} value={locale}>
+              {locale}
+            </MenuItem>
+          ))}
+        </Select>
       </FormControl>
     </div>
-  )
+  );
 }

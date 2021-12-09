@@ -1,13 +1,9 @@
-import { expectLoggedIN } from '../hooks/useAuth'
+import { expectLoggedIN } from "../hooks/useAuth";
 
 const Coach = () => {
-    expectLoggedIN()
+  expectLoggedIN();
 
-    return (
-        <div className="coach">
-            Coach
-        </div>
-    );
-}
- 
+  return <div className="coach">Coach</div>;
+};
+
 export default Coach;

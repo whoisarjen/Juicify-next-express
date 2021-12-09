@@ -1,34 +1,34 @@
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
-import { useCookies } from 'react-cookie';
-import { useSelector } from 'react-redux';
-import { getCurrentDate } from '../hooks/useDate'
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { useCookies } from "react-cookie";
+import { useSelector } from "react-redux";
+import { getCurrentDate } from "../hooks/useDate";
 
 const expectLoggedIN = () => {
-  const router = useRouter()
-  const [cookies] = useCookies(['token']);
+  const router = useRouter();
+  const [cookies] = useCookies(["token"]);
 
   useEffect(() => {
     if (!cookies.token) {
-      router.push('/login')
+      router.push("/login");
     }
-  }, [])
-}
+  }, []);
+};
 
 const expectLoggedOUT = () => {
-  const router = useRouter()
-  const [cookies] = useCookies(['token']);
-  const login = useSelector((state) => state.token.value.login)
+  const router = useRouter();
+  const [cookies] = useCookies(["token"]);
+  const login = useSelector((state) => state.token.value.login);
 
   useEffect(() => {
     if (cookies.token) {
-      router.push(`/${login}/nutrition-diary/${getCurrentDate()}`)
+      router.push(`/${login}/nutrition-diary/${getCurrentDate()}`);
     }
-  }, [])
-}
+  }, []);
+};
 
 const readToken = (token) => {
-  return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString())
-}
+  return JSON.parse(Buffer.from(token.split(".")[1], "base64").toString());
+};
 
-export { expectLoggedIN, expectLoggedOUT, readToken }
+export { expectLoggedIN, expectLoggedOUT, readToken };

@@ -1,26 +1,25 @@
-import { createSlice } from '@reduxjs/toolkit'
-
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  domainAdress: 'https://juicify.app',
-  logoAdress: 'https://juicify.app/img/logo.png',
-  logoAlt: 'Juicify.app',
+  domainAdress: "https://juicify.app",
+  logoAdress: "https://juicify.app/img/logo.png",
+  logoAlt: "Juicify.app",
   requiredBasicInputLength: (value) => {
-    if(2 < value.length && value.length < 41){
+    if (2 < value.length && value.length < 41) {
       return {
-        status: true
-      }
-    }else{
+        status: true,
+      };
+    } else {
       return {
-        status: false
-      }
+        status: false,
+      };
     }
-  }
-}
+  },
+};
 
 export const configSlice = createSlice({
-  name: 'config',
+  name: "config",
   initialState,
-})
+});
 
-export default configSlice.reducer
+export default configSlice.reducer;

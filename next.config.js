@@ -1,6 +1,6 @@
-const nextTranslate = require('next-translate')
+const nextTranslate = require("next-translate");
 
 module.exports = {
   reactStrictMode: true,
-  ...nextTranslate()
-}
+  ...nextTranslate(),
+};

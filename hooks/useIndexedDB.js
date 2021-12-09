@@ -1,135 +1,163 @@
-const namOfIndexedDB = 'test'
+const namOfIndexedDB = "test";
 
-const connectIndexedDB = () => { return window.indexedDB.open(namOfIndexedDB); }
+const connectIndexedDB = () => {
+  return window.indexedDB.open(namOfIndexedDB);
+};
 
 const createIndexedDB = async () => {
-    await window.indexedDB.deleteDatabase(namOfIndexedDB);
-    let request = window.indexedDB.open(namOfIndexedDB);
-    return new Promise(resolve => {
-        request.onupgradeneeded = function(event) {
-            const db = event.target.result;
-            let objectStore;
-            objectStore = db.createObjectStore("product", { keyPath: "_id" });
-            objectStore = db.createObjectStore("cache_product", { keyPath: "_id" });
-            objectStore = db.createObjectStore("last_used_product", { keyPath: "_id" });
-            objectStore = db.createObjectStore("favourite_product", { keyPath: "_id" });
-            objectStore = db.createObjectStore("exercise", { keyPath: "_id" });
-            objectStore = db.createObjectStore("cache_exercise", { keyPath: "_id" });
-            objectStore = db.createObjectStore("last_used_exercise", { keyPath: "_id" });
-            objectStore = db.createObjectStore("workout_plan", { keyPath: "_id" });
-            objectStore = db.createObjectStore("workout_result", { keyPath: "_id" });
-            objectStore = db.createObjectStore("daily_measurement", { keyPath: "whenAdded" });
-            objectStore = db.createObjectStore("last_searched_users", { keyPath: "_id" });
-            objectStore = db.createObjectStore("whatToUpdate", { keyPath: "_id" });
-            objectStore.transaction.oncomplete = async () => resolve();
-        }
-    })
-}
+  await window.indexedDB.deleteDatabase(namOfIndexedDB);
+  let request = window.indexedDB.open(namOfIndexedDB);
+  return new Promise((resolve) => {
+    request.onupgradeneeded = function (event) {
+      const db = event.target.result;
+      let objectStore;
+      objectStore = db.createObjectStore("product", { keyPath: "_id" });
+      objectStore = db.createObjectStore("cache_product", { keyPath: "_id" });
+      objectStore = db.createObjectStore("last_used_product", {
+        keyPath: "_id",
+      });
+      objectStore = db.createObjectStore("favourite_product", {
+        keyPath: "_id",
+      });
+      objectStore = db.createObjectStore("exercise", { keyPath: "_id" });
+      objectStore = db.createObjectStore("cache_exercise", { keyPath: "_id" });
+      objectStore = db.createObjectStore("last_used_exercise", {
+        keyPath: "_id",
+      });
+      objectStore = db.createObjectStore("workout_plan", { keyPath: "_id" });
+      objectStore = db.createObjectStore("workout_result", { keyPath: "_id" });
+      objectStore = db.createObjectStore("daily_measurement", {
+        keyPath: "whenAdded",
+      });
+      objectStore = db.createObjectStore("last_searched_users", {
+        keyPath: "_id",
+      });
+      objectStore = db.createObjectStore("whatToUpdate", { keyPath: "_id" });
+      objectStore.transaction.oncomplete = async () => resolve();
+    };
+  });
+};
 
-const deleteDatabaseIndexedDB = async () => { await window.indexedDB.deleteDatabase(namOfIndexedDB); }
+const deleteDatabaseIndexedDB = async () => {
+  await window.indexedDB.deleteDatabase(namOfIndexedDB);
+};
 
 const getAllIndexedDB = async (value) => {
-    let request = await connectIndexedDB();
-    return new Promise(resolve => {
-        request.onsuccess = async function(){
-            let valueITEMS = await request.result.transaction(value).objectStore(value).getAll();
-            valueITEMS.onsuccess = function(){
-                resolve(valueITEMS.result);
-            }
-        }
-    })
-}
+  let request = await connectIndexedDB();
+  return new Promise((resolve) => {
+    request.onsuccess = async function () {
+      let valueITEMS = await request.result
+        .transaction(value)
+        .objectStore(value)
+        .getAll();
+      valueITEMS.onsuccess = function () {
+        resolve(valueITEMS.result);
+      };
+    };
+  });
+};
 
 const getIndexedDBbyID = async (where, id) => {
-    let request3 = await connectIndexedDB()
-    return new Promise(resolve => {
-        request3.onsuccess = async function() {
-            const objectStore = await request3.result.transaction(where, "readwrite").objectStore(where);
-            const objectStoreTitleRequest = await objectStore.get(id.toString());
-            objectStoreTitleRequest.onsuccess = async function() {
-                resolve(objectStoreTitleRequest.result);
-            };
-        }
-    })
-}
+  let request3 = await connectIndexedDB();
+  return new Promise((resolve) => {
+    request3.onsuccess = async function () {
+      const objectStore = await request3.result
+        .transaction(where, "readwrite")
+        .objectStore(where);
+      const objectStoreTitleRequest = await objectStore.get(id.toString());
+      objectStoreTitleRequest.onsuccess = async function () {
+        resolve(objectStoreTitleRequest.result);
+      };
+    };
+  });
+};
 
 const putIndexedDB = async (where, id, what, value) => {
-    await putInformationAboutNeededUpdate(where)
-    value = value.toString()
-    let request3 = await connectIndexedDB()
-    return new Promise(resolve => {
-        request3.onsuccess = async function() {
-            const objectStore = await request3.result.transaction(where, "readwrite").objectStore(where);
-            const objectStoreTitleRequest = await objectStore.get(id.toString());
-            objectStoreTitleRequest.onsuccess = async function() {
-                const data = await objectStoreTitleRequest.result;
-                data[what] = await value;
-                await objectStore.put(data);
-                resolve();
-            };
-        }
-    })
-}
+  await putInformationAboutNeededUpdate(where);
+  value = value.toString();
+  let request3 = await connectIndexedDB();
+  return new Promise((resolve) => {
+    request3.onsuccess = async function () {
+      const objectStore = await request3.result
+        .transaction(where, "readwrite")
+        .objectStore(where);
+      const objectStoreTitleRequest = await objectStore.get(id.toString());
+      objectStoreTitleRequest.onsuccess = async function () {
+        const data = await objectStoreTitleRequest.result;
+        data[what] = await value;
+        await objectStore.put(data);
+        resolve();
+      };
+    };
+  });
+};
 
 const deleteIndexedDB = async (where, _id) => {
-    _id = _id.toString()
-    await putInformationAboutNeededUpdate(where)
-    let request = await connectIndexedDB()
-    return new Promise(resolve => {
-        request.onsuccess = async function() {
-            await request.result.transaction(where, "readwrite").objectStore(where).delete(_id);
-        }
-        resolve();
-    })
-}
+  _id = _id.toString();
+  await putInformationAboutNeededUpdate(where);
+  let request = await connectIndexedDB();
+  return new Promise((resolve) => {
+    request.onsuccess = async function () {
+      await request.result
+        .transaction(where, "readwrite")
+        .objectStore(where)
+        .delete(_id);
+    };
+    resolve();
+  });
+};
 
 const addIndexedDB = async (where, value) => {
-    if(value && value.length>0){
-        await putInformationAboutNeededUpdate(where)
-        for(let i=0; i<value.length; i++){
-            value[i]._id = (value[i]._id).toString()
-        }
-        let request = await connectIndexedDB()
-            return new Promise(resolve => {
-                request.onsuccess = function() {
-                    let objectStore = request.result.transaction(where, "readwrite").objectStore(where);
-                    value.forEach(function(products){
-                        objectStore.add(products);
-                    });
-                    resolve();
-                };
-        });
+  if (value && value.length > 0) {
+    await putInformationAboutNeededUpdate(where);
+    for (let i = 0; i < value.length; i++) {
+      value[i]._id = value[i]._id.toString();
     }
-}
+    let request = await connectIndexedDB();
+    return new Promise((resolve) => {
+      request.onsuccess = function () {
+        let objectStore = request.result
+          .transaction(where, "readwrite")
+          .objectStore(where);
+        value.forEach(function (products) {
+          objectStore.add(products);
+        });
+        resolve();
+      };
+    });
+  }
+};
 
 const putInformationAboutNeededUpdate = async (where) => {
-    return new Promise(resolve => {
-        (async () => {
-            if((where != "nutrition_diary_connections") && (where != "whatToUpdate")){
-                if(!store.state.online){
-                    let indexedDB = await getIndexedDBbyID("whatToUpdate", where)
-                    if(!indexedDB){
-                        let array = [{
-                            "_id": where,
-                        }]
-                        await addIndexedDB("whatToUpdate", array)
-                    }
-                }else localStorage.setItem('lastUpdated', new Date().getTime())
-            }
-            resolve();
-        })();
-    })
-}
+  return new Promise((resolve) => {
+    (async () => {
+      if (where != "nutrition_diary_connections" && where != "whatToUpdate") {
+        if (!store.state.online) {
+          let indexedDB = await getIndexedDBbyID("whatToUpdate", where);
+          if (!indexedDB) {
+            let array = [
+              {
+                _id: where,
+              },
+            ];
+            await addIndexedDB("whatToUpdate", array);
+          }
+        } else localStorage.setItem("lastUpdated", new Date().getTime());
+      }
+      resolve();
+    })();
+  });
+};
 
 export {
-    createIndexedDB,
-    deleteDatabaseIndexedDB,
-    getAllIndexedDB,
-    getIndexedDBbyID,
-    addIndexedDB,
-    deleteIndexedDB,
-    putIndexedDB
-}
+  createIndexedDB,
+  deleteDatabaseIndexedDB,
+  getAllIndexedDB,
+  getIndexedDBbyID,
+  addIndexedDB,
+  deleteIndexedDB,
+  putIndexedDB,
+};
 
 // Vue.prototype.$deleteThoseIDSfromDB = async (where, array, isNewValueInDB) => {
 //     if(isNewValueInDB){ // if there is new value in DB, check if still need to request delete
@@ -227,7 +255,7 @@ export {
 // }
 
 // Vue.prototype.$insertThoseIDStoDB = async (where, array, whatToUpdate, value, uniquePARAM, whatToUpdate2) => {
-//     if(!uniquePARAM) uniquePARAM = "_id" 
+//     if(!uniquePARAM) uniquePARAM = "_id"
 //     return new Promise(resolve => {
 //         (async () => {
 //             let whatToUpdateARRAY = false
@@ -362,7 +390,7 @@ export {
 //             }
 
 //             if(where == 'water'){
-//                 array[0].water > 0 ? NEWdaily_measurement.water = array[0].water : delete NEWdaily_measurement.water 
+//                 array[0].water > 0 ? NEWdaily_measurement.water = array[0].water : delete NEWdaily_measurement.water
 //             }
 
 //             // Wprowadzanie zmian
@@ -430,7 +458,7 @@ export {
 //             // Wysyłanie do mongoDB
 //             if(NEWdaily_measurement._id && await Vue.prototype.$is_id(NEWdaily_measurement._id)) NEWdaily_measurement = await Vue.prototype.$overwriteThoseIDSinDB("daily_measurement", [NEWdaily_measurement], false, 'whenAdded')
 //             else NEWdaily_measurement = await Vue.prototype.$insertThoseIDStoDB("daily_measurement", [NEWdaily_measurement], '', '', 'whenAdded')
-            
+
 //             store.state.daily_measurementFLAG = timeNOW
 //             if(itsNewValue){
 //                 let allDaily = await Vue.prototype.$getAllIndexedDB('daily_measurement')
