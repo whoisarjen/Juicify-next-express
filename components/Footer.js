@@ -17,8 +17,8 @@ const Footer = () => {
                 token.login &&
                 <div className="footerMenu">
                     <Link href="/coach/"><a className="footerMenuElement"><SmartToyIcon/></a></Link>
-                    <div className="footerMenuElement"><FitnessCenterIcon/></div>
-                    <div className="footerMenuElement"><PhotoCameraIcon/></div>
+                    <Link href="/workout"><div className="footerMenuElement"><FitnessCenterIcon/></div></Link>
+                    <Link href="barcode"><div className="footerMenuElement"><PhotoCameraIcon/></div></Link>
                     <Link href={`/${token.login}/nutrition-diary/${getCurrentDate()}`}><a className="footerMenuElement"><BookIcon/></a></Link>
                     <Link href={`/${token.login}`}><a className="footerMenuElement"><AccountCircleIcon/></a></Link>
                 </div>

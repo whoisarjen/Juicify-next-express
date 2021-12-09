@@ -5,14 +5,18 @@ import { useEffect } from 'react'
 import { useCookies } from 'react-cookie'
 import { useDispatch } from 'react-redux'
 import { setToken } from '../redux/features/tokenSlice'
+import { io } from "socket.io-client";
 
 const Layout = ({ children }) => {
     const [cookies] = useCookies()
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if(cookies.token) dispatch(setToken(cookies.token))
-    }, [])
+        if(cookies.token){
+            dispatch(setToken(cookies.token))
+            const socket = io('http://localhost:1000')
+        }
+    }, [cookies.token])
 
     return (
         <div className="layout">

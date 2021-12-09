@@ -123,3 +123,25 @@ a, a:hover, a:focus, a:active {
   display: grid;
   cursor: pointer;
 }
+
+.mobileOnly{
+  display: none;
+}
+
+@media(max-width: 800px){
+  .navbar ul{
+    grid-template-columns: auto 1fr auto auto;
+  }
+
+  .notMobileOnly{
+    display: none;
+  }
+
+  .mobileOnly{
+    display: block;
+  }
+
+  .paddingMenu{
+    padding: 10px 15px;
+  }
+}

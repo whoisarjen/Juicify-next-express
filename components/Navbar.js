@@ -24,6 +24,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import BookIcon from '@mui/icons-material/Book';
 import { getCurrentDate } from '../hooks/useDate'
+import MenuIcon from '@mui/icons-material/Menu';
 
 const Navbar = () => {
     const router = useRouter('Home')
@@ -44,18 +45,24 @@ const Navbar = () => {
         setAnchorEl(event.currentTarget);
     };
     
-    const handleLogout = () => {
+    const handleLogout = async () => {
         dispatch(removeToken())
-        removeCookie('token')
-        removeCookie('refresh_token')
-        router.push('/')
+        removeCookie('token', {
+            path: '/',
+            expire: new Date((new Date).setFullYear((new Date).getFullYear() - 1))
+        })
+        removeCookie('refresh_token', {
+            path: '/',
+            expire: new Date((new Date).setFullYear((new Date).getFullYear() - 1))
+        })
+        router.push(router.pathname === '/login' ? '/' : '/login')
     }
 
     return (
         <nav className="navbar">
             <ul>
-                <li><Link href="/"><Avatar alt={logoAlt} src={logoAdress}/></Link></li>
-                <li>
+                <li className="paddingMenu"><Link href="/"><Avatar alt={logoAlt} src={logoAdress}/></Link></li>
+                <li className="notMobileOnly paddingMenu">
                     <Paper
                         component="form"
                         sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400, boxShadow: 0, border: 1, borderColor: '#e4e4e4' }}
@@ -70,7 +77,7 @@ const Navbar = () => {
                         </IconButton>
                     </Paper>
                 </li>
-                <li>
+                <li className="notMobileOnly paddingMenu">
                     <Tabs
                         aria-label="Top menu"
                         value={0}
@@ -99,6 +106,13 @@ const Navbar = () => {
                         }
                         
                     </Tabs>
+                </li>
+                <div className="mobileOnly paddingMenu"/>
+                <li className="mobileOnly paddingMenu">
+                    <SearchIcon/>
+                </li>
+                <li className="mobileOnly paddingMenu">
+                    <MenuIcon/>
                 </li>
 
                 <Menu
@@ -142,7 +156,7 @@ const Navbar = () => {
                             </MenuItem>
                         </a>
                     </Link>
-                    <Link href={`/${login}/nutrition-diary`}>
+                    <Link href={`/${login}/nutrition-diary/${getCurrentDate()}`}>
                         <a>
                             <MenuItem>
                                 <ListItemIcon>
