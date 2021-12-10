@@ -13,9 +13,14 @@ const server = app.listen(port, () =>
   console.log(`Listening on port ${port} (http://localhost:${port})`)
 );
 
-app.post("/auth/login", (req, res, next) =>
-  require("./mongoDB/auth/login")(req, res, next)
-);
+app.post("/:where/:what", (req, res, next) => {
+  try {
+    require(`./mongoDB/${req.params.where}/${req.params.what}`)(req, res, next)
+  } catch (err) {
+    console.log(`Error on require module ${req.params.where}/${req.params.what}: ${err}`)
+  }
+});
+
 // register
 // remind-password
 // images
