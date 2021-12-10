@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import useFetch from "../hooks/useFetch";
+import connectAPI from "../components/api/connectAPI";
 import Stack from "@mui/material/Stack";
 import { useCookies } from "react-cookie";
 import styles from "../styles/Login.module.css";
@@ -13,6 +13,8 @@ import useTranslation from "next-translate/useTranslation";
 import { expectLoggedOUT, readToken } from "../hooks/useAuth";
 import { getCurrentDate } from "../hooks/useDate";
 import { createIndexedDB } from "../hooks/useIndexedDB";
+import Image from 'next/image'
+import logo from '../public/images/logo.png'
 
 const Login = () => {
   expectLoggedOUT();
@@ -22,9 +24,7 @@ const Login = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [cookies, setCookie] = useCookies(["token"]);
-  const logoAlt = useSelector((state) => state.config.logoAlt);
-  const logoAdress = useSelector((state) => state.config.logoAdress);
+  const [, setCookie] = useCookies(["token"]);
   const requiredBasicInputLength = useSelector(
     (state) => state.config.requiredBasicInputLength
   );
@@ -41,7 +41,7 @@ const Login = () => {
       requiredBasicInputLength(password).status
     ) {
       setLoading(true);
-      const { response, status } = await useFetch("/auth/login", {
+      const { response, status } = await connectAPI("/auth/login", {
         login,
         password,
       });
@@ -73,7 +73,9 @@ const Login = () => {
   return (
     <div className="login">
       <div className={styles.loginBox}>
-        <img alt={logoAlt} className={styles.loginLogo} src={logoAdress} />
+        <div className={styles.loginLogoBox}>
+          <Image alt="Juicify.app"src={logo}/>
+        </div>
         <div>
           <Stack direction="column" spacing={2}>
             <TextField
@@ -116,13 +118,13 @@ const Login = () => {
             >
               {t("login:Sign in")}
             </LoadingButton>
-            <Link href="/reset-password">
+            <Link passHref href="/reset-password">
               {t("login:Forgot password? Reset it")}
             </Link>
           </Stack>
         </div>
         <div className="displayGrid">
-          <Link href="/register">
+          <Link passHref href="/register">
             <LoadingButton
               color="success"
               className="marginAutoVertical"

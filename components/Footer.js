@@ -16,27 +16,27 @@ const Footer = () => {
       {token.login && (
         // <div className="footerMenu mobileOnly">
         <div className="footerMenu">
-          <Link href="/coach/">
+          <Link passHref href="/coach/">
             <a className="footerMenuElement">
               <SmartToyIcon />
             </a>
           </Link>
-          <Link href="/workout">
+          <Link passHref href="/workout">
             <div className="footerMenuElement">
               <FitnessCenterIcon />
             </div>
           </Link>
-          <Link href="/barcode">
+          <Link passHref href="/barcode">
             <div className="footerMenuElement">
               <PhotoCameraIcon />
             </div>
           </Link>
-          <Link href={`/${token.login}/nutrition-diary/${getCurrentDate()}`}>
+          <Link passHref href={`/${token.login}/nutrition-diary/${getCurrentDate()}`}>
             <a className="footerMenuElement">
               <BookIcon />
             </a>
           </Link>
-          <Link href={`/${token.login}`}>
+          <Link passHref href={`/${token.login}`}>
             <a className="footerMenuElement">
               <AccountCircleIcon />
             </a>

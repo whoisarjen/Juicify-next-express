@@ -1,4 +1,4 @@
-export default async function useFetch(url, body) {
+export default async function connectAPI (url, body) {
   let response = {};
   let status = "";
   await fetch(`http://localhost:4000${url}`, {

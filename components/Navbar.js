@@ -26,6 +26,8 @@ import BookIcon from "@mui/icons-material/Book";
 import { getCurrentDate } from "../hooks/useDate";
 import MenuIcon from "@mui/icons-material/Menu";
 import { deleteDatabaseIndexedDB } from "../hooks/useIndexedDB";
+import Image from 'next/image'
+import logo from '../public/images/logo.png'
 
 const Navbar = () => {
   const router = useRouter("Home");
@@ -65,8 +67,8 @@ const Navbar = () => {
     <nav className="navbar">
       <ul>
         <li className="paddingMenu">
-          <Link href="/">
-            <Avatar alt={logoAlt} src={logoAdress} />
+          <Link passHref href="/">
+            <Image width={40} height={40} alt="juicify.app" src={logo}/>
           </Link>
         </li>
         <li className="notMobileOnly paddingMenu">
@@ -98,24 +100,24 @@ const Navbar = () => {
             value={0}
             TabIndicatorProps={{ style: { display: "none" } }}
           >
-            <Link href="/">
+            <Link passHref href="/">
               <a>
                 <Tab icon={<HomeIcon />} wrapped label={t("Home")} />
               </a>
             </Link>
-            <Link href="/blog">
+            <Link passHref href="/blog">
               <a>
                 <Tab icon={<AutoStoriesIcon />} wrapped label={t("Blog")} />
               </a>
             </Link>
             {login ? (
-              <Link href={`/${login}/nutrition-diary/${getCurrentDate()}`}>
+              <Link passHref href={`/${login}/nutrition-diary/${getCurrentDate()}`}>
                 <a>
                   <Tab icon={<BookIcon />} wrapped label={t("Diary")} />
                 </a>
               </Link>
             ) : (
-              <Link href="/login">
+              <Link passHref href="/login">
                 <a>
                   <Tab icon={<BookIcon />} wrapped label={t("Diary")} />
                 </a>
@@ -129,7 +131,7 @@ const Navbar = () => {
                 onClick={handleOpenExtraMenu}
               />
             ) : (
-              <Link href="/login">
+              <Link passHref href="/login">
                 <a>
                   <Tab icon={<LoginIcon />} wrapped label={t("Sign in")} />
                 </a>
@@ -179,14 +181,14 @@ const Navbar = () => {
           transformOrigin={{ horizontal: "right", vertical: "top" }}
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         >
-          <Link href={`/${login}`}>
+          <Link passHref href={`/${login}`}>
             <a>
               <MenuItem>
                 <Avatar /> Profile
               </MenuItem>
             </a>
           </Link>
-          <Link href={`/${login}/nutrition-diary/${getCurrentDate()}`}>
+          <Link passHref href={`/${login}/nutrition-diary/${getCurrentDate()}`}>
             <a>
               <MenuItem>
                 <ListItemIcon>
@@ -196,7 +198,7 @@ const Navbar = () => {
               </MenuItem>
             </a>
           </Link>
-          <Link href={`/${login}/workout-plans`}>
+          <Link passHref href={`/${login}/workout-plans`}>
             <a>
               <MenuItem>
                 <ListItemIcon>
@@ -206,7 +208,7 @@ const Navbar = () => {
               </MenuItem>
             </a>
           </Link>
-          <Link href={`/${login}/workout-results`}>
+          <Link passHref href={`/${login}/workout-results`}>
             <a>
               <MenuItem>
                 <ListItemIcon>
@@ -219,7 +221,7 @@ const Navbar = () => {
 
           <Divider />
 
-          <Link href="/settings">
+          <Link passHref href="/settings">
             <a>
               <MenuItem>
                 <ListItemIcon>

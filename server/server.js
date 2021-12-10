@@ -34,5 +34,5 @@ const io = socket(server, {
 });
 
 io.on("connection", (client) => {
-  // console.log(client.id, client.handshake.query.user_ID, new Date())
+  console.log(client.id, client.handshake.query.user_ID, new Date())
 });
