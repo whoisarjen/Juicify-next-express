@@ -23,9 +23,9 @@ import Tab from "@mui/material/Tab";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import BookIcon from "@mui/icons-material/Book";
-import { getCurrentDate } from "./functional/changeDate";
+import { getCurrentDate } from "../functional/changeDate";
 import MenuIcon from "@mui/icons-material/Menu";
-import { deleteDatabaseIndexedDB } from "../hooks/useIndexedDB";
+import { deleteDatabaseIndexedDB } from "../functional/indexedDB";
 import Image from 'next/image'
 import logo from '../public/images/logo.png'
 
