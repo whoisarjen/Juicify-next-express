@@ -14,7 +14,6 @@ const Footer = () => {
     <footer className="footer">
       <div className="">©2022 Juicify.app</div>
       {token.login && (
-        // <div className="footerMenu mobileOnly">
         <div className="footerMenu">
           <Link passHref href="/coach/">
             <a className="footerMenuElement">

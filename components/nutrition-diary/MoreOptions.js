@@ -1,7 +1,12 @@
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import IconButton from "@mui/material/IconButton";
+
 const MoreOptions = () => {
     return (
         <div className="moreOptions">
-            More options
+            <IconButton aria-label="More" color="primary">
+                <MoreVertIcon fontSize="small" />
+            </IconButton>
         </div>
     );
 }

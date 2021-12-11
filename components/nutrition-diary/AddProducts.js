@@ -1,22 +1,30 @@
-import { forwardRef } from 'react'
-import Slide from '@mui/material/Slide';
+import { forwardRef, useState } from 'react'
+import AddIcon from "@mui/icons-material/Add";
+import IconButton from "@mui/material/IconButton";
 import Dialog from '@mui/material/Dialog';
+import Slide from '@mui/material/Slide'
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const AddProducts = () => {
-    const handleDialogClose = () => console.log()
+    const [isDialogOpen, setIsDialogOpen] = useState(false)
+    const handleDialogClose = () => setIsDialogOpen(false)
+
     return (
         <div className="addProductToNutrionDiary">
+            <IconButton aria-label="Add" color="primary">
+                <AddIcon fontSize="small" onClick={() => setIsDialogOpen(true)}/>
+            </IconButton>
             <Dialog
                 fullScreen
                 scroll='body'
-                open={true}
+                open={isDialogOpen}
                 onClose={handleDialogClose}
                 TransitionComponent={Transition}
             >
+                <button onClick={handleDialogClose}>Close</button>
                 Dodawanie produktu
             </Dialog>
         </div>
