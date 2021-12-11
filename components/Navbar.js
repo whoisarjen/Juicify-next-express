@@ -68,7 +68,6 @@ const Navbar = () => {
     <nav className="navbar">
       <ul>
         <li className="paddingMenu">
-
           <Link passHref href="/">
             <MyLogo />
           </Link>
@@ -220,9 +219,7 @@ const Navbar = () => {
               </MenuItem>
             </a>
           </Link>
-
           <Divider />
-
           <Link passHref href="/settings">
             <a>
               <MenuItem>
