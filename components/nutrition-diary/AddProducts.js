@@ -37,18 +37,18 @@ const AddProducts = ({ meal, isDialogOpen, closeDialog }) => {
         setLoading(false)
     }, 1500)
 
-    const handleLoad = async (e) => {
+    const handleLoad = async (value) => {
         clearTimeout(searchTimer)
-        if (e.target.value.length > 2) {
+        if (value.length > 2) {
             setLoading(true)
-            const cache = await getIndexedDBbyID('cache_product', e.target.value)
+            const cache = await getIndexedDBbyID('cache_product', value)
             if (cache && cache.products.length > 0) {
                 console.log("Products loaded from cache")
                 setProducts(cache.products)
                 setLoading(false)
                 setOpen(false);
             } else {
-                setSearchTimer(searchFunction(e.target.value))
+                setSearchTimer(searchFunction(value))
             }
         }
     }
@@ -73,11 +73,11 @@ const AddProducts = ({ meal, isDialogOpen, closeDialog }) => {
                         getOptionLabel={(option) => option}
                         options={searchCache}
                         loading={loading}
+                        onInputChange={(e, value) => handleLoad(value)}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
                                 label="Search product"
-                                onChange={handleLoad}
                                 InputProps={{
                                     ...params.InputProps,
                                     endAdornment: (
