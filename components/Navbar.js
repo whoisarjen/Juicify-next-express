@@ -38,13 +38,8 @@ const Navbar = () => {
   const [, , removeCookie] = useCookies(["token"]);
   const open = Boolean(anchorEl);
 
-  const handleCloseExtraMenu = () => {
-    setAnchorEl(null);
-  };
-
-  const handleOpenExtraMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  const handleCloseExtraMenu = () => setAnchorEl(null)
+  const handleOpenExtraMenu = (event) => setAnchorEl(event.currentTarget)
 
   const MyLogo = forwardRef(({ onClick, href }, ref) => {
     return (
