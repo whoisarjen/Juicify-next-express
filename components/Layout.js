@@ -19,6 +19,8 @@ const Layout = ({ children }) => {
         query: `user_ID=${readToken(cookies.token)._id}`,
       });
     }
+    window.addEventListener('online', () => console.log('Became online'));
+    window.addEventListener('offline', () => console.log('Became offline'));
   }, [cookies.token]);
 
   return (

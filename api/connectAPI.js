@@ -1,6 +1,6 @@
 export default async function connectAPI (url, body) {
   let response = {};
-  let status = "";
+  let isSuccess = false;
   await fetch(`http://localhost:4000${url}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -10,11 +10,8 @@ export default async function connectAPI (url, body) {
     .then((res) => {
       if (res.error) throw res;
       response = res;
-      status = "success";
+      isSuccess = true;
     })
-    .catch((err) => {
-      console.log(err);
-      status = "error";
-    });
-  return { response, status };
+    .catch((err) => console.log(err));
+  return { response, isSuccess };
 }

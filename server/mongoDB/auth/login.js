@@ -1,7 +1,8 @@
 const loadProduct = require("../functions/loadProduct")
 const loadExercise = require("../functions/loadExercise")
+const handleError = require("../functions/handleError")
 
-module.exports = function (req, res, next) {
+module.exports = function (req, res) {
 
 	let Model = require('../models/user')
 	Model.findOne({
@@ -68,12 +69,12 @@ module.exports = function (req, res, next) {
 										workout_plan,
 										daily_measurement
 									});
-								}).catch(next)
-							}).catch(next)
-					}).catch(next)
-				}).catch(next)
-			}).catch(next)
+								}).catch(err => handleError(err, 'login'))
+							}).catch(err => handleError(err, 'login'))
+					}).catch(err => handleError(err, 'login'))
+				}).catch(err => handleError(err, 'login'))
+			}).catch(err => handleError(err, 'login'))
 		});
-	}).catch(next)
+	}).catch(err => handleError(err, 'login'))
 
 }

@@ -1,4 +1,4 @@
-You need to create "connection.js" file with monogoDB string and mongoose connection
+You need to create "connection.js" file with monogoDB string and mongoose connection:
 
 const mongoose = require('mongoose');
 

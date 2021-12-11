@@ -23,9 +23,9 @@ import Tab from "@mui/material/Tab";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import BookIcon from "@mui/icons-material/Book";
-import { getCurrentDate } from "../functional/changeDate";
+import { getCurrentDate } from "../functions/changeDate";
 import MenuIcon from "@mui/icons-material/Menu";
-import { deleteDatabaseIndexedDB } from "../functional/indexedDB";
+import { deleteDatabaseIndexedDB } from "../functions/indexedDB";
 import Image from 'next/image'
 import logo from '../public/images/logo.png'
 
@@ -34,10 +34,8 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation("home");
   const [anchorEl, setAnchorEl] = useState(null);
-  const logoAlt = useSelector((state) => state.config.logoAlt);
   const login = useSelector((state) => state.token.value.login);
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
-  const logoAdress = useSelector((state) => state.config.logoAdress);
+  const [,, removeCookie] = useCookies(["token"]);
   const open = Boolean(anchorEl);
 
   const handleCloseExtraMenu = () => {

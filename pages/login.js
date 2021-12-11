@@ -11,8 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../redux/features/tokenSlice";
 import useTranslation from "next-translate/useTranslation";
 import { expectLoggedOUT, readToken } from "../hooks/useAuth";
-import { getCurrentDate } from "../functional/changeDate";
-import { createIndexedDB } from "../functional/indexedDB";
+import { getCurrentDate } from "../functions/changeDate";
+import { createIndexedDB } from "../functions/indexedDB";
 import Image from 'next/image'
 import logo from '../public/images/logo.png'
 
@@ -41,11 +41,11 @@ const Login = () => {
       requiredBasicInputLength(password).status
     ) {
       setLoading(true);
-      const { response, status } = await connectAPI("/auth/login", {
+      const { response, isSuccess } = await connectAPI("/auth/login", {
         login,
         password,
       });
-      if (status === "success") {
+      if (isSuccess) {
         setCookie("token", response.token, {
           path: "/",
           expires: new Date(

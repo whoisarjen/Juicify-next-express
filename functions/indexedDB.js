@@ -132,7 +132,7 @@ const putInformationAboutNeededUpdate = async (where) => {
   return new Promise((resolve) => {
     (async () => {
       if (where != "nutrition_diary_connections" && where != "whatToUpdate") {
-        if (!store.state.online) {
+        if (false) {
           let indexedDB = await getIndexedDBbyID("whatToUpdate", where);
           if (!indexedDB) {
             let array = [
@@ -142,7 +142,10 @@ const putInformationAboutNeededUpdate = async (where) => {
             ];
             await addIndexedDB("whatToUpdate", array);
           }
-        } else localStorage.setItem("lastUpdated", new Date().getTime());
+        } else {
+          console.log('change putInformationAboutNeededUpdate to care about online')
+          localStorage.setItem("lastUpdated", new Date().getTime());
+        }
       }
       resolve();
     })();

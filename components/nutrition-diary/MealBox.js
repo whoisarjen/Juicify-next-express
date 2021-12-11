@@ -21,7 +21,7 @@ const MealBox = ({ index, products }) => {
       </div>
       <div className={style.boxAdd}>
         {token.login === router.query.login ? (
-          <AddProducts />
+          <AddProducts meal={index}/>
         ) : (
           <div />
         )}
