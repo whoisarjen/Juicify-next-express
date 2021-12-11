@@ -14,8 +14,8 @@ const AddProducts = () => {
 
     return (
         <div className="addProductToNutrionDiary">
-            <IconButton aria-label="Add" color="primary">
-                <AddIcon fontSize="small" onClick={() => setIsDialogOpen(true)}/>
+            <IconButton aria-label="Add" color="primary" onClick={() => setIsDialogOpen(true)}>
+                <AddIcon fontSize="small"/>
             </IconButton>
             <Dialog
                 fullScreen
