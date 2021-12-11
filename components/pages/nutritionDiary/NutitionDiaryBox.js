@@ -1,4 +1,4 @@
-import style from "../../styles/NutritionDiary.module.css";
+import style from "../../../styles/NutritionDiary.module.css";
 import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AddIcon from "@mui/icons-material/Add";
