@@ -22,8 +22,8 @@ const MealBox = ({ index, products, openDialog }) => {
       </div>
       <div className={style.boxAdd}>
         {token.login === router.query.login ? (
-          <IconButton aria-label="Add" color="primary" onClick={() => openDialog()}>
-              <AddIcon fontSize="small" />
+          <IconButton sx={{ margin: 'auto' }} aria-label="Add" color="primary" onClick={() => openDialog()}>
+            <AddIcon fontSize="small" />
           </IconButton>
         ) : (
           <div />
