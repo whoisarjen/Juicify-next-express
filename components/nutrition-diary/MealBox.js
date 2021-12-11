@@ -1,4 +1,4 @@
-import style from "../../../styles/NutritionDiary.module.css";
+import style from "../../styles/nutrition-diary.module.css";
 import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AddIcon from "@mui/icons-material/Add";
@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 
-const NutritionDiaryBox = ({ index, products }) => {
+const MealBox = ({ index, products }) => {
   const router = useRouter();
   const token = useSelector((state) => state.token.value);
 
@@ -60,4 +60,4 @@ const NutritionDiaryBox = ({ index, products }) => {
   );
 };
 
-export default NutritionDiaryBox;
+export default MealBox;

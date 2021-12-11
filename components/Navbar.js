@@ -23,7 +23,7 @@ import Tab from "@mui/material/Tab";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import BookIcon from "@mui/icons-material/Book";
-import { getCurrentDate } from "../hooks/useDate";
+import { getCurrentDate } from "./functional/changeDate";
 import MenuIcon from "@mui/icons-material/Menu";
 import { deleteDatabaseIndexedDB } from "../hooks/useIndexedDB";
 import Image from 'next/image'

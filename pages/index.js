@@ -9,7 +9,7 @@ import { useCookies } from "react-cookie";
 export default function Home() {
   const router = useRouter();
   const { t } = useTranslation("home");
-  const [cookies, setCookie] = useCookies(["NEXT_LOCALE"]);
+  const [, setCookie] = useCookies(["NEXT_LOCALE"]);
 
   const handleChange = (e) => {
     setCookie("NEXT_LOCALE", e.target.value, {

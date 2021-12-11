@@ -1,17 +1,17 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import connectAPI from "../components/api/connectAPI";
+import connectAPI from "../api/connectAPI";
 import Stack from "@mui/material/Stack";
 import { useCookies } from "react-cookie";
-import styles from "../styles/Login.module.css";
+import styles from "../styles/login.module.css";
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../redux/features/tokenSlice";
 import useTranslation from "next-translate/useTranslation";
 import { expectLoggedOUT, readToken } from "../hooks/useAuth";
-import { getCurrentDate } from "../hooks/useDate";
+import { getCurrentDate } from "../functional/changeDate";
 import { createIndexedDB } from "../hooks/useIndexedDB";
 import Image from 'next/image'
 import logo from '../public/images/logo.png'

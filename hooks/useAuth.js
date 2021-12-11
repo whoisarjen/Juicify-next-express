@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import { useSelector } from "react-redux";
-import { getCurrentDate } from "../hooks/useDate";
+import { getCurrentDate } from "../functional/changeDate";
 
 const expectLoggedIN = () => {
   const router = useRouter();
