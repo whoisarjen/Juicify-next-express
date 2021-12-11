@@ -35,7 +35,7 @@ const Navbar = () => {
   const { t } = useTranslation("home");
   const [anchorEl, setAnchorEl] = useState(null);
   const login = useSelector((state) => state.token.value.login);
-  const [,, removeCookie] = useCookies(["token"]);
+  const [, , removeCookie] = useCookies(["token"]);
   const open = Boolean(anchorEl);
 
   const handleCloseExtraMenu = () => {
@@ -49,7 +49,7 @@ const Navbar = () => {
   const MyLogo = forwardRef(({ onClick, href }, ref) => {
     return (
       <a href={href} onClick={onClick} ref={ref}>
-        <Image width={40} height={40} alt="juicify.app" src={logo}/>
+        <Image width={40} height={40} alt="juicify.app" src={logo} />
       </a>
     )
   })
@@ -73,10 +73,10 @@ const Navbar = () => {
     <nav className="navbar">
       <ul>
         <li className="paddingMenu">
-          
-      <Link passHref href="/">
-        <MyLogo/>
-      </Link>
+
+          <Link passHref href="/">
+            <MyLogo />
+          </Link>
         </li>
         <li className="notMobileOnly paddingMenu">
           <Paper
