@@ -1,11 +1,12 @@
 import style from "../../styles/nutrition-diary.module.css";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import AddProducts from './AddProducts'
 import EditProduct from './EditProduct'
 import MoreOptions from './MoreOptions'
+import AddIcon from "@mui/icons-material/Add";
+import IconButton from "@mui/material/IconButton";
 
-const MealBox = ({ index, products }) => {
+const MealBox = ({ index, products, openDialog }) => {
   const router = useRouter();
   const token = useSelector((state) => state.token.value);
 
@@ -21,7 +22,9 @@ const MealBox = ({ index, products }) => {
       </div>
       <div className={style.boxAdd}>
         {token.login === router.query.login ? (
-          <AddProducts meal={index}/>
+          <IconButton aria-label="Add" color="primary" onClick={() => openDialog()}>
+              <AddIcon fontSize="small" />
+          </IconButton>
         ) : (
           <div />
         )}

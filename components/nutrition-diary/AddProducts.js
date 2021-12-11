@@ -1,6 +1,4 @@
 import { forwardRef, useState, Fragment } from 'react'
-import AddIcon from "@mui/icons-material/Add";
-import IconButton from "@mui/material/IconButton";
 import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide'
 import Button from '@mui/material/Button';
@@ -17,8 +15,7 @@ const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const AddProducts = ({ meal }) => {
-    const [isDialogOpen, setIsDialogOpen] = useState(false)
+const AddProducts = ({ meal, isDialogOpen, closeDialog }) => {
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false)
@@ -26,7 +23,7 @@ const AddProducts = ({ meal }) => {
     const [searchCache, setSearchCache] = useState([])
 
     const searchFunction = (find) => setTimeout(async () => {
-        console.log("API")
+        console.log("Products loaded from API")
         setOpen(false);
         setLoading(true);
         const { response, isSuccess } = await connectAPI("/find/products", {
@@ -46,7 +43,7 @@ const AddProducts = ({ meal }) => {
             setLoading(true)
             const cache = await getIndexedDBbyID('cache_product', e.target.value)
             if (cache && cache.products.length > 0) {
-                console.log("From cache")
+                console.log("Products loaded from cache")
                 setProducts(cache.products)
                 setLoading(false)
                 setOpen(false);
@@ -56,16 +53,10 @@ const AddProducts = ({ meal }) => {
         }
     }
 
-    useEffect(async () => {
-        console.log("Siema")
-        setSearchCache((await getAllIndexedDB('cache_product')).map(product => product._id))
-    }, [])
+    useEffect(async () => setSearchCache((await getAllIndexedDB('cache_product')).map(product => product._id)), [])
 
     return (
         <div className={styles.addProducts}>
-            <IconButton aria-label="Add" color="primary" onClick={() => setIsDialogOpen(true)}>
-                <AddIcon fontSize="small" />
-            </IconButton>
             <Dialog
                 fullScreen
                 scroll='body'
@@ -73,7 +64,7 @@ const AddProducts = ({ meal }) => {
                 TransitionComponent={Transition}
             >
                 <div className="content">
-                    Add products
+                    Add products to {meal + 1}
                     <Autocomplete
                         open={open}
                         onOpen={() => setOpen(true)}
@@ -105,7 +96,7 @@ const AddProducts = ({ meal }) => {
                         )
                     }
                     <div className={styles.addProductsCloseButtonPlaceholder} />
-                    <div className={styles.addProductsCloseButton} onClick={() => setIsDialogOpen(false)}>
+                    <div className={styles.addProductsCloseButton} onClick={() => closeDialog()}>
                         <Button variant="contained">
                             Close
                         </Button>
