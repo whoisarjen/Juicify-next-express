@@ -11,7 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import { useState } from "react";
+import { useState, forwardRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useCookies } from "react-cookie";
 import { useRouter } from "next/router";
@@ -46,6 +46,14 @@ const Navbar = () => {
     setAnchorEl(event.currentTarget);
   };
 
+  const MyLogo = forwardRef(({ onClick, href }, ref) => {
+    return (
+      <a href={href} onClick={onClick} ref={ref}>
+        <Image width={40} height={40} alt="juicify.app" src={logo}/>
+      </a>
+    )
+  })
+
   const handleLogout = async () => {
     await deleteDatabaseIndexedDB();
     dispatch(removeToken());
@@ -65,9 +73,10 @@ const Navbar = () => {
     <nav className="navbar">
       <ul>
         <li className="paddingMenu">
-          <Link passHref href="/">
-            <Image width={40} height={40} alt="juicify.app" src={logo}/>
-          </Link>
+          
+      <Link passHref href="/">
+        <MyLogo/>
+      </Link>
         </li>
         <li className="notMobileOnly paddingMenu">
           <Paper
