@@ -1,3 +1,4 @@
 - head href language flag
 Site 404
+offline site
 Better protection on cookies
