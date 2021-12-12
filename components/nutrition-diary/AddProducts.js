@@ -11,7 +11,6 @@ import { addIndexedDB, getAllIndexedDB, getIndexedDBbyID } from '../../functions
 import AddProductsBox from './AddProductsBox';
 import { useEffect } from 'react'
 import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import { useSelector } from 'react-redux';
 
@@ -72,12 +71,11 @@ const AddProducts = ({ index, isDialogOpen, closeDialog }) => {
             >
                 <div className="content">
                     <div className="title">Add products</div>
-                    <InputLabel id="demo-simple-select-label">Meal</InputLabel>
                     <Select
+                        sx={{ marginBottom: '10px' }}
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={meal}
-                        label="Meal"
                         onChange={(e) => setMeal(e.target.value)}
                     >
                         {
@@ -87,6 +85,7 @@ const AddProducts = ({ index, isDialogOpen, closeDialog }) => {
                         }
                     </Select>
                     <Autocomplete
+                        sx={{ marginBottom: '10px' }}
                         open={open}
                         onOpen={() => setOpen(true)}
                         onClose={() => setOpen(false)}

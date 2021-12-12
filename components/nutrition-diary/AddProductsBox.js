@@ -12,7 +12,7 @@ const AddProductsBox = ({ product }) => {
     const [value, setValue] = useState('1.0')
 
     return (
-        <div className={styles.addProductsBox} style={{ borderLeft: product.v ? '5px solid rgb(76, 175, 80)' : '' }}>
+        <div className={styles.addProductsBox} style={{ borderLeft: product.v ? '5px solid #1976d2' : '' }}>
             <div className={styles.addProductsBoxName}>
                 {product.name}
             </div>

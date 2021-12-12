@@ -165,5 +165,6 @@ input[type=number] {
 
 .title{
   font-size: 2rem;
+  margin-bottom: 10px;
   font-weight: bold;
 }
