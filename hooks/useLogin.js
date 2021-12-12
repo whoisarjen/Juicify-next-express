@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from "next/router";
-import useAPI from '../hooks/useAPI'
+import useAPI from './useAPI'
 import { useCookies } from "react-cookie";
-import { getShortDate } from "../hooks/useDate";
-import { createIndexedDB } from "../hooks/useIndexedDB";
+import { getShortDate } from "./useDate";
+import { createIndexedDB } from "./useIndexedDB";
 import { setToken } from "../redux/features/tokenSlice";
-import { readToken } from "../hooks/useAuth";
+import { readToken } from "./useAuth";
 import { useDispatch, useSelector } from "react-redux";
 
 const useLogin = ({ login = '', password = '' }) => {

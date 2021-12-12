@@ -1,6 +1,6 @@
 import useAPI from './useAPI'
 import { useState, useEffect } from "react";
-import { addIndexedDB, getAllIndexedDB, getIndexedDBbyID } from '../hooks/useIndexedDB'
+import { addIndexedDB, getAllIndexedDB, getIndexedDBbyID } from './useIndexedDB'
 
 const useFind = (value = '', where, tab) => {
     const [products, setProducts] = useState([])
