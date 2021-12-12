@@ -6,7 +6,7 @@ import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
 import { useEffect } from 'react'
-import { putIndexedDB, addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../functions/indexedDB';
+import { putIndexedDB, addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../hooks/useIndexedDB';
 import { useState } from 'react'
 
 const AddProductsBox = ({ product, refreshCheckedProducts }) => {

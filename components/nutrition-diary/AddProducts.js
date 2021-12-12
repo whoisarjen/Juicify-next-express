@@ -14,7 +14,7 @@ import useFind from '../../hooks/useFind';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { getAllIndexedDB } from '../../functions/indexedDB';
+import { getAllIndexedDB } from '../../hooks/useIndexedDB';
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;

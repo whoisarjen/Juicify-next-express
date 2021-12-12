@@ -12,7 +12,7 @@ import { setToken } from "../redux/features/tokenSlice";
 import useTranslation from "next-translate/useTranslation";
 import { expectLoggedOUT, readToken } from "../hooks/useAuth";
 import { getCurrentDate } from "../functions/changeDate";
-import { createIndexedDB } from "../functions/indexedDB";
+import { createIndexedDB } from "../hooks/useIndexedDB";
 import Image from 'next/image'
 import logo from '../public/images/logo.png'
 

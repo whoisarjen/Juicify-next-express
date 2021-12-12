@@ -24,8 +24,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import BookIcon from "@mui/icons-material/Book";
 import { getCurrentDate } from "../functions/changeDate";
-import MenuIcon from "@mui/icons-material/Menu";
-import { deleteDatabaseIndexedDB } from "../functions/indexedDB";
+import { deleteDatabaseIndexedDB } from "../hooks/useIndexedDB";
 import Image from 'next/image'
 import logo from '../public/images/logo.png'
 
