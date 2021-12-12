@@ -1,4 +1,4 @@
-import { forwardRef, useState, Fragment } from 'react'
+import { forwardRef, useState, useEffect, Fragment } from 'react'
 import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide'
 import Button from '@mui/material/Button';
@@ -7,7 +7,6 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
 import AddProductsBox from './AddProductsBox';
-import { useEffect } from 'react'
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { useSelector } from 'react-redux';
@@ -31,6 +30,12 @@ const AddProducts = ({ index, isDialogOpen, closeDialog }) => {
     const [refreshChecked, setRefreshChecked] = useState(0)
     const token = useSelector(state => state.token.value)
     const { products, loading, searchCache } = useFind(find, 'product', tab)
+
+    const addProductsToDiary = async () => {
+        setLoadingButton(true)
+        console.log("Adding to diary...")
+        setTimeout(() => setLoadingButton(false), 1500)
+    }
 
     useEffect(() => setMeal(index), [index])
     useEffect(() => setOpen(false), [searchCache])
@@ -107,9 +112,8 @@ const AddProducts = ({ index, isDialogOpen, closeDialog }) => {
                         <>
                             <div className={styles.addProductsSubmit}>
                                 <LoadingButton
-                                    onClick={() => setLoadingButton(true)}
+                                    onClick={addProductsToDiary}
                                     loading={loadingButton}
-                                    loadingIndicator="Loading..."
                                     variant="contained"
                                 >
                                     Submit ({checked.length})

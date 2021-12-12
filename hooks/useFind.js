@@ -13,24 +13,24 @@ const useFind = (value = '', where, tab) => {
         if (value.length > 2) {
             setLoading(true)
             if (tab === 1) {
-                console.log("Products loaded from favourite")
+                console.log(`${where} loaded from favourite`)
                 let fav = await getAllIndexedDB(`favourite_${where}`) || []
                 setProducts(fav.filter(product => product.name.toLowerCase().includes(value)).sort((a, b) => a.name.length - b.name.length).splice(0, 10))
                 setLoading(false)
             } else if (tab === 2) {
-                console.log("Products loaded from checked")
+                console.log(`${where} loaded from checked`)
                 let checked = await getAllIndexedDB(`checked_${where}`) || []
                 setProducts(checked.splice(0, 10))
                 setLoading(false)
             } else {
                 const cache = await getIndexedDBbyID(`cache_${where}`, value)
                 if (cache && cache.products.length > 0) {
-                    console.log("Products loaded from cache")
+                    console.log(`${where} loaded from cache`)
                     setProducts(cache.products)
                     setLoading(false)
                 } else {
                     const searchFunction = (find) => setTimeout(async () => {
-                        console.log("Products loaded from API")
+                        console.log(`${where} loaded from API`)
                         setLoading(true);
                         const { response, isSuccess } = await useAPI(`/find/${where}`, {
                             find: find
