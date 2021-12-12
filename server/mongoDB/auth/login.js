@@ -10,8 +10,8 @@ module.exports = function (req, res) {
 	}).then(function (user) {
 		if (!user) return res.status(404).send({ error: 'Wrong password' })
 		const bcrypt = require('bcrypt');
-		bcrypt.compare(req.body.password, user.password, function (error,) {
-			if (error) return res.status(404).send({ error: 'Wrong password' })
+		bcrypt.compare(req.body.password, user.password, function (error, response) {
+			if (!response) return res.status(404).send({ error: 'Wrong password' })
 			if (user.banned) return res.status(400).send({ error: 'Your account has been banned' })
 			const token = require('./tokenGENERATOR')([user])
 			const refresh_token = require('./tokenRefreshGENERATOR')([user])
