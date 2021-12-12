@@ -79,7 +79,7 @@ const Navbar = () => {
               p: "2px 4px",
               display: "flex",
               alignItems: "center",
-              width: 400,
+              width: 350,
               boxShadow: 0,
               border: 1,
               borderColor: "#e4e4e4",
@@ -95,7 +95,7 @@ const Navbar = () => {
             </IconButton>
           </Paper>
         </li>
-        <li className="notMobileOnly paddingMenu">
+        <li className="paddingMenu">
           <Tabs
             aria-label="Top menu"
             value={0}
@@ -114,13 +114,13 @@ const Navbar = () => {
             {login ? (
               <Link passHref href={`/${login}/nutrition-diary/${getCurrentDate()}`}>
                 <a>
-                  <Tab icon={<BookIcon />} wrapped label={t("Diary")} />
+                  <Tab className="notMobileOnly" icon={<BookIcon />} wrapped label={t("Diary")} />
                 </a>
               </Link>
             ) : (
               <Link passHref href="/login">
                 <a>
-                  <Tab icon={<BookIcon />} wrapped label={t("Diary")} />
+                  <Tab className="notMobileOnly" icon={<BookIcon />} wrapped label={t("Diary")} />
                 </a>
               </Link>
             )}
@@ -139,13 +139,6 @@ const Navbar = () => {
               </Link>
             )}
           </Tabs>
-        </li>
-        <div className="mobileOnly paddingMenu" />
-        <li className="mobileOnly paddingMenu">
-          <SearchIcon />
-        </li>
-        <li className="mobileOnly paddingMenu">
-          <MenuIcon />
         </li>
 
         <Menu

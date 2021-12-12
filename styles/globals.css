@@ -142,7 +142,12 @@ a, a:hover, a:focus, a:active {
   }
 
   .paddingMenu{
-    padding: 10px 15px;
+    padding: 0 15px;
+  }
+
+  .paddingMenu:last-child{
+    margin-right: 0;
+    padding-right: 0;
   }
 }
 
@@ -156,4 +161,9 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+.title{
+  font-size: 2rem;
+  font-weight: bold;
 }

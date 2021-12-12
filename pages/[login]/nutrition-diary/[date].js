@@ -25,7 +25,7 @@ const NutritionDiary = () => {
           key={i}
         />
       ))}
-      <AddProducts meal={index} isDialogOpen={isDialogOpen} closeDialog={() => setIsDialogOpen(false)}/>
+      <AddProducts index={index} isDialogOpen={isDialogOpen} closeDialog={() => setIsDialogOpen(false)}/>
     </div>
   );
 };

@@ -10,17 +10,23 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { addIndexedDB, getAllIndexedDB, getIndexedDBbyID } from '../../functions/indexedDB'
 import AddProductsBox from './AddProductsBox';
 import { useEffect } from 'react'
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import { useSelector } from 'react-redux';
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const AddProducts = ({ meal, isDialogOpen, closeDialog }) => {
+const AddProducts = ({ index, isDialogOpen, closeDialog }) => {
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false)
     const [searchTimer, setSearchTimer] = useState(null)
     const [searchCache, setSearchCache] = useState([])
+    const [meal, setMeal] = useState(index)
+    const token = useSelector(state => state.token.value)
 
     const searchFunction = (find) => setTimeout(async () => {
         console.log("Products loaded from API")
@@ -53,6 +59,7 @@ const AddProducts = ({ meal, isDialogOpen, closeDialog }) => {
         }
     }
 
+    useEffect(() => setMeal(index), [index])
     useEffect(async () => setSearchCache((await getAllIndexedDB('cache_product')).map(product => product._id)), [])
 
     return (
@@ -64,7 +71,21 @@ const AddProducts = ({ meal, isDialogOpen, closeDialog }) => {
                 TransitionComponent={Transition}
             >
                 <div className="content">
-                    Add products to {meal + 1}
+                    <div className="title">Add products</div>
+                    <InputLabel id="demo-simple-select-label">Meal</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={meal}
+                        label="Meal"
+                        onChange={(e) => setMeal(e.target.value)}
+                    >
+                        {
+                            [...Array(token.meal_number)].map((x, i) => 
+                                <MenuItem key={i} value={i}>Meal {i + 1}</MenuItem>
+                            )
+                        }
+                    </Select>
                     <Autocomplete
                         open={open}
                         onOpen={() => setOpen(true)}
