@@ -1,30 +1,23 @@
 import Link from "next/link";
 import { useState } from "react";
-import { useRouter } from "next/router";
-import useAPI from '../hooks/useAPI'
 import Stack from "@mui/material/Stack";
-import { useCookies } from "react-cookie";
 import styles from "../styles/login.module.css";
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { useDispatch, useSelector } from "react-redux";
-import { setToken } from "../redux/features/tokenSlice";
+import { useSelector } from "react-redux";
 import useTranslation from "next-translate/useTranslation";
-import { expectLoggedOUT, readToken } from "../hooks/useAuth";
-import { getShortDate } from "../hooks/useDate";
-import { createIndexedDB } from "../hooks/useIndexedDB";
+import { expectLoggedOUT } from "../hooks/useAuth";
 import Image from 'next/image'
 import logo from '../public/images/logo.png'
+import useLogin from '../hooks/useLogin'
 
 const Login = () => {
   expectLoggedOUT();
-  const router = useRouter();
+  const [data, setData] = useState({})
+  const { loading } = useLogin(data)
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [, setCookie] = useCookies(["token"]);
   const requiredBasicInputLength = useSelector(
     (state) => state.config.requiredBasicInputLength
   );
@@ -35,46 +28,18 @@ const Login = () => {
     }
   };
 
-  const handleLogin = async () => {
-    if (
-      requiredBasicInputLength(login).status &&
-      requiredBasicInputLength(password).status
-    ) {
-      setLoading(true);
-      const { response, isSuccess } = await useAPI("/auth/login", {
-        login,
-        password,
-      });
-      if (isSuccess) {
-        setCookie("token", response.token, {
-          path: "/",
-          expires: new Date(
-            new Date().setFullYear(new Date().getFullYear() + 20)
-          ),
-        });
-        setCookie("refresh_token", response.refresh_token, {
-          path: "/",
-          expires: new Date(
-            new Date().setFullYear(new Date().getFullYear() + 20)
-          ),
-        });
-        dispatch(setToken(response.token));
-        await createIndexedDB();
-        router.push(
-          `/${
-            readToken(response.token).login
-          }/nutrition-diary/${getShortDate()}`
-        );
-      }
-      setLoading(false);
-    }
+  const handleLogin = () => {
+    setData({
+      login,
+      password
+    })
   };
 
   return (
     <div className="login">
       <div className={styles.loginBox}>
         <div className={styles.loginLogoBox}>
-          <Image alt="Juicify.app"src={logo}/>
+          <Image alt="Juicify.app" src={logo} />
         </div>
         <div>
           <Stack direction="column" spacing={2}>
@@ -106,7 +71,7 @@ const Login = () => {
               }
               helperText={
                 password.length > 0 &&
-                !requiredBasicInputLength(password).status
+                  !requiredBasicInputLength(password).status
                   ? t("home:requiredBasicInputLength")
                   : ""
               }

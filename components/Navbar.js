@@ -47,6 +47,7 @@ const Navbar = () => {
       </a>
     )
   })
+  MyLogo.displayName = "MyLogo Navbar";
 
   const handleLogout = async () => {
     await deleteDatabaseIndexedDB();
