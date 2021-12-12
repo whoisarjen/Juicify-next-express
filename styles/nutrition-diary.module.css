@@ -70,6 +70,7 @@
     left: 50%;
     transform: translateX(-50%);
     background: #fff;
+    z-index: 2;
 }
 
 .addProductsCloseButtonPlaceholder{
@@ -132,6 +133,7 @@
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
+    z-index: 2;
 }
 
 .addProductsSubmitPlaceholder{
