@@ -67,6 +67,7 @@ const AddProducts = ({ index, isDialogOpen, closeDialog }) => {
                     <Autocomplete
                         sx={{ marginBottom: '10px' }}
                         open={open}
+                        value={find}
                         onOpen={() => setOpen(true)}
                         onClose={() => setOpen(false)}
                         isOptionEqualToValue={(option, value) => option === value}

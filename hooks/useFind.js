@@ -2,7 +2,7 @@ import useAPI from './useAPI'
 import { useState, useEffect } from "react";
 import { addIndexedDB, getAllIndexedDB, getIndexedDBbyID } from './useIndexedDB'
 
-const useFind = (value = '', where, tab) => {
+const useFind = (value, where, tab) => {
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(false)
     const [searchCache, setSearchCache] = useState([])
@@ -12,12 +12,12 @@ const useFind = (value = '', where, tab) => {
         clearTimeout(searchTimer)
         if (value.length > 2) {
             setLoading(true)
-            if (tab === 1) {
+            if (tab == 1) {
                 console.log(`${where} loaded from favourite`)
                 let fav = await getAllIndexedDB(`favourite_${where}`) || []
                 setProducts(fav.filter(product => product.name.toLowerCase().includes(value)).sort((a, b) => a.name.length - b.name.length).splice(0, 10))
                 setLoading(false)
-            } else if (tab === 2) {
+            } else if (tab == 2) {
                 console.log(`${where} loaded from checked`)
                 let checked = await getAllIndexedDB(`checked_${where}`) || []
                 setProducts(checked.splice(0, 10))
