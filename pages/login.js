@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import connectAPI from "../api/connectAPI";
+import useAPI from '../hooks/useAPI'
 import Stack from "@mui/material/Stack";
 import { useCookies } from "react-cookie";
 import styles from "../styles/login.module.css";
@@ -41,7 +41,7 @@ const Login = () => {
       requiredBasicInputLength(password).status
     ) {
       setLoading(true);
-      const { response, isSuccess } = await connectAPI("/auth/login", {
+      const { response, isSuccess } = await useAPI("/auth/login", {
         login,
         password,
       });

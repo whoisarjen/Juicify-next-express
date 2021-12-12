@@ -3,7 +3,7 @@ import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide'
 import Button from '@mui/material/Button';
 import styles from '../../styles/nutrition-diary.module.css'
-import connectAPI from '../../api/connectAPI'
+import useAPI from '../../hooks/useAPI'
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -31,7 +31,7 @@ const AddProducts = ({ index, isDialogOpen, closeDialog }) => {
         console.log("Products loaded from API")
         setOpen(false);
         setLoading(true);
-        const { response, isSuccess } = await connectAPI("/find/products", {
+        const { response, isSuccess } = await useAPI("/find/products", {
             find: find
         });
         if (isSuccess) {

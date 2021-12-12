@@ -20,11 +20,11 @@ const AddProductsBox = ({ product }) => {
                 {(product.p || 0)}P {(product.c || 0)}W {(product.f || 0)}F {Math.ceil((product.p || 0) * 4 + (product.c || 0) * 4 + (product.f || 0) * 9)}kcal
             </div>
             <div className={styles.addProductsBoxFavourite}>
-                <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
+                <Checkbox icon={<FavoriteBorder fontSize="small"/>} checkedIcon={<Favorite fontSize="small"/>} />
             </div>
             <div className={styles.addProductsBoxMoreInfo}>
                 <IconButton color="primary">
-                    <InfoIcon />
+                    <InfoIcon fontSize="small"/>
                 </IconButton>
             </div>
             <div className={styles.addProductsBoxValue}>
