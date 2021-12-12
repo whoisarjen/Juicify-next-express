@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../redux/features/tokenSlice";
 import useTranslation from "next-translate/useTranslation";
 import { expectLoggedOUT, readToken } from "../hooks/useAuth";
-import { getCurrentDate } from "../functions/changeDate";
+import { getShortDate } from "../hooks/useDate";
 import { createIndexedDB } from "../hooks/useIndexedDB";
 import Image from 'next/image'
 import logo from '../public/images/logo.png'
@@ -63,7 +63,7 @@ const Login = () => {
         router.push(
           `/${
             readToken(response.token).login
-          }/nutrition-diary/${getCurrentDate()}`
+          }/nutrition-diary/${getShortDate()}`
         );
       }
       setLoading(false);

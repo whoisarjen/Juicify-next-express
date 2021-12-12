@@ -23,7 +23,7 @@ import Tab from "@mui/material/Tab";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import BookIcon from "@mui/icons-material/Book";
-import { getCurrentDate } from "../functions/changeDate";
+import { getShortDate } from "../hooks/useDate";
 import { deleteDatabaseIndexedDB } from "../hooks/useIndexedDB";
 import Image from 'next/image'
 import logo from '../public/images/logo.png'
@@ -111,7 +111,7 @@ const Navbar = () => {
               </a>
             </Link>
             {login ? (
-              <Link passHref href={`/${login}/nutrition-diary/${getCurrentDate()}`}>
+              <Link passHref href={`/${login}/nutrition-diary/${getShortDate()}`}>
                 <a>
                   <Tab className="notMobileOnly" icon={<BookIcon />} wrapped label={t("Diary")} />
                 </a>
@@ -181,7 +181,7 @@ const Navbar = () => {
               </MenuItem>
             </a>
           </Link>
-          <Link passHref href={`/${login}/nutrition-diary/${getCurrentDate()}`}>
+          <Link passHref href={`/${login}/nutrition-diary/${getShortDate()}`}>
             <a>
               <MenuItem>
                 <ListItemIcon>
