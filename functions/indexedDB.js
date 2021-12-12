@@ -13,6 +13,7 @@ const createIndexedDB = async () => {
       let objectStore;
       objectStore = db.createObjectStore("product", { keyPath: "_id" });
       objectStore = db.createObjectStore("cache_product", { keyPath: "_id" });
+      objectStore = db.createObjectStore("checked_product", { keyPath: "_id" });
       objectStore = db.createObjectStore("last_used_product", {
         keyPath: "_id",
       });
@@ -143,7 +144,7 @@ const putInformationAboutNeededUpdate = async (where) => {
             await addIndexedDB("whatToUpdate", array);
           }
         } else {
-          console.log('change putInformationAboutNeededUpdate to care about online')
+          console.log('change putInformationAboutNeededUpdate to care about online + after offline should also update checked and favourite products?')
           localStorage.setItem("lastUpdated", new Date().getTime());
         }
       }

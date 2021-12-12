@@ -15,7 +15,7 @@ const server = app.listen(port, () =>
 
 app.post('/auth/login', (req, res) => require('./mongoDB/auth/login')(req, res));
 
-app.post('/find/products', (req, res) => require('./mongoDB/find/products')(req, res));
+app.post('/find/product', (req, res) => require('./mongoDB/find/product')(req, res));
 
 // app.post('/:where/:what', (req, res) => {
 //   try {

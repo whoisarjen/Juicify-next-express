@@ -2,3 +2,4 @@
 Site 404
 offline site
 Better protection on cookies
+Fav products => redis
