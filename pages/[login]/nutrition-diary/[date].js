@@ -13,21 +13,29 @@ const NutritionDiary = () => {
     const token = useSelector(state => state.token.value)
     const [isDialogOpen, setIsDialogOpen] = useState(false)
     const [when, setWhen] = useState(router.query.date)
-    const diary = loadDailyMeasurement(when)
+    const dailyMeasurement = loadDailyMeasurement(when)
     const [nutrition_diary, setNutrition_diary] = useState([])
 
     useEffect(() => {
-        if (diary && diary.nutrition_diary) {
-            let arr = [...Array(token.meal_number || Math.max.apply(Math, diary.nutrition_diary.map(function (o) { return o.meal; })))].fill(diary.nutrition_diary)
-            setNutrition_diary(arr)
+        if (dailyMeasurement && dailyMeasurement.nutrition_diary) {
+            setNutrition_diary(
+                [
+                    ...Array(
+                        token.meal_number || Math.max.apply(Math, dailyMeasurement.nutrition_diary.map(function (o) {
+                            return o.meal;
+                        }))
+                    )
+                ]
+                    .fill(dailyMeasurement.nutrition_diary)
+            )
         }
-    }, [diary])
+    }, [dailyMeasurement])
 
     useEffect(async () => setWhen(router.query.date), [router.query.date])
 
     return (
         <div className="NutritionDiary">
-            {diary && diary.whenAdded}
+            {dailyMeasurement && dailyMeasurement.whenAdded}
             <Link passHref href={`/${router.query.login}/nutrition-diary/${addDaysToDate(router.query.date, 1)}`}><a>Next</a></Link>
             {nutrition_diary && nutrition_diary.map((x, i) => (
                 <MealBox
@@ -36,7 +44,7 @@ const NutritionDiary = () => {
                         setIndex(i)
                         setIsDialogOpen(true)
                     }}
-                    products={x}
+                    products={nutrition_diary[i]}
                     key={i}
                 />
             ))}
