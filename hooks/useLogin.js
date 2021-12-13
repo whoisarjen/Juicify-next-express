@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from "next/router";
 import useAPI from './useAPI'
 import { useCookies } from "react-cookie";
-import { getShortDate } from "./useDate";
+import { useShortDate } from "./useDate";
 import { createIndexedDB } from "./useIndexedDB";
 import { setToken } from "../redux/features/tokenSlice";
 import { readToken } from "./useAuth";
@@ -44,7 +44,7 @@ const useLogin = ({ login = '', password = '' }) => {
                 await createIndexedDB();
                 router.push(
                     `/${readToken(response.token).login
-                    }/nutrition-diary/${getShortDate()}`
+                    }/nutrition-diary/${useShortDate()}`
                 );
             }
             setLoading(false);

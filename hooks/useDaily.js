@@ -5,10 +5,11 @@ import { useCookies } from "react-cookie"
 import { useState, useEffect } from 'react'
 import { getIndexedDBbyID } from "./useIndexedDB"
 
-const loadDailyMeasurement = (when) => {
+const useDailyMeasurement = (when) => {
     const router = useRouter()
     const [cookies] = useCookies()
     const [diary, setDiary] = useState()
+    const [reload, setReload] = useState(0)
     const range = useSelector(state => state.config.range())
 
     const loadDailyMeasurementFromAPI = async () => {
@@ -60,9 +61,9 @@ const loadDailyMeasurement = (when) => {
                 setDiary(await loadDailyMeasurementFromAPI())
             }
         }
-    }, [when])
+    }, [when, reload])
 
-    return diary
+    return [diary, () => setReload(reload + 1)]
 }
 
-export { loadDailyMeasurement }
+export { useDailyMeasurement }

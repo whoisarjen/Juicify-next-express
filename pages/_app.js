@@ -8,6 +8,11 @@ const theme = createTheme({
   typography: {
     fontFamily: "Quicksand, sans-serif",
   },
+  // palette: {
+    // primary: {
+      // main: 'rgb(252, 97, 70)'
+    // }
+  // }
 });
 
 function MyApp({ Component, pageProps }) {

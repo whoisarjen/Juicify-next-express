@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import { useSelector } from "react-redux";
-import { getShortDate } from "./useDate";
+import { useShortDate } from "./useDate";
 
 const expectLoggedIN = () => {
   const router = useRouter();
@@ -22,7 +22,7 @@ const expectLoggedOUT = () => {
 
   useEffect(() => {
     if (cookies.token) {
-      router.push(`/${login}/nutrition-diary/${getShortDate()}`);
+      router.push(`/${login}/nutrition-diary/${useShortDate()}`);
     }
   }, []);
 };
