@@ -2,32 +2,75 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import MealBox from "../../../components/nutrition-diary/MealBox";
 import AddProducts from '../../../components/nutrition-diary/AddProducts'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useCookies } from "react-cookie"
+import { useSelector } from "react-redux"
+import { readToken } from "../../../hooks/useAuth"
+import { getIndexedDBbyID } from "../../../hooks/useIndexedDB"
+import { addDaysToDate } from '../../../hooks/useDate'
 
 const NutritionDiary = () => {
-  const router = useRouter()
-  const [index, setIndex] = useState(0)
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
+    const router = useRouter()
+    const [cookies] = useCookies()
+    const [diary, setDiary] = useState()
+    const [index, setIndex] = useState(0)
+    const [isDialogOpen, setIsDialogOpen] = useState(false)
+    const range = useSelector(state => state.config.range())
 
-  const openDialog = (i) => {
-    setIndex(i)
-    setIsDialogOpen(true)
-  }
+    const loadDailyMeasurementFromAPI = async () => {
+        return {
+            whenAdded: router.query.date,
+            user_ID: null,
+            nutrition_diary: [],
+            workout_result: []
+        }
+    }
 
-  return (
-    <div className="NutritionDiary">
-      <Link passHref href={`/${router.query.login}/nutrition-diary/${new Date((new Date(router.query.date)).setDate((new Date(router.query.date)).getDate() + 1)).toJSON().slice(0, 10)}`}><a>Next</a></Link>
-      {[...Array(5)].map((x, i) => (
-        <MealBox
-          index={i}
-          openDialog={() => openDialog(i)}
-          products={[{ name: "123" }, { name: "234" }, { name: "345" }]}
-          key={i}
-        />
-      ))}
-      <AddProducts index={index} isDialogOpen={isDialogOpen} closeDialog={() => setIsDialogOpen(false)}/>
-    </div>
-  );
+    useEffect(async () => {
+        if (cookies.token) {
+            const token = readToken(cookies.token)
+            if (token.login == router.query.login) {
+                if (range <= router.query.date) {
+                    let daily = await getIndexedDBbyID('daily_measurement', router.query.date)
+                    if (!daily) {
+                        console.log('creating')
+                        daily = {
+                            whenAdded: router.query.date,
+                            user_ID: token._id,
+                            nutrition_diary: [],
+                            workout_result: []
+                        }
+                    }
+                    setDiary(daily)
+                } else {
+                    console.log('Not in range')
+                    setDiary(await loadDailyMeasurementFromAPI())
+                }
+            } else {
+                console.log('Guest')
+                setDiary(await loadDailyMeasurementFromAPI())
+            }
+        }
+    }, [cookies.token, router.query.date])
+
+    return (
+        <div className="NutritionDiary">
+            {diary && diary.whenAdded}
+            <Link passHref href={`/${router.query.login}/nutrition-diary/${addDaysToDate(router.query.date, 1)}`}><a>Next</a></Link>
+            {[...Array(5)].map((x, i) => (
+                <MealBox
+                    index={i}
+                    openDialog={() => {
+                        setIndex(i)
+                        setIsDialogOpen(true)
+                    }}
+                    products={[{ name: "123" }, { name: "234" }, { name: "345" }]}
+                    key={i}
+                />
+            ))}
+            <AddProducts index={index} isDialogOpen={isDialogOpen} closeDialog={() => setIsDialogOpen(false)} />
+        </div>
+    );
 };
 
 export default NutritionDiary;
