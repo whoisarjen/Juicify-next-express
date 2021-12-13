@@ -57,8 +57,8 @@ const NutritionDiary = () => {
                 <AddProducts
                     index={index}
                     isDialogOpen={isDialogOpen}
-                    closeDialog={() => setIsDialogOpen(false)}
                     dailyMeasurement={dailyMeasurement}
+                    closeDialog={() => setIsDialogOpen(false)}
                 />
             }
         </div>
