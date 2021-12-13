@@ -13,9 +13,7 @@ const NutritionDiary = () => {
     const [when, setWhen] = useState(router.query.date)
     const diary = loadDailyMeasurement(when)
 
-    useEffect(async () => {
-        setWhen(router.query.date)
-    }, [router.query.date])
+    useEffect(async () => setWhen(router.query.date), [router.query.date])
 
     return (
         <div className="NutritionDiary">
