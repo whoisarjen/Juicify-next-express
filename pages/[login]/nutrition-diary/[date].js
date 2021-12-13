@@ -1,57 +1,21 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useState, useEffect } from 'react'
+import { addDaysToDate } from '../../../hooks/useDate'
+import { loadDailyMeasurement } from '../../../hooks/useDaily'
 import MealBox from "../../../components/nutrition-diary/MealBox";
 import AddProducts from '../../../components/nutrition-diary/AddProducts'
-import { useState, useEffect } from 'react'
-import { useCookies } from "react-cookie"
-import { useSelector } from "react-redux"
-import { readToken } from "../../../hooks/useAuth"
-import { getIndexedDBbyID } from "../../../hooks/useIndexedDB"
-import { addDaysToDate } from '../../../hooks/useDate'
 
 const NutritionDiary = () => {
     const router = useRouter()
-    const [cookies] = useCookies()
-    const [diary, setDiary] = useState()
     const [index, setIndex] = useState(0)
     const [isDialogOpen, setIsDialogOpen] = useState(false)
-    const range = useSelector(state => state.config.range())
-
-    const loadDailyMeasurementFromAPI = async () => {
-        return {
-            whenAdded: router.query.date,
-            user_ID: null,
-            nutrition_diary: [],
-            workout_result: []
-        }
-    }
+    const [when, setWhen] = useState(router.query.date)
+    const diary = loadDailyMeasurement(when)
 
     useEffect(async () => {
-        if (cookies.token) {
-            const token = readToken(cookies.token)
-            if (token.login == router.query.login) {
-                if (range <= router.query.date) {
-                    let daily = await getIndexedDBbyID('daily_measurement', router.query.date)
-                    if (!daily) {
-                        console.log('creating')
-                        daily = {
-                            whenAdded: router.query.date,
-                            user_ID: token._id,
-                            nutrition_diary: [],
-                            workout_result: []
-                        }
-                    }
-                    setDiary(daily)
-                } else {
-                    console.log('Not in range')
-                    setDiary(await loadDailyMeasurementFromAPI())
-                }
-            } else {
-                console.log('Guest')
-                setDiary(await loadDailyMeasurementFromAPI())
-            }
-        }
-    }, [cookies.token, router.query.date])
+        setWhen(router.query.date)
+    }, [router.query.date])
 
     return (
         <div className="NutritionDiary">
