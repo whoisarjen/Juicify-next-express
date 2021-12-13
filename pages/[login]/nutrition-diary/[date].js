@@ -29,7 +29,6 @@ const NutritionDiary = () => {
                         arr.push([])
                     }
                 }
-                console.log(arr.length)
                 arr[meal.meal].push(meal)
             })
             setNutrition_diary(arr)
