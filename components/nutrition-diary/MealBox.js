@@ -16,9 +16,9 @@ const MealBox = ({ index, products, openDialog }) => {
     products.forEach(product => {
       if (product.meal == index) {
         setMacro({
-          p: p + product.p || 0,
-          c: c + product.c || 0,
-          f: f + product.f || 0
+          p: (p + product.p) || 0,
+          c: (c + product.c) || 0,
+          f: (f + product.f) || 0
         })
       }
     })
