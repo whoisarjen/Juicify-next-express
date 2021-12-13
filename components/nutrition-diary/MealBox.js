@@ -15,12 +15,10 @@ const MealBox = ({ index, products, openDialog }) => {
     useEffect(() => {
         let macro = { p: 0, c: 0, f: 0 }
         products.forEach(product => {
-            if (product.meal == index) {
-                macro = {
-                    p: (macro.p + product.p) || 0,
-                    c: (macro.c + product.c) || 0,
-                    f: (macro.f + product.f) || 0
-                }
+            macro = {
+                p: (macro.p + product.p) || 0,
+                c: (macro.c + product.c) || 0,
+                f: (macro.f + product.f) || 0
             }
             setMacro(macro)
         })
@@ -48,22 +46,19 @@ const MealBox = ({ index, products, openDialog }) => {
             <div>{p}P {c}C {f}F {p * 4 + c * 4 + f * 9}Kcal</div>
             {
                 products && products.map((product) => (
-                    (
-                        product.meal == index &&
-                        <div className={style.boxProduct} key={product._id}>
-                            <div className={style.boxProductEdit}>
-                                <EditProduct isOwner={token.login === router.query.login} />
-                            </div>
-                            <div className={style.boxProductContent}>
-                                <div>{product.name}</div>
-                                <div>{(product.p || 0) * 4 + (product.c || 0) * 4 + (product.f || 0) * 9}kcal</div>
-                            </div>
-                            <div className={style.boxProductContent}>
-                                <div>{product.p || 0}P {product.c || 0}C {product.f || 0}F</div>
-                                <div>100g/ml</div>
-                            </div>
+                    <div className={style.boxProduct} key={product._id}>
+                        <div className={style.boxProductEdit}>
+                            <EditProduct isOwner={token.login === router.query.login} />
                         </div>
-                    )
+                        <div className={style.boxProductContent}>
+                            <div>{product.name}</div>
+                            <div>{(product.p || 0) * 4 + (product.c || 0) * 4 + (product.f || 0) * 9}kcal</div>
+                        </div>
+                        <div className={style.boxProductContent}>
+                            <div>{product.p || 0}P {product.c || 0}C {product.f || 0}F</div>
+                            <div>100g/ml</div>
+                        </div>
+                    </div>
                 ))
             }
         </div>

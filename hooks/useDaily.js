@@ -38,6 +38,14 @@ const loadDailyMeasurement = (when) => {
                                 p: 1,
                                 c: 2,
                                 f: 3
+                            },
+                            {
+                                name: '1233',
+                                _id: 34,
+                                meal: 3,
+                                p: 0,
+                                c: 0,
+                                f: 1
                             }],
                             workout_result: []
                         }
