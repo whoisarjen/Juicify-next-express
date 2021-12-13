@@ -42,13 +42,13 @@ const NutritionDiary = () => {
             {
                 nutrition_diary && nutrition_diary.map((x, i) => (
                     <MealBox
+                        key={i}
                         index={i}
+                        products={x}
                         openDialog={() => {
                             setIndex(i)
                             setIsDialogOpen(true)
                         }}
-                        products={x}
-                        key={i}
                     />
                 ))
             }
