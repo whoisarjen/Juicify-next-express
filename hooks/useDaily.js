@@ -22,44 +22,42 @@ const useDailyMeasurement = (when) => {
     }
 
     useEffect(async () => {
-        if (cookies.token) {
-            const token = readToken(cookies.token)
-            if (token.login == router.query.login) {
-                if (range <= when) {
-                    let daily = await getIndexedDBbyID('daily_measurement', when)
-                    if (!daily) {
-                        console.log('creating')
-                        daily = {
-                            whenAdded: when,
-                            user_ID: token._id,
-                            nutrition_diary: [{
-                                _id: 123,
-                                meal: 1,
-                                name: '123',
-                                p: 1,
-                                c: 2,
-                                f: 3
-                            },
-                            {
-                                name: '1233',
-                                _id: 34,
-                                meal: 3,
-                                p: 0,
-                                c: 0,
-                                f: 1
-                            }],
-                            workout_result: []
-                        }
+        const token = readToken(cookies.token)
+        if (token.login == router.query.login) {
+            if (range <= when) {
+                let daily = await getIndexedDBbyID('daily_measurement', when)
+                if (!daily) {
+                    console.log('creating')
+                    daily = {
+                        whenAdded: when,
+                        user_ID: token._id,
+                        nutrition_diary: [{
+                            _id: 123,
+                            meal: 1,
+                            name: '123',
+                            p: 1,
+                            c: 2,
+                            f: 3
+                        },
+                        {
+                            name: '1233',
+                            _id: 34,
+                            meal: 3,
+                            p: 0,
+                            c: 0,
+                            f: 1
+                        }],
+                        workout_result: []
                     }
-                    setDiary(daily)
-                } else {
-                    console.log('Not in range')
-                    setDiary(await loadDailyMeasurementFromAPI())
                 }
+                setDiary(daily)
             } else {
-                console.log('Guest')
+                console.log('Not in range')
                 setDiary(await loadDailyMeasurementFromAPI())
             }
+        } else {
+            console.log('Guest')
+            setDiary(await loadDailyMeasurementFromAPI())
         }
     }, [when, reload])
 
