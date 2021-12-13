@@ -5,10 +5,24 @@ import EditProduct from './EditProduct'
 import MoreOptions from './MoreOptions'
 import AddIcon from "@mui/icons-material/Add";
 import IconButton from "@mui/material/IconButton";
+import { useState, useEffect } from 'react'
 
 const MealBox = ({ index, products, openDialog }) => {
   const router = useRouter();
   const token = useSelector((state) => state.token.value);
+  const [{ p, c, f }, setMacro] = useState({ p: 0, c: 0, f: 0 })
+
+  useEffect(() => {
+    products.forEach(product => {
+      if (product.meal == index) {
+        setMacro({
+          p: p + product.p || 0,
+          c: c + product.c || 0,
+          f: f + product.f || 0
+        })
+      }
+    })
+  }, [products, index])
 
   return (
     <div className={style.box}>
@@ -29,7 +43,7 @@ const MealBox = ({ index, products, openDialog }) => {
           <div />
         )}
       </div>
-      <div>0.0P 0.0C 0.0F 0Kcal</div>
+      <div>{p}P {c}C {f}F {p * 4 + c * 4 + f * 9}Kcal</div>
       {
         products && products.map((product, i) => (
           (
@@ -40,10 +54,10 @@ const MealBox = ({ index, products, openDialog }) => {
               </div>
               <div className={style.boxProductContent}>
                 <div>{product.name}</div>
-                <div>305kcal</div>
+                <div>{(product.p || 0) * 4 + (product.c || 0) * 4 + (product.f || 0) * 9}kcal</div>
               </div>
               <div className={style.boxProductContent}>
-                <div>0.0P 20.0C 25.0F</div>
+                <div>{product.p || 0}P {product.c || 0}C {product.f || 0}F</div>
                 <div>100g/ml</div>
               </div>
             </div>

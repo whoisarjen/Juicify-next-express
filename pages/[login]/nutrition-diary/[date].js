@@ -18,13 +18,7 @@ const NutritionDiary = () => {
 
     useEffect(() => {
         if (diary && diary.nutrition_diary) {
-            let arr = [...Array(token.meal_number || 5)].fill([])
-            diary.nutrition_diary.forEach(meal => {
-                if (meal.meal > arr.length - 1) {
-                    arr.push(...Array(meal.meal - arr.length + 1).fill([]))
-                }
-                arr[meal.meal].push(meal)
-            })
+            let arr = [...Array(token.meal_number || Math.max.apply(Math, diary.nutrition_diary.map(function (o) { return o.meal; })))].fill(diary.nutrition_diary)
             setNutrition_diary(arr)
         }
     }, [diary])
@@ -42,7 +36,7 @@ const NutritionDiary = () => {
                         setIndex(i)
                         setIsDialogOpen(true)
                     }}
-                    products={nutrition_diary[i]}
+                    products={x}
                     key={i}
                 />
             ))}
