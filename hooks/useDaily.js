@@ -31,7 +31,14 @@ const loadDailyMeasurement = (when) => {
                         daily = {
                             whenAdded: when,
                             user_ID: token._id,
-                            nutrition_diary: [],
+                            nutrition_diary: [{
+                                _id: 123,
+                                meal: 1,
+                                name: '123',
+                                p: 1,
+                                c: 2,
+                                f: 3
+                            }],
                             workout_result: []
                         }
                     }

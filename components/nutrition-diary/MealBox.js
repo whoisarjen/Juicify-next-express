@@ -30,21 +30,26 @@ const MealBox = ({ index, products, openDialog }) => {
         )}
       </div>
       <div>0.0P 0.0C 0.0F 0Kcal</div>
-      {products.map((product, i) => (
-        <div className={style.boxProduct} key={i}>
-          <div className={style.boxProductEdit}>
-            <EditProduct isOwner={token.login === router.query.login} />
-          </div>
-          <div className={style.boxProductContent}>
-            <div>{product.name}</div>
-            <div>305kcal</div>
-          </div>
-          <div className={style.boxProductContent}>
-            <div>0.0P 20.0C 25.0F</div>
-            <div>100g/ml</div>
-          </div>
-        </div>
-      ))}
+      {
+        products && products.map((product, i) => (
+          (
+            product.meal == index &&
+            <div className={style.boxProduct} key={product._id}>
+              <div className={style.boxProductEdit}>
+                <EditProduct isOwner={token.login === router.query.login} />
+              </div>
+              <div className={style.boxProductContent}>
+                <div>{product.name}</div>
+                <div>305kcal</div>
+              </div>
+              <div className={style.boxProductContent}>
+                <div>0.0P 20.0C 25.0F</div>
+                <div>100g/ml</div>
+              </div>
+            </div>
+          )
+        ))
+      }
     </div>
   );
 };

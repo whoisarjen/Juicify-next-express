@@ -5,13 +5,29 @@ import { addDaysToDate } from '../../../hooks/useDate'
 import { loadDailyMeasurement } from '../../../hooks/useDaily'
 import MealBox from "../../../components/nutrition-diary/MealBox";
 import AddProducts from '../../../components/nutrition-diary/AddProducts'
+import { useSelector } from 'react-redux'
 
 const NutritionDiary = () => {
     const router = useRouter()
     const [index, setIndex] = useState(0)
+    const token = useSelector(state => state.token.value)
     const [isDialogOpen, setIsDialogOpen] = useState(false)
     const [when, setWhen] = useState(router.query.date)
     const diary = loadDailyMeasurement(when)
+    const [nutrition_diary, setNutrition_diary] = useState([])
+
+    useEffect(() => {
+        if (diary && diary.nutrition_diary) {
+            let arr = [...Array(token.meal_number || 5)].fill([])
+            diary.nutrition_diary.forEach(meal => {
+                if (meal.meal > arr.length - 1) {
+                    arr.push(...Array(meal.meal - arr.length + 1).fill([]))
+                }
+                arr[meal.meal].push(meal)
+            })
+            setNutrition_diary(arr)
+        }
+    }, [diary])
 
     useEffect(async () => setWhen(router.query.date), [router.query.date])
 
@@ -19,14 +35,14 @@ const NutritionDiary = () => {
         <div className="NutritionDiary">
             {diary && diary.whenAdded}
             <Link passHref href={`/${router.query.login}/nutrition-diary/${addDaysToDate(router.query.date, 1)}`}><a>Next</a></Link>
-            {[...Array(5)].map((x, i) => (
+            {nutrition_diary && nutrition_diary.map((x, i) => (
                 <MealBox
                     index={i}
                     openDialog={() => {
                         setIndex(i)
                         setIsDialogOpen(true)
                     }}
-                    products={[{ name: "123" }, { name: "234" }, { name: "345" }]}
+                    products={nutrition_diary[i]}
                     key={i}
                 />
             ))}
