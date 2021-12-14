@@ -2,29 +2,32 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { useSelector } from 'react-redux'
 import { useState, useEffect } from 'react'
+import DialogEditProduct from '../../../components/nutrition-diary/DialogEditProduct';
 import { addDaysToDate } from '../../../utils/manageDate'
+import { overwriteThoseIDSinDB } from "../../../utils/API"
 import { useDailyMeasurement } from '../../../hooks/useDaily'
 import MealBox from "../../../components/nutrition-diary/MealBox"
 import AddProducts from '../../../components/nutrition-diary/AddProducts'
-import { overwriteThoseIDSinDB } from "../../../utils/API"
 
 const NutritionDiary = () => {
     const router = useRouter()
     const [index, setIndex] = useState(0)
+    const [product, setProduct] = useState({})
     const token = useSelector(state => state.token.value)
-    const [isDialogOpen, setIsDialogOpen] = useState(false)
+    const [isAddDialog, setIsAddDialog] = useState(false)
+    const [isEditDialog, setIsEditDialog] = useState(false)
     const [nutrition_diary, setNutrition_diary] = useState([])
     const isOnline = useSelector(state => state.online.isOnline)
     const [dailyMeasurement, reloadDailyMeasurement] = useDailyMeasurement(router.query.date)
 
-    const deleteProduct = async (product) => {
-        let copyDailyMeasurement = JSON.parse(JSON.stringify(dailyMeasurement))
-        copyDailyMeasurement.nutrition_diary = copyDailyMeasurement.nutrition_diary.map(obj =>
-            obj._id == product._id ? { ...obj, deleted: true } : obj
-        );
-        await overwriteThoseIDSinDB('daily_measurement', [copyDailyMeasurement], isOnline)
-        reloadDailyMeasurement()
-    }
+    // const deleteProduct = async (product) => {
+    //     let copyDailyMeasurement = JSON.parse(JSON.stringify(dailyMeasurement))
+    //     copyDailyMeasurement.nutrition_diary = copyDailyMeasurement.nutrition_diary.map(obj =>
+    //         obj._id == product._id ? { ...obj, deleted: true } : obj
+    //     );
+    //     await overwriteThoseIDSinDB('daily_measurement', [copyDailyMeasurement], isOnline)
+    //     reloadDailyMeasurement()
+    // }
 
     useEffect(() => {
         if (dailyMeasurement && dailyMeasurement.nutrition_diary) {
@@ -56,9 +59,12 @@ const NutritionDiary = () => {
                         products={x}
                         openDialog={() => {
                             setIndex(i)
-                            setIsDialogOpen(true)
+                            setIsAddDialog(true)
                         }}
-                        deleteProduct={deleteProduct}
+                        openEditProduct={(product) => {
+                            setProduct(product)
+                            setIsEditDialog(true)
+                        }}
                     />
                 ))
             }
@@ -66,11 +72,14 @@ const NutritionDiary = () => {
                 token.login == router.query.login &&
                 <AddProducts
                     index={index}
-                    isDialogOpen={isDialogOpen}
+                    isAddDialog={isAddDialog}
                     dailyMeasurement={dailyMeasurement}
-                    closeDialog={() => setIsDialogOpen(false)}
+                    closeDialog={() => setIsAddDialog(false)}
                     reloadDailyMeasurement={reloadDailyMeasurement}
                 />
+            }
+            {
+                token.login == router.query.login && <DialogEditProduct product={product} isDialog={isEditDialog} closeDialog={() => setIsEditDialog(false)} />
             }
         </div>
     );

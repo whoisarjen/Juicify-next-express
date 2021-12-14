@@ -26,6 +26,7 @@ const insertThoseIDStoDB = async (where, array, isOnline, whatToUpdate, value, w
     return new Promise(async resolve => {
         const copyArray = JSON.parse(JSON.stringify(array));
         const arrayIDSbeforeInsert = []
+        console.log(copyArray)
         for (let i = 0; i < array.length; i++) {
             if (array[i]._id) {
                 await deleteIndexedDB(where, array[i][uniquePARAM])
@@ -34,6 +35,7 @@ const insertThoseIDStoDB = async (where, array, isOnline, whatToUpdate, value, w
             }
             if (where == 'daily_measurement' && isOnline) array[i] = await prepareDailyToSend(array[i], true)
         }
+        console.log('after', array)
         if (isOnline) {
             const { response, isSuccess } = await API(`/insert/${where}`, {
                 array

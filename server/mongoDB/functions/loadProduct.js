@@ -14,6 +14,7 @@ module.exports = async (object) => {
                 if (product) {
                     product = product.toJSON()
                     createdObject = product
+                    delete createdObject._id
                 }
                 resolve(Object.assign(res, createdObject))
             })

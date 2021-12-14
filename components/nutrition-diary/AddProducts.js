@@ -16,13 +16,12 @@ import Tab from '@mui/material/Tab';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { getAllIndexedDB, deleteIndexedDB } from '../../utils/indexedDB';
 import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../utils/API'
-import { useNewToken } from '../../hooks/useNewToken'
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const AddProducts = ({ index, isDialogOpen, closeDialog, dailyMeasurement, reloadDailyMeasurement }) => {
+const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reloadDailyMeasurement }) => {
     const [tab, setTab] = useState(0)
     const [find, setFind] = useState('')
     const [open, setOpen] = useState(false)
@@ -36,12 +35,13 @@ const AddProducts = ({ index, isDialogOpen, closeDialog, dailyMeasurement, reloa
 
     const addProductsToDiary = async () => {
         setLoadingButton(true)
-        let object = checked
+        let object = JSON.parse(JSON.stringify(checked))
         object.map(async (x, i) => {
             x.meal = meal
             x.product_ID = x._id
             x._id = 'XD' + new Date().getTime() + i
             await deleteIndexedDB('checked_product', x.product_ID)
+            return x
         })
         setChecked([])
         if (!dailyMeasurement.nutrition_diary) dailyMeasurement.nutrition_diary = []
@@ -65,7 +65,7 @@ const AddProducts = ({ index, isDialogOpen, closeDialog, dailyMeasurement, reloa
             <Dialog
                 fullScreen
                 scroll='body'
-                open={isDialogOpen}
+                open={isAddDialog}
                 TransitionComponent={Transition}
             >
                 <div className="content">
