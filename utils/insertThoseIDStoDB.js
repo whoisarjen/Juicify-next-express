@@ -1,4 +1,5 @@
 import { getAllIndexedDB, putIndexedDB, addIndexedDB, deleteIndexedDB } from "./indexedDB"
+import { useSelector } from 'react-redux'
 
 // const insertThoseIDStoDB = async (where, array) => {
 //     await deleteIndexedDB(where, array[0].whenAdded)
@@ -7,6 +8,7 @@ import { getAllIndexedDB, putIndexedDB, addIndexedDB, deleteIndexedDB } from "./
 // }
 
 const insertThoseIDStoDB = async (where, array, whatToUpdate, value, uniquePARAM, whatToUpdate2) => {
+    const isOnline = useSelector(state => state.online.isOnline)
     if(!uniquePARAM) uniquePARAM = "_id"
     return new Promise(resolve => {
         (async () => {
@@ -20,9 +22,9 @@ const insertThoseIDStoDB = async (where, array, whatToUpdate, value, uniquePARAM
                     arrayIDSbeforeInsert.push(array[i]._id)
                     delete array[i]._id
                 }
-                if(where == 'daily_measurement' && store.state.online) array[i] = await prepareDailyToSend(array[i], true)
+                if(where == 'daily_measurement' && isOnline) array[i] = await prepareDailyToSend(array[i], true)
             }
-            if(store.state.online){
+            if(isOnline){
                 if(whatToUpdate) whatToUpdateARRAY = await getAllIndexedDB('daily_measurement')
                 if(whatToUpdate2) whatToUpdateARRAY2 = await getAllIndexedDB(whatToUpdate2)
                 await http.post('requests/insert/' + where, {
@@ -65,7 +67,7 @@ const insertThoseIDStoDB = async (where, array, whatToUpdate, value, uniquePARAM
                     await tellAboutSynchronization(where, "add", array)
                 })
                 .catch(async (err) => {
-                    store.state.online = false
+                    isOnline = false
                     await catchThis(err)
                     return await insertThoseIDStoDB(where, originalArray, whatToUpdate, value, uniquePARAM, whatToUpdate2)
                 })
