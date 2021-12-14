@@ -6,7 +6,7 @@ import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
 import { useEffect } from 'react'
-import { putIndexedDB, addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../hooks/useIndexedDB';
+import { putIndexedDB, addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../utils/indexedDB';
 import { useState } from 'react'
 
 const AddProductsBox = ({ product, refreshCheckedProducts }) => {
@@ -40,6 +40,7 @@ const AddProductsBox = ({ product, refreshCheckedProducts }) => {
         if (await getIndexedDBbyID('checked_product', product._id)) {
             await putIndexedDB('checked_product', product._id, 'how_many', e.target.value)
         }
+        refreshCheckedProducts()
     }
 
     useEffect(async () => {
@@ -53,7 +54,7 @@ const AddProductsBox = ({ product, refreshCheckedProducts }) => {
                 {product.name}
             </div>
             <div className={styles.addProductsBoxDescription}>
-                {(product.p || 0)}P {(product.c || 0)}W {(product.f || 0)}F {Math.ceil((product.p || 0) * 4 + (product.c || 0) * 4 + (product.f || 0) * 9)}kcal
+                {(product.p || 0)}P {(product.c || 0)}W {(product.f || 0)}F {parseInt((product.p || 0) * 4 + (product.c || 0) * 4 + (product.f || 0) * 9)}kcal
             </div>
             <div className={styles.addProductsBoxFavourite} onClick={handleLike}>
                 <Checkbox checked={fav} icon={<FavoriteBorder fontSize="small" />} checkedIcon={<Favorite fontSize="small" />} />

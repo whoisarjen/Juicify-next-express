@@ -6,7 +6,7 @@ import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import { setToken } from "../redux/features/tokenSlice";
 import { io } from "socket.io-client";
-import { readToken } from "../hooks/useAuth";
+import { readToken } from "../utils/checkAuth";
 
 const Layout = ({ children }) => {
   const [cookies] = useCookies();

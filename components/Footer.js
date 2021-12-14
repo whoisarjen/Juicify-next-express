@@ -4,7 +4,7 @@ import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import BookIcon from "@mui/icons-material/Book";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { useShortDate } from "../hooks/useDate";
+import { getShortDate } from "../utils/manageDate";
 import Link from "next/link";
 
 const Footer = () => {
@@ -30,7 +30,7 @@ const Footer = () => {
               <PhotoCameraIcon />
             </div>
           </Link>
-          <Link passHref href={`/${token.login}/nutrition-diary/${useShortDate()}`}>
+          <Link passHref href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
             <a className="footerMenuElement">
               <BookIcon />
             </a>

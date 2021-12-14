@@ -1,6 +1,6 @@
-import useAPI from './useAPI'
+import API from '../utils/API'
 import { useState, useEffect } from "react";
-import { addIndexedDB, getAllIndexedDB, getIndexedDBbyID } from './useIndexedDB'
+import { addIndexedDB, getAllIndexedDB, getIndexedDBbyID } from '../utils/indexedDB'
 
 const useFind = (value, where, tab) => {
     const [products, setProducts] = useState([])
@@ -32,7 +32,7 @@ const useFind = (value, where, tab) => {
                     const searchFunction = (find) => setTimeout(async () => {
                         console.log(`${where} loaded from API`)
                         setLoading(true);
-                        const { response, isSuccess } = await useAPI(`/find/${where}`, {
+                        const { response, isSuccess } = await API(`/find/${where}`, {
                             find: find
                         });
                         if (isSuccess) {

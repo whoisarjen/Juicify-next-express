@@ -1,4 +1,4 @@
-export default async function useAPI(url, body) {
+export default async function API(url, body) {
     let response = {}
     let isSuccess = false
     if (url) {

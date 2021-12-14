@@ -2,7 +2,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { useSelector } from 'react-redux'
 import { useState, useEffect } from 'react'
-import { useAddDaysToDate } from '../../../hooks/useDate'
+import { addDaysToDate } from '../../../utils/manageDate'
 import { useDailyMeasurement } from '../../../hooks/useDaily'
 import MealBox from "../../../components/nutrition-diary/MealBox"
 import AddProducts from '../../../components/nutrition-diary/AddProducts'
@@ -38,7 +38,7 @@ const NutritionDiary = () => {
         <div className="NutritionDiary">
             <button onClick={reloadDailyMeasurement}>123</button>
             {dailyMeasurement && dailyMeasurement.whenAdded}
-            <Link passHref href={`/${router.query.login}/nutrition-diary/${useAddDaysToDate(router.query.date, 1)}`}><a>Next</a></Link>
+            <Link passHref href={`/${router.query.login}/nutrition-diary/${addDaysToDate(router.query.date, 1)}`}><a>Next</a></Link>
             {
                 nutrition_diary && nutrition_diary.map((x, i) => (
                     <MealBox
@@ -59,6 +59,7 @@ const NutritionDiary = () => {
                     isDialogOpen={isDialogOpen}
                     dailyMeasurement={dailyMeasurement}
                     closeDialog={() => setIsDialogOpen(false)}
+                    reloadDailyMeasurement={reloadDailyMeasurement}
                 />
             }
         </div>

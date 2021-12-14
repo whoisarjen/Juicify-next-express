@@ -14,27 +14,47 @@ import useFind from '../../hooks/useFind';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { getAllIndexedDB } from '../../hooks/useIndexedDB';
+import { getAllIndexedDB, addIndexedDB, deleteIndexedDB } from '../../utils/indexedDB';
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const AddProducts = ({ index, isDialogOpen, closeDialog }) => {
+const AddProducts = ({ index, isDialogOpen, closeDialog, dailyMeasurement, reloadDailyMeasurement }) => {
     const [tab, setTab] = useState(0)
     const [find, setFind] = useState('')
     const [open, setOpen] = useState(false)
     const [meal, setMeal] = useState(index)
     const [checked, setChecked] = useState([])
-    const [loadingButton, setLoadingButton] = useState(false)
-    const [refreshChecked, setRefreshChecked] = useState(0)
     const token = useSelector(state => state.token.value)
+    const [refreshChecked, setRefreshChecked] = useState(0)
+    const [loadingButton, setLoadingButton] = useState(false)
     const { products, loading, searchCache } = useFind(find, 'product', tab)
 
     const addProductsToDiary = async () => {
         setLoadingButton(true)
-        console.log("Adding to diary...")
-        setTimeout(() => setLoadingButton(false), 1500)
+        // console.log("Adding to diary...")
+        // setTimeout(async () => {
+        // delete from checked
+        // add to DB
+        let object = checked
+        object.map(async x => {
+            x.meal = index
+            x.product_ID = x._id
+            delete x._id
+
+            await deleteIndexedDB('checked_product', x.product_ID)
+        })
+        setChecked([])
+        dailyMeasurement.nutrition_diary = dailyMeasurement.nutrition_diary.concat(object)
+        console.log(dailyMeasurement)
+        await deleteIndexedDB('daily_measurement', dailyMeasurement.whenAdded)
+        await addIndexedDB('daily_measurement', [dailyMeasurement])
+
+        reloadDailyMeasurement()
+        // }, 1500)
+        setLoadingButton(false)
+        closeDialog()
     }
 
     useEffect(() => setMeal(index), [index])

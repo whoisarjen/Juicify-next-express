@@ -1,9 +1,9 @@
-import { readToken } from "./useAuth"
+import { readToken } from "../utils/checkAuth"
 import { useRouter } from "next/router"
 import { useSelector } from "react-redux"
 import { useCookies } from "react-cookie"
 import { useState, useEffect } from 'react'
-import { getIndexedDBbyID } from "./useIndexedDB"
+import { getIndexedDBbyID } from "../utils/indexedDB"
 
 const useDailyMeasurement = (when) => {
     const router = useRouter()
@@ -14,6 +14,7 @@ const useDailyMeasurement = (when) => {
 
     const loadDailyMeasurementFromAPI = async () => {
         return {
+            _id: 'XD' + new Date().getTime(),
             whenAdded: when,
             user_ID: null,
             nutrition_diary: [],
@@ -29,24 +30,10 @@ const useDailyMeasurement = (when) => {
                 if (!daily) {
                     console.log('creating')
                     daily = {
+                        _id: 'XD' + new Date().getTime(),
                         whenAdded: when,
                         user_ID: token._id,
-                        nutrition_diary: [{
-                            _id: 123,
-                            meal: 1,
-                            name: '123',
-                            p: 1,
-                            c: 2,
-                            f: 3
-                        },
-                        {
-                            name: '1233',
-                            _id: 34,
-                            meal: 3,
-                            p: 0,
-                            c: 0,
-                            f: 1
-                        }],
+                        nutrition_diary: [],
                         workout_result: []
                     }
                 }

@@ -1,4 +1,4 @@
-import { expectLoggedOUT } from "../hooks/useAuth";
+import { expectLoggedOUT } from "../utils/checkAuth";
 
 const ResetPassword = () => {
   expectLoggedOUT();

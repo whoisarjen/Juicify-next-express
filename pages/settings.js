@@ -1,4 +1,4 @@
-import { expectLoggedIN } from "../hooks/useAuth";
+import { expectLoggedIN } from "../utils/checkAuth";
 
 const Settings = () => {
   expectLoggedIN();

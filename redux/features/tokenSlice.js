@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { readToken } from "../../hooks/useAuth";
+import { readToken } from "../../utils/checkAuth";
 
 const initialState = {
   value: {},
