@@ -1,4 +1,4 @@
-import API from '../utils/API'
+import {API} from '../utils/API'
 import { useState, useEffect } from "react";
 import { addIndexedDB, getAllIndexedDB, getIndexedDBbyID } from '../utils/indexedDB'
 

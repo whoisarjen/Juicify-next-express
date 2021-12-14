@@ -10,41 +10,46 @@ const useDailyMeasurement = (when) => {
     const [cookies] = useCookies()
     const [diary, setDiary] = useState()
     const [reload, setReload] = useState(0)
-    const range = useSelector(state => state.config.range())
+    const theOldestSupportedDate = useSelector(state => state.config.theOldestSupportedDate())
 
     const loadDailyMeasurementFromAPI = async () => {
         return {
-            _id: 'XD' + new Date().getTime(),
-            whenAdded: when,
-            user_ID: null,
-            nutrition_diary: [],
-            workout_result: []
+            // _id: 'XD' + new Date().getTime(),
+            // whenAdded: new Date(when).toISOString(),
+            // user_ID: null,
+            // nutrition_diary: [],
+            // workout_result: []
         }
     }
 
     useEffect(async () => {
-        const token = readToken(cookies.token)
-        if (token.login == router.query.login) {
-            if (range <= when) {
-                let daily = await getIndexedDBbyID('daily_measurement', when)
-                if (!daily) {
-                    console.log('creating')
-                    daily = {
-                        _id: 'XD' + new Date().getTime(),
-                        whenAdded: when,
-                        user_ID: token._id,
-                        nutrition_diary: [],
-                        workout_result: []
+        if (when) {
+            const token = readToken(cookies.token)
+            if (token.login == router.query.login) {
+                if (theOldestSupportedDate <= when) {
+                    let daily = await getIndexedDBbyID('daily_measurement', new Date(when).toISOString())
+                    if (!daily) {
+                        console.log('creating')
+                        daily = {
+                            _id: 'XD' + new Date().getTime(),
+                            // whenAdded: new Date(when).toISOString(),
+                            whenAdded: when,
+                            user_ID: token._id,
+                            nutrition_diary: [],
+                            workout_result: []
+                        }
+                    } else {
+                        console.log("From cache")
                     }
+                    setDiary(daily)
+                } else {
+                    console.log('Not in theOldestSupportedDate')
+                    setDiary(await loadDailyMeasurementFromAPI())
                 }
-                setDiary(daily)
             } else {
-                console.log('Not in range')
+                console.log('Guest')
                 setDiary(await loadDailyMeasurementFromAPI())
             }
-        } else {
-            console.log('Guest')
-            setDiary(await loadDailyMeasurementFromAPI())
         }
     }, [when, reload])
 

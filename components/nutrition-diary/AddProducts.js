@@ -15,7 +15,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { getAllIndexedDB, deleteIndexedDB } from '../../utils/indexedDB';
-import insertThoseIDStoDB from '../../utils/insertThoseIDStoDB'
+import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../utils/API'
+import { useNewToken } from '../../hooks/useNewToken'
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -28,6 +29,7 @@ const AddProducts = ({ index, isDialogOpen, closeDialog, dailyMeasurement, reloa
     const [meal, setMeal] = useState(index)
     const [checked, setChecked] = useState([])
     const token = useSelector(state => state.token.value)
+    const isOnline = useSelector(state => state.online.isOnline)
     const [refreshChecked, setRefreshChecked] = useState(0)
     const [loadingButton, setLoadingButton] = useState(false)
     const { products, loading, searchCache } = useFind(find, 'product', tab)
@@ -36,7 +38,7 @@ const AddProducts = ({ index, isDialogOpen, closeDialog, dailyMeasurement, reloa
         setLoadingButton(true)
         let object = checked
         object.map(async x => {
-            x.meal = index
+            x.meal = meal
             x.product_ID = x._id
             delete x._id
             await deleteIndexedDB('checked_product', x.product_ID)
@@ -44,7 +46,11 @@ const AddProducts = ({ index, isDialogOpen, closeDialog, dailyMeasurement, reloa
         setChecked([])
         if (!dailyMeasurement.nutrition_diary) dailyMeasurement.nutrition_diary = []
         dailyMeasurement.nutrition_diary = dailyMeasurement.nutrition_diary.concat(object)
-        await insertThoseIDStoDB('daily_measurement', [dailyMeasurement])
+        if (await is_id(dailyMeasurement._id)) {
+            await overwriteThoseIDSinDB('daily_measurement', [dailyMeasurement], isOnline)
+        } else {
+            await insertThoseIDStoDB('daily_measurement', [dailyMeasurement], isOnline)
+        }
         reloadDailyMeasurement()
         setLoadingButton(false)
         closeDialog()

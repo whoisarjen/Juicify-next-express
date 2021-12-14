@@ -12,15 +12,15 @@ const MealBox = ({ index, products, openDialog }) => {
     const token = useSelector((state) => state.token.value);
     const [{ p, c, f }, setMacro] = useState({ p: 0, c: 0, f: 0 })
 
-    const count = (product, key) => (Math.round((product[key] * product.how_many) * 100) / 100).toFixed(1) || 0
+    const count = (product, key) => parseFloat((Math.round((product[key] * product.how_many) * 100) / 100).toFixed(1)) || 0
 
     useEffect(() => {
         let macro = { p: 0, c: 0, f: 0 }
         products.forEach(product => {
             macro = {
-                p: (macro.p + parseFloat(count(product, 'p'))),
-                c: (macro.c + parseFloat(count(product, 'c'))),
-                f: (macro.f + parseFloat(count(product, 'f')))
+                p: (macro.p + count(product, 'p')),
+                c: (macro.c + count(product, 'c')),
+                f: (macro.f + count(product, 'f'))
             }
         })
         setMacro(macro)

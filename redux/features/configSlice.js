@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     domainAdress: "https://juicify.app",
     isOnline: false,
-    range: () => new Date((new Date()).setDate((new Date()).getDate() - 28)).toJSON().slice(0, 10),
+    theOldestSupportedDate: () => new Date((new Date()).setDate((new Date()).getDate() - 28)).toJSON().slice(0, 10),
     requiredBasicInputLength: (value) => {
         if (2 < value.length && value.length < 41) {
             return {
