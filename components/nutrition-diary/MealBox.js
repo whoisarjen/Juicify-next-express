@@ -49,7 +49,7 @@ const MealBox = ({ index, products, openDialog, deleteProduct }) => {
                     )
                 }
             </div>
-            <div>{p}P {c}C {f}F {parseInt(p * 4 + c * 4 + f * 9)}Kcal</div>
+            <div>{parseFloat((Math.round(p * 100) / 100).toFixed(1))}P {parseFloat((Math.round(c * 100) / 100).toFixed(1))}C {parseFloat((Math.round(f * 100) / 100).toFixed(1))}F {parseInt(p * 4 + c * 4 + f * 9)}Kcal</div>
             {
                 products && products.map((product) => (
                     <div className={style.boxProduct} key={product._id}>
