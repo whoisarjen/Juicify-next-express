@@ -2,12 +2,12 @@ import Head from "next/head";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { useEffect } from "react";
+import { io } from "socket.io-client";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
+import { readToken } from "../utils/checkAuth";
 import { setToken } from "../redux/features/tokenSlice";
 import { setIsOnline } from "../redux/features/onlineSlice";
-import { io } from "socket.io-client";
-import { readToken } from "../utils/checkAuth";
 
 const Layout = ({ children }) => {
     const [cookies] = useCookies();
