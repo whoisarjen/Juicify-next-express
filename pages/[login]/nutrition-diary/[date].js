@@ -14,8 +14,8 @@ const NutritionDiary = () => {
     const token = useSelector(state => state.token.value)
     const [isDialogOpen, setIsDialogOpen] = useState(false)
     const [nutrition_diary, setNutrition_diary] = useState([])
-    const [dailyMeasurement, reloadDailyMeasurement] = useDailyMeasurement(router.query.date)
     const isOnline = useSelector(state => state.online.isOnline)
+    const [dailyMeasurement, reloadDailyMeasurement] = useDailyMeasurement(router.query.date)
 
     const deleteProduct = async (product) => {
         let copyDailyMeasurement = JSON.parse(JSON.stringify(dailyMeasurement))
