@@ -13,13 +13,14 @@ const useDailyMeasurement = (when) => {
     const theOldestSupportedDate = useSelector(state => state.config.theOldestSupportedDate())
 
     const loadDailyMeasurementFromAPI = async () => {
-        return {
-            // _id: 'XD' + new Date().getTime(),
-            // whenAdded: new Date(when).toISOString(),
-            // user_ID: null,
-            // nutrition_diary: [],
-            // workout_result: []
-        }
+        return {}
+        // _id: 'XD' + new Date().getTime(),
+        // whenAdded: new Date(when).toISOString(),
+        // user_ID: null,
+        // nutrition_diary: [],
+        // workout_result: []
+        // if(!daily.nutrition_diary) daily.nutrition_diary = []
+        // if(!daily.workout_results) daily.workout_results = []
     }
 
     useEffect(async () => {
@@ -39,6 +40,8 @@ const useDailyMeasurement = (when) => {
                         }
                     } else {
                         console.log("From cache")
+                        if(!daily.nutrition_diary) daily.nutrition_diary = []
+                        if(!daily.workout_results) daily.workout_results = []
                     }
                     setDiary(daily)
                 } else {

@@ -7,7 +7,7 @@ import AddIcon from "@mui/icons-material/Add";
 import IconButton from "@mui/material/IconButton";
 import style from "../../styles/nutrition-diary.module.css";
 
-const MealBox = ({ index, products, openDialog }) => {
+const MealBox = ({ index, products, openDialog, deleteProduct }) => {
     const router = useRouter();
     const token = useSelector((state) => state.token.value);
     const [{ p, c, f }, setMacro] = useState({ p: 0, c: 0, f: 0 })
@@ -54,7 +54,11 @@ const MealBox = ({ index, products, openDialog }) => {
                 products && products.map((product) => (
                     <div className={style.boxProduct} key={product._id}>
                         <div className={style.boxProductEdit}>
-                            <EditProduct isOwner={token.login === router.query.login} />
+                            <EditProduct
+                                isOwner={token.login === router.query.login}
+                                product={product}
+                                deleteProduct={deleteProduct}
+                            />
                         </div>
                         <div className={style.boxProductContent}>
                             <div>{product.name}</div>

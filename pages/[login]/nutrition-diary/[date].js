@@ -6,6 +6,7 @@ import { addDaysToDate } from '../../../utils/manageDate'
 import { useDailyMeasurement } from '../../../hooks/useDaily'
 import MealBox from "../../../components/nutrition-diary/MealBox"
 import AddProducts from '../../../components/nutrition-diary/AddProducts'
+import { overwriteThoseIDSinDB } from "../../../utils/API"
 
 const NutritionDiary = () => {
     const router = useRouter()
@@ -14,6 +15,16 @@ const NutritionDiary = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false)
     const [nutrition_diary, setNutrition_diary] = useState([])
     const [dailyMeasurement, reloadDailyMeasurement] = useDailyMeasurement(router.query.date)
+    const isOnline = useSelector(state => state.online.isOnline)
+
+    const deleteProduct = async (product) => {
+        let copyDailyMeasurement = JSON.parse(JSON.strinigify(dailyMeasurement))
+        copyDailyMeasurement.nutrition_diary = copyDailyMeasurement.map(obj =>
+            obj._id == product._id ? { ...obj, deleted: true } : obj
+        );
+        await overwriteThoseIDSinDB('daily_measurement', [copyDailyMeasurement], isOnline)
+        reloadDailyMeasurement()
+    }
 
     useEffect(() => {
         if (dailyMeasurement && dailyMeasurement.nutrition_diary) {
@@ -47,6 +58,7 @@ const NutritionDiary = () => {
                             setIndex(i)
                             setIsDialogOpen(true)
                         }}
+                        deleteProduct={deleteProduct}
                     />
                 ))
             }
