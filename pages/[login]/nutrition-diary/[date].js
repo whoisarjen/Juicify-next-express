@@ -18,8 +18,8 @@ const NutritionDiary = () => {
     const isOnline = useSelector(state => state.online.isOnline)
 
     const deleteProduct = async (product) => {
-        let copyDailyMeasurement = JSON.parse(JSON.strinigify(dailyMeasurement))
-        copyDailyMeasurement.nutrition_diary = copyDailyMeasurement.map(obj =>
+        let copyDailyMeasurement = JSON.parse(JSON.stringify(dailyMeasurement))
+        copyDailyMeasurement.nutrition_diary = copyDailyMeasurement.nutrition_diary.map(obj =>
             obj._id == product._id ? { ...obj, deleted: true } : obj
         );
         await overwriteThoseIDSinDB('daily_measurement', [copyDailyMeasurement], isOnline)
