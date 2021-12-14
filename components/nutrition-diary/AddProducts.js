@@ -14,7 +14,8 @@ import useFind from '../../hooks/useFind';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { getAllIndexedDB, addIndexedDB, deleteIndexedDB } from '../../utils/indexedDB';
+import { getAllIndexedDB, deleteIndexedDB } from '../../utils/indexedDB';
+import insertThoseIDStoDB from '../../utils/insertThoseIDStoDB'
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -33,26 +34,18 @@ const AddProducts = ({ index, isDialogOpen, closeDialog, dailyMeasurement, reloa
 
     const addProductsToDiary = async () => {
         setLoadingButton(true)
-        // console.log("Adding to diary...")
-        // setTimeout(async () => {
-        // delete from checked
-        // add to DB
         let object = checked
         object.map(async x => {
             x.meal = index
             x.product_ID = x._id
             delete x._id
-
             await deleteIndexedDB('checked_product', x.product_ID)
         })
         setChecked([])
+        if (!dailyMeasurement.nutrition_diary) dailyMeasurement.nutrition_diary = []
         dailyMeasurement.nutrition_diary = dailyMeasurement.nutrition_diary.concat(object)
-        console.log(dailyMeasurement)
-        await deleteIndexedDB('daily_measurement', dailyMeasurement.whenAdded)
-        await addIndexedDB('daily_measurement', [dailyMeasurement])
-
+        await insertThoseIDStoDB('daily_measurement', [dailyMeasurement])
         reloadDailyMeasurement()
-        // }, 1500)
         setLoadingButton(false)
         closeDialog()
     }
