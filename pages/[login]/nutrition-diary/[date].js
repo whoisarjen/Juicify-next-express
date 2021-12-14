@@ -14,6 +14,7 @@ const NutritionDiary = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false)
     const [nutrition_diary, setNutrition_diary] = useState([])
     const [dailyMeasurement, reloadDailyMeasurement] = useDailyMeasurement(router.query.date)
+    const isOnline = useSelector(state => state.online.isOnline)
 
     useEffect(() => {
         if (dailyMeasurement && dailyMeasurement.nutrition_diary) {
@@ -38,6 +39,7 @@ const NutritionDiary = () => {
         <div className="NutritionDiary">
             <button onClick={reloadDailyMeasurement}>123</button>
             {dailyMeasurement && dailyMeasurement.whenAdded}
+            {isOnline ? "true" : "nop"}
             <Link passHref href={`/${router.query.login}/nutrition-diary/${addDaysToDate(router.query.date, 1)}`}><a>Next</a></Link>
             {
                 nutrition_diary && nutrition_diary.map((x, i) => (

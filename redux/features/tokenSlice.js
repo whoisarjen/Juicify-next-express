@@ -2,20 +2,20 @@ import { createSlice } from "@reduxjs/toolkit";
 import { readToken } from "../../utils/checkAuth";
 
 const initialState = {
-  value: {},
+    value: {},
 };
 
 export const tokenSlice = createSlice({
-  name: "token",
-  initialState,
-  reducers: {
-    setToken: (state, action) => {
-      state.value = readToken(action.payload);
+    name: "token",
+    initialState,
+    reducers: {
+        setToken: (state, action) => {
+            state.value = readToken(action.payload);
+        },
+        removeToken: (state) => {
+            state.value = {};
+        },
     },
-    removeToken: (state) => {
-      state.value = {};
-    },
-  },
 });
 
 export const { setToken, removeToken } = tokenSlice.actions;

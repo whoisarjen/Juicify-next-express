@@ -5,35 +5,40 @@ import { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import { setToken } from "../redux/features/tokenSlice";
+import { setIsOnline } from "../redux/features/onlineSlice";
 import { io } from "socket.io-client";
 import { readToken } from "../utils/checkAuth";
 
 const Layout = ({ children }) => {
-  const [cookies] = useCookies();
-  const dispatch = useDispatch();
+    const [cookies] = useCookies();
+    const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (cookies.token) {
-      dispatch(setToken(cookies.token));
-      const socket = io("http://localhost:4000", {
-        query: `user_ID=${readToken(cookies.token)._id}`,
-      });
-    }
-    window.addEventListener('online', () => console.log('Became online'));
-    window.addEventListener('offline', () => console.log('Became offline'));
-  }, [cookies.token]);
+    useEffect(() => {
+        if (cookies.token) {
+            dispatch(setToken(cookies.token));
+            const socket = io("http://localhost:4000", {
+                query: `user_ID=${readToken(cookies.token)._id}`,
+            });
+        }
+    }, [cookies.token]);
 
-  return (
-    <div className="layout">
-      <Head>
-        <title>Dynamic title INC...</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      </Head>
-      <Navbar />
-      <div className="content">{children}</div>
-      <Footer />
-    </div>
-  );
+    useEffect(() => {
+        dispatch(setIsOnline(navigator.onLine))
+        window.addEventListener('online', () => dispatch(setIsOnline(true)));
+        window.addEventListener('offline', () => dispatch(setIsOnline(false)));
+    }, [])
+
+    return (
+        <div className="layout">
+            <Head>
+                <title>Dynamic title INC...</title>
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+            </Head>
+            <Navbar />
+            <div className="content">{children}</div>
+            <Footer />
+        </div>
+    );
 };
 
 export default Layout;
