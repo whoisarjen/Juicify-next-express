@@ -37,10 +37,10 @@ const AddProducts = ({ index, isDialogOpen, closeDialog, dailyMeasurement, reloa
     const addProductsToDiary = async () => {
         setLoadingButton(true)
         let object = checked
-        object.map(async x => {
+        object.map(async (x, i) => {
             x.meal = meal
             x.product_ID = x._id
-            delete x._id
+            x._id = 'XD' + new Date().getTime() + i
             await deleteIndexedDB('checked_product', x.product_ID)
         })
         setChecked([])

@@ -32,8 +32,7 @@ const useDailyMeasurement = (when) => {
                         console.log('creating')
                         daily = {
                             _id: 'XD' + new Date().getTime(),
-                            // whenAdded: new Date(when).toISOString(),
-                            whenAdded: when,
+                            whenAdded: new Date(when).toISOString(),
                             user_ID: token._id,
                             nutrition_diary: [],
                             workout_result: []
