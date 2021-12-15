@@ -41,7 +41,8 @@ const NutritionDiary = () => {
     useEffect(() => {
         if (dailyMeasurement && dailyMeasurement.nutrition_diary) {
             const arr = []
-            for (let i = 0; i < token.meal_number; i++) {
+            const l = token.meal_number || 5
+            for (let i = 0; i < l; i++) {
                 arr.push([])
             }
             const length = arr.length
