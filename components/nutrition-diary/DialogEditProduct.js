@@ -9,8 +9,11 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import MenuItem from '@mui/material/MenuItem';
 import ConfirmDialog from '../common/ConfirmDialog'
+import useTranslation from "next-translate/useTranslation";
+
 
 const DialogEditProduct = ({ product, isDialog, closeDialog, deleteProduct, changeProduct }) => {
+    const { t } = useTranslation('nutrition-diary');
     const [meal, setMeal] = useState(0)
     const [howMany, setHowMany] = useState(1)
     const [isDialogConfirm, setIsDialogConfirm] = useState(false)
@@ -39,7 +42,7 @@ const DialogEditProduct = ({ product, isDialog, closeDialog, deleteProduct, chan
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
-                    Edit
+                    {t('Edit')}
                 </DialogTitle>
                 <DialogContent>
                     <Select
@@ -51,16 +54,16 @@ const DialogEditProduct = ({ product, isDialog, closeDialog, deleteProduct, chan
                     >
                         {
                             [...Array(token.meal_number)].map((x, i) =>
-                                <MenuItem key={i} value={i}>Meal {i + 1}</MenuItem>
+                                <MenuItem key={i} value={i}>{t('Meal')} {i + 1}</MenuItem>
                             )
                         }
                     </Select>
-                    <TextField type="number" label="How many" sx={{ width: '100%' }} value={howMany} onChange={(e) => setHowMany(e.target.value)} inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} />
+                    <TextField type="number" label={t('How Many times 100g/ml')} sx={{ width: '100%' }} value={howMany} onChange={(e) => setHowMany(e.target.value)} inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} />
                 </DialogContent>
                 <DialogActions>
-                    <Button sx={{ color: 'red' }} onClick={() => setIsDialogConfirm(true)}>Delete</Button>
-                    <Button onClick={closeDialog}>Deny</Button>
-                    <Button onClick={beforeChangeProduct}>Confirm</Button>
+                    <Button sx={{ color: 'red' }} onClick={() => setIsDialogConfirm(true)}>{t('Delete')}</Button>
+                    <Button onClick={closeDialog}>{t('Deny')}</Button>
+                    <Button onClick={beforeChangeProduct}>{t('Confirm')}</Button>
                 </DialogActions>
             </Dialog>
             <ConfirmDialog

@@ -7,8 +7,10 @@ import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import style from "../../styles/nutrition-diary.module.css";
+import useTranslation from "next-translate/useTranslation";
 
 const MealBox = ({ index, products, openDialog, openEditProduct, deleteproduct }) => {
+    const { t } = useTranslation('nutrition-diary');
     const router = useRouter();
     const token = useSelector((state) => state.token.value);
     const [{ p, c, f }, setMacro] = useState({ p: 0, c: 0, f: 0 })
@@ -30,7 +32,7 @@ const MealBox = ({ index, products, openDialog, openEditProduct, deleteproduct }
 
     return (
         <div className={style.box}>
-            <div className={style.boxMeal}> Meal {index + 1}</div>
+            <div className={style.boxMeal}>{t('Meal')} {index + 1}</div>
             <div className={style.boxExtraOptions}>
                 {
                     token.login == router.query.login ? (
@@ -73,7 +75,7 @@ const MealBox = ({ index, products, openDialog, openEditProduct, deleteproduct }
                             <div>{parseInt((count(product, 'p')) * 4 + (count(product, 'c')) * 4 + (count(product, 'f')) * 9)}kcal</div>
                         </div>
                         <div className={style.boxProductContent}>
-                            <div>{count(product, 'p')}P {count(product, 'c')}C {count(product, 'f')}F</div>
+                            <div>{count(product, 'p')}{t('P')} {count(product, 'c')}{t('C')} {count(product, 'f')}{t('F')}</div>
                             <div>{parseFloat(product.how_many) * 100}g/ml</div>
                         </div>
                     </div>

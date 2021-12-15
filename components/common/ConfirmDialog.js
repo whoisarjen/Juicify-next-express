@@ -4,8 +4,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContentText from '@mui/material/DialogContentText';
+import useTranslation from "next-translate/useTranslation";
 
 const ConfirmDialog = ({ isDialog, closeDialog, confirm }) => {
+    const { t } = useTranslation('nutrition-diary');
+
     return (
         <div className="confirmDialog">
             <Dialog
@@ -14,17 +17,17 @@ const ConfirmDialog = ({ isDialog, closeDialog, confirm }) => {
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
-                    Confirm
+                    {t('Confirm')}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        The action can NOT be undone.
+                        {t('This action can NOT be undone')}.
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={closeDialog}>Disagree</Button>
+                    <Button onClick={closeDialog}>{t('Deny')}</Button>
                     <Button onClick={confirm} autoFocus>
-                        Agree
+                        {t('Confirm')}
                     </Button>
                 </DialogActions>
             </Dialog>

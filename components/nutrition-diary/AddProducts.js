@@ -14,6 +14,7 @@ import useFind from '../../hooks/useFind';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import LoadingButton from '@mui/lab/LoadingButton';
+import useTranslation from "next-translate/useTranslation";
 import { getAllIndexedDB, deleteIndexedDB } from '../../utils/indexedDB';
 import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../utils/API'
 
@@ -22,6 +23,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 });
 
 const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reloadDailyMeasurement }) => {
+    const { t } = useTranslation('nutrition-diary');
     const [tab, setTab] = useState(0)
     const [find, setFind] = useState(null)
     const [open, setOpen] = useState(false)
@@ -69,7 +71,7 @@ const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload
                 TransitionComponent={Transition}
             >
                 <div className="content">
-                    <div className="title">Add products</div>
+                    <div className="title">{t('Add products')}</div>
                     <Select
                         sx={{ marginBottom: '10px' }}
                         labelId="demo-simple-select-label"
@@ -79,7 +81,7 @@ const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload
                     >
                         {
                             [...Array(token.meal_number)].map((x, i) =>
-                                <MenuItem key={i} value={i}>Meal {i + 1}</MenuItem>
+                                <MenuItem key={i} value={i}>{t('Meal')} {i + 1}</MenuItem>
                             )
                         }
                     </Select>
@@ -97,7 +99,7 @@ const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload
                         renderInput={(params) => (
                             <TextField
                                 {...params}
-                                label="Search product"
+                                label={t('Search product')}
                                 InputProps={{
                                     ...params.InputProps,
                                     endAdornment: (
@@ -118,9 +120,9 @@ const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload
                         variant="fullWidth"
                         sx={{ marginBottom: '10px' }}
                     >
-                        <Tab wrapped label="All" />
-                        <Tab wrapped label="Favourite" />
-                        <Tab wrapped label={`Selected (${checked.length})`} />
+                        <Tab wrapped label={t('All')} />
+                        <Tab wrapped label={t('Favourite')} />
+                        <Tab wrapped label={`${t('Selected')} (${checked.length})`} />
                     </Tabs>
                     {
                         products && products.map(product =>
@@ -136,7 +138,7 @@ const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload
                                     loading={loadingButton}
                                     variant="contained"
                                 >
-                                    Submit ({checked.length})
+                                    {t('Submit')} ({checked.length})
                                 </LoadingButton>
                             </div>
                             <div className={styles.addProductsSubmitPlaceholder} />
@@ -145,7 +147,7 @@ const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload
                     <div className={styles.addProductsCloseButtonPlaceholder} />
                     <div className={styles.addProductsCloseButton} onClick={() => closeDialog()}>
                         <Button variant="contained">
-                            Close
+                            {t('Close')}
                         </Button>
                     </div>
                 </div>

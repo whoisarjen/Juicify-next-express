@@ -3,6 +3,7 @@
     "defaultLocale": "en",
     "pages": {
         "*": ["home"],
-        "/login": ["login"]
+        "/login": ["login"],
+        "/[login]/nutrition-diary/[date]": ["nutrition-diary"]
     }
 }

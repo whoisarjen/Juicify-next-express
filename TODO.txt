@@ -5,3 +5,4 @@ Better protection on cookies
 Fav products => redis
 block +30days in diary + notify it
 max value on inputs
+Clean DB from empty products
