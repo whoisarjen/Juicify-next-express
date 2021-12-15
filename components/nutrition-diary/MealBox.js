@@ -8,7 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import style from "../../styles/nutrition-diary.module.css";
 
-const MealBox = ({ index, products, openDialog, openEditProduct }) => {
+const MealBox = ({ index, products, openDialog, openEditProduct, deleteproduct }) => {
     const router = useRouter();
     const token = useSelector((state) => state.token.value);
     const [{ p, c, f }, setMacro] = useState({ p: 0, c: 0, f: 0 })
@@ -59,7 +59,7 @@ const MealBox = ({ index, products, openDialog, openEditProduct }) => {
                             {
                                 token.login == router.query.login ? (
                                     <IconButton onClick={() => openEditProduct(product)} aria-label="edit">
-                                        <EditIcon fontSize="small" />
+                                        <EditIcon fontSize="small"/>
                                     </IconButton>
                                 ) : (
                                     <IconButton aria-label="edit">
@@ -74,7 +74,7 @@ const MealBox = ({ index, products, openDialog, openEditProduct }) => {
                         </div>
                         <div className={style.boxProductContent}>
                             <div>{count(product, 'p')}P {count(product, 'c')}C {count(product, 'f')}F</div>
-                            <div>100g/ml</div>
+                            <div>{parseFloat(product.how_many) * 100}g/ml</div>
                         </div>
                     </div>
                 ))

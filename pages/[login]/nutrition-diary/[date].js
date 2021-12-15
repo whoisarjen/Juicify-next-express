@@ -20,14 +20,23 @@ const NutritionDiary = () => {
     const isOnline = useSelector(state => state.online.isOnline)
     const [dailyMeasurement, reloadDailyMeasurement] = useDailyMeasurement(router.query.date)
 
-    // const deleteProduct = async (product) => {
-    //     let copyDailyMeasurement = JSON.parse(JSON.stringify(dailyMeasurement))
-    //     copyDailyMeasurement.nutrition_diary = copyDailyMeasurement.nutrition_diary.map(obj =>
-    //         obj._id == product._id ? { ...obj, deleted: true } : obj
-    //     );
-    //     await overwriteThoseIDSinDB('daily_measurement', [copyDailyMeasurement], isOnline)
-    //     reloadDailyMeasurement()
-    // }
+    const deleteProduct = async (_id) => {
+        let copyDailyMeasurement = JSON.parse(JSON.stringify(dailyMeasurement))
+        copyDailyMeasurement.nutrition_diary = copyDailyMeasurement.nutrition_diary.map(obj =>
+            obj._id == _id ? { ...obj, deleted: true } : obj
+        );
+        await overwriteThoseIDSinDB('daily_measurement', [copyDailyMeasurement], isOnline)
+        reloadDailyMeasurement()
+    }
+
+    const changeProduct = async (newProduct) => {
+        let copyDailyMeasurement = JSON.parse(JSON.stringify(dailyMeasurement))
+        copyDailyMeasurement.nutrition_diary = copyDailyMeasurement.nutrition_diary.map(obj =>
+            obj._id == newProduct._id ? { ...obj, ...{changed: true, how_many: newProduct.how_many, meal: newProduct.meal} } : obj
+        );
+        await overwriteThoseIDSinDB('daily_measurement', [copyDailyMeasurement], isOnline)
+        reloadDailyMeasurement()
+    }
 
     useEffect(() => {
         if (dailyMeasurement && dailyMeasurement.nutrition_diary) {
@@ -79,7 +88,14 @@ const NutritionDiary = () => {
                 />
             }
             {
-                token.login == router.query.login && <DialogEditProduct product={product} isDialog={isEditDialog} closeDialog={() => setIsEditDialog(false)} />
+                token.login == router.query.login &&
+                <DialogEditProduct
+                    product={product}
+                    isDialog={isEditDialog}
+                    closeDialog={() => setIsEditDialog(false)}
+                    deleteProduct={(_id) => deleteProduct(_id)}
+                    changeProduct={(newProduct) => changeProduct(newProduct)}
+                />
             }
         </div>
     );

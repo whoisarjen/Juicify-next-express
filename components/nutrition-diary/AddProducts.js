@@ -23,7 +23,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reloadDailyMeasurement }) => {
     const [tab, setTab] = useState(0)
-    const [find, setFind] = useState('')
+    const [find, setFind] = useState(null)
     const [open, setOpen] = useState(false)
     const [meal, setMeal] = useState(index)
     const [checked, setChecked] = useState([])

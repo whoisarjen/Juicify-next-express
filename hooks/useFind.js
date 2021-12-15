@@ -10,7 +10,7 @@ const useFind = (value, where, tab) => {
 
     useEffect(async () => {
         clearTimeout(searchTimer)
-        if (value.length > 2) {
+        if (value && value.length > 2) {
             setLoading(true)
             if (tab == 1) {
                 console.log(`${where} loaded from favourite`)
