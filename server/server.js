@@ -7,6 +7,7 @@ require('./mongoDB/connection');
 
 app.use(cors());
 app.use(express.json());
+// app.use(express.urlencoded({extended: true}))
 
 const socket = require('socket.io');
 const server = app.listen(port, () =>
@@ -48,5 +49,10 @@ const io = socket(server, {
 });
 
 io.on('connection', (client) => {
-    console.log(client.id, client.handshake.query.user_ID, new Date())
+    const user_ID = JSON.parse(JSON.stringify(client.handshake.query.user_ID))
+    console.log(new Date().getTime())
+    io.to(client.id).emit('compareDatabases', {
+        "lastUpdated": { daily_measurement: new Date().getTime()},
+        "version": 1
+    })
 });

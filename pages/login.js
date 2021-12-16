@@ -64,10 +64,11 @@ const Login = () => {
                 const keys = Object.keys(response)
                 for (let i = 0; i < keys.length; i++) {
                     if (keys[i] != 'token' && keys[i] != 'refresh_token') {
-                        await addIndexedDB(keys[i], response[keys[i]])
+                        await addIndexedDB(true, keys[i], response[keys[i]])
                     }
                 }
                 dispatch(setToken(response.token));
+                localStorage.setItem("lastUpdated", new Date().getTime() + 1000);
                 router.push(
                     `/${readToken(response.token).login
                     }/nutrition-diary/${getShortDate()}`

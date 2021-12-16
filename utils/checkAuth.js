@@ -28,10 +28,8 @@ const expectLoggedOUT = () => {
 };
 
 const readToken = (token) => {
-  if (token) {
-    return JSON.parse(Buffer.from(token.split(".")[1], "base64").toString());
-  }
-  return ''
+  if(!token) return ''
+  return JSON.parse(Buffer.from(token.split(".")[1], "base64").toString());
 };
 
 export { expectLoggedIN, expectLoggedOUT, readToken };

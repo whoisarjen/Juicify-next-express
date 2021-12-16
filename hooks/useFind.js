@@ -1,5 +1,6 @@
 import {API} from '../utils/API'
 import { useState, useEffect } from "react";
+import { useSelector } from 'react-redux';
 import { addIndexedDB, getAllIndexedDB, getIndexedDBbyID } from '../utils/indexedDB'
 
 const useFind = (value, where, tab) => {
@@ -7,6 +8,7 @@ const useFind = (value, where, tab) => {
     const [loading, setLoading] = useState(false)
     const [searchCache, setSearchCache] = useState([])
     const [searchTimer, setSearchTimer] = useState(null)
+    const isOnline = useSelector(state => state.online.isOnline)
 
     useEffect(async () => {
         clearTimeout(searchTimer)
@@ -38,7 +40,7 @@ const useFind = (value, where, tab) => {
                         if (isSuccess) {
                             const receivedProducts = response.products.sort((a, b) => a.name.length - b.name.length)
                             setProducts(receivedProducts)
-                            await addIndexedDB(`cache_${where}`, [{ _id: find, whenAdded: new Date(), products: receivedProducts }])
+                            await addIndexedDB(isOnline, `cache_${where}`, [{ _id: find, whenAdded: new Date(), products: receivedProducts }])
                             setSearchCache([...searchCache, find])
                         }
                         setLoading(false)

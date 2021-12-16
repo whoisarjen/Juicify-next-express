@@ -42,7 +42,7 @@ const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload
             x.meal = meal
             x.product_ID = x._id
             x._id = 'XD' + new Date().getTime() + i
-            await deleteIndexedDB('checked_product', x.product_ID)
+            await deleteIndexedDB(isOnline, 'checked_product', x.product_ID)
             return x
         })
         setChecked([])

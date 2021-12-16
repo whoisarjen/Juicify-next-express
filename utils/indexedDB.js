@@ -73,8 +73,8 @@ const getIndexedDBbyID = async (where, id) => {
     });
 };
 
-const putIndexedDB = async (where, id, what, value) => {
-    await putInformationAboutNeededUpdate(where);
+const putIndexedDB = async (online, where, id, what, value) => {
+    await putInformationAboutNeededUpdate(online, where);
     value = value.toString();
     let request3 = await connectIndexedDB();
     return new Promise((resolve) => {
@@ -93,9 +93,9 @@ const putIndexedDB = async (where, id, what, value) => {
     });
 };
 
-const deleteIndexedDB = async (where, _id) => {
+const deleteIndexedDB = async (online, where, _id) => {
     _id = _id.toString();
-    await putInformationAboutNeededUpdate(where);
+    await putInformationAboutNeededUpdate(online, where);
     let request = await connectIndexedDB();
     return new Promise((resolve) => {
         request.onsuccess = async function () {
@@ -108,9 +108,9 @@ const deleteIndexedDB = async (where, _id) => {
     });
 };
 
-const addIndexedDB = async (where, value) => {
+const addIndexedDB = async (online, where, value) => {
     if (value && value.length > 0) {
-        await putInformationAboutNeededUpdate(where);
+        await putInformationAboutNeededUpdate(online, where);
         for (let i = 0; i < value.length; i++) {
             value[i]._id = value[i]._id.toString();
         }
@@ -129,22 +129,19 @@ const addIndexedDB = async (where, value) => {
     }
 };
 
-const putInformationAboutNeededUpdate = async (where) => {
+const putInformationAboutNeededUpdate = async (online, where) => {
     return new Promise((resolve) => {
         (async () => {
             if (where != "nutrition_diary_connections" && where != "whatToUpdate") {
-                if (false) {
-                    let indexedDB = await getIndexedDBbyID("whatToUpdate", where);
-                    if (!indexedDB) {
-                        let array = [
+                if (online) {
+                    if (!await getIndexedDBbyID("whatToUpdate", where)) {
+                        await addIndexedDB("whatToUpdate", [
                             {
                                 _id: where,
                             },
-                        ];
-                        await addIndexedDB("whatToUpdate", array);
+                        ]);
                     }
                 } else {
-                    console.log('change putInformationAboutNeededUpdate to care about online + after offline should also update checked and favourite products?')
                     localStorage.setItem("lastUpdated", new Date().getTime());
                 }
             }
