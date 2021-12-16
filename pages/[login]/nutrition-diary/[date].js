@@ -8,6 +8,7 @@ import { useDailyMeasurement } from '../../../hooks/useDaily'
 import MealBox from "../../../components/nutrition-diary/MealBox"
 import AddProducts from '../../../components/nutrition-diary/AddProducts'
 import DialogEditProduct from '../../../components/nutrition-diary/DialogEditProduct';
+import { useSynchronization } from "../../../hooks/useSynchronization"
 
 const NutritionDiary = () => {
     const router = useRouter()
@@ -16,6 +17,7 @@ const NutritionDiary = () => {
     const token = useSelector(state => state.token.value)
     const [isAddDialog, setIsAddDialog] = useState(false)
     const [isEditDialog, setIsEditDialog] = useState(false)
+    const sendSynchronizationMessege = useSynchronization()
     const [nutrition_diary, setNutrition_diary] = useState([])
     const isOnline = useSelector(state => state.online.isOnline)
     const [{ dataObject, user }, reloadDailyMeasurement] = useDailyMeasurement(router.query.date)
@@ -26,6 +28,7 @@ const NutritionDiary = () => {
             obj._id == _id ? { ...obj, deleted: true } : obj
         );
         await overwriteThoseIDSinDB('daily_measurement', [copyDailyMeasurement], isOnline)
+            .then(res => sendSynchronizationMessege('daily_measurement', 'change', res))
         reloadDailyMeasurement()
     }
 
@@ -35,6 +38,7 @@ const NutritionDiary = () => {
             obj._id == newProduct._id ? { ...obj, ...{ changed: true, how_many: newProduct.how_many, meal: newProduct.meal } } : obj
         );
         await overwriteThoseIDSinDB('daily_measurement', [copyDailyMeasurement], isOnline)
+            .then(res => sendSynchronizationMessege('daily_measurement', 'change', res))
         reloadDailyMeasurement()
     }
 

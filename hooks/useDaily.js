@@ -36,7 +36,9 @@ const useDailyMeasurement = (when) => {
                 setUser(user)
                 setDataObject(dataObject)
             } else {
-                const res = await loadOneDailyMeasurementByLogin(when, router.query.login)
+                let res = await loadOneDailyMeasurementByLogin(when, router.query.login)
+                if (!res.dataObject.nutrition_diary) res.dataObject.nutrition_diary = []
+                if (!res.dataObject.workout_results) res.dataObject.workout_results = []
                 console.log('Guest', res)
                 setUser(res.user)
                 setDataObject(res.dataObject)

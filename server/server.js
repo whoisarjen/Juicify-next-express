@@ -69,7 +69,7 @@ io.on('connection', (client) => {
         "version": 1
     })
 
-    client.on('tellAboutSynchronization', async (value) => {
-        console.log(value)
+    client.on('sendSynchronizationMessege', async (messege) => {
+        console.log(messege)
     })
 });
