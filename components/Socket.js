@@ -1,8 +1,8 @@
-import { useEffect, useContext } from "react"
-// import { io } from "socket.io-client";
-import { useCookies } from "react-cookie"
-// import { readToken } from "../utils/checkAuth";
-import {SocketContext} from '../context/socket';
+import { setIsOnline } from '../redux/features/onlineSlice'
+import io from "socket.io-client";
+import { SocketContext } from '../context/socket';
+import { useState, useEffect } from 'react'
+import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../redux/features/tokenSlice";
 import { is_id, API } from '../utils/API'
@@ -257,19 +257,26 @@ const daily_measurementAfterOffline = async (isNewValueInDB, theOldestSupportedD
     });
 }
 
-const useSocket = () => {
-    // const [cookies] = useCookies();
-    // const dispatch = useDispatch();
+const Socket = ({ children }) => {
+    const dispatch = useDispatch()
+    const [cookies] = useCookies()
+    const [socket, setSocket] = useState(() => 'placeholder')
     const isOnline = useSelector(state => state.online.isOnline)
     const theOldestSupportedDate = useSelector(state => state.config.theOldestSupportedDate())
-    const socket = useContext(SocketContext);
 
     useEffect(() => {
-        // if (cookies.token) {
-            // dispatch(setToken(cookies.token));
-            // const socket = io("http://localhost:4000", {
-            //     query: `user_ID=${readToken(cookies.token)._id}`,
-            // });
+        dispatch(setIsOnline(navigator.onLine))
+        window.addEventListener('online', () => dispatch(setIsOnline(true)))
+        window.addEventListener('offline', () => dispatch(setIsOnline(false)))
+    }, [])
+
+    useEffect(() => {
+        if (cookies.token) {
+            dispatch(setToken(cookies.token));
+            const socket = io("http://localhost:4000", {
+                query: `token=${cookies.token}`,
+            })
+            setSocket(socket)
 
             socket.on('compareDatabases', async (object) => {
                 let newTimeOfUpdate = 0
@@ -306,10 +313,16 @@ const useSocket = () => {
                 // store.state[messege.where + "FLAG"] = await currentTime() // Refreshing component where changed messege
                 // localStorage.setItem('lastUpdated', messege.time)
             })
-        // }
-    }, []);
+        }
+    }, [cookies.token])
 
-    return '';
+    return (
+        <div className='socket'>
+            <SocketContext.Provider value={socket}>
+                {children}
+            </SocketContext.Provider>
+        </div>
+    )
 }
 
-export default useSocket;
+export default Socket
