@@ -94,6 +94,7 @@ const putIndexedDB = async (online, where, id, what, value) => {
 };
 
 const deleteIndexedDB = async (online, where, _id) => {
+    console.log(online, where, _id)
     _id = _id.toString();
     await putInformationAboutNeededUpdate(online, where);
     let request = await connectIndexedDB();
@@ -135,7 +136,7 @@ const putInformationAboutNeededUpdate = async (online, where) => {
             if (where != "nutrition_diary_connections" && where != "whatToUpdate") {
                 if (online) {
                     if (!await getIndexedDBbyID("whatToUpdate", where)) {
-                        await addIndexedDB("whatToUpdate", [
+                        await addIndexedDB(online, "whatToUpdate", [
                             {
                                 _id: where,
                             },

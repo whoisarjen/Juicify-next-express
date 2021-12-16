@@ -293,7 +293,7 @@ const useSocket = () => {
                     console.log('Synchronization daily_measurement')
                     // newTimeOfUpdate = object.lastUpdated.daily_measurement
                     // this.synchroMessage = true;
-                    await daily_measurementAfterOffline(object.lastUpdated.daily_measurement > lastUpdated);
+                    // await daily_measurementAfterOffline(object.lastUpdated.daily_measurement > lastUpdated);
                     if (!isOnline) await addIndexedDB(isOnline, 'whatToUpdate', [{ '_id': 'daily_measurement' }]);
                 }
             })
