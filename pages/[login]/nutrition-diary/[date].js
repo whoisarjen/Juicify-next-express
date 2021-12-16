@@ -2,12 +2,12 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { useSelector } from 'react-redux'
 import { useState, useEffect } from 'react'
-import DialogEditProduct from '../../../components/nutrition-diary/DialogEditProduct';
 import { addDaysToDate } from '../../../utils/manageDate'
 import { overwriteThoseIDSinDB } from "../../../utils/API"
 import { useDailyMeasurement } from '../../../hooks/useDaily'
 import MealBox from "../../../components/nutrition-diary/MealBox"
 import AddProducts from '../../../components/nutrition-diary/AddProducts'
+import DialogEditProduct from '../../../components/nutrition-diary/DialogEditProduct';
 
 const NutritionDiary = () => {
     const router = useRouter()
@@ -18,7 +18,7 @@ const NutritionDiary = () => {
     const [isEditDialog, setIsEditDialog] = useState(false)
     const [nutrition_diary, setNutrition_diary] = useState([])
     const isOnline = useSelector(state => state.online.isOnline)
-    const [dailyMeasurement, reloadDailyMeasurement] = useDailyMeasurement(router.query.date)
+    const [{ dataObject, user }, reloadDailyMeasurement] = useDailyMeasurement(router.query.date)
 
     const deleteProduct = async (_id) => {
         let copyDailyMeasurement = JSON.parse(JSON.stringify(dailyMeasurement))
@@ -30,23 +30,23 @@ const NutritionDiary = () => {
     }
 
     const changeProduct = async (newProduct) => {
-        let copyDailyMeasurement = JSON.parse(JSON.stringify(dailyMeasurement))
+        let copyDailyMeasurement = JSON.parse(JSON.stringify(dataObject))
         copyDailyMeasurement.nutrition_diary = copyDailyMeasurement.nutrition_diary.map(obj =>
-            obj._id == newProduct._id ? { ...obj, ...{changed: true, how_many: newProduct.how_many, meal: newProduct.meal} } : obj
+            obj._id == newProduct._id ? { ...obj, ...{ changed: true, how_many: newProduct.how_many, meal: newProduct.meal } } : obj
         );
         await overwriteThoseIDSinDB('daily_measurement', [copyDailyMeasurement], isOnline)
         reloadDailyMeasurement()
     }
 
     useEffect(() => {
-        if (dailyMeasurement && dailyMeasurement.nutrition_diary) {
+        if (dataObject && dataObject.nutrition_diary) {
             const arr = []
-            const l = token.meal_number || 5
+            const l = user.meal_number || 5
             for (let i = 0; i < l; i++) {
                 arr.push([])
             }
             const length = arr.length
-            dailyMeasurement.nutrition_diary.forEach(meal => {
+            dataObject.nutrition_diary.forEach(meal => {
                 if (meal.meal + 1 > length) {
                     for (let i = 0; i < meal.meal + 1 - length; i++) {
                         arr.push([])
@@ -56,7 +56,7 @@ const NutritionDiary = () => {
             })
             setNutrition_diary(arr)
         }
-    }, [dailyMeasurement])
+    }, [dataObject])
 
     return (
         <div className="NutritionDiary">
@@ -79,17 +79,17 @@ const NutritionDiary = () => {
                 ))
             }
             {
-                token.login == router.query.login &&
+                token && token.login == router.query.login &&
                 <AddProducts
                     index={index}
                     isAddDialog={isAddDialog}
-                    dailyMeasurement={dailyMeasurement}
+                    dailyMeasurement={dataObject}
                     closeDialog={() => setIsAddDialog(false)}
                     reloadDailyMeasurement={reloadDailyMeasurement}
                 />
             }
             {
-                token.login == router.query.login &&
+                token && token.login == router.query.login &&
                 <DialogEditProduct
                     product={product}
                     isDialog={isEditDialog}

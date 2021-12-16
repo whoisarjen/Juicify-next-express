@@ -1,5 +1,4 @@
-import { getAllIndexedDB, getIndexedDBbyID, addIndexedDB, deleteIndexedDB, putIndexedDB } from "./indexedDB"
-import { useSelector, useDispatch } from 'react-redux'
+import { getIndexedDBbyID, addIndexedDB, deleteIndexedDB, putIndexedDB } from "./indexedDB"
 
 const API = async (url, body) => {
     let response = {}
@@ -18,6 +17,26 @@ const API = async (url, body) => {
         })
         .catch((err) => console.log(err))
     return { response, isSuccess }
+}
+
+const loadOneDailyMeasurementByLogin = async (when, login) => {
+    const { response, isSuccess } = await API(`/guest/daily_measurement`, {
+        when: when,
+        login: login
+    })
+    if (isSuccess) {
+        console.log(`loadOneDailyMeasurementByLogin: ${response}`)
+        return response
+    } else {
+        console.log('loadOneDailyMeasurementByLogin: server error')
+        return {
+            _id: 'XD' + new Date().getTime(),
+            whenAdded: new Date(when).toISOString(),
+            user_ID: null,
+            nutrition_diary: [],
+            workout_result: []
+        }
+    }
 }
 
 const insertThoseIDStoDB = async (where, array, isOnline, whatToUpdate, value, whatToUpdate2) => {
@@ -171,4 +190,4 @@ const is_id = async (_id) => {
     })
 }
 
-export { API, insertThoseIDStoDB, is_id, overwriteThoseIDSinDB }
+export { API, insertThoseIDStoDB, is_id, overwriteThoseIDSinDB, loadOneDailyMeasurementByLogin }

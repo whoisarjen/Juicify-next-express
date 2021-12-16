@@ -1,60 +1,50 @@
-import { readToken } from "../utils/checkAuth"
 import { useRouter } from "next/router"
 import { useSelector } from "react-redux"
 import { useCookies } from "react-cookie"
 import { useState, useEffect } from 'react'
+import { readToken } from "../utils/checkAuth"
 import { getIndexedDBbyID } from "../utils/indexedDB"
+import { loadOneDailyMeasurementByLogin } from '../utils/API'
 
 const useDailyMeasurement = (when) => {
     const router = useRouter()
     const [cookies] = useCookies()
-    const [diary, setDiary] = useState()
+    const [user, setUser] = useState()
     const [reload, setReload] = useState(0)
+    const [dataObject, setDataObject] = useState()
     const theOldestSupportedDate = useSelector(state => state.config.theOldestSupportedDate())
-
-    const loadDailyMeasurementFromAPI = async () => {
-        return {
-            _id: 'XD' + new Date().getTime(),
-            whenAdded: new Date(when).toISOString(),
-            user_ID: null,
-            nutrition_diary: [],
-            workout_result: []
-        }
-    }
 
     useEffect(async () => {
         if (when) {
-            const token = readToken(cookies.token)
-            if (token.login == router.query.login) {
-                if (theOldestSupportedDate <= when) {
-                    let daily = await getIndexedDBbyID('daily_measurement', new Date(when).toISOString())
-                    if (!daily) {
-                        console.log('creating')
-                        daily = {
-                            _id: 'XD' + new Date().getTime(),
-                            whenAdded: new Date(when).toISOString(),
-                            user_ID: token._id,
-                            nutrition_diary: [],
-                            workout_result: []
-                        }
-                    } else {
-                        console.log("From cache")
-                        if (!daily.nutrition_diary) daily.nutrition_diary = []
-                        if (!daily.workout_results) daily.workout_results = []
+            const user = readToken(cookies.token)
+            if (user.login == router.query.login && theOldestSupportedDate <= when) {
+                let dataObject = await getIndexedDBbyID('daily_measurement', new Date(when).toISOString())
+                if (!dataObject) {
+                    console.log('creating')
+                    dataObject = {
+                        _id: 'XD' + new Date().getTime(),
+                        whenAdded: new Date(when).toISOString(),
+                        user_ID: user._id,
+                        nutrition_diary: [],
+                        workout_result: []
                     }
-                    setDiary(daily)
                 } else {
-                    console.log('Not in theOldestSupportedDate')
-                    setDiary(await loadDailyMeasurementFromAPI())
+                    console.log("From cache")
+                    if (!dataObject.nutrition_diary) dataObject.nutrition_diary = []
+                    if (!dataObject.workout_results) dataObject.workout_results = []
                 }
+                setUser(user)
+                setDataObject(dataObject)
             } else {
-                console.log('Guest')
-                setDiary(await loadDailyMeasurementFromAPI())
+                const res = await loadOneDailyMeasurementByLogin(when, router.query.login)
+                console.log('Guest', res)
+                setUser(res.user)
+                setDataObject(res.dataObject)
             }
         }
     }, [when, reload])
 
-    return [diary, () => setReload(reload + 1)]
+    return [{ dataObject, user }, () => setReload(reload + 1)]
 }
 
 export { useDailyMeasurement }
