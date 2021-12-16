@@ -21,7 +21,7 @@ const NutritionDiary = () => {
     const [{ dataObject, user }, reloadDailyMeasurement] = useDailyMeasurement(router.query.date)
 
     const deleteProduct = async (_id) => {
-        let copyDailyMeasurement = JSON.parse(JSON.stringify(dailyMeasurement))
+        let copyDailyMeasurement = JSON.parse(JSON.stringify(dataObject))
         copyDailyMeasurement.nutrition_diary = copyDailyMeasurement.nutrition_diary.map(obj =>
             obj._id == _id ? { ...obj, deleted: true } : obj
         );
