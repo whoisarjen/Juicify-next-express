@@ -73,8 +73,8 @@ const getIndexedDBbyID = async (where, id) => {
     });
 };
 
-const putIndexedDB = async (online, where, id, what, value) => {
-    await putInformationAboutNeededUpdate(online, where);
+const putIndexedDB = async (isOnline, where, id, what, value) => {
+    await putInformationAboutNeededUpdate(isOnline, where);
     value = value.toString();
     let request3 = await connectIndexedDB();
     return new Promise((resolve) => {
@@ -93,10 +93,10 @@ const putIndexedDB = async (online, where, id, what, value) => {
     });
 };
 
-const deleteIndexedDB = async (online, where, _id) => {
-    console.log(online, where, _id)
+const deleteIndexedDB = async (isOnline, where, _id) => {
+    console.log(isOnline, where, _id)
     _id = _id.toString();
-    await putInformationAboutNeededUpdate(online, where);
+    await putInformationAboutNeededUpdate(isOnline, where);
     let request = await connectIndexedDB();
     return new Promise((resolve) => {
         request.onsuccess = async function () {
@@ -109,9 +109,9 @@ const deleteIndexedDB = async (online, where, _id) => {
     });
 };
 
-const addIndexedDB = async (online, where, value) => {
+const addIndexedDB = async (isOnline, where, value) => {
     if (value && value.length > 0) {
-        await putInformationAboutNeededUpdate(online, where);
+        await putInformationAboutNeededUpdate(isOnline, where);
         for (let i = 0; i < value.length; i++) {
             value[i]._id = value[i]._id.toString();
         }
@@ -130,13 +130,13 @@ const addIndexedDB = async (online, where, value) => {
     }
 };
 
-const putInformationAboutNeededUpdate = async (online, where) => {
+const putInformationAboutNeededUpdate = async (isOnline, where) => {
     return new Promise((resolve) => {
         (async () => {
             if (where != "nutrition_diary_connections" && where != "whatToUpdate") {
-                if (online) {
+                if (isOnline) {
                     if (!await getIndexedDBbyID("whatToUpdate", where)) {
-                        await addIndexedDB(online, "whatToUpdate", [
+                        await addIndexedDB(isOnline, "whatToUpdate", [
                             {
                                 _id: where,
                             },

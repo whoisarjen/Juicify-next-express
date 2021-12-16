@@ -39,7 +39,7 @@ const loadOneDailyMeasurementByLogin = async (when, login) => {
     }
 }
 
-const insertThoseIDStoDB = async (where, array, online, whatToUpdate, value, whatToUpdate2) => {
+const insertThoseIDStoDB = async (where, array, isOnline, whatToUpdate, value, whatToUpdate2) => {
     let uniquePARAM = '_id'
     if (where == 'daily_measurement') uniquePARAM = "whenAdded"
     return new Promise(async resolve => {
@@ -48,14 +48,14 @@ const insertThoseIDStoDB = async (where, array, online, whatToUpdate, value, wha
         console.log(copyArray)
         for (let i = 0; i < array.length; i++) {
             if (array[i]._id) {
-                await deleteIndexedDB(online, where, array[i][uniquePARAM])
+                await deleteIndexedDB(isOnline, where, array[i][uniquePARAM])
                 arrayIDSbeforeInsert.push(array[i]._id)
                 delete array[i]._id
             }
-            if (where == 'daily_measurement' && online) array[i] = await prepareDailyToSend(array[i], true)
+            if (where == 'daily_measurement' && isOnline) array[i] = await prepareDailyToSend(array[i], true)
         }
         console.log('after', array)
-        if (online) {
+        if (isOnline) {
             const { response, isSuccess } = await API(`/insert/${where}`, {
                 array
             })
@@ -65,7 +65,7 @@ const insertThoseIDStoDB = async (where, array, online, whatToUpdate, value, wha
                 if (where == 'daily_measurement') {
                     for (let i = 0; i < array.length; i++) {
                         if (await getIndexedDBbyID(where, array[i].whenAdded)) {
-                            await deleteIndexedDB(online, where, array[i].whenAdded) // Server can return existing date
+                            await deleteIndexedDB(isOnline, where, array[i].whenAdded) // Server can return existing date
                         }
                     }
                 }
@@ -80,8 +80,8 @@ const insertThoseIDStoDB = async (where, array, online, whatToUpdate, value, wha
                                 }
                             }
                             if (checker > 0) {
-                                await deleteIndexedDB(online, 'daily_measurement', new Date(whatToUpdateARRAY[a].whenAdded).toISOString())
-                                await addIndexedDB(online, 'daily_measurement', [whatToUpdateARRAY[a]])
+                                await deleteIndexedDB(isOnline, 'daily_measurement', new Date(whatToUpdateARRAY[a].whenAdded).toISOString())
+                                await addIndexedDB(isOnline, 'daily_measurement', [whatToUpdateARRAY[a]])
                             }
                         }
                     }
@@ -90,26 +90,26 @@ const insertThoseIDStoDB = async (where, array, online, whatToUpdate, value, wha
                     for (let i = 0; i < array.length; i++) {
                         for (let a = 0; a < whatToUpdateARRAY2.length; a++) {
                             if (whatToUpdateARRAY2[a][value] == arrayIDSbeforeInsert[i]) {
-                                await putIndexedDB(online, whatToUpdate2, whatToUpdateARRAY2[a]._id, value, array[i]._id)
+                                await putIndexedDB(isOnline, whatToUpdate2, whatToUpdateARRAY2[a]._id, value, array[i]._id)
                             }
                         }
                     }
                 }
                 // await tellAboutSynchronization(where, "add", array)
             } else {
-                return await insertThoseIDStoDB(where, copyArray, whatToUpdate, value, whatToUpdate2, online)
+                return await insertThoseIDStoDB(where, copyArray, whatToUpdate, value, whatToUpdate2, isOnline)
             }
         } else {
             for (let i = 0; i < array.length; i++) {
                 array[i]._id = "XD" + new Date().getTime() + i
             }
         }
-        await addIndexedDB(online, where, array)
+        await addIndexedDB(isOnline, where, array)
         return resolve(array)
     })
 }
 
-const overwriteThoseIDSinDB = async (where, array, online) => {
+const overwriteThoseIDSinDB = async (where, array, isOnline) => {
     let uniquePARAM = '_id'
     if (where == 'daily_measurement') uniquePARAM = "whenAdded"
     return new Promise(resolve => {
@@ -119,10 +119,10 @@ const overwriteThoseIDSinDB = async (where, array, online) => {
                 return x
             })));
             for (let i = 0; i < array.length; i++) {
-                await deleteIndexedDB(online, where, array[i][uniquePARAM])
-                if (where == 'daily_measurement' && online) array[i] = await prepareDailyToSend(array[i], true)
+                await deleteIndexedDB(isOnline, where, array[i][uniquePARAM])
+                if (where == 'daily_measurement' && isOnline) array[i] = await prepareDailyToSend(array[i], true)
             }
-            if (online) {
+            if (isOnline) {
                 const { response, isSuccess } = await API(`/update/${where}`, {
                     array
                 })
@@ -145,7 +145,7 @@ const overwriteThoseIDSinDB = async (where, array, online) => {
                     return await overwriteThoseIDSinDB(where, originalArray, false)
                 }
             }
-            await addIndexedDB(online, where, array)
+            await addIndexedDB(isOnline, where, array)
             resolve(array);
         })();
     })
