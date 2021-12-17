@@ -115,9 +115,5 @@ module.exports = async function (req, res, tokenGenerated, tokenRefreshGenerated
 		}
 	}
 
-	res.send({
-		model: copyModel,
-		// tokenGenerated: tokenGenerated,
-		// tokenRefreshGenerated: tokenRefreshGenerated
-	})
+	return copyModel
 }

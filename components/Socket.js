@@ -258,7 +258,7 @@ const daily_measurementAfterOffline = async (isNewValueInDB, theOldestSupportedD
 }
 
 const Socket = ({ children }) => {
-    const [key, setKey] = useState(0)
+    // const [key, setKey] = useState(0)
     const dispatch = useDispatch()
     const [cookies] = useCookies()
     const isOnline = useSelector(state => state.online.isOnline)
@@ -306,7 +306,7 @@ const Socket = ({ children }) => {
                         await deleteIndexedDB(isOnline, messege.where, messege.array[i].whenAdded)
                     }
                     await addIndexedDB(isOnline, messege.where, messege.array)
-                    setKey(new Date().getTime())
+                    // setKey(new Date().getTime())
                 // } else {
                 //     for (let i = 0; i < messege.array.length; i++) {
                 //         await deleteIndexedDB(messege.where, messege.array[i]._id)
@@ -320,7 +320,8 @@ const Socket = ({ children }) => {
     }, [cookies])
 
     return (
-        <div className='socket' key={key}>
+        // <div className='socket' key={key}>
+        <div className='socket'>
             {children}
         </div>
     )

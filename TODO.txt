@@ -7,3 +7,5 @@ block +30days in diary + notify it
 max value on inputs
 Clean DB from empty products
 useSocket logout
+deleteidsfromdb change response to response => data
+Errors and loading data from loadOneDailyMeasurementByLogin

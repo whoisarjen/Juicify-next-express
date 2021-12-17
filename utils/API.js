@@ -35,18 +35,13 @@ const loadOneDailyMeasurementByLogin = async (when, login) => {
         when: when,
         login: login
     })
+    if(!response.dataObject) response.dataObject = {}
     if (isSuccess) {
         console.log(`loadOneDailyMeasurementByLogin: ${response}`)
         return response
     } else {
         console.log('loadOneDailyMeasurementByLogin: server error')
-        return {
-            _id: 'XD' + new Date().getTime(),
-            whenAdded: new Date(when).toISOString(),
-            user_ID: null,
-            nutrition_diary: [],
-            workout_result: []
-        }
+        return response
     }
 }
 
@@ -72,7 +67,7 @@ const insertThoseIDStoDB = async (where, array, isOnline, whatToUpdate, value, w
             })
             if (isSuccess) {
                 // await gotNewToken(response.tokenGenerated, response.tokenRefreshGenerated)
-                array = JSON.parse(JSON.stringify(response.model));
+                array = JSON.parse(JSON.stringify(response.data));
                 if (where == 'daily_measurement') {
                     for (let i = 0; i < array.length; i++) {
                         if (await getIndexedDBbyID(where, array[i].whenAdded)) {
@@ -139,7 +134,7 @@ const overwriteThoseIDSinDB = async (where, array, isOnline) => {
                 if (isSuccess) {
                     // await gotNewToken(response.tokenGenerated, response.tokenRefreshGenerated)
                     let originalSentArray = JSON.parse(JSON.stringify(array));
-                    array = JSON.parse(JSON.stringify(response.arrayNEWvalues));
+                    array = JSON.parse(JSON.stringify(response.data));
                     if (where == 'daily_measurement') {
                         for (let i = 0; i < originalSentArray.length; i++) {
                             if (originalSentArray[i].nutrition_diary && originalSentArray[i].nutrition_diary.length > 0) {
