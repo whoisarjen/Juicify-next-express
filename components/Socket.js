@@ -1,6 +1,6 @@
 import { setIsOnline } from '../redux/features/onlineSlice'
 import io from "socket.io-client";
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../redux/features/tokenSlice";
@@ -258,6 +258,7 @@ const daily_measurementAfterOffline = async (isNewValueInDB, theOldestSupportedD
 }
 
 const Socket = ({ children }) => {
+    const [key, setKey] = useState(0)
     const dispatch = useDispatch()
     const [cookies] = useCookies()
     const isOnline = useSelector(state => state.online.isOnline)
@@ -301,10 +302,11 @@ const Socket = ({ children }) => {
                 //     cookies.set("token", messege.array, "200y")
                 //     store.state.userToken = decodeToken(messege.array)
                 // } else if (messege.where == "daily_measurement") {
-                //     for (let i = 0; i < messege.array.length; i++) {
-                //         await deleteIndexedDB(messege.where, messege.array[i].whenAdded)
-                //     }
-                //     await addIndexedDB(messege.where, messege.array)
+                    for (let i = 0; i < messege.array.length; i++) {
+                        await deleteIndexedDB(isOnline, messege.where, messege.array[i].whenAdded)
+                    }
+                    await addIndexedDB(isOnline, messege.where, messege.array)
+                    setKey(new Date().getTime())
                 // } else {
                 //     for (let i = 0; i < messege.array.length; i++) {
                 //         await deleteIndexedDB(messege.where, messege.array[i]._id)
@@ -318,7 +320,7 @@ const Socket = ({ children }) => {
     }, [cookies])
 
     return (
-        <div className='socket'>
+        <div className='socket' key={key}>
             {children}
         </div>
     )

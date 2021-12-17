@@ -1,3 +1,6 @@
+const loadProduct = require("../functions/loadProduct")
+const loadExercise = require("../functions/loadExercise")
+
 module.exports = async function (req) {
     return new Promise(resolve => {
 
@@ -11,14 +14,21 @@ module.exports = async function (req) {
                 req.body.array[i],
                 { returnOriginal: false }
             )
-                .then(function (model) {
-                    model = JSON.parse(JSON.stringify(model))
-                    if (model.workout_result && model.workout_result.length > 0) {
-                        for (let i = 0; i < model.workout_result.length; i++) {
-                            model.workout_result[i].results = JSON.parse(JSON.stringify(req.body.array[i].workout_result[i].results))
+                .then(async (model) => {
+                    let copyModel = JSON.parse(JSON.stringify(model))
+                    if (copyModel.nutrition_diary && copyModel.nutrition_diary.length > 0) {
+                        for (let a = 0; a < copyModel.nutrition_diary.length; a++) {
+                            copyModel.nutrition_diary[a] = await loadProduct(model.nutrition_diary[a])
                         }
                     }
-                    arrayNEWvalues.push(model)
+                    if (copyModel.workout_result && copyModel.workout_result.length > 0) {
+                        for (let a = 0; a < copyModel.workout_result.length; a++) {
+                            for (let b = 0; b < copyModel.workout_result[a].results.length; b++) {
+                                copyModel.workout_result[a].results[b] = await loadExercise(model.workout_result[a].results[b])
+                            }
+                        }
+                    }
+                    arrayNEWvalues.push(copyModel)
                 })
                 .catch(err => console.log(err))
                 .finally(() => {
