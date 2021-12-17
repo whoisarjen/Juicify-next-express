@@ -8,12 +8,12 @@ const API = async (url, body) => {
         document.cookie.indexOf(" token=") + 7, 
         document.cookie.lastIndexOf("; ")
     )
-    console.log('token', token)
+    // console.log('token', token)
     const refresh_token = document.cookie.substring(
         document.cookie.indexOf(" refresh_token=") + 15, 
         document.cookie.lastIndexOf("")
     )
-    console.log('refresh_token', refresh_token)
+    // console.log('refresh_token', refresh_token)
     await fetch(`http://localhost:4000${url}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -21,7 +21,7 @@ const API = async (url, body) => {
     })
         .then((response) => response.json())
         .then((res) => {
-            document.cookie = "test=halo"
+            // Verify token diff here and mb refresh?
             if (res.error) throw res
             response = res
             isSuccess = true
