@@ -31,8 +31,8 @@ app.post('/find/daily_measurements', (req, res) => {
 app.post('/guest/daily_measurement', async (req, res) => {
     const loadUserByLogin = require('./mongoDB/functions/loadUserByLogin')
     req.body.user = await loadUserByLogin(req.body.login)
-    // if (!req.body.user) return res.status(404).send({ error: 'Not found' })
-    // if (parseInt(req.body.user.public_profile) == 0) return res.status(403).send({ error: 'Account is not public' })
+    if (!req.body.user) return res.status(404).send({ error: 'Not found' })
+    if (parseInt(req.body.user.public_profile) == 0) return res.status(403).send({ user: req.body.user })
     require('./mongoDB/find/daily_measurement')(req, res)
 });
 
@@ -65,9 +65,6 @@ app.post('/:what/:where', async (req, res) => {
 });
 
 io.on('connection', (client) => {
-
-
-
     // const user_ID = JSON.parse(JSON.stringify(client.handshake.query.user_ID))
     // console.log(client.handshake.query.token)
     console.log(new Date().getTime())
