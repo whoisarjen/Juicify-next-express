@@ -95,7 +95,6 @@ const insertThoseIDStoDB = async (where, array, isOnline, whatToUpdate, value, w
                         }
                     }
                 }
-                // await tellAboutSynchronization(where, "add", array)
             } else {
                 return await insertThoseIDStoDB(where, copyArray, whatToUpdate, value, whatToUpdate2, isOnline)
             }
@@ -140,7 +139,6 @@ const overwriteThoseIDSinDB = async (where, array, isOnline) => {
                             }
                         }
                     }
-                    // await tellAboutSynchronization(where, "change", array)
                 } else {
                     return await overwriteThoseIDSinDB(where, originalArray, false)
                 }

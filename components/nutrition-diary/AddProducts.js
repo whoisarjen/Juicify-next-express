@@ -17,7 +17,6 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import useTranslation from "next-translate/useTranslation";
 import { getAllIndexedDB, deleteIndexedDB } from '../../utils/indexedDB';
 import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../utils/API'
-import { useSynchronization } from '../../hooks/useSynchronization'
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -32,7 +31,6 @@ const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload
     const [checked, setChecked] = useState([])
     const token = useSelector(state => state.token.value)
     const [refreshChecked, setRefreshChecked] = useState(0)
-    const sendSynchronizationMessege = useSynchronization()
     const [loadingButton, setLoadingButton] = useState(false)
     const isOnline = useSelector(state => state.online.isOnline)
     const { products, loading, searchCache } = useFind(find, 'product', tab)
@@ -52,10 +50,8 @@ const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload
         dailyMeasurement.nutrition_diary = dailyMeasurement.nutrition_diary.concat(object)
         if (await is_id(dailyMeasurement._id)) {
             await overwriteThoseIDSinDB('daily_measurement', [dailyMeasurement], isOnline)
-                .then(res => sendSynchronizationMessege('daily_measurement', 'change', res))
         } else {
             await insertThoseIDStoDB('daily_measurement', [dailyMeasurement], isOnline)
-                .then(res => sendSynchronizationMessege('daily_measurement', 'change', res))
         }
         reloadDailyMeasurement()
         setLoadingButton(false)
