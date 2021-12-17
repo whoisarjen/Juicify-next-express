@@ -1,7 +1,6 @@
 import { setIsOnline } from '../redux/features/onlineSlice'
 import io from "socket.io-client";
-import { SocketContext } from '../context/socket';
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../redux/features/tokenSlice";
@@ -261,7 +260,6 @@ const daily_measurementAfterOffline = async (isNewValueInDB, theOldestSupportedD
 const Socket = ({ children }) => {
     const dispatch = useDispatch()
     const [cookies] = useCookies()
-    const [socket, setSocket] = useState(() => 'placeholder')
     const isOnline = useSelector(state => state.online.isOnline)
     const theOldestSupportedDate = useSelector(state => state.config.theOldestSupportedDate())
 
@@ -274,10 +272,11 @@ const Socket = ({ children }) => {
     useEffect(() => {
         if (cookies.token) {
             dispatch(setToken(cookies.token));
+        }
+        if (cookies.refresh_token) {
             const socket = io("http://localhost:4000", {
-                query: `token=${cookies.token}`,
+                query: `token=${cookies.refresh_token}`,
             })
-            setSocket(socket)
 
             socket.on('compareDatabases', async (object) => {
                 let newTimeOfUpdate = 0
@@ -315,13 +314,11 @@ const Socket = ({ children }) => {
                 // localStorage.setItem('lastUpdated', messege.time)
             })
         }
-    }, [cookies.token])
+    }, [cookies])
 
     return (
         <div className='socket'>
-            <SocketContext.Provider value={socket}>
-                {children}
-            </SocketContext.Provider>
+            {children}
         </div>
     )
 }
