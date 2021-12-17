@@ -270,6 +270,7 @@ const Socket = ({ children }) => {
     }, [])
 
     useEffect(() => {
+        console.log('token')
         if (cookies.token) {
             dispatch(setToken(cookies.token));
         }

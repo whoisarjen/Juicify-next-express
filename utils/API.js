@@ -4,13 +4,24 @@ const API = async (url, body) => {
     let response = {}
     let isSuccess = false
     console.log(url, body)
+    const token = document.cookie.substring(
+        document.cookie.indexOf(" token=") + 7, 
+        document.cookie.lastIndexOf("; ")
+    )
+    console.log('token', token)
+    const refresh_token = document.cookie.substring(
+        document.cookie.indexOf(" refresh_token=") + 15, 
+        document.cookie.lastIndexOf("")
+    )
+    console.log('refresh_token', refresh_token)
     await fetch(`http://localhost:4000${url}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
+        body: JSON.stringify({...body, token, refresh_token}),
     })
         .then((response) => response.json())
         .then((res) => {
+            document.cookie = "test=halo"
             if (res.error) throw res
             response = res
             isSuccess = true
