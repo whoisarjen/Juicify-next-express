@@ -137,8 +137,12 @@ const daily_measurementAfterOffline = async (isNewValueInDB, theOldestSupportedD
             if (daily_measurement.length > 0) {
                 for (let i = 0; i < daily_measurement.length; i++) {
                     if (daily_measurement[i].whenAdded >= theOldestSupportedDate) { // Check if date is bigger than limit
-                        if (!(await is_id(daily_measurement[i]._id))) inserted.push(daily_measurement[i])
-                        else if (daily_measurement[i].changed) changed.push(daily_measurement[i])
+                        if (!(await is_id(daily_measurement[i]._id))) {
+                            inserted.push(daily_measurement[i])
+                        } else if (daily_measurement[i].changed) {
+                            console.log("GOT CHANGED")
+                            changed.push(daily_measurement[i])
+                        }
                     }
                 }
             }
@@ -146,8 +150,8 @@ const daily_measurementAfterOffline = async (isNewValueInDB, theOldestSupportedD
                 const { response, isSuccess } = await API('/find/daily_measurements', {
                     overDatePlusTheDate: theOldestSupportedDate
                 })
-                console.log('New daily', response)
                 if (isSuccess) {
+                    console.log('Success new daily', response, inserted, changed)
                     if (response && response.length > 0) {
                         for (let i = 0; i < response.length; i++) {
                             await deleteIndexedDB(isOnline, 'daily_measurement', response[i].whenAdded)
@@ -271,7 +275,6 @@ const Socket = ({ children }) => {
     }, [])
 
     useEffect(() => {
-        console.log('token')
         if (cookies.token) {
             dispatch(setToken(cookies.token));
         }

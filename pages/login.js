@@ -57,13 +57,13 @@ const Login = () => {
                 }
                 dispatch(setToken(response.token));
                 setLastUpdated()
-                setCookie("token", response.token, {
+                setCookie("refresh_token", response.refresh_token, {
                     path: "/",
                     expires: new Date(
                         new Date().setFullYear(new Date().getFullYear() + 20)
                     ),
                 });
-                setCookie("refresh_token", response.refresh_token, {
+                setCookie("token", response.token, {
                     path: "/",
                     expires: new Date(
                         new Date().setFullYear(new Date().getFullYear() + 20)

@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const port = 4000;
+const appVersion = 1
 
 require('./mongoDB/connection');
 
@@ -70,7 +71,7 @@ io.on('connection', (client) => {
     client.join('60ba774fe0ecd72587eeaa29')
     io.to(client.id).emit('compareDatabases', {
         "lastUpdated": { daily_measurement: new Date().getTime() },
-        "version": 1,
+        "version": appVersion,
         "socket_ID": client.id
     })
 });

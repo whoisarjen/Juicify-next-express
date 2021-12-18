@@ -53,11 +53,11 @@ const Navbar = () => {
     await deleteDatabaseIndexedDB();
     dispatch(removeToken());
     localStorage.clear();
-    removeCookie("token", {
+    removeCookie("refresh_token", {
       path: "/",
       expire: new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
     });
-    removeCookie("refresh_token", {
+    removeCookie("token", {
       path: "/",
       expire: new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
     });
