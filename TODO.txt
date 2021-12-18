@@ -9,3 +9,4 @@ Clean DB from empty products
 useSocket logout
 deleteidsfromdb change response to response => data
 logout error
+Chceck if synchro function after online for sure put right isOnline

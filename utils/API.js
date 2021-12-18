@@ -48,6 +48,7 @@ const loadOneDailyMeasurementByLogin = async (when, login) => {
 }
 
 const insertThoseIDStoDB = async (where, array, isOnline, whatToUpdate, value, whatToUpdate2) => {
+    console.log('insertThoseIDStoDB isOnline:', isOnline)
     let uniquePARAM = '_id'
     if (where == 'daily_measurement') uniquePARAM = "whenAdded"
     return new Promise(async resolve => {
@@ -117,6 +118,7 @@ const insertThoseIDStoDB = async (where, array, isOnline, whatToUpdate, value, w
 }
 
 const overwriteThoseIDSinDB = async (where, array, isOnline) => {
+    console.log('overwriteThoseIDSinDB isOnline:', isOnline)
     let uniquePARAM = '_id'
     if (where == 'daily_measurement') uniquePARAM = "whenAdded"
     return new Promise(resolve => {

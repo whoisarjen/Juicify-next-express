@@ -47,12 +47,14 @@ const NutritionDiary = () => {
             }
             const length = arr.length
             dataObject.nutrition_diary.forEach(meal => {
-                if (meal.meal + 1 > length) {
-                    for (let i = 0; i < meal.meal + 1 - length; i++) {
-                        arr.push([])
+                if (!meal.deleted) {
+                    if (meal.meal + 1 > length) {
+                        for (let i = 0; i < meal.meal + 1 - length; i++) {
+                            arr.push([])
+                        }
                     }
+                    arr[meal.meal].push(meal)
                 }
-                arr[meal.meal].push(meal)
             })
             setNutrition_diary(arr)
         }
