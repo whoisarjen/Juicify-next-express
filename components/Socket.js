@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../redux/features/tokenSlice";
 import { is_id, API } from '../utils/API'
 import { getAllIndexedDB, deleteIndexedDB, getIndexedDBbyID, addIndexedDB } from '../utils/indexedDB'
-import { overwriteThoseIDSinDB } from '../utils/API'
+import { overwriteThoseIDSinDB, setLastUpdated } from '../utils/API'
 
 //         if(cookies.get("token")){
 //             socket.on('needToUpdateAfterOffline', async (object) => {
@@ -258,9 +258,9 @@ const daily_measurementAfterOffline = async (isNewValueInDB, theOldestSupportedD
 }
 
 const Socket = ({ children }) => {
-    // const [key, setKey] = useState(0)
+    const [key, setKey] = useState(0)
     const dispatch = useDispatch()
-    const [cookies] = useCookies()
+    const [cookies, setCookie] = useCookies()
     const isOnline = useSelector(state => state.online.isOnline)
     const theOldestSupportedDate = useSelector(state => state.config.theOldestSupportedDate())
 
@@ -283,6 +283,7 @@ const Socket = ({ children }) => {
             socket.on('compareDatabases', async (object) => {
                 let newTimeOfUpdate = 0
                 const lastUpdated = localStorage.getItem('lastUpdated')
+                localStorage.setItem("socket_ID", object.socket_ID);
                 console.log(`halo from socket`, object)
                 await daily_measurementAfterOffline(object.lastUpdated.daily_measurement > lastUpdated, theOldestSupportedDate, isOnline);
                 if (isOnline && object.lastUpdated.daily_measurement > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'daily_measurement')) {
@@ -295,33 +296,24 @@ const Socket = ({ children }) => {
 
             socket.on('synchronizationMessege', async (messege) => {
                 console.log('synchronizationMessege', messege)
-                // if (messege.where == 'refresh') window.location.reload(true);
-                // else if (messege.where == "message") store.state.number_of_messages = messege.number_of_messages
-                // else if (messege.where == "logout") await logout()
-                // else if (messege.where == "settings") {
-                //     cookies.set("token", messege.array, "200y")
-                //     store.state.userToken = decodeToken(messege.array)
-                // } else if (messege.where == "daily_measurement") {
-                    for (let i = 0; i < messege.array.length; i++) {
-                        await deleteIndexedDB(isOnline, messege.where, messege.array[i].whenAdded)
-                    }
+                let keyIndexedDB = '_id'
+                if (messege.where == 'daily_measurement') {
+                    keyIndexedDB = 'whenAdded'
+                }
+                for (let i = 0; i < messege.array.length; i++) {
+                    await deleteIndexedDB(isOnline, messege.where, messege.array[i][keyIndexedDB])
+                }
+                if (messege.whatToDo == 'change') {
                     await addIndexedDB(isOnline, messege.where, messege.array)
-                    // setKey(new Date().getTime())
-                // } else {
-                //     for (let i = 0; i < messege.array.length; i++) {
-                //         await deleteIndexedDB(messege.where, messege.array[i]._id)
-                //     }
-                //     if (messege.WhatToDo == "add" || messege.WhatToDo == "change") await addIndexedDB(messege.where, messege.array)
-                // }
-                // store.state[messege.where + "FLAG"] = await currentTime() // Refreshing component where changed messege
-                // localStorage.setItem('lastUpdated', messege.time)
+                }
+                setKey(new Date().getTime())
+                setLastUpdated()
             })
         }
-    }, [cookies])
+    }, [cookies.token])
 
     return (
-        // <div className='socket' key={key}>
-        <div className='socket'>
+        <div className='socket' key={key}>
             {children}
         </div>
     )

@@ -143,7 +143,7 @@ const putInformationAboutNeededUpdate = async (isOnline, where) => {
                         ]);
                     }
                 } else {
-                    localStorage.setItem("lastUpdated", new Date().getTime());
+                    // localStorage.setItem("lastUpdated", new Date().getTime()); // Basic on server's time
                 }
             }
             resolve();

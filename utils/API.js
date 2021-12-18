@@ -13,14 +13,16 @@ const API = async (url, body) => {
         document.cookie.indexOf(" refresh_token=") + 15, 
         document.cookie.lastIndexOf("")
     )
+    const socket_ID = localStorage.getItem('socket_ID')
     // console.log('refresh_token', refresh_token)
     await fetch(`http://localhost:4000${url}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({...body, token, refresh_token}),
+        body: JSON.stringify({...body, token, refresh_token, socket_ID}),
     })
         .then((response) => response.json())
         .then((res) => {
+            setLastUpdated()
             // Verify token diff here and mb refresh?
             if (res.error) throw res
             response = res
@@ -194,4 +196,8 @@ const is_id = async (_id) => {
     })
 }
 
-export { API, insertThoseIDStoDB, is_id, overwriteThoseIDSinDB, loadOneDailyMeasurementByLogin }
+const setLastUpdated = () => {
+    localStorage.setItem('lastUpdated', new Date().getTime())
+}
+
+export { API, insertThoseIDStoDB, is_id, overwriteThoseIDSinDB, loadOneDailyMeasurementByLogin, setLastUpdated }

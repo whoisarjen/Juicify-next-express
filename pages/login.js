@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from 'next/image'
-import { API } from '../utils/API'
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Stack from "@mui/material/Stack";
@@ -8,13 +7,14 @@ import { useCookies } from "react-cookie";
 import logo from '../public/images/logo.png'
 import styles from "../styles/login.module.css";
 import TextField from "@mui/material/TextField";
+import { API, setLastUpdated } from '../utils/API'
 import LoadingButton from "@mui/lab/LoadingButton";
-import { getShortDate } from "../utils/manageDate";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../redux/features/tokenSlice";
 import useTranslation from "next-translate/useTranslation";
 import { expectLoggedOUT, readToken } from "../utils/checkAuth";
 import { createIndexedDB, addIndexedDB } from "../utils/indexedDB";
+import { getShortDate } from "../utils/manageDate";
 
 const Login = () => {
     expectLoggedOUT();
@@ -49,6 +49,14 @@ const Login = () => {
             });
             if (isSuccess) {
                 await createIndexedDB()
+                const keys = Object.keys(response)
+                for (let i = 0; i < keys.length; i++) {
+                    if (keys[i] != 'token' && keys[i] != 'refresh_token') {
+                        await addIndexedDB(true, keys[i], response[keys[i]])
+                    }
+                }
+                dispatch(setToken(response.token));
+                setLastUpdated()
                 setCookie("token", response.token, {
                     path: "/",
                     expires: new Date(
@@ -61,14 +69,6 @@ const Login = () => {
                         new Date().setFullYear(new Date().getFullYear() + 20)
                     ),
                 });
-                const keys = Object.keys(response)
-                for (let i = 0; i < keys.length; i++) {
-                    if (keys[i] != 'token' && keys[i] != 'refresh_token') {
-                        await addIndexedDB(true, keys[i], response[keys[i]])
-                    }
-                }
-                dispatch(setToken(response.token));
-                localStorage.setItem("lastUpdated", new Date().getTime() + 1000);
                 router.push(
                     `/${readToken(response.token).login
                     }/nutrition-diary/${getShortDate()}`

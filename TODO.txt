@@ -8,4 +8,4 @@ max value on inputs
 Clean DB from empty products
 useSocket logout
 deleteidsfromdb change response to response => data
-Errors and loading data from loadOneDailyMeasurementByLogin
+logout error

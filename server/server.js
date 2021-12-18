@@ -50,13 +50,12 @@ app.post('/:what/:where', async (req, res) => {
     req.body.user_ID = '60ba774fe0ecd72587eeaa29' // verifi token
     await require(`./mongoDB/${req.params.what}/${req.params.where}`)(req)
         .then(response => {
-            console.log(response)
-            io.emit('synchronizationMessege', {
+            io.to('60ba774fe0ecd72587eeaa29').except(req.body.socket_ID).emit('synchronizationMessege', {
                 where: req.params.where,
                 whatToDo: 'change',
                 array: response
             })
-            res.send({data: response})
+            res.send({ data: response })
         })
         .catch(err => {
             console.log(err)
@@ -68,8 +67,10 @@ io.on('connection', (client) => {
     // const user_ID = JSON.parse(JSON.stringify(client.handshake.query.user_ID))
     // console.log(client.handshake.query.token)
     console.log(new Date().getTime())
+    client.join('60ba774fe0ecd72587eeaa29')
     io.to(client.id).emit('compareDatabases', {
         "lastUpdated": { daily_measurement: new Date().getTime() },
-        "version": 1
+        "version": 1,
+        "socket_ID": client.id
     })
 });

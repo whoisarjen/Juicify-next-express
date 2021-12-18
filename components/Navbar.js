@@ -52,6 +52,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     await deleteDatabaseIndexedDB();
     dispatch(removeToken());
+    localStorage.clear();
     removeCookie("token", {
       path: "/",
       expire: new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
@@ -60,7 +61,6 @@ const Navbar = () => {
       path: "/",
       expire: new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
     });
-    localStorage.clear();
     router.push(router.pathname === "/login" ? "/" : "/login");
   };
 
