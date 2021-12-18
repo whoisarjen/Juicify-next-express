@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { setToken } from "../redux/features/tokenSlice";
 import { is_id, API } from '../utils/API'
 import { getAllIndexedDB, deleteIndexedDB, getIndexedDBbyID, addIndexedDB } from '../utils/indexedDB'
-import { overwriteThoseIDSinDB, setLastUpdated } from '../utils/API'
+import { overwriteThoseIDSinDB, insertThoseIDStoDB, setLastUpdated } from '../utils/API'
 import { store } from '../redux/store'
 
 const daily_measurementAfterOffline = async (isNewValueInDB) => {
@@ -167,8 +167,9 @@ const daily_measurementAfterOffline = async (isNewValueInDB) => {
                                 changed[i].nutrition_diary = doesDateIsAlreadyInDB.nutrition_diary
                             }
 
-                            if (doesDateIsAlreadyInDB.workout_result && !changed[i].workout_result) changed[i].workout_result = doesDateIsAlreadyInDB.workout_result
-                            else if (doesDateIsAlreadyInDB.workout_result && changed[i].workout_result) {
+                            if (doesDateIsAlreadyInDB.workout_result && !changed[i].workout_result) {
+                                changed[i].workout_result = doesDateIsAlreadyInDB.workout_result
+                            } else if (doesDateIsAlreadyInDB.workout_result && changed[i].workout_result) {
                                 if (changed[i].workout_result.length.length > 0) {
                                     for (let a = 0; a < changed[i].workout_result.length; a++) {
                                         if (changed[i].workout_result[a].deleted) {
@@ -188,7 +189,7 @@ const daily_measurementAfterOffline = async (isNewValueInDB) => {
                         }
                     }
                 }
-                await overwriteThoseIDSinDB("daily_measurement", changed, false, 'whenAdded')
+                await overwriteThoseIDSinDB("daily_measurement", changed)
             }
             await deleteIndexedDB("whatToUpdate", 'daily_measurement')
             if (logout) {
@@ -220,7 +221,7 @@ const Socket = ({ children }) => {
         }
         if (cookies.refresh_token) {
             const socket = io("http://localhost:4000", {
-                query: `token=${cookies.refresh_token}`,
+                query: `refresh_token=${cookies.refresh_token}`,
             })
 
             socket.on('compareDatabases', async (object) => {

@@ -48,8 +48,10 @@ const loadOneDailyMeasurementByLogin = async (when, login) => {
     }
 }
 
-const insertThoseIDStoDB = async (where, array, test, whatToUpdate, value, whatToUpdate2) => {
+const insertThoseIDStoDB = async (where, sentArray, whatToUpdate, value, whatToUpdate2) => {
+    let array = JSON.parse(JSON.stringify(sentArray))
     const isOnline = store.getState().online.isOnline;
+    console.log(`insertThoseIDStoDB is online: ${isOnline}`)
     let uniquePARAM = '_id'
     if (where == 'daily_measurement') uniquePARAM = "whenAdded"
     return new Promise(async resolve => {
@@ -118,8 +120,10 @@ const insertThoseIDStoDB = async (where, array, test, whatToUpdate, value, whatT
     })
 }
 
-const overwriteThoseIDSinDB = async (where, array) => {
+const overwriteThoseIDSinDB = async (where, sentArray) => {
+    let array = JSON.parse(JSON.stringify(sentArray))
     const isOnline = store.getState().online.isOnline
+    console.log(`overwriteThoseIDSinDB is online: ${isOnline}`)
     let uniquePARAM = '_id'
     if (where == 'daily_measurement') uniquePARAM = "whenAdded"
     return new Promise(resolve => {
@@ -130,7 +134,11 @@ const overwriteThoseIDSinDB = async (where, array) => {
             })));
             for (let i = 0; i < array.length; i++) {
                 await deleteIndexedDB(where, array[i][uniquePARAM])
-                if (where == 'daily_measurement' && isOnline) array[i] = await prepareDailyToSend(array[i], true)
+                if (where == 'daily_measurement' && isOnline) {
+                    console.log('before prepare', sentArray[i])
+                    array[i] = await prepareDailyToSend(array[i], true)
+                    console.log('After prepare', array[i])
+                }
             }
             if (isOnline) {
                 const { response, isSuccess } = await API(`/update/${where}`, {
@@ -140,6 +148,8 @@ const overwriteThoseIDSinDB = async (where, array) => {
                     // await gotNewToken(response.tokenGenerated, response.tokenRefreshGenerated)
                     let originalSentArray = JSON.parse(JSON.stringify(array));
                     array = JSON.parse(JSON.stringify(response.data));
+                    console.log('overwriteThoseIDSinDB originalSentArray', originalSentArray)
+                    console.log('overwriteThoseIDSinDB array', array)
                     if (where == 'daily_measurement') {
                         for (let i = 0; i < originalSentArray.length; i++) {
                             if (originalSentArray[i].nutrition_diary && originalSentArray[i].nutrition_diary.length > 0) {
@@ -161,34 +171,41 @@ const overwriteThoseIDSinDB = async (where, array) => {
 }
 
 const prepareDailyToSend = async (daily_measurement, removeDeleted) => {
+    const object = JSON.parse(JSON.stringify(daily_measurement))
     return new Promise(resolve => {
         (async () => {
-            if (daily_measurement._id && !await is_id(daily_measurement._id)) delete daily_measurement._id
-            if (daily_measurement.nutrition_diary && daily_measurement.nutrition_diary.length > 0) {
-                for (let i = 0; i < daily_measurement.nutrition_diary.length; i++) {
-                    if (removeDeleted && daily_measurement.nutrition_diary[i].deleted) {
-                        daily_measurement.nutrition_diary.splice(i, 1)
-                    } else if (daily_measurement.nutrition_diary[i]._id && !await is_id(daily_measurement.nutrition_diary[i]._id)) {
-                        delete daily_measurement.nutrition_diary[i]._id
+            if (object._id && !await is_id(object._id)) {
+                delete object._id
+            }
+            if (object.nutrition_diary && object.nutrition_diary.length > 0) {
+                // for (let i = 0; i < object.nutrition_diary.length; i++) {
+                for (let i = object.nutrition_diary.length - 1; i >= 0; i--) {
+                    if (removeDeleted && object.nutrition_diary[i].deleted) {
+                        object.nutrition_diary.splice(i, 1)
+                    } else if (object.nutrition_diary[i]._id && !await is_id(object.nutrition_diary[i]._id)) {
+                        console.log('deleting _id', object.nutrition_diary[i]._id)
+                        delete object.nutrition_diary[i]._id
                     }
                 }
             }
-            if (daily_measurement.workout_result && daily_measurement.workout_result.length > 0) {
-                for (let i = 0; i < daily_measurement.workout_result.length; i++) {
-                    if (removeDeleted && daily_measurement.workout_result[i].deleted) {
-                        daily_measurement.workout_result.splice(i, 1)
-                    } else if (daily_measurement.workout_result[i]._id && !await is_id(daily_measurement.workout_result[i]._id)) {
-                        delete daily_measurement.workout_result[i]._id
+            if (object.workout_result && object.workout_result.length > 0) {
+                // for (let i = 0; i < object.workout_result.length; i++) {
+                for (let i = object.workout_result.length - 1; i >= 0; i--) {
+                    if (removeDeleted && object.workout_result[i].deleted) {
+                        object.workout_result.splice(i, 1)
+                    } else if (object.workout_result[i]._id && !await is_id(object.workout_result[i]._id)) {
+                        console.log('deleting _id', object.workout_result[i]._id)
+                        delete object.workout_result[i]._id
                     }
                 }
             }
-            if (daily_measurement.nutrition_diary && daily_measurement.nutrition_diary.length == 0) {
-                delete daily_measurement.nutrition_diary
+            if (object.nutrition_diary && object.nutrition_diary.length == 0) {
+                delete object.nutrition_diary
             }
-            if (daily_measurement.workout_result && daily_measurement.workout_result.length == 0) {
-                delete daily_measurement.workout_result
+            if (object.workout_result && object.workout_result.length == 0) {
+                delete object.workout_result
             }
-            resolve(daily_measurement);
+            resolve(object);
         })();
     });
 }
