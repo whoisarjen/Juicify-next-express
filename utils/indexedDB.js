@@ -1,3 +1,4 @@
+import { store } from '../redux/store'
 const namOfIndexedDB = "test";
 
 const connectIndexedDB = () => {
@@ -73,8 +74,8 @@ const getIndexedDBbyID = async (where, id) => {
     });
 };
 
-const putIndexedDB = async (isOnline, where, id, what, value) => {
-    await putInformationAboutNeededUpdate(isOnline, where);
+const putIndexedDB = async (where, id, what, value) => {
+    await putInformationAboutNeededUpdate(where);
     value = value.toString();
     let request3 = await connectIndexedDB();
     return new Promise((resolve) => {
@@ -93,10 +94,10 @@ const putIndexedDB = async (isOnline, where, id, what, value) => {
     });
 };
 
-const deleteIndexedDB = async (isOnline, where, _id) => {
-    console.log(isOnline, where, _id)
+const deleteIndexedDB = async (where, _id) => {
+    console.log(where, _id)
     _id = _id.toString();
-    await putInformationAboutNeededUpdate(isOnline, where);
+    await putInformationAboutNeededUpdate(where);
     let request = await connectIndexedDB();
     return new Promise((resolve) => {
         request.onsuccess = async function () {
@@ -109,9 +110,9 @@ const deleteIndexedDB = async (isOnline, where, _id) => {
     });
 };
 
-const addIndexedDB = async (isOnline, where, value) => {
+const addIndexedDB = async (where, value) => {
     if (value && value.length > 0) {
-        await putInformationAboutNeededUpdate(isOnline, where);
+        await putInformationAboutNeededUpdate(where);
         for (let i = 0; i < value.length; i++) {
             value[i]._id = value[i]._id.toString();
         }
@@ -130,13 +131,14 @@ const addIndexedDB = async (isOnline, where, value) => {
     }
 };
 
-const putInformationAboutNeededUpdate = async (isOnline, where) => {
+const putInformationAboutNeededUpdate = async (where) => {
+    const isOnline = store.getState().online.isOnline;
     return new Promise((resolve) => {
         (async () => {
             if (where != "nutrition_diary_connections" && where != "whatToUpdate") {
                 if (isOnline) {
                     if (!await getIndexedDBbyID("whatToUpdate", where)) {
-                        await addIndexedDB(isOnline, "whatToUpdate", [
+                        await addIndexedDB("whatToUpdate", [
                             {
                                 _id: where,
                             },

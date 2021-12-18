@@ -32,7 +32,6 @@ const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload
     const token = useSelector(state => state.token.value)
     const [refreshChecked, setRefreshChecked] = useState(0)
     const [loadingButton, setLoadingButton] = useState(false)
-    const isOnline = useSelector(state => state.online.isOnline)
     const { products, loading, searchCache } = useFind(find, 'product', tab)
 
     const addProductsToDiary = async () => {
@@ -42,16 +41,16 @@ const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload
             x.meal = meal
             x.product_ID = x._id
             x._id = 'XD' + new Date().getTime() + i
-            await deleteIndexedDB(isOnline, 'checked_product', x.product_ID)
+            await deleteIndexedDB('checked_product', x.product_ID)
             return x
         })
         setChecked([])
         if (!dailyMeasurement.nutrition_diary) dailyMeasurement.nutrition_diary = []
         dailyMeasurement.nutrition_diary = dailyMeasurement.nutrition_diary.concat(object)
         if (await is_id(dailyMeasurement._id)) {
-            await overwriteThoseIDSinDB('daily_measurement', [dailyMeasurement], isOnline)
+            await overwriteThoseIDSinDB('daily_measurement', [dailyMeasurement])
         } else {
-            await insertThoseIDStoDB('daily_measurement', [dailyMeasurement], isOnline)
+            await insertThoseIDStoDB('daily_measurement', [dailyMeasurement])
         }
         reloadDailyMeasurement()
         setLoadingButton(false)

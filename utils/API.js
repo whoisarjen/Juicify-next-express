@@ -1,4 +1,5 @@
 import { getIndexedDBbyID, addIndexedDB, deleteIndexedDB, putIndexedDB } from "./indexedDB"
+import { store } from '../redux/store'
 
 const API = async (url, body) => {
     let response = {}
@@ -47,7 +48,9 @@ const loadOneDailyMeasurementByLogin = async (when, login) => {
     }
 }
 
-const insertThoseIDStoDB = async (where, array, isOnline, whatToUpdate, value, whatToUpdate2) => {
+const insertThoseIDStoDB = async (where, array, test, whatToUpdate, value, whatToUpdate2) => {
+    console.log("----------- TEST -----------------", test)
+    const isOnline = store.getState().online.isOnline;
     console.log('insertThoseIDStoDB isOnline:', isOnline)
     let uniquePARAM = '_id'
     if (where == 'daily_measurement') uniquePARAM = "whenAdded"
@@ -117,7 +120,9 @@ const insertThoseIDStoDB = async (where, array, isOnline, whatToUpdate, value, w
     })
 }
 
-const overwriteThoseIDSinDB = async (where, array, isOnline) => {
+const overwriteThoseIDSinDB = async (where, array, test) => {
+    console.log("----------- TEST -----------------", test)
+    const isOnline = store.getState().online.isOnline;
     console.log('overwriteThoseIDSinDB isOnline:', isOnline)
     let uniquePARAM = '_id'
     if (where == 'daily_measurement') uniquePARAM = "whenAdded"

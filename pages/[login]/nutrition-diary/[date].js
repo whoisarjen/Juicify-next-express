@@ -7,7 +7,8 @@ import { overwriteThoseIDSinDB } from "../../../utils/API"
 import { useDailyMeasurement } from '../../../hooks/useDaily'
 import MealBox from "../../../components/nutrition-diary/MealBox"
 import AddProducts from '../../../components/nutrition-diary/AddProducts'
-import DialogEditProduct from '../../../components/nutrition-diary/DialogEditProduct';
+import DialogEditProduct from '../../../components/nutrition-diary/DialogEditProduct'
+// import { store } from "../../../redux/store" 
 
 const NutritionDiary = () => {
     const router = useRouter()
@@ -19,6 +20,8 @@ const NutritionDiary = () => {
     const [nutrition_diary, setNutrition_diary] = useState([])
     const isOnline = useSelector(state => state.online.isOnline)
     const [{ dataObject, user }, reloadDailyMeasurement] = useDailyMeasurement(router.query.date)
+    // const isOnline = store.getState().online.isOnline;
+    // console.log('>', isOnline)
 
     const deleteProduct = async (_id) => {
         let copyDailyMeasurement = JSON.parse(JSON.stringify(dataObject))

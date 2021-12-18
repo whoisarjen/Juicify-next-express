@@ -15,25 +15,24 @@ const AddProductsBox = ({ product, refreshCheckedProducts }) => {
     const [checked, setChecked] = useState(false);
     const [value, setValue] = useState('1.0')
     const [fav, setFav] = useState(false)
-    const isOnline = useSelector(state => state.online.isOnline)
 
     const handleLike = async () => {
         if (fav) {
             setFav(false)
-            await deleteIndexedDB(isOnline, 'favourite_product', product._id)
+            await deleteIndexedDB('favourite_product', product._id)
         } else {
             setFav(true)
-            await addIndexedDB(isOnline, 'favourite_product', [product])
+            await addIndexedDB('favourite_product', [product])
         }
     }
 
     const handleCheck = async () => {
         if (checked) {
             setChecked(false)
-            await deleteIndexedDB(isOnline, 'checked_product', product._id)
+            await deleteIndexedDB('checked_product', product._id)
         } else {
             setChecked(true)
-            await addIndexedDB(isOnline, 'checked_product', [{ ...product, how_many: value }])
+            await addIndexedDB('checked_product', [{ ...product, how_many: value }])
         }
         refreshCheckedProducts()
     }
@@ -41,7 +40,7 @@ const AddProductsBox = ({ product, refreshCheckedProducts }) => {
     const handleValueChange = async (e) => {
         setValue(e.target.value)
         if (await getIndexedDBbyID('checked_product', product._id)) {
-            await putIndexedDB(isOnline, 'checked_product', product._id, 'how_many', e.target.value)
+            await putIndexedDB('checked_product', product._id, 'how_many', e.target.value)
         }
         refreshCheckedProducts()
     }
