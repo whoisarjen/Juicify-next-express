@@ -6,12 +6,12 @@ const API = async (url, body) => {
     let isSuccess = false
     console.log(url, body)
     const token = document.cookie.substring(
-        document.cookie.indexOf(" token=") + 7, 
+        document.cookie.indexOf(" token=") + 7,
         document.cookie.lastIndexOf("; ")
     )
     // console.log('token', token)
     const refresh_token = document.cookie.substring(
-        document.cookie.indexOf(" refresh_token=") + 15, 
+        document.cookie.indexOf(" refresh_token=") + 15,
         document.cookie.lastIndexOf("")
     )
     const socket_ID = localStorage.getItem('socket_ID')
@@ -19,7 +19,7 @@ const API = async (url, body) => {
     await fetch(`http://localhost:4000${url}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({...body, token, refresh_token, socket_ID}),
+        body: JSON.stringify({ ...body, token, refresh_token, socket_ID }),
     })
         .then((response) => response.json())
         .then((res) => {
@@ -38,7 +38,7 @@ const loadOneDailyMeasurementByLogin = async (when, login) => {
         when: when,
         login: login
     })
-    if(!response.dataObject) response.dataObject = {}
+    if (!response.dataObject) response.dataObject = {}
     if (isSuccess) {
         console.log(`loadOneDailyMeasurementByLogin: ${response}`)
         return response
@@ -49,9 +49,7 @@ const loadOneDailyMeasurementByLogin = async (when, login) => {
 }
 
 const insertThoseIDStoDB = async (where, array, test, whatToUpdate, value, whatToUpdate2) => {
-    console.log("----------- TEST -----------------", test)
     const isOnline = store.getState().online.isOnline;
-    console.log('insertThoseIDStoDB isOnline:', isOnline)
     let uniquePARAM = '_id'
     if (where == 'daily_measurement') uniquePARAM = "whenAdded"
     return new Promise(async resolve => {
@@ -60,7 +58,7 @@ const insertThoseIDStoDB = async (where, array, test, whatToUpdate, value, whatT
         console.log(copyArray)
         for (let i = 0; i < array.length; i++) {
             if (array[i]._id) {
-                await deleteIndexedDB(isOnline, where, array[i][uniquePARAM])
+                await deleteIndexedDB(where, array[i][uniquePARAM])
                 arrayIDSbeforeInsert.push(array[i]._id)
                 delete array[i]._id
             }
@@ -77,7 +75,7 @@ const insertThoseIDStoDB = async (where, array, test, whatToUpdate, value, whatT
                 if (where == 'daily_measurement') {
                     for (let i = 0; i < array.length; i++) {
                         if (await getIndexedDBbyID(where, array[i].whenAdded)) {
-                            await deleteIndexedDB(isOnline, where, array[i].whenAdded) // Server can return existing date
+                            await deleteIndexedDB(where, array[i].whenAdded) // Server can return existing date
                         }
                     }
                 }
@@ -92,8 +90,8 @@ const insertThoseIDStoDB = async (where, array, test, whatToUpdate, value, whatT
                                 }
                             }
                             if (checker > 0) {
-                                await deleteIndexedDB(isOnline, 'daily_measurement', new Date(whatToUpdateARRAY[a].whenAdded).toISOString())
-                                await addIndexedDB(isOnline, 'daily_measurement', [whatToUpdateARRAY[a]])
+                                await deleteIndexedDB('daily_measurement', new Date(whatToUpdateARRAY[a].whenAdded).toISOString())
+                                await addIndexedDB('daily_measurement', [whatToUpdateARRAY[a]])
                             }
                         }
                     }
@@ -102,28 +100,26 @@ const insertThoseIDStoDB = async (where, array, test, whatToUpdate, value, whatT
                     for (let i = 0; i < array.length; i++) {
                         for (let a = 0; a < whatToUpdateARRAY2.length; a++) {
                             if (whatToUpdateARRAY2[a][value] == arrayIDSbeforeInsert[i]) {
-                                await putIndexedDB(isOnline, whatToUpdate2, whatToUpdateARRAY2[a]._id, value, array[i]._id)
+                                await putIndexedDB(whatToUpdate2, whatToUpdateARRAY2[a]._id, value, array[i]._id)
                             }
                         }
                     }
                 }
             } else {
-                return await insertThoseIDStoDB(where, copyArray, whatToUpdate, value, whatToUpdate2, isOnline)
+                return await insertThoseIDStoDB(where, copyArray, whatToUpdate, value, whatToUpdate2)
             }
         } else {
             for (let i = 0; i < array.length; i++) {
                 array[i]._id = "XD" + new Date().getTime() + i
             }
         }
-        await addIndexedDB(isOnline, where, array)
+        await addIndexedDB(where, array)
         return resolve(array)
     })
 }
 
-const overwriteThoseIDSinDB = async (where, array, test) => {
-    console.log("----------- TEST -----------------", test)
-    const isOnline = store.getState().online.isOnline;
-    console.log('overwriteThoseIDSinDB isOnline:', isOnline)
+const overwriteThoseIDSinDB = async (where, array) => {
+    const isOnline = store.getState().online.isOnline
     let uniquePARAM = '_id'
     if (where == 'daily_measurement') uniquePARAM = "whenAdded"
     return new Promise(resolve => {
@@ -133,7 +129,7 @@ const overwriteThoseIDSinDB = async (where, array, test) => {
                 return x
             })));
             for (let i = 0; i < array.length; i++) {
-                await deleteIndexedDB(isOnline, where, array[i][uniquePARAM])
+                await deleteIndexedDB(where, array[i][uniquePARAM])
                 if (where == 'daily_measurement' && isOnline) array[i] = await prepareDailyToSend(array[i], true)
             }
             if (isOnline) {
@@ -155,10 +151,10 @@ const overwriteThoseIDSinDB = async (where, array, test) => {
                         }
                     }
                 } else {
-                    return await overwriteThoseIDSinDB(where, originalArray, false)
+                    return await overwriteThoseIDSinDB(where, originalArray)
                 }
             }
-            await addIndexedDB(isOnline, where, array)
+            await addIndexedDB(where, array)
             resolve(array);
         })();
     })
