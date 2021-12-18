@@ -37,10 +37,11 @@ const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload
     const addProductsToDiary = async () => {
         setLoadingButton(true)
         let object = JSON.parse(JSON.stringify(checked))
+        const time = new Date().getTime()
         object.map(async (x, i) => {
             x.meal = meal
             x.product_ID = x._id
-            x._id = 'XD' + new Date().getTime() + i
+            x._id = 'XD' + time + i
             await deleteIndexedDB('checked_product', x.product_ID)
             return x
         })

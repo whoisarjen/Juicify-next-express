@@ -19,7 +19,7 @@ const daily_measurementAfterOffline = async (isNewValueInDB) => {
             let changed = []
             if (daily_measurement.length > 0) {
                 for (let i = 0; i < daily_measurement.length; i++) {
-                    if (daily_measurement[i].whenAdded >= theOldestSupportedDate) { // Check if date is bigger than limit
+                    if (daily_measurement[i].whenAdded >= theOldestSupportedDate) {
                         if (!(await is_id(daily_measurement[i]._id))) {
                             inserted.push(daily_measurement[i])
                         } else if (daily_measurement[i].changed) {
@@ -52,23 +52,51 @@ const daily_measurementAfterOffline = async (isNewValueInDB) => {
                             if (doesDateIsAlreadyInDB) { // If user already had the date, the new date get some values and change from inserted => changed
                                 inserted[i]._id = doesDateIsAlreadyInDB._id
 
-                                if (doesDateIsAlreadyInDB.weight && !inserted[i].weight) inserted[i].weight = doesDateIsAlreadyInDB.weight
-                                if (doesDateIsAlreadyInDB.weight_description && !inserted[i].weight_description) inserted[i].weight_description = doesDateIsAlreadyInDB.weight_description
-                                if (doesDateIsAlreadyInDB.neck && !inserted[i].neck) inserted[i].neck = doesDateIsAlreadyInDB.neck
-                                if (doesDateIsAlreadyInDB.shoulders && !inserted[i].shoulders) inserted[i].shoulders = doesDateIsAlreadyInDB.shoulders
-                                if (doesDateIsAlreadyInDB.chest && !inserted[i].chest) inserted[i].chest = doesDateIsAlreadyInDB.chest
-                                if (doesDateIsAlreadyInDB.biceps && !inserted[i].biceps) inserted[i].biceps = doesDateIsAlreadyInDB.biceps
-                                if (doesDateIsAlreadyInDB.waist && !inserted[i].waist) inserted[i].waist = doesDateIsAlreadyInDB.waist
-                                if (doesDateIsAlreadyInDB.hips && !inserted[i].hips) inserted[i].hips = doesDateIsAlreadyInDB.hips
-                                if (doesDateIsAlreadyInDB.thigh && !inserted[i].thigh) inserted[i].thigh = doesDateIsAlreadyInDB.thigh
-                                if (doesDateIsAlreadyInDB.calf && !inserted[i].calf) inserted[i].calf = doesDateIsAlreadyInDB.calf
-                                if (doesDateIsAlreadyInDB.water && !inserted[i].water) inserted[i].water = doesDateIsAlreadyInDB.water
+                                if (doesDateIsAlreadyInDB.weight && !inserted[i].weight) {
+                                    inserted[i].weight = doesDateIsAlreadyInDB.weight
+                                }
+                                if (doesDateIsAlreadyInDB.weight_description && !inserted[i].weight_description) {
+                                    inserted[i].weight_description = doesDateIsAlreadyInDB.weight_description
+                                }
+                                if (doesDateIsAlreadyInDB.neck && !inserted[i].neck) {
+                                    inserted[i].neck = doesDateIsAlreadyInDB.neck
+                                }
+                                if (doesDateIsAlreadyInDB.shoulders && !inserted[i].shoulders) {
+                                    inserted[i].shoulders = doesDateIsAlreadyInDB.shoulders
+                                }
+                                if (doesDateIsAlreadyInDB.chest && !inserted[i].chest) {
+                                    inserted[i].chest = doesDateIsAlreadyInDB.chest
+                                }
+                                if (doesDateIsAlreadyInDB.biceps && !inserted[i].biceps) {
+                                    inserted[i].biceps = doesDateIsAlreadyInDB.biceps
+                                }
+                                if (doesDateIsAlreadyInDB.waist && !inserted[i].waist) {
+                                    inserted[i].waist = doesDateIsAlreadyInDB.waist
+                                }
+                                if (doesDateIsAlreadyInDB.hips && !inserted[i].hips) {
+                                    inserted[i].hips = doesDateIsAlreadyInDB.hips
+                                }
+                                if (doesDateIsAlreadyInDB.thigh && !inserted[i].thigh) {
+                                    inserted[i].thigh = doesDateIsAlreadyInDB.thigh
+                                }
+                                if (doesDateIsAlreadyInDB.calf && !inserted[i].calf) {
+                                    inserted[i].calf = doesDateIsAlreadyInDB.calf
+                                }
+                                if (doesDateIsAlreadyInDB.water && !inserted[i].water) {
+                                    inserted[i].water = doesDateIsAlreadyInDB.water
+                                }
 
-                                if (doesDateIsAlreadyInDB.nutrition_diary && !inserted[i].nutrition_diary) inserted[i].nutrition_diary = doesDateIsAlreadyInDB.nutrition_diary
-                                else if (doesDateIsAlreadyInDB.nutrition_diary && inserted[i].nutrition_diary) inserted[i].nutrition_diary = inserted[i].nutrition_diary.concat(doesDateIsAlreadyInDB.nutrition_diary)
+                                if (doesDateIsAlreadyInDB.nutrition_diary && !inserted[i].nutrition_diary) {
+                                    inserted[i].nutrition_diary = doesDateIsAlreadyInDB.nutrition_diary
+                                } else if (doesDateIsAlreadyInDB.nutrition_diary && inserted[i].nutrition_diary) {
+                                    inserted[i].nutrition_diary = inserted[i].nutrition_diary.concat(doesDateIsAlreadyInDB.nutrition_diary)
+                                }
 
-                                if (doesDateIsAlreadyInDB.workout_result && !inserted[i].workout_result) inserted[i].workout_result = doesDateIsAlreadyInDB.workout_result
-                                else if (doesDateIsAlreadyInDB.workout_result && inserted[i].workout_result) inserted[i].workout_result = inserted[i].workout_result.concat(doesDateIsAlreadyInDB.workout_result)
+                                if (doesDateIsAlreadyInDB.workout_result && !inserted[i].workout_result) {
+                                    inserted[i].workout_result = doesDateIsAlreadyInDB.workout_result
+                                } else if (doesDateIsAlreadyInDB.workout_result && inserted[i].workout_result) {
+                                    inserted[i].workout_result = inserted[i].workout_result.concat(doesDateIsAlreadyInDB.workout_result)
+                                }
 
                                 changed.push(inserted[i])
                                 inserted.splice(i, 1)
@@ -85,27 +113,54 @@ const daily_measurementAfterOffline = async (isNewValueInDB) => {
                     for (let i = 0; i < changed.length; i++) {
                         let doesDateIsAlreadyInDB = await getIndexedDBbyID("daily_measurement", changed[i].whenAdded)
                         if (doesDateIsAlreadyInDB) {
-                            if (doesDateIsAlreadyInDB.weight && !changed[i].weight) changed[i].weight = doesDateIsAlreadyInDB.weight
-                            if (doesDateIsAlreadyInDB.weight_description && !changed[i].weight_description) changed[i].weight_description = doesDateIsAlreadyInDB.weight_description
-                            if (doesDateIsAlreadyInDB.neck && !changed[i].neck) changed[i].neck = doesDateIsAlreadyInDB.neck
-                            if (doesDateIsAlreadyInDB.shoulders && !changed[i].shoulders) changed[i].shoulders = doesDateIsAlreadyInDB.shoulders
-                            if (doesDateIsAlreadyInDB.chest && !changed[i].chest) changed[i].chest = doesDateIsAlreadyInDB.chest
-                            if (doesDateIsAlreadyInDB.biceps && !changed[i].biceps) changed[i].biceps = doesDateIsAlreadyInDB.biceps
-                            if (doesDateIsAlreadyInDB.waist && !changed[i].waist) changed[i].waist = doesDateIsAlreadyInDB.waist
-                            if (doesDateIsAlreadyInDB.hips && !changed[i].hips) changed[i].hips = doesDateIsAlreadyInDB.hips
-                            if (doesDateIsAlreadyInDB.thigh && !changed[i].thigh) changed[i].thigh = doesDateIsAlreadyInDB.thigh
-                            if (doesDateIsAlreadyInDB.calf && !changed[i].calf) changed[i].calf = doesDateIsAlreadyInDB.calf
-                            if (doesDateIsAlreadyInDB.water && !changed[i].water) changed[i].water = doesDateIsAlreadyInDB.water
+                            if (doesDateIsAlreadyInDB.weight && !changed[i].weight) {
+                                changed[i].weight = doesDateIsAlreadyInDB.weight
+                            }
+                            if (doesDateIsAlreadyInDB.weight_description && !changed[i].weight_description) {
+                                changed[i].weight_description = doesDateIsAlreadyInDB.weight_description
+                            }
+                            if (doesDateIsAlreadyInDB.neck && !changed[i].neck) {
+                                changed[i].neck = doesDateIsAlreadyInDB.neck
+                            }
+                            if (doesDateIsAlreadyInDB.shoulders && !changed[i].shoulders) {
+                                changed[i].shoulders = doesDateIsAlreadyInDB.shoulders
+                            }
+                            if (doesDateIsAlreadyInDB.chest && !changed[i].chest) {
+                                changed[i].chest = doesDateIsAlreadyInDB.chest
+                            }
+                            if (doesDateIsAlreadyInDB.biceps && !changed[i].biceps) {
+                                changed[i].biceps = doesDateIsAlreadyInDB.biceps
+                            }
+                            if (doesDateIsAlreadyInDB.waist && !changed[i].waist) {
+                                changed[i].waist = doesDateIsAlreadyInDB.waist
+                            }
+                            if (doesDateIsAlreadyInDB.hips && !changed[i].hips) {
+                                changed[i].hips = doesDateIsAlreadyInDB.hips
+                            }
+                            if (doesDateIsAlreadyInDB.thigh && !changed[i].thigh) {
+                                changed[i].thigh = doesDateIsAlreadyInDB.thigh
+                            }
+                            if (doesDateIsAlreadyInDB.calf && !changed[i].calf) {
+                                changed[i].calf = doesDateIsAlreadyInDB.calf
+                            }
+                            if (doesDateIsAlreadyInDB.water && !changed[i].water) {
+                                changed[i].water = doesDateIsAlreadyInDB.water
+                            }
 
-                            if (doesDateIsAlreadyInDB.nutrition_diary && !changed[i].nutrition_diary) changed[i].nutrition_diary = doesDateIsAlreadyInDB.nutrition_diary
-                            else if (doesDateIsAlreadyInDB.nutrition_diary && changed[i].nutrition_diary) {
+                            if (doesDateIsAlreadyInDB.nutrition_diary && !changed[i].nutrition_diary) {
+                                changed[i].nutrition_diary = doesDateIsAlreadyInDB.nutrition_diary
+                            } else if (doesDateIsAlreadyInDB.nutrition_diary && changed[i].nutrition_diary) {
                                 if (changed[i].nutrition_diary.length > 0) {
                                     for (let a = 0; a < changed[i].nutrition_diary.length; a++) {
-                                        if (changed[i].nutrition_diary[a].deleted) doesDateIsAlreadyInDB.nutrition_diary = doesDateIsAlreadyInDB.nutrition_diary.filter(x => x._id != changed[i].nutrition_diary[a]._id)
-                                        else if (!await is_id(changed[i].nutrition_diary[a]._id)) doesDateIsAlreadyInDB.nutrition_diary.push(changed[i].nutrition_diary[a])
-                                        else if (changed[i].nutrition_diary[a].changed) {
+                                        if (changed[i].nutrition_diary[a].deleted) {
+                                            doesDateIsAlreadyInDB.nutrition_diary = doesDateIsAlreadyInDB.nutrition_diary.filter(x => x._id != changed[i].nutrition_diary[a]._id)
+                                        } else if (!await is_id(changed[i].nutrition_diary[a]._id)) {
+                                            doesDateIsAlreadyInDB.nutrition_diary.push(changed[i].nutrition_diary[a])
+                                        } else if (changed[i].nutrition_diary[a].changed) {
                                             const indexNumber = doesDateIsAlreadyInDB.nutrition_diary.findIndex(x => x._id == changed[i].nutrition_diary[a]._id)
-                                            if (parseInt(indexNumber) >= 0) doesDateIsAlreadyInDB.nutrition_diary[indexNumber] = changed[i].nutrition_diary[a]
+                                            if (parseInt(indexNumber) >= 0) {
+                                                doesDateIsAlreadyInDB.nutrition_diary[indexNumber] = changed[i].nutrition_diary[a]
+                                            }
                                         }
                                     }
                                 }
@@ -116,11 +171,15 @@ const daily_measurementAfterOffline = async (isNewValueInDB) => {
                             else if (doesDateIsAlreadyInDB.workout_result && changed[i].workout_result) {
                                 if (changed[i].workout_result.length.length > 0) {
                                     for (let a = 0; a < changed[i].workout_result.length; a++) {
-                                        if (changed[i].workout_result[a].deleted) doesDateIsAlreadyInDB.workout_result = doesDateIsAlreadyInDB.workout_result.filter(x => x._id != changed[i].workout_result[a]._id)
-                                        else if (!await is_id(changed[i].workout_result[a]._id)) doesDateIsAlreadyInDB.workout_result.push(changed[i].workout_result[a])
-                                        else if (changed[i].workout_result[a].changed) {
+                                        if (changed[i].workout_result[a].deleted) {
+                                            doesDateIsAlreadyInDB.workout_result = doesDateIsAlreadyInDB.workout_result.filter(x => x._id != changed[i].workout_result[a]._id)
+                                        } else if (!await is_id(changed[i].workout_result[a]._id)) {
+                                            doesDateIsAlreadyInDB.workout_result.push(changed[i].workout_result[a])
+                                        } else if (changed[i].workout_result[a].changed) {
                                             const indexNumber = doesDateIsAlreadyInDB.workout_result.findIndex(x => x._id == changed[i].workout_result[a]._id)
-                                            if (parseInt(indexNumber) >= 0) doesDateIsAlreadyInDB.workout_result[indexNumber] = changed[i].workout_result[a]
+                                            if (parseInt(indexNumber) >= 0) {
+                                                doesDateIsAlreadyInDB.workout_result[indexNumber] = changed[i].workout_result[a]
+                                            }
                                         }
                                     }
                                 }
