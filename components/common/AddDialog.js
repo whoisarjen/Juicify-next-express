@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
 import AddDialogProduct from './AddDialogProduct';
+import AddDialogExercise from './AddDialogExercise';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { useSelector } from 'react-redux';
@@ -22,7 +23,7 @@ const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const AddProducts = ({ index, where, isAddDialog, closeDialog, dailyMeasurement, reloadDailyMeasurement }) => {
+const AddDialog = ({ index, where, isAddDialog, closeDialog, dailyMeasurement, reloadDailyMeasurement }) => {
     const { t } = useTranslation('nutrition-diary');
     const [tab, setTab] = useState(0)
     const [find, setFind] = useState(null)
@@ -125,9 +126,15 @@ const AddProducts = ({ index, where, isAddDialog, closeDialog, dailyMeasurement,
                         <Tab wrapped label={`${t('Selected')} (${checked.length})`} />
                     </Tabs>
                     {
-                        items && items.map(item =>
-                            <AddDialogProduct refreshCheckedProducts={() => setRefreshChecked(refreshChecked + 1)} product={item} key={item._id} />
-                        )
+                        where === 'product'
+                            ?
+                            items && items.map(item =>
+                                <AddDialogProduct refreshCheckedProducts={() => setRefreshChecked(refreshChecked + 1)} product={item} key={item._id} />
+                            )
+                            :
+                            items && items.map(item =>
+                                <AddDialogExercise refreshCheckedProducts={() => setRefreshChecked(refreshChecked + 1)} exercise={item} key={item._id} />
+                            )
                     }
                     {
                         checked && checked.length > 0 &&
@@ -156,4 +163,4 @@ const AddProducts = ({ index, where, isAddDialog, closeDialog, dailyMeasurement,
     );
 }
 
-export default AddProducts;
+export default AddDialog;
