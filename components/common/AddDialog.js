@@ -6,7 +6,7 @@ import styles from '../../styles/nutrition-diary.module.css'
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
-import AddDialogBox from './AddDialogBox';
+import AddDialogProduct from './AddDialogProduct';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { useSelector } from 'react-redux';
@@ -126,7 +126,7 @@ const AddProducts = ({ index, where, isAddDialog, closeDialog, dailyMeasurement,
                     </Tabs>
                     {
                         items && items.map(item =>
-                            <AddDialogBox refreshCheckedProducts={() => setRefreshChecked(refreshChecked + 1)} product={item} key={item._id} />
+                            <AddDialogProduct refreshCheckedProducts={() => setRefreshChecked(refreshChecked + 1)} product={item} key={item._id} />
                         )
                     }
                     {

@@ -14,7 +14,6 @@ const AddProductsBox = ({ product, refreshCheckedProducts }) => {
     const [checked, setChecked] = useState(false);
     const [value, setValue] = useState('1.0')
     const [fav, setFav] = useState(false)
-    console.log(product)
 
     const handleLike = async () => {
         if (fav) {
