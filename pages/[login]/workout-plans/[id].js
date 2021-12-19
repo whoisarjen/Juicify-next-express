@@ -34,6 +34,8 @@ const WorkoutPlansID = () => {
                 sx={{ width: '100%', marginTop: '10px' }}
             />
 
+            Sort change on button click?
+
             <Stack direction="column" spacing={1}>
                 <Chip
                     label="Custom delete icon"
