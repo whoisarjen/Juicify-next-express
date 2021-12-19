@@ -1,5 +1,12 @@
+import { useState, useEffect } from "react";
+import { getAllIndexedDB } from "../utils/indexedDB";
+
 const useWorkoutPlans = () => {
-    let data = []
+    const [data, setData] = useState(false)
+
+    useEffect(async () => {
+        setData(await getAllIndexedDB('workout_plan'))
+    }, [])
 
     return data;
 }

@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { addIndexedDB } from '../../../utils/indexedDB'
 import useWorkoutPlans from '../../../hooks/useWorkoutPlans'
 import Spinner from '../../../components/common/Spinner';
+import Link from 'next/link'
 
 const WorkoutPlans = () => {
     const router = useRouter()
@@ -23,7 +24,21 @@ const WorkoutPlans = () => {
         <div className="workoutPlans">
             <button onClick={createWorkoutPlan}>Create</button>
             Workout plans
-            <Spinner/>
+            {
+                data === false
+                    ?
+                    <Spinner />
+                    :
+                    data && data.map(plan =>
+                        <Link href={`/${router.query.login}/workout-plans/${plan._id}`} key={plan._id}>
+                            <a>
+                                <div className="workoutPlansBox">
+                                    {plan._id}
+                                </div>
+                            </a>
+                        </Link>
+                    )
+            }
         </div>
     );
 };
