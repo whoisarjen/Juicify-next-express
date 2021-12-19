@@ -30,6 +30,7 @@ const io = socket(server, {
 app.post('/auth/login', (req, res) => require('./mongoDB/auth/login')(req, res));
 
 app.post('/find/product', (req, res) => require('./mongoDB/find/product')(req, res));
+app.post('/find/exercise', (req, res) => require('./mongoDB/find/exercise')(req, res));
 
 app.post('/find/daily_measurements', (req, res) => {
     req.body.user_ID = '60ba774fe0ecd72587eeaa29'

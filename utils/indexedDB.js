@@ -15,17 +15,15 @@ const createIndexedDB = async () => {
             objectStore = db.createObjectStore("product", { keyPath: "_id" });
             objectStore = db.createObjectStore("cache_product", { keyPath: "_id" });
             objectStore = db.createObjectStore("checked_product", { keyPath: "_id" });
-            objectStore = db.createObjectStore("last_used_product", {
-                keyPath: "_id",
-            });
-            objectStore = db.createObjectStore("favourite_product", {
-                keyPath: "_id",
-            });
+            objectStore = db.createObjectStore("last_used_product", { keyPath: "_id" });
+            objectStore = db.createObjectStore("favourite_product", { keyPath: "_id" });
+
             objectStore = db.createObjectStore("exercise", { keyPath: "_id" });
             objectStore = db.createObjectStore("cache_exercise", { keyPath: "_id" });
-            objectStore = db.createObjectStore("last_used_exercise", {
-                keyPath: "_id",
-            });
+            objectStore = db.createObjectStore("checked_exercise", { keyPath: "_id" });
+            objectStore = db.createObjectStore("last_used_exercise", { keyPath: "_id" });
+            objectStore = db.createObjectStore("favourite_exercise", { keyPath: "_id" });
+            
             objectStore = db.createObjectStore("workout_plan", { keyPath: "_id" });
             objectStore = db.createObjectStore("workout_result", { keyPath: "_id" });
             objectStore = db.createObjectStore("daily_measurement", {

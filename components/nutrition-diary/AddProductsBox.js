@@ -8,7 +8,6 @@ import InfoIcon from '@mui/icons-material/Info';
 import { useEffect, useState } from 'react'
 import { putIndexedDB, addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../utils/indexedDB';
 import useTranslation from "next-translate/useTranslation";
-import { useSelector } from 'react-redux';
 
 const AddProductsBox = ({ product, refreshCheckedProducts }) => {
     const { t } = useTranslation('nutrition-diary');

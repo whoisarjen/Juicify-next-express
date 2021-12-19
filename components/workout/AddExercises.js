@@ -6,62 +6,56 @@ import styles from '../../styles/nutrition-diary.module.css'
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
-import AddDialogProduct from './AddDialogProduct';
-import AddDialogExercise from './AddDialogExercise';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import { useSelector } from 'react-redux';
+import AddDialogExercise from './AddExercisesBox';
 import useFind from '../../hooks/useFind';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import LoadingButton from '@mui/lab/LoadingButton';
 import useTranslation from "next-translate/useTranslation";
-import { getAllIndexedDB, deleteIndexedDB } from '../../utils/indexedDB';
-import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../utils/API'
+import { addIndexedDB, deleteIndexedDB, getAllIndexedDB, getIndexedDBbyID, putIndexedDB } from '../../utils/indexedDB';
+import { useRouter } from 'next/router';
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const AddDialog = ({ index, where, isAddDialog, closeDialog, dailyMeasurement, reloadDailyMeasurement }) => {
-    const { t } = useTranslation('nutrition-diary');
+const AddDialog = ({ isAddDialog, closeDialog, skipThoseIDS, reload }) => {
+    const { t } = useTranslation('home');
     const [tab, setTab] = useState(0)
     const [find, setFind] = useState(null)
     const [open, setOpen] = useState(false)
-    const [meal, setMeal] = useState(index)
     const [checked, setChecked] = useState([])
-    const token = useSelector(state => state.token.value)
+    const router = useRouter()
     const [refreshChecked, setRefreshChecked] = useState(0)
     const [loadingButton, setLoadingButton] = useState(false)
-    const { items, loading, searchCache } = useFind(find, where, tab)
+    const { items, loading, searchCache } = useFind(find, 'exercise', tab, skipThoseIDS)
 
-    const addProductsToDiary = async () => {
+    const addExercisesToWorkoutPlan = async () => {
         setLoadingButton(true)
-        let object = JSON.parse(JSON.stringify(checked))
-        const time = new Date().getTime()
-        object.map(async (x, i) => {
-            x.meal = meal
-            x[`${where}_ID`] = x._id
-            x._id = 'XD' + time + i
-            await deleteIndexedDB(`checked_${where}`, x[`${where}_ID`])
-            return x
+        let workout = await getIndexedDBbyID('workout_plan', router.query.id)
+        let newExercises = [...checked].map(x => {
+            return {
+                _id: x._id,
+                name: x.name
+            }
         })
-        setChecked([])
-        if (!dailyMeasurement.nutrition_diary) dailyMeasurement.nutrition_diary = []
-        dailyMeasurement.nutrition_diary = dailyMeasurement.nutrition_diary.concat(object)
-        if (await is_id(dailyMeasurement._id)) {
-            await overwriteThoseIDSinDB('daily_measurement', [dailyMeasurement])
-        } else {
-            await insertThoseIDStoDB('daily_measurement', [dailyMeasurement])
-        }
-        reloadDailyMeasurement()
+        newExercises.forEach(async x => {
+            await deleteIndexedDB('checked_exercise', x._id)
+        })
+        console.log(newExercises)
+        workout.exercises.push(...newExercises)
+        console.log(workout)
+        await deleteIndexedDB('workout_plan', router.query.id)
+        await addIndexedDB('workout_plan', [workout])
+        reload()
+        setRefreshChecked()
         setLoadingButton(false)
         closeDialog()
+        setFind('')
     }
 
-    useEffect(() => setMeal(index), [index])
     useEffect(() => setOpen(false), [searchCache])
-    useEffect(async () => setChecked(await getAllIndexedDB(`checked_${where}`) || []), [refreshChecked])
+    useEffect(async () => setChecked(await getAllIndexedDB('checked_exercise') || []), [refreshChecked])
 
     return (
         <div className={styles.addProducts}>
@@ -72,20 +66,7 @@ const AddDialog = ({ index, where, isAddDialog, closeDialog, dailyMeasurement, r
                 TransitionComponent={Transition}
             >
                 <div className="content">
-                    <div className="title">{t('Add products')}</div>
-                    <Select
-                        sx={{ marginBottom: '10px' }}
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={meal}
-                        onChange={(e) => setMeal(e.target.value)}
-                    >
-                        {
-                            [...Array(token.meal_number)].map((x, i) =>
-                                <MenuItem key={i} value={i}>{t('Meal')} {i + 1}</MenuItem>
-                            )
-                        }
-                    </Select>
+                    <div className="title">{t('Add exercises')}</div>
                     <Autocomplete
                         sx={{ marginBottom: '10px' }}
                         open={open}
@@ -100,7 +81,7 @@ const AddDialog = ({ index, where, isAddDialog, closeDialog, dailyMeasurement, r
                         renderInput={(params) => (
                             <TextField
                                 {...params}
-                                label={t('Search product')}
+                                label={t('Search')}
                                 InputProps={{
                                     ...params.InputProps,
                                     endAdornment: (
@@ -126,22 +107,16 @@ const AddDialog = ({ index, where, isAddDialog, closeDialog, dailyMeasurement, r
                         <Tab wrapped label={`${t('Selected')} (${checked.length})`} />
                     </Tabs>
                     {
-                        where === 'product'
-                            ?
-                            items && items.map(item =>
-                                <AddDialogProduct refreshCheckedProducts={() => setRefreshChecked(refreshChecked + 1)} product={item} key={item._id} />
-                            )
-                            :
-                            items && items.map(item =>
-                                <AddDialogExercise refreshCheckedProducts={() => setRefreshChecked(refreshChecked + 1)} exercise={item} key={item._id} />
-                            )
+                        items && items.map(item =>
+                            <AddDialogExercise refreshCheckedExercises={() => setRefreshChecked(refreshChecked + 1)} exercise={item} key={item._id} />
+                        )
                     }
                     {
                         checked && checked.length > 0 &&
                         <>
                             <div className={styles.addProductsSubmit}>
                                 <LoadingButton
-                                    onClick={addProductsToDiary}
+                                    onClick={addExercisesToWorkoutPlan}
                                     loading={loadingButton}
                                     variant="contained"
                                 >

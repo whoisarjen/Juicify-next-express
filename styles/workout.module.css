@@ -4,3 +4,58 @@
     grid-template-columns: 1fr 1fr;
     margin: 0 auto auto;
 }
+
+
+.addExercisesCloseButton{
+    display: grid;
+    width: calc( 100% - 10px );
+    padding: 3.75px 5px;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    z-index: 2;
+}
+
+.addExercisesCloseButtonPlaceholder{
+    width: 100%;
+    height: 44px;
+}
+
+.addExercisesBox{
+    display: grid;
+    grid-template-columns: 1fr 44px 44px;
+    margin-bottom: 10px;
+    border: 1px solid #e4e4e4;
+    border-left: 5px solid #e4e4e4;
+    border-radius: 8px;
+    padding: 10px 5px 10px 15px;
+    width: calc( 100% - 26px );
+    color: #7a7a7a;
+    font-size: .875rem;
+}
+
+.addExercisesBox div{
+    margin: auto;
+}
+
+.addExercisesBoxName{
+    margin-left: 0 !important;
+    font-weight: bold;
+}
+
+.addExercisesSubmit{
+    width: 100%;
+    position: fixed;
+    bottom: 56px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 2;
+}
+
+.addExercisesSubmitPlaceholder{
+    height: 36.5px;
+    width: 100%;
+}

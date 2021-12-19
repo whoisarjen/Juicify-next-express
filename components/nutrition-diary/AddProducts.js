@@ -22,8 +22,8 @@ const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reloadDailyMeasurement }) => {
-    const { t } = useTranslation('nutrition-diary');
+const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload }) => {
+    const { t } = useTranslation('home');
     const [tab, setTab] = useState(0)
     const [find, setFind] = useState(null)
     const [open, setOpen] = useState(false)
@@ -32,7 +32,7 @@ const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload
     const token = useSelector(state => state.token.value)
     const [refreshChecked, setRefreshChecked] = useState(0)
     const [loadingButton, setLoadingButton] = useState(false)
-    const { products, loading, searchCache } = useFind(find, 'product', tab)
+    const { items, loading, searchCache } = useFind(find, 'product', tab)
 
     const addProductsToDiary = async () => {
         setLoadingButton(true)
@@ -53,7 +53,7 @@ const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload
         } else {
             await insertThoseIDStoDB('daily_measurement', [dailyMeasurement])
         }
-        reloadDailyMeasurement()
+        reload()
         setLoadingButton(false)
         closeDialog()
     }
@@ -99,7 +99,7 @@ const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload
                         renderInput={(params) => (
                             <TextField
                                 {...params}
-                                label={t('Search product')}
+                                label={t('Search')}
                                 InputProps={{
                                     ...params.InputProps,
                                     endAdornment: (
@@ -125,7 +125,7 @@ const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload
                         <Tab wrapped label={`${t('Selected')} (${checked.length})`} />
                     </Tabs>
                     {
-                        products && products.map(product =>
+                        items && items.map(product =>
                             <AddProductsBox refreshCheckedProducts={() => setRefreshChecked(refreshChecked + 1)} product={product} key={product._id} />
                         )
                     }
