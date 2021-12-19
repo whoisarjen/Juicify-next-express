@@ -6,7 +6,7 @@ import { addDaysToDate } from '../../../utils/manageDate'
 import { overwriteThoseIDSinDB } from "../../../utils/API"
 import { useDailyMeasurement } from '../../../hooks/useDaily'
 import MealBox from "../../../components/nutrition-diary/MealBox"
-import AddProducts from '../../../components/nutrition-diary/AddProducts'
+import AddDialog from '../../../components/common/AddDialog'
 import DialogEditProduct from '../../../components/nutrition-diary/DialogEditProduct'
 
 const NutritionDiary = () => {
@@ -81,8 +81,9 @@ const NutritionDiary = () => {
             }
             {
                 token && token.login == router.query.login &&
-                <AddProducts
+                <AddDialog
                     index={index}
+                    where="product"
                     isAddDialog={isAddDialog}
                     dailyMeasurement={dataObject}
                     closeDialog={() => setIsAddDialog(false)}

@@ -11,6 +11,6 @@ module.exports = async function (req, res) {
     })
         .sort({ l: 1, v: -1 })
         .limit(10)
-        .then(products => res.send({ products }))
+        .then(items => res.send({ items }))
         .catch(err => handleError(err, 'find/product'))
 }

@@ -1,10 +1,9 @@
 import {API} from '../utils/API'
 import { useState, useEffect } from "react";
-import { useSelector } from 'react-redux';
 import { addIndexedDB, getAllIndexedDB, getIndexedDBbyID } from '../utils/indexedDB'
 
 const useFind = (value, where, tab) => {
-    const [products, setProducts] = useState([])
+    const [items, setItems] = useState([])
     const [loading, setLoading] = useState(false)
     const [searchCache, setSearchCache] = useState([])
     const [searchTimer, setSearchTimer] = useState(null)
@@ -16,18 +15,18 @@ const useFind = (value, where, tab) => {
             if (tab == 1) {
                 console.log(`${where} loaded from favourite`)
                 let fav = await getAllIndexedDB(`favourite_${where}`) || []
-                setProducts(fav.filter(product => product.name.toLowerCase().includes(value)).sort((a, b) => a.name.length - b.name.length).splice(0, 10))
+                setItems(fav.filter(product => product.name.toLowerCase().includes(value)).sort((a, b) => a.name.length - b.name.length).splice(0, 10))
                 setLoading(false)
             } else if (tab == 2) {
                 console.log(`${where} loaded from checked`)
                 let checked = await getAllIndexedDB(`checked_${where}`) || []
-                setProducts(checked.splice(0, 10))
+                setItems(checked.splice(0, 10))
                 setLoading(false)
             } else {
                 const cache = await getIndexedDBbyID(`cache_${where}`, value)
-                if (cache && cache.products.length > 0) {
+                if (cache && cache.items.length > 0) {
                     console.log(`${where} loaded from cache`)
-                    setProducts(cache.products)
+                    setItems(cache.items)
                     setLoading(false)
                 } else {
                     const searchFunction = (find) => setTimeout(async () => {
@@ -37,9 +36,9 @@ const useFind = (value, where, tab) => {
                             find: find
                         });
                         if (isSuccess) {
-                            const receivedProducts = response.products.sort((a, b) => a.name.length - b.name.length)
-                            setProducts(receivedProducts)
-                            await addIndexedDB(`cache_${where}`, [{ _id: find, whenAdded: new Date(), products: receivedProducts }])
+                            const receivedProducts = response.items.sort((a, b) => a.name.length - b.name.length)
+                            setItems(receivedProducts)
+                            await addIndexedDB(`cache_${where}`, [{ _id: find, whenAdded: new Date(), items: receivedProducts }])
                             setSearchCache([...searchCache, find])
                         }
                         setLoading(false)
@@ -54,7 +53,7 @@ const useFind = (value, where, tab) => {
 
     useEffect(async () => setSearchCache((await getAllIndexedDB(`cache_${where}`)).map(product => product._id)), [])
 
-    return { products, loading, searchCache }
+    return { items, loading, searchCache }
 }
 
 export default useFind

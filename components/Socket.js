@@ -284,13 +284,6 @@ const Socket = ({ children }) => {
                 //                     if(!isOnline) await addIndexedDB("whatToUpdate", [{"_id": "product"}]);
                 //                 }
 
-                //                 if(isOnline && object.lastUpdated.favourite_product > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'favourite_product')){
-                //                     newTimeOfUpdate = object.lastUpdated.favourite_product
-                //                     this.synchroMessage = true;
-                //                     await synchronizationAfterOffline(object.lastUpdated.favourite_product > lastUpdated, "favourite_product");
-                //                     if(!isOnline) await addIndexedDB("whatToUpdate", [{"_id": "favourite_product"}]);
-                //                 }
-
                 //                 if(isOnline && object.lastUpdated.exercise > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'exercise')){
                 //                     newTimeOfUpdate = object.lastUpdated.exercise
                 //                     this.synchroMessage = true;
