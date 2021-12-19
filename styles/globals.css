@@ -166,3 +166,12 @@ input[type=number] {
   margin-bottom: 10px;
   font-weight: bold;
 }
+
+.spinner{
+  width: 100%;
+  display: grid;
+}
+
+.spinner div{
+  margin: auto;
+}

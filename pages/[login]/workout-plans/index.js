@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { addIndexedDB } from '../../../utils/indexedDB'
 import useWorkoutPlans from '../../../hooks/useWorkoutPlans'
+import Spinner from '../../../components/common/Spinner';
 
 const WorkoutPlans = () => {
     const router = useRouter()
@@ -22,6 +23,7 @@ const WorkoutPlans = () => {
         <div className="workoutPlans">
             <button onClick={createWorkoutPlan}>Create</button>
             Workout plans
+            <Spinner/>
         </div>
     );
 };
