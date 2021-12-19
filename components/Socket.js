@@ -47,7 +47,7 @@ const daily_measurementAfterOffline = async (isNewValueInDB) => {
                         await addIndexedDB('daily_measurement', response)
                     }
                     if (inserted.length > 0) {
-                        for (let i = 0; i < inserted.length; i++) {
+                        for (let i = inserted.length - 1; i >= 0; i--) {
                             const doesDateIsAlreadyInDB = await getIndexedDBbyID('daily_measurement', inserted[i].whenAdded) // Checking if there is the date already
                             if (doesDateIsAlreadyInDB) { // If user already had the date, the new date get some values and change from inserted => changed
                                 inserted[i]._id = doesDateIsAlreadyInDB._id
