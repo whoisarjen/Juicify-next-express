@@ -25,6 +25,7 @@ const API = async (url, body) => {
         .then((res) => {
             setLastUpdated()
             // Verify token diff here and mb refresh?
+            // await gotNewToken(response.tokenGenerated, response.tokenRefreshGenerated)
             if (res.error) throw res
             response = res
             isSuccess = true
@@ -72,7 +73,6 @@ const insertThoseIDStoDB = async (where, sentArray, whatToUpdate, value, whatToU
                 array
             })
             if (isSuccess) {
-                // await gotNewToken(response.tokenGenerated, response.tokenRefreshGenerated)
                 array = JSON.parse(JSON.stringify(response.data));
                 if (where == 'daily_measurement') {
                     for (let i = 0; i < array.length; i++) {
@@ -145,7 +145,6 @@ const overwriteThoseIDSinDB = async (where, sentArray) => {
                     array
                 })
                 if (isSuccess) {
-                    // await gotNewToken(response.tokenGenerated, response.tokenRefreshGenerated)
                     let originalSentArray = JSON.parse(JSON.stringify(array));
                     array = JSON.parse(JSON.stringify(response.data));
                     console.log('overwriteThoseIDSinDB originalSentArray', originalSentArray)
@@ -178,7 +177,6 @@ const prepareDailyToSend = async (daily_measurement, removeDeleted) => {
                 delete object._id
             }
             if (object.nutrition_diary && object.nutrition_diary.length > 0) {
-                // for (let i = 0; i < object.nutrition_diary.length; i++) {
                 for (let i = object.nutrition_diary.length - 1; i >= 0; i--) {
                     if (removeDeleted && object.nutrition_diary[i].deleted) {
                         object.nutrition_diary.splice(i, 1)
@@ -189,7 +187,6 @@ const prepareDailyToSend = async (daily_measurement, removeDeleted) => {
                 }
             }
             if (object.workout_result && object.workout_result.length > 0) {
-                // for (let i = 0; i < object.workout_result.length; i++) {
                 for (let i = object.workout_result.length - 1; i >= 0; i--) {
                     if (removeDeleted && object.workout_result[i].deleted) {
                         object.workout_result.splice(i, 1)
