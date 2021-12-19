@@ -33,25 +33,20 @@ const AddDialog = ({ isAddDialog, closeDialog, skipThoseIDS, reload }) => {
     const addExercisesToWorkoutPlan = async () => {
         setLoadingButton(true)
         let workout = await getIndexedDBbyID('workout_plan', router.query.id)
-        let newExercises = [...checked].map(x => {
-            return {
+        checked.forEach(async x => {
+            await deleteIndexedDB('checked_exercise', x._id)
+            workout.exercises.push({
                 _id: x._id,
                 name: x.name
-            }
+            })
         })
-        newExercises.forEach(async x => {
-            await deleteIndexedDB('checked_exercise', x._id)
-        })
-        console.log(newExercises)
-        workout.exercises.push(...newExercises)
-        console.log(workout)
         await deleteIndexedDB('workout_plan', router.query.id)
         await addIndexedDB('workout_plan', [workout])
         reload()
         setRefreshChecked()
         setLoadingButton(false)
         closeDialog()
-        setFind('')
+        setFind(null)
     }
 
     useEffect(() => setOpen(false), [searchCache])
