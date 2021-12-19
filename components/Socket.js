@@ -9,7 +9,7 @@ import { getAllIndexedDB, deleteIndexedDB, getIndexedDBbyID, addIndexedDB } from
 import { overwriteThoseIDSinDB, insertThoseIDStoDB, setLastUpdated } from '../utils/API'
 import { store } from '../redux/store'
 
-const daily_measurementAfterOffline = async (isNewValueInDB) => {
+const synchronizationAfterOfflineDailyMeasurement = async (isNewValueInDB) => {
     const theOldestSupportedDate = store.getState().config.theOldestSupportedDate();
     return new Promise(resolve => {
         (async () => {
@@ -204,6 +204,50 @@ const daily_measurementAfterOffline = async (isNewValueInDB) => {
     });
 }
 
+const synchronizationAfterOffline = async (isNewValueInDB, where, whatToUpdate, value, whatToUpdate2) => {
+    return new Promise(resolve => {
+        (async () => {
+            let deleted = []
+            let changed = []
+            let inserted = []
+            let whereArray = await getAllIndexedDB(where)
+            if (isNewValueInDB) {
+                const { response, isSuccess } = await API(`/find/${where}s`, {
+                    overDatePlusTheDate: theOldestSupportedDate
+                })
+                if (isSuccess) {
+                    console.log('Success new value downloaded', response)
+                    if (response && response.length > 0) {
+                        for (let i = 0; i < response.length; i++) {
+                            await deleteIndexedDB('daily_measurement', response[i].whenAdded)
+                            if (response[i].workout_result && response[i].workout_result.length > 0) {
+                                for (let a = 0; a < response[i].workout_result.length; a++) {
+                                    await deleteIndexedDB("workout_result", response[i].workout_result[a]._id)
+                                }
+                            }
+                        }
+                        await addIndexedDB('daily_measurement', response)
+                    }
+                }
+            }
+            if (whereArray.length > 0) {
+                for (let i = 0; i < whereArray.length; i++) {
+                    if (!whereArray[i].notSAVED) {
+                        if (!(await is_id(whereArray[i]._id))) inserted.push(whereArray[i]) // Seperating new value
+                        else if (whereArray[i].deleted) deleted.push(whereArray[i]) // Seperating deleted value
+                        else if (whereArray[i].changed) changed.push(whereArray[i]) // Seperating changed value
+                    }
+                }
+            }
+            if (inserted.length > 0) await insertThoseIDStoDB(where, inserted, whatToUpdate, value, "_id", whatToUpdate2)
+            if (changed.length > 0) await overwriteThoseIDSinDB(where, changed)
+            if (deleted.length > 0) await deleteThoseIDSfromDB(where, deleted, isNewValueInDB)
+            await deleteIndexedDB("whatToUpdate", where)
+            resolve();
+        })();
+    })
+}
+
 const Socket = ({ children }) => {
     const [key, setKey] = useState(0)
     const dispatch = useDispatch()
@@ -231,50 +275,29 @@ const Socket = ({ children }) => {
                 localStorage.setItem("socket_ID", object.socket_ID);
                 console.log(`halo from socket`, object)
                 const isOnline = store.getState().online.isOnline;
-                await daily_measurementAfterOffline(object.lastUpdated.daily_measurement > lastUpdated);
-                // if (isOnline && object.lastUpdated.daily_measurement > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'daily_measurement')) {
-                //     console.log('Synchronization daily_measurement')
-                //     newTimeOfUpdate = object.lastUpdated.daily_measurement
-                //     await daily_measurementAfterOffline(object.lastUpdated.daily_measurement > lastUpdated);
-                //     if (!isOnline) await addIndexedDB('whatToUpdate', [{ '_id': 'daily_measurement' }]);
-                // }
 
 
-
-
-                //         if(cookies.get("token")){
-                //             socket.on('needToUpdateAfterOffline', async (object) => {
-                //                 let newTimeOfUpdate = 0
-                //                 isOnline = true
-                //                 socket.connected = true
-                //                 socket.disconnected = false
-                //                 this.synchroPercent = 0
-                //                 this.showSynchroNeedMoreTime = false
-                //                 setTimeout(() => this.showSynchroNeedMoreTime = true, 3500)
-                //                 const lastUpdated = localStorage.getItem('lastUpdated')
-
-                //                 this.synchroPercent++
                 //                 if(isOnline && object.lastUpdated.product > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'product')){
                 //                     newTimeOfUpdate = object.lastUpdated.product
                 //                     this.synchroMessage = true;
                 //                     await synchronizationAfterOffline(object.lastUpdated.product > lastUpdated, "product");
                 //                     if(!isOnline) await addIndexedDB("whatToUpdate", [{"_id": "product"}]);
                 //                 }
-                //                 this.synchroPercent++
+
                 //                 if(isOnline && object.lastUpdated.favourite_product > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'favourite_product')){
                 //                     newTimeOfUpdate = object.lastUpdated.favourite_product
                 //                     this.synchroMessage = true;
                 //                     await synchronizationAfterOffline(object.lastUpdated.favourite_product > lastUpdated, "favourite_product");
                 //                     if(!isOnline) await addIndexedDB("whatToUpdate", [{"_id": "favourite_product"}]);
                 //                 }
-                //                 this.synchroPercent++
+
                 //                 if(isOnline && object.lastUpdated.exercise > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'exercise')){
                 //                     newTimeOfUpdate = object.lastUpdated.exercise
                 //                     this.synchroMessage = true;
                 //                     await synchronizationAfterOffline(object.lastUpdated.exercise > lastUpdated, "exercise");
                 //                     if(!isOnline) await addIndexedDB("whatToUpdate", [{"_id": 'exercise'}]);
                 //                 }
-                //                 this.synchroPercent++
+
                 //                 if(isOnline && object.lastUpdated.workout_plan > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'workout_plan')){
                 //                     newTimeOfUpdate = object.lastUpdated.workout_plan
                 //                     this.synchroMessage = true;
@@ -282,15 +305,15 @@ const Socket = ({ children }) => {
                 //                     if(!isOnline) await addIndexedDB("whatToUpdate", [{"_id": "workout_plan"}]);
                 //                 }
 
-                //                 this.synchroPercent++
-                //                 if(isOnline && object.lastUpdated.daily_measurement > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'daily_measurement')){
-                //                     newTimeOfUpdate = object.lastUpdated.daily_measurement
-                //                     this.synchroMessage = true;
-                //                     await daily_measurementAfterOffline(object.lastUpdated.daily_measurement > lastUpdated);
-                //                     if(!isOnline) await addIndexedDB("whatToUpdate", [{"_id": "daily_measurement"}]);
-                //                 }
 
-                //                 this.synchroPercent++
+                if (isOnline && object.lastUpdated.daily_measurement > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'daily_measurement')) {
+                    console.log('Synchronization daily_measurement')
+                    newTimeOfUpdate = object.lastUpdated.daily_measurement
+                    await synchronizationAfterOfflineDailyMeasurement(object.lastUpdated.daily_measurement > lastUpdated);
+                    if (!isOnline) await addIndexedDB('whatToUpdate', [{ '_id': 'daily_measurement' }]);
+                }
+
+
                 //                 if(isOnline && object.lastUpdated.settings > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'settings')){
                 //                     newTimeOfUpdate = object.lastUpdated.settings
                 //                     this.synchroMessage = true;
@@ -322,44 +345,13 @@ const Socket = ({ children }) => {
                 //                     store.state.number_of_messages = object.lastUpdated.message.number_of_messages
                 //                     store.state.last_message_time = object.lastUpdated.message.last_message_time
                 //                 }
-                //                 this.synchroPercent++
+
                 //                 this.synchroMessage = false
                 //             })
 
-                //             socket.on('disconnect', () => {
-                //                 isOnline = false;
-                //                 this.synchroMessage = false;
-                //                 socket.connected = false;
-                //                 socket.disconnected = true;
-                //             })
-
-
-                //             synchronizationAfterOffline = async (isisNewValueInDB, where, whatToUpdate, value, whatToUpdate2) => {
-                //                 return new Promise(resolve => {
-                //                     (async () => {
-                //                         let deleted = []
-                //                         let changed = []
-                //                         let inserted = []
-                //                         let whereArray = await getAllIndexedDB(where)
-                //                         if(isisNewValueInDB) await selectFROM(true, where, null, null, null, null, true) // Donwload new value from DB
-                //                         if(whereArray.length>0){
-                //                             for(let i=0;i<whereArray.length;i++){
-                //                                 if(!whereArray[i].notSAVED){
-                //                                     if(!(await is_id(whereArray[i]._id))) inserted.push(whereArray[i]) // Seperating new value
-                //                                     else if(whereArray[i].deleted) deleted.push(whereArray[i]) // Seperating deleted value
-                //                                     else if(whereArray[i].changed) changed.push(whereArray[i]) // Seperating changed value
-                //                                 }
-                //                             }
-                //                         }
-                //                         if(inserted.length>0) await insertThoseIDStoDB(where, inserted, whatToUpdate, value, "_id", whatToUpdate2)
-                //                         if(changed.length>0) await overwriteThoseIDSinDB(where, changed)
-                //                         if(deleted.length>0) await deleteThoseIDSfromDB(where, deleted, isisNewValueInDB)
-                //                         await deleteIndexedDB("whatToUpdate", where) // Deleting from need to update indexedDB holder
-                //                         store.state[where+"FLAG"] = await currentTime() // Refreshing flag for changed value to refresh components
-                //                         resolve();
-                //                     })();
-                //                 });
-                //             }
+                if (newTimeOfUpdate) {
+                    setKey(new Date().getTime())
+                }
             })
 
             socket.on('synchronizationMessege', async (messege) => {
@@ -377,6 +369,8 @@ const Socket = ({ children }) => {
                 setKey(new Date().getTime())
                 setLastUpdated()
             })
+
+            socket.on('disconnect', () => dispatch(setIsOnline(false))) // Closed socket => user has to be offline
         }
     }, [cookies.token])
 

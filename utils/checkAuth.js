@@ -2,34 +2,48 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import { useSelector } from "react-redux";
-import { useShortDate } from "./manageDate";
+import { getShortDate } from "./manageDate";
+import { deleteDatabaseIndexedDB } from "./indexedDB";
+
+const logout = async () => {
+    await deleteDatabaseIndexedDB();
+    localStorage.clear();
+    document.cookie = `token=''; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`
+    document.cookie = `refresh_token=''; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`
+    window.location.replace(`${window.location.origin}/login`)
+}
 
 const expectLoggedIN = () => {
-  const router = useRouter();
-  const [cookies] = useCookies(["token"]);
+    const router = useRouter();
+    const [cookies] = useCookies(["token"]);
 
-  useEffect(() => {
-    if (!cookies.token) {
-      router.push("/login");
-    }
-  }, []);
+    useEffect(() => {
+        if (!cookies.token) {
+            router.push("/login");
+        }
+    }, []);
 };
 
 const expectLoggedOUT = () => {
-  const router = useRouter();
-  const [cookies] = useCookies(["token"]);
-  const login = useSelector((state) => state.token.value.login);
+    const router = useRouter();
+    const [cookies] = useCookies(["token"]);
+    const login = useSelector((state) => state.token.value.login);
 
-  useEffect(() => {
-    if (cookies.token) {
-      router.push(`/${login}/nutrition-diary/${useShortDate()}`);
-    }
-  }, []);
+    useEffect(() => {
+        if (cookies.token) {
+            router.push(`/${login}/nutrition-diary/${getShortDate()}`);
+        }
+    }, []);
 };
 
 const readToken = (token) => {
-  if(!token) return ''
-  return JSON.parse(Buffer.from(token.split(".")[1], "base64").toString());
+    if (!token) return ''
+    return JSON.parse(Buffer.from(token.split(".")[1], "base64").toString());
 };
 
-export { expectLoggedIN, expectLoggedOUT, readToken };
+export {
+    expectLoggedIN,
+    expectLoggedOUT,
+    readToken,
+    logout
+};

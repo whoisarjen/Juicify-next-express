@@ -12,10 +12,7 @@ import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { useState, forwardRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useCookies } from "react-cookie";
-import { useRouter } from "next/router";
-import { removeToken } from "../redux/features/tokenSlice";
+import { useSelector } from "react-redux";
 import HomeIcon from "@mui/icons-material/Home";
 import LoginIcon from "@mui/icons-material/Login";
 import Tabs from "@mui/material/Tabs";
@@ -24,17 +21,14 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import BookIcon from "@mui/icons-material/Book";
 import { getShortDate } from "../utils/manageDate";
-import { deleteDatabaseIndexedDB } from "../utils/indexedDB";
 import Image from 'next/image'
 import logo from '../public/images/logo.png'
+import { logout } from '../utils/checkAuth'
 
 const Navbar = () => {
-  const router = useRouter("Home");
-  const dispatch = useDispatch();
   const { t } = useTranslation("home");
   const [anchorEl, setAnchorEl] = useState(null);
   const login = useSelector((state) => state.token.value.login);
-  const [, , removeCookie] = useCookies(["token"]);
   const open = Boolean(anchorEl);
 
   const handleCloseExtraMenu = () => setAnchorEl(null)
@@ -48,21 +42,6 @@ const Navbar = () => {
     )
   })
   MyLogo.displayName = "MyLogo Navbar";
-
-  const handleLogout = async () => {
-    await deleteDatabaseIndexedDB();
-    dispatch(removeToken());
-    localStorage.clear();
-    removeCookie("refresh_token", {
-      path: "/",
-      expire: new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
-    });
-    removeCookie("token", {
-      path: "/",
-      expire: new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
-    });
-    router.push(router.pathname === "/login" ? "/" : "/login");
-  };
 
   return (
     <nav className="navbar">
@@ -223,7 +202,7 @@ const Navbar = () => {
               </MenuItem>
             </a>
           </Link>
-          <MenuItem onClick={handleLogout}>
+          <MenuItem onClick={logout}>
             <ListItemIcon>
               <Logout fontSize="small" />
             </ListItemIcon>
