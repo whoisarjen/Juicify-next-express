@@ -1,21 +1,14 @@
 import { getIndexedDBbyID, addIndexedDB, deleteIndexedDB, putIndexedDB } from "./indexedDB"
 import { store } from '../redux/store'
+import { getCookie } from "./checkAuth"
 
 const API = async (url, body) => {
     let response = {}
     let isSuccess = false
     console.log(url, body)
-    const token = document.cookie.substring(
-        document.cookie.indexOf(" token=") + 7,
-        document.cookie.lastIndexOf("; ")
-    )
-    // console.log('token', token)
-    const refresh_token = document.cookie.substring(
-        document.cookie.indexOf(" refresh_token=") + 15,
-        document.cookie.lastIndexOf("")
-    )
+    const token = await getCookie('token')
+    const refresh_token = await getCookie('refresh_token')
     const socket_ID = localStorage.getItem('socket_ID')
-    // console.log('refresh_token', refresh_token)
     await fetch(`http://localhost:4000${url}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
