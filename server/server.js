@@ -51,13 +51,13 @@ app.post('/guest/daily_measurement', async (req, res) => {
 // select
 // Before it, need to handle every possible query without token
 
-app.post('/delete', async (req, res) => {
+app.post('/delete/:where', async (req, res) => {
     await verifyToken(req)
     await require(`./mongoDB/delete`)(req)
         .then(async () => {
-            await updateSynchronizationObject(req.body.user_ID, req.body.where)
+            await updateSynchronizationObject(req.body.user_ID, req.params.where)
             io.to(req.body.user_ID).except(req.body.socket_ID).emit('synchronizationMessege', {
-                where: req.body.where,
+                where: req.params.where,
                 whatToDo: 'delete',
                 array: req.body.array
             })

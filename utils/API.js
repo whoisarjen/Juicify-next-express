@@ -180,8 +180,7 @@ const deleteThoseIDSfromDB = async (where, array, isNewValueInDB) => {
                 }
                 if (isOnline) {
                     if (await is_id(array[0]._id)) {
-                        const { response, isSuccess } = await API(`/delete`, {
-                            where,
+                        const { response, isSuccess } = await API(`/delete/${where}`, {
                             array
                         })
                         if (!isSuccess) {
