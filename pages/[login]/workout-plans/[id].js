@@ -21,6 +21,7 @@ const WorkoutPlansID = () => {
     const [exercises, setExercises] = useState([])
     const [isAddDialog, setIsAddDialog] = useState(false)
     const token = useSelector(state => state.token.value)
+    const isOwner = token && token.login == router.query.login
 
     useEffect(() => {
         setName(data.name)
@@ -65,11 +66,16 @@ const WorkoutPlansID = () => {
         setExercises(newExercises)
     }
 
-    useEffect(async () => await save(true), [name, description, burnt, exercises])
+    useEffect(async () => {
+        if (name !== undefined && description !== undefined && burnt !== undefined && exercises !== undefined) {
+            await save(true)
+        }
+    }, [name, description, burnt, exercises])
 
     return (
         <div className="workoutPlansID">
             <TextField
+                disabled={!isOwner}
                 id="outlined-basic"
                 label="Name of plan"
                 variant="outlined"
@@ -81,6 +87,7 @@ const WorkoutPlansID = () => {
                 sx={{ width: '100%', marginTop: '10px' }}
             />
             <TextField
+                disabled={!isOwner}
                 id="outlined-basic"
                 label="Description"
                 variant="outlined"
@@ -92,6 +99,7 @@ const WorkoutPlansID = () => {
                 sx={{ width: '100%', marginTop: '10px' }}
             />
             <TextField
+                disabled={!isOwner}
                 id="outlined-basic"
                 label="Burnt calories"
                 variant="outlined"
@@ -117,6 +125,7 @@ const WorkoutPlansID = () => {
                                                         {...provided.draggableProps}
                                                         {...provided.dragHandleProps}
                                                         ref={provided.innerRef}
+                                                        disabled={!isOwner}
                                                         label={`${i + 1}. ${exercise.name}`}
                                                         onDelete={() => handleDelete(exercise._id)}
                                                         avatar={<SwapVertIcon />}
@@ -143,17 +152,18 @@ const WorkoutPlansID = () => {
                     }
                 </Droppable>
             </DragDropContext>
-            <ButtonPlus click={() => setIsAddDialog(true)} />
             {
-                token && token.login == router.query.login &&
-                <AddExercises
-                    // key={exercises}
-                    isAddDialog={isAddDialog}
-                    skipThoseIDS={exercises}
-                    closeDialog={() => setIsAddDialog(false)}
-                    reload={reloadWorkoutPlan}
-                    addThoseExercises={(array) => setExercises([...exercises, ...array])}
-                />
+                isOwner &&
+                <>
+                    <ButtonPlus click={() => setIsAddDialog(true)} />
+                    <AddExercises
+                        isAddDialog={isAddDialog}
+                        skipThoseIDS={exercises}
+                        closeDialog={() => setIsAddDialog(false)}
+                        reload={reloadWorkoutPlan}
+                        addThoseExercises={(array) => setExercises([...exercises, ...array])}
+                    />
+                </>
             }
         </div>
     );

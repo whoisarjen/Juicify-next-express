@@ -13,7 +13,6 @@ import Tab from '@mui/material/Tab';
 import LoadingButton from '@mui/lab/LoadingButton';
 import useTranslation from "next-translate/useTranslation";
 import { deleteIndexedDB, getAllIndexedDB } from '../../utils/indexedDB';
-import { useRouter } from 'next/router';
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -25,7 +24,6 @@ const AddDialog = ({ isAddDialog, closeDialog, skipThoseIDS, addThoseExercises, 
     const [find, setFind] = useState(null)
     const [open, setOpen] = useState(false)
     const [checked, setChecked] = useState([])
-    const router = useRouter()
     const [refreshChecked, setRefreshChecked] = useState(0)
     const [loadingButton, setLoadingButton] = useState(false)
     const { items, loading, searchCache } = useFind(find, 'exercise', tab, skipThoseIDS)
