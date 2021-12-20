@@ -32,6 +32,7 @@ const WorkoutPlansID = () => {
     const isOwner = token && token.login == router.query.login
     const [{ data }] = useWorkoutPlan(router.query.id)
     const [isDialog, setIsDialog] = useState(false)
+    const requiredBasicInputLength = useSelector(state => state.config.requiredBasicInputLength)
 
     const saveWorkoutPlan = async () => {
         setSaveLoading(true)
@@ -102,7 +103,7 @@ const WorkoutPlansID = () => {
     }, [data])
 
     useEffect(async () => {
-        if (title !== undefined && description !== undefined && burnt !== undefined && exercises !== undefined) {
+        if (title != undefined && description != undefined && burnt != undefined && exercises != undefined) {
             if (isOwner) {
                 await save()
             }
@@ -149,6 +150,14 @@ const WorkoutPlansID = () => {
                 type="text"
                 onChange={(e) => setTitle(e.target.value)}
                 sx={{ width: '100%', marginTop: '10px' }}
+                error={
+                    title.length > 0 && !requiredBasicInputLength(title).status
+                }
+                helperText={
+                    title.length > 0 && !requiredBasicInputLength(title).status
+                        ? t("home:requiredBasicInputLength")
+                        : ""
+                }
             />
             <TextField
                 disabled={!isOwner}

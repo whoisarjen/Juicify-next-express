@@ -26,9 +26,7 @@ const Login = () => {
     const dispatch = useDispatch();
     const [, setCookie] = useCookies(["token"]);
     const theOldestSupportedDate = useSelector(state => state.config.theOldestSupportedDate)
-    const requiredBasicInputLength = useSelector(
-        (state) => state.config.requiredBasicInputLength
-    );
+    const requiredBasicInputLength = useSelector(state => state.config.requiredBasicInputLength)
 
     const handleKeyPress = (event) => {
         if (event.key === "Enter") {
