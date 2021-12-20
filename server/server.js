@@ -51,8 +51,22 @@ app.post('/guest/daily_measurement', async (req, res) => {
 // select
 // Before it, need to handle every possible query without token
 
-app.post('/delete/*', (req, res) => {
-    // 
+app.post('/delete', async (req, res) => {
+    req.body.user_ID = '60ba774fe0ecd72587eeaa29' // verifi token
+    await require(`./mongoDB/delete`)(req)
+        .then(async () => {
+            await updateSynchronizationObject(req.body.user_ID, req.body.where)
+            io.to(req.body.user_ID).except(req.body.socket_ID).emit('synchronizationMessege', {
+                where: req.body.where,
+                whatToDo: 'delete',
+                array: req.body.array
+            })
+            res.send({})
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(404).send({ error: 'Wrong query' })
+        })
 })
 
 app.post('/:what/:where', async (req, res) => {
@@ -65,7 +79,6 @@ app.post('/:what/:where', async (req, res) => {
                 whatToDo: 'change',
                 array: response
             })
-            console.log(`server is sending back: ${response}`)
             res.send({ data: response })
         })
         .catch(err => {

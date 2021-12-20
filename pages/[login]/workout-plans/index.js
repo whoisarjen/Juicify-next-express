@@ -3,6 +3,7 @@ import { addIndexedDB } from '../../../utils/indexedDB'
 import useWorkoutPlans from '../../../hooks/useWorkoutPlans'
 import Spinner from '../../../components/common/Spinner';
 import Link from 'next/link'
+import ButtonPlus from '../../../components/common/ButtonPlus';
 
 const WorkoutPlans = () => {
     const router = useRouter()
@@ -22,8 +23,8 @@ const WorkoutPlans = () => {
 
     return (
         <div className="workoutPlans">
-            <button onClick={createWorkoutPlan}>Create</button>
-            Workout plans
+            <div className="title">Workout plans</div>
+            <ButtonPlus click={createWorkoutPlan}/>
             {
                 data === false
                     ?

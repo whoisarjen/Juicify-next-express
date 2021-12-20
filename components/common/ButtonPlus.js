@@ -3,8 +3,8 @@ import AddIcon from '@mui/icons-material/Add';
 
 const ButtonPlus = ({ click }) => {
     return (
-        <div className="buttonPlus">
-            <Fab onClick={click} color="primary" aria-label="add">
+        <div className="buttonPlus" onClick={click}>
+            <Fab color="primary" aria-label="add">
                 <AddIcon />
             </Fab>
         </div>

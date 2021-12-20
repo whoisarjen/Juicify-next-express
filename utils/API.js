@@ -162,6 +162,47 @@ const overwriteThoseIDSinDB = async (where, sentArray) => {
     })
 }
 
+const deleteThoseIDSfromDB = async (where, array, isNewValueInDB) => {
+    const isOnline = store.getState().online.isOnline
+    if (isNewValueInDB) { // if there is new value in DB, check if still need to request delete
+        for (let i = 0; i < array.length; i++) {
+            if (!await getIndexedDBbyID(where, array[i]._id)) array.splice(i, 1)
+        }
+    }
+    return new Promise(resolve => {
+        (async () => {
+            if (array.length > 0) {
+                const originalArray = JSON.parse(JSON.stringify(array));
+                for (let i = 0; i < array.length; i++) {
+                    array[i].deleted = true
+                    await deleteIndexedDB(where, array[i]._id)
+                    if (where == 'daily_measurement' && isOnline) array[i] = await prepareDailyToSend(array[i], true)
+                }
+                if (isOnline) {
+                    if (await is_id(array[0]._id)) {
+                        const { response, isSuccess } = await API(`/delete`, {
+                            where,
+                            array
+                        })
+                        if (!isSuccess) {
+                            return await deleteThoseIDSfromDB(where, originalArray, isNewValueInDB)
+                        }
+                    }
+                } else {
+                    for (let i = array.length - 1; i >= 0; i--) {
+                        if (!await is_id(array[i]._id)) {
+                            await deleteIndexedDB(where, array[i]._id)
+                            array.splice(i, 1)
+                        }
+                    }
+                    if (array.length > 0) await addIndexedDB(where, array)
+                }
+            }
+            resolve();
+        })();
+    })
+}
+
 const prepareDailyToSend = async (daily_measurement, removeDeleted) => {
     const object = JSON.parse(JSON.stringify(daily_measurement))
     return new Promise(resolve => {
@@ -210,4 +251,12 @@ const setLastUpdated = () => {
     localStorage.setItem('lastUpdated', new Date().getTime())
 }
 
-export { API, insertThoseIDStoDB, is_id, overwriteThoseIDSinDB, loadOneDailyMeasurementByLogin, setLastUpdated }
+export {
+    API,
+    insertThoseIDStoDB,
+    is_id,
+    overwriteThoseIDSinDB,
+    loadOneDailyMeasurementByLogin,
+    setLastUpdated,
+    deleteThoseIDSfromDB
+}

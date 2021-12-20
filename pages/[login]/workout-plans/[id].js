@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { useState, useEffect } from "react"
 import SaveIcon from '@mui/icons-material/Save'
 import TextField from '@mui/material/TextField'
+import IconButton from '@mui/material/IconButton'
 import LoadingButton from '@mui/lab/LoadingButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 import SwapVertIcon from '@mui/icons-material/SwapVert'
@@ -12,9 +13,9 @@ import useWorkoutPlan from "../../../hooks/useWorkoutPlan"
 import useTranslation from "next-translate/useTranslation"
 import ButtonPlus from '../../../components/common/ButtonPlus'
 import AddExercises from '../../../components/workout/AddExercises'
-import { addIndexedDB, deleteIndexedDB } from "../../../utils/indexedDB"
+import { addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from "../../../utils/indexedDB"
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
-import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from "../../../utils/API"
+import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB, deleteThoseIDSfromDB } from "../../../utils/API"
 
 const WorkoutPlansID = () => {
     const router = useRouter()
@@ -38,6 +39,18 @@ const WorkoutPlansID = () => {
             await insertThoseIDStoDB('workout_plan', [object])
                 .then((response) => router.push(`/${token.login}/workout-plans/${response[0]._id}`))
         }
+        setSaveLoading(false)
+    }
+
+    const deleteWorkoutPlan = async () => {
+        setSaveLoading(true)
+        let object = await getIndexedDBbyID('workout_plan', router.query.id)
+        if (!await is_id(object._id)) {
+            await deleteIndexedDB('workout_plan', object._id)
+        } else {
+            await deleteThoseIDSfromDB('workout_plan', [object])
+        }
+        router.push(`/${token.login}/workout-plans`)
         setSaveLoading(false)
     }
 
@@ -91,8 +104,11 @@ const WorkoutPlansID = () => {
 
     return (
         <div className="workoutPlansID">
-            <div className="grid2WithButton">
+            <div className="grid3WithButton">
                 <div className="title">{t("Workout plan")}</div>
+                <IconButton aria-label="delete" onClick={deleteWorkoutPlan}>
+                    <DeleteIcon />
+                </IconButton>
                 <LoadingButton
                     loading={saveLoading}
                     loadingPosition="start"
