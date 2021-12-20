@@ -11,8 +11,10 @@ import { useSelector } from 'react-redux'
 import { addIndexedDB, deleteIndexedDB } from "../../../utils/indexedDB";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import ButtonPlus from '../../../components/common/ButtonPlus'
+import useTranslation from "next-translate/useTranslation";
 
 const WorkoutPlansID = () => {
+    const {t} = useTranslation('workout')
     const router = useRouter()
     const [data, reloadWorkoutPlan] = useWorkoutPlan(router.query.id)
     const [name, setName] = useState("")
@@ -74,6 +76,7 @@ const WorkoutPlansID = () => {
 
     return (
         <div className="workoutPlansID">
+            <div className="title">{t("Workout plan")}</div>
             <TextField
                 disabled={!isOwner}
                 id="outlined-basic"
