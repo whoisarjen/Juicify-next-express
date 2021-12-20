@@ -44,7 +44,7 @@ app.post('/guest/:where', async (req, res) => {
     await require(`./mongoDB/find/${req.params.where}`)(req)
         .then((data) => {
             console.log('data', data)
-            res.send({
+            return res.send({
                 user: req.body.user,
                 data
             })
@@ -61,7 +61,7 @@ app.post('/delete', async (req, res) => {
                 whatToDo: 'delete',
                 array: req.body.array
             })
-            res.send({})
+            return res.send({})
         })
         .catch(err => {
             console.log(err)
@@ -79,7 +79,7 @@ app.post('/:what/:where', async (req, res) => {
                 whatToDo: 'change',
                 array: data
             })
-            res.send({ data })
+            return res.send({ data })
         })
         .catch(err => {
             console.log(err)
