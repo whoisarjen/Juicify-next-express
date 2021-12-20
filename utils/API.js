@@ -27,17 +27,17 @@ const API = async (url, body) => {
     return { response, isSuccess }
 }
 
-const loadOneDailyMeasurementByLogin = async (when, login) => {
-    const { response, isSuccess } = await API(`/guest/daily_measurement`, {
-        when: when,
-        login: login
+const loadOneValueByLogin = async (where, uniqueKey, login) => {
+    const { response, isSuccess } = await API(`/guest/${where}`, {
+        uniqueKey,
+        login
     })
     if (!response.dataObject) response.dataObject = {}
     if (isSuccess) {
-        console.log(`loadOneDailyMeasurementByLogin: ${response}`)
+        console.log(`loadOneValueByLogin: ${response}`)
         return response
     } else {
-        console.log('loadOneDailyMeasurementByLogin: server error')
+        console.log('loadOneValueByLogin: server error')
         return response
     }
 }
@@ -256,7 +256,7 @@ export {
     insertThoseIDStoDB,
     is_id,
     overwriteThoseIDSinDB,
-    loadOneDailyMeasurementByLogin,
+    loadOneValueByLogin,
     setLastUpdated,
     deleteThoseIDSfromDB
 }

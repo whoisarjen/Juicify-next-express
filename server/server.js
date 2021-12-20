@@ -32,17 +32,28 @@ app.post('/auth/login', (req, res) => require('./mongoDB/auth/login')(req, res))
 app.post('/find/product', (req, res) => require('./mongoDB/find/product')(req, res));
 app.post('/find/exercise', (req, res) => require('./mongoDB/find/exercise')(req, res)); // Need function to cache find things etc.
 
-app.post('/find/daily_measurements', async (req, res) => {
-    await verifyToken(req)
-    require('./mongoDB/find/daily_measurements')(req, res)
-});
+// app.post('/find/daily_measurements', async (req, res) => {
+//     await verifyToken(req)
+//     require('./mongoDB/find/daily_measurements')(req, res)
+// });
 
-app.post('/guest/daily_measurement', async (req, res) => {
+app.post('/guest/:where', async (req, res) => {
     const loadUserByLogin = require('./mongoDB/functions/loadUserByLogin')
     req.body.user = await loadUserByLogin(req.body.login)
-    if (!req.body.user) return res.status(404).send({ error: 'Not found' })
-    if (parseInt(req.body.user.public_profile) == 0) return res.status(403).send({ user: req.body.user })
-    require('./mongoDB/find/daily_measurement')(req, res)
+    if (!req.body.user) {
+        return res.status(404).send({ error: 'Not found' })
+    }
+    if (parseInt(req.body.user.public_profile) == 0) {
+        return res.status(403).send({ user: req.body.user })
+    }
+    await require(`./mongoDB/find/${req.params.where}`)(req)
+        .then((data) => {
+            console.log('data', data)
+            res.send({
+                user: req.body.user,
+                data
+            })
+        })
 });
 
 // register
@@ -72,14 +83,14 @@ app.post('/delete', async (req, res) => {
 app.post('/:what/:where', async (req, res) => {
     await verifyToken(req)
     await require(`./mongoDB/${req.params.what}/${req.params.where}`)(req)
-        .then(async response => {
+        .then(async data => {
             await updateSynchronizationObject(req.body.user_ID, req.params.where)
             io.to(req.body.user_ID).except(req.body.socket_ID).emit('synchronizationMessege', {
                 where: req.params.where,
                 whatToDo: 'change',
-                array: response
+                array: data
             })
-            res.send({ data: response })
+            res.send({ data })
         })
         .catch(err => {
             console.log(err)
@@ -108,7 +119,7 @@ io.on('connection', async (socket) => {
                     "socket_ID": socket.id
                 })
             } else {
-                // If refresh_token is dead, logout user, but allow him synchronization
+                // If refresh_token is dead, logout user, but allow synchronization
                 io.to(socket.id).emit('compareDatabases', {
                     "lastUpdated": { ...await synchronizationObject(0), ...{ logout: new Date().getTime() + 999999999 } },
                     "version": appVersion,
@@ -120,7 +131,7 @@ io.on('connection', async (socket) => {
 });
 
 const createSynchronizationObject = async (user_ID) => {
-    console.log(`Creating Update Object for ${user_ID}`)
+    console.log(`Creating Synchronization Object for ${user_ID}`)
     await redis.set(user_ID, JSON.stringify(await synchronizationObject()))
     return JSON.parse(await redis.get(user_ID))
 }
@@ -137,7 +148,7 @@ const synchronizationObject = async (timeMS = new Date().getTime()) => {
 }
 
 const updateSynchronizationObject = async (user_ID, where) => {
-    console.log(`Updating Update Object (${where}) for ${user_ID}`)
+    console.log(`Updating Synchronization Object (${where}) for ${user_ID}`)
     let object = JSON.parse(await redis.get(user_ID))
     object[where] = new Date().getTime();
     await redis.set(user_ID, JSON.stringify(object))

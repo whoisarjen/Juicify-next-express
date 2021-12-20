@@ -6,7 +6,7 @@ import styles from '../../styles/nutrition-diary.module.css'
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
-import AddDialogExercise from './AddExercisesBox';
+import AddExercisesBox from './AddExercisesBox';
 import useFind from '../../hooks/useFind';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -18,7 +18,7 @@ const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const AddDialog = ({ isAddDialog, closeDialog, skipThoseIDS, addThoseExercises, reload }) => {
+const AddDialog = ({ isAddDialog, closeDialog, skipThoseIDS, addThoseExercises }) => {
     const { t } = useTranslation('home');
     const [tab, setTab] = useState(0)
     const [find, setFind] = useState(null)
@@ -61,7 +61,7 @@ const AddDialog = ({ isAddDialog, closeDialog, skipThoseIDS, addThoseExercises, 
                         onOpen={() => setOpen(true)}
                         onClose={() => setOpen(false)}
                         isOptionEqualToValue={(option, value) => option === value}
-                        getOptionLabel={(option) => option}
+                        getOptionLabel={option => option ? option : ''}
                         options={searchCache}
                         loading={loading}
                         onInputChange={(e, value) => setFind(value.trim().toLowerCase())}
@@ -95,7 +95,7 @@ const AddDialog = ({ isAddDialog, closeDialog, skipThoseIDS, addThoseExercises, 
                     </Tabs>
                     {
                         items && items.map(item =>
-                            <AddDialogExercise refreshCheckedExercises={() => setRefreshChecked(refreshChecked + 1)} exercise={item} key={item._id} />
+                            <AddExercisesBox refreshCheckedExercises={() => setRefreshChecked(refreshChecked + 1)} exercise={item} key={item._id} />
                         )
                     }
                     {

@@ -29,24 +29,24 @@ const useFind = (value, where, tab, skipThoseIDS) => {
         if (value && value.length > 2) {
             setLoading(true)
             if (tab == 1) {
-                console.log(`${where} loaded from favourite`)
+                // console.log(`${where} loaded from favourite`)
                 let fav = await prepareItems(await getAllIndexedDB(`favourite_${where}`) || [], skipThoseIDS)
                 setItems(fav.filter(item => item.name.toLowerCase().includes(value)).sort((a, b) => a.name.length - b.name.length).splice(0, 10))
                 setLoading(false)
             } else if (tab == 2) {
-                console.log(`${where} loaded from checked`)
+                // console.log(`${where} loaded from checked`)
                 let checked = await prepareItems(await getAllIndexedDB(`checked_${where}`) || [], skipThoseIDS)
                 setItems(checked.splice(0, 10))
                 setLoading(false)
             } else {
                 const cache = await getIndexedDBbyID(`cache_${where}`, value)
                 if (cache && cache.items.length > 0) {
-                    console.log(`${where} loaded from cache`)
+                    // console.log(`${where} loaded from cache`)
                     setItems(await prepareItems(cache.items || [], skipThoseIDS))
                     setLoading(false)
                 } else {
                     const searchFunction = (find) => setTimeout(async () => {
-                        console.log(`${where} loaded from API`)
+                        // console.log(`${where} loaded from API`)
                         setLoading(true);
                         const { response, isSuccess } = await API(`/find/${where}`, {
                             find: find

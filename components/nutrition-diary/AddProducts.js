@@ -92,7 +92,7 @@ const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload
                         onOpen={() => setOpen(true)}
                         onClose={() => setOpen(false)}
                         isOptionEqualToValue={(option, value) => option === value}
-                        getOptionLabel={(option) => option}
+                        getOptionLabel={option => option ? option : ''}
                         options={searchCache}
                         loading={loading}
                         onInputChange={(e, value) => setFind(value.trim().toLowerCase())}

@@ -29,7 +29,7 @@ const WorkoutPlansID = () => {
     const [saveLoading, setSaveLoading] = useState(false)
     const token = useSelector(state => state.token.value)
     const isOwner = token && token.login == router.query.login
-    const [data, reloadWorkoutPlan] = useWorkoutPlan(router.query.id)
+    const [{ data }] = useWorkoutPlan(router.query.id)
     const [isDialog, setIsDialog] = useState(false)
 
     const saveWorkoutPlan = async () => {
@@ -102,7 +102,9 @@ const WorkoutPlansID = () => {
 
     useEffect(async () => {
         if (title !== undefined && description !== undefined && burnt !== undefined && exercises !== undefined) {
-            await save()
+            if (isOwner) {
+                await save()
+            }
         }
     }, [title, description, burnt, exercises])
 
@@ -110,7 +112,7 @@ const WorkoutPlansID = () => {
         <div className="workoutPlansID">
             <div className="grid3WithButton">
                 <div className="title">{t("Workout plan")}</div>
-                <IconButton aria-label="delete" onClick={() => setIsDialog(true)}>
+                <IconButton aria-label="delete" onClick={() => setIsDialog(true)} sx={{ margin: 'auto' }}>
                     <DeleteIcon />
                 </IconButton>
                 <LoadingButton
@@ -203,7 +205,6 @@ const WorkoutPlansID = () => {
                         isAddDialog={isAddDialog}
                         skipThoseIDS={exercises}
                         closeDialog={() => setIsAddDialog(false)}
-                        reload={reloadWorkoutPlan}
                         addThoseExercises={(array) => setExercises([...exercises, ...array])}
                     />
                     <ConfirmDialog

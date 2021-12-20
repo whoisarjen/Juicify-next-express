@@ -17,10 +17,10 @@ const NutritionDiary = () => {
     const [isAddDialog, setIsAddDialog] = useState(false)
     const [isEditDialog, setIsEditDialog] = useState(false)
     const [nutrition_diary, setNutrition_diary] = useState([])
-    const [{ dataObject, user }, reloadDailyMeasurement] = useDailyMeasurement(router.query.date)
+    const [{ data, user }, reloadDailyMeasurement] = useDailyMeasurement(router.query.date)
 
     const deleteProduct = async (_id) => {
-        let copyDailyMeasurement = JSON.parse(JSON.stringify(dataObject))
+        let copyDailyMeasurement = JSON.parse(JSON.stringify(data))
         copyDailyMeasurement.nutrition_diary = copyDailyMeasurement.nutrition_diary.map(obj =>
             obj._id == _id ? { ...obj, deleted: true } : obj
         );
@@ -29,7 +29,7 @@ const NutritionDiary = () => {
     }
 
     const changeProduct = async (newProduct) => {
-        let copyDailyMeasurement = JSON.parse(JSON.stringify(dataObject))
+        let copyDailyMeasurement = JSON.parse(JSON.stringify(data))
         copyDailyMeasurement.nutrition_diary = copyDailyMeasurement.nutrition_diary.map(obj =>
             obj._id == newProduct._id ? { ...obj, ...{ changed: true, how_many: newProduct.how_many, meal: newProduct.meal } } : obj
         );
@@ -38,14 +38,14 @@ const NutritionDiary = () => {
     }
 
     useEffect(() => {
-        if (dataObject && dataObject.nutrition_diary) {
+        if (data && data.nutrition_diary) {
             const arr = []
             const l = user.meal_number || 5
             for (let i = 0; i < l; i++) {
                 arr.push([])
             }
             const length = arr.length
-            dataObject.nutrition_diary.forEach(meal => {
+            data.nutrition_diary.forEach(meal => {
                 if (!meal.deleted) {
                     if (meal.meal + 1 > length) {
                         for (let i = 0; i < meal.meal + 1 - length; i++) {
@@ -57,7 +57,7 @@ const NutritionDiary = () => {
             })
             setNutrition_diary(arr)
         }
-    }, [dataObject])
+    }, [data])
 
     return (
         <div className="NutritionDiary">
@@ -84,7 +84,7 @@ const NutritionDiary = () => {
                 <AddProducts
                     index={index}
                     isAddDialog={isAddDialog}
-                    dailyMeasurement={dataObject}
+                    dailyMeasurement={data}
                     closeDialog={() => setIsAddDialog(false)}
                     reload={reloadDailyMeasurement}
                 />
