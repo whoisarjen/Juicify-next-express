@@ -12,14 +12,14 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import LoadingButton from '@mui/lab/LoadingButton';
 import useTranslation from "next-translate/useTranslation";
-import { addIndexedDB, deleteIndexedDB, getAllIndexedDB, getIndexedDBbyID, putIndexedDB } from '../../utils/indexedDB';
+import { deleteIndexedDB, getAllIndexedDB } from '../../utils/indexedDB';
 import { useRouter } from 'next/router';
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const AddDialog = ({ isAddDialog, closeDialog, skipThoseIDS, reload }) => {
+const AddDialog = ({ isAddDialog, closeDialog, skipThoseIDS, addThoseExercises, reload }) => {
     const { t } = useTranslation('home');
     const [tab, setTab] = useState(0)
     const [find, setFind] = useState(null)
@@ -32,22 +32,15 @@ const AddDialog = ({ isAddDialog, closeDialog, skipThoseIDS, reload }) => {
 
     const addExercisesToWorkoutPlan = async () => {
         setLoadingButton(true)
-        let workout = await getIndexedDBbyID('workout_plan', router.query.id)
-        if(!workout.exercises) workout.exercises = []
         checked.forEach(async x => {
             await deleteIndexedDB('checked_exercise', x._id)
-            workout.exercises.push({
-                _id: x._id,
-                name: x.name
-            })
         })
-        await deleteIndexedDB('workout_plan', router.query.id)
-        await addIndexedDB('workout_plan', [workout])
-        reload()
-        setRefreshChecked()
+        addThoseExercises(checked)
         setLoadingButton(false)
         closeDialog()
         setFind(null)
+        setChecked([])
+
     }
 
     useEffect(() => setOpen(false), [searchCache])

@@ -4,13 +4,11 @@ import { addIndexedDB, getAllIndexedDB, getIndexedDBbyID } from '../utils/indexe
 
 const prepareItems = (data, skipThoseIDS) => {
     return new Promise(resolve => {
-        console.log('prepare', data, skipThoseIDS)
         if (skipThoseIDS && skipThoseIDS.length > 0 && data.length > 0) {
             for (let i = 0; i < skipThoseIDS.length; i++) {
                 for (let a = 0; a < data.length; a++) {
                     if (skipThoseIDS[i]._id == data[a]._id) {
                         data.splice(a, 1)
-                        console.log("SKIP")
                         break;
                     }
                 }

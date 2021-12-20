@@ -143,14 +143,16 @@ const WorkoutPlansID = () => {
                     }
                 </Droppable>
             </DragDropContext>
-            <ButtonPlus click={() => setIsAddDialog(true)}/>
+            <ButtonPlus click={() => setIsAddDialog(true)} />
             {
                 token && token.login == router.query.login &&
                 <AddExercises
+                    // key={exercises}
                     isAddDialog={isAddDialog}
                     skipThoseIDS={exercises}
                     closeDialog={() => setIsAddDialog(false)}
                     reload={reloadWorkoutPlan}
+                    addThoseExercises={(array) => setExercises([...exercises, ...array])}
                 />
             }
         </div>
