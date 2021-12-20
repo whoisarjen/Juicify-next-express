@@ -30,10 +30,10 @@ const io = socket(server, {
 app.post('/auth/login', (req, res) => require('./mongoDB/auth/login')(req, res));
 
 app.post('/find/product', (req, res) => require('./mongoDB/find/product')(req, res));
-app.post('/find/exercise', (req, res) => require('./mongoDB/find/exercise')(req, res));
+app.post('/find/exercise', (req, res) => require('./mongoDB/find/exercise')(req, res)); // Need function to cache find things etc.
 
-app.post('/find/daily_measurements', (req, res) => {
-    req.body.user_ID = '60ba774fe0ecd72587eeaa29'
+app.post('/find/daily_measurements', async (req, res) => {
+    await verifyToken(req)
     require('./mongoDB/find/daily_measurements')(req, res)
 });
 
@@ -52,7 +52,7 @@ app.post('/guest/daily_measurement', async (req, res) => {
 // Before it, need to handle every possible query without token
 
 app.post('/delete', async (req, res) => {
-    req.body.user_ID = '60ba774fe0ecd72587eeaa29' // verifi token
+    await verifyToken(req)
     await require(`./mongoDB/delete`)(req)
         .then(async () => {
             await updateSynchronizationObject(req.body.user_ID, req.body.where)
@@ -70,7 +70,7 @@ app.post('/delete', async (req, res) => {
 })
 
 app.post('/:what/:where', async (req, res) => {
-    req.body.user_ID = '60ba774fe0ecd72587eeaa29' // verifi token
+    await verifyToken(req)
     await require(`./mongoDB/${req.params.what}/${req.params.where}`)(req)
         .then(async response => {
             await updateSynchronizationObject(req.body.user_ID, req.params.where)
@@ -86,6 +86,10 @@ app.post('/:what/:where', async (req, res) => {
             res.status(404).send({ error: 'Wrong query' })
         })
 });
+
+const verifyToken = async (req) => {
+    req.body.user_ID = '60ba774fe0ecd72587eeaa29'
+} 
 
 
 // ---- ---- SOCKET ---- ----
@@ -104,8 +108,12 @@ io.on('connection', async (socket) => {
                     "socket_ID": socket.id
                 })
             } else {
-                // Logout user bc refresh_token is dead?
-                // or refresh it, but then how to handle new token?
+                // If refresh_token is dead, logout user, but allow him synchronization
+                io.to(socket.id).emit('compareDatabases', {
+                    "lastUpdated": {...await synchronizationObject(0), ...{ logout: new Date().getTime() + 999999999 }},
+                    "version": appVersion,
+                    "socket_ID": socket.id
+                })
             }
         })
     }
@@ -113,17 +121,20 @@ io.on('connection', async (socket) => {
 
 const createSynchronizationObject = async (user_ID) => {
     console.log(`Creating Update Object for ${user_ID}`)
-    const timeMS = new Date().getTime()
-    await redis.set(user_ID, JSON.stringify({
+    await redis.set(user_ID, JSON.stringify(await synchronizationObject()))
+    return JSON.parse(await redis.get(user_ID))
+}
+
+const synchronizationObject = async (timeMS = new Date().getTime()) => {
+    return {
         product: timeMS,
         exercise: timeMS,
         workout_plan: timeMS,
         settings: timeMS,
         daily_measurement: timeMS,
         logout: 0
-    }))
-    return JSON.parse(await redis.get(user_ID))
-}
+    }
+} 
 
 const updateSynchronizationObject = async (user_ID, where) => {
     console.log(`Updating Update Object (${where}) for ${user_ID}`)
