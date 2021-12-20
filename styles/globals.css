@@ -175,3 +175,13 @@ input[type=number] {
 .spinner div{
   margin: auto;
 }
+
+.buttonPlus{
+  width: 100%;
+  display: grid;
+  margin-top: 10px;
+}
+
+.buttonPlus button{
+  margin: auto;
+}

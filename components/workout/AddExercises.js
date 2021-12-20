@@ -33,6 +33,7 @@ const AddDialog = ({ isAddDialog, closeDialog, skipThoseIDS, reload }) => {
     const addExercisesToWorkoutPlan = async () => {
         setLoadingButton(true)
         let workout = await getIndexedDBbyID('workout_plan', router.query.id)
+        if(!workout.exercises) workout.exercises = []
         checked.forEach(async x => {
             await deleteIndexedDB('checked_exercise', x._id)
             workout.exercises.push({
