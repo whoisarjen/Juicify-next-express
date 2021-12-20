@@ -1,63 +1,71 @@
-import useWorkoutPlan from "../../../hooks/useWorkoutPlan";
-import TextField from '@mui/material/TextField';
-import Chip from '@mui/material/Chip';
-import Stack from '@mui/material/Stack';
-import DeleteIcon from '@mui/icons-material/Delete';
-import SwapVertIcon from '@mui/icons-material/SwapVert';
-import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
-import AddExercises from '../../../components/workout/AddExercises'
+import Chip from '@mui/material/Chip'
+import Stack from '@mui/material/Stack'
+import { useRouter } from "next/router"
 import { useSelector } from 'react-redux'
-import { addIndexedDB, deleteIndexedDB } from "../../../utils/indexedDB";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { useState, useEffect } from "react"
+import SaveIcon from '@mui/icons-material/Save'
+import TextField from '@mui/material/TextField'
+import LoadingButton from '@mui/lab/LoadingButton'
+import DeleteIcon from '@mui/icons-material/Delete'
+import SwapVertIcon from '@mui/icons-material/SwapVert'
+import useWorkoutPlan from "../../../hooks/useWorkoutPlan"
+import useTranslation from "next-translate/useTranslation"
 import ButtonPlus from '../../../components/common/ButtonPlus'
-import useTranslation from "next-translate/useTranslation";
+import AddExercises from '../../../components/workout/AddExercises'
+import { addIndexedDB, deleteIndexedDB } from "../../../utils/indexedDB"
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
+import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from "../../../utils/API"
 
 const WorkoutPlansID = () => {
-    const {t} = useTranslation('workout')
     const router = useRouter()
-    const [data, reloadWorkoutPlan] = useWorkoutPlan(router.query.id)
-    const [name, setName] = useState("")
-    const [description, setDescription] = useState("")
     const [burnt, setBurnt] = useState(0)
+    const [title, setTitle] = useState("")
+    const { t } = useTranslation('workout')
     const [exercises, setExercises] = useState([])
+    const [description, setDescription] = useState("")
     const [isAddDialog, setIsAddDialog] = useState(false)
+    const [saveLoading, setSaveLoading] = useState(false)
     const token = useSelector(state => state.token.value)
     const isOwner = token && token.login == router.query.login
+    const [data, reloadWorkoutPlan] = useWorkoutPlan(router.query.id)
 
-    useEffect(() => {
-        setName(data.name)
-        setDescription(data.description)
-        setBurnt(data.burnt)
-        setExercises(data.exercises)
-    }, [data])
+    const saveWorkoutPlan = async () => {
+        setSaveLoading(true)
+        let object = await save(true)
+        if (object._id) {
+            await overwriteThoseIDSinDB('workout_plan', [object])
+        } else {
+            await insertThoseIDStoDB('workout_plan', [object])
+                .then((response) => router.push(`/${token.login}/workout-plans/${response[0]._id}`))
+        }
+        setSaveLoading(false)
+    }
 
-    const handleDelete = async (_id) => setExercises(exercises.filter(x => x._id != _id))
+    const handleDelete = (_id) => setExercises(exercises.filter(x => x._id != _id))
 
-    const save = async (auto) => {
+    const save = async (prepareForDB) => {
         let object = {
             _id: router.query.id,
-            name: name,
+            title: title,
             user_ID: token._id,
             description: description,
             burnt: burnt,
-            exercises: exercises,
-            notSaved: new Date().getTime()
-        }
-        if (!auto) {
-            delete object.notSaved
+            exercises: exercises
         }
         if (!object.burnt) {
             delete object.burnt
-        }
-        if (!object.exercises || object.exercises.length == 0) {
-            delete object.exercises
         }
         if (!object.description) {
             delete object.description
         }
         await deleteIndexedDB('workout_plan', router.query.id)
-        await addIndexedDB('workout_plan', [object])
+        if (!prepareForDB) {
+            object.notSaved = new Date().getTime()
+            await addIndexedDB('workout_plan', [object])
+        } else if (!await is_id(object._id)) {
+            delete object._id
+        }
+        return object
     }
 
     const handleOnDragEnd = async (result) => {
@@ -68,25 +76,41 @@ const WorkoutPlansID = () => {
         setExercises(newExercises)
     }
 
+    useEffect(() => {
+        setTitle(data.title)
+        setDescription(data.description)
+        setBurnt(data.burnt)
+        setExercises(data.exercises)
+    }, [data])
+
     useEffect(async () => {
-        if (name !== undefined && description !== undefined && burnt !== undefined && exercises !== undefined) {
-            await save(true)
+        if (title !== undefined && description !== undefined && burnt !== undefined && exercises !== undefined) {
+            await save()
         }
-    }, [name, description, burnt, exercises])
+    }, [title, description, burnt, exercises])
 
     return (
         <div className="workoutPlansID">
-            <div className="title">{t("Workout plan")}</div>
+            <div className="grid2WithButton">
+                <div className="title">{t("Workout plan")}</div>
+                <LoadingButton
+                    loading={saveLoading}
+                    loadingPosition="start"
+                    startIcon={<SaveIcon />}
+                    variant="outlined"
+                    onClick={saveWorkoutPlan}
+                >
+                    {t('Save')}
+                </LoadingButton>
+            </div>
             <TextField
                 disabled={!isOwner}
                 id="outlined-basic"
                 label="Name of plan"
                 variant="outlined"
-                value={name}
+                value={title}
                 type="text"
-                onChange={(e) => {
-                    setName(e.target.event)
-                }}
+                onChange={(e) => setTitle(e.target.value)}
                 sx={{ width: '100%', marginTop: '10px' }}
             />
             <TextField
@@ -96,9 +120,7 @@ const WorkoutPlansID = () => {
                 variant="outlined"
                 value={description}
                 type="text"
-                onChange={(e) => {
-                    setDescription(e.target.event)
-                }}
+                onChange={(e) => setDescription(e.target.value)}
                 sx={{ width: '100%', marginTop: '10px' }}
             />
             <TextField
@@ -109,9 +131,7 @@ const WorkoutPlansID = () => {
                 value={burnt}
                 type="number"
                 inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                onChange={(e) => {
-                    setBurnt(e.target.event)
-                }}
+                onChange={(e) => setBurnt(e.target.value)}
                 sx={{ width: '100%', marginTop: '10px', display: 'grid', gridTemplateColumns: 'auto 1fr auro' }}
             />
             <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -169,7 +189,7 @@ const WorkoutPlansID = () => {
                 </>
             }
         </div>
-    );
+    )
 }
 
-export default WorkoutPlansID;
+export default WorkoutPlansID

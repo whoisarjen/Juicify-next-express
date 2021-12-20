@@ -65,6 +65,7 @@ app.post('/:what/:where', async (req, res) => {
                 whatToDo: 'change',
                 array: response
             })
+            console.log(`server is sending back: ${response}`)
             res.send({ data: response })
         })
         .catch(err => {

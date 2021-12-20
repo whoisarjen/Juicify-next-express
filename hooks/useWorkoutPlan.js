@@ -8,7 +8,7 @@ const useWorkoutPlan = (workoutPlanID) => {
     useEffect(async () => {
         if (workoutPlanID) {
             let object = await getIndexedDBbyID('workout_plan', workoutPlanID)
-            if (!object.name) object.name = ''
+            if (!object.title) object.title = ''
             if (!object.description) object.description = ''
             if (!object.burnt) object.burnt = 0
             if (!object.exercises) object.exercises = []

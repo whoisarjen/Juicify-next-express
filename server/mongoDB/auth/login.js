@@ -16,11 +16,12 @@ module.exports = function (req, res) {
 			const token = require('./tokenGENERATOR')([user])
 			const refresh_token = require('./tokenRefreshGENERATOR')([user])
 			Model = require('../models/workout_plan')
-			Model.find({ user_ID: user._id }).then(async function (workout_plan) {
+			Model.find({ user_ID: user._id }).then(async function (RES_workout_plan) {
+				const workout_plan = JSON.parse(JSON.stringify(RES_workout_plan))
 				if (workout_plan.length > 0) {
 					for (let i = 0; i < workout_plan.length; i++) {
 						for (let a = 0; a < workout_plan[i].exercises.length; a++) {
-							workout_plan[i].exercises[a] = await loadExercise(workout_plan[i].exercises[a])
+							workout_plan[i].exercises[a] = await loadExercise(RES_workout_plan[i].exercises[a])
 						}
 					}
 				}

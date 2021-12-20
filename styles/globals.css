@@ -186,3 +186,10 @@ input[type=number] {
 .buttonPlus button{
   margin: auto;
 }
+
+.grid2WithButton{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  margin: auto;
+}
