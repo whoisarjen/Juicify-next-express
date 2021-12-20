@@ -14,6 +14,7 @@ import useTranslation from "next-translate/useTranslation"
 import ButtonPlus from '../../../components/common/ButtonPlus'
 import AddExercises from '../../../components/workout/AddExercises'
 import ConfirmDialog from '../../../components/common/ConfirmDialog'
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from "../../../utils/indexedDB"
 import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB, deleteThoseIDSfromDB } from "../../../utils/API"
@@ -39,9 +40,9 @@ const WorkoutPlansID = () => {
             await overwriteThoseIDSinDB('workout_plan', [object])
         } else {
             await insertThoseIDStoDB('workout_plan', [object])
-                .then((response) => router.push(`/${token.login}/workout-plans/${response[0]._id}`))
         }
         setSaveLoading(false)
+        router.push(`/${token.login}/workout-plans/`)
     }
 
     const deleteWorkoutPlan = async () => {
@@ -110,8 +111,12 @@ const WorkoutPlansID = () => {
 
     return (
         <div className="workoutPlansID">
-            <div className="grid3WithButton">
-                <div className="title">{t("Workout plan")}</div>
+            <div className="title">{t("Workout plan")}</div>
+            <div className="grid4WithButton">
+                <IconButton aria-label="delete" onClick={() => router.push(`/${router.query.login}/workout-plans/`)} sx={{ margin: 'auto' }}>
+                    <KeyboardBackspaceIcon />
+                </IconButton>
+                <div />
                 {
                     isOwner
                         ?

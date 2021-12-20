@@ -43,7 +43,6 @@ app.post('/guest/:where', async (req, res) => {
     }
     await require(`./mongoDB/find/${req.params.where}`)(req)
         .then((data) => {
-            console.log('data', data)
             return res.send({
                 user: req.body.user,
                 data

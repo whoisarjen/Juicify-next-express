@@ -34,7 +34,6 @@ const useWorkoutPlan = (workoutPlanID) => {
                     if (!res.data.description) res.data.description = ''
                     if (!res.data.burnt) res.data.burnt = 0
                     if (!res.data.exercises) res.data.exercises = []
-                    console.log(res.data)
                     setUser(res.user)
                     setData(res.data)
                 } else {

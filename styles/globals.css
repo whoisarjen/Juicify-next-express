@@ -187,9 +187,9 @@ input[type=number] {
   margin: auto;
 }
 
-.grid3WithButton{
+.grid4WithButton{
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 44px auto;
+  grid-template-columns: 44px 1fr 44px auto;
   margin: auto;
 }
