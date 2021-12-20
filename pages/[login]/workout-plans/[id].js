@@ -90,10 +90,12 @@ const WorkoutPlansID = () => {
     }
 
     useEffect(() => {
-        setTitle(data.title)
-        setDescription(data.description)
-        setBurnt(data.burnt)
-        setExercises(data.exercises)
+        if (data) {
+            setTitle(data.title)
+            setDescription(data.description)
+            setBurnt(data.burnt)
+            setExercises(data.exercises)
+        }
     }, [data])
 
     useEffect(async () => {
