@@ -89,7 +89,7 @@ app.post('/:what/:where', async (req, res) => {
 
 const verifyToken = async (req) => {
     req.body.user_ID = '60ba774fe0ecd72587eeaa29'
-} 
+}
 
 
 // ---- ---- SOCKET ---- ----
@@ -110,7 +110,7 @@ io.on('connection', async (socket) => {
             } else {
                 // If refresh_token is dead, logout user, but allow him synchronization
                 io.to(socket.id).emit('compareDatabases', {
-                    "lastUpdated": {...await synchronizationObject(0), ...{ logout: new Date().getTime() + 999999999 }},
+                    "lastUpdated": { ...await synchronizationObject(0), ...{ logout: new Date().getTime() + 999999999 } },
                     "version": appVersion,
                     "socket_ID": socket.id
                 })
@@ -134,7 +134,7 @@ const synchronizationObject = async (timeMS = new Date().getTime()) => {
         daily_measurement: timeMS,
         logout: 0
     }
-} 
+}
 
 const updateSynchronizationObject = async (user_ID, where) => {
     console.log(`Updating Update Object (${where}) for ${user_ID}`)
