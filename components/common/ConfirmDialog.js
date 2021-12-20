@@ -7,7 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import useTranslation from "next-translate/useTranslation";
 
 const ConfirmDialog = ({ isDialog, closeDialog, confirm }) => {
-    const { t } = useTranslation('nutrition-diary');
+    const { t } = useTranslation('home');
 
     return (
         <div className="confirmDialog">

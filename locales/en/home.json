@@ -20,5 +20,8 @@
     "Close": "Close",
     "Submit": "Submit",
     "Add exercises": "Add exercises",
-    "Add products": "Add products"
+    "Add products": "Add products",
+    "This action can NOT be undone": "This action can NOT be undone",
+    "Confirm": "Confirm",
+    "Deny": "Deny"
 }

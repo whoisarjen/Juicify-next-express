@@ -20,5 +20,8 @@
     "Close": "Zamknij",
     "Submit": "Zatwierdź",
     "Add exercises": "Dodaj ćwiczenia",
-    "Add products": "Dodaj produkty"
+    "Add products": "Dodaj produkty",
+    "This action can NOT be undone": "Akcja nie może być cofnięta.",
+    "Confirm": "OK",
+    "Deny": "Anuluj"
 }

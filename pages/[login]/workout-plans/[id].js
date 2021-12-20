@@ -13,8 +13,9 @@ import useWorkoutPlan from "../../../hooks/useWorkoutPlan"
 import useTranslation from "next-translate/useTranslation"
 import ButtonPlus from '../../../components/common/ButtonPlus'
 import AddExercises from '../../../components/workout/AddExercises'
-import { addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from "../../../utils/indexedDB"
+import ConfirmDialog from '../../../components/common/ConfirmDialog'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
+import { addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from "../../../utils/indexedDB"
 import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB, deleteThoseIDSfromDB } from "../../../utils/API"
 
 const WorkoutPlansID = () => {
@@ -29,6 +30,7 @@ const WorkoutPlansID = () => {
     const token = useSelector(state => state.token.value)
     const isOwner = token && token.login == router.query.login
     const [data, reloadWorkoutPlan] = useWorkoutPlan(router.query.id)
+    const [isDialog, setIsDialog] = useState(false)
 
     const saveWorkoutPlan = async () => {
         setSaveLoading(true)
@@ -108,7 +110,7 @@ const WorkoutPlansID = () => {
         <div className="workoutPlansID">
             <div className="grid3WithButton">
                 <div className="title">{t("Workout plan")}</div>
-                <IconButton aria-label="delete" onClick={deleteWorkoutPlan}>
+                <IconButton aria-label="delete" onClick={() => setIsDialog(true)}>
                     <DeleteIcon />
                 </IconButton>
                 <LoadingButton
@@ -203,6 +205,11 @@ const WorkoutPlansID = () => {
                         closeDialog={() => setIsAddDialog(false)}
                         reload={reloadWorkoutPlan}
                         addThoseExercises={(array) => setExercises([...exercises, ...array])}
+                    />
+                    <ConfirmDialog
+                        isDialog={isDialog}
+                        confirm={deleteWorkoutPlan}
+                        closeDialog={() => setIsDialog(false)}
                     />
                 </>
             }
