@@ -112,18 +112,28 @@ const WorkoutPlansID = () => {
         <div className="workoutPlansID">
             <div className="grid3WithButton">
                 <div className="title">{t("Workout plan")}</div>
-                <IconButton aria-label="delete" onClick={() => setIsDialog(true)} sx={{ margin: 'auto' }}>
-                    <DeleteIcon />
-                </IconButton>
-                <LoadingButton
-                    loading={saveLoading}
-                    loadingPosition="start"
-                    startIcon={<SaveIcon />}
-                    variant="outlined"
-                    onClick={saveWorkoutPlan}
-                >
-                    {t('Save')}
-                </LoadingButton>
+                {
+                    isOwner
+                        ?
+                        <>
+                            <IconButton aria-label="delete" onClick={() => setIsDialog(true)} sx={{ margin: 'auto' }}>
+                                <DeleteIcon />
+                            </IconButton>
+                            <LoadingButton
+                                loading={saveLoading}
+                                loadingPosition="start"
+                                startIcon={<SaveIcon />}
+                                variant="outlined"
+                                onClick={saveWorkoutPlan}
+                            >
+                                {t('Save')}
+                            </LoadingButton></>
+                        :
+                        <>
+                            <div />
+                            <div />
+                        </>
+                }
             </div>
             <TextField
                 disabled={!isOwner}
