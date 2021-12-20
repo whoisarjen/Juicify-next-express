@@ -32,11 +32,6 @@ app.post('/auth/login', (req, res) => require('./mongoDB/auth/login')(req, res))
 app.post('/find/product', (req, res) => require('./mongoDB/find/product')(req, res));
 app.post('/find/exercise', (req, res) => require('./mongoDB/find/exercise')(req, res)); // Need function to cache find things etc.
 
-// app.post('/find/daily_measurements', async (req, res) => {
-//     await verifyToken(req)
-//     require('./mongoDB/find/daily_measurements')(req, res)
-// });
-
 app.post('/guest/:where', async (req, res) => {
     const loadUserByLogin = require('./mongoDB/functions/loadUserByLogin')
     req.body.user = await loadUserByLogin(req.body.login)
@@ -55,12 +50,6 @@ app.post('/guest/:where', async (req, res) => {
             })
         })
 });
-
-// register
-// remind-password
-// images
-// select
-// Before it, need to handle every possible query without token
 
 app.post('/delete', async (req, res) => {
     await verifyToken(req)

@@ -7,5 +7,12 @@
     "Meal": "Meal",
     "Edit": "Edit",
     "Delete": "Delete",
-    "How Many times 100g/ml": "How many times 100g/ml?"
+    "How Many times 100g/ml": "How many times 100g/ml?",
+    "All": "All",
+    "Favourite": "Favourite",
+    "Selected": "Selected",
+    "Close": "Close",
+    "Confirm": "Confirm",
+    "Deny": "Deny",
+    "Search": "Search"
 }

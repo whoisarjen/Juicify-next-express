@@ -6,5 +6,12 @@
     "Meal": "Posiłek",
     "Edit": "Edytuj",
     "Delete": "Usuń",
-    "How Many times 100g/ml": "Ile razy 100g/ml?"
+    "How Many times 100g/ml": "Ile razy 100g/ml?",
+    "All": "Wszystkie",
+    "Favourite": "Ulubione",
+    "Selected": "Wybrane",
+    "Close": "Zamknij",
+    "Confirm": "Potwierdź",
+    "Deny": "Anuluj",
+    "Search": "Wyszukaj"
 }

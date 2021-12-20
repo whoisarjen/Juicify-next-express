@@ -23,7 +23,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 });
 
 const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload }) => {
-    const { t } = useTranslation('home');
+    const { t } = useTranslation('nutrition-diary');
     const [tab, setTab] = useState(0)
     const [find, setFind] = useState(null)
     const [open, setOpen] = useState(false)
