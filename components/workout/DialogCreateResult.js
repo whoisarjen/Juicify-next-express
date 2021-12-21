@@ -14,6 +14,7 @@ import DialogContent from '@mui/material/DialogContent'
 import useWorkoutPlans from '../../hooks/useWorkoutPlans'
 import DialogContentText from '@mui/material/DialogContentText'
 import DatePicker from '../common/MobileDatePicker'
+import Link from 'next/link'
 
 const DialogCreateResult = () => {
     const router = useRouter()
@@ -25,12 +26,14 @@ const DialogCreateResult = () => {
     const createWorkoutResult = async () => {
         const workoutPlan = data.filter(workout => workout._id === workoutPlanID)
         const createdID = 'XD' + new Date().getTime()
+        let whenAddedChanged = new Date(whenAdded).toJSON().slice(0, 10)
         await addIndexedDB(
             'workout_result',
             [{
                 ...workoutPlan[0],
                 ...{
-                    whenAdded: whenAdded,
+                    description: '',
+                    whenAdded: whenAddedChanged,
                     workout_plan_ID: workoutPlan[0]._id,
                     _id: createdID,
                     results: [
@@ -46,18 +49,30 @@ const DialogCreateResult = () => {
                 }
             }]
         )
-        router.push(`/${router.query.login}/workout-results/${whenAdded}/${createdID}`)
+        router.push(`/${router.query.login}/workout-results/${whenAddedChanged}/${createdID}`)
     }
 
     useEffect(() => {
-        if (data) {
+        if (data && data.length > 0) {
             setWorkoutPlanID(data[0]._id)
         }
     }, [data])
 
     return (
         <div>
-            <ButtonPlus click={() => setOpen(true)} />
+            {
+                data.length > 0
+                    ?
+                    <ButtonPlus click={() => setOpen(true)} />
+                    :
+                    <Link href={`/${router.query.login}/workout-plans`}>
+                        <a>
+                            <div style={{ color: 'red', textDecoration: 'underline', textAlign: 'center', margin: '15px auto' }}>
+                                You need to create workout plan first
+                            </div>
+                        </a>
+                    </Link>
+            }
             <Dialog open={open} onClose={() => setOpen(false)}>
                 <DialogTitle>Create result</DialogTitle>
                 <DialogContent>

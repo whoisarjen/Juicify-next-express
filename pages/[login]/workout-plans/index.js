@@ -33,7 +33,13 @@ const WorkoutPlans = () => {
                     <Spinner />
                     :
                     data && data.map(plan =>
-                        <Box title={plan.title} description={plan.description} route={`/${router.query.login}/workout-plans/${plan._id}`} type={1} />
+                        <Box
+                            title={plan.title}
+                            description={plan.description}
+                            route={`/${router.query.login}/workout-plans/${plan._id}`}
+                            type={1}
+                            key={plan._id}
+                        />
                     )
             }
         </div>

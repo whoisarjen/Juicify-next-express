@@ -106,3 +106,25 @@
 .workoutPlansBoxDescription{
     font-size: 0.9rem;
 }
+
+.addResultValuesName{
+    width: 100%;
+    padding: 15px 0;
+    background: #333;
+    color: #fff;
+    margin-top: 12px;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.AddResultValuesBox{
+    width: 100%;
+    padding: 15px 0;
+    margin-top: 12px;
+    border-radius: 4px;
+    border: 1px solid #eee;
+    font-size: .875rem;
+    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}

@@ -20,7 +20,6 @@ const useDailyMeasurement = (when) => {
             if (token.login == router.query.login && theOldestSupportedDate <= when) {
                 let data = await getIndexedDBbyID('daily_measurement', new Date(when).toISOString())
                 if (!data) {
-                    // console.log('creating')
                     data = {
                         _id: 'XD' + new Date().getTime(),
                         whenAdded: new Date(when).toISOString(),
@@ -29,7 +28,6 @@ const useDailyMeasurement = (when) => {
                         workout_result: []
                     }
                 } else {
-                    // console.log("From cache")
                     if (!data.nutrition_diary) data.nutrition_diary = []
                     if (!data.workout_results) data.workout_results = []
                 }
@@ -39,7 +37,6 @@ const useDailyMeasurement = (when) => {
                 let res = await loadOneValueByLogin('daily_measurement', when, router.query.login)
                 if (!res.data.nutrition_diary) res.data.nutrition_diary = []
                 if (!res.data.workout_results) res.data.workout_results = []
-                // console.log('Guest', res)
                 setUser(res.user)
                 setDataObject(res.data)
             }

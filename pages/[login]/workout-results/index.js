@@ -15,7 +15,13 @@ const WorkoutResults = () => {
             <DialogCreateResult />
             {
                 data && data.map(result =>
-                    <Box title={result.title} description={result.description} route={`/${router.query.login}/workout-results/${result.whenAdded}/${result._id}`} type={0} />
+                    <Box
+                        title={result.title}
+                        description={result.description}
+                        route={`/${router.query.login}/workout-results/${result.whenAdded}/${result._id}`}
+                        type={0}
+                        key={result._id}
+                    />
                 )
             }
         </div>

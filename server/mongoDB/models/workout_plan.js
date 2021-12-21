@@ -18,7 +18,7 @@ const workout_planSchema = new Schema({
         type: String,
         required: [true, 'required!']
     },
-    burned: Number,
+    burnt: Number,
     exercises: [exerciseSchema]
 })
 
