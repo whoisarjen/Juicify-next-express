@@ -1,15 +1,25 @@
-import useTranslation from "next-translate/useTranslation";
-import DialogCreateResult from "../../../components/workout/DialogCreateResult";
+import { useRouter } from 'next/router'
+import Box from '../../../components/workout/Box'
+import useTranslation from "next-translate/useTranslation"
+import useWorkoutResults from '../../../hooks/useWorkoutResults'
+import DialogCreateResult from "../../../components/workout/DialogCreateResult"
 
 const WorkoutResults = () => {
-    const { t } = useTranslation('workout');
+    const router = useRouter()
+    const data = useWorkoutResults()
+    const { t } = useTranslation('workout')
 
     return (
         <div className="workoutResults">
             <div className="title">{t('Workout results')}</div>
             <DialogCreateResult />
+            {
+                data && data.map(result =>
+                    <Box title={result.title} description={result.description} route={`/${router.query.login}/workout-results/${result.whenAdded}/${result._id}`} type={0} />
+                )
+            }
         </div>
-    );
-};
+    )
+}
 
-export default WorkoutResults;
+export default WorkoutResults
