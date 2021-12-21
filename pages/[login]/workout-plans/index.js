@@ -2,12 +2,14 @@ import { useRouter } from 'next/router';
 import { addIndexedDB } from '../../../utils/indexedDB'
 import useWorkoutPlans from '../../../hooks/useWorkoutPlans'
 import Spinner from '../../../components/common/Spinner';
-import Link from 'next/link'
 import ButtonPlus from '../../../components/common/ButtonPlus';
+import Box from '../../../components/workout/Box';
+import useTranslation from "next-translate/useTranslation";
 
 const WorkoutPlans = () => {
     const router = useRouter()
     const data = useWorkoutPlans()
+    const { t } = useTranslation('workout');
 
     const createWorkoutPlan = async () => {
         const time = new Date().getTime()
@@ -23,21 +25,15 @@ const WorkoutPlans = () => {
 
     return (
         <div className="workoutPlans">
-            <div className="title">Workout plans</div>
-            <ButtonPlus click={createWorkoutPlan}/>
+            <div className="title">{t('Workout plans')}</div>
+            <ButtonPlus click={createWorkoutPlan} />
             {
                 data === false
                     ?
                     <Spinner />
                     :
                     data && data.map(plan =>
-                        <Link href={`/${router.query.login}/workout-plans/${plan._id}`} key={plan._id}>
-                            <a>
-                                <div className="workoutPlansBox">
-                                    {plan._id}
-                                </div>
-                            </a>
-                        </Link>
+                        <Box title={plan.title} description={plan.description} route={`/${router.query.login}/workout-plans/${plan._id}`} type={1} />
                     )
             }
         </div>

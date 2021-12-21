@@ -23,7 +23,7 @@ const createIndexedDB = async () => {
             objectStore = db.createObjectStore("checked_exercise", { keyPath: "_id" });
             objectStore = db.createObjectStore("last_used_exercise", { keyPath: "_id" });
             objectStore = db.createObjectStore("favourite_exercise", { keyPath: "_id" });
-            
+
             objectStore = db.createObjectStore("workout_plan", { keyPath: "_id" });
             objectStore = db.createObjectStore("workout_result", { keyPath: "_id" });
             objectStore = db.createObjectStore("daily_measurement", {
@@ -93,7 +93,6 @@ const putIndexedDB = async (where, id, what, value) => {
 };
 
 const deleteIndexedDB = async (where, _id) => {
-    console.log(where, _id)
     _id = _id.toString();
     await putInformationAboutNeededUpdate(where);
     let request = await connectIndexedDB();
@@ -130,21 +129,18 @@ const addIndexedDB = async (where, value) => {
 };
 
 const putInformationAboutNeededUpdate = async (where) => {
-    const isOnline = store.getState().online.isOnline;
     return new Promise((resolve) => {
         (async () => {
-            if (where != "nutrition_diary_connections" && where != "whatToUpdate") {
-                if (isOnline) {
-                    if (!await getIndexedDBbyID("whatToUpdate", where)) {
-                        await addIndexedDB("whatToUpdate", [
-                            {
-                                _id: where,
-                            },
-                        ]);
-                    }
-                } else {
-                    // localStorage.setItem("lastUpdated", new Date().getTime()); // Basic on server's time
+            if (!store.getState().online.isOnline) {
+                if (!await getIndexedDBbyID("whatToUpdate", where)) {
+                    await addIndexedDB("whatToUpdate", [
+                        {
+                            _id: where,
+                        },
+                    ]);
                 }
+            } else {
+                localStorage.setItem("lastUpdated", new Date().getTime());
             }
             resolve();
         })();

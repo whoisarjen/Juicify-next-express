@@ -18,6 +18,7 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from "../../../utils/indexedDB"
 import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB, deleteThoseIDSfromDB } from "../../../utils/API"
+import { ToastContainer, toast } from 'react-toastify';
 
 const WorkoutPlansID = () => {
     const router = useRouter()
@@ -37,13 +38,27 @@ const WorkoutPlansID = () => {
     const saveWorkoutPlan = async () => {
         setSaveLoading(true)
         let object = await save(true)
-        if (object._id) {
-            await overwriteThoseIDSinDB('workout_plan', [object])
+        if (!requiredBasicInputLength(title).status) {
+            toast.error("Title is incorrect!", {
+                position: "bottom-right",
+                autoClose: 2000,
+                closeOnClick: true,
+            })
+        } else if (object.exercises.length < 1) {
+            toast.error("Add some exercises!", {
+                position: "bottom-right",
+                autoClose: 2000,
+                closeOnClick: true,
+            })
         } else {
-            await insertThoseIDStoDB('workout_plan', [object])
+            if (object._id) {
+                await overwriteThoseIDSinDB('workout_plan', [object])
+            } else {
+                await insertThoseIDStoDB('workout_plan', [object])
+            }
+            router.push(`/${token.login}/workout-plans/`)
         }
         setSaveLoading(false)
-        router.push(`/${token.login}/workout-plans/`)
     }
 
     const deleteWorkoutPlan = async () => {
@@ -57,8 +72,6 @@ const WorkoutPlansID = () => {
         router.push(`/${token.login}/workout-plans`)
         setSaveLoading(false)
     }
-
-    const handleDelete = (_id) => setExercises(exercises.filter(x => x._id != _id))
 
     const save = async (prepareForDB) => {
         let object = {
@@ -103,15 +116,18 @@ const WorkoutPlansID = () => {
     }, [data])
 
     useEffect(async () => {
-        if (title != undefined && description != undefined && burnt != undefined && exercises != undefined) {
-            if (isOwner) {
-                await save()
+        if(!await is_id(router.query.id)){
+            if (title != undefined && description != undefined && burnt != undefined && exercises != undefined) {
+                if (isOwner) {
+                    await save()
+                }
             }
         }
     }, [title, description, burnt, exercises])
 
     return (
         <div className="workoutPlansID">
+            <ToastContainer />
             <div className="title">{t("Workout plan")}</div>
             <div className="grid4WithButton">
                 <IconButton aria-label="delete" onClick={() => router.push(`/${router.query.login}/workout-plans/`)} sx={{ margin: 'auto' }}>
@@ -196,7 +212,7 @@ const WorkoutPlansID = () => {
                                                         ref={provided.innerRef}
                                                         disabled={!isOwner}
                                                         label={`${i + 1}. ${exercise.name}`}
-                                                        onDelete={() => handleDelete(exercise._id)}
+                                                        onDelete={() => setExercises(exercises.filter(x => x._id != exercise._id))}
                                                         avatar={<SwapVertIcon />}
                                                         deleteIcon={<DeleteIcon />}
                                                         sx={{

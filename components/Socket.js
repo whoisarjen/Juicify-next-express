@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { setToken } from "../redux/features/tokenSlice";
 import { is_id, API } from '../utils/API'
 import { getAllIndexedDB, deleteIndexedDB, getIndexedDBbyID, addIndexedDB } from '../utils/indexedDB'
-import { overwriteThoseIDSinDB, insertThoseIDStoDB, setLastUpdated } from '../utils/API'
+import { overwriteThoseIDSinDB, insertThoseIDStoDB, deleteThoseIDSfromDB, setLastUpdated } from '../utils/API'
 import { store } from '../redux/store'
 
 const synchronizationAfterOfflineDailyMeasurement = async (isNewValueInDB) => {
@@ -233,9 +233,13 @@ const synchronizationAfterOffline = async (isNewValueInDB, where, whatToUpdate, 
             if (whereArray.length > 0) {
                 for (let i = 0; i < whereArray.length; i++) {
                     if (!whereArray[i].notSAVED) {
-                        if (!(await is_id(whereArray[i]._id))) inserted.push(whereArray[i]) // Seperating new value
-                        else if (whereArray[i].deleted) deleted.push(whereArray[i]) // Seperating deleted value
-                        else if (whereArray[i].changed) changed.push(whereArray[i]) // Seperating changed value
+                        if (!(await is_id(whereArray[i]._id))) {
+                            inserted.push(whereArray[i])
+                        } else if (whereArray[i].deleted) {
+                            deleted.push(whereArray[i])
+                        } else if (whereArray[i].changed) {
+                            changed.push(whereArray[i])
+                        }
                     }
                 }
             }
@@ -291,12 +295,11 @@ const Socket = ({ children }) => {
                 //                     if(!isOnline) await addIndexedDB("whatToUpdate", [{"_id": 'exercise'}]);
                 //                 }
 
-                //                 if(isOnline && object.lastUpdated.workout_plan > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'workout_plan')){
-                //                     newTimeOfUpdate = object.lastUpdated.workout_plan
-                //                     this.synchroMessage = true;
-                //                     await synchronizationAfterOffline(object.lastUpdated.workout_plan > lastUpdated, "workout_plan", "workout_result", "workout_plan_ID");
-                //                     if(!isOnline) await addIndexedDB("whatToUpdate", [{"_id": "workout_plan"}]);
-                //                 }
+                if (isOnline && object.lastUpdated.workout_plan > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'workout_plan')) {
+                    newTimeOfUpdate = object.lastUpdated.workout_plan
+                    await synchronizationAfterOffline(object.lastUpdated.workout_plan > lastUpdated, "workout_plan", "workout_result", "workout_plan_ID");
+                    if (!isOnline) await addIndexedDB("whatToUpdate", [{ "_id": "workout_plan" }]);
+                }
 
 
                 if (isOnline && object.lastUpdated.daily_measurement > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'daily_measurement')) {

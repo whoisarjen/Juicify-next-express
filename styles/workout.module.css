@@ -1,10 +1,37 @@
-.workout{
-    width: 100%;
+/* BOX */
+
+.box{
+    min-height: 140px;
+    width: calc( 100% - 20px );
+    padding: 10px;
+    margin-top: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+    background: #1976d2;
+    box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%);
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin: 0 auto auto;
+    grid-template-columns: auto 100px;
 }
 
+.boxText{
+    margin-left: 10px;
+    margin-block-end: 0.83em;
+}
+
+.boxText h2{
+    margin-block-end: 0.415em;
+}
+
+.boxImage{
+    margin: auto;
+}
+
+.boxImage svg{
+    font-size: 2rem;
+}
+
+/* END BOX */
 
 .addExercisesCloseButton{
     display: grid;
@@ -58,4 +85,24 @@
 .addExercisesSubmitPlaceholder{
     height: 36.5px;
     width: 100%;
+}
+
+.workoutPlansBox{
+    padding: 10px;
+    width: calc( 100% - 20px );
+    border-radius: 8px;
+    min-height: 130px;
+    margin-top: 12px;
+    color: #fff;
+    background: #1976d2;
+    box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%);
+}
+
+.workoutPlansBoxTitle{
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.workoutPlansBoxDescription{
+    font-size: 0.9rem;
 }

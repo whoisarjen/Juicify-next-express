@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import 'react-toastify/dist/ReactToastify.css';
 import { store } from "../redux/store";
 import { Provider } from "react-redux";
 import { createTheme, ThemeProvider } from "@mui/material/styles";

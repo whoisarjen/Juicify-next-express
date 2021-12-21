@@ -1,12 +1,15 @@
-import ButtonPlus from "../../../components/common/ButtonPlus";
+import useTranslation from "next-translate/useTranslation";
+import DialogCreateResult from "../../../components/workout/DialogCreateResult";
 
 const WorkoutResults = () => {
-  return (
-    <div className="workoutResults">
-    <div className="title">Workout results</div>
-      <ButtonPlus click={console.log('asd')}/> // click, not onClick!
-    </div>)
-    ;
+    const { t } = useTranslation('workout');
+
+    return (
+        <div className="workoutResults">
+            <div className="title">{t('Workout results')}</div>
+            <DialogCreateResult />
+        </div>
+    );
 };
 
 export default WorkoutResults;
