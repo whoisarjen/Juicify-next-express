@@ -1,16 +1,17 @@
-import { useState, useEffect } from 'react'
-import { readToken } from "../utils/checkAuth"
-import { getIndexedDBbyID } from '../utils/indexedDB'
-import { loadOneValueByLogin } from '../utils/API'
-import { useCookies } from 'react-cookie'
+import { is_id } from '../utils/API'
 import { useRouter } from 'next/router'
+import { useCookies } from 'react-cookie'
+import { useState, useEffect } from 'react'
+import { readToken } from '../utils/checkAuth'
+import { loadOneValueByLogin } from '../utils/API'
+import { getIndexedDBbyID } from '../utils/indexedDB'
 
 const useWorkoutPlan = (workoutPlanID) => {
     const router = useRouter()
     const [cookies] = useCookies()
+    const [user, setUser] = useState({})
     const [reload, setReload] = useState(0)
     const [data, setData] = useState(false)
-    const [user, setUser] = useState({})
 
     useEffect(async () => {
         if (workoutPlanID) {
@@ -28,14 +29,18 @@ const useWorkoutPlan = (workoutPlanID) => {
                     router.push(`/${router.query.login}/workout-plans`)
                 }
             } else {
-                let res = await loadOneValueByLogin('workout_plan', workoutPlanID, router.query.login)
-                if (res.data) {
-                    if (!res.data.title) res.data.title = ''
-                    if (!res.data.description) res.data.description = ''
-                    if (!res.data.burnt) res.data.burnt = 0
-                    if (!res.data.exercises) res.data.exercises = []
-                    setUser(res.user)
-                    setData(res.data)
+                if (await is_id(router.query.id)) {
+                    let res = await loadOneValueByLogin('workout_plan', workoutPlanID, router.query.login)
+                    if (res.data) {
+                        if (!res.data.title) res.data.title = ''
+                        if (!res.data.description) res.data.description = ''
+                        if (!res.data.burnt) res.data.burnt = 0
+                        if (!res.data.exercises) res.data.exercises = []
+                        setUser(res.user)
+                        setData(res.data)
+                    } else {
+                        router.push(`/${router.query.login}/workout-plans`)
+                    }
                 } else {
                     router.push(`/${router.query.login}/workout-plans`)
                 }
