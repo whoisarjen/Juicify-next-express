@@ -16,6 +16,7 @@ const WorkoutResults = () => {
             {
                 data && data.map(result =>
                     <Box
+                        whenAdded={result.whenAdded}
                         isNotSaved={result.notSaved}
                         title={result.title}
                         description={result.description}

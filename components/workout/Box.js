@@ -4,7 +4,7 @@ import NoteAltIcon from '@mui/icons-material/NoteAlt'
 import useTranslation from "next-translate/useTranslation";
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
 
-const Box = ({ title, description, route, type, isNotSaved }) => {
+const Box = ({ title, description, route, type, isNotSaved, whenAdded }) => {
     const { t } = useTranslation('workout');
     
     return (
@@ -24,6 +24,12 @@ const Box = ({ title, description, route, type, isNotSaved }) => {
                                 <NoteAltIcon />
                         }
                     </div>
+                    {
+                        whenAdded &&
+                        <div className={styles.boxTextNotSaved}>
+                            {whenAdded}
+                        </div>
+                    }
                     {
                         isNotSaved &&
                         <div className={styles.boxTextNotSaved}>

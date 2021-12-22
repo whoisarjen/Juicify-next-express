@@ -25,6 +25,8 @@
 
 .boxImage{
     margin: auto;
+    grid-column: 2;
+    grid-row: 1 / 3;
 }
 
 .boxImage svg{
