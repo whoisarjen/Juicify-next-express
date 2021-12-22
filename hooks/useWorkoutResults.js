@@ -35,7 +35,6 @@ const useWorkoutResults = () => {
                 return x
             })
         }
-        console.log(results)
         setData(results)
     }, [])
 

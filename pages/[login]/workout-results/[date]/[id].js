@@ -54,7 +54,7 @@ const WorkoutResultsID = () => {
         }
         if (count > 0) {
             let newDaily = daily
-            newDaily.workout_result.filter(result => result._id != router.query.id)
+            newDaily.workout_result = newDaily.workout_result.filter(result => result._id != router.query.id)
             let object = {
                 _id: router.query.id,
                 title: data.title,
