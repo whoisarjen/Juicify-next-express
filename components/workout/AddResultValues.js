@@ -59,7 +59,7 @@ const AddResultValues = ({ result, setNewValues, isOwner }) => {
             {
                 values && values.map((value, index) =>
                     <AddResultValuesBox
-                        key={value._id}
+                        key={value._id + index}
                         value={value}
                         index={index}
                         deleteResult={() => deleteResult(value._id)}

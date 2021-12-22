@@ -200,7 +200,7 @@ const WorkoutResultsID = () => {
             {
                 results && results.map((result, index) =>
                     <AddResultValues
-                        key={result._id}
+                        key={result._id + index}
                         result={result}
                         isOwner={isOwner}
                         setNewValues={(values) => setNewValues(values, index)}
