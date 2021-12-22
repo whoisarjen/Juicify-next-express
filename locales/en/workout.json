@@ -13,5 +13,8 @@
     "Date": "Date",
     "Description of workout plan": "Description of workout plan",
     "Not saved": "Not saved",
-    "Add some results": "Add some results"
+    "Add some results": "Add some results",
+    "Title is incorrect": "Title is incorrect",
+    "Description is incorrect": "Description is incorrect",
+    "Exercises are incorrect": "Exercises are incorrect"
 }

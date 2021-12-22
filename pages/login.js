@@ -36,8 +36,8 @@ const Login = () => {
 
     const handleLogin = async () => {
         if (
-            requiredBasicInputLength(login).status &&
-            requiredBasicInputLength(password).status
+            requiredBasicInputLength(login) &&
+            requiredBasicInputLength(password)
         ) {
             setLoading(true);
             const { response, isSuccess } = await API("/auth/login", {
@@ -91,10 +91,10 @@ const Login = () => {
                             onKeyPress={handleKeyPress}
                             onChange={(e) => setLogin(e.target.value)}
                             error={
-                                login.length > 0 && !requiredBasicInputLength(login).status
+                                login.length > 0 && !requiredBasicInputLength(login)
                             }
                             helperText={
-                                login.length > 0 && !requiredBasicInputLength(login).status
+                                login.length > 0 && !requiredBasicInputLength(login)
                                     ? t("home:requiredBasicInputLength")
                                     : ""
                             }
@@ -108,11 +108,11 @@ const Login = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             error={
                                 password.length > 0 &&
-                                !requiredBasicInputLength(password).status
+                                !requiredBasicInputLength(password)
                             }
                             helperText={
                                 password.length > 0 &&
-                                    !requiredBasicInputLength(password).status
+                                    !requiredBasicInputLength(password)
                                     ? t("home:requiredBasicInputLength")
                                     : ""
                             }

@@ -28,6 +28,7 @@ const WorkoutResultsID = () => {
     const [autoSaveCheck, setAutoSaveCheck] = useState(false)
     const [descriptionWorkout, setDescriptionWorkout] = useState('')
     const theOldestSupportedDate = useSelector(state => state.config.theOldestSupportedDate())
+    const basicInputLength = useSelector(state => state.config.basicInputLength)
 
     const deleteWorkoutResult = async () => {
         if (await is_id(router.query.id)) {
@@ -53,39 +54,47 @@ const WorkoutResultsID = () => {
             }
         }
         if (count > 0) {
-            let newDaily = daily
-            newDaily.workout_result = newDaily.workout_result.filter(result => result._id != router.query.id)
-            let object = {
-                _id: router.query.id,
-                title: data.title,
-                workout_plan_ID: data.workout_plan_ID,
-                results: results
-            }
-            if (description) {
-                object.description = description
-            }
-            if (burnt) {
-                object.burnt = burnt
-            }
-            if (await is_id(router.query.id)) {
-                object._id = router.query.id
-            } else {
-                if (burnt) {
-                    newDaily.nutrition_diary.push({
-                        _id: 'XD' + new Date().getTime(),
-                        activity: data.title,
-                        calories: -1 * parseInt(burnt)
-                    })
+            if (basicInputLength(description)) {
+                let newDaily = daily
+                newDaily.workout_result = newDaily.workout_result.filter(result => result._id != router.query.id)
+                let object = {
+                    _id: router.query.id,
+                    title: data.title,
+                    workout_plan_ID: data.workout_plan_ID,
+                    results: results
                 }
-            }
-            newDaily.workout_result.push(object)
-            if (daily._id && await is_id(daily._id)) {
-                await overwriteThoseIDSinDB('daily_measurement', [newDaily])
+                if (description) {
+                    object.description = description
+                }
+                if (burnt) {
+                    object.burnt = burnt
+                }
+                if (await is_id(router.query.id)) {
+                    object._id = router.query.id
+                } else {
+                    if (burnt) {
+                        newDaily.nutrition_diary.push({
+                            _id: 'XD' + new Date().getTime(),
+                            activity: data.title,
+                            calories: -1 * parseInt(burnt)
+                        })
+                    }
+                }
+                newDaily.workout_result.push(object)
+                if (daily._id && await is_id(daily._id)) {
+                    await overwriteThoseIDSinDB('daily_measurement', [newDaily])
+                } else {
+                    await insertThoseIDStoDB('daily_measurement', [newDaily])
+                }
+                await deleteIndexedDB('workout_result', router.query.id)
+                router.push(`/${router.query.login}/workout-results`)
             } else {
-                await insertThoseIDStoDB('daily_measurement', [newDaily])
+                toast.error(t('Description is incorrect'),{
+                    position: "bottom-right",
+                    autoClose: 2000,
+                    closeOnClick: true,
+                })
             }
-            await deleteIndexedDB('workout_result', router.query.id)
-            router.push(`/${router.query.login}/workout-results`)
         } else {
             toast.error(t('Add some results'), {
                 position: "bottom-right",
@@ -207,6 +216,14 @@ const WorkoutResultsID = () => {
                 disabled={!isOwner}
                 onChange={e => setDescription(e.target.value)}
                 sx={{ width: '100%', marginTop: '10px' }}
+                error={
+                    description.length > 0 && !basicInputLength(description)
+                }
+                helperText={
+                    description.length > 0 && !basicInputLength(description)
+                        ? t("home:requiredBasicInputLength")
+                        : ""
+                }
             />
             {
                 results && results.map((result, index) =>

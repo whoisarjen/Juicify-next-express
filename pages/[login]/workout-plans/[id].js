@@ -30,19 +30,26 @@ const WorkoutPlansID = () => {
     const isOwner = token && token.login == router.query.login
     const [{ data }] = useWorkoutPlan(router.query.id)
     const [isDialog, setIsDialog] = useState(false)
+    const basicInputLength = useSelector(state => state.config.basicInputLength)
     const requiredBasicInputLength = useSelector(state => state.config.requiredBasicInputLength)
 
     const saveWorkoutPlan = async () => {
         setSaveLoading(true)
         let object = await save(true)
-        if (!requiredBasicInputLength(title).status) {
-            toast.error("Title is incorrect!", {
+        if (!requiredBasicInputLength(title)) {
+            toast.error(t('Title is incorrect'), {
                 position: "bottom-right",
                 autoClose: 2000,
                 closeOnClick: true,
             })
-        } else if (object.exercises.length < 1) {
-            toast.error("Add some exercises!", {
+        } else if (!basicInputLength(description)) {
+            toast.error(t('Description is incorrect'), {
+                position: "bottom-right",
+                autoClose: 2000,
+                closeOnClick: true,
+            })
+        }else if (object.exercises.length < 1) {
+            toast.error(t('Exercises are incorrect'), {
                 position: "bottom-right",
                 autoClose: 2000,
                 closeOnClick: true,
@@ -142,10 +149,10 @@ const WorkoutPlansID = () => {
                 onChange={(e) => setTitle(e.target.value)}
                 sx={{ width: '100%', marginTop: '10px' }}
                 error={
-                    title.length > 0 && !requiredBasicInputLength(title).status
+                    title.length > 0 && !requiredBasicInputLength(title)
                 }
                 helperText={
-                    title.length > 0 && !requiredBasicInputLength(title).status
+                    title.length > 0 && !requiredBasicInputLength(title)
                         ? t("home:requiredBasicInputLength")
                         : ""
                 }
@@ -159,6 +166,14 @@ const WorkoutPlansID = () => {
                 type="text"
                 onChange={(e) => setDescription(e.target.value)}
                 sx={{ width: '100%', marginTop: '10px' }}
+                error={
+                    description.length > 0 && !basicInputLength(description)
+                }
+                helperText={
+                    description.length > 0 && !basicInputLength(description)
+                        ? t("home:requiredBasicInputLength")
+                        : ""
+                }
             />
             <TextField
                 disabled={!isOwner}

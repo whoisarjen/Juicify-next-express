@@ -16,31 +16,33 @@ const DialogEditProduct = ({ product, isDialog, closeDialog, deleteProduct, chan
     const { t } = useTranslation('nutrition-diary');
     const [meal, setMeal] = useState(0)
     const [howMany, setHowMany] = useState(1)
-    const [isDialogConfirm, setIsDialogConfirm] = useState(false)
     const [calories, setCalories] = useState(0)
     const [activity, setActivity] = useState('')
     const token = useSelector(state => state.token.value)
+    const [isDialogConfirm, setIsDialogConfirm] = useState(false)
+    const requiredBasicInputNumber = useSelector(state => state.config.requiredBasicInputNumber)
+    const requiredBasicInputLength = useSelector(state => state.config.requiredBasicInputLength)
+    const requireNumberDiffrentThanZero = useSelector(state => state.config.requireNumberDiffrentThanZero)
 
     const beforeChangeProduct = async () => {
         let newProduct = JSON.parse(JSON.stringify(product))
         let isChanged = false
-        if (calories != product.calories) {
+        if ((calories != product.calories) && requireNumberDiffrentThanZero(calories)) {
             newProduct.calories = calories || 1
             isChanged = true
         }
-        if (meal != product.meal) {
+        if ((meal != product.meal) && requiredBasicInputNumber(meal)) {
             newProduct.meal = meal || 0
             isChanged = true
         }
-        if (howMany != product.how_many) {
+        if ((howMany != product.how_many) && requiredBasicInputNumber(howMany)) {
             newProduct.how_many = howMany || 1
             isChanged = true
         }
-        if (activity != product.activity) {
+        if ((activity != product.activity) && requiredBasicInputLength(activity)) {
             newProduct.activity = activity || 1
             isChanged = true
         }
-        console.log('newProduct', newProduct)
         if (isChanged) {
             changeProduct(newProduct)
         }
@@ -89,6 +91,18 @@ const DialogEditProduct = ({ product, isDialog, closeDialog, deleteProduct, chan
                             sx={{ marginTop: '10px', width: '100%' }}
                             value={activity}
                             onChange={(e) => setActivity(e.target.value)}
+                            error={
+                                activity &&
+                                activity.length > 0 &&
+                                !requiredBasicInputLength(activity)
+                            }
+                            helperText={
+                                activity &&
+                                activity.length > 0 &&
+                                    !requiredBasicInputLength(activity)
+                                    ? t("home:requiredBasicInputLength")
+                                    : ""
+                            }
                         />
                     }
                     {
@@ -100,6 +114,16 @@ const DialogEditProduct = ({ product, isDialog, closeDialog, deleteProduct, chan
                             value={calories}
                             onChange={(e) => setCalories(e.target.value)}
                             inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                            error={
+                                calories &&
+                                !requireNumberDiffrentThanZero(calories)
+                            }
+                            helperText={
+                                calories &&
+                                    !requireNumberDiffrentThanZero(calories)
+                                    ? t("home:requireNumberDiffrentThanZero")
+                                    : ""
+                            }
                         />
                     }
                     {
@@ -111,6 +135,16 @@ const DialogEditProduct = ({ product, isDialog, closeDialog, deleteProduct, chan
                             value={howMany}
                             onChange={(e) => setHowMany(e.target.value)}
                             inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                            error={
+                                howMany &&
+                                !requiredBasicInputNumber(howMany)
+                            }
+                            helperText={
+                                howMany &&
+                                    !requiredBasicInputNumber(howMany)
+                                    ? t("home:requiredBasicInputNumber")
+                                    : ""
+                            }
                         />
                     }
 
