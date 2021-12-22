@@ -2,16 +2,11 @@
 Site 404
 offline site
 Better protection on cookies
-Fav products => redis
 block +30days in diary + notify it
 max value on inputs
 Clean DB from empty products
 useSocket logout
 deleteidsfromdb change response to response => data
 logout error
-Chceck if synchro function after online for sure put right isOnline
 Chcecking fake id on server side?
 block workout save if not diff
-burned => burnt
-diff color on notSaved
-skip !is_id() for useWorkout ...

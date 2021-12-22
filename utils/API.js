@@ -215,7 +215,6 @@ const prepareDailyToSend = async (daily_measurement, removeDeleted) => {
                     if (removeDeleted && object.nutrition_diary[i].deleted) {
                         object.nutrition_diary.splice(i, 1)
                     } else if (object.nutrition_diary[i]._id && !await is_id(object.nutrition_diary[i]._id)) {
-                        console.log('deleting _id', object.nutrition_diary[i]._id)
                         delete object.nutrition_diary[i]._id
                     }
                 }
@@ -225,7 +224,6 @@ const prepareDailyToSend = async (daily_measurement, removeDeleted) => {
                     if (removeDeleted && object.workout_result[i].deleted) {
                         object.workout_result.splice(i, 1)
                     } else if (object.workout_result[i]._id && !await is_id(object.workout_result[i]._id)) {
-                        console.log('deleting _id', object.workout_result[i]._id)
                         delete object.workout_result[i]._id
                     }
                 }

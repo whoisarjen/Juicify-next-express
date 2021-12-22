@@ -69,6 +69,13 @@ const WorkoutResultsID = () => {
             }
             if (await is_id(router.query.id)) {
                 object._id = router.query.id
+                if (burnt) {
+                    newDaily.nutrition_diary.push({
+                        _id: 'XD' + new Date().getTime(),
+                        activity: data.title,
+                        calories: -1 * parseInt(burnt)
+                    })
+                }
             }
             newDaily.workout_result.push(object)
             if (daily._id && await is_id(daily._id)) {
@@ -79,7 +86,7 @@ const WorkoutResultsID = () => {
             await deleteIndexedDB('workout_result', router.query.id)
             router.push(`/${router.query.login}/workout-results`)
         } else {
-            toast.error("Add some results!", {
+            toast.error(t('Add some results'), {
                 position: "bottom-right",
                 autoClose: 2000,
                 closeOnClick: true,
