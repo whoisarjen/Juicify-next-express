@@ -29,14 +29,14 @@ const useDailyMeasurement = (when) => {
                     }
                 } else {
                     if (!data.nutrition_diary) data.nutrition_diary = []
-                    if (!data.workout_results) data.workout_results = []
+                    if (!data.workout_result) data.workout_result = []
                 }
                 setUser(token)
                 setDataObject(data)
             } else {
                 let res = await loadOneValueByLogin('daily_measurement', when, router.query.login)
                 if (!res.data.nutrition_diary) res.data.nutrition_diary = []
-                if (!res.data.workout_results) res.data.workout_results = []
+                if (!res.data.workout_result) res.data.workout_result = []
                 setUser(res.user)
                 setDataObject(res.data)
             }

@@ -96,6 +96,7 @@ const WorkoutResultsID = () => {
             } else {
                 object.results = results
             }
+            object.whenAdded = router.query.date
             object.burnt = burnt
             object.description = description
             await deleteIndexedDB('workout_result', object._id)

@@ -1,79 +1,46 @@
 import { is_id } from '../utils/API'
 import { useRouter } from 'next/router'
-import { useCookies } from 'react-cookie'
 import { useState, useEffect } from 'react'
-import { readToken } from '../utils/checkAuth'
-import { loadOneValueByLogin } from '../utils/API'
 import { getIndexedDBbyID } from '../utils/indexedDB'
-import { useSelector } from 'react-redux'
+import { useDailyMeasurement } from './useDailyMeasurement'
 
 const useWorkoutResult = () => {
     const router = useRouter()
-    const [cookies] = useCookies()
-    const [user, setUser] = useState({})
     const [reload, setReload] = useState(0)
     const [data, setData] = useState(false)
-    const [daily, setDaily] = useState({})
-    const theOldestSupportedDate = useSelector(state => state.config.theOldestSupportedDate())
+    const [{ data: daily, user }] = useDailyMeasurement(router.query.date)
 
     useEffect(async () => {
-        if (router.query.id && router.query.date) {
-            const whenAdded = new Date(router.query.date).toJSON()
-            const token = readToken(cookies.token)
-            if (token.login == router.query.login) {
-                setUser(token)
-                if (theOldestSupportedDate <= router.query.date) {
-                    let daily = await getIndexedDBbyID('daily_measurement', whenAdded)
-                    let data = false
-                    if (!daily) {
-                        daily = {
-                            _id: 'XD' + new Date().getTime(),
-                            whenAdded: whenAdded,
-                            user_ID: token._id,
-                            nutrition_diary: [],
-                            workout_result: []
-                        }
-                        setDaily(daily)
-                    } else {
-                        if (!daily.workout_result) {
-                            daily.workout_result = []
-                        } else {
-                            data = daily.workout_result.filter(workout => workout._id == router.query.id)
-                            if (data && data.length > 0) {
-                                data = data[0]
-                            }
-                        }
-                        setDaily(daily)
-                    }
-                    if (data) {
-                        if (await getIndexedDBbyID('workout_result', router.query.id)) {
-                            data = await getIndexedDBbyID('workout_result', router.query.id)
-                        }
-                    } else {
-                        if (await getIndexedDBbyID('workout_result', router.query.id)) {
-                            data = await getIndexedDBbyID('workout_result', router.query.id)
-                        }
-                    }
-                    setData(data)
-                    if (!daily || !data) {
-                        router.push(`/${router.query.login}/workout-results`)
-                    }
+        if (daily) {
+            if (user.login == router.query.login) {
+                let res = {}
+                let cache = await getIndexedDBbyID('workout_result', router.query.id)
+                if (cache) {
+                    res = cache
                 } else {
-                    if (await is_id(router.query.id)) {
-                        // DB
+                    res = daily.workout_result.filter(workout => workout._id == router.query.id)
+                    if (res && res.length > 0) {
+                        res = res[0]
                     } else {
                         router.push(`/${router.query.login}/workout-results`)
                     }
                 }
+                setData(res)
             } else {
                 if (await is_id(router.query.id)) {
-                    // DB guest
+                    let res = {}
+                    res = daily.workout_result.filter(workout => workout._id == router.query.id)
+                    if (res && res.length > 0) {
+                        res = res[0]
+                    } else {
+                        router.push(`/${router.query.login}/workout-results`)
+                    }
                 } else {
                     router.push(`/${router.query.login}/workout-results`)
                 }
             }
         }
-    }, [reload])
+    }, [daily, reload])
 
     return [{ data, user, daily }, () => setReload(reload + 1)]
 }

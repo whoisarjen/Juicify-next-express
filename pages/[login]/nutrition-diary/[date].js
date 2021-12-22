@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { useState, useEffect } from 'react'
 import { addDaysToDate } from '../../../utils/manageDate'
 import { overwriteThoseIDSinDB } from "../../../utils/API"
-import { useDailyMeasurement } from '../../../hooks/useDaily'
+import { useDailyMeasurement } from '../../../hooks/useDailyMeasurement'
 import MealBox from "../../../components/nutrition-diary/MealBox"
 import AddProducts from '../../../components/nutrition-diary/AddProducts'
 import DialogEditProduct from '../../../components/nutrition-diary/DialogEditProduct'

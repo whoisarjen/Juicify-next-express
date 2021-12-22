@@ -32,6 +32,7 @@ const useWorkoutResults = () => {
         } else {
             results = cache
         }
+        console.log(results)
         setData(results)
     }, [])
 
