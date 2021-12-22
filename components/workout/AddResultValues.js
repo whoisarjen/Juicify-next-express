@@ -8,7 +8,14 @@ const AddResultValues = ({ result, setNewValues, isOwner }) => {
 
     const changeResult = (object, index) => {
         let array = values
-        array[index] = { ...object, open: false }
+        let newObject = object
+        if (!newObject.reps) {
+            newObject.reps = '0'
+        }
+        if (!newObject.weight) {
+            newObject.weight = '0'
+        }
+        array[index] = { ...newObject, open: false }
         setValues(array)
         setNewValues(array)
     }

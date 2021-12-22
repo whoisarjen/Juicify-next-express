@@ -30,7 +30,10 @@ const useWorkoutResults = () => {
                 }
             }
         } else {
-            results = cache
+            results = cache.map(x => {
+                x.notSaved = new Date().getTime()
+                return x
+            })
         }
         console.log(results)
         setData(results)

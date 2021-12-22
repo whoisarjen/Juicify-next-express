@@ -3,11 +3,11 @@ import styles from '../../styles/workout.module.css'
 import NoteAltIcon from '@mui/icons-material/NoteAlt'
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
 
-const Box = ({ title, description, route, type }) => {
+const Box = ({ title, description, route, type, isNotSaved }) => {
     return (
         <Link href={route}>
             <a>
-                <div className={styles.box}>
+                <div className={styles.box} style={{background: isNotSaved ? 'red':''}}>
                     <div className={styles.boxText}>
                         <h2>{title}</h2>
                         <div className={styles.boxTextDescription}>{description}</div>

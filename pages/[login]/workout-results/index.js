@@ -16,6 +16,7 @@ const WorkoutResults = () => {
             {
                 data && data.map(result =>
                     <Box
+                        isNotSaved={result.notSaved}
                         title={result.title}
                         description={result.description}
                         route={`/${router.query.login}/workout-results/${result.whenAdded}/${result._id}`}
