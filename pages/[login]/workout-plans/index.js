@@ -8,7 +8,7 @@ import useTranslation from "next-translate/useTranslation";
 
 const WorkoutPlans = () => {
     const router = useRouter()
-    const data = useWorkoutPlans()
+    const { data, user } = useWorkoutPlans()
     const { t } = useTranslation('workout');
 
     const createWorkoutPlan = async () => {

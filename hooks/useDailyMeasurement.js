@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie"
 import { useState, useEffect } from 'react'
 import { readToken } from "../utils/checkAuth"
 import { getIndexedDBbyID } from "../utils/indexedDB"
-import { loadOneValueByLogin } from '../utils/API'
+import { loadValueByLogin } from '../utils/API'
 
 const useDailyMeasurement = (when) => {
     const router = useRouter()
@@ -34,7 +34,7 @@ const useDailyMeasurement = (when) => {
                 setUser(token)
                 setDataObject(data)
             } else {
-                let res = await loadOneValueByLogin('daily_measurement', when, router.query.login)
+                let res = await loadValueByLogin('daily_measurement', when, router.query.login)
                 if (!res.data.nutrition_diary) res.data.nutrition_diary = []
                 if (!res.data.workout_result) res.data.workout_result = []
                 setUser(res.user)

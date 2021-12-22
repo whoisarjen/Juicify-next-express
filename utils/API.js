@@ -27,12 +27,12 @@ const API = async (url, body) => {
     return { response, isSuccess }
 }
 
-const loadOneValueByLogin = async (where, uniqueKey, login) => {
+const loadValueByLogin = async (where, uniqueKey, login = uniqueKey) => {
     const { response, isSuccess } = await API(`/guest/${where}`, {
         uniqueKey,
         login
     })
-    if (!response.dataObject) response.dataObject = {}
+    if (!response.data) response.data = {}
     if (isSuccess) {
         console.log(`loadOneValueByLogin: ${response}`)
         return response
@@ -254,7 +254,7 @@ export {
     insertThoseIDStoDB,
     is_id,
     overwriteThoseIDSinDB,
-    loadOneValueByLogin,
+    loadValueByLogin,
     setLastUpdated,
     deleteThoseIDSfromDB
 }

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { useCookies } from 'react-cookie'
 import { useState, useEffect } from 'react'
 import { readToken } from '../utils/checkAuth'
-import { loadOneValueByLogin } from '../utils/API'
+import { loadValueByLogin } from '../utils/API'
 import { getIndexedDBbyID } from '../utils/indexedDB'
 
 const useWorkoutPlan = (workoutPlanID) => {
@@ -30,7 +30,7 @@ const useWorkoutPlan = (workoutPlanID) => {
                 }
             } else {
                 if (await is_id(router.query.id)) {
-                    let res = await loadOneValueByLogin('workout_plan', workoutPlanID, router.query.login)
+                    let res = await loadValueByLogin('workout_plan', workoutPlanID, router.query.login)
                     if (res.data) {
                         if (!res.data.title) res.data.title = ''
                         if (!res.data.description) res.data.description = ''

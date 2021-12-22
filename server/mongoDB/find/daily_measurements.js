@@ -6,9 +6,9 @@ module.exports = async function (req) {
     return new Promise(resolve => {
         const Model = require('../models/daily_measurement')
         Model.find({
-            user_ID: req.body.user_ID,
+            user_ID: req.body.user._id,
             whenAdded: {
-                $gte: req.body.overDatePlusTheDate
+                $gte: req.body.uniqueKey
             }
         })
             .then(async function (response) {
