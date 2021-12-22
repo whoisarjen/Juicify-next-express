@@ -17,9 +17,8 @@ const useWorkoutResult = () => {
     const theOldestSupportedDate = useSelector(state => state.config.theOldestSupportedDate())
 
     useEffect(async () => {
-        const _id = router.query.id
-        const whenAdded = router.query.date
-        if (_id && whenAdded) {
+        if (router.query.id && router.query.date) {
+            const whenAdded = new Date(router.query.date).toJSON()
             const token = readToken(cookies.token)
             if (token.login == router.query.login) {
                 setUser(token)
@@ -39,9 +38,9 @@ const useWorkoutResult = () => {
                         if (!daily.workout_result) {
                             daily.workout_result = []
                         } else {
-                            if (daily.workout_result.filter(workout => workout._id === router.query.id) > 0) {
-                                data = daily.workout_result.filter(workout => workout._id === router.query.id)[0]
-                            }
+                            console.log(whenAdded, daily)
+                            data = daily.workout_result.filter(workout => workout._id == router.query.id)[0]
+                            console.log(whenAdded, data)
                         }
                         setDaily(daily)
                     }

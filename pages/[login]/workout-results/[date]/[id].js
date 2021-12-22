@@ -30,7 +30,7 @@ const WorkoutResultsID = () => {
     const deleteWorkoutResult = async () => {
         if (await is_id(router.query.id)) {
             let newDaily = daily
-            newDaily.workout_result.filter(result => result._id != router.query.id)
+            newDaily.workout_result = newDaily.workout_result.filter(result => result._id != router.query.id)
             if (daily._id && await is_id(daily._id)) {
                 await overwriteThoseIDSinDB('daily_measurement', [newDaily])
             } else {
@@ -112,11 +112,11 @@ const WorkoutResultsID = () => {
 
     useEffect(async () => {
         if (data) {
-            setTitle(data.title)
-            setBurnt(data.burnt)
-            setDate(data.whenAdded)
-            setDescription(data.description)
-            setResults(data.results)
+            setTitle(data.title || '')
+            setBurnt(data.burnt || 0)
+            setDate(data.whenAdded || '')
+            setDescription(data.description || '')
+            setResults(data.results || [])
             setDescriptionWorkout(await getIndexedDBbyID('workout_plan', data.workout_plan_ID).description)
             setAutoSaveCheck(true)
         }
