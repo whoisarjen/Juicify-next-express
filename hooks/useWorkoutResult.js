@@ -38,9 +38,10 @@ const useWorkoutResult = () => {
                         if (!daily.workout_result) {
                             daily.workout_result = []
                         } else {
-                            console.log(whenAdded, daily)
-                            data = daily.workout_result.filter(workout => workout._id == router.query.id)[0]
-                            console.log(whenAdded, data)
+                            data = daily.workout_result.filter(workout => workout._id == router.query.id)
+                            if (data && data.length > 0) {
+                                data = data[0]
+                            }
                         }
                         setDaily(daily)
                     }
