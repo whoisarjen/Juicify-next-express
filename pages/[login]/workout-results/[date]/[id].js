@@ -130,7 +130,7 @@ const WorkoutResultsID = () => {
             setDescriptionWorkout(await getIndexedDBbyID('workout_plan', data.workout_plan_ID).description)
             setAutoSaveCheck(true)
         }
-    }, [data])
+    }, [data, user, daily])
 
     useEffect(() => {
         if (token && token.login == router.query.login) {
