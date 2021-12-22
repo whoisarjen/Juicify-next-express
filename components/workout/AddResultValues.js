@@ -3,7 +3,7 @@ import ButtonPlus from '../../components/common/ButtonPlus'
 import { useState, useEffect } from 'react'
 import AddResultValuesBox from '../../components/workout/AddResultValuesBox'
 
-const AddResultValues = ({ result, setNewValues }) => {
+const AddResultValues = ({ result, setNewValues, isOwner }) => {
     const [values, setValues] = useState([])
 
     const changeResult = (object, index) => {
@@ -67,7 +67,10 @@ const AddResultValues = ({ result, setNewValues }) => {
                     />
                 )
             }
-            <ButtonPlus size="small" click={openNewResult} />
+            {
+                isOwner &&
+                <ButtonPlus size="small" click={openNewResult} />
+            }
         </div>
     );
 }

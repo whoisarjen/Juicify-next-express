@@ -18,8 +18,10 @@ const WorkoutResultsID = () => {
     const [burnt, setBurnt] = useState(0)
     const [title, setTitle] = useState('')
     const [results, setResults] = useState([])
+    const [isOwner, setIsOwner] = useState(false)
     const [isDialog, setIsDialog] = useState(false)
     const [description, setDescription] = useState('')
+    const token = useSelector(state => state.token.value)
     const [saveLoading, setSaveLoading] = useState(false)
     const [autoSaveCheck, setAutoSaveCheck] = useState(false)
     const [descriptionWorkout, setDescriptionWorkout] = useState('')
@@ -120,6 +122,14 @@ const WorkoutResultsID = () => {
         }
     }, [data])
 
+    useEffect(() => {
+        if (token && token.login == router.query.login) {
+            setIsOwner(true)
+        } else {
+            setIsOwner(false)
+        }
+    }, [token])
+
     return (
         <div className="workoutResultsID">
             <ToastContainer />
@@ -164,6 +174,7 @@ const WorkoutResultsID = () => {
                 sx={{ width: '100%', marginTop: '10px' }}
                 value={burnt}
                 onChange={e => setBurnt(e.target.value)}
+                disabled={!isOwner}
                 InputProps={{
                     endAdornment: <InputAdornment position="end">Kcal</InputAdornment>,
                 }}
@@ -175,6 +186,7 @@ const WorkoutResultsID = () => {
                 label="Notes"
                 variant="outlined"
                 value={description}
+                disabled={!isOwner}
                 onChange={e => setDescription(e.target.value)}
                 sx={{ width: '100%', marginTop: '10px' }}
             />
@@ -183,15 +195,19 @@ const WorkoutResultsID = () => {
                     <AddResultValues
                         key={result._id}
                         result={result}
+                        isOwner={isOwner}
                         setNewValues={(values) => setNewValues(values, index)}
                     />
                 )
             }
-            <ConfirmDialog
-                isDialog={isDialog}
-                confirm={deleteWorkoutResult}
-                closeDialog={() => setIsDialog(false)}
-            />
+            {
+                isOwner &&
+                <ConfirmDialog
+                    isDialog={isDialog}
+                    confirm={deleteWorkoutResult}
+                    closeDialog={() => setIsDialog(false)}
+                />
+            }
         </div>
     );
 }
