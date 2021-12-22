@@ -13,6 +13,7 @@ const useWorkoutResult = () => {
     const [user, setUser] = useState({})
     const [reload, setReload] = useState(0)
     const [data, setData] = useState(false)
+    const [daily, setDaily] = useState({})
     const theOldestSupportedDate = useSelector(state => state.config.theOldestSupportedDate())
 
     useEffect(async () => {
@@ -22,41 +23,59 @@ const useWorkoutResult = () => {
             const token = readToken(cookies.token)
             if (token.login == router.query.login) {
                 setUser(token)
-                if (await is_id(_id)) {
-                    if (theOldestSupportedDate <= router.query.date) {
-                        let res = await getIndexedDBbyID('workout_result', _id)
-                        if (res) {
-                            setData(res)
+                if (theOldestSupportedDate <= router.query.date) {
+                    let daily = await getIndexedDBbyID('daily_measurement', whenAdded)
+                    let data = false
+                    if (!daily) {
+                        daily = {
+                            _id: 'XD' + new Date().getTime(),
+                            whenAdded: whenAdded,
+                            user_ID: token._id,
+                            nutrition_diary: [],
+                            workout_result: []
+                        }
+                        setDaily(daily)
+                    } else {
+                        if (!daily.workout_result) {
+                            daily.workout_result = []
                         } else {
-                            res = await getIndexedDBbyID('daily_measurement', whenAdded)
-                            if (res && res.workout_results && res.workout_results.length > 0) {
-                                res = res.filter(result => result._id === _id)
-                                if (res.length > 0) {
-                                    setData(res[0])
-                                } else {
-                                    // out
-                                }
+                            if (daily.workout_result.filter(workout => workout._id === router.query.id) > 0) {
+                                data = daily.workout_result.filter(workout => workout._id === router.query.id)[0]
                             }
                         }
-                        setData()
+                        setDaily(daily)
+                    }
+                    if (data) {
+                        if (await getIndexedDBbyID('workout_result', router.query.id)) {
+                            data = await getIndexedDBbyID('workout_result', router.query.id)
+                        }
                     } else {
-                        // DB
+                        if (await getIndexedDBbyID('workout_result', router.query.id)) {
+                            data = await getIndexedDBbyID('workout_result', router.query.id)
+                        }
+                    }
+                    setData(data)
+                    if (!daily || !data) {
+                        router.push(`/${router.query.login}/workout-results`)
                     }
                 } else {
-                    let res = await getIndexedDBbyID('workout_result', _id)
-                    if (res) {
-                        setData(res)
+                    if (await is_id(router.query.id)) {
+                        // DB
                     } else {
-                        // out
+                        router.push(`/${router.query.login}/workout-results`)
                     }
                 }
             } else {
-                // DB
+                if (await is_id(router.query.id)) {
+                    // DB guest
+                } else {
+                    router.push(`/${router.query.login}/workout-results`)
+                }
             }
         }
     }, [reload])
 
-    return [{ data, user }, () => setReload(reload + 1)]
+    return [{ data, user, daily }, () => setReload(reload + 1)]
 }
 
 export default useWorkoutResult;

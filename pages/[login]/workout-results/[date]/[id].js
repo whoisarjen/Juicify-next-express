@@ -8,11 +8,13 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Navbar from '../../../../components/workout/Navbar'
 import ConfirmDialog from '../../../../components/common/ConfirmDialog';
+import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../../../utils/API';
+import { ToastContainer, toast } from 'react-toastify'
 
 const WorkoutResultsID = () => {
     const router = useRouter()
     const [date, setDate] = useState('')
-    const [{ data }] = useWorkoutResult()
+    const [{ data, user, daily }] = useWorkoutResult()
     const [burnt, setBurnt] = useState(0)
     const [title, setTitle] = useState('')
     const [results, setResults] = useState([])
@@ -24,11 +26,55 @@ const WorkoutResultsID = () => {
     const theOldestSupportedDate = useSelector(state => state.config.theOldestSupportedDate())
 
     const deleteWorkoutResult = async () => {
-
+        if (await is_id(router.query.id)) {
+            let newDaily = daily
+            newDaily.workout_result.filter(result => result._id != router.query.id)
+            if (daily._id && await is_id(daily._id)) {
+                await overwriteThoseIDSinDB('daily_measurement', [newDaily])
+            } else {
+                await insertThoseIDStoDB('daily_measurement', [newDaily])
+            }
+        }
+        await deleteIndexedDB('workout_result', router.query.id)
+        router.push(`/${router.query.login}/workout-results`)
     }
 
     const saveWorkoutResult = async () => {
-
+        setSaveLoading(true)
+        if (results.length > 0) {
+            let newDaily = daily
+            newDaily.workout_result.filter(result => result._id != router.query.id)
+            let object = {
+                _id: router.query.id,
+                title: data.title,
+                workout_plan_ID: data.workout_plan_ID,
+                results: results
+            }
+            if (description) {
+                object.description = description
+            }
+            if (burnt) {
+                object.burnt = burnt
+            }
+            if (await is_id(router.query.id)) {
+                object._id = router.query.id
+            }
+            newDaily.workout_result.push(object)
+            if (daily._id && await is_id(daily._id)) {
+                await overwriteThoseIDSinDB('daily_measurement', [newDaily])
+            } else {
+                await insertThoseIDStoDB('daily_measurement', [newDaily])
+            }
+            await deleteIndexedDB('workout_result', router.query.id)
+            router.push(`/${router.query.login}/workout-results`)
+            setSaveLoading(false)
+        } else {
+            toast.error("Add some results!", {
+                position: "bottom-right",
+                autoClose: 2000,
+                closeOnClick: true,
+            })
+        }
     }
 
     const autoSave = async (newResults) => {
@@ -76,6 +122,7 @@ const WorkoutResultsID = () => {
 
     return (
         <div className="workoutResultsID">
+            <ToastContainer />
             <Navbar
                 title="Workout result"
                 where="workout-results"
