@@ -15,14 +15,14 @@ import useTranslation from "next-translate/useTranslation";
 const WorkoutResultsID = () => {
     const router = useRouter()
     const [date, setDate] = useState('')
-    const { t } = useTranslation('workout');
-    const [{ data, user, daily }] = useWorkoutResult()
     const [burnt, setBurnt] = useState(0)
     const [title, setTitle] = useState('')
+    const { t } = useTranslation('workout')
     const [results, setResults] = useState([])
     const [isOwner, setIsOwner] = useState(false)
     const [isDialog, setIsDialog] = useState(false)
     const [description, setDescription] = useState('')
+    const [{ data, user, daily }] = useWorkoutResult()
     const token = useSelector(state => state.token.value)
     const [saveLoading, setSaveLoading] = useState(false)
     const [autoSaveCheck, setAutoSaveCheck] = useState(false)
@@ -69,6 +69,7 @@ const WorkoutResultsID = () => {
             }
             if (await is_id(router.query.id)) {
                 object._id = router.query.id
+            } else {
                 if (burnt) {
                     newDaily.nutrition_diary.push({
                         _id: 'XD' + new Date().getTime(),

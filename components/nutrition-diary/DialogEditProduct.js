@@ -17,13 +17,31 @@ const DialogEditProduct = ({ product, isDialog, closeDialog, deleteProduct, chan
     const [meal, setMeal] = useState(0)
     const [howMany, setHowMany] = useState(1)
     const [isDialogConfirm, setIsDialogConfirm] = useState(false)
+    const [calories, setCalories] = useState(0)
+    const [activity, setActivity] = useState('')
     const token = useSelector(state => state.token.value)
 
     const beforeChangeProduct = async () => {
-        if (meal != product.meal || howMany != product.how_many) {
-            let newProduct = JSON.parse(JSON.stringify(product))
-            newProduct.meal = meal
-            newProduct.how_many = howMany
+        let newProduct = JSON.parse(JSON.stringify(product))
+        let isChanged = false
+        if (calories != product.calories) {
+            newProduct.calories = calories || 1
+            isChanged = true
+        }
+        if (meal != product.meal) {
+            newProduct.meal = meal || 0
+            isChanged = true
+        }
+        if (howMany != product.how_many) {
+            newProduct.how_many = howMany || 1
+            isChanged = true
+        }
+        if (activity != product.activity) {
+            newProduct.activity = activity || 1
+            isChanged = true
+        }
+        console.log('newProduct', newProduct)
+        if (isChanged) {
             changeProduct(newProduct)
         }
         closeDialog()
@@ -32,6 +50,8 @@ const DialogEditProduct = ({ product, isDialog, closeDialog, deleteProduct, chan
     useEffect(() => {
         setMeal(product.meal)
         setHowMany(product.how_many)
+        setCalories(product.calories)
+        setActivity(product.activity)
     }, [product])
 
     return (
@@ -45,20 +65,55 @@ const DialogEditProduct = ({ product, isDialog, closeDialog, deleteProduct, chan
                     {t('Edit')}
                 </DialogTitle>
                 <DialogContent>
-                    <Select
-                        sx={{ marginBottom: '10px', width: '100%' }}
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={meal}
-                        onChange={(e) => setMeal(e.target.value)}
-                    >
-                        {
-                            [...Array(token.meal_number)].map((x, i) =>
-                                <MenuItem key={i} value={i}>{t('Meal')} {i + 1}</MenuItem>
-                            )
-                        }
-                    </Select>
-                    <TextField type="number" label={t('How Many times 100g/ml')} sx={{ width: '100%' }} value={howMany} onChange={(e) => setHowMany(e.target.value)} inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} />
+                    {
+                        parseInt(product.meal) >= 0 &&
+                        <Select
+                            sx={{ width: '100%' }}
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={meal}
+                            onChange={(e) => setMeal(e.target.value)}
+                        >
+                            {
+                                [...Array(token.meal_number)].map((x, i) =>
+                                    <MenuItem key={i} value={i}>{t('Meal')} {i + 1}</MenuItem>
+                                )
+                            }
+                        </Select>
+                    }
+                    {
+                        product.activity &&
+                        <TextField
+                            type="text"
+                            label={t('Activity')}
+                            sx={{ marginTop: '10px', width: '100%' }}
+                            value={activity}
+                            onChange={(e) => setActivity(e.target.value)}
+                        />
+                    }
+                    {
+                        product.calories &&
+                        <TextField
+                            type="number"
+                            label={t('How many calories')}
+                            sx={{ marginTop: '10px', width: '100%' }}
+                            value={calories}
+                            onChange={(e) => setCalories(e.target.value)}
+                            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                        />
+                    }
+                    {
+                        product.how_many &&
+                        <TextField
+                            type="number"
+                            label={t('How many times 100g/ml')}
+                            sx={{ marginTop: '10px', width: '100%' }}
+                            value={howMany}
+                            onChange={(e) => setHowMany(e.target.value)}
+                            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                        />
+                    }
+
                 </DialogContent>
                 <DialogActions>
                     <Button sx={{ color: 'red' }} onClick={() => setIsDialogConfirm(true)}>{t('Delete')}</Button>

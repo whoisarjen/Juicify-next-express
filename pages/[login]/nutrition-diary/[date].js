@@ -31,7 +31,7 @@ const NutritionDiary = () => {
     const changeProduct = async (newProduct) => {
         let copyDailyMeasurement = JSON.parse(JSON.stringify(data))
         copyDailyMeasurement.nutrition_diary = copyDailyMeasurement.nutrition_diary.map(obj =>
-            obj._id == newProduct._id ? { ...obj, ...{ changed: true, how_many: newProduct.how_many, meal: newProduct.meal } } : obj
+            obj._id == newProduct._id ? { ...obj, ...{ changed: true }, ...newProduct } : obj
         );
         await overwriteThoseIDSinDB('daily_measurement', [copyDailyMeasurement])
         reloadDailyMeasurement()
@@ -47,6 +47,9 @@ const NutritionDiary = () => {
             const length = arr.length
             data.nutrition_diary.forEach(meal => {
                 if (!meal.deleted) {
+                    if (!meal.meal) {
+                        meal.meal = 0
+                    }
                     if (meal.meal + 1 > length) {
                         for (let i = 0; i < meal.meal + 1 - length; i++) {
                             arr.push([])

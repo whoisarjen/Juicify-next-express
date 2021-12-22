@@ -61,7 +61,7 @@ const MealBox = ({ index, products, openDialog, openEditProduct }) => {
                             {
                                 token.login == router.query.login ? (
                                     <IconButton onClick={() => openEditProduct(product)} aria-label="edit">
-                                        <EditIcon fontSize="small"/>
+                                        <EditIcon fontSize="small" />
                                     </IconButton>
                                 ) : (
                                     <IconButton aria-label="edit">
@@ -71,12 +71,20 @@ const MealBox = ({ index, products, openDialog, openEditProduct }) => {
                             }
                         </div>
                         <div className={style.boxProductContent}>
-                            <div>{product.name}</div>
-                            <div>{parseInt((count(product, 'p')) * 4 + (count(product, 'c')) * 4 + (count(product, 'f')) * 9)}kcal</div>
+                            <div>{product.name || product.activity}</div>
+                            <div>{product.calories || parseInt((count(product, 'p')) * 4 + (count(product, 'c')) * 4 + (count(product, 'f')) * 9)}kcal</div>
                         </div>
                         <div className={style.boxProductContent}>
-                            <div>{count(product, 'p')}{t('nutrition-diary:P')} {count(product, 'c')}{t('nutrition-diary:C')} {count(product, 'f')}{t('nutrition-diary:F')}</div>
-                            <div>{parseFloat(product.how_many) * 100}g/ml</div>
+                            {
+                                product.how_many
+                                    ?
+                                    <>
+                                        <div>{count(product, 'p')}{t('nutrition-diary:P')} {count(product, 'c')}{t('nutrition-diary:C')} {count(product, 'f')}{t('nutrition-diary:F')}</div>
+                                        <div>{parseFloat(product.how_many) * 100}g/ml</div>
+                                    </>
+                                    :
+                                    <></>
+                            }
                         </div>
                     </div>
                 ))
