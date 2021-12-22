@@ -10,10 +10,12 @@ import Navbar from '../../../../components/workout/Navbar'
 import ConfirmDialog from '../../../../components/common/ConfirmDialog';
 import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../../../utils/API';
 import { ToastContainer, toast } from 'react-toastify'
+import useTranslation from "next-translate/useTranslation";
 
 const WorkoutResultsID = () => {
     const router = useRouter()
     const [date, setDate] = useState('')
+    const { t } = useTranslation('workout');
     const [{ data, user, daily }] = useWorkoutResult()
     const [burnt, setBurnt] = useState(0)
     const [title, setTitle] = useState('')
@@ -149,7 +151,7 @@ const WorkoutResultsID = () => {
             />
             <TextField
                 id="outlined-basic"
-                label="Title"
+                label={t("Title")}
                 variant="outlined"
                 sx={{ width: '100%', marginTop: '10px' }}
                 disabled
@@ -157,7 +159,7 @@ const WorkoutResultsID = () => {
             />
             <TextField
                 id="outlined-basic"
-                label="Date"
+                label={t("Date")}
                 variant="outlined"
                 sx={{ width: '100%', marginTop: '10px' }}
                 disabled
@@ -167,7 +169,7 @@ const WorkoutResultsID = () => {
                 descriptionWorkout &&
                 <TextField
                     id="outlined-basic"
-                    label="Description of workout plan"
+                    label={t("Description of workout plan")}
                     variant="outlined"
                     sx={{ width: '100%', marginTop: '10px' }}
                     disabled
@@ -176,7 +178,7 @@ const WorkoutResultsID = () => {
             }
             <TextField
                 id="outlined-basic"
-                label="Burnt"
+                label={t("Burnt")}
                 variant="outlined"
                 sx={{ width: '100%', marginTop: '10px' }}
                 value={burnt}
@@ -190,7 +192,7 @@ const WorkoutResultsID = () => {
                 multiline
                 rows={4}
                 id="outlined-basic"
-                label="Notes"
+                label={t("Notes")}
                 variant="outlined"
                 value={description}
                 disabled={!isOwner}

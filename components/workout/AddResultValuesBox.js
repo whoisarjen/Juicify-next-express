@@ -5,6 +5,9 @@ import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import { useState, useEffect, useMemo } from 'react'
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import ConfirmDialog from '../common/ConfirmDialog';
+import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
+import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
 
 const AddResultValuesBox = ({ value, index, changeResult, deleteResult }) => {
     const [reps, setReps] = useState(value.reps)
@@ -12,6 +15,7 @@ const AddResultValuesBox = ({ value, index, changeResult, deleteResult }) => {
     const [open, setOpen] = useState(false)
     const [repsOptions, setRepsOptions] = useState([])
     const [weightOptions, setWeightOptions] = useState([])
+    const [isDialog, setIsDialog] = useState(false)
 
     const loadWeight = (choosenWeight) => {
         const choosenWeightLocally = parseInt(choosenWeight)
@@ -62,13 +66,21 @@ const AddResultValuesBox = ({ value, index, changeResult, deleteResult }) => {
                                 changeResult({ reps, weight, _id: value._id })
                             }}
                         >
-                            <div>open</div>
-                            <div>asd</div>
-                            <div>asd</div>
-                            <div>asd</div>
-                            <div>asd</div>
+                            <div className={styles.AddResultValuesBoxConnectGrid}><div>Click to save</div></div>
+                            <div><div>#{index + 1}</div></div>
+                            <div>
+                                <IconButton aria-label="arrow">
+                                    <ArrowRightAltOutlinedIcon sx={{ fontSize: 20 }} />
+                                </IconButton>
+                            </div>
+                            <div>
+                                <IconButton aria-label="save">
+                                    <CircleOutlinedIcon sx={{ fontSize: 20 }} />
+                                </IconButton>
+                            </div>
                         </div>
                         <Autocomplete
+                            sx={{ marginTop: '8px' }}
                             disablePortal
                             value={weight}
                             id="combo-box-demo"
@@ -78,6 +90,7 @@ const AddResultValuesBox = ({ value, index, changeResult, deleteResult }) => {
                             renderInput={(params) => <TextField {...params} label="Weight" />}
                         />
                         <Autocomplete
+                            sx={{ marginTop: '8px' }}
                             disablePortal
                             value={reps}
                             id="combo-box-demo"
@@ -88,17 +101,28 @@ const AddResultValuesBox = ({ value, index, changeResult, deleteResult }) => {
                         />
                     </div>
                     :
-                    <div className={styles.AddResultValuesBox} onClick={() => setOpen(true)}>
-                        <IconButton aria-label="delete" onClick={deleteResult}>
-                            <DeleteIcon />
-                        </IconButton>
-                        <div><div>{weight}kg</div></div>
-                        <div><div>#{index + 1}</div></div>
-                        <div><div>{reps}r.</div></div>
-                        <IconButton aria-label="save">
-                            <CheckCircleOutlinedIcon />
-                        </IconButton>
-                    </div>
+                    <>
+                        <div className={styles.AddResultValuesBox}>
+                            <div onClick={() => setIsDialog(true)} >
+                                <IconButton aria-label="delete">
+                                    <DeleteIcon sx={{ fontSize: 20 }} />
+                                </IconButton>
+                            </div>
+                            <div onClick={() => setOpen(true)}><div>{weight}kg</div></div>
+                            <div onClick={() => setOpen(true)}><div>#{index + 1}</div></div>
+                            <div onClick={() => setOpen(true)}><div>{reps}r.</div></div>
+                            <div onClick={() => setOpen(true)}>
+                                <IconButton aria-label="save">
+                                    <CheckCircleOutlinedIcon sx={{ fontSize: 20 }} />
+                                </IconButton>
+                            </div>
+                        </div>
+                        <ConfirmDialog
+                            isDialog={isDialog}
+                            confirm={deleteResult}
+                            closeDialog={() => setIsDialog(false)}
+                        />
+                    </>
             }
         </>
     );
