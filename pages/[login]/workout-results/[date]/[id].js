@@ -14,6 +14,7 @@ import useTranslation from "next-translate/useTranslation";
 
 const WorkoutResultsID = () => {
     const router = useRouter()
+    const [trueID, setTrueID] = useState(false)
     const [date, setDate] = useState('')
     const [burnt, setBurnt] = useState(0)
     const [title, setTitle] = useState('')
@@ -139,6 +140,9 @@ const WorkoutResultsID = () => {
 
     useEffect(async () => {
         if (data) {
+            if(await is_id(router.query.id)){
+                setTrueID(true)
+            }
             setTitle(data.title || '')
             setBurnt(data.burnt || 0)
             setDate(data.whenAdded || '')
@@ -196,18 +200,21 @@ const WorkoutResultsID = () => {
                     value={descriptionWorkout}
                 />
             }
-            <TextField
-                id="outlined-basic"
-                label={t("Burnt")}
-                variant="outlined"
-                sx={{ width: '100%', marginTop: '10px' }}
-                value={burnt}
-                onChange={e => setBurnt(e.target.value)}
-                disabled={!isOwner}
-                InputProps={{
-                    endAdornment: <InputAdornment position="end">Kcal</InputAdornment>,
-                }}
-            />
+            {
+                !trueID &&
+                <TextField
+                    id="outlined-basic"
+                    label={t("Burnt")}
+                    variant="outlined"
+                    sx={{ width: '100%', marginTop: '10px' }}
+                    value={burnt}
+                    onChange={e => setBurnt(e.target.value)}
+                    disabled={!isOwner}
+                    InputProps={{
+                        endAdornment: <InputAdornment position="end">Kcal</InputAdornment>,
+                    }}
+                />
+            }
             <TextField
                 multiline
                 rows={4}
