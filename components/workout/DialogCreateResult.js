@@ -18,7 +18,7 @@ import Link from 'next/link'
 
 const DialogCreateResult = () => {
     const router = useRouter()
-    const data = useWorkoutPlans()
+    const { data } = useWorkoutPlans()
     const [open, setOpen] = useState(false)
     const [whenAdded, setWhenAdded] = useState('')
     const [workoutPlanID, setWorkoutPlanID] = useState('')

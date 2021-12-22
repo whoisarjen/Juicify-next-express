@@ -89,7 +89,7 @@ const WorkoutResultsID = () => {
                 await deleteIndexedDB('workout_result', router.query.id)
                 router.push(`/${router.query.login}/workout-results`)
             } else {
-                toast.error(t('Description is incorrect'),{
+                toast.error(t('Description is incorrect'), {
                     position: "bottom-right",
                     autoClose: 2000,
                     closeOnClick: true,
@@ -144,10 +144,12 @@ const WorkoutResultsID = () => {
             setDate(data.whenAdded || '')
             setDescription(data.description || '')
             setResults(data.results || [])
-            setDescriptionWorkout(await getIndexedDBbyID('workout_plan', data.workout_plan_ID).description)
-            setAutoSaveCheck(true)
+            if (token && token.login == router.query.login) {
+                setDescriptionWorkout(await getIndexedDBbyID('workout_plan', data.workout_plan_ID).description)
+                setAutoSaveCheck(true)
+            }
         }
-    }, [data, user, daily])
+    }, [data, user, daily, token])
 
     useEffect(() => {
         if (token && token.login == router.query.login) {

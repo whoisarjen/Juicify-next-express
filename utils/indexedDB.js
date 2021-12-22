@@ -58,6 +58,7 @@ const getAllIndexedDB = async (value) => {
 };
 
 const getIndexedDBbyID = async (where, id) => {
+    console.log('get', where, id)
     let request3 = await connectIndexedDB();
     return new Promise((resolve) => {
         request3.onsuccess = async function () {
