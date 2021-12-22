@@ -13,3 +13,5 @@ Chceck if synchro function after online for sure put right isOnline
 Chcecking fake id on server side?
 block workout save if not diff
 burned => burnt
+diff color on notSaved
+skip !is_id() for useWorkout ...
