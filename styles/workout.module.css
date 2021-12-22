@@ -107,6 +107,10 @@
     font-size: 0.9rem;
 }
 
+.addResultValues:last-child{
+    margin-bottom: 100px;
+}
+
 .addResultValuesName{
     width: 100%;
     padding: 15px 0;
@@ -127,4 +131,12 @@
     text-align: center;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.AddResultValuesBox div{
+    display: grid;
+}
+
+.AddResultValuesBox div div{
+    margin: auto;
 }

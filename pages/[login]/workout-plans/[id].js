@@ -3,22 +3,19 @@ import Stack from '@mui/material/Stack'
 import { useRouter } from "next/router"
 import { useSelector } from 'react-redux'
 import { useState, useEffect } from "react"
-import SaveIcon from '@mui/icons-material/Save'
 import TextField from '@mui/material/TextField'
-import IconButton from '@mui/material/IconButton'
-import LoadingButton from '@mui/lab/LoadingButton'
 import DeleteIcon from '@mui/icons-material/Delete'
+import { ToastContainer, toast } from 'react-toastify'
+import Navbar from '../../../components/workout/Navbar'
 import SwapVertIcon from '@mui/icons-material/SwapVert'
 import useWorkoutPlan from "../../../hooks/useWorkoutPlan"
 import useTranslation from "next-translate/useTranslation"
 import ButtonPlus from '../../../components/common/ButtonPlus'
 import AddExercises from '../../../components/workout/AddExercises'
 import ConfirmDialog from '../../../components/common/ConfirmDialog'
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from "../../../utils/indexedDB"
 import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB, deleteThoseIDSfromDB } from "../../../utils/API"
-import { ToastContainer, toast } from 'react-toastify';
 
 const WorkoutPlansID = () => {
     const router = useRouter()
@@ -128,35 +125,13 @@ const WorkoutPlansID = () => {
     return (
         <div className="workoutPlansID">
             <ToastContainer />
-            <div className="title">{t("Workout plan")}</div>
-            <div className="grid4WithButton">
-                <IconButton aria-label="delete" onClick={() => router.push(`/${router.query.login}/workout-plans/`)} sx={{ margin: 'auto' }}>
-                    <KeyboardBackspaceIcon />
-                </IconButton>
-                <div />
-                {
-                    isOwner
-                        ?
-                        <>
-                            <IconButton aria-label="delete" onClick={() => setIsDialog(true)} sx={{ margin: 'auto' }}>
-                                <DeleteIcon />
-                            </IconButton>
-                            <LoadingButton
-                                loading={saveLoading}
-                                loadingPosition="start"
-                                startIcon={<SaveIcon />}
-                                variant="outlined"
-                                onClick={saveWorkoutPlan}
-                            >
-                                {t('Save')}
-                            </LoadingButton></>
-                        :
-                        <>
-                            <div />
-                            <div />
-                        </>
-                }
-            </div>
+            <Navbar
+                title="Workout plan"
+                where="workout-plans"
+                saveLoading={saveLoading}
+                saveWorkout={saveWorkoutPlan}
+                setIsDialog={(Boolean) => setIsDialog(Boolean)}
+            />
             <TextField
                 disabled={!isOwner}
                 id="outlined-basic"

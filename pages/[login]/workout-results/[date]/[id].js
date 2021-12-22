@@ -4,28 +4,46 @@ import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import { addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../../../utils/indexedDB';
 import AddResultValues from '../../../../components/workout/AddResultValues';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+import Navbar from '../../../../components/workout/Navbar'
+import ConfirmDialog from '../../../../components/common/ConfirmDialog';
 
 const WorkoutResultsID = () => {
+    const router = useRouter()
     const [date, setDate] = useState('')
     const [{ data }] = useWorkoutResult()
     const [burnt, setBurnt] = useState(0)
     const [title, setTitle] = useState('')
     const [results, setResults] = useState([])
-    const [autoSave, setAutoSave] = useState(false)
+    const [isDialog, setIsDialog] = useState(false)
     const [description, setDescription] = useState('')
+    const [saveLoading, setSaveLoading] = useState(false)
+    const [autoSaveCheck, setAutoSaveCheck] = useState(false)
     const [descriptionWorkout, setDescriptionWorkout] = useState('')
+    const theOldestSupportedDate = useSelector(state => state.config.theOldestSupportedDate())
 
-    const save = async (newResults) => {
-        let object = data
-        if (newResults) {
-            object.results = newResults
-        } else {
-            object.results = results
+    const deleteWorkoutResult = async () => {
+
+    }
+
+    const saveWorkoutResult = async () => {
+
+    }
+
+    const autoSave = async (newResults) => {
+        if (theOldestSupportedDate <= router.query.date) {
+            let object = data
+            if (newResults) {
+                object.results = newResults
+            } else {
+                object.results = results
+            }
+            object.burnt = burnt
+            object.description = description
+            await deleteIndexedDB('workout_result', object._id)
+            await addIndexedDB('workout_result', [object])
         }
-        object.burnt = burnt
-        object.description = description
-        await deleteIndexedDB('workout_result', object._id)
-        await addIndexedDB('workout_result', [object])
     }
 
     const setNewValues = async (values, index) => {
@@ -35,12 +53,12 @@ const WorkoutResultsID = () => {
             values
         }
         setResults(newResults)
-        await save(newResults)
+        await autoSave(newResults)
     }
 
     useEffect(async () => {
-        if (autoSave) {
-            await save()
+        if (autoSaveCheck) {
+            await autoSave()
         }
     }, [burnt, description, results])
 
@@ -52,12 +70,19 @@ const WorkoutResultsID = () => {
             setDescription(data.description)
             setResults(data.results)
             setDescriptionWorkout(await getIndexedDBbyID('workout_plan', data.workout_plan_ID).description)
-            setAutoSave(true)
+            setAutoSaveCheck(true)
         }
     }, [data])
 
     return (
         <div className="workoutResultsID">
+            <Navbar
+                title="Workout result"
+                where="workout-results"
+                saveLoading={saveLoading}
+                saveWorkout={saveWorkoutResult}
+                setIsDialog={(Boolean) => setIsDialog(Boolean)}
+            />
             <TextField
                 id="outlined-basic"
                 label="Title"
@@ -115,6 +140,11 @@ const WorkoutResultsID = () => {
                     />
                 )
             }
+            <ConfirmDialog
+                isDialog={isDialog}
+                confirm={deleteWorkoutResult}
+                closeDialog={() => setIsDialog(false)}
+            />
         </div>
     );
 }

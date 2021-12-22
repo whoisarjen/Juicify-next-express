@@ -42,8 +42,8 @@ const AddResultValues = ({ result, setNewValues }) => {
             setValues([
                 ...newValues,
                 {
-                    reps: 0,
-                    weight: 0,
+                    reps: '0',
+                    weight: '0',
                     _id: 'XD' + new Date().getTime(),
                     open: true
                 }
@@ -54,7 +54,7 @@ const AddResultValues = ({ result, setNewValues }) => {
     useEffect(() => setValues(result.values), [result])
 
     return (
-        <div className="addResultValues">
+        <div className={styles.addResultValues}>
             <div className={styles.addResultValuesName}>{result.name}</div>
             {
                 values && values.map((value, index) =>
