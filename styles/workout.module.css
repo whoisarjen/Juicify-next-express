@@ -31,6 +31,11 @@
     font-size: 2rem;
 }
 
+.boxTextNotSaved{
+    margin: auto;
+    margin-left: 10px;
+}
+
 /* END BOX */
 
 .addExercisesCloseButton{
