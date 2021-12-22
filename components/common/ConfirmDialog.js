@@ -1,13 +1,16 @@
-import Dialog from '@mui/material/Dialog';
-import Button from '@mui/material/Button';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContentText from '@mui/material/DialogContentText';
-import useTranslation from "next-translate/useTranslation";
+import { useState } from 'react'
+import Dialog from '@mui/material/Dialog'
+import Button from '@mui/material/Button'
+import LoadingButton from '@mui/lab/LoadingButton'
+import DialogTitle from '@mui/material/DialogTitle'
+import DialogContent from '@mui/material/DialogContent'
+import DialogActions from '@mui/material/DialogActions'
+import useTranslation from "next-translate/useTranslation"
+import DialogContentText from '@mui/material/DialogContentText'
 
 const ConfirmDialog = ({ isDialog, closeDialog, confirm }) => {
-    const { t } = useTranslation('home');
+    const [loading, setLoading] = useState(false)
+    const { t } = useTranslation('home')
 
     return (
         <div className="confirmDialog">
@@ -26,13 +29,20 @@ const ConfirmDialog = ({ isDialog, closeDialog, confirm }) => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={closeDialog}>{t('Deny')}</Button>
-                    <Button onClick={confirm} autoFocus>
+                    <LoadingButton
+                        loading={loading}
+                        onClick={() => {
+                            setLoading(true)
+                            confirm()
+                        }}
+                        autoFocus
+                    >
                         {t('Confirm')}
-                    </Button>
+                    </LoadingButton>
                 </DialogActions>
             </Dialog>
         </div>
-    );
+    )
 }
 
-export default ConfirmDialog;
+export default ConfirmDialog

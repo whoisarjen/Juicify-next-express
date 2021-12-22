@@ -43,7 +43,14 @@ const WorkoutResultsID = () => {
 
     const saveWorkoutResult = async () => {
         setSaveLoading(true)
-        if (results.length > 0) {
+        let count = 0
+        for (let i = 0; i < results.length; i++) {
+            count += results[i].values.length
+            if (count > 0) {
+                break;
+            }
+        }
+        if (count > 0) {
             let newDaily = daily
             newDaily.workout_result.filter(result => result._id != router.query.id)
             let object = {
@@ -69,7 +76,6 @@ const WorkoutResultsID = () => {
             }
             await deleteIndexedDB('workout_result', router.query.id)
             router.push(`/${router.query.login}/workout-results`)
-            setSaveLoading(false)
         } else {
             toast.error("Add some results!", {
                 position: "bottom-right",
@@ -77,6 +83,7 @@ const WorkoutResultsID = () => {
                 closeOnClick: true,
             })
         }
+        setSaveLoading(false)
     }
 
     const autoSave = async (newResults) => {
