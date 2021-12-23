@@ -61,7 +61,7 @@ const CreateExercise = ({ closeCreateExercise, isCreateExercise, created }) => {
                         autoFocus
                         margin="dense"
                         id="name"
-                        label={t('Name of product')}
+                        label={t('Name of exercise')}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         type="text"

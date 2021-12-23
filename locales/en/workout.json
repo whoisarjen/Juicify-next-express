@@ -18,5 +18,8 @@
     "Description is incorrect": "Description is incorrect",
     "Exercises are incorrect": "Exercises are incorrect",
     "Create exercise": "Create exercise",
-    "Create exercise description": "You can create your own exercise and decide, if it should be available for every user."
+    "Create exercise description": "You can create your own exercise and decide, if it should be available for every user.",
+    "Submit": "OK",
+    "Cancel": "Anuluj",
+    "Name of exercise": "Nazwa ćwiczenia"
 }
