@@ -42,7 +42,7 @@ const loadValueByLogin = async (where, uniqueKey, login = uniqueKey) => {
     }
 }
 
-const insertThoseIDStoDB = async (where, sentArray, whatToUpdate, value, whatToUpdate2) => {
+const insertThoseIDStoDB = async (where, sentArray, whatToUpdate, value, whatToUpdate2, forceOffline = false) => {
     let array = JSON.parse(JSON.stringify(sentArray))
     const isOnline = store.getState().online.isOnline;
     console.log(`insertThoseIDStoDB is online: ${isOnline}`)
@@ -61,7 +61,7 @@ const insertThoseIDStoDB = async (where, sentArray, whatToUpdate, value, whatToU
             if (where == 'daily_measurement' && isOnline) array[i] = await prepareDailyToSend(array[i], true)
         }
         console.log('after', array)
-        if (isOnline) {
+        if (isOnline && !forceOffline) {
             const { response, isSuccess } = await API(`/insert/${where}`, {
                 array
             })
@@ -101,7 +101,7 @@ const insertThoseIDStoDB = async (where, sentArray, whatToUpdate, value, whatToU
                     }
                 }
             } else {
-                return await insertThoseIDStoDB(where, copyArray, whatToUpdate, value, whatToUpdate2)
+                return await insertThoseIDStoDB(where, copyArray, whatToUpdate, value, whatToUpdate2, true)
             }
         } else {
             for (let i = 0; i < array.length; i++) {
@@ -113,7 +113,7 @@ const insertThoseIDStoDB = async (where, sentArray, whatToUpdate, value, whatToU
     })
 }
 
-const overwriteThoseIDSinDB = async (where, sentArray) => {
+const overwriteThoseIDSinDB = async (where, sentArray, forceOffline = false) => {
     let array = JSON.parse(JSON.stringify(sentArray))
     const isOnline = store.getState().online.isOnline
     console.log(`overwriteThoseIDSinDB is online: ${isOnline}`)
@@ -133,7 +133,7 @@ const overwriteThoseIDSinDB = async (where, sentArray) => {
                     console.log('After prepare', array[i])
                 }
             }
-            if (isOnline) {
+            if (isOnline && !forceOffline) {
                 const { response, isSuccess } = await API(`/update/${where}`, {
                     array
                 })
@@ -153,7 +153,7 @@ const overwriteThoseIDSinDB = async (where, sentArray) => {
                         }
                     }
                 } else {
-                    return await overwriteThoseIDSinDB(where, originalArray)
+                    return await overwriteThoseIDSinDB(where, originalArray, true)
                 }
             }
             await addIndexedDB(where, array)
@@ -162,7 +162,7 @@ const overwriteThoseIDSinDB = async (where, sentArray) => {
     })
 }
 
-const deleteThoseIDSfromDB = async (where, array, isNewValueInDB) => {
+const deleteThoseIDSfromDB = async (where, array, isNewValueInDB, forceOffline = false) => {
     const isOnline = store.getState().online.isOnline
     if (isNewValueInDB) { // if there is new value in DB, check if still need to request delete
         for (let i = 0; i < array.length; i++) {
@@ -178,14 +178,14 @@ const deleteThoseIDSfromDB = async (where, array, isNewValueInDB) => {
                     await deleteIndexedDB(where, array[i]._id)
                     if (where == 'daily_measurement' && isOnline) array[i] = await prepareDailyToSend(array[i], true)
                 }
-                if (isOnline) {
+                if (isOnline && !forceOffline) {
                     if (await is_id(array[0]._id)) {
                         const { response, isSuccess } = await API(`/delete`, {
                             where,
                             array
                         })
                         if (!isSuccess) {
-                            return await deleteThoseIDSfromDB(where, originalArray, isNewValueInDB)
+                            return await deleteThoseIDSfromDB(where, originalArray, isNewValueInDB, true)
                         }
                     }
                 } else {

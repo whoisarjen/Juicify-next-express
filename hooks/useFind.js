@@ -64,6 +64,8 @@ const useFind = (value, where, tab, skipThoseIDS, reload = 0) => {
                             setItems(await prepareItems(receivedProducts || [], skipThoseIDS, where, value))
                             await addIndexedDB(`cache_${where}`, [{ _id: find, whenAdded: new Date(), items: receivedProducts }])
                             setSearchCache([...searchCache, find])
+                        } else {
+                            setItems(await prepareItems([], skipThoseIDS, where, value))
                         }
                         setLoading(false)
                     }, 1500)
