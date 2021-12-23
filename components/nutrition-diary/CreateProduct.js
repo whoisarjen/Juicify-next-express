@@ -72,7 +72,7 @@ const CreateProduct = ({ closeCreateProduct, isCreateProduct, created }) => {
                 await insertThoseIDStoDB('product', [object])
                     .then(() => created(object.name))
                     .then(() => {
-                        toast.success('', {
+                        toast.success(t('home:Success'), {
                             position: "bottom-right",
                             autoClose: 2000,
                             closeOnClick: true,

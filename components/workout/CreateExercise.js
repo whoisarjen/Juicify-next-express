@@ -22,15 +22,16 @@ const CreateExercise = ({ closeCreateExercise, isCreateExercise, created }) => {
     const handleCreateExercise = async () => {
         if (requiredBasicInputLength(name)) {
             setLoading(true)
-            await insertThoseIDStoDB('exercise', [{
+            let object = {
                 _id: 'XD' + new Date().getTime(),
                 name: name,
                 l: name.length,
                 user_ID: token._id
-            }])
-                .then(() => created(name))
+            }
+            await insertThoseIDStoDB('exercise', [object])
+                .then(() => created(object.name))
                 .then(() => {
-                    toast.success('', {
+                    toast.success(t('home:Success'), {
                         position: "bottom-right",
                         autoClose: 2000,
                         closeOnClick: true,
