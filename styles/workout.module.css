@@ -149,10 +149,6 @@
     margin: auto;
 }
 
-.addResultValues:last-child{
-    margin-bottom: 100px;
-}
-
 .AddResultValuesBoxConnectGrid{
     grid-column: 1 / 3;
 }

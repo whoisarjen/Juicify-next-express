@@ -32,9 +32,7 @@ const AddDialog = ({ isAddDialog, closeDialog, skipThoseIDS, addThoseExercises }
 
     const addExercisesToWorkoutPlan = async () => {
         setLoadingButton(true)
-        checked.forEach(async x => {
-            await deleteIndexedDB('checked_exercise', x._id)
-        })
+        checked.forEach(async x => await deleteIndexedDB('checked_exercise', x._id))
         addThoseExercises(checked)
         setLoadingButton(false)
         closeDialog()

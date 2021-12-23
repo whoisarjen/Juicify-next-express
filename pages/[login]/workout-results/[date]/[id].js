@@ -11,6 +11,7 @@ import ConfirmDialog from '../../../../components/common/ConfirmDialog';
 import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../../../utils/API';
 import { ToastContainer, toast } from 'react-toastify'
 import useTranslation from "next-translate/useTranslation";
+import AddResultMoreOptions from '../../../../components/workout/AddResultMoreOptions'
 
 const WorkoutResultsID = () => {
     const router = useRouter()
@@ -132,6 +133,15 @@ const WorkoutResultsID = () => {
         await autoSave(newResults)
     }
 
+    const handleNewExercises = async (array) => {
+        let newResults = [...results, ...array.map(x => {
+            x.values = []
+            return x
+        })]
+        setResults(newResults)
+        await autoSave(newResults)
+    }
+
     useEffect(async () => {
         if (autoSaveCheck) {
             await autoSave()
@@ -140,7 +150,7 @@ const WorkoutResultsID = () => {
 
     useEffect(async () => {
         if (data) {
-            if(await is_id(router.query.id)){
+            if (await is_id(router.query.id)) {
                 setTrueID(true)
             }
             setTitle(data.title || '')
@@ -236,21 +246,29 @@ const WorkoutResultsID = () => {
             />
             {
                 results && results.map((result, index) =>
-                    <AddResultValues
-                        key={result._id + index}
-                        result={result}
-                        isOwner={isOwner}
-                        setNewValues={(values) => setNewValues(values, index)}
-                    />
+                    <div style={results.length == (index + 1) ? { marginBottom: '100px' } : {}}>
+                        <AddResultValues
+                            key={result._id + index}
+                            result={result}
+                            isOwner={isOwner}
+                            setNewValues={(values) => setNewValues(values, index)}
+                        />
+                    </div>
                 )
             }
             {
                 isOwner &&
-                <ConfirmDialog
-                    isDialog={isDialog}
-                    confirm={deleteWorkoutResult}
-                    closeDialog={() => setIsDialog(false)}
-                />
+                <>
+                    <ConfirmDialog
+                        isDialog={isDialog}
+                        confirm={deleteWorkoutResult}
+                        closeDialog={() => setIsDialog(false)}
+                    />
+                    <AddResultMoreOptions
+                        exercises={results}
+                        setExercises={handleNewExercises}
+                    />
+                </>
             }
         </div>
     );
