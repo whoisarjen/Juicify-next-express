@@ -16,5 +16,7 @@
     "Add some results": "Add some results",
     "Title is incorrect": "Title is incorrect",
     "Description is incorrect": "Description is incorrect",
-    "Exercises are incorrect": "Exercises are incorrect"
+    "Exercises are incorrect": "Exercises are incorrect",
+    "Create exercise": "Create exercise",
+    "Create exercise description": "You can create your own exercise and decide, if it should be available for every user."
 }

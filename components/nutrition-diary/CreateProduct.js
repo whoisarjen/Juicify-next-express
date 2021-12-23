@@ -10,6 +10,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { useSelector } from "react-redux";
 import { ToastContainer, toast } from 'react-toastify'
 import { insertThoseIDStoDB } from '../../utils/API';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 const CreateProduct = ({ closeCreateProduct, isCreateProduct, created }) => {
     const { t } = useTranslation('nutrition-diary')
@@ -70,6 +71,13 @@ const CreateProduct = ({ closeCreateProduct, isCreateProduct, created }) => {
                 }
                 await insertThoseIDStoDB('product', [object])
                     .then(() => created(object.name))
+                    .then(() => {
+                        toast.success('', {
+                            position: "bottom-right",
+                            autoClose: 2000,
+                            closeOnClick: true,
+                        })
+                    })
                     .finally(() => setLoading(false))
             } else {
                 toast.error(t('Calories can NOT be equal to zero'), {
@@ -101,7 +109,7 @@ const CreateProduct = ({ closeCreateProduct, isCreateProduct, created }) => {
     return (
         <div>
             <Dialog open={isCreateProduct}>
-                <DialogTitle>Create product</DialogTitle>
+                <DialogTitle>{t('Create product')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         {t('Create product description')}
@@ -273,7 +281,9 @@ const CreateProduct = ({ closeCreateProduct, isCreateProduct, created }) => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={closeCreateProduct}>{t('Cancel')}</Button>
-                    <Button onClick={handleCreateProduct}>{t('Submit')}</Button>
+                    <LoadingButton loading={loading} onClick={handleCreateProduct}>
+                    {t('Submit')}
+                    </LoadingButton>
                 </DialogActions>
                 <ToastContainer />
             </Dialog>

@@ -43,17 +43,18 @@ const loadValueByLogin = async (where, uniqueKey, login = uniqueKey) => {
 }
 
 const insertThoseIDStoDB = async (where, sentArray, whatToUpdate, value, whatToUpdate2) => {
-    let array = JSON.parse(JSON.stringify(sentArray))
-    const isOnline = store.getState().online.isOnline;
-    console.log(`insertThoseIDStoDB is online: ${isOnline}`)
-    let uniquePARAM = '_id'
-    if (where == 'daily_measurement') uniquePARAM = "whenAdded"
     return new Promise(async resolve => {
+        let array = JSON.parse(JSON.stringify(sentArray))
         const copyArray = JSON.parse(JSON.stringify(array));
+        const isOnline = store.getState().online.isOnline;
+        console.log(`insertThoseIDStoDB is online: ${isOnline}`)
+        let uniquePARAM = '_id'
+        if (where == 'daily_measurement') {
+            uniquePARAM = "whenAdded"
+        }
         const arrayIDSbeforeInsert = []
         let whatToUpdateARRAY = false
         let whatToUpdateARRAY2 = false
-        console.log(copyArray)
         for (let i = 0; i < array.length; i++) {
             if (array[i]._id) {
                 await deleteIndexedDB(where, array[i][uniquePARAM])
@@ -64,7 +65,6 @@ const insertThoseIDStoDB = async (where, sentArray, whatToUpdate, value, whatToU
                 array[i] = await prepareDailyToSend(array[i], true)
             }
         }
-        console.log('after', array)
         if (isOnline) {
             if (whatToUpdate) {
                 whatToUpdateARRAY = await getAllIndexedDB('daily_measurement')

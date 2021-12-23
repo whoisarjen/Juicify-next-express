@@ -287,10 +287,9 @@ const Socket = ({ children }) => {
             socket.on('compareDatabases', async (object) => {
                 let newTimeOfUpdate = 0
                 dispatch(setIsOnline(true))
-                const lastUpdated = localStorage.getItem('lastUpdated')
-                localStorage.setItem("socket_ID", object.socket_ID);
-                console.log(`halo from socket`, object)
                 const isOnline = store.getState().online.isOnline;
+                localStorage.setItem("socket_ID", object.socket_ID);
+                const lastUpdated = localStorage.getItem('lastUpdated')
 
 
                 if (isOnline && object.lastUpdated.product > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'product')) {

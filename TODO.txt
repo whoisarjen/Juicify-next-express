@@ -10,3 +10,5 @@ deleteidsfromdb change response to response => data
 logout error
 Chcecking fake id on server side?
 block workout save if not diff
+product site api for SEO
+Make better notify for create [...]

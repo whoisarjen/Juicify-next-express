@@ -140,7 +140,7 @@ const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload
                             <AddProductsBox refreshCheckedProducts={() => setRefreshChecked(refreshChecked + 1)} product={product} key={product._id} />
                         )
                     }
-                    <Button variant="outlined" onClick={() => setIsCreateProduct(true)}>
+                    <Button variant="outlined" onClick={() => setIsCreateProduct(true)} sx={{ margin: 'auto' }}>
                         {t('Create product')}
                     </Button>
                     <CreateProduct

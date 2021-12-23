@@ -13,6 +13,7 @@ import Tab from '@mui/material/Tab';
 import LoadingButton from '@mui/lab/LoadingButton';
 import useTranslation from "next-translate/useTranslation";
 import { deleteIndexedDB, getAllIndexedDB } from '../../utils/indexedDB';
+import CreateExercise from './CreateExercise';
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -113,6 +114,14 @@ const AddDialog = ({ isAddDialog, closeDialog, skipThoseIDS, addThoseExercises }
                             <div className={styles.addProductsSubmitPlaceholder} />
                         </>
                     }
+                    <Button variant="outlined" onClick={() => setIsCreateExercise(true)} sx={{ margin: 'auto' }}>
+                        {t('Create exercise')}
+                    </Button>
+                    <CreateExercise
+                        created={created}
+                        isCreateExercise={isCreateExercise}
+                        closeCreateExercise={() => setIsCreateExercise(false)}
+                    />
                     <div className={styles.addProductsCloseButtonPlaceholder} />
                     <div className={styles.addProductsCloseButton} onClick={() => closeDialog()}>
                         <Button variant="contained">
