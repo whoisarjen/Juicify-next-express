@@ -1,6 +1,7 @@
 {
     "Add products": "Add products",
     "Submit": "Submit",
+    "Cancel": "Cancel",
     "P": "P",
     "C": "C",
     "F": "F",
@@ -16,5 +17,18 @@
     "Confirm": "Confirm",
     "Deny": "Deny",
     "Search": "Search",
-    "Activity": "Activity"
+    "Activity": "Activity",
+    "My": "My",
+    "Create product": "Create product",
+    "Create product description": "You can create your own product and decide, if it should be available for every user.",
+    "Name of product": "Name of product",
+    "Proteins in 100g/ml": "Proteins in 100g/ml",
+    "Carbs in 100g/ml": "Carbs in 100g/ml",
+    "Sugar in 100g/ml": "Sugar in 100g/ml",
+    "Fat in 100g/ml": "Fat in 100g/ml",
+    "Fiber in 100g/ml": "Fiber in 100g/ml",
+    "Salt in 100g/ml": "Salt in 100g/ml",
+    "Ethanol in 100g/ml": "Ethanol in 100g/ml",
+    "Calories in 100g/ml": "Calories in 100g/ml",
+    "Calories can NOT be equal to zero": "Calories can NOT be equal to zero"
 }

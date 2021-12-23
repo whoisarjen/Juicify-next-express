@@ -281,12 +281,11 @@ const Socket = ({ children }) => {
                 const isOnline = store.getState().online.isOnline;
 
 
-                //                 if(isOnline && object.lastUpdated.product > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'product')){
-                //                     newTimeOfUpdate = object.lastUpdated.product
-                //                     this.synchroMessage = true;
-                //                     await synchronizationAfterOffline(object.lastUpdated.product > lastUpdated, "product");
-                //                     if(!isOnline) await addIndexedDB("whatToUpdate", [{"_id": "product"}]);
-                //                 }
+                if (isOnline && object.lastUpdated.product > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'product')) {
+                    newTimeOfUpdate = object.lastUpdated.product
+                    await synchronizationAfterOffline(object.lastUpdated.product > lastUpdated, "product");
+                    if (!isOnline) await addIndexedDB("whatToUpdate", [{ "_id": "product" }]);
+                }
 
                 //                 if(isOnline && object.lastUpdated.exercise > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'exercise')){
                 //                     newTimeOfUpdate = object.lastUpdated.exercise

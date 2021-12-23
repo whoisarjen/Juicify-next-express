@@ -17,6 +17,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import useTranslation from "next-translate/useTranslation";
 import { getAllIndexedDB, deleteIndexedDB } from '../../utils/indexedDB';
 import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../utils/API'
+import CreateProduct from './CreateProduct';
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -32,7 +33,17 @@ const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload
     const token = useSelector(state => state.token.value)
     const [refreshChecked, setRefreshChecked] = useState(0)
     const [loadingButton, setLoadingButton] = useState(false)
+    const [isCreateProduct, setIsCreateProduct] = useState(false)
     const { items, loading, searchCache } = useFind(find, 'product', tab)
+
+    const created = async (productName) => {
+        if (productName == find) {
+            setFind(null)
+        } else {
+            setFind(productName)
+        }
+        setIsCreateProduct(false)
+    }
 
     const addProductsToDiary = async () => {
         setLoadingButton(true)
@@ -129,6 +140,14 @@ const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload
                             <AddProductsBox refreshCheckedProducts={() => setRefreshChecked(refreshChecked + 1)} product={product} key={product._id} />
                         )
                     }
+                    <Button variant="outlined" onClick={() => setIsCreateProduct(true)}>
+                        {t('Create product')}
+                    </Button>
+                    <CreateProduct
+                        created={created}
+                        isCreateProduct={isCreateProduct}
+                        closeCreateProduct={() => setIsCreateProduct(false)}
+                    />
                     {
                         checked && checked.length > 0 &&
                         <>

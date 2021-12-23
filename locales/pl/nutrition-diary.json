@@ -1,6 +1,7 @@
 {
     "Add products": "Dodaj produkty",
     "Submit": "Submit",
+    "Cancel": "Anuluj",
     "P": "B",
     "C": "W",
     "F": "T",
@@ -16,5 +17,18 @@
     "Confirm": "Potwierdź",
     "Deny": "Anuluj",
     "Search": "Wyszukaj",
-    "Activity": "Aktywność"
+    "Activity": "Aktywność",
+    "My": "Moje",
+    "Create product": "Tworzenie produktu",
+    "Create product description": "Możesz stworzyć własny produkt, a następnie zdecydować, czy chcesz, aby był on dostępny dla każdego.",
+    "Name of product": "Name of product",
+    "Proteins in 100g/ml": "Białko w 100g/ml",
+    "Carbs in 100g/ml": "Węglowodany w 100g/ml",
+    "Sugar in 100g/ml": "Cukier w 100g/ml",
+    "Fat in 100g/ml": "Tłuszcz w 100g/ml",
+    "Fiber in 100g/ml": "Błonnik w 100g/ml",
+    "Salt in 100g/ml": "Sód w 100g/ml",
+    "Ethanol in 100g/ml": "Ethanol w 100g/ml",
+    "Calories in 100g/ml": "Kalorie w 100g/ml",
+    "Calories can NOT be equal to zero": "Kalorie nie mogą wynosić zero"
 }

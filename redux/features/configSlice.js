@@ -18,6 +18,13 @@ const initialState = {
             return false
         }
     },
+    numberOnlyPositive: (value) => {
+        if(!value || (0 <= value && value <= 10000)){
+            return true
+        }else{
+            return false
+        }
+    },
     basicInputLength: (value) => {
         if (!value || (0 <= value.length && value.length <= 255)) {
             return true
