@@ -2,7 +2,7 @@ const loadProduct = require("../functions/loadProduct")
 const loadExercise = require("../functions/loadExercise")
 
 module.exports = async function (req) {
-	return new Promise(resolve => {
+	return new Promise(async resolve => {
 		const Model = require('../models/daily_measurement')
 		function check2(array, user_ID) {
 			return new Promise(resolve => {

@@ -1,4 +1,5 @@
 import { API } from '../utils/API'
+import { store } from '../redux/store'
 import { useState, useEffect } from "react";
 import { addIndexedDB, getAllIndexedDB, getIndexedDBbyID } from '../utils/indexedDB'
 
@@ -33,6 +34,7 @@ const prepareItems = async (data, skipThoseIDS, where, value) => {
 const useFind = (value, where, tab, skipThoseIDS, reload = 0) => {
     const [items, setItems] = useState([])
     const [loading, setLoading] = useState(false)
+    const isOnline = store.getState().online.isOnline
     const [searchCache, setSearchCache] = useState([])
     const [searchTimer, setSearchTimer] = useState(null)
 
@@ -56,14 +58,18 @@ const useFind = (value, where, tab, skipThoseIDS, reload = 0) => {
                 } else {
                     const searchFunction = (find) => setTimeout(async () => {
                         setLoading(true);
-                        const { response, isSuccess } = await API(`/find/${where}`, {
-                            find: find
-                        });
-                        if (isSuccess) {
-                            const receivedProducts = response.items.sort((a, b) => a.name.length - b.name.length)
-                            setItems(await prepareItems(receivedProducts || [], skipThoseIDS, where, value))
-                            await addIndexedDB(`cache_${where}`, [{ _id: find, whenAdded: new Date(), items: receivedProducts }])
-                            setSearchCache([...searchCache, find])
+                        if (isOnline) {
+                            const { response, isSuccess } = await API(`/find/${where}`, {
+                                find: find
+                            });
+                            if (isSuccess) {
+                                const receivedProducts = response.items.sort((a, b) => a.name.length - b.name.length)
+                                setItems(await prepareItems(receivedProducts || [], skipThoseIDS, where, value))
+                                await addIndexedDB(`cache_${where}`, [{ _id: find, whenAdded: new Date(), items: receivedProducts }])
+                                setSearchCache([...searchCache, find])
+                            } else {
+                                setItems(await prepareItems([], skipThoseIDS, where, value))
+                            }
                         } else {
                             setItems(await prepareItems([], skipThoseIDS, where, value))
                         }

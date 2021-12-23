@@ -1,4 +1,4 @@
-import { getIndexedDBbyID, addIndexedDB, deleteIndexedDB, putIndexedDB } from "./indexedDB"
+import { getIndexedDBbyID, addIndexedDB, deleteIndexedDB, putIndexedDB, getAllIndexedDB } from "./indexedDB"
 import { store } from '../redux/store'
 import { getCookie } from "./checkAuth"
 
@@ -42,7 +42,7 @@ const loadValueByLogin = async (where, uniqueKey, login = uniqueKey) => {
     }
 }
 
-const insertThoseIDStoDB = async (where, sentArray, whatToUpdate, value, whatToUpdate2, forceOffline = false) => {
+const insertThoseIDStoDB = async (where, sentArray, whatToUpdate, value, whatToUpdate2) => {
     let array = JSON.parse(JSON.stringify(sentArray))
     const isOnline = store.getState().online.isOnline;
     console.log(`insertThoseIDStoDB is online: ${isOnline}`)
@@ -58,10 +58,18 @@ const insertThoseIDStoDB = async (where, sentArray, whatToUpdate, value, whatToU
                 arrayIDSbeforeInsert.push(array[i]._id)
                 delete array[i]._id
             }
-            if (where == 'daily_measurement' && isOnline) array[i] = await prepareDailyToSend(array[i], true)
+            if (where == 'daily_measurement' && isOnline) {
+                array[i] = await prepareDailyToSend(array[i], true)
+            }
         }
         console.log('after', array)
-        if (isOnline && !forceOffline) {
+        if (isOnline) {
+            if (whatToUpdate) {
+                whatToUpdateARRAY = await getAllIndexedDB('daily_measurement')
+            }
+            if (whatToUpdate2) {
+                whatToUpdateARRAY2 = await getAllIndexedDB(whatToUpdate2)
+            }
             const { response, isSuccess } = await API(`/insert/${where}`, {
                 array
             })
@@ -101,7 +109,7 @@ const insertThoseIDStoDB = async (where, sentArray, whatToUpdate, value, whatToU
                     }
                 }
             } else {
-                return await insertThoseIDStoDB(where, copyArray, whatToUpdate, value, whatToUpdate2, true)
+                return resolve(await insertThoseIDStoDB(where, copyArray, whatToUpdate, value, whatToUpdate2))
             }
         } else {
             for (let i = 0; i < array.length; i++) {
@@ -113,7 +121,7 @@ const insertThoseIDStoDB = async (where, sentArray, whatToUpdate, value, whatToU
     })
 }
 
-const overwriteThoseIDSinDB = async (where, sentArray, forceOffline = false) => {
+const overwriteThoseIDSinDB = async (where, sentArray) => {
     let array = JSON.parse(JSON.stringify(sentArray))
     const isOnline = store.getState().online.isOnline
     console.log(`overwriteThoseIDSinDB is online: ${isOnline}`)
@@ -133,7 +141,7 @@ const overwriteThoseIDSinDB = async (where, sentArray, forceOffline = false) => 
                     console.log('After prepare', array[i])
                 }
             }
-            if (isOnline && !forceOffline) {
+            if (isOnline) {
                 const { response, isSuccess } = await API(`/update/${where}`, {
                     array
                 })
@@ -153,7 +161,7 @@ const overwriteThoseIDSinDB = async (where, sentArray, forceOffline = false) => 
                         }
                     }
                 } else {
-                    return await overwriteThoseIDSinDB(where, originalArray, true)
+                    return await overwriteThoseIDSinDB(where, originalArray)
                 }
             }
             await addIndexedDB(where, array)
@@ -162,7 +170,7 @@ const overwriteThoseIDSinDB = async (where, sentArray, forceOffline = false) => 
     })
 }
 
-const deleteThoseIDSfromDB = async (where, array, isNewValueInDB, forceOffline = false) => {
+const deleteThoseIDSfromDB = async (where, array, isNewValueInDB) => {
     const isOnline = store.getState().online.isOnline
     if (isNewValueInDB) { // if there is new value in DB, check if still need to request delete
         for (let i = 0; i < array.length; i++) {
@@ -178,14 +186,14 @@ const deleteThoseIDSfromDB = async (where, array, isNewValueInDB, forceOffline =
                     await deleteIndexedDB(where, array[i]._id)
                     if (where == 'daily_measurement' && isOnline) array[i] = await prepareDailyToSend(array[i], true)
                 }
-                if (isOnline && !forceOffline) {
+                if (isOnline) {
                     if (await is_id(array[0]._id)) {
                         const { response, isSuccess } = await API(`/delete`, {
                             where,
                             array
                         })
                         if (!isSuccess) {
-                            return await deleteThoseIDSfromDB(where, originalArray, isNewValueInDB, true)
+                            return await deleteThoseIDSfromDB(where, originalArray, isNewValueInDB)
                         }
                     }
                 } else {

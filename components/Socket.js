@@ -283,14 +283,14 @@ const Socket = ({ children }) => {
 
                 if (isOnline && object.lastUpdated.product > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'product')) {
                     newTimeOfUpdate = object.lastUpdated.product
-                    await synchronizationAfterOffline(object.lastUpdated.product > lastUpdated, "product");
+                    await synchronizationAfterOffline(object.lastUpdated.product > lastUpdated, "product", 'nutrition_diary', 'product_ID');
                     if (!isOnline) await addIndexedDB("whatToUpdate", [{ "_id": "product" }]);
                 }
 
                 //                 if(isOnline && object.lastUpdated.exercise > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'exercise')){
                 //                     newTimeOfUpdate = object.lastUpdated.exercise
                 //                     this.synchroMessage = true;
-                //                     await synchronizationAfterOffline(object.lastUpdated.exercise > lastUpdated, "exercise");
+                //                     await synchronizationAfterOffline(object.lastUpdated.exercise > lastUpdated, "exercise", 'workout_result', HERE NEED TO FIND WAY TO GET RESULTS[EXERCISE[]]);
                 //                     if(!isOnline) await addIndexedDB("whatToUpdate", [{"_id": 'exercise'}]);
                 //                 }
 
