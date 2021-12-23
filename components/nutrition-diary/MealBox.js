@@ -8,6 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import style from "../../styles/nutrition-diary.module.css";
 import useTranslation from "next-translate/useTranslation";
+import countCalories from './utils/countCalories';
 
 const MealBox = ({ index, products, openDialog, openEditProduct }) => {
     const { t } = useTranslation('nutrition-diary');
@@ -72,7 +73,7 @@ const MealBox = ({ index, products, openDialog, openEditProduct }) => {
                         </div>
                         <div className={style.boxProductContent}>
                             <div>{product.name || product.activity}</div>
-                            <div>{product.calories || parseInt((count(product, 'p')) * 4 + (count(product, 'c')) * 4 + (count(product, 'f')) * 9)}kcal</div>
+                            <div>{countCalories(product)}kcal</div>
                         </div>
                         <div className={style.boxProductContent}>
                             {

@@ -8,6 +8,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import { useEffect, useState } from 'react'
 import { putIndexedDB, addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../utils/indexedDB';
 import useTranslation from "next-translate/useTranslation";
+import countCalories from './utils/countCalories';
 
 const AddProductsBox = ({ product, refreshCheckedProducts }) => {
     const { t } = useTranslation('nutrition-diary');
@@ -55,7 +56,7 @@ const AddProductsBox = ({ product, refreshCheckedProducts }) => {
                 {product.name}
             </div>
             <div className={styles.addProductsBoxDescription}>
-                {(product.p || 0)}{t('P')} {(product.c || 0)}{t('C')} {(product.f || 0)}{t('F')} {parseInt((product.p || 0) * 4 + (product.c || 0) * 4 + (product.f || 0) * 9)}kcal
+                {(product.p || 0)}{t('P')} {(product.c || 0)}{t('C')} {(product.f || 0)}{t('F')} {countCalories(product)}kcal
             </div>
             <div className={styles.addProductsBoxFavourite} onClick={handleLike}>
                 <Checkbox checked={fav} icon={<FavoriteBorder fontSize="small" />} checkedIcon={<Favorite fontSize="small" />} />
