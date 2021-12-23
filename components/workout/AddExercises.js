@@ -27,6 +27,7 @@ const AddDialog = ({ isAddDialog, closeDialog, skipThoseIDS, addThoseExercises }
     const [checked, setChecked] = useState([])
     const [refreshChecked, setRefreshChecked] = useState(0)
     const [loadingButton, setLoadingButton] = useState(false)
+    const [isCreateExercise, setIsCreateExercise] = useState(false)
     const { items, loading, searchCache } = useFind(find, 'exercise', tab, skipThoseIDS)
 
     const addExercisesToWorkoutPlan = async () => {
@@ -39,7 +40,15 @@ const AddDialog = ({ isAddDialog, closeDialog, skipThoseIDS, addThoseExercises }
         closeDialog()
         setFind(null)
         setChecked([])
+    }
 
+    const created = async (exerciseName) => {
+        if (exerciseName == find) {
+            setFind(null)
+        } else {
+            setFind(exerciseName)
+        }
+        setIsCreateExercise(false)
     }
 
     useEffect(() => setOpen(false), [searchCache])
