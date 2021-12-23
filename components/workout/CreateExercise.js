@@ -28,7 +28,7 @@ const CreateExercise = ({ closeCreateExercise, isCreateExercise, created }) => {
                 l: name.length,
                 user_ID: token._id
             }])
-                .then(() => created(object.name))
+                .then(() => created(name))
                 .then(() => {
                     toast.success('', {
                         position: "bottom-right",
