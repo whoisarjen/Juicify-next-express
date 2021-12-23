@@ -51,6 +51,8 @@ const insertThoseIDStoDB = async (where, sentArray, whatToUpdate, value, whatToU
     return new Promise(async resolve => {
         const copyArray = JSON.parse(JSON.stringify(array));
         const arrayIDSbeforeInsert = []
+        let whatToUpdateARRAY = false
+        let whatToUpdateARRAY2 = false
         console.log(copyArray)
         for (let i = 0; i < array.length; i++) {
             if (array[i]._id) {
