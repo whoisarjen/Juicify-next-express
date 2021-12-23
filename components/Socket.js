@@ -252,6 +252,18 @@ const synchronizationAfterOffline = async (isNewValueInDB, where, whatToUpdate, 
     })
 }
 
+const cleanCache = async (where) => {
+    return new Promise(async resolve => {
+        const cache = await getAllIndexedDB(where)
+        if(cache && cache.length > 0){
+            for(let i=0; i<cache.length; i++){
+                await deleteIndexedDB(where, cache[i]._id)
+            }
+        }
+        resolve()
+    })
+}
+
 const Socket = ({ children }) => {
     const [key, setKey] = useState(0)
     const dispatch = useDispatch()
@@ -283,20 +295,22 @@ const Socket = ({ children }) => {
 
                 if (isOnline && object.lastUpdated.product > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'product')) {
                     newTimeOfUpdate = object.lastUpdated.product
-                    await synchronizationAfterOffline(object.lastUpdated.product > lastUpdated, "product", 'nutrition_diary', 'product_ID');
+                    await synchronizationAfterOffline(object.lastUpdated.product > lastUpdated, "product", 'nutrition_diary', 'product_ID', 'favourite_product', '_id');
+                    await cleanCache('checked_product')
                     if (!isOnline) await addIndexedDB("whatToUpdate", [{ "_id": "product" }]);
                 }
 
-                //                 if(isOnline && object.lastUpdated.exercise > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'exercise')){
-                //                     newTimeOfUpdate = object.lastUpdated.exercise
-                //                     this.synchroMessage = true;
-                //                     await synchronizationAfterOffline(object.lastUpdated.exercise > lastUpdated, "exercise", 'workout_result', HERE NEED TO FIND WAY TO GET RESULTS[EXERCISE[]]);
-                //                     if(!isOnline) await addIndexedDB("whatToUpdate", [{"_id": 'exercise'}]);
-                //                 }
+                // if(isOnline && object.lastUpdated.exercise > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'exercise')){
+                //     newTimeOfUpdate = object.lastUpdated.exercise
+                //     await synchronizationAfterOffline(object.lastUpdated.exercise > lastUpdated, "exercise", 'workout_result', HERE NEED TO FIND WAY TO GET RESULTS[EXERCISE[]]);
+                //     await cleanCache('checked_exercise')
+                //     if(!isOnline) await addIndexedDB("whatToUpdate", [{"_id": 'exercise'}]);
+                // }
 
                 if (isOnline && object.lastUpdated.workout_plan > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'workout_plan')) {
                     newTimeOfUpdate = object.lastUpdated.workout_plan
                     await synchronizationAfterOffline(object.lastUpdated.workout_plan > lastUpdated, "workout_plan", "workout_result", "workout_plan_ID");
+                    await cleanCache('workout_result')
                     if (!isOnline) await addIndexedDB("whatToUpdate", [{ "_id": "workout_plan" }]);
                 }
 
