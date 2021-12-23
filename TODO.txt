@@ -13,3 +13,4 @@ block workout save if not diff
 product site api for SEO
 Make better notify for create [...]
 in result => option to add exercise but synchro need to handle it too...
+sidebar need to random show profiles for better seo
