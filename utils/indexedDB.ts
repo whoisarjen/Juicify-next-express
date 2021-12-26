@@ -9,7 +9,7 @@ const createIndexedDB = async () => {
     await window.indexedDB.deleteDatabase(namOfIndexedDB);
     let request = window.indexedDB.open(namOfIndexedDB);
     return new Promise((resolve) => {
-        request.onupgradeneeded = function (event) {
+        request.onupgradeneeded = function (event: any) {
             const db = event.target.result;
             let objectStore;
             objectStore = db.createObjectStore("product", { keyPath: "_id" });
@@ -33,7 +33,7 @@ const createIndexedDB = async () => {
                 keyPath: "_id",
             });
             objectStore = db.createObjectStore("whatToUpdate", { keyPath: "_id" });
-            objectStore.transaction.oncomplete = async () => resolve();
+            objectStore.transaction.oncomplete = async () => resolve(true);
         };
     });
 };
@@ -42,7 +42,7 @@ const deleteDatabaseIndexedDB = async () => {
     await window.indexedDB.deleteDatabase(namOfIndexedDB);
 };
 
-const getAllIndexedDB = async (value) => {
+const getAllIndexedDB = async (value: string) => {
     let request = await connectIndexedDB();
     return new Promise((resolve) => {
         request.onsuccess = async function () {
@@ -57,7 +57,7 @@ const getAllIndexedDB = async (value) => {
     });
 };
 
-const getIndexedDBbyID = async (where, id) => {
+const getIndexedDBbyID = async (where: string, id: string) => {
     let request3 = await connectIndexedDB();
     return new Promise((resolve) => {
         request3.onsuccess = async function () {
@@ -72,7 +72,7 @@ const getIndexedDBbyID = async (where, id) => {
     });
 };
 
-const putIndexedDB = async (where, id, what, value) => {
+const putIndexedDB = async (where: string, id: string, what: string, value: any) => {
     await putInformationAboutNeededUpdate(where);
     value = value.toString();
     let request3 = await connectIndexedDB();
@@ -86,13 +86,13 @@ const putIndexedDB = async (where, id, what, value) => {
                 const data = await objectStoreTitleRequest.result;
                 data[what] = await value;
                 await objectStore.put(data);
-                resolve();
+                resolve(true);
             };
         };
     });
 };
 
-const deleteIndexedDB = async (where, _id) => {
+const deleteIndexedDB = async (where: string, _id: string) => {
     _id = _id.toString();
     await putInformationAboutNeededUpdate(where);
     let request = await connectIndexedDB();
@@ -103,11 +103,11 @@ const deleteIndexedDB = async (where, _id) => {
                 .objectStore(where)
                 .delete(_id);
         };
-        resolve();
+        resolve(true);
     });
 };
 
-const addIndexedDB = async (where, value) => {
+const addIndexedDB = async (where: string, value: Array<any>) => {
     if (value && value.length > 0) {
         await putInformationAboutNeededUpdate(where);
         for (let i = 0; i < value.length; i++) {
@@ -122,13 +122,13 @@ const addIndexedDB = async (where, value) => {
                 value.forEach(function (products) {
                     objectStore.add(products);
                 });
-                resolve();
+                resolve(true);
             };
         });
     }
 };
 
-const putInformationAboutNeededUpdate = async (where) => {
+const putInformationAboutNeededUpdate = async (where: string) => {
     return new Promise((resolve) => {
         (async () => {
             if (!store.getState().online.isOnline) {
@@ -140,9 +140,9 @@ const putInformationAboutNeededUpdate = async (where) => {
                     ]);
                 }
             } else {
-                localStorage.setItem("lastUpdated", new Date().getTime());
+                localStorage.setItem("lastUpdated", new Date().getTime().toString());
             }
-            resolve();
+            resolve(true);
         })();
     });
 };

@@ -9,7 +9,7 @@ import styles from "../styles/login.module.css";
 import TextField from "@mui/material/TextField";
 import { API, setLastUpdated } from '../utils/API'
 import LoadingButton from "@mui/lab/LoadingButton";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../hooks/useRedux";
 import { setToken } from "../redux/features/tokenSlice";
 import useTranslation from "next-translate/useTranslation";
 import { expectLoggedOUT, readToken } from "../utils/checkAuth";
@@ -23,12 +23,12 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false)
     const router = useRouter();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const [, setCookie] = useCookies(["token"]);
-    const theOldestSupportedDate = useSelector(state => state.config.theOldestSupportedDate)
-    const requiredBasicInputLength = useSelector(state => state.config.requiredBasicInputLength)
+    const theOldestSupportedDate = useAppSelector(state => state.config.theOldestSupportedDate)
+    const requiredBasicInputLength = useAppSelector(state => state.config.requiredBasicInputLength)
 
-    const handleKeyPress = (event) => {
+    const handleKeyPress = (event: any) => {
         if (event.key === "Enter") {
             handleLogin();
         }

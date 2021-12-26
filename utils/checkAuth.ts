@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../hooks/useRedux";
 import { getShortDate } from "./manageDate";
 import { deleteDatabaseIndexedDB } from "./indexedDB";
 
@@ -27,16 +27,16 @@ const expectLoggedIN = () => {
 const expectLoggedOUT = () => {
     const router = useRouter();
     const [cookies] = useCookies(["token"]);
-    const login = useSelector((state) => state.token.value.login);
+    const token: any = useAppSelector((state) => state.token.value);
 
     useEffect(() => {
         if (cookies.token) {
-            router.push(`/${login}/nutrition-diary/${getShortDate()}`);
+            router.push(`/${token.login}/nutrition-diary/${getShortDate()}`);
         }
     }, []);
 };
 
-const getCookie = async (name) => {
+const getCookie = async (name: string) => {
     let nameEQ = name + "=";
     let ca = document.cookie.split(';');
     for(let i=0;i < ca.length;i++) {
@@ -47,7 +47,7 @@ const getCookie = async (name) => {
     return null;
 }
 
-const readToken = (token) => {
+const readToken = (token: string) => {
     if (!token) return ''
     return JSON.parse(Buffer.from(token.split(".")[1], "base64").toString());
 };

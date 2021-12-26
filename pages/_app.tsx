@@ -5,19 +5,20 @@ import { Provider } from "react-redux";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Layout from "../components/Layout";
 import Socket from "../components/Socket";
+import { FunctionComponent } from "react";
+
+interface MyAppProps {
+    Component: any,
+    pageProps: any
+}
 
 const theme = createTheme({
     typography: {
         fontFamily: "Quicksand, sans-serif",
-    },
-    // palette: {
-    // primary: {
-    // main: 'rgb(252, 97, 70)'
-    // }
-    // }
+    }
 });
 
-function MyApp({ Component, pageProps }) {
+const MyApp: FunctionComponent<MyAppProps> = ({ Component, pageProps }) => {
     return (
         <ThemeProvider theme={theme}>
             <Provider store={store}>

@@ -1,6 +1,7 @@
+import { FunctionComponent } from "react";
 import { expectLoggedIN } from "../utils/checkAuth";
 
-const Barcode = () => {
+const Barcode: FunctionComponent = () => {
   expectLoggedIN();
 
   return <div className="barcode">Barcode</div>;

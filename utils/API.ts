@@ -2,7 +2,7 @@ import { getIndexedDBbyID, addIndexedDB, deleteIndexedDB, putIndexedDB, getAllIn
 import { store } from '../redux/store'
 import { getCookie } from "./checkAuth"
 
-const API = async (url, body) => {
+const API = async (url: string, body: any): Promise<any> => {
     let response = {}
     let isSuccess = false
     console.log(url, body)
@@ -27,7 +27,7 @@ const API = async (url, body) => {
     return { response, isSuccess }
 }
 
-const loadValueByLogin = async (where, uniqueKey, login = uniqueKey) => {
+const loadValueByLogin = async (where: string, uniqueKey: any, login: string = uniqueKey) => {
     const { response, isSuccess } = await API(`/guest/${where}`, {
         uniqueKey,
         login
@@ -42,7 +42,7 @@ const loadValueByLogin = async (where, uniqueKey, login = uniqueKey) => {
     }
 }
 
-const insertThoseIDStoDB = async (where, sentArray, whatToUpdate, value, whatToUpdate2) => {
+const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, whatToUpdate: string, value: string, whatToUpdate2: string): Promise<Array<any>> => {
     return new Promise(async resolve => {
         let array = JSON.parse(JSON.stringify(sentArray))
         const copyArray = JSON.parse(JSON.stringify(array));
@@ -53,8 +53,8 @@ const insertThoseIDStoDB = async (where, sentArray, whatToUpdate, value, whatToU
             uniquePARAM = "whenAdded"
         }
         const arrayIDSbeforeInsert = []
-        let whatToUpdateARRAY = false
-        let whatToUpdateARRAY2 = false
+        let whatToUpdateARRAY: any = false
+        let whatToUpdateARRAY2: any = false
         for (let i = 0; i < array.length; i++) {
             if (array[i]._id) {
                 await deleteIndexedDB(where, array[i][uniquePARAM])
@@ -123,7 +123,7 @@ const insertThoseIDStoDB = async (where, sentArray, whatToUpdate, value, whatToU
     })
 }
 
-const overwriteThoseIDSinDB = async (where, sentArray) => {
+const overwriteThoseIDSinDB = async (where: string, sentArray: Array<any>): Promise<Array<any>> => {
     let array = JSON.parse(JSON.stringify(sentArray))
     const isOnline = store.getState().online.isOnline
     console.log(`overwriteThoseIDSinDB is online: ${isOnline}`)
@@ -131,7 +131,7 @@ const overwriteThoseIDSinDB = async (where, sentArray) => {
     if (where == 'daily_measurement') uniquePARAM = "whenAdded"
     return new Promise(resolve => {
         (async () => {
-            let originalArray = JSON.parse(JSON.stringify(array.map((x) => {
+            let originalArray = JSON.parse(JSON.stringify(array.map((x: any) => {
                 x.changed = true
                 return x
             })));
@@ -172,7 +172,7 @@ const overwriteThoseIDSinDB = async (where, sentArray) => {
     })
 }
 
-const deleteThoseIDSfromDB = async (where, array, isNewValueInDB) => {
+const deleteThoseIDSfromDB = async (where: string, array: Array<any>, isNewValueInDB: boolean = false) => {
     const isOnline = store.getState().online.isOnline
     if (isNewValueInDB) { // if there is new value in DB, check if still need to request delete
         for (let i = 0; i < array.length; i++) {
@@ -208,12 +208,12 @@ const deleteThoseIDSfromDB = async (where, array, isNewValueInDB) => {
                     if (array.length > 0) await addIndexedDB(where, array)
                 }
             }
-            resolve();
+            resolve(true);
         })();
     })
 }
 
-const prepareDailyToSend = async (daily_measurement, removeDeleted) => {
+const prepareDailyToSend = async (daily_measurement: any, removeDeleted: boolean = false) => {
     const object = JSON.parse(JSON.stringify(daily_measurement))
     return new Promise(resolve => {
         (async () => {
@@ -249,14 +249,14 @@ const prepareDailyToSend = async (daily_measurement, removeDeleted) => {
     });
 }
 
-const is_id = async (_id) => {
+const is_id = async (_id: string) => {
     return new Promise(resolve => {
         (_id).substring(0, 2) != "XD" ? resolve(true) : resolve(false)
     })
 }
 
 const setLastUpdated = () => {
-    localStorage.setItem('lastUpdated', new Date().getTime())
+    localStorage.setItem('lastUpdated', new Date().getTime().toString())
 }
 
 export {
