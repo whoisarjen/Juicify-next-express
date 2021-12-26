@@ -270,8 +270,8 @@ const Socket = ({ children }) => {
     const [cookies] = useCookies()
 
     useEffect(() => {
-        dispatch(setIsOnline(navigator.onLine))
-        window.addEventListener('online', () => dispatch(setIsOnline(true)))
+        // dispatch(setIsOnline(navigator.onLine)) // Only socket connection can turn online for app
+        // window.addEventListener('online', () => dispatch(setIsOnline(true))) // Only socket connection can turn online for app
         window.addEventListener('offline', () => dispatch(setIsOnline(false)))
     }, [])
 
