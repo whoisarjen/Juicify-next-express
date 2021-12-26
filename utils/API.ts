@@ -42,7 +42,7 @@ const loadValueByLogin = async (where: string, uniqueKey: any, login: string = u
     }
 }
 
-const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, whatToUpdate: string, value: string, whatToUpdate2: string): Promise<Array<any>> => {
+const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, whatToUpdate: string = '', value: string = '', whatToUpdate2: string = '', value2: string = '_id'): Promise<Array<any>> => {
     return new Promise(async resolve => {
         let array = JSON.parse(JSON.stringify(sentArray))
         const copyArray = JSON.parse(JSON.stringify(array));
@@ -105,13 +105,13 @@ const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, whatToUp
                     for (let i = 0; i < array.length; i++) {
                         for (let a = 0; a < whatToUpdateARRAY2.length; a++) {
                             if (whatToUpdateARRAY2[a][value] == arrayIDSbeforeInsert[i]) {
-                                await putIndexedDB(whatToUpdate2, whatToUpdateARRAY2[a]._id, value, array[i]._id)
+                                await putIndexedDB(whatToUpdate2, whatToUpdateARRAY2[a][value2], value, array[i]._id)
                             }
                         }
                     }
                 }
             } else {
-                return resolve(await insertThoseIDStoDB(where, copyArray, whatToUpdate, value, whatToUpdate2))
+                return resolve(await insertThoseIDStoDB(where, copyArray, whatToUpdate, value, whatToUpdate2, value2))
             }
         } else {
             for (let i = 0; i < array.length; i++) {

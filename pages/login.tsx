@@ -24,7 +24,7 @@ const Login = () => {
     const [loading, setLoading] = useState(false)
     const router = useRouter();
     const dispatch = useAppDispatch();
-    const [, setCookie] = useCookies(["token"]);
+    const [, setCookie] = useCookies();
     const theOldestSupportedDate = useAppSelector(state => state.config.theOldestSupportedDate)
     const requiredBasicInputLength = useAppSelector(state => state.config.requiredBasicInputLength)
 
