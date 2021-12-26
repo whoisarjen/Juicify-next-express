@@ -124,6 +124,14 @@ const AddDialog: FunctionComponent<AddDialogProps> = ({ isAddDialog, closeDialog
                             <AddExercisesBox refreshCheckedExercises={() => setRefreshChecked(refreshChecked + 1)} exercise={item} key={item._id} />
                         )
                     }
+                    <Button variant="outlined" onClick={() => setIsCreateExercise(true)} sx={{ margin: 'auto' }}>
+                        {t('Create exercise')}
+                    </Button>
+                    <CreateExercise
+                        created={created}
+                        isCreateExercise={isCreateExercise}
+                        closeCreateExercise={() => setIsCreateExercise(false)}
+                    />
                     {
                         checked && checked.length > 0 &&
                         <>
@@ -139,14 +147,6 @@ const AddDialog: FunctionComponent<AddDialogProps> = ({ isAddDialog, closeDialog
                             <div className={styles.addProductsSubmitPlaceholder} />
                         </>
                     }
-                    <Button variant="outlined" onClick={() => setIsCreateExercise(true)} sx={{ margin: 'auto' }}>
-                        {t('Create exercise')}
-                    </Button>
-                    <CreateExercise
-                        created={created}
-                        isCreateExercise={isCreateExercise}
-                        closeCreateExercise={() => setIsCreateExercise(false)}
-                    />
                     <div className={styles.addProductsCloseButtonPlaceholder} />
                     <div className={styles.addProductsCloseButton} onClick={() => closeDialog()}>
                         <Button variant="contained">
