@@ -72,7 +72,7 @@ const AddResultValues: FunctionComponent<AddResultValuesProps> = ({ result, setN
             {
                 values && values.map((value: any, index: number) =>
                     <AddResultValuesBox
-                        key={index}
+                        key={index + result._id}
                         value={value}
                         index={index}
                         deleteResult={() => deleteResult(value._id)}

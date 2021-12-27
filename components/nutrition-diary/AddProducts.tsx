@@ -13,12 +13,12 @@ import { useAppSelector } from '../../hooks/useRedux';
 import useFind from '../../hooks/useFind';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import LoadingButton from '@mui/lab/LoadingButton';
 import useTranslation from "next-translate/useTranslation";
 import { getAllIndexedDB, deleteIndexedDB } from '../../utils/indexedDB';
 import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../utils/API'
 import CreateProduct from './CreateProduct';
 import { TransitionProps } from '@material-ui/core/transitions';
+import BottomFlyingButton from '../common/BottomFlyingButton';
 
 interface AddproductsProps {
     index: number,
@@ -168,18 +168,7 @@ const AddProducts: FunctionComponent<AddproductsProps> = ({ index, isAddDialog, 
                     />
                     {
                         checked && checked.length > 0 &&
-                        <>
-                            <div className={styles.addProductsSubmit}>
-                                <LoadingButton
-                                    onClick={addProductsToDiary}
-                                    loading={loadingButton}
-                                    variant="contained"
-                                >
-                                    {t('Submit')} ({checked.length})
-                                </LoadingButton>
-                            </div>
-                            <div className={styles.addProductsSubmitPlaceholder} />
-                        </>
+                        <BottomFlyingButton clicked={addProductsToDiary} isLoading={loadingButton} />
                     }
                     <div className={styles.addProductsCloseButtonPlaceholder} />
                     <div className={styles.addProductsCloseButton} onClick={() => closeDialog()}>

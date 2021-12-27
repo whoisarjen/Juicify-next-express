@@ -15,3 +15,4 @@ Make better notify for create [...]
 in result => option to add exercise but synchro need to handle it too...
 sidebar need to random show profiles for better seo
 barcode to createProduct
+probably insert on whattoupdate might have issues, to check later with synchro

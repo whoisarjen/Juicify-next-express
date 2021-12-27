@@ -10,7 +10,7 @@ import AddExercisesBox from './AddExercisesBox';
 import useFind from '../../hooks/useFind';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import LoadingButton from '@mui/lab/LoadingButton';
+import BottomFlyingButton from '../common/BottomFlyingButton'
 import useTranslation from "next-translate/useTranslation";
 import { deleteIndexedDB, getAllIndexedDB } from '../../utils/indexedDB';
 import CreateExercise from './CreateExercise';
@@ -134,18 +134,7 @@ const AddDialog: FunctionComponent<AddDialogProps> = ({ isAddDialog, closeDialog
                     />
                     {
                         checked && checked.length > 0 &&
-                        <>
-                            <div className={styles.addProductsSubmit}>
-                                <LoadingButton
-                                    onClick={addExercisesToWorkoutPlan}
-                                    loading={loadingButton}
-                                    variant="contained"
-                                >
-                                    {t('Submit')} ({checked.length})
-                                </LoadingButton>
-                            </div>
-                            <div className={styles.addProductsSubmitPlaceholder} />
-                        </>
+                        <BottomFlyingButton clicked={addExercisesToWorkoutPlan} isLoading={loadingButton} />
                     }
                     <div className={styles.addProductsCloseButtonPlaceholder} />
                     <div className={styles.addProductsCloseButton} onClick={() => closeDialog()}>
