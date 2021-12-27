@@ -8,6 +8,10 @@ import Tab1 from "../components/settings/Tab1";
 import Tab2 from "../components/settings/Tab2";
 import Tab3 from "../components/settings/Tab3";
 import Tab4 from "../components/settings/Tab4";
+import BookIcon from "@mui/icons-material/Book";
+import SecurityIcon from '@mui/icons-material/Security';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AppSettingsAltIcon from '@mui/icons-material/AppSettingsAlt';
 
 interface TabPanelProps {
     children?: ReactNode;
@@ -53,10 +57,10 @@ const Settings: FunctionComponent = () => {
                 aria-label="Vertical tabs example"
                 sx={{ borderRight: 1, borderColor: 'divider', overflow: 'visible'  }}
             >
-                <Tab label="Account" />
-                <Tab label="Diary" />
-                <Tab label="Preference" />
-                <Tab label="Security" />
+                <Tab label={<AccountCircleIcon />} />
+                <Tab label={<BookIcon />} />
+                <Tab label={<AppSettingsAltIcon />} />
+                <Tab label={<SecurityIcon />} />
             </Tabs>
             <TabPanel value={value} index={0}>
                 <Tab1 />

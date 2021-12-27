@@ -168,7 +168,7 @@ const AddProducts: FunctionComponent<AddproductsProps> = ({ index, isAddDialog, 
                     />
                     {
                         checked && checked.length > 0 &&
-                        <BottomFlyingButton clicked={addProductsToDiary} isLoading={loadingButton} />
+                        <BottomFlyingButton clicked={addProductsToDiary} isLoading={loadingButton} showNumberValue={checked.length} />
                     }
                     <div className={styles.addProductsCloseButtonPlaceholder} />
                     <div className={styles.addProductsCloseButton} onClick={() => closeDialog()}>

@@ -134,7 +134,7 @@ const AddDialog: FunctionComponent<AddDialogProps> = ({ isAddDialog, closeDialog
                     />
                     {
                         checked && checked.length > 0 &&
-                        <BottomFlyingButton clicked={addExercisesToWorkoutPlan} isLoading={loadingButton} />
+                        <BottomFlyingButton clicked={addExercisesToWorkoutPlan} isLoading={loadingButton} showNumberValue={checked.length} />
                     }
                     <div className={styles.addProductsCloseButtonPlaceholder} />
                     <div className={styles.addProductsCloseButton} onClick={() => closeDialog()}>

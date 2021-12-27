@@ -5,10 +5,11 @@ import { FunctionComponent, useEffect, useState } from "react";
 interface BottomFlyingButtonProps {
     clicked: () => void,
     isLoading: boolean,
-    buttonText?: string
+    buttonText?: string,
+    showNumberValue?: number
 }
 
-const BottomFlyingButton: FunctionComponent<BottomFlyingButtonProps> = ({ clicked, isLoading = false, buttonText = 'Submit' }) => {
+const BottomFlyingButton: FunctionComponent<BottomFlyingButtonProps> = ({ clicked, isLoading = false, buttonText = 'Submit', showNumberValue = 0 }) => {
     const { t } = useTranslation('home')
     const [loading, setLoading] = useState<boolean>(false)
 
@@ -22,7 +23,7 @@ const BottomFlyingButton: FunctionComponent<BottomFlyingButtonProps> = ({ clicke
                     loading={loading}
                     variant="contained"
                 >
-                    {t(buttonText)}
+                    {t(buttonText)}{showNumberValue > 0 && ` (${showNumberValue})`}
                 </LoadingButton>
             </div>
             <div className="bottomFlyingButtonPlaceholder" />

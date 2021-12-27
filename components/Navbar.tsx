@@ -13,7 +13,6 @@ import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { forwardRef, useState } from "react";
 import { useAppSelector } from "../hooks/useRedux";
-import HomeIcon from "@mui/icons-material/Home";
 import LoginIcon from "@mui/icons-material/Login";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -80,11 +79,6 @@ const Navbar = () => {
             value={0}
             TabIndicatorProps={{ style: { display: "none" } }}
           >
-            <Link passHref href="/">
-              <a>
-                <Tab icon={<HomeIcon />} wrapped label={t("Home")} />
-              </a>
-            </Link>
             <Link passHref href="/blog">
               <a>
                 <Tab icon={<AutoStoriesIcon />} wrapped label={t("Blog")} />

@@ -2,12 +2,15 @@ import Head from 'next/head'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import { FunctionComponent } from 'react'
+import { useRouter } from 'next/router'
 
 interface LayoutProps {
     children: any
 }
 
 const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
+    const router = useRouter()
+    
     return (
         <div className='layout'>
             <Head>
@@ -15,7 +18,7 @@ const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
                 <meta name='viewport' content='initial-scale=1.0, width=device-width' />
             </Head>
             <Navbar />
-            <div className='content'>{children}</div>
+            <div className={router.pathname.includes('blog') ? '' : 'content'}>{children}</div>
             <Footer />
         </div>
     )
