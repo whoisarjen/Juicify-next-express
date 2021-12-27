@@ -1,6 +1,7 @@
 const express = require('express');
 const jwt = require("jsonwebtoken");
 const tokenKEY = require("./mongoDB/auth/tokenKEY")
+const verifyToken = require('./mongoDB/auth/verifyToken')
 const app = express();
 const cors = require('cors');
 const port = 4000;
@@ -50,6 +51,24 @@ app.post('/guest/:where', async (req, res) => {
         })
 });
 
+app.post('/auth/change', async (req, res) => {
+    await verifyToken(req)
+    require('./mongoDB/auth/change')(req)
+        .then(async (data) => {
+            await updateSynchronizationObject(req.body.user_ID, 'settings')
+            io.to(req.body.user_ID).except(req.body.socket_ID).emit('synchronizationMessege', {
+                where: 'settings',
+                whatToDo: 'delete',
+                array: data
+            })
+            return res.send({ data })
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(404).send({ error: 'Wrong query' })
+        })
+});
+
 app.post('/delete', async (req, res) => {
     await verifyToken(req)
     await require(`./mongoDB/delete`)(req)
@@ -86,10 +105,6 @@ app.post('/:what/:where', async (req, res) => {
         })
 });
 
-const verifyToken = async (req) => {
-    req.body.user_ID = '60ba774fe0ecd72587eeaa29'
-}
-
 
 // ---- ---- SOCKET ---- ----
 
@@ -107,7 +122,7 @@ io.on('connection', async (socket) => {
                     "socket_ID": socket.id
                 })
             } else {
-                // If refresh_token is dead, logout user, but allow synchronization
+                // If refresh_token is dead, logout user, but allow synchronization | Does it really gona work? Check token while synchro won't kill connection...?
                 io.to(socket.id).emit('compareDatabases', {
                     "lastUpdated": { ...await synchronizationObject(0), ...{ logout: new Date().getTime() + 999999999 } },
                     "version": appVersion,

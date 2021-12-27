@@ -63,16 +63,16 @@ const Settings: FunctionComponent = () => {
                 <Tab label={<SecurityIcon />} />
             </Tabs>
             <TabPanel value={value} index={0}>
-                <Tab1 />
+                <Tab1 marginBottom='12px' />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <Tab2 />
+                <Tab2 marginBottom='12px' />
             </TabPanel>
             <TabPanel value={value} index={2}>
-                <Tab3 />
+                <Tab3 marginBottom='12px' />
             </TabPanel>
             <TabPanel value={value} index={3}>
-                <Tab4 />
+                <Tab4 marginBottom='12px' />
             </TabPanel>
         </Box>
     </div>;

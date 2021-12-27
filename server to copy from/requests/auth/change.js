@@ -29,8 +29,8 @@ module.exports = async function(req, res, next){
         if(response){
             response = JSON.parse(JSON.stringify(response))
             response.password = req.body.array[0].password || req.body.token.password
-            const jwt = require('./tokenGENERATOR')([response])
-            const refresh_jwt = require('./tokenRefreshGENERATOR')([response])
+            const jwt = require('../../../server to copy from/requests/auth/tokenGENERATOR')([response])
+            const refresh_jwt = require('../../../server to copy from/requests/auth/tokenRefreshGENERATOR')([response])
             res.send({ 
                 jwt: jwt,
                 refresh_jwt: refresh_jwt

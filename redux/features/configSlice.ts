@@ -4,10 +4,24 @@ const initialState = {
     domainAdress: "https://juicify.app",
     isOnline: false,
     theOldestSupportedDate: () => new Date((new Date()).setDate((new Date()).getDate() - 28)).toJSON().slice(0, 10),
-    requireNumberDiffrentThanZero: (value: any) => {
-        if(0 < parseInt(value) || parseInt(value) < 0){
+    requireMealNumber: (value: any) => {
+        if (0 < parseInt(value) && parseInt(value) < 11) {
             return true
-        }else{
+        } else {
+            return false
+        }
+    },
+    requireHeightNumber: (value: any) => {
+        if (120 < parseInt(value) && parseInt(value) < 250) {
+            return true
+        } else {
+            return false
+        }
+    },
+    requireNumberDiffrentThanZero: (value: any) => {
+        if (0 < parseInt(value) || parseInt(value) < 0) {
+            return true
+        } else {
             return false
         }
     },
@@ -18,10 +32,17 @@ const initialState = {
             return false
         }
     },
-    numberOnlyPositive: (value: any) => {
-        if(!value || (0 <= value && value <= 10000)){
+    requiredBasicInputNumber0TO100: (value: any) => {
+        if (0 <= value && value <= 100) {
             return true
-        }else{
+        } else {
+            return false
+        }
+    },
+    numberOnlyPositive: (value: any) => {
+        if (!value || (0 <= value && value <= 10000)) {
+            return true
+        } else {
             return false
         }
     },

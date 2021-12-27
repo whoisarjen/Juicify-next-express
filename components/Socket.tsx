@@ -270,11 +270,7 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
     const dispatch = useDispatch()
     const [cookies] = useCookies()
 
-    useEffect(() => {
-        // dispatch(setIsOnline(navigator.onLine)) // Only socket connection can turn online for app
-        // window.addEventListener('online', () => dispatch(setIsOnline(true))) // Only socket connection can turn online for app
-        window.addEventListener('offline', () => dispatch(setIsOnline(false)))
-    }, [])
+    useEffect(() => window.addEventListener('offline', () => dispatch(setIsOnline(false))), [])
 
     useEffect(() => {
         if (cookies.token) {
@@ -366,15 +362,19 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
 
             socket.on('synchronizationMessege', async (messege) => {
                 console.log('synchronizationMessege', messege)
-                let keyIndexedDB = '_id'
-                if (messege.where == 'daily_measurement') {
-                    keyIndexedDB = 'whenAdded'
-                }
-                for (let i = 0; i < messege.array.length; i++) {
-                    await deleteIndexedDB(messege.where, messege.array[i][keyIndexedDB])
-                }
-                if (messege.whatToDo == 'change') {
-                    await addIndexedDB(messege.where, messege.array)
+                if (messege.where == 'settings') {
+                    dispatch(setToken(messege.array.token));
+                } else {
+                    let keyIndexedDB = '_id'
+                    if (messege.where == 'daily_measurement') {
+                        keyIndexedDB = 'whenAdded'
+                    }
+                    for (let i = 0; i < messege.array.length; i++) {
+                        await deleteIndexedDB(messege.where, messege.array[i][keyIndexedDB])
+                    }
+                    if (messege.whatToDo == 'change') {
+                        await addIndexedDB(messege.where, messege.array)
+                    }
                 }
                 setKey(new Date().getTime())
                 setLastUpdated()
