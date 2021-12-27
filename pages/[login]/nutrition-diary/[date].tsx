@@ -1,13 +1,13 @@
-import Link from "next/link"
 import { useRouter } from "next/router"
 import { useAppSelector } from '../../../hooks/useRedux'
 import { useState, useEffect, FunctionComponent } from 'react'
-import { addDaysToDate } from '../../../utils/manageDate'
 import { overwriteThoseIDSinDB } from "../../../utils/API"
 import { useDailyMeasurement } from '../../../hooks/useDailyMeasurement'
 import MealBox from "../../../components/nutrition-diary/MealBox"
 import AddProducts from '../../../components/nutrition-diary/AddProducts'
 import DialogEditProduct from '../../../components/nutrition-diary/DialogEditProduct'
+import Navbar from "../../../components/nutrition-diary/Navbar"
+import FastDateChanger from '../../../components/common/FastDateChanger'
 
 const NutritionDiary: FunctionComponent = () => {
     const router: any = useRouter()
@@ -64,7 +64,8 @@ const NutritionDiary: FunctionComponent = () => {
 
     return (
         <div className="NutritionDiary">
-            <Link passHref href={`/${router.query.login}/nutrition-diary/${addDaysToDate(router.query.date, 1)}`}><a>Next</a></Link>
+            <Navbar />
+            <FastDateChanger />
             {
                 nutrition_diary && nutrition_diary.map((x, i) => (
                     <MealBox

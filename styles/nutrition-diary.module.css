@@ -145,3 +145,13 @@
     height: 36.5px;
     width: 100%;
 }
+
+.navbar{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 36px 36px 36px;
+}
+
+.navbar button{
+    margin: auto;
+}

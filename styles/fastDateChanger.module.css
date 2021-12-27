@@ -1,0 +1,28 @@
+.fastDateChanger{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 47.5px 47.5px auto 47.5px 47.5px;
+    grid-gap: 12px;
+    margin: 12px 0;
+    text-align: center;
+}
+
+.fastDateChanger a {
+    width: 100%;
+    margin: auto;
+}
+
+.fastDateChanger div{
+    width: calc( 100% - 16px );
+    background: #f0f1f6;
+    margin: auto;
+    text-align: center;
+    border-radius: 4px;
+    padding: 11.75px 8px;
+}
+
+.fastDateChanger div:nth-child(3) {
+    background: #333;
+    color: #fff;
+    padding: 20px 8px;
+}
