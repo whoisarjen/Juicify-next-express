@@ -149,7 +149,8 @@
 .navbar{
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 36px 36px 36px;
+    /* grid-template-columns: 1fr 36px 36px 36px; */
+    grid-template-columns: 1fr 36px 36px;
 }
 
 .navbar button{
