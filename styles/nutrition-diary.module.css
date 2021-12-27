@@ -156,3 +156,14 @@
 .navbar button{
     margin: auto;
 }
+
+.diagrams{
+    width: 100%;
+}
+
+.diagramsGrid{
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 0;
+}

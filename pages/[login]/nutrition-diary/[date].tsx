@@ -8,6 +8,7 @@ import AddProducts from '../../../components/nutrition-diary/AddProducts'
 import DialogEditProduct from '../../../components/nutrition-diary/DialogEditProduct'
 import Navbar from "../../../components/nutrition-diary/Navbar"
 import FastDateChanger from '../../../components/common/FastDateChanger'
+import Diagrams from '../../../components/nutrition-diary/Diagrams'
 
 const NutritionDiary: FunctionComponent = () => {
     const router: any = useRouter()
@@ -66,6 +67,7 @@ const NutritionDiary: FunctionComponent = () => {
         <div className="NutritionDiary">
             <Navbar />
             <FastDateChanger />
+            <Diagrams array={nutrition_diary} />
             {
                 nutrition_diary && nutrition_diary.map((x, i) => (
                     <MealBox
