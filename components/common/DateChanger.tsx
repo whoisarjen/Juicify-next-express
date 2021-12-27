@@ -35,7 +35,7 @@ const DateChanger: FunctionComponent<{ where?: string }> = ({ where = 'nutrition
     return (
         <>
             <IconButton onClick={() => setIsDialog(true)}>
-                <EventIcon />
+                <EventIcon/>
             </IconButton>
             <Dialog
                 open={isDialog}
