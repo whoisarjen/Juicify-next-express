@@ -2,18 +2,16 @@ import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
 import Slide from '@mui/material/Slide';
 import { useRouter } from "next/router";
-import isWeekend from 'date-fns/isWeekend';
-import TextField from '@mui/material/TextField';
 import EventIcon from '@mui/icons-material/Event';
 import IconButton from '@mui/material/IconButton';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import StaticDatePicker from '@mui/lab/StaticDatePicker';
 import { TransitionProps } from '@mui/material/transitions';
 import DialogContentText from '@mui/material/DialogContentText';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import { FunctionComponent, useState, forwardRef, Ref, ReactElement } from "react";
+import CalendarPicker from '@mui/lab/CalendarPicker';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
 
 const Transition = forwardRef(function Transition(
     props: TransitionProps & {
@@ -48,16 +46,7 @@ const DateChanger: FunctionComponent<{ where?: string }> = ({ where = 'nutrition
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
-                            <StaticDatePicker<Date>
-                                orientation="landscape"
-                                openTo="day"
-                                value={value}
-                                shouldDisableDate={isWeekend}
-                                onChange={(newValue) => {
-                                    setValue(newValue);
-                                }}
-                                renderInput={(params) => <TextField {...params} />}
-                            />
+                            <CalendarPicker date={value} onChange={(newDate) => setValue(newDate)} />
                         </LocalizationProvider>
                     </DialogContentText>
                 </DialogContent>
