@@ -3,7 +3,7 @@ import SmartToyIcon from "@mui/icons-material/SmartToy";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import BookIcon from "@mui/icons-material/Book";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import { getShortDate } from "../utils/manageDate";
 import Link from "next/link";
 
@@ -35,9 +35,9 @@ const Footer = () => {
               <BookIcon />
             </a>
           </Link>
-          <Link passHref href={`/${token.login}`}>
+          <Link passHref href={`/statistics`}>
             <a className="footerMenuElement">
-              <AccountCircleIcon />
+              <EmojiEventsIcon />
             </a>
           </Link>
         </div>

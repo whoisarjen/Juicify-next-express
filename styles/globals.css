@@ -61,6 +61,7 @@ a:active {
   max-width: 702px;
   padding: 12px;
   display: grid;
+  min-height: calc( 100vh - 141px );
 }
 
 @media (max-width: 726px) {

@@ -6,7 +6,7 @@ const Macronutrients: FunctionComponent = () => {
 
     return (
         <div>
-            Macronutrients
+            <div className="title">Macronutrients</div>
         </div>
     )
 }
