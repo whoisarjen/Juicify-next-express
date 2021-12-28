@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import styles from '../../styles/blog.module.css'
-import SidebarBlog from '../../components/common/SidebarBlog'
+import Sidebar from '../../components/Sidebar'
 
 const Post: FunctionComponent = () => {
     return (
@@ -8,7 +8,7 @@ const Post: FunctionComponent = () => {
             <article className={styles.postGrid}>
                 <h1>The Witcher: Ronin has arrived on Kickstarter!</h1>
                 <img src="https://static.cdprojektred.com/cms.cdprojektred.com/16x9_big/7601a16f992ecc4bd95a2668d1a369320dd0f86b-1280x720.jpg" />
-                <SidebarBlog />
+                <Sidebar />
                 <div className={styles.content}>
                     {
                         [...Array(10)].map(x =>

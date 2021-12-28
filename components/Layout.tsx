@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import Navbar from './Navbar'
 import Footer from './Footer'
-import { FunctionComponent } from 'react'
 import { useRouter } from 'next/router'
+import { FunctionComponent } from 'react'
 
 interface LayoutProps {
     children: any
@@ -10,7 +10,7 @@ interface LayoutProps {
 
 const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
     const router = useRouter()
-    
+
     return (
         <div className='layout'>
             <Head>

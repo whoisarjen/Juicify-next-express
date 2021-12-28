@@ -182,3 +182,8 @@
 .diagramsTable tr td:first-of-type{
     font-weight: bold;
 }
+
+.diagramsOptions{
+    display: grid;
+    margin-bottom: 24px;
+}

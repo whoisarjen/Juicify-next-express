@@ -9,6 +9,7 @@ import DialogEditProduct from '../../../components/nutrition-diary/DialogEditPro
 import Navbar from "../../../components/nutrition-diary/Navbar"
 import FastDateChanger from '../../../components/common/FastDateChanger'
 import Diagrams from '../../../components/nutrition-diary/Diagrams'
+import DiagramsOptions from '../../../components/nutrition-diary/DiagramsOptions'
 
 const NutritionDiary: FunctionComponent = () => {
     const router: any = useRouter()
@@ -68,6 +69,7 @@ const NutritionDiary: FunctionComponent = () => {
             <Navbar />
             <FastDateChanger />
             <Diagrams array={nutrition_diary} />
+            <DiagramsOptions />
             {
                 nutrition_diary && nutrition_diary.map((x, i) => (
                     <MealBox

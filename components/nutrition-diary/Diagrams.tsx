@@ -47,7 +47,7 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array }) => {
                     })
                 }
             })
-            
+
             o['Sugar']['macro'] = token.sugar_percent * o['Carbs']['value']
             o['Fiber']['macro'] = token.fiber * (calories / 1000)
 
@@ -59,7 +59,7 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array }) => {
 
     return (
         <div className={styles.diagrams}>
-            <Box sx={{ width: '100%', marginBottom: '24px' }}>
+            <Box sx={{ width: '100%' }} className={styles.diagramsOptions}>
                 <TabContext value={value}>
                     <Box>
                         <TabList
@@ -85,7 +85,7 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array }) => {
                                     <tr>
                                         <th>{x}:</th>
                                         <td>{Math.round(object[x].value * 10) / 10}g</td>
-                                        <td>/ {Math.round(object[x].macro * 10) / 10}g</td>
+                                        <td>{Math.round(object[x].macro * 10) / 10}g</td>
                                     </tr>
                                 )
                             }
@@ -102,7 +102,7 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array }) => {
                                     <tr>
                                         <th>{x}:</th>
                                         <td>{Math.round((object[x].macro - object[x].value) * 10) / 10}g</td>
-                                        <td>/ {Math.round(object[x].macro * 10) / 10}g</td>
+                                        <td>{Math.round(object[x].macro * 10) / 10}g</td>
                                     </tr>
                                 )
                             }
