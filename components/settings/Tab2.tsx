@@ -100,7 +100,7 @@ const Tab2: FunctionComponent<any> = ({ marginBottom }) => {
                     shrink: true,
                 }}
                 InputProps={{
-                    endAdornment: <InputAdornment position="start">% / kcal</InputAdornment>
+                    endAdornment: <InputAdornment position="start">% / carbs</InputAdornment>
                 }}
                 sx={{ marginBottom: marginBottom }}
                 error={
