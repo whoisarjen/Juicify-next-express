@@ -12,6 +12,7 @@ const DiagramsOptions: FunctionComponent = () => {
             <Button
                 onClick={() => router.push('/macronutrients')}
                 color="primary"
+                variant="outlined"
                 aria-label="macronutrients"
                 component="span"
                 startIcon={<PieChartIcon />}

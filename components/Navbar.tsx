@@ -7,10 +7,6 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import IconButton from "@mui/material/IconButton";
-import Paper from "@mui/material/Paper";
-import InputBase from "@mui/material/InputBase";
-import SearchIcon from "@mui/icons-material/Search";
 import { forwardRef, useState } from "react";
 import { useAppSelector } from "../hooks/useRedux";
 import LoginIcon from "@mui/icons-material/Login";
@@ -23,6 +19,7 @@ import { getShortDate } from "../utils/manageDate";
 import Image from 'next/image'
 import logo from '../public/images/logo.png'
 import { logout } from '../utils/checkAuth'
+import SearchBox from './common/SearchBox'
 
 const Navbar = () => {
   const { t } = useTranslation("home");
@@ -51,27 +48,7 @@ const Navbar = () => {
           </Link>
         </li>
         <li className="notMobileOnly paddingMenu">
-          <Paper
-            component="form"
-            sx={{
-              p: "2px 4px",
-              display: "flex",
-              alignItems: "center",
-              width: 350,
-              boxShadow: 0,
-              border: 1,
-              borderColor: "#e4e4e4",
-            }}
-          >
-            <InputBase
-              sx={{ ml: 1, flex: 1 }}
-              placeholder={t("Search Something Awesome")}
-              inputProps={{ "aria-label": t("Search Something Awesome") }}
-            />
-            <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
-              <SearchIcon />
-            </IconButton>
-          </Paper>
+          <SearchBox />
         </li>
         <li className="paddingMenu">
           <Tabs
