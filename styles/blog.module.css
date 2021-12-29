@@ -70,13 +70,29 @@
 }
 
 .blog img{
+    margin: auto;
     display: block;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 24px;
     object-fit: cover;
-    margin-bottom: 20px;
     width: 100%;
 }
 
 .marginAuto{
     margin: auto;
+}
+
+@media(max-width: 1200px){
+    .postGrid{
+        display: block;
+    }
+
+    .postGrid .content{
+        width: 100%;
+        max-width: 688px;
+        margin: auto;
+    }
+
+    .postGrid h1{
+        margin-bottom: 20px;
+    }
 }
