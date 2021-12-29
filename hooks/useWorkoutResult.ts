@@ -37,7 +37,7 @@ const useWorkoutResult = (): [any, () => void] => {
                         res = daily.workout_result.filter((workout: any) => workout._id == router.query.id)
                         if (res && res.length > 0) {
                             res = res[0]
-                            res.whenAdded = router.query.date
+                            res.whenAdded = daily.whenAdded
                         } else {
                             router.push(`/${router.query.login}/workout-results`)
                         }
