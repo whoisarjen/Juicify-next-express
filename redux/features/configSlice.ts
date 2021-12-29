@@ -4,6 +4,13 @@ const initialState = {
     domainAdress: "https://juicify.app",
     isOnline: false,
     theOldestSupportedDate: () => new Date((new Date()).setDate((new Date()).getDate() - 28)).toJSON().slice(0, 10),
+    requirePassword: (value: any) => {
+        if (7 < value.length && value.length < 61) {
+            return true;
+        } else {
+            return false;
+        }
+    },
     requireMealNumber: (value: any) => {
         if (0 < parseInt(value) && parseInt(value) < 11) {
             return true

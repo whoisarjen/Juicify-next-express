@@ -70,6 +70,16 @@ app.post('/auth/change', async (req, res) => {
         })
 });
 
+app.post('/auth/changePassword', async (req, res) => {
+    await verifyToken(req)
+    require('./mongoDB/auth/changePassword')(req, res)
+        .then((data) => res.send({ data }))
+        .catch(err => {
+            console.log(err)
+            res.status(404).send({ error: 'Wrong query' })
+        })
+});
+
 app.post('/delete', async (req, res) => {
     await verifyToken(req)
     await require(`./mongoDB/delete`)(req)

@@ -19,6 +19,7 @@
     "requiredBasicInputLength": "Expect 3 to 40 symbols!",
     "requiredBasicInputNumber": "Expect value bigger than 0 and smaller than 10000",
     "requireNumberDiffrentThanZero": "Expect value diffrent than 0",
+    "requirePassword": "Expect 8 to 60 symbols!",
     "Meal": "Meal",
     "All": "All",
     "Favourite": "Favourite",
