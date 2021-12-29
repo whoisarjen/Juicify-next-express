@@ -69,6 +69,10 @@ const Macronutrients: FunctionComponent = () => {
             await changeSettings({ macronutrients: macro })
         }
         setChangeObject({})
+        setMacro(macro.map(x => {
+            x.choosen = false
+            return x
+        }))
     }
 
     const openChange = (object) => {
