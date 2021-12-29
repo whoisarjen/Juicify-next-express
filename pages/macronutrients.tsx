@@ -137,8 +137,7 @@ const Macronutrients: FunctionComponent = () => {
                                             x != 'locked' &&
                                             x != 'choosen' &&
                                             <SimpleSlider
-                                                key={changeObject['day']}
-                                                day={changeObject['day']}
+                                                day={changeObject['day'] + changeObject[x]}
                                                 title={x}
                                                 beginValue={changeObject[x]}
                                                 macro={macro}
