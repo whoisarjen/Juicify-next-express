@@ -13,7 +13,7 @@ const Profile: FunctionComponent = () => {
             <div className={styles.profileContent}>
                 {
                     data && data.map((daily, index) =>
-                        <p>{index}. {daily.whenAdded}</p>
+                        <p key={daily._id}>{index}. {daily.whenAdded}</p>
                     )
                 }
             </div>
