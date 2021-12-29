@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { readToken } from "../utils/checkAuth";
 import { getIndexedDBbyID } from "../utils/indexedDB";
 import { loadValueByLogin } from "../utils/API";
+import dailyMeasurement from "../components/schema/dailyMeasurement";
 
 const useDailyMeasurement = (when: string): [any, () => void] => {
   const router: any = useRouter();
@@ -29,13 +30,7 @@ const useDailyMeasurement = (when: string): [any, () => void] => {
             new Date(when).toISOString()
           );
           if (!data) {
-            data = {
-              _id: "XD" + new Date().getTime(),
-              whenAdded: new Date(when).toISOString(),
-              user_ID: token._id,
-              nutrition_diary: [],
-              workout_result: [],
-            };
+            data = dailyMeasurement("XD" + new Date().getTime(), when, token._id)
           } else {
             if (!data.nutrition_diary) data.nutrition_diary = [];
             if (!data.workout_result) data.workout_result = [];

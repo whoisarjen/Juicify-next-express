@@ -1,16 +1,21 @@
 import { FunctionComponent } from "react";
 import Navbar from "../../components/profile/Navbar";
-import { useAppSelector } from "../../hooks/useRedux";
+import { useDailyMeasurements } from "../../hooks/useDailyMeasurements";
 import styles from '../../styles/profile.module.css'
+import { addDaysToDate, getShortDate } from '../../utils/manageDate';
 
 const Profile: FunctionComponent = () => {
-    const user: any = useAppSelector(state => state.token.value)
+    const [{ data, user }]: any = useDailyMeasurements(addDaysToDate(getShortDate(), -1), 14)
 
     return (
         <div className="profile">
             <Navbar user={user} tab={0} />
             <div className={styles.profileContent}>
-                1232113221132
+                {
+                    data && data.map((daily, index) =>
+                        <p>{index}. {daily.whenAdded}</p>
+                    )
+                }
             </div>
         </div>
     );
