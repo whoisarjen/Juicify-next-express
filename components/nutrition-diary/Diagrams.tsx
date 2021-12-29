@@ -29,12 +29,11 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array }) => {
             let o = {
                 'Proteins': { 'value': 0, 'macro': macro.proteins },
                 'Carbs': { 'value': 0, 'macro': macro.carbs },
-                'Sugar': { 'value': 0, 'macro': 0 },
+                'Sugar': { 'value': 0, 'macro': token.sugar_percent * macro.carbs / 100 },
                 'Fats': { 'value': 0, 'macro': macro.fats },
-                'Fiber': { 'value': 0, 'macro': 0 }
+                'Fiber': { 'value': 0, 'macro': token.fiber * (macro.proteins * 4 + macro.carbs * 4 + macro.fats * 9) / 1000 }
             }
 
-            let calories = 0
             array.forEach(meal => {
                 if (meal.length > 0) {
                     meal.forEach(product => {
@@ -43,13 +42,9 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array }) => {
                         if (product.s) o['Sugar']['value'] += product.s * product.how_many
                         if (product.f) o['Fats']['value'] += product.f * product.how_many
                         if (product.fi) o['Fiber']['value'] += product.fi * product.how_many
-                        calories += parseInt(countCalories(product).toString())
                     })
                 }
             })
-
-            o['Sugar']['macro'] = token.sugar_percent * o['Carbs']['value']
-            o['Fiber']['macro'] = token.fiber * (calories / 1000)
 
             setObject(o)
         }
