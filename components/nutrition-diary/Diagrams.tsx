@@ -48,7 +48,7 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array }) => {
 
             setObject(o)
         }
-    }, [token])
+    }, [token, array])
 
     const handleChange = (event: SyntheticEvent, newValue: string) => setValue(newValue);
 

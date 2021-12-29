@@ -68,7 +68,7 @@ const NutritionDiary: FunctionComponent = () => {
         <div className="NutritionDiary">
             <Navbar />
             <FastDateChanger />
-            <Diagrams array={nutrition_diary} />
+            <Diagrams array={nutrition_diary} key={nutrition_diary.length} />
             <DiagramsOptions />
             {
                 nutrition_diary && nutrition_diary.map((x, i) => (

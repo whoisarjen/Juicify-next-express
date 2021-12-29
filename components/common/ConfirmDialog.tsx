@@ -37,10 +37,7 @@ const ConfirmDialog: FunctionComponent<ConfirmDialogProps> = ({ isDialog, closeD
                     <Button onClick={closeDialog}>{t('Deny')}</Button>
                     <LoadingButton
                         loading={loading}
-                        onClick={() => {
-                            setLoading(true)
-                            confirm()
-                        }}
+                        onClick={() => confirm()}
                         autoFocus
                     >
                         {t('Confirm')}
