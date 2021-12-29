@@ -11,7 +11,6 @@ module.exports = async function (req) {
                 $gte: req.body.uniqueKey
             }
         })
-            .limit(req.body.limit)
             .then(async function (response) {
                 let dataArray = JSON.parse(JSON.stringify(response))
                 if (dataArray.length > 0) {
