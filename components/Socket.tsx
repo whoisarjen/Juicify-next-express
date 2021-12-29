@@ -361,23 +361,27 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
             })
 
             socket.on('synchronizationMessege', async (messege) => {
-                console.log('synchronizationMessege', messege)
-                if (messege.where == 'settings') {
-                    dispatch(setToken(messege.array.token));
+                if (messege.socket_ID != localStorage.getItem('socket_ID')) {
+                    console.log('synchronizationMessege', messege)
+                    if (messege.where == 'settings') {
+                        dispatch(setToken(messege.array.token));
+                    } else {
+                        let keyIndexedDB = '_id'
+                        if (messege.where == 'daily_measurement') {
+                            keyIndexedDB = 'whenAdded'
+                        }
+                        for (let i = 0; i < messege.array.length; i++) {
+                            await deleteIndexedDB(messege.where, messege.array[i][keyIndexedDB])
+                        }
+                        if (messege.whatToDo == 'change') {
+                            await addIndexedDB(messege.where, messege.array)
+                        }
+                    }
+                    setKey(new Date().getTime())
+                    setLastUpdated()
                 } else {
-                    let keyIndexedDB = '_id'
-                    if (messege.where == 'daily_measurement') {
-                        keyIndexedDB = 'whenAdded'
-                    }
-                    for (let i = 0; i < messege.array.length; i++) {
-                        await deleteIndexedDB(messege.where, messege.array[i][keyIndexedDB])
-                    }
-                    if (messege.whatToDo == 'change') {
-                        await addIndexedDB(messege.where, messege.array)
-                    }
+                    console.log('Normally would try synchro, but protection works!')
                 }
-                setKey(new Date().getTime())
-                setLastUpdated()
             })
 
             socket.on('disconnect', () => dispatch(setIsOnline(false))) // Closed socket => user has to be offline

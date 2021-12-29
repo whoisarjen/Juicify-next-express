@@ -59,7 +59,8 @@ app.post('/auth/change', async (req, res) => {
             io.to(req.body.user_ID).except(req.body.socket_ID).emit('synchronizationMessege', {
                 where: 'settings',
                 whatToDo: 'delete',
-                array: data
+                array: data,
+                socket_ID: req.body.socket_ID
             })
             return res.send({ data })
         })
@@ -77,7 +78,8 @@ app.post('/delete', async (req, res) => {
             io.to(req.body.user_ID).except(req.body.socket_ID).emit('synchronizationMessege', {
                 where: req.body.where,
                 whatToDo: 'delete',
-                array: req.body.array
+                array: req.body.array,
+                socket_ID: req.body.socket_ID
             })
             return res.send({})
         })
@@ -95,7 +97,8 @@ app.post('/:what/:where', async (req, res) => {
             io.to(req.body.user_ID).except(req.body.socket_ID).emit('synchronizationMessege', {
                 where: req.params.where,
                 whatToDo: 'change',
-                array: data
+                array: data,
+                socket_ID: req.body.socket_ID
             })
             return res.send({ data })
         })

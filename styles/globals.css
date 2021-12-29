@@ -60,7 +60,6 @@ a:active {
   margin: 0 auto;
   max-width: 702px;
   padding: 12px;
-  display: grid;
   min-height: calc( 100vh - 141px );
 }
 
@@ -68,6 +67,15 @@ a:active {
   .content {
     width: calc(100% - 24px);
   }
+}
+
+.contentGrid{
+  display: grid;
+  width: 100%;
+  margin: 0 auto;
+  max-width: 702px;
+  padding: 12px;
+  min-height: calc( 100vh - 141px );
 }
 
 .navbar {
