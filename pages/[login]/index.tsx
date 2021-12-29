@@ -5,7 +5,7 @@ import styles from '../../styles/profile.module.css'
 import { addDaysToDate, getShortDate } from '../../utils/manageDate';
 
 const Profile: FunctionComponent = () => {
-    const [{ data, user }]: any = useDailyMeasurements(addDaysToDate(getShortDate(), -1), 14)
+    const [{ data, user }]: any = useDailyMeasurements(addDaysToDate(getShortDate(), -1), 7)
 
     return (
         <div className="profile">
