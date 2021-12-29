@@ -21,6 +21,7 @@ const Macronutrients: FunctionComponent = () => {
 
         let value = newValue - changeObject[key]
         let numberPossibleObjectChange = macro.filter(x => !x.locked && x.day != changeObject.day).length
+        
         newMacro.forEach(x => {
             if (!x.locked && x.day != changeObject.day) {
                 let minus = Math.ceil(value / numberPossibleObjectChange)
@@ -68,6 +69,7 @@ const Macronutrients: FunctionComponent = () => {
         if (isNewValue) {
             await changeSettings({ macronutrients: macro })
         }
+
         setChangeObject({})
         setMacro(macro.map(x => {
             x.choosen = false
