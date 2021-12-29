@@ -115,7 +115,7 @@ const AddProducts: FunctionComponent<AddproductsProps> = ({ index, isAddDialog, 
                         }
                     </Select>
                     <Autocomplete
-                        sx={{ marginBottom: '10px' }}
+                        sx={{ marginBottom: '10px', width: '100%' }}
                         open={open}
                         value={find}
                         onOpen={() => setOpen(true)}
@@ -158,9 +158,11 @@ const AddProducts: FunctionComponent<AddproductsProps> = ({ index, isAddDialog, 
                             <AddProductsBox refreshCheckedProducts={() => setRefreshChecked(refreshChecked + 1)} product={product} key={product._id} />
                         )
                     }
-                    <Button variant="outlined" onClick={() => setIsCreateProduct(true)} sx={{ margin: 'auto' }}>
-                        {t('Create product')}
-                    </Button>
+                    <div className='contentGridPureWidth'>
+                        <Button variant="outlined" onClick={() => setIsCreateProduct(true)} sx={{ margin: 'auto' }}>
+                            {t('Create product')}
+                        </Button>
+                    </div>
                     <CreateProduct
                         created={created}
                         isCreateProduct={isCreateProduct}

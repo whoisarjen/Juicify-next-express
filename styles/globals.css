@@ -60,7 +60,7 @@ a:active {
   margin: 0 auto;
   max-width: 702px;
   padding: 12px;
-  min-height: calc( 100vh - 141px );
+  min-height: calc(100vh - 141px);
 }
 
 @media (max-width: 726px) {
@@ -69,12 +69,17 @@ a:active {
   }
 }
 
-.contentGrid{
+.contentGrid {
   display: grid;
   width: 100%;
   margin: 0 auto;
   max-width: 702px;
-  min-height: calc( 100vh - 141px );
+  min-height: calc(100vh - 141px);
+}
+
+.contentGridPureWidth {
+  display: grid;
+  width: 100%;
 }
 
 .navbar {
@@ -241,6 +246,10 @@ input[type="number"] {
   z-index: 2;
 }
 
-.css-169iwlq-MuiCalendarPicker-root{
+.css-169iwlq-MuiCalendarPicker-root {
   max-width: 100%;
+}
+
+.css-1a1wxa0-MuiInputBase-root-MuiOutlinedInput-root {
+  width: 100%;
 }

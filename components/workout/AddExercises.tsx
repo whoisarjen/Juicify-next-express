@@ -124,9 +124,11 @@ const AddDialog: FunctionComponent<AddDialogProps> = ({ isAddDialog, closeDialog
                             <AddExercisesBox refreshCheckedExercises={() => setRefreshChecked(refreshChecked + 1)} exercise={item} key={item._id} />
                         )
                     }
-                    <Button variant="outlined" onClick={() => setIsCreateExercise(true)} sx={{ margin: 'auto' }}>
-                        {t('Create exercise')}
-                    </Button>
+                    <div className='contentGridPureWidth'>
+                        <Button variant="outlined" onClick={() => setIsCreateExercise(true)} sx={{ margin: 'auto' }}>
+                            {t('Create exercise')}
+                        </Button>
+                    </div>
                     <CreateExercise
                         created={created}
                         isCreateExercise={isCreateExercise}
