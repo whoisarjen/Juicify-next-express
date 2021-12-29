@@ -42,18 +42,30 @@ const Navbar: FunctionComponent<NavbarProps> = ({ user, tab }) => {
                     <div>{user.name} {user.surname}</div>
                     <div>{user.description}</div>
                     <div>
-                        <IconButton onClick={() => window.open('https://www.codexworld.com', '_blank')} aria-label="Facebook" color="primary">
-                            <FacebookIcon />
-                        </IconButton>
-                        <IconButton onClick={() => window.open('https://www.codexworld.com', '_blank')} aria-label="Instagram" color="primary">
-                            <InstagramIcon />
-                        </IconButton>
-                        <IconButton onClick={() => window.open('https://www.codexworld.com', '_blank')} aria-label="Twitter" color="primary">
-                            <TwitterIcon />
-                        </IconButton>
-                        <IconButton onClick={() => window.open('https://www.codexworld.com', '_blank')} aria-label="Website" color="primary">
-                            <WebIcon />
-                        </IconButton>
+                        {
+                            token.facebook &&
+                            <IconButton onClick={() => window.open(`https://facebook.com/${token.facebook}`, '_blank')} aria-label="Facebook" color="primary">
+                                <FacebookIcon />
+                            </IconButton>
+                        }
+                        {
+                            token.instagram &&
+                            <IconButton onClick={() => window.open(`https://instagram.com/${token.instagram}`, '_blank')} aria-label="Facebook" color="primary">
+                                <InstagramIcon />
+                            </IconButton>
+                        }
+                        {
+                            token.twitter &&
+                            <IconButton onClick={() => window.open(`https://twitter.com/${token.twitter}`, '_blank')} aria-label="Facebook" color="primary">
+                                <TwitterIcon />
+                            </IconButton>
+                        }
+                        {
+                            token.website &&
+                            <IconButton onClick={() => window.open(`${token.website}`, '_blank')} aria-label="Facebook" color="primary">
+                                <WebIcon />
+                            </IconButton>
+                        }
                     </div>
                 </div>
             </div>
