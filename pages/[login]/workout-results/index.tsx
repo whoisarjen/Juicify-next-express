@@ -5,6 +5,7 @@ import useTranslation from "next-translate/useTranslation"
 import useWorkoutResults from '../../../hooks/useWorkoutResults'
 import DialogCreateResult from "../../../components/workout/DialogCreateResult"
 import { FunctionComponent } from 'react'
+import Navbar from '../../../components/profile/Navbar'
 
 const WorkoutResults: FunctionComponent = () => {
     const router = useRouter()
@@ -14,10 +15,16 @@ const WorkoutResults: FunctionComponent = () => {
 
     return (
         <div className="workoutResults">
-            <div className="title">{t('Workout results')}</div>
             {
-                token.login == router.query.login &&
-                <DialogCreateResult />
+                token.login == router.query.login ?
+                    (
+                        <>
+                            <div className="title">{t('Workout results')}</div>
+                            <DialogCreateResult />
+                        </>
+                    ) : (
+                        <Navbar user={user} tab={2} />
+                    )
             }
             {
                 data && data.map((result: any) =>

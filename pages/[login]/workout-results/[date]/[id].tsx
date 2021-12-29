@@ -12,6 +12,7 @@ import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../../../ut
 import { ToastContainer, toast } from 'react-toastify'
 import useTranslation from "next-translate/useTranslation";
 import AddResultMoreOptions from '../../../../components/workout/AddResultMoreOptions'
+import BottomFlyingGuestBanner from '../../../../components/common/BottomFlyingGuestBanner'
 
 const WorkoutResultsID: FunctionComponent = () => {
     const router: any = useRouter()
@@ -262,18 +263,22 @@ const WorkoutResultsID: FunctionComponent = () => {
                 )
             }
             {
-                isOwner &&
-                <>
-                    <ConfirmDialog
-                        isDialog={isDialog}
-                        confirm={deleteWorkoutResult}
-                        closeDialog={() => setIsDialog(false)}
-                    />
-                    <AddResultMoreOptions
-                        exercises={results}
-                        setExercises={handleNewExercises}
-                    />
-                </>
+                isOwner ?
+                    (
+                        <>
+                            <ConfirmDialog
+                                isDialog={isDialog}
+                                confirm={deleteWorkoutResult}
+                                closeDialog={() => setIsDialog(false)}
+                            />
+                            <AddResultMoreOptions
+                                exercises={results}
+                                setExercises={handleNewExercises}
+                            />
+                        </>
+                    ) : (
+                        <BottomFlyingGuestBanner user={user} />
+                    )
             }
         </div>
     );

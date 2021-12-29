@@ -1,0 +1,43 @@
+.navbar{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 130px auto;
+}
+
+.navbarAvatar{
+    width: 120px;
+    height: 120px;
+    margin: auto;
+    border: 1px solid #e4e4e4;
+    border-radius: 50%;
+    display: grid;
+}
+
+.navbarAvatar img {
+    width: 95%;
+    margin: auto;
+    border-radius: 50%;
+}
+
+.navbarContent{
+    width: calc( 100% - 20px );
+    padding: 10px;
+    display: grid;
+    grid-template-rows: auto auto auto auto;
+}
+
+.navbarContent div:nth-child(1){
+    display: grid;
+    grid-template-columns: auto 40px;
+    width: 100%;
+}
+
+.navbarContent div:nth-child(2){
+    font-weight: bold;
+}
+
+.profileContent{
+    width: 100%;
+    min-height: 100px;
+    background: red;
+}

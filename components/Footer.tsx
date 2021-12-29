@@ -1,10 +1,10 @@
 import { useAppSelector } from "../hooks/useRedux";
-import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
-import BookIcon from "@mui/icons-material/Book";
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
-import { getShortDate } from "../utils/manageDate";
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import BookIcon from "@mui/icons-material/Book";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { getShortDate } from "../utils/manageDate";
 import Link from "next/link";
 
 const Footer = () => {
@@ -35,7 +35,7 @@ const Footer = () => {
               <BookIcon />
             </a>
           </Link>
-          <Link passHref href={`/statistics`}>
+          <Link passHref href={`/${token.login}`}>
             <a className="footerMenuElement">
               <AccountCircleIcon />
             </a>

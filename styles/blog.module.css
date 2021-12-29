@@ -22,6 +22,18 @@
     gap: 0px 40px;
 }
 
+@media(max-width: 1200px){
+    .grid{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 800px){
+    .grid{
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
 .grid h1{
     font-size: 50px;
     text-align: center;

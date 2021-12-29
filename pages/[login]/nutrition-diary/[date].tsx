@@ -10,6 +10,7 @@ import Navbar from "../../../components/nutrition-diary/Navbar"
 import FastDateChanger from '../../../components/common/FastDateChanger'
 import Diagrams from '../../../components/nutrition-diary/Diagrams'
 import DiagramsOptions from '../../../components/nutrition-diary/DiagramsOptions'
+import BottomFlyingGuestBanner from '../../../components/common/BottomFlyingGuestBanner'
 
 const NutritionDiary: FunctionComponent = () => {
     const router: any = useRouter()
@@ -98,14 +99,18 @@ const NutritionDiary: FunctionComponent = () => {
                 />
             }
             {
-                token && token.login == router.query.login &&
-                <DialogEditProduct
-                    product={product}
-                    isDialog={isEditDialog}
-                    closeDialog={() => setIsEditDialog(false)}
-                    deleteProduct={(_id) => deleteProduct(_id)}
-                    changeProduct={(newProduct) => changeProduct(newProduct)}
-                />
+                token && token.login == router.query.login ?
+                    (
+                        <DialogEditProduct
+                            product={product}
+                            isDialog={isEditDialog}
+                            closeDialog={() => setIsEditDialog(false)}
+                            deleteProduct={(_id) => deleteProduct(_id)}
+                            changeProduct={(newProduct) => changeProduct(newProduct)}
+                        />
+                    ) : (
+                        <BottomFlyingGuestBanner user={user} />
+                    )
             }
         </div>
     );

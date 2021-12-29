@@ -16,6 +16,7 @@ import ConfirmDialog from '../../../components/common/ConfirmDialog'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from "../../../utils/indexedDB"
 import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB, deleteThoseIDSfromDB } from "../../../utils/API"
+import BottomFlyingGuestBanner from '../../../components/common/BottomFlyingGuestBanner'
 
 const WorkoutPlansID: FunctionComponent = () => {
     const router: any = useRouter()
@@ -28,7 +29,7 @@ const WorkoutPlansID: FunctionComponent = () => {
     const [saveLoading, setSaveLoading] = useState<any>(false)
     const token: any = useAppSelector(state => state.token.value)
     const isOwner = token && token.login == router.query.login
-    const [{ data }] = useWorkoutPlan(router.query.id)
+    const [{ data, user }] = useWorkoutPlan(router.query.id)
     const [isDialog, setIsDialog] = useState(false)
     const basicInputLength = useAppSelector(state => state.config.basicInputLength)
     const requiredBasicInputLength = useAppSelector(state => state.config.requiredBasicInputLength)
@@ -230,7 +231,8 @@ const WorkoutPlansID: FunctionComponent = () => {
                 </Droppable>
             </DragDropContext>
             {
-                isOwner &&
+                isOwner ?
+                (
                 <>
                     <ButtonPlus click={() => setIsAddDialog(true)} />
                     <AddExercises
@@ -245,6 +247,9 @@ const WorkoutPlansID: FunctionComponent = () => {
                         closeDialog={() => setIsDialog(false)}
                     />
                 </>
+                ) : (
+                    <BottomFlyingGuestBanner user={user} />
+                )
             }
         </div>
     )
