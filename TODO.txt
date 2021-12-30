@@ -18,11 +18,11 @@ barcode to createProduct
 probably insert on whattoupdate might have issues, to check later with synchro
 wrap box on descirption, login etc to protect overflow?
 daily measurements optimization server site with limit
+Precache synchro / load / hooks etc
 
 
 profile
 coach
-Search
 barcode
 statistics
 unit test react

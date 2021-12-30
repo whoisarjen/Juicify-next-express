@@ -5,54 +5,51 @@ import { useState, useEffect } from "react";
 import { readToken } from "../utils/checkAuth";
 import { getIndexedDBbyID } from "../utils/indexedDB";
 import { loadValueByLogin } from "../utils/API";
-import dailyMeasurement from "../components/schema/dailyMeasurement";
+import schema from "../schema/dailyMeasurement";
 
 const useDailyMeasurement = (when: string): [any, () => void] => {
-  const router: any = useRouter();
-  const [cookies] = useCookies();
-  const [user, setUser] = useState();
-  const [reload, setReload] = useState(0);
-  const [data, setDataObject] = useState();
-  const theOldestSupportedDate = useAppSelector((state) =>
-    state.config.theOldestSupportedDate()
-  );
+    const router: any = useRouter();
+    const [cookies] = useCookies();
+    const [user, setUser] = useState();
+    const [reload, setReload] = useState(0);
+    const [data, setDataObject] = useState<Object>();
+    const theOldestSupportedDate = useAppSelector((state) =>
+        state.config.theOldestSupportedDate()
+    );
 
-  useEffect(() => {
-    if (when) {
-      (async () => {
-        const token = readToken(cookies.token);
-        if (
-          token.login == router.query.login &&
-          theOldestSupportedDate <= when
-        ) {
-          let data = await getIndexedDBbyID(
-            "daily_measurement",
-            new Date(when).toISOString()
-          );
-          if (!data) {
-            data = dailyMeasurement("XD" + new Date().getTime(), when, token._id)
-          } else {
-            if (!data.nutrition_diary) data.nutrition_diary = [];
-            if (!data.workout_result) data.workout_result = [];
-          }
-          setUser(token);
-          setDataObject(data);
-        } else {
-          let res = await loadValueByLogin(
-            "daily_measurement",
-            when,
-            router.query.login
-          );
-          if (!res.data.nutrition_diary) res.data.nutrition_diary = [];
-          if (!res.data.workout_result) res.data.workout_result = [];
-          setUser(res.user);
-          setDataObject(res.data);
+    useEffect(() => {
+        if (when) {
+            (async () => {
+                const token = readToken(cookies.token);
+                if (
+                    token.login == router.query.login &&
+                    theOldestSupportedDate <= when
+                ) {
+                    let data = await getIndexedDBbyID(
+                        "daily_measurement",
+                        new Date(when).toISOString()
+                    );
+                    if (!data) {
+                        data = schema(false, "XD" + new Date().getTime(), when, token._id)
+                    } else {
+                        data = schema(data, "XD" + new Date().getTime(), when, token._id)
+                    }
+                    setUser(token);
+                    setDataObject(data);
+                } else {
+                    let res = await loadValueByLogin(
+                        "daily_measurement",
+                        when,
+                        router.query.login
+                    );
+                    setUser(res.user);
+                    setDataObject(schema(res.data, "XD" + new Date().getTime(), when, res.user._id));
+                }
+            })();
         }
-      })();
-    }
-  }, [when, reload]);
+    }, [when, reload]);
 
-  return [{ data, user }, () => setReload(reload + 1)];
+    return [{ data, user }, () => setReload(reload + 1)];
 };
 
 export { useDailyMeasurement };

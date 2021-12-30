@@ -2,13 +2,13 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react'
 import { getAllIndexedDB } from '../utils/indexedDB';
 import { useAppSelector } from "./useRedux";
-import dailyMeasurement from '../components/schema/dailyMeasurement';
+import schema from "../schema/dailyMeasurement";
 import { addDaysToDate } from '../utils/manageDate';
 import { loadValueByLogin } from '../utils/API';
 
 const useDailyMeasurements = (today, howManyDays = 7) => {
     const [reload, setReload] = useState(0)
-    const [data, setData] = useState('')
+    const [data, setData] = useState<Array<any>>([])
     const [user, setUser] = useState('')
     const router = useRouter()
     const token: any = useAppSelector(state => state.token.value)
@@ -33,11 +33,11 @@ const useDailyMeasurements = (today, howManyDays = 7) => {
             }
             for (let i = 0; i < howManyDays; i++) {
                 if (object[checkingDate]) {
-                    newArray.push(object[checkingDate])
+                    newArray.push(schema(object[checkingDate], "XD" + new Date().getTime() + i, checkingDate, user_ID))
                 } else {
-                    newArray.push(dailyMeasurement("XD" + new Date().getTime() + i, checkingDate, user_ID))
+                    newArray.push(schema(false, "XD" + new Date().getTime() + i, checkingDate, user_ID))
                 }
-                checkingDate = addDaysToDate(checkingDate, -1)
+                checkingDate = new Date(addDaysToDate(checkingDate, -1)).toJSON()
             }
             resolve(newArray)
         })
