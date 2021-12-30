@@ -55,26 +55,26 @@ const Navbar: FunctionComponent<NavbarProps> = ({ user, tab }) => {
                     <div>{user.description}</div>
                     <div>
                         {
-                            token.facebook &&
-                            <IconButton onClick={() => window.open(`https://facebook.com/${token.facebook}`, '_blank')} aria-label="Facebook" color="primary">
+                            user.facebook &&
+                            <IconButton onClick={() => window.open(`https://facebook.com/${user.facebook}`, '_blank')} aria-label="Facebook" color="primary">
                                 <FacebookIcon />
                             </IconButton>
                         }
                         {
-                            token.instagram &&
-                            <IconButton onClick={() => window.open(`https://instagram.com/${token.instagram}`, '_blank')} aria-label="Facebook" color="primary">
+                            user.instagram &&
+                            <IconButton onClick={() => window.open(`https://instagram.com/${user.instagram}`, '_blank')} aria-label="Facebook" color="primary">
                                 <InstagramIcon />
                             </IconButton>
                         }
                         {
-                            token.twitter &&
-                            <IconButton onClick={() => window.open(`https://twitter.com/${token.twitter}`, '_blank')} aria-label="Facebook" color="primary">
+                            user.twitter &&
+                            <IconButton onClick={() => window.open(`https://twitter.com/${user.twitter}`, '_blank')} aria-label="Facebook" color="primary">
                                 <TwitterIcon />
                             </IconButton>
                         }
                         {
-                            token.website &&
-                            <IconButton onClick={() => window.open(`${token.website}`, '_blank')} aria-label="Facebook" color="primary">
+                            user.website &&
+                            <IconButton onClick={() => window.open(`${user.website}`, '_blank')} aria-label="Facebook" color="primary">
                                 <WebIcon />
                             </IconButton>
                         }
