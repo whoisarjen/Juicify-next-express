@@ -1,17 +1,12 @@
 import { useRouter } from "next/router";
-import { FunctionComponent, useEffect } from "react";
+import { FunctionComponent } from "react";
 import Navbar from "../../components/profile/Navbar";
 import { useDailyMeasurements } from "../../hooks/useDailyMeasurements";
 import styles from '../../styles/profile.module.css'
 import { addDaysToDate, getShortDate } from '../../utils/manageDate';
 
 const Profile: FunctionComponent = () => {
-    const [{ data, user }, reload]: any = useDailyMeasurements(addDaysToDate(getShortDate(), -1), 7)
-    const router = useRouter()
-
-    useEffect(() => {
-        reload()
-    }, [router.query.login])
+    const [{ data, user }]: any = useDailyMeasurements(addDaysToDate(getShortDate(), -1), 7)
 
     return (
         <div className="profile">

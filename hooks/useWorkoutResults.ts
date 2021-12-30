@@ -65,7 +65,7 @@ const useWorkoutResults = (): any => {
                 setUser(response.user || [])
             }
         })()
-    }, [])
+    }, [cookies, router.query])
 
     return { data, user };
 }

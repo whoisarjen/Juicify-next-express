@@ -1,9 +1,11 @@
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { API } from "../utils/API";
 
 const useSearch = (find, where) => {
     const [data, setData] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    const router = useRouter()
 
     useEffect(() => {
         (async () => {
@@ -20,7 +22,7 @@ const useSearch = (find, where) => {
             }
             setIsLoading(false)
         })()
-    }, [find])
+    }, [find, router.query])
 
     return [{ data, isLoading }]
 }

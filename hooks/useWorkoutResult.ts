@@ -48,7 +48,7 @@ const useWorkoutResult = (): [any, () => void] => {
                 }
             }
         })()
-    }, [daily, reload])
+    }, [daily, reload, router.query])
 
     return [{ data, user, daily }, () => setReload(reload + 1)]
 }

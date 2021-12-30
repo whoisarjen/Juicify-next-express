@@ -47,7 +47,7 @@ const useDailyMeasurement = (when: string): [any, () => void] => {
                 }
             })();
         }
-    }, [when, reload]);
+    }, [when, reload, router.query]);
 
     return [{ data, user }, () => setReload(reload + 1)];
 };

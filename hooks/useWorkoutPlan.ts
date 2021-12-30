@@ -48,7 +48,7 @@ const useWorkoutPlan = (workoutPlanID: string): [any, () => void] => {
                 }
             }
         })()
-    }, [workoutPlanID, reload])
+    }, [workoutPlanID, reload, router.query])
 
     return [{ data, user }, () => setReload(reload + 1)]
 }
