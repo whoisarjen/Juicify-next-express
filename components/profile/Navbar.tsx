@@ -9,6 +9,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import WebIcon from '@mui/icons-material/Web';
 import { useRouter } from "next/router";
 import TabsInterface from './TabsInterface'
+import Avatar from '@mui/material/Avatar';
 
 interface NavbarProps {
     user: any,
@@ -23,7 +24,18 @@ const Navbar: FunctionComponent<NavbarProps> = ({ user, tab }) => {
         <>
             <div className={styles.navbar}>
                 <div className={styles.navbarAvatar}>
-                    <img src='https://juicify.app:4000/server/avatar/60ba774fe0ecd72587eeaa29.jpg' alt={`Avatar for ${token.login} knows as ${token.name} ${token.surname}`} />
+                    <Avatar
+                        sx={{ display: 'grid', margin: 'auto', width: '100%', height: 'auto', background: "none !important" }}
+                        alt={`${user.login} ${user.name} ${user.surname} on Juicify`}
+                        src={`https://juicify.app:4000/server/avatar/${user._id}.jpg`}
+                    >
+                        <Avatar
+                            sx={{ display: 'grid', margin: 'auto', width: '100%', height: 'auto', background: "none !important" }}
+                            alt={`${user.login} ${user.name} ${user.surname} on Juicify`}
+                            src="http://localhost:3000/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo.77a8e0c9.png&w=48&q=75"
+                        />
+                    </Avatar>
+                    {/* <img src='https://juicify.app:4000/server/avatar/60ba774fe0ecd72587eeaa29.jpg' alt={`Avatar for ${token.login} knows as ${token.name} ${token.surname}`} /> */}
                 </div>
                 <div className={styles.navbarContent}>
                     <div>

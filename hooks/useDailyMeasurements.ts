@@ -61,7 +61,7 @@ const useDailyMeasurements = (today, howManyDays = 7) => {
                 setData(res)
             }
         })()
-    }, [token])
+    }, [token, reload])
 
     return [{ data, user }, () => setReload(reload + 1)];
 }

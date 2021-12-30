@@ -7,7 +7,6 @@ import List from '@mui/material/List';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
-import ImageIcon from '@mui/icons-material/Image';
 import ListItemButton from '@mui/material/ListItemButton';
 
 const Search: FunctionComponent = () => {
@@ -23,19 +22,19 @@ const Search: FunctionComponent = () => {
                         <Spinner />
                     ) : (
 
-                        <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                        <List sx={{ width: '100%', bgcolor: 'background.paper', marginTop: '12px' }}>
                             {
                                 data.map(user =>
                                     <ListItemButton onClick={() => router.push(`/${user.login}`)}>
                                         <ListItemAvatar>
                                             <Avatar
                                                 sx={{ background: "none !important" }}
-                                                alt={`${user.login} ${user.name} ${user.surname}`}
+                                                alt={`${user.login} ${user.name} ${user.surname} on Juicify`}
                                                 src={`https://juicify.app:4000/server/avatar/${user._id}.jpg`}
                                             >
                                                 <Avatar
                                                     sx={{ background: "none !important" }}
-                                                    alt={`${user.login} ${user.name} ${user.surname}`}
+                                                    alt={`${user.login} ${user.name} ${user.surname} on Juicify`}
                                                     src="http://localhost:3000/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo.77a8e0c9.png&w=48&q=75"
                                                 />
                                             </Avatar>
