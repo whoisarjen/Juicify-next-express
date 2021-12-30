@@ -12,7 +12,7 @@ Chcecking fake id on server side?
 block workout save if not diff
 product site api for SEO
 Make better notify for create [...]
-in result => option to add exercise but synchro need to handle it too...
+in result => option to add exercise but synchro need to handle it too... + change order of exercises + delete
 sidebar need to random show profiles for better seo
 barcode to createProduct
 probably insert on whattoupdate might have issues, to check later with synchro
