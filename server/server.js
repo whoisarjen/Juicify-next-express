@@ -30,8 +30,7 @@ const io = socket(server, {
 
 app.post('/auth/login', (req, res) => require('./mongoDB/auth/login')(req, res));
 
-app.post('/find/product', (req, res) => require('./mongoDB/find/product')(req, res));
-app.post('/find/exercise', (req, res) => require('./mongoDB/find/exercise')(req, res)); // Need function to cache find things etc.
+app.post('/find/:where', (req, res) => require(`./mongoDB/find/${req.params.where}`)(req, res)); // Need function to cache find things etc.
 
 app.post('/guest/:where', async (req, res) => {
     const loadUserByLogin = require('./mongoDB/functions/loadUserByLogin')

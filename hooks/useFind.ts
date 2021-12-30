@@ -60,7 +60,7 @@ const useFind = (value: any, where: string, tab: number, skipThoseIDS: Array<any
                         const searchFunction = (find: string) => setTimeout(async () => {
                             setLoading(true);
                             if (isOnline) {
-                                const { response, isSuccess } = await API(`/find/${where}`, {
+                                const { response, isSuccess } = await API(`/find/${where}s`, {
                                     find: find
                                 });
                                 if (isSuccess) {
