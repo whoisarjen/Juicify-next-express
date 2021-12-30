@@ -11,6 +11,12 @@ const SearchBox: FunctionComponent = () => {
     const { t } = useTranslation("home");
     const [search, setSearch] = useState<string | null>('')
 
+    const handleKeyPress = (event: any) => {
+        if (event.key === "Enter") {
+            router.push(`/search/${search}`)
+        }
+    };
+
     return (
         <Paper
             sx={{
@@ -28,6 +34,7 @@ const SearchBox: FunctionComponent = () => {
                 sx={{ ml: 1, flex: 1 }}
                 placeholder={t("Search Something Awesome")}
                 value={search}
+                onKeyPress={handleKeyPress}
                 onChange={(e) => setSearch(e.target.value)}
                 inputProps={{ "aria-label": t("Search Something Awesome") }}
             />
