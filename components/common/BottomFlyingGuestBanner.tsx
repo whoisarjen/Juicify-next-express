@@ -25,10 +25,10 @@ const BottomFlyingGuestBanner: FunctionComponent<BottomFlyingGuestBannerProps> =
                         <Button
                             onClick={() => router.push(`/${router.query.login}`)}
                             sx={{
-                                width: '100%',
                                 maxWidth: 700,
                                 position: 'fixed',
-                                bottom: 52
+                                bottom: 52,
+                                width: 'calc( 100% - 24px )'
                             }}
                             variant="contained"
                             startIcon={<Avatar user={user} size="24px" />}
