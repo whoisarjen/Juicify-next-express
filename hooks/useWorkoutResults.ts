@@ -1,14 +1,12 @@
 import { useRouter } from "next/router";
-import { useCookies } from "react-cookie"
 import { useAppSelector } from "./useRedux";
 import { useState, useEffect } from "react";
-import { readToken } from "../utils/checkAuth"
+import { getCookie, readToken } from "../utils/checkAuth"
 import { loadValueByLogin } from '../utils/API'
 import { getAllIndexedDB } from "../utils/indexedDB";
 
 const useWorkoutResults = (): any => {
     const router: any = useRouter()
-    const [cookies] = useCookies()
     const [data, setData] = useState([])
     const [user, setUser] = useState({})
     const theOldestSupportedDate = useAppSelector(state => state.config.theOldestSupportedDate)
@@ -16,8 +14,8 @@ const useWorkoutResults = (): any => {
     useEffect(() => {
         (async () => {
             let results = []
-            const token = readToken(cookies.token)
-            if (token == router.query.login) {
+            const token = readToken(await getCookie('token'))
+            if (token.login == router.query.login) {
                 let cache = await getAllIndexedDB('workout_result')
                 let daily_measurements = await getAllIndexedDB('daily_measurement')
                 if (daily_measurements.length > 0) {
@@ -65,7 +63,7 @@ const useWorkoutResults = (): any => {
                 setUser(response.user || [])
             }
         })()
-    }, [cookies, router.query])
+    }, [router.query])
 
     return { data, user };
 }

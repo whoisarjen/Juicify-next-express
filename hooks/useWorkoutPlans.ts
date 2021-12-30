@@ -2,18 +2,16 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { getAllIndexedDB } from "../utils/indexedDB";
 import { loadValueByLogin } from '../utils/API'
-import { readToken } from "../utils/checkAuth";
-import { useCookies } from "react-cookie";
+import { getCookie, readToken } from "../utils/checkAuth";
 
 const useWorkoutPlans = (): any => {
     const router: any = useRouter()
     const [data, setData] = useState(false)
     const [user, setUser] = useState({})
-    const [cookies] = useCookies()
 
     useEffect(() => {
         (async () => {
-            const token = readToken(cookies.token)
+            const token = readToken(await getCookie('token'))
             if (token.login == router.query.login) {
                 setData(await getAllIndexedDB('workout_plan'))
                 setUser(token)
@@ -23,7 +21,7 @@ const useWorkoutPlans = (): any => {
                 setUser(response.user || [])
             }
         })()
-    }, [cookies, router.query])
+    }, [router.query])
 
     return { data, user };
 }

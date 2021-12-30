@@ -1,15 +1,13 @@
 import { useRouter } from "next/router";
 import { useAppSelector } from "./useRedux";
-import { useCookies } from "react-cookie";
 import { useState, useEffect } from "react";
-import { readToken } from "../utils/checkAuth";
+import { getCookie, readToken } from "../utils/checkAuth";
 import { getIndexedDBbyID } from "../utils/indexedDB";
 import { loadValueByLogin } from "../utils/API";
 import schema from "../schema/dailyMeasurement";
 
 const useDailyMeasurement = (when: string): [any, () => void] => {
     const router: any = useRouter();
-    const [cookies] = useCookies();
     const [user, setUser] = useState();
     const [reload, setReload] = useState(0);
     const [data, setDataObject] = useState<Object>();
@@ -20,7 +18,7 @@ const useDailyMeasurement = (when: string): [any, () => void] => {
     useEffect(() => {
         if (when) {
             (async () => {
-                const token = readToken(cookies.token);
+                const token = readToken(await getCookie('token'))
                 if (
                     token.login == router.query.login &&
                     theOldestSupportedDate <= when

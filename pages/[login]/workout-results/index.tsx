@@ -27,7 +27,9 @@ const WorkoutResults: FunctionComponent = () => {
                     )
             }
             {
-                data && data.map((result: any) =>
+                data &&
+                data.length > 0 &&
+                data.map((result: any) =>
                     <Box
                         whenAdded={result.whenAdded}
                         isNotSaved={result.notSaved}

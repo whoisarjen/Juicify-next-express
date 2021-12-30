@@ -1,17 +1,16 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react'
 import { getAllIndexedDB } from '../utils/indexedDB';
-import { useAppSelector } from "./useRedux";
 import schema from "../schema/dailyMeasurement";
 import { addDaysToDate } from '../utils/manageDate';
 import { loadValueByLogin } from '../utils/API';
+import { getCookie, readToken } from '../utils/checkAuth';
 
 const useDailyMeasurements = (today, howManyDays = 7) => {
     const [reload, setReload] = useState(0)
     const [data, setData] = useState<Array<any>>([])
     const [user, setUser] = useState('')
     const router = useRouter()
-    const token: any = useAppSelector(state => state.token.value)
 
     const loadMissingDays = async (oryginalArray, user_ID) => {
         return new Promise(resolve => {
@@ -45,7 +44,8 @@ const useDailyMeasurements = (today, howManyDays = 7) => {
 
     useEffect(() => {
         (async () => {
-            if (token && token.login == router.query.login) {
+            const token = readToken(await getCookie('token'))
+            if (token.login == router.query.login) {
                 let res = await getAllIndexedDB('daily_measurement')
                 res = await loadMissingDays(res, token._id)
                 setData(res)
@@ -61,7 +61,7 @@ const useDailyMeasurements = (today, howManyDays = 7) => {
                 setData(res)
             }
         })()
-    }, [token, reload, router.query])
+    }, [reload, router.query])
 
     return [{ data, user }, () => setReload(reload + 1)];
 }
