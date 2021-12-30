@@ -1,7 +1,19 @@
 const useMacro = () => {
 
+    const getShortDayName = (day: number) => {
+        return {
+            1: 'short_sunday',
+            2: 'short_monday',
+            3: 'short_tuesday',
+            4: 'short_wednesday',
+            5: 'short_thursday',
+            6: 'short_friday',
+            7: 'short_saturday'
+        }[day]
+    }
+
     const getDay = (date: any, token: any = false) => {
-        let day = (new Date(date)).getDay() // 0 => Sunday
+        let day = (new Date(date)).getDay() // 0 in array => Sunday | day 1
 
         if (token && token.macronutrients) {
             return token.macronutrients[day]
@@ -15,7 +27,7 @@ const useMacro = () => {
         }
     }
 
-    return [getDay]
+    return [getDay, getShortDayName]
 }
 
 export default useMacro;

@@ -3,6 +3,8 @@ import styles from '../../styles/macronutrients.module.css'
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import IconButton from '@mui/material/IconButton';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import useMacro from "../../hooks/useMacro";
+import useTranslation from "next-translate/useTranslation";
 
 interface BarProps {
     object: {
@@ -18,11 +20,14 @@ interface BarProps {
 }
 
 const Bar: FunctionComponent<BarProps> = ({ object, click, toggleLock }) => {
-
+    const [, getShortDayName] = useMacro()
+    const { t } = useTranslation('home')
+    
     return (
         <div className={styles.barBox}>
             <div className={styles.barBoxDay}>
-                <div>{object.day}</div>
+                <div>{t(getShortDayName(object.day))}</div>
+
             </div>
             <div className={object.choosen ? styles.macroChoosen : styles.macro} onClick={() => click(object)}>
                 <div className={styles.barBoxProteins}>
