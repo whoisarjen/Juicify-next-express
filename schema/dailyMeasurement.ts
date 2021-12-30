@@ -9,4 +9,4 @@ const schema = (object, _id, when: any, user_ID: string) => {
     };
 }
 
-export default schema
+export default schema;
