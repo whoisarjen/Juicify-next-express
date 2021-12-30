@@ -9,7 +9,7 @@ import useTranslation from "next-translate/useTranslation"
 const SearchBox: FunctionComponent = () => {
     const router = useRouter()
     const { t } = useTranslation("home");
-    const [search, setSearch] = useState<string | null>()
+    const [search, setSearch] = useState<string | null>('')
 
     return (
         <Paper
