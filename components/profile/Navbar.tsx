@@ -24,7 +24,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({ user, tab }) => {
         <>
             <div className={styles.navbar}>
                 <div className={styles.navbarAvatar}>
-                    <Avatar object={user} />
+                    <Avatar user={user} />
                 </div>
                 <div className={styles.navbarContent}>
                     <div>

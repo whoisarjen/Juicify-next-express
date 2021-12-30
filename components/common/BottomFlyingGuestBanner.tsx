@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { useRouter } from "next/router";
+import Avatar from "./Avatar";
 
 interface BottomFlyingGuestBannerProps {
     user: any
@@ -9,7 +9,7 @@ interface BottomFlyingGuestBannerProps {
 
 const BottomFlyingGuestBanner: FunctionComponent<BottomFlyingGuestBannerProps> = ({ user }) => {
     const router = useRouter()
-    
+
     return (
         <div className="bottomFlyingGuestBanner">
             {
@@ -31,7 +31,7 @@ const BottomFlyingGuestBanner: FunctionComponent<BottomFlyingGuestBannerProps> =
                                 bottom: 52
                             }}
                             variant="contained"
-                            startIcon={<DeleteIcon />}
+                            startIcon={<Avatar user={user} size="24px" />}
                         >
                             Watching {user.login}'s profile
                         </Button>

@@ -27,7 +27,7 @@ const Search: FunctionComponent = () => {
                                 data.map(user =>
                                     <ListItemButton onClick={() => router.push(`/${user.login}`)}>
                                         <ListItemAvatar>
-                                            <Avatar object={user} size="40px" />
+                                            <Avatar user={user} size="40px" />
                                         </ListItemAvatar>
                                         <ListItemText primary={user.login} secondary={`${user.name} ${user.surname}`} />
                                     </ListItemButton>
