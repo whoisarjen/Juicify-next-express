@@ -61,3 +61,11 @@
     font-size: 1.1rem;
     font-weight: bold;
 }
+
+.welcome{
+    width: 100%;
+    height: calc( 100vh - var(--BothNavHeightAndPadding));
+    display: grid;
+    grid-template-rows: auto 1fr auto auto auto auto;
+    grid-gap: 5px;
+}
