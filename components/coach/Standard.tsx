@@ -15,7 +15,7 @@ interface StandardProps {
 
 const Standard: FunctionComponent<StandardProps> = ({ setStep }) => {
     const [daysToCoach, setDaysToCoach] = useState(7)
-    const [{ data }] = useDailyMeasurement(getShortDate())
+    const [{ data }, reload] = useDailyMeasurement(getShortDate())
     const [isWeights, setIsWeights] = useState(false)
     const token: any = useAppSelector(state => state.token.value)
 
@@ -128,7 +128,13 @@ const Standard: FunctionComponent<StandardProps> = ({ setStep }) => {
                         </>
                 }
             </div>
-            <Weights isWeights={isWeights} closeWeights={() => setIsWeights(false)} />
+            <Weights
+                isWeights={isWeights}
+                closeWeights={() => {
+                    reload()
+                    setIsWeights(false)
+                }}
+            />
         </div >
     )
 }
