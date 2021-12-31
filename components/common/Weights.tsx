@@ -89,9 +89,17 @@ const Weights: FunctionComponent<WeightsProps> = ({ isWeights, closeWeights }) =
                                             <TimelineDot />
                                             <TimelineConnector />
                                         </TimelineSeparator>
-                                        <TimelineContent>
-                                            {x.weight}kg
-                                        </TimelineContent>
+                                        {
+                                            x.weight > 0
+                                                ?
+                                                <TimelineContent>
+                                                    {x.weight}kg
+                                                </TimelineContent>
+                                                :
+                                                <TimelineContent color="error">
+                                                    {x.weight}kg
+                                                </TimelineContent>
+                                        }
                                     </TimelineItem>
                                 )
                             }
