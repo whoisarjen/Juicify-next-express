@@ -5,9 +5,9 @@ import IconButton from '@mui/material/IconButton';
 import HistoryIcon from '@mui/icons-material/History';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { useDailyMeasurement } from "../../hooks/useDailyMeasurement";
-import { getShortDate, getDirrentBetweenDays } from "../../utils/manageDate";
-import AddWeight from "./AddWeight";
+import { getShortDate, getDirrentBetweenDays, addDaysToDate, reverseDateDotes } from "../../utils/manageDate";
 import { useAppSelector } from "../../hooks/useRedux";
+import Weights from "../common/Weights";
 
 interface StandardProps {
     setStep: (arg0: string) => void
@@ -16,7 +16,7 @@ interface StandardProps {
 const Standard: FunctionComponent<StandardProps> = ({ setStep }) => {
     const [daysToCoach, setDaysToCoach] = useState(7)
     const [{ data }] = useDailyMeasurement(getShortDate())
-    const [isAddDialog, setIsAddDialog] = useState(false)
+    const [isWeights, setIsWeights] = useState(false)
     const token: any = useAppSelector(state => state.token.value)
 
     useEffect(() => setDaysToCoach(getDirrentBetweenDays(token.coach || getShortDate(), getShortDate())), [token])
@@ -32,7 +32,7 @@ const Standard: FunctionComponent<StandardProps> = ({ setStep }) => {
                         <div>New goal</div>
                     </div>
                     <div />
-                    <div onClick={() => setIsAddDialog(true)}>
+                    <div onClick={() => setIsWeights(true)}>
                         <IconButton aria-label="history">
                             <HistoryIcon />
                         </IconButton>
@@ -89,11 +89,11 @@ const Standard: FunctionComponent<StandardProps> = ({ setStep }) => {
                             (
                                 data.weight > 0
                                     ?
-                                    <Button variant="contained" onClick={() => setIsAddDialog(true)}>Change weight</Button>
+                                    <Button variant="contained" onClick={() => setIsWeights(true)}>Change weight</Button>
                                     :
-                                    <Button variant="contained" color="error" onClick={() => setIsAddDialog(true)}>Add weight</Button>
+                                    <Button variant="contained" color="error" onClick={() => setIsWeights(true)}>Add weight</Button>
                             ) : (
-                                <Button variant="contained" onClick={() => setIsAddDialog(true)}>Change weight</Button>
+                                <Button variant="contained" onClick={() => setIsWeights(true)}>Change weight</Button>
                             )
                     }
                 </div>
@@ -103,12 +103,12 @@ const Standard: FunctionComponent<StandardProps> = ({ setStep }) => {
                 <div className={styles.AddWeightSecondInfo}>
                     <div>
                         <div>Last check</div>
-                        <div className={styles.AddWeightSecondInfoBold}>20.06.2021</div>
+                        <div className={styles.AddWeightSecondInfoBold}>{reverseDateDotes(addDaysToDate(token.coach, -7))}</div>
                     </div>
                     <div />
                     <div>
                         <div>Next check</div>
-                        <div className={styles.AddWeightSecondInfoBold}>20.06.2021</div>
+                        <div className={styles.AddWeightSecondInfoBold}>{reverseDateDotes(token.coach)}</div>
                     </div>
                 </div>
                 {
@@ -128,7 +128,7 @@ const Standard: FunctionComponent<StandardProps> = ({ setStep }) => {
                         </>
                 }
             </div>
-            <AddWeight isAddDialog={isAddDialog} closeDialog={() => setIsAddDialog(false)} />
+            <Weights isWeights={isWeights} closeWeights={() => setIsWeights(false)} />
         </div >
     )
 }

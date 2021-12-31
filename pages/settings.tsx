@@ -12,6 +12,8 @@ import BookIcon from "@mui/icons-material/Book";
 import SecurityIcon from '@mui/icons-material/Security';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AppSettingsAltIcon from '@mui/icons-material/AppSettingsAlt';
+import { logout } from '../utils/checkAuth'
+import LogoutIcon from '@mui/icons-material/Logout';
 
 interface TabPanelProps {
     children?: ReactNode;
@@ -61,6 +63,7 @@ const Settings: FunctionComponent = () => {
                 <Tab label={<BookIcon />} />
                 <Tab label={<AppSettingsAltIcon />} />
                 <Tab label={<SecurityIcon />} />
+                <Tab onClick={logout} label={<LogoutIcon />} />
             </Tabs>
             <TabPanel value={value} index={0}>
                 <Tab1 marginBottom='12px' />
@@ -73,6 +76,9 @@ const Settings: FunctionComponent = () => {
             </TabPanel>
             <TabPanel value={value} index={3}>
                 <Tab4 marginBottom='12px' />
+            </TabPanel>
+            <TabPanel value={value} index={4}>
+                Goodbye...!
             </TabPanel>
         </Box>
     </div>;

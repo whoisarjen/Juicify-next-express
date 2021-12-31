@@ -244,6 +244,14 @@ const prepareDailyToSend = async (daily_measurement: any, removeDeleted: boolean
             if (object.workout_result && object.workout_result.length == 0) {
                 delete object.workout_result
             }
+
+            // DB think no value = 0, so we don't need values == 0 (can be string too!)
+            const keys = Object.keys(object)
+            keys.forEach(x => {
+                if(object[x] == 0){
+                    delete object[x]
+                }
+            })
             resolve(object);
         })();
     });
