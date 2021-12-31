@@ -92,11 +92,11 @@ const Weights: FunctionComponent<WeightsProps> = ({ isWeights, closeWeights }) =
                                         {
                                             x.weight > 0
                                                 ?
-                                                <TimelineContent>
+                                                <TimelineContent style={{ fontWeight: 'bold' }}>
                                                     {x.weight}kg
                                                 </TimelineContent>
                                                 :
-                                                <TimelineContent color="error">
+                                                <TimelineContent color="error" style={{ fontWeight: 'bold' }}>
                                                     {x.weight}kg
                                                 </TimelineContent>
                                         }
