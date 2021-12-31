@@ -1,4 +1,4 @@
-import { FunctionComponent, Fragment, useState } from "react";
+import { FunctionComponent, Fragment, useState, Ref, ReactElement, forwardRef } from "react";
 import Timeline from '@mui/lab/Timeline';
 import TimelineItem from '@mui/lab/TimelineItem';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
@@ -18,6 +18,17 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from "../../utils/API";
 import useTranslation from "next-translate/useTranslation";
+import { TransitionProps } from '@mui/material/transitions';
+import Slide from '@mui/material/Slide';
+
+const Transition = forwardRef(function Transition(
+    props: TransitionProps & {
+        children: ReactElement<any, any>;
+    },
+    ref: Ref<unknown>,
+) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const TimelineComponent: FunctionComponent = () => {
     const { t } = useTranslation('home');
@@ -67,7 +78,11 @@ const TimelineComponent: FunctionComponent = () => {
                     }
                 </Timeline>
             </Fragment>
-            <Dialog open={isDialog} onClose={() => setIsDialog(false)}>
+            <Dialog
+                open={isDialog}
+                onClose={() => setIsDialog(false)}
+                TransitionComponent={Transition}
+            >
                 <DialogTitle>{t('Add weight')}</DialogTitle>
                 <DialogContent>
                     <OutlinedInput

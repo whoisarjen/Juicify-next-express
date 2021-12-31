@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import HistoryIcon from '@mui/icons-material/History';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { useDailyMeasurement } from "../../hooks/useDailyMeasurement";
-import { getShortDate } from "../../utils/manageDate";
+import { getShortDate, getDirrentBetweenDays } from "../../utils/manageDate";
 import AddWeight from "./AddWeight";
 import { useAppSelector } from "../../hooks/useRedux";
 
@@ -19,11 +19,7 @@ const Standard: FunctionComponent<StandardProps> = ({ setStep }) => {
     const [isAddDialog, setIsAddDialog] = useState(false)
     const token: any = useAppSelector(state => state.token.value)
 
-    useEffect(() => {
-        if (token) {
-
-        }
-    }, [token])
+    useEffect(() => setDaysToCoach(getDirrentBetweenDays(token.coach || getShortDate(), getShortDate())), [token])
 
     return (
         <div className={styles.grid2Equal}>
@@ -78,7 +74,14 @@ const Standard: FunctionComponent<StandardProps> = ({ setStep }) => {
                                 :
                                 " lose weight"
                     }
-                    . Keep updating your weight everyday. In {daysToCoach} days we will check your progress and create new instruction.
+                    . Keep updating your weight everyday.
+                    {
+                        daysToCoach > 0 ?
+                            ` In {daysToCoach} days we will `
+                            :
+                            ` It's time to `
+                    }
+                    check your progress and create new instruction.
                 </div>
                 <div>
                     {
@@ -108,16 +111,22 @@ const Standard: FunctionComponent<StandardProps> = ({ setStep }) => {
                         <div className={styles.AddWeightSecondInfoBold}>20.06.2021</div>
                     </div>
                 </div>
-                <div>{daysToCoach} days until your next check in</div>
-                <div>
-                    {
-                        daysToCoach > 0 ? (
-                            <Button disabled variant="contained">Check progress in {daysToCoach} days</Button>
-                        ) : (
-                            <Button variant="contained" color="error">Check progress</Button>
-                        )
-                    }
-                </div>
+                {
+                    daysToCoach > 0 ?
+                        <>
+                            <div>{daysToCoach} days until your next check in</div>
+                            <div>
+                                <Button disabled variant="contained">Check progress in {daysToCoach} days</Button>
+                            </div>
+                        </>
+                        :
+                        <>
+                            <div>It's time to check your progress!</div>
+                            <div>
+                                <Button variant="contained" color="error">Check progress</Button>
+                            </div>
+                        </>
+                }
             </div>
             <AddWeight isAddDialog={isAddDialog} closeDialog={() => setIsAddDialog(false)} />
         </div >
