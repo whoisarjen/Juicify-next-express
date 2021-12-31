@@ -15,7 +15,12 @@ interface MyAppProps {
 const theme = createTheme({
     typography: {
         fontFamily: "Quicksand, sans-serif",
-    }
+    },
+    // palette: {
+    //     primary: {
+    //         main: '#d32f2f'
+    //     }
+    // }
 });
 
 const MyApp: FunctionComponent<MyAppProps> = ({ Component, pageProps }) => {

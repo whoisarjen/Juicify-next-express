@@ -41,6 +41,10 @@
       format("svg"); /* Legacy iOS */
 }
 
+:root {
+  --BothNavHeightAndPadding: 141px;
+}
+
 body {
   margin: 0;
   font-family: "Quicksand", sans-serif;
@@ -202,6 +206,10 @@ input[type="number"] {
   margin-bottom: 10px;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.87);
+}
+
+.description {
+  font-size: 0.9rem;
 }
 
 .spinner {

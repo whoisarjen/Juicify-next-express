@@ -20,7 +20,7 @@ const useDailyMeasurement = (when: string): [any, () => void] => {
             (async () => {
                 const token = readToken(await getCookie('token'))
                 if (
-                    token.login == router.query.login &&
+                    token.login == (router.query.login || token.login) && // Sometimes need to use only in token's user case and this block errors
                     theOldestSupportedDate <= when
                 ) {
                     let data = await getIndexedDBbyID(

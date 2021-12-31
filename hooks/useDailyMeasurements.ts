@@ -15,7 +15,7 @@ const useDailyMeasurements = (today, howManyDays = 7) => {
     const loadMissingDays = async (oryginalArray, user_ID) => {
         return new Promise(resolve => {
             let newArray = []
-            let checkingDate = JSON.parse(JSON.stringify(today))
+            let checkingDate = JSON.parse(JSON.stringify(new Date(today)))
             let array = JSON.parse(JSON.stringify(oryginalArray))
             if (array.length > 0) {
                 array = array.sort((a, b) => {
@@ -45,7 +45,7 @@ const useDailyMeasurements = (today, howManyDays = 7) => {
     useEffect(() => {
         (async () => {
             const token = readToken(await getCookie('token'))
-            if (token.login == router.query.login) {
+            if (token.login == (router.query.login || token.login)) { // Sometimes need to use only in token's user case and this block errors
                 let res = await getAllIndexedDB('daily_measurement')
                 res = await loadMissingDays(res, token._id)
                 setData(res)
