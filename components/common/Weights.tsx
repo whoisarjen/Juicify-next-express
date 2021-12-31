@@ -77,11 +77,7 @@ const Weights: FunctionComponent<WeightsProps> = ({ isWeights, closeWeights }) =
                                 data &&
                                 data.length > 0 &&
                                 data.map(x =>
-                                    <TimelineItem key={x._id} onClick={() => {
-                                        setWeight(x.weight)
-                                        setChange(x)
-                                        setIsDialog(true)
-                                    }}>
+                                    <TimelineItem key={x._id}>
                                         <TimelineOppositeContent color="text.secondary">
                                             {reverseDateDotes(x.whenAdded)}
                                         </TimelineOppositeContent>
@@ -92,11 +88,19 @@ const Weights: FunctionComponent<WeightsProps> = ({ isWeights, closeWeights }) =
                                         {
                                             x.weight > 0
                                                 ?
-                                                <TimelineContent style={{ fontWeight: 'bold' }}>
+                                                <TimelineContent style={{ fontWeight: 'bold' }} onClick={() => {
+                                                    setWeight(x.weight)
+                                                    setChange(x)
+                                                    setIsDialog(true)
+                                                }}>
                                                     {x.weight}kg
                                                 </TimelineContent>
                                                 :
-                                                <TimelineContent color="error" style={{ fontWeight: 'bold' }}>
+                                                <TimelineContent color="error" style={{ fontWeight: 'bold' }} onClick={() => {
+                                                    setWeight(x.weight)
+                                                    setChange(x)
+                                                    setIsDialog(true)
+                                                }}>
                                                     {x.weight}kg
                                                 </TimelineContent>
                                         }
