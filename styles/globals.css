@@ -190,6 +190,10 @@ a:active {
     margin-right: 0;
     padding-right: 0;
   }
+
+  :root{
+    --BothNavHeightAndPadding: 113px;
+  }
 }
 
 input::-webkit-outer-spin-button,
