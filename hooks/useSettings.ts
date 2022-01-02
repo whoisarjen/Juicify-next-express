@@ -9,8 +9,8 @@ const useSettings = () => {
             array: [object]
         })
         if(isSuccess){
-            setCookie('token', response.data.token)
             setCookie('refresh_token', response.data.refresh_token)
+            setCookie('token', response.data.token)
         }
     }
 
@@ -19,8 +19,8 @@ const useSettings = () => {
             array: [object]
         })
         if(isSuccess){
-            setCookie('token', response.data.token)
             setCookie('refresh_token', response.data.refresh_token)
+            setCookie('token', response.data.token)
         }
     }
 

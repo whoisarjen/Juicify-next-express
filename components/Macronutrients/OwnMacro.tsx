@@ -37,21 +37,21 @@ const OwnMacro: FunctionComponent<OwnMacroProps> = ({ isOwnMacro, close }) => {
 
     const handleConfirm = async () => {
         setIsDialog(false)
-        let macro = []
-        for(let i=1; i<8; i++){
-            macro.push({
+        let macronutrients = []
+        for (let i = 1; i < 8; i++) {
+            macronutrients.push({
                 proteins,
                 carbs,
                 fats,
                 day: i
             })
         }
-        await changeSettings({ macronutrients: macro })
+        await changeSettings({ macronutrients })
         close()
     }
 
     useEffect(() => {
-        if(token){
+        if (token && Object.keys(token).length) {
             setProteins(token.macronutrients[0].proteins)
             setCarbs(token.macronutrients[0].carbs)
             setFats(token.macronutrients[0].fats)
