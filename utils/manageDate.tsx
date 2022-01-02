@@ -16,6 +16,13 @@ const reverseDateDotes = (date: Date | string = new Date()) => {
     return date.slice(8, 10) + '.' + date.slice(5, 7) + '.' + date.slice(0, 4)
 }
 
-const getDirrentBetweenDays = (a, b) => (new Date(a) - new Date(b)) / 864e5 | 0;
+const getAge = (date: Date) => {
+    var month_diff = Date.now() - new Date(date).getTime();
+    var age_dt = new Date(month_diff);
+    var year = age_dt.getUTCFullYear();
+    return Math.abs(year - 1970);
+}
 
-export { getShortDate, addDaysToDate, reverseDate, reverseDateDotes, getDirrentBetweenDays };
+const getDiffrentBetweenDays = (a, b) => (new Date(a) - new Date(b)) / 864e5 | 0;
+
+export { getShortDate, addDaysToDate, reverseDate, reverseDateDotes, getDiffrentBetweenDays, getAge };

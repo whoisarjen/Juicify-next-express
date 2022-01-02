@@ -9,12 +9,9 @@ interface WelcomeProps {
 const Welcome: FunctionComponent<WelcomeProps> = ({ setStep }) => {
     return (
         <div className={styles.welcome}>
-            <div className="title">Welcome</div>
-            <div className="description">Welcome to your coach, let's together achieve your goal! What diet should we start with?</div>
-            <Button variant="contained" onClick={() => setStep('')}>Muscle building</Button>
-            <Button variant="contained" onClick={() => setStep('')}>Recomposition</Button>
-            <Button variant="contained" onClick={() => setStep('')}>Losing weight</Button>
-            <Button variant="contained" onClick={() => setStep('')}>Custome diet</Button>
+        <div className={styles.AddWeightMainTitle}><div>Welcome</div></div>
+            <div className="description">Welcome to your coach, I am an Artificial Intelligence created to analize your eatting habits and help you achieve goal as quickly as it's possible! What kind of diet should we start with?</div>
+            <Button variant="contained" onClick={() => setStep('CheckingTodayData')}>Sounds cool!</Button>
         </div>
     )
 }

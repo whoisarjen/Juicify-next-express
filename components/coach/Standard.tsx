@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import HistoryIcon from '@mui/icons-material/History';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { useDailyMeasurement } from "../../hooks/useDailyMeasurement";
-import { getShortDate, getDirrentBetweenDays, addDaysToDate, reverseDateDotes } from "../../utils/manageDate";
+import { getShortDate, getDiffrentBetweenDays, addDaysToDate, reverseDateDotes } from "../../utils/manageDate";
 import { useAppSelector } from "../../hooks/useRedux";
 import Weights from "../common/Weights";
 
@@ -19,7 +19,11 @@ const Standard: FunctionComponent<StandardProps> = ({ setStep }) => {
     const [isWeights, setIsWeights] = useState(false)
     const token: any = useAppSelector(state => state.token.value)
 
-    useEffect(() => setDaysToCoach(getDirrentBetweenDays(token.coach || getShortDate(), getShortDate())), [token])
+    useEffect(() => {
+        if (token) {
+            setDaysToCoach(getDiffrentBetweenDays(token.coach || getShortDate(), getShortDate()))
+        }
+    }, [token])
 
     return (
         <div className={styles.grid2Equal}>

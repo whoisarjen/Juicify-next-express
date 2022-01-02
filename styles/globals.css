@@ -65,7 +65,7 @@ a:active {
   margin: 0 auto;
   max-width: 702px;
   padding: 12px;
-  min-height: calc(100vh - 141px);
+  min-height: calc(100vh - var(--BothNavHeightAndPadding));
 }
 
 @media (max-width: 726px) {
@@ -215,6 +215,7 @@ input[type="number"] {
 
 .description {
   font-size: 0.9rem;
+  margin: auto 0;
 }
 
 .spinner {
