@@ -44,7 +44,7 @@ const CheckingTodayData: FunctionComponent<ChooseDietProps> = ({ setStep }) => {
                                     </tr>
                                 </tbody>
                             </table>
-                            <div>Please make sure the information are correct. Next steps will basic on them. The date for today you can change directly in the page. The rest is available on settings page.</div>
+                            <div>Please make sure the information are correct. Next steps will basic on them. The weight for today you can change directly in the page. The rest is available on settings page.</div>
 
                             <Button variant="contained" onClick={() => setIsWeights(true)}>Change weight</Button>
                         </>
