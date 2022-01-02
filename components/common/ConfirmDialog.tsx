@@ -26,7 +26,7 @@ const ConfirmDialog: FunctionComponent<ConfirmDialogProps> = ({ isDialog, closeD
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
-                    {t('Confirm')}
+                    {t('Confirm Dialog Title')}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">

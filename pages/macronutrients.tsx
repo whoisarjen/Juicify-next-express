@@ -7,6 +7,8 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import SimpleSlider from "../components/Macronutrients/SimpleSlider";
 import BottomFlyingButton from '../components/common/BottomFlyingButton'
 import useSettings from '../hooks/useSettings'
+import Button from '@mui/material/Button';
+import OwnMacro from "../components/Macronutrients/OwnMacro";
 
 const Macronutrients: FunctionComponent = () => {
     expectLoggedIN()
@@ -14,6 +16,7 @@ const Macronutrients: FunctionComponent = () => {
     const token: any = useAppSelector(state => state.token.value)
     const [macro, setMacro] = useState<Array<any>>([])
     const [changeObject, setChangeObject] = useState<any>({})
+    const [isOwnMacro, setIsOwnMacro] = useState(false)
 
     const changed = (newValue, key) => {
         let newMacro = JSON.parse(JSON.stringify(macro))
@@ -21,7 +24,7 @@ const Macronutrients: FunctionComponent = () => {
 
         let value = newValue - changeObject[key]
         let numberPossibleObjectChange = macro.filter(x => !x.locked && x.day != changeObject.day).length
-        
+
         newMacro.forEach(x => {
             if (!x.locked && x.day != changeObject.day) {
                 let minus = Math.ceil(value / numberPossibleObjectChange)
@@ -107,58 +110,64 @@ const Macronutrients: FunctionComponent = () => {
     }, [token])
 
     return (
-        <div className="contentGrid">
-            <div>
-                {
-                    Object.keys(changeObject).length == 0 &&
-                    <div className="title">Macronutrients</div>
-                }
-                <div className={styles.mainGrid}>
-                    <div className={styles.mainGridMacroBox}>
+        <>
+            <div className="contentGrid">
+                <div>
+                    {
+                        Object.keys(changeObject).length == 0 &&
+                        <div className="title">Macronutrients</div>
+                    }
+                    <div className={styles.mainGrid}>
+                        <div className={styles.mainGridMacroBox}>
+                            {
+                                macro &&
+                                macro.map(x =>
+                                    <Bar
+                                        key={x.day}
+                                        object={x}
+                                        click={openChange}
+                                        toggleLock={toggleLock}
+                                    />
+                                )
+                            }
+                        </div>
                         {
-                            macro &&
-                            macro.map(x =>
-                                <Bar
-                                    key={x.day}
-                                    object={x}
-                                    click={openChange}
-                                    toggleLock={toggleLock}
-                                />
-                            )
+                            Object.keys(changeObject).length > 0 ?
+                                (
+                                    <div className={styles.sliderGrid}>
+                                        {
+                                            [...Object.keys(changeObject)].map(x =>
+                                                x != 'day' &&
+                                                x != 'locked' &&
+                                                x != 'choosen' &&
+                                                <SimpleSlider
+                                                    day={changeObject['day'] + changeObject[x]}
+                                                    title={x}
+                                                    beginValue={changeObject[x]}
+                                                    macro={macro}
+                                                    changed={(value) => changed(value, x)}
+                                                />
+                                            )
+                                        }
+                                    </div>
+                                ) : (
+                                    <div className={styles.mainGridDescription}>
+                                        <div>
+                                            Click bar to change macro for this day. The diffrent will put on unlocked days. Click <LockOpenIcon /> to lock day. Week macro will stay same.
+                                        </div>
+                                        <Button variant="contained" onClick={() => setIsOwnMacro(true)}>Use own macro</Button>
+                                    </div>
+                                )
                         }
                     </div>
                     {
-                        Object.keys(changeObject).length > 0 ?
-                            (
-                                <div className={styles.sliderGrid}>
-                                    {
-                                        [...Object.keys(changeObject)].map(x =>
-                                            x != 'day' &&
-                                            x != 'locked' &&
-                                            x != 'choosen' &&
-                                            <SimpleSlider
-                                                day={changeObject['day'] + changeObject[x]}
-                                                title={x}
-                                                beginValue={changeObject[x]}
-                                                macro={macro}
-                                                changed={(value) => changed(value, x)}
-                                            />
-                                        )
-                                    }
-                                </div>
-                            ) : (
-                                <div className={styles.mainGridDescription}>
-                                    Click bar to change macro for this day. The diffrent will put on unlocked days. Click <LockOpenIcon /> to lock day. Week macro will stay same.
-                                </div>
-                            )
+                        Object.keys(changeObject).length > 0 &&
+                        <BottomFlyingButton clicked={save} isLoading={false} />
                     }
                 </div>
-                {
-                    Object.keys(changeObject).length > 0 &&
-                    <BottomFlyingButton clicked={save} isLoading={false} />
-                }
             </div>
-        </div>
+            <OwnMacro isOwnMacro={isOwnMacro} close={() => setIsOwnMacro(false)} />
+        </>
     )
 }
 

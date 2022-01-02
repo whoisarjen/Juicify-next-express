@@ -8,6 +8,14 @@
 .mainGridDescription{
     text-align: center;
     margin: auto;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    width: 100%;
+    height: 100%;
+}
+
+.mainGridDescription div{
+    margin: auto;
 }
 
 .mainGridMacroBox{
