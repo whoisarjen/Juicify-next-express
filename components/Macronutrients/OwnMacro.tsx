@@ -1,4 +1,4 @@
-import { FunctionComponent, forwardRef, Ref, ReactElement, useState } from "react";
+import { FunctionComponent, forwardRef, Ref, ReactElement, useState, useEffect } from "react";
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -11,6 +11,7 @@ import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import ConfirmDialog from "../common/ConfirmDialog";
 import useSettings from '../../hooks/useSettings'
+import { useAppSelector } from "../../hooks/useRedux";
 
 interface OwnMacroProps {
     isOwnMacro: boolean,
@@ -27,6 +28,7 @@ const Transition = forwardRef(function Transition(
 });
 
 const OwnMacro: FunctionComponent<OwnMacroProps> = ({ isOwnMacro, close }) => {
+    const token: any = useAppSelector(state => state.token.value)
     const [isDialog, setIsDialog] = useState(false)
     const [proteins, setProteins] = useState(0)
     const [carbs, setCarbs] = useState(0)
@@ -47,6 +49,14 @@ const OwnMacro: FunctionComponent<OwnMacroProps> = ({ isOwnMacro, close }) => {
         await changeSettings({ macronutrients: macro })
         close()
     }
+
+    useEffect(() => {
+        if(token){
+            setProteins(token.macronutrients[0].proteins)
+            setCarbs(token.macronutrients[0].carbs)
+            setFats(token.macronutrients[0].fats)
+        }
+    }, [token])
 
     return (
         <div>
