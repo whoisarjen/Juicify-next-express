@@ -8,7 +8,7 @@ import { useDailyMeasurement } from "../../hooks/useDailyMeasurement";
 import { getShortDate, getDiffrentBetweenDays, addDaysToDate, reverseDateDotes } from "../../utils/manageDate";
 import { useAppSelector } from "../../hooks/useRedux";
 import Weights from "../common/Weights";
-import HelpIcon from '@mui/icons-material/Help';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import useTranslation from "next-translate/useTranslation";
 
 interface StandardProps {
@@ -40,7 +40,7 @@ const Standard: FunctionComponent<StandardProps> = ({ setStep }) => {
                     </div>
                     <div onClick={() => setStep('Tutorial_1')}>
                         <IconButton aria-label="help">
-                            <HelpIcon />
+                            <HelpOutlineIcon />
                         </IconButton>
                         <div>{t('HELP')}</div>
                     </div>
