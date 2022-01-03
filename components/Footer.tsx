@@ -5,6 +5,7 @@ import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import BookIcon from "@mui/icons-material/Book";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { getShortDate } from "../utils/manageDate";
+import Avatar from '@mui/material/Avatar';
 import Link from "next/link";
 
 const Footer = () => {
@@ -37,7 +38,13 @@ const Footer = () => {
           </Link>
           <Link passHref href={`/${token.login}`}>
             <a className="footerMenuElement">
-              <AccountCircleIcon />
+              <Avatar
+                sx={{ width: '28px', height: '28px' }}
+                alt={`${token.login} ${token.name} ${token.surname} on Juicify`}
+                src={`https://juicify.app:4000/server/avatar/${token._id}.jpg`}
+              >
+                <AccountCircleIcon />
+              </Avatar>
             </a>
           </Link>
         </div>
