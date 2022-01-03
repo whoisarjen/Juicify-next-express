@@ -8,6 +8,7 @@ import { useDailyMeasurement } from "../../hooks/useDailyMeasurement";
 import { getShortDate, getDiffrentBetweenDays, addDaysToDate, reverseDateDotes } from "../../utils/manageDate";
 import { useAppSelector } from "../../hooks/useRedux";
 import Weights from "../common/Weights";
+import HelpIcon from '@mui/icons-material/Help';
 import useTranslation from "next-translate/useTranslation";
 
 interface StandardProps {
@@ -37,7 +38,12 @@ const Standard: FunctionComponent<StandardProps> = ({ setStep }) => {
                         </IconButton>
                         <div>{t('NEW_GOAL')}</div>
                     </div>
-                    <div />
+                    <div onClick={() => setStep('Tutorial_1')}>
+                        <IconButton aria-label="help">
+                            <HelpIcon />
+                        </IconButton>
+                        <div>{t('HELP')}</div>
+                    </div>
                     <div onClick={() => setIsWeights(true)}>
                         <IconButton aria-label="history">
                             <HistoryIcon />

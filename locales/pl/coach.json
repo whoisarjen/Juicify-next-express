@@ -54,6 +54,7 @@
     "STANDARD_BUTTON": "Przenalizuj mój progres",
     "NEW_GOAL": "Nowy cel",
     "HISTORY": "Historia",
+    "HELP": "Pomoc",
     "CHECKING_WEEK_DESCRIPTION": "Upewnij się, że podane informację są poprawnę. Kolejne wyliczenia będą na nich bazować. Wagę możesz bezpośrednio zmienić z poziomu tej strony. Wartości równe 0 zostaną pominięte, co sprawia, że nadal otrzymamy dobre wyliczenie, ale nie będzie ono tak dokładne, jak przy codziennym notowaniu.",
     "CHECKING_WEEK_DESCRIPTION_ALTERNATIVE": "Musisz podać co najmniej jedną wagę dla przedziału ostatnich 1-8 dni oraz 9-15 dni.",
     "CHOOSE_CALORIES_SOURCE_TITLE": "Wybierz źródło kalorii",
