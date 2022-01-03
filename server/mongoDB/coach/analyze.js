@@ -1,298 +1,132 @@
-module.exports = function(req, res, next, tokenGenerated, tokenRefreshGenerated){
+module.exports = (req) => {
+    return new Promise(resolve => {
 
-	// 0 - balanced diet
-	// 1 - keto diet
-	// 2 - custome
+        const object = req.body.array[0]
 
-	let coachAnswer = ''
+        let allWeightsWeek1 = 0
+        let qualityDaysWeek1 = 0
+        let caloriesWeek1 = 0
+        let allWeightsWeek2 = 0
+        let qualityDaysWeek2 = 0
+        let caloriesWeek2 = 0
 
-	let object = req.body.array[0]
-	if(!object.theNewestWeight) object.theNewestWeight = 50 // Protect if not the newest weight
-	let age = getAge(req.body.token.birth)
-	let height = req.body.token.height
+        object.data.forEach((day, index) => {
+            if (index < 14) { // Skip last day for weight
+                if (day.weight > 0) {
+                    if (index < 7) {
+                        allWeightsWeek1 += day.weight;
+                        qualityDaysWeek1++;
+                    } else {
+                        allWeightsWeek2 += day.weight;
+                        qualityDaysWeek2++;
+                    }
+                }
+            }
+            if (index > 0) { // Skip first day for nutrition
+                if (index < 8) {
+                    if (day.nutrition_diary && day.nutrition_diary.length) {
+                        day.nutrition_diary.forEach(meal => {
+                            if (meal.calories) {
+                                caloriesWeek1 += meal.calories
+                            } else {
+                                if (meal.proteins) {
+                                    caloriesWeek1 += meal.proteins * 4
+                                }
+                                if (meal.carbs) {
+                                    caloriesWeek1 += meal.carbs * 4
+                                }
+                                if (meal.fats) {
+                                    caloriesWeek1 += meal.fats * 9
+                                }
+                                if (meal.ethanol) {
+                                    caloriesWeek1 += meal.ethanol * 7
+                                }
+                            }
+                        })
+                    }
+                } else {
+                    if (day.nutrition_diary && day.nutrition_diary.length) {
+                        day.nutrition_diary.forEach(meal => {
+                            if (meal.calories) {
+                                caloriesWeek2 += meal.calories
+                            } else {
+                                if (meal.proteins) {
+                                    caloriesWeek2 += meal.proteins * 4
+                                }
+                                if (meal.carbs) {
+                                    caloriesWeek2 += meal.carbs * 4
+                                }
+                                if (meal.fats) {
+                                    caloriesWeek2 += meal.fats * 9
+                                }
+                                if (meal.ethanol) {
+                                    caloriesWeek2 += meal.ethanol * 7
+                                }
+                            }
+                        })
+                    }
+                }
+            }
+        })
 
-	let proteins = 0;
-	let carbs = 0;
-	let fats = 0;
-	let calories = 0
+        const avgWeekWeight1 = allWeightsWeek1 / qualityDaysWeek1
+        const avgWeekWeight2 = allWeightsWeek2 / qualityDaysWeek2
+        const diffrentInWeight = avgWeekWeight1 - avgWeekWeight2
 
-	let consumedFiber = 0
-	let consumedSugar = 0
-	let consumedProteins = 0
+        let avgWeekCalories = caloriesWeek1 / qualityDaysWeek1
 
-    let averageCHANGEinWEIGHT = 0
-    let allWEEKLYcalories = 0
+        // If user decide to use token's macro over live data
+        if (!object.isUseData) {
+            avgWeekCalories = 0
+            req.body.token.macronutrients.forEach(x => {
+                avgWeekCalories += x.proteins * 4
+                avgWeekCalories += x.carbs * 4
+                avgWeekCalories += x.fats * 9
+            })
+            avgWeekCalories = parseInt(avgWeekCalories / 7)
+        }
 
-    let averateWeightWeek2 = 0
-    let averateCaloriesWeek2 = 0
+        const basicCalories = avgWeekCalories - diffrentInWeight * 7800 / 7
 
-    // Using for everyday weight from next day
-    for(let i=object.results.length - 1; i>=0; i--){
-    	if(i == 0){
-    		object.results[i].weight = object.theNewestWeight
-    		break;
-    	}
-    	object.results[i].weight = object.results[i - 1].weight
-    }
+        const newCalories = basicCalories + (req.body.token.goal / 100 * avgWeekWeight1) * 7800 / 7
 
-	for(let i=0;i<7;i++){
-    	averateWeightWeek2 += object.results[i].weight
-    	averateCaloriesWeek2 += object.results[i].calories
+        const macro = require('./functions/macro')(req.body.token.kind_of_diet, object.age, req.body.token.sport_active, avgWeekWeight1, newCalories)
 
-    	consumedFiber += object.results[i].fiber
-		consumedSugar += object.results[i].sugar
-		consumedProteins += object.results[i].proteins
-		allWEEKLYcalories += object.results[i].calories
-	}
-	averateWeightWeek2 = averateWeightWeek2 / 7
-	averateCaloriesWeek2 = averateCaloriesWeek2 / 7
+        let array = []
+        for (let i = 1; i < 8; i++) {
+            array.push({
+                'day': i,
+                'proteins': macro.proteins,
+                'carbs': macro.carbs,
+                'fats': macro.fats
+            })
+        }
 
-    let averateWeightWeek1 = 0
-	for(let i=7;i<14;i++){
-    	averateWeightWeek1 += object.results[i].weight
-	}
-	averateWeightWeek1 = averateWeightWeek1 / 7
+        const Model = require('../models/user')
+        Model.findOneAndUpdate(
+            {
+                "_id": req.body.user_ID
+            },
+            {
+                coach: (new Date(Date.parse(object.today) + 7 * 24 * 60 * 60 * 1000)).toISOString().slice(0, 10),
+                coach_analyze: true,
+                goal: req.body.token.goal,
+                kind_of_diet: req.body.token.kind_of_diet,
+                sport_active: req.body.token.sport_active,
+                activity: req.body.token.activity,
+                macronutrients: array
+            },
+            {
+                new: true
+            }
+        ).then((user) => {
+            const token = require('../auth/tokenGENERATOR')([user])
+            const refresh_token = require('../auth/tokenRefreshGENERATOR')([user])
+            resolve({
+                token,
+                refresh_token
+            })
+        })
 
-	// Second + analyze has to own atleast 75% success ratio
-	if(object.checkIfEverythingIsFine && req.body.token.coach_analyze){
-		let prevGoalCalories = req.body.token.macronutrients[0].proteins * 4 + req.body.token.macronutrients[0].carbs * 4 + req.body.token.macronutrients[0].fats * 9;
-		if(prevGoalCalories * 1.1 > averateCaloriesWeek2 && prevGoalCalories * 0.9 < averateCaloriesWeek2){
-			if( Math.abs(averateWeightWeek2 - averateWeightWeek1) < Math.abs(req.body.token.goal * (7.5 / 10) / 30 * 7) && req.body.token.goal != 0 ){
-				res.send({
-					analyzeSomethingWentWrong: true,
-			        tokenGenerated: tokenGenerated,
-			        tokenRefreshGenerated: tokenRefreshGenerated
-				})
-			}
-		}
-	}
-
-	let differenceInWeight = averateWeightWeek2 - averateWeightWeek1
-	let weightChangeInCalories = differenceInWeight * 7800 / 7
-	let basicNeededCalories = averateCaloriesWeek2 - weightChangeInCalories
-
-    basicNeededCalories = parseInt(basicNeededCalories / req.body.token.activity * object.activity) // Change level of activity
-
-    calories = parseInt(basicNeededCalories + object.goal * 7800 / 30)
-
-    // Hold macro => overwrite calories with previously
-    if(object.holdMacronutrients){
-    	calories = req.body.token.macronutrients[0].proteins * 4 + req.body.token.macronutrients[0].carbs * 4 + req.body.token.macronutrients[0].fats * 9
-	}
-
-	// Diet break => calores = basicNeededCalories
-	if(object.dietBreak){
-		calories = parseInt(req.body.token.macronutrients[0].proteins * 4 + req.body.token.macronutrients[0].carbs * 4 + req.body.token.macronutrients[0].fats * 9 + (req.body.token.goal * -7800 / 30))
-	}
-
-	// Reverse diet => calores = basicNeededCalories + 25kcal
-	if(object.reverse_diet){
-		calories = parseInt(req.body.token.macronutrients[0].proteins * 4 + req.body.token.macronutrients[0].carbs * 4 + req.body.token.macronutrients[0].fats * 9 + (req.body.token.goal * -7800 / 30) + 25)
-	}
-
-	let macro
-	if(object.kind_of_diet == 0) macro = require("./macro/balanced_diet")(age, req.body.array[0].sport_active, object.theNewestWeight, calories)
-	else if(object.kind_of_diet == 0) macro = require("./macro/ketogenic_diet")(age, req.body.array[0].sport_active, object.theNewestWeight, calories)
-	else macro = require("./macro/custom_macro")(age, req.body.array[0].sport_active, object.theNewestWeight, calories, object.useProteinsG, object.proteinsG, object.proteins, object.carbs, object.fats)
-
-	proteins = macro.proteins
-	carbs = macro.carbs
-	fats = macro.fats
-	
-	proteins = parseInt(proteins / 4) 
-	carbs = parseInt(carbs / 4) 
-	fats = parseInt(fats / 9)
-
-	let array = []
-	for(let i=0; i<7; i++){
-		array.push({
-			'day': i+1,
-			'proteins': proteins,
-			'carbs': carbs,
-			'fats': fats
-		})
-	}
-
-	let lastAverageCaloriesGoal = 0
-	for(let i = 0; i<req.body.token.macronutrients.length; i++){
-		lastAverageCaloriesGoal += req.body.token.macronutrients[i].proteins * 4 + req.body.token.macronutrients[i].carbs * 4 + req.body.token.macronutrients[i].fats * 9
-	}
-	lastAverageCaloriesGoal = lastAverageCaloriesGoal / 7
-
-	if(!object.reverse_diet && !object.dietBreak) coachAnswer = coachAnswerFunction(req.body.token.lang, object.theNewestWeight, req.body.token.goal, averageCHANGEinWEIGHT, consumedFiber, consumedSugar, allWEEKLYcalories, req.body.token.fiber, req.body.token.sugar_percent, consumedProteins, req.body.token.sport_active, averateWeightWeek2, lastAverageCaloriesGoal)
-
-    const Model = require('../models/user')
-    Model.findOneAndUpdate({
-        "_id": req.body.token._id
-    },
-    {
-    	coach: (new Date( Date.parse(req.body.array[0].today) + 7 * 24 * 60 * 60 * 1000)).toISOString().substr(0, 10),
-    	coach_analyze: true,
-    	reverse_diet: req.body.array[0].reverse_diet,
-    	goal: req.body.array[0].goal,
-    	kind_of_diet: req.body.array[0].kind_of_diet,
-    	sport_active: req.body.array[0].sport_active,
-    	activity: req.body.array[0].activity,
- 		useProteinsG: req.body.array[0].useProteinsG,
- 		proteinsG: req.body.array[0].proteinsG,
- 		proteins: req.body.array[0].proteins,
- 		carbs: req.body.array[0].carbs,
- 		fats: req.body.array[0].fats,
-    	macronutrients: array 
-    },
-    {
-    	new: true
-    }).then((response) => {
-        return require('../auth/tokenGENERATOR')([response])
-    }).then((jwt) => {
-		res.send({
-			jwt: jwt,
-			coachAnswer: coachAnswer,
-            tokenGenerated: tokenGenerated,
-            tokenRefreshGenerated: tokenRefreshGenerated
-		})
-    }).catch(next)
-
-
-}
-
-function getAge(date){
-    let today = new Date();
-    let birthDate = new Date(date);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    let m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
-    {
-        age--;
-    }
-    return age;
-}
-
-function coachAnswerFunction(lang, theNewestWeight, prevGoal, changeInWeight, consumedFiber, consumedSugar, consumedCalories, neededFiber, neededSugar, consumedProteins, sport_active, averageConsumedCalories, lastAverageCaloriesGoal){
-	let coachAnswer = ''
-
-	let object = {
-		calories: {
-			pl: {
-				good: 'Świetnie liczyłeś kalorie! ',
-				bad: 'Musisz popracować nad trzymaniem odpowiednich kalorii. '
-			},
-			en: {
-				good: 'Awesome job with counting calories! ',
-				bad: 'You need to pay more attenction to calories. '
-			}
-		},
-		progress: {
-			pl: {
-				good: 'Osiągnąłeś odpowiedni progres. Wprowadzimy kilka kosmetycznych zmian w kaloriach. ',
-				bad: 'Musimy zmienić twoje kalorie. Progres jeszcze nie idzie tak, jak byśmy tego oczekiwali. '
-			},
-			en: {
-				good: "You made progress in the way we expected. We have to cosmetical change your calories. ",
-				bad: "We have to change your calories. The progress is not going as we want. "
-			}
-		},
-		proteins: {
-			pl: {
-				good: "",
-				bad: ""
-			},
-			en: {
-				good: "Trenujesz, więc potrzebujesz więcej białka. Spróbuj osiągać cel. ",
-				bad: "You are training, you need to eat more proteins. Try to reach goal. "
-			}
-		},
-		fiber: {
-			pl: {
-				good: "",
-				bad: "Spróbuj jeść więcej produktów zawierających błonnik. "
-			},
-			en: {
-				good: "",
-				bad: "Try to eat products, which have more fiber. "
-			}
-		},
-		sugar: {
-			pl: {
-				good: "",
-				bad: "Spróbuj jeść mniej produktów zawierających cukier. "
-			},
-			en: {
-				good: "",
-				bad: "Try to eat LESS products, which have sugar. "
-			}
-		},
-		warning_fiber_sugar: {
-			pl: 'To nie będzie miało wpływu na progres, ale może mieć wpływ na zdrowie. ',
-			en: "It won't impact your progress, but might impact health. "
-		},
-		end: {
-			pl: "Pracuj dalej i nie zapomnij odwiedzić mnie za 7+ dni!",
-			en: "Keep going and let's see each other in next 7+ days!"
-		}
-	}
-
-	// ----- ----- CHECK GOAL ----- -----
-
-	if(lastAverageCaloriesGoal * 1.1 > averageConsumedCalories || lastAverageCaloriesGoal * 0.9 < averageConsumedCalories){
-		coachAnswer += object['calories'][lang]['good'] || object['calories']['en']['good']
-	}else{
-		coachAnswer += object['calories'][lang]['bad'] || object['calories']['en']['bad']
-	}
-
-	if(prevGoal < 0 && changeInWeight < 0){
-		if(Math.abs(prevGoal) > (Math.abs(changeInWeight) * 0.8) || Math.abs(prevGoal) < (Math.abs(changeInWeight) * 1.2)){
-			coachAnswer += object['progress'][lang]['good'] || object['progress']['en']['good']
-		}else{
-			coachAnswer += object['progress'][lang]['bad'] || object['progress']['en']['bad']
-		}
-	}
-
-	if(prevGoal < 0 && changeInWeight >= 0){
-		coachAnswer += object['progress'][lang]['bad'] || object['progress']['en']['bad']
-	}
-
-	if(prevGoal >= 0 && changeInWeight < 0){
-		coachAnswer += object['progress'][lang]['bad'] || object['progress']['en']['bad']
-	}
-
-	if(prevGoal >= 0 && changeInWeight >= 0){
-		if(Math.abs(prevGoal) > (Math.abs(changeInWeight) * 0.8) || Math.abs(prevGoal) < (Math.abs(changeInWeight) * 1.2)){
-			coachAnswer += object['progress'][lang]['good'] || object['progress']['en']['good']
-		}else{
-			coachAnswer += object['progress'][lang]['bad'] || object['progress']['en']['bad']
-		}
-	}
-
-	if(sport_active && ((consumedProteins * 7 / 4 * 0.8) < (theNewestWeight * 2))){
-			coachAnswer += object['proteins'][lang]['bad'] || object['proteins']['en']['bad']
-	}
-
-	let warning_fiber_sugar = false
-
-	// ----- ----- CHECK FIBER ----- -----
-
-	if((neededFiber / 1000 * lastAverageCaloriesGoal) * 7 * 0.8 < consumedFiber){
-		coachAnswer += object['fiber'][lang]['good'] || object['fiber']['en']['good']
-	}else{
-		coachAnswer += object['fiber'][lang]['bad'] || object['fiber']['en']['bad']
-		warning_fiber_sugar = true
-	}
-
-	// ----- ----- CHECK SUGAR ----- -----
-
-	if((neededSugar + 2) / 100 * consumedCalories < consumedSugar){
-		coachAnswer += object['sugar'][lang]['bad'] || object['sugar']['en']['bad']
-		warning_fiber_sugar = true
-	}else{
-		coachAnswer += object['sugar'][lang]['good'] || object['sugar']['en']['good']
-	}
-
-	if(warning_fiber_sugar) coachAnswer += object['warning_fiber_sugar'][lang] || object['warning_fiber_sugar']['en']
-
-
-	coachAnswer += object['end'][lang] || object['end']['en']
-
-
-	return coachAnswer
+    })
 }

@@ -6,48 +6,48 @@ import { addDaysToDate } from '../utils/manageDate';
 import { loadValueByLogin } from '../utils/API';
 import { getCookie, readToken } from '../utils/checkAuth';
 
+const loadMissingDays = async (oryginalArray, user_ID, howManyDays, today) => {
+    return new Promise(resolve => {
+        let newArray = []
+        let checkingDate = JSON.parse(JSON.stringify(new Date(today)))
+        let array = JSON.parse(JSON.stringify(oryginalArray))
+        if (array.length > 0) {
+            array = array.sort((a, b) => {
+                if (a.whenAdded < b.whenAdded) {
+                    return 1
+                } else {
+                    return -1
+                }
+            })
+        }
+        let object = {}
+        for (let i = 0; i < array.length; i++) {
+            object[array[i].whenAdded] = array[i]
+        }
+        for (let i = 0; i < howManyDays; i++) {
+            if (object[checkingDate]) {
+                newArray.push(schema(object[checkingDate], "XD" + new Date().getTime() + i, checkingDate, user_ID))
+            } else {
+                newArray.push(schema(false, "XD" + new Date().getTime() + i, checkingDate, user_ID))
+            }
+            checkingDate = new Date(addDaysToDate(checkingDate, -1)).toJSON()
+        }
+        resolve(newArray)
+    })
+}
+
 const useDailyMeasurements = (today, howManyDays = 7) => {
     const [reload, setReload] = useState(0)
     const [data, setData] = useState<Array<any>>([])
     const [user, setUser] = useState('')
     const router = useRouter()
 
-    const loadMissingDays = async (oryginalArray, user_ID) => {
-        return new Promise(resolve => {
-            let newArray = []
-            let checkingDate = JSON.parse(JSON.stringify(new Date(today)))
-            let array = JSON.parse(JSON.stringify(oryginalArray))
-            if (array.length > 0) {
-                array = array.sort((a, b) => {
-                    if (a.whenAdded < b.whenAdded) {
-                        return 1
-                    } else {
-                        return -1
-                    }
-                })
-            }
-            let object = {}
-            for (let i = 0; i < array.length; i++) {
-                object[array[i].whenAdded] = array[i]
-            }
-            for (let i = 0; i < howManyDays; i++) {
-                if (object[checkingDate]) {
-                    newArray.push(schema(object[checkingDate], "XD" + new Date().getTime() + i, checkingDate, user_ID))
-                } else {
-                    newArray.push(schema(false, "XD" + new Date().getTime() + i, checkingDate, user_ID))
-                }
-                checkingDate = new Date(addDaysToDate(checkingDate, -1)).toJSON()
-            }
-            resolve(newArray)
-        })
-    }
-
     useEffect(() => {
         (async () => {
             const token = readToken(await getCookie('token'))
             if (token.login == (router.query.login || token.login)) { // Sometimes need to use only in token's user case and this block errors
                 let res = await getAllIndexedDB('daily_measurement')
-                res = await loadMissingDays(res, token._id)
+                res = await loadMissingDays(res, token._id, howManyDays, today)
                 setData(res)
                 setUser(token)
             } else {
@@ -57,7 +57,7 @@ const useDailyMeasurements = (today, howManyDays = 7) => {
                     router.query.login.toString()
                 );
                 setUser(res.user)
-                res = await loadMissingDays(res.data, res.user._id)
+                res = await loadMissingDays(res.data, res.user._id, howManyDays, today)
                 setData(res)
             }
         })()
@@ -66,4 +66,4 @@ const useDailyMeasurements = (today, howManyDays = 7) => {
     return [{ data, user }, () => setReload(reload + 1)];
 }
 
-export { useDailyMeasurements };
+export { useDailyMeasurements, loadMissingDays };

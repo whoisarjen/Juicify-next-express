@@ -8,13 +8,23 @@ const useCoach = () => {
         const { response, isSuccess } = await API('/coach/create', {
             array: [object]
         })
-        if(isSuccess){
+        if (isSuccess) {
             setCookie('refresh_token', response.data.refresh_token)
             setCookie('token', response.data.token)
         }
     }
 
-    return [createDiet]
+    const analyzeDiet = async (object) => {
+        const { response, isSuccess } = await API('/coach/analyze', {
+            array: [object]
+        })
+        if (isSuccess) {
+            setCookie('refresh_token', response.data.refresh_token)
+            setCookie('token', response.data.token)
+        }
+    }
+
+    return [createDiet, analyzeDiet]
 }
 
 

@@ -13,15 +13,15 @@ import ChooseCaloriesSource from '../components/coach/ChooseCaloriesSource';
 import Loading from '../components/coach/Loading';
 import { useAppSelector } from "../hooks/useRedux";
 import useCoach from "../hooks/useCoach";
-import { getIndexedDBbyID } from "../utils/indexedDB";
+import { getAllIndexedDB, getIndexedDBbyID } from "../utils/indexedDB";
 import { getAge, getDailyDate, getShortDate } from "../utils/manageDate";
+import { loadMissingDays } from "../hooks/useDailyMeasurements";
 
 const Coach: FunctionComponent = () => {
     expectLoggedIN()
-    const [createDiet] = useCoach()
+    const [createDiet, analyzeDiet] = useCoach()
     const token: any = useAppSelector(state => state.token.value)
-    // const [step, setStep] = useState(token.coach_analyze ? 'Standard' : 'Welcome')
-    const [step, setStep] = useState('CheckingWeekData')
+    const [step, setStep] = useState(token.coach_analyze ? 'Standard' : 'Welcome')
 
     const prepareCreate = async (object) => {
         setStep('Loading')
@@ -39,9 +39,13 @@ const Coach: FunctionComponent = () => {
 
     const prepareAnalize = async (isUseData) => {
         setStep('Loading')
-        console.log('isUseData', isUseData)
-
-        // reload daily before using it or get on your own
+        await analyzeDiet({
+            isUseData,
+            today: getShortDate(),
+            age: getAge(token.birth),
+            data: await loadMissingDays(await getAllIndexedDB('daily_measurement'), token._id, 15, getShortDate())
+        })
+            .then(() => setStep('Result'))
     }
 
     return (

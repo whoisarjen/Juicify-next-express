@@ -1,4 +1,4 @@
-module.exports = function (req) {
+module.exports = (req) => {
 	return new Promise(resolve => {
 		let object = req.body.array[0]
 		let token = req.body.token
