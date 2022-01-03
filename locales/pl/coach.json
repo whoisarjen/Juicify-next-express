@@ -55,7 +55,7 @@
     "NEW_GOAL": "Nowy cel",
     "HISTORY": "Historia",
     "CHECKING_WEEK_DESCRIPTION": "Upewnij się, że podane informację są poprawnę. Kolejne wyliczenia będą na nich bazować. Wagę możesz bezpośrednio zmienić z poziomu tej strony. Wartości równe 0 zostaną pominięte, co sprawia, że nadal otrzymamy dobre wyliczenie, ale nie będzie ono tak dokładne, jak przy codziennym notowaniu.",
-    "CHECKING_WEEK_DESCRIPTION_ALTERNATIVE": "Musisz podać co najmniej jedną wagę dla przedziału ostatnich 1-7 dni oraz 8-14 dni.",
+    "CHECKING_WEEK_DESCRIPTION_ALTERNATIVE": "Musisz podać co najmniej jedną wagę dla przedziału ostatnich 1-8 dni oraz 9-15 dni.",
     "CHOOSE_CALORIES_SOURCE_TITLE": "Wybierz źródło kalorii",
     "CHOOSE_CALORIES_SOURCE_DESCRIPTION": "Do wyliczenia makroskładników zostaną wykrozystane dane o spożytych produktach, które posiada Juicify. Liczyć się będa realnie spożyte makroskładniki, a nie wyznaczone.",
     "CHOOSE_CALORIES_SOURCE_DESCRIPTION_2": "Juicify uzna, że prawie perfekcyjnie dostarczałeś kalorie względem poprzedniego wyliczenia, co może nie do końca oddawać rzeczywiste spożycie.",
