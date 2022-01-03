@@ -11,18 +11,28 @@ import LosingWeight from '../components/coach/LosingWeight';
 import CheckingWeekData from '../components/coach/CheckingWeekData';
 import Loading from '../components/coach/Loading';
 import { useAppSelector } from "../hooks/useRedux";
+import useCoach from "../hooks/useCoach";
+import { getIndexedDBbyID } from "../utils/indexedDB";
+import { getAge, getDailyDate, getShortDate } from "../utils/manageDate";
 
 const Coach: FunctionComponent = () => {
     expectLoggedIN()
+    const [createDiet] = useCoach()
     const token: any = useAppSelector(state => state.token.value)
-    const [step, setStep] = useState(token.used_coach ? 'Standard' : 'Welcome')
+    const [step, setStep] = useState(token.coach_analyze ? 'Standard' : 'Welcome')
 
-    const prepareAnalize = (object) => {
+    const prepareAnalize = async (object) => {
         setStep('Loading')
-        console.log('prepareAnalize', object)
-        setTimeout(() => {
-            setStep('Result')
-        }, 2500)
+        const daily = await getIndexedDBbyID('daily_measurement', getDailyDate())
+        await createDiet({
+            ...object,
+            ...{
+                weight: daily.weight,
+                age: getAge(token.birth),
+                today: getShortDate()
+            }
+        })
+            .then(() => setStep('Result'))
     }
 
     return (

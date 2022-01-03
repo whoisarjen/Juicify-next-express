@@ -17,12 +17,22 @@ const reverseDateDotes = (date: Date | string = new Date()) => {
 }
 
 const getAge = (date: Date) => {
-    var month_diff = Date.now() - new Date(date).getTime();
-    var age_dt = new Date(month_diff);
-    var year = age_dt.getUTCFullYear();
+    const month_diff = Date.now() - new Date(date).getTime();
+    const age_dt = new Date(month_diff);
+    const year = age_dt.getUTCFullYear();
     return Math.abs(year - 1970);
 }
 
+const getDailyDate = (date: Date | string = getShortDate()) => new Date(date).toJSON()
+
 const getDiffrentBetweenDays = (a, b) => (new Date(a) - new Date(b)) / 864e5 | 0;
 
-export { getShortDate, addDaysToDate, reverseDate, reverseDateDotes, getDiffrentBetweenDays, getAge };
+export {
+    getShortDate,
+    addDaysToDate,
+    reverseDate,
+    reverseDateDotes,
+    getDiffrentBetweenDays,
+    getDailyDate,
+    getAge
+};

@@ -6,64 +6,69 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
 import Select from '@mui/material/Select';
+import { DIET_ACTIVITY, DIET_KIND } from '../../utils/manageCoach'
+import useTranslation from "next-translate/useTranslation";
 
 interface RecompositionProps {
     prepareAnalize: (arg0: Object) => void
 }
 
 const Recomposition: FunctionComponent<RecompositionProps> = ({ prepareAnalize }) => {
-    const [kindOfDiet, setKindOfDiet] = useState(0)
-    const [levelOfActivity, setLevelOfActivity] = useState(1.2)
+    const { t } = useTranslation('coach')
+    const [kind_of_diet, setKind_of_diet] = useState(0)
+    const [activity, setActivity] = useState(1.2)
 
     const handleNextStep = () => {
         prepareAnalize({
-            'tempo': 2,
-            kindOfDiet,
-            'doYouLift': true,
-            levelOfActivity,
-            coach_diet: 1,
-            used_coach: true
+            'goal': 0,
+            kind_of_diet,
+            'sport_active': true,
+            activity,
+            coach_diet: 1
         })
     }
 
     return (
         <div className={styles.recomposition}>
-            <div className={styles.AddWeightMainTitle}><div>Recomposition</div></div>
-            <div>Help me know bettrer your needs. Remember that faster results doesn't always mean better long term results. That's why even if we can get your goal faster, we put some limits on this.</div>
+            <div className={styles.AddWeightMainTitle}><div>{t('RECOMPOSITION')}</div></div>
+            <div>{t('RECOMPOSITION_DESCRIPTION')}</div>
             <Box>
                 <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Level of activity</InputLabel>
+                    <InputLabel id="demo-simple-select-label">{t('DIET_ACTIVITY_TITLE')}</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={levelOfActivity}
-                        label="Level of activity"
-                        onChange={e => setLevelOfActivity(parseFloat(e.target.value.toString()))}
+                        value={activity}
+                        label={t('DIET_ACTIVITY_TITLE')}
+                        onChange={e => setActivity(parseFloat(e.target.value.toString()))}
                     >
-                        <MenuItem value={1.2}>No workouts, sedentary work, school</MenuItem>
-                        <MenuItem value={1.375}>One workout per week, light work</MenuItem>
-                        <MenuItem value={1.55}>2 workouts per week, work</MenuItem>
-                        <MenuItem value={1.715}>3-4 workouts per week, heavy work</MenuItem>
-                        <MenuItem value={1.9}>5+ workouts per week, physical work</MenuItem>
+                        {
+                            DIET_ACTIVITY.map(x =>
+                                <MenuItem key={x.value} value={x.value}>{t(x.name)}</MenuItem>
+                            )
+                        }
                     </Select>
                 </FormControl>
             </Box>
             <Box>
                 <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Kind of diet</InputLabel>
+                    <InputLabel id="demo-simple-select-label">{t('DIET_KIND_TITLE')}</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={kindOfDiet}
-                        label="Kind of diet"
-                        onChange={e => setKindOfDiet(parseInt(e.target.value.toString()))}
+                        value={kind_of_diet}
+                        label={t('DIET_KIND_TITLE')}
+                        onChange={e => setKind_of_diet(parseInt(e.target.value.toString()))}
                     >
-                        <MenuItem value={0}>Balanced diet (recommended)</MenuItem>
-                        <MenuItem value={1}>Ketogenic diet</MenuItem>
+                        {
+                            DIET_KIND.map(x =>
+                                <MenuItem key={x.value} value={x.value}>{t(x.name)}</MenuItem>
+                            )
+                        }
                     </Select>
                 </FormControl>
             </Box>
-            <Button variant="contained" onClick={handleNextStep}>Count my diet</Button>
+            <Button variant="contained" onClick={handleNextStep}>{t('COUNT_DIET')}</Button>
         </div>
     )
 }

@@ -50,48 +50,40 @@ app.post('/guest/:where', async (req, res) => {
         })
 });
 
-app.post('/auth/change', async (req, res) => {
-    await verifyToken(req)
-    require('./mongoDB/auth/change')(req)
-        .then(async (data) => {
-            await updateSynchronizationObject(req.body.user_ID, 'settings')
-            io.to(req.body.user_ID).except(req.body.socket_ID).emit('synchronizationMessege', {
-                where: 'settings',
-                whatToDo: 'delete',
-                array: data,
-                socket_ID: req.body.socket_ID
-            })
-            return res.send({ data })
-        })
-        .catch(err => {
-            console.log(err)
-            res.status(404).send({ error: 'Wrong query' })
-        })
-});
+// app.post('/coach/:where', async (req, res) => {
+//     await verifyToken(req)
+//     require(`./mongoDB/coach/${req.params.where}`)(req)
+//         .then(async () => await handleSynchronization(req, res, req.body.array, ''))
+//         .catch(err => {
+//             console.log(err)
+//             res.status(404).send({ error: 'Wrong query' })
+//         })
+// });
 
-app.post('/auth/changePassword', async (req, res) => {
-    await verifyToken(req)
-    require('./mongoDB/auth/changePassword')(req, res)
-        .then((data) => res.send({ data }))
-        .catch(err => {
-            console.log(err)
-            res.status(404).send({ error: 'Wrong query' })
-        })
-});
+// app.post('/auth/change', async (req, res) => {
+//     await verifyToken(req)
+//     require('./mongoDB/auth/change')(req)
+//         .then(async () => await handleSynchronization(req, res, req.body.array, ''))
+//         .catch(err => {
+//             console.log(err)
+//             res.status(404).send({ error: 'Wrong query' })
+//         })
+// });
+
+// app.post('/auth/changePassword', async (req, res) => {
+//     await verifyToken(req)
+//     require('./mongoDB/auth/changePassword')(req, res)
+//         .then((data) => res.send({ data }))
+//         .catch(err => {
+//             console.log(err)
+//             res.status(404).send({ error: 'Wrong query' })
+//         })
+// });
 
 app.post('/delete', async (req, res) => {
     await verifyToken(req)
     await require(`./mongoDB/delete`)(req)
-        .then(async () => {
-            await updateSynchronizationObject(req.body.user_ID, req.body.where)
-            io.to(req.body.user_ID).except(req.body.socket_ID).emit('synchronizationMessege', {
-                where: req.body.where,
-                whatToDo: 'delete',
-                array: req.body.array,
-                socket_ID: req.body.socket_ID
-            })
-            return res.send({})
-        })
+        .then(async () => await handleSynchronization(req, res, req.body.array, 'delete'))
         .catch(err => {
             console.log(err)
             res.status(404).send({ error: 'Wrong query' })
@@ -101,16 +93,7 @@ app.post('/delete', async (req, res) => {
 app.post('/:what/:where', async (req, res) => {
     await verifyToken(req)
     await require(`./mongoDB/${req.params.what}/${req.params.where}`)(req)
-        .then(async data => {
-            await updateSynchronizationObject(req.body.user_ID, req.params.where)
-            io.to(req.body.user_ID).except(req.body.socket_ID).emit('synchronizationMessege', {
-                where: req.params.where,
-                whatToDo: 'change',
-                array: data,
-                socket_ID: req.body.socket_ID
-            })
-            return res.send({ data })
-        })
+        .then(async data => await handleSynchronization(req, res, data, 'change'))
         .catch(err => {
             console.log(err)
             res.status(404).send({ error: 'Wrong query' })
@@ -144,6 +127,20 @@ io.on('connection', async (socket) => {
         })
     }
 });
+
+const handleSynchronization = async (req, res, data, whatToDo) => {
+    if (req.params.where == 'create' || req.params.where == 'analyze') { // Overwritting coach's routes
+        req.params.where = 'settings'
+    }
+    await updateSynchronizationObject(req.body.user_ID, req.params.where)
+    io.to(req.body.user_ID).except(req.body.socket_ID).emit('synchronizationMessege', {
+        where: req.params.where,
+        whatToDo: whatToDo,
+        array: data,
+        socket_ID: req.body.socket_ID
+    })
+    return res.send({ data })
+}
 
 const createSynchronizationObject = async (user_ID) => {
     console.log(`Creating Synchronization Object for ${user_ID}`)

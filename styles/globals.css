@@ -112,7 +112,7 @@ a:active {
 }
 
 .navbar ul li:nth-child(1) {
-  margin-left: 0;
+  margin: auto auto auto 8px;
 }
 
 .navbar ul li:nth-child(3) {

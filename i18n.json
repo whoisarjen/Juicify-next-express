@@ -9,6 +9,7 @@
         "/[login]/workout-plans": ["workout"],
         "/[login]/workout-plans/[id]": ["workout"],
         "/[login]/workout-results": ["workout"],
-        "/[login]/workout-results/[date]/[id]": ["workout"]
+        "/[login]/workout-results/[date]/[id]": ["workout"],
+        "/coach": ["coach"]
     }
 }

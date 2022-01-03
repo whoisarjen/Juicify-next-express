@@ -8,12 +8,14 @@ import { useDailyMeasurement } from "../../hooks/useDailyMeasurement";
 import { getShortDate, getDiffrentBetweenDays, addDaysToDate, reverseDateDotes } from "../../utils/manageDate";
 import { useAppSelector } from "../../hooks/useRedux";
 import Weights from "../common/Weights";
+import useTranslation from "next-translate/useTranslation";
 
 interface StandardProps {
     setStep: (arg0: string) => void
 }
 
 const Standard: FunctionComponent<StandardProps> = ({ setStep }) => {
+    const { t } = useTranslation('coach')
     const [daysToCoach, setDaysToCoach] = useState(7)
     const [{ data }, reload] = useDailyMeasurement(getShortDate())
     const [isWeights, setIsWeights] = useState(false)
@@ -33,14 +35,14 @@ const Standard: FunctionComponent<StandardProps> = ({ setStep }) => {
                         <IconButton aria-label="reset">
                             <RestartAltIcon />
                         </IconButton>
-                        <div>New goal</div>
+                        <div>{t('NEW_GOAL')}</div>
                     </div>
                     <div />
                     <div onClick={() => setIsWeights(true)}>
                         <IconButton aria-label="history">
                             <HistoryIcon />
                         </IconButton>
-                        <div>History</div>
+                        <div>{t('HISTORY')}</div>
                     </div>
                 </div>
                 <div className={styles.AddWeightMainTitle}>
@@ -49,43 +51,26 @@ const Standard: FunctionComponent<StandardProps> = ({ setStep }) => {
                             ?
                             (
                                 <div>
-                                    Recomposition
+                                    {t('RECOMPOSITION')}
                                 </div>
                             )
                             : token.goal > 0 ?
                                 (
                                     <div>
-                                        Building Muscles
+                                        {t('MUSCLE_BUILDING')}
                                     </div>
                                 )
                                 :
                                 (
                                     <div>
-                                        Losing Weight
+                                        {t('LOSING_WEIGHT')}
                                     </div>
                                 )
                     }
                 </div>
-                <div>{token.goal / 4}kg / Week</div>
+                <div>{token.goal}% / {t('WEEK')}</div>
                 <div>
-                    Your goal is to
-                    {
-                        token.goal === 0
-                            ?
-                            " recomposition"
-                            : token.goal > 0 ?
-                                " building muscles"
-                                :
-                                " lose weight"
-                    }
-                    . Keep updating your weight everyday.
-                    {
-                        daysToCoach > 0 ?
-                            ` In {daysToCoach} days we will `
-                            :
-                            ` It's time to `
-                    }
-                    check your progress and create new instruction.
+                    {t('STANDARD_DESCRIPTION')}
                 </div>
                 <div>
                     {
@@ -93,11 +78,11 @@ const Standard: FunctionComponent<StandardProps> = ({ setStep }) => {
                             (
                                 data.weight > 0
                                     ?
-                                    <Button variant="contained" onClick={() => setIsWeights(true)}>Change weight</Button>
+                                    <Button variant="contained" onClick={() => setIsWeights(true)}>{t('CHANGE_WEIGHT')}</Button>
                                     :
-                                    <Button variant="contained" color="error" onClick={() => setIsWeights(true)}>Add weight</Button>
+                                    <Button variant="contained" color="error" onClick={() => setIsWeights(true)}>{t('ADD_WEIGHT')}</Button>
                             ) : (
-                                <Button variant="contained" onClick={() => setIsWeights(true)}>Change weight</Button>
+                                <Button variant="contained" onClick={() => setIsWeights(true)}>{t('CHANGE_WEIGHT')}</Button>
                             )
                     }
                 </div>
@@ -106,21 +91,21 @@ const Standard: FunctionComponent<StandardProps> = ({ setStep }) => {
             <div className={styles.AddWeightSecond}>
                 <div className={styles.AddWeightSecondInfo}>
                     <div>
-                        <div>Last check</div>
+                        <div>{t('LAST_CHECK')}</div>
                         <div className={styles.AddWeightSecondInfoBold}>{reverseDateDotes(addDaysToDate(token.coach, -7))}</div>
                     </div>
                     <div />
                     <div>
-                        <div>Next check</div>
+                        <div>{t('NEXT_CHECK')}</div>
                         <div className={styles.AddWeightSecondInfoBold}>{reverseDateDotes(token.coach)}</div>
                     </div>
                 </div>
                 {
                     daysToCoach > 0 ?
                         <>
-                            <div>{daysToCoach} days until your next check in</div>
+                            <div>{daysToCoach} {t('DAYS_UNTIL_NEXT')}</div>
                             <div>
-                                <Button disabled variant="contained">Check progress in {daysToCoach} days</Button>
+                                <Button disabled variant="contained">{t('STANDARD_BUTTON')}</Button>
                             </div>
                         </>
                         :

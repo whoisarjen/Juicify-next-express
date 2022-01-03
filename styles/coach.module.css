@@ -76,31 +76,31 @@
   grid-template-rows: 1fr 1fr auto;
 }
 
-.checkingTodayData{
-    width: 100%;
-    height: calc(100vh - var(--BothNavHeightAndPadding));
-    display: grid;
-    grid-template-rows: 1fr 1fr 1fr auto;
-    grid-gap: 5px;
-    text-align: center;
+.checkingTodayData {
+  width: 100%;
+  height: calc(100vh - var(--BothNavHeightAndPadding));
+  display: grid;
+  grid-template-rows: 1fr 2fr 1fr auto auto;
+  row-gap: 5px;
+  text-align: center;
 }
 
-.checkingTodayData table{
-    table-layout: fixed;
-    width: 100%;
+.checkingTodayData table {
+  table-layout: fixed;
+  width: 100%;
 }
 
-.chooseDiet{
-    width: 100%;
-    height: calc(100vh - var(--BothNavHeightAndPadding));
-    display: grid;
-    grid-template-rows: 1fr 1fr auto auto auto;
-    grid-gap: 5px;
-    text-align: center;
+.chooseDiet {
+  width: 100%;
+  height: calc(100vh - var(--BothNavHeightAndPadding));
+  display: grid;
+  grid-template-rows: 1fr 1fr auto auto auto;
+  grid-gap: 5px;
+  text-align: center;
 }
 
 .muscleBuilding,
-.losingWeight{
+.losingWeight {
   width: 100%;
   height: calc(100vh - var(--BothNavHeightAndPadding));
   display: grid;
@@ -109,19 +109,48 @@
   text-align: center;
 }
 
-.loading{
-    width: 100%;
-    height: calc(100vh - var(--BothNavHeightAndPadding));
-    display: grid;
-    margin: auto;
-    text-align: center;
+.loading {
+  width: 100%;
+  height: calc(100vh - var(--BothNavHeightAndPadding));
+  display: grid;
+  margin: auto;
+  text-align: center;
 }
 
-.recomposition{
-    width: 100%;
-    height: calc(100vh - var(--BothNavHeightAndPadding));
-    display: grid;
-    grid-template-rows: 2fr 2fr 1fr 1fr auto;
-    grid-gap: 5px;
-    text-align: center;
+.recomposition {
+  width: 100%;
+  height: calc(100vh - var(--BothNavHeightAndPadding));
+  display: grid;
+  grid-template-rows: 2fr 2fr 1fr 1fr auto;
+  grid-gap: 5px;
+  text-align: center;
+}
+
+.results {
+  width: 100%;
+  height: calc(100vh - var(--BothNavHeightAndPadding));
+  display: grid;
+  grid-template-rows: 2fr 1fr 3fr auto auto;
+  grid-gap: 5px;
+  text-align: center;
+}
+
+.results table{
+  width: 50%;
+  min-width: 300px;
+  margin: auto;
+  text-align: center;
+}
+
+.results table tr:nth-child(1){
+  font-weight: bold;
+}
+
+.results table tr:nth-child(2){
+  font-size: 0.785rem;
+  text-transform: uppercase;
+}
+
+.results div{
+  margin: auto;
 }

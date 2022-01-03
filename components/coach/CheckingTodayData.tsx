@@ -5,19 +5,21 @@ import { useDailyMeasurement } from "../../hooks/useDailyMeasurement";
 import { getAge, getShortDate } from "../../utils/manageDate";
 import Weights from '../common/Weights'
 import { useAppSelector } from "../../hooks/useRedux";
+import useTranslation from "next-translate/useTranslation";
 
 interface ChooseDietProps {
     setStep: (arg0: string) => void
 }
 
 const CheckingTodayData: FunctionComponent<ChooseDietProps> = ({ setStep }) => {
+    const { t } = useTranslation('coach')
     const [{ data }, reload] = useDailyMeasurement(getShortDate())
     const [isWeights, setIsWeights] = useState(false)
     const token: any = useAppSelector(state => state.token.value)
 
     return (
         <div className={styles.checkingTodayData}>
-            <div className={styles.AddWeightMainTitle}><div>Before we start</div></div>
+            <div className={styles.AddWeightMainTitle}><div>{t('CHECKING_TODAY_TITLE')}</div></div>
             {
                 data &&
                 (
@@ -27,36 +29,36 @@ const CheckingTodayData: FunctionComponent<ChooseDietProps> = ({ setStep }) => {
                             <table>
                                 <tbody>
                                     <tr>
-                                        <th>Height:</th>
+                                        <th>{t('HEIGHT')}:</th>
                                         <td>{token.height}cm</td>
                                     </tr>
                                 </tbody>
                                 <tbody>
                                     <tr>
-                                        <th>Weight:</th>
+                                        <th>{t('WEIGHT')}:</th>
                                         <td>{data.weight}kg</td>
                                     </tr>
                                 </tbody>
                                 <tbody>
                                     <tr>
-                                        <th>Age:</th>
-                                        <td>{getAge(token.birth)}y</td>
+                                        <th>{t('AGE')}:</th>
+                                        <td>{getAge(token.birth)}</td>
                                     </tr>
                                 </tbody>
                             </table>
-                            <div>Please make sure the information are correct. Next steps will basic on them. The weight for today you can change directly in the page. The rest is available on settings page.</div>
+                            <div>{t('CHECKING_TODAY_DESCRIPTION')}</div>
 
-                            <Button variant="contained" onClick={() => setIsWeights(true)}>Change weight</Button>
+                            <Button variant="contained" onClick={() => setIsWeights(true)}>{t('CHANGE_WEIGHT')}</Button>
                         </>
                         :
                         <>
                             <div />
-                            <div>Before we start, you have to put correct weight for today's date. It's important, because all calculation will basic on this data.</div>
-                            <Button variant="contained" color="error" onClick={() => setIsWeights(true)}>Add weight</Button>
+                            <div>{t('CHECKING_TODAY_DESCRIPTION_ALTERNATIVE')}</div>
+                            <Button variant="contained" color="error" onClick={() => setIsWeights(true)}>{t('ADD_WEIGHT')}</Button>
                         </>
                 )
             }
-            <Button variant="contained" onClick={() => setStep('ChooseDiet')} disabled={!data || data.weight == 0}>Everything is fine</Button>
+            <Button variant="contained" onClick={() => setStep('ChooseDiet')} disabled={!data || data.weight == 0}>{t('CHECKING_TODAY_BUTTON')}</Button>
             <Weights
                 isWeights={isWeights}
                 closeWeights={() => {

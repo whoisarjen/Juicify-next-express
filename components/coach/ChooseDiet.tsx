@@ -1,19 +1,22 @@
 import { FunctionComponent } from "react";
 import Button from '@mui/material/Button';
 import styles from '../../styles/coach.module.css'
+import useTranslation from "next-translate/useTranslation";
 
 interface ChooseDietProps {
     setStep: (arg0: string) => void
 }
 
 const ChooseDiet: FunctionComponent<ChooseDietProps> = ({ setStep }) => {
+    const { t } = useTranslation('coach')
+
     return (
         <div className={styles.chooseDiet}>
-            <div className={styles.AddWeightMainTitle}><div>Choose diet</div></div>
-            <div>It's time to choose type of diet, which you are interested in.</div>
-            <Button variant="contained" onClick={() => setStep('MuscleBuilding')}>Muscle building</Button>
-            <Button variant="contained" onClick={() => setStep('Recomposition')}>Recomposition</Button>
-            <Button variant="contained" onClick={() => setStep('LosingWeight')}>Losing weight</Button>
+            <div className={styles.AddWeightMainTitle}><div>{t('CHOOSE_DIET_TITLE')}</div></div>
+            <div>{t('CHOOSE_DIET_DESCRIPTION')}</div>
+            <Button variant="contained" onClick={() => setStep('MuscleBuilding')}>{t('MUSCLE_BUILDING')}</Button>
+            <Button variant="contained" onClick={() => setStep('Recomposition')}>{t('RECOMPOSITION')}</Button>
+            <Button variant="contained" onClick={() => setStep('LosingWeight')}>{t('LOSING_WEIGHT')}</Button>
         </div>
     )
 }
