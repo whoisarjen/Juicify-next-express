@@ -154,3 +154,31 @@
 .results div{
   margin: auto;
 }
+
+.checkingWeekData{
+  width: 100%;
+  height: calc(100vh - var(--BothNavHeightAndPadding));
+  display: grid;
+  grid-template-rows: 1fr 3fr 2fr auto auto;
+  grid-gap: 5px;
+  text-align: center;
+}
+
+.checkingWeekData table{
+  width: 100%;
+}
+
+.chooseCaloriesSource{
+  width: 100%;
+  height: calc(100vh - var(--BothNavHeightAndPadding));
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr auto auto;
+  grid-gap: 5px;
+  text-align: center;
+}
+
+.chooseCaloriesSourceBold{
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}

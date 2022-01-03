@@ -20,6 +20,7 @@
     "HEIGHT": "Wysokość",
     "WEIGHT": "Waga",
     "AGE": "Wiek",
+    "DATE": "Data",
     "PROTEINS": "Białko",
     "CARBS": "Węglowodany",
     "FAT": "Tłuszcze",
@@ -52,5 +53,11 @@
     "STANDARD_DESCRIPTION": "Twój cel został określony. Dbają o dzienne spożycie na poziomie wyznacoznych makroskładników. Codzinnie notuj wagę, a po 7 dniach od poprzedniej analizy, wróć po nowe wytyczne.",
     "STANDARD_BUTTON": "Przenalizuj mój progres",
     "NEW_GOAL": "Nowy cel",
-    "HISTORY": "Historia"
+    "HISTORY": "Historia",
+    "CHECKING_WEEK_DESCRIPTION": "Upewnij się, że podane informację są poprawnę. Kolejne wyliczenia będą na nich bazować. Wagę możesz bezpośrednio zmienić z poziomu tej strony. Dla lepszego efektu, postaraj się zadbać o ciągłość na przedziale co najmniej 15 dni.",
+    "CHOOSE_CALORIES_SOURCE_TITLE": "Wybierz źródło kalorii",
+    "CHOOSE_CALORIES_SOURCE_DESCRIPTION": "Do wyliczenia makroskładników zostaną wykrozystane dane o spożytych produktach, które posiada Juicify. Liczyć się będa realnie spożyte makroskładniki, a nie wyznaczone.",
+    "CHOOSE_CALORIES_SOURCE_DESCRIPTION_2": "Juicify uzna, że prawie perfekcyjnie dostarczałeś kalorie względem poprzedniego wyliczenia, co może nie do końca oddawać rzeczywiste spożycie.",
+    "CHOOSE_CALORIES_SOURCE_BUTTON": "Korzystałem z Juicify",
+    "CHOOSE_CALORIES_SOURCE_BUTTON_2": "Korzystałem z innej aplikacji"
 }

@@ -10,10 +10,10 @@ import { DIET_GOAL, DIET_ACTIVITY, DIET_KIND, DIET_EXTRA_PROTEINS } from '../../
 import useTranslation from "next-translate/useTranslation";
 
 interface MuscleBuildingProps {
-    prepareAnalize: (arg0: Object) => void
+    prepareCreate: (arg0: Object) => void
 }
 
-const MuscleBuilding: FunctionComponent<MuscleBuildingProps> = ({ prepareAnalize }) => {
+const MuscleBuilding: FunctionComponent<MuscleBuildingProps> = ({ prepareCreate }) => {
     const { t } = useTranslation('coach')
     const [goal, setGoal] = useState(0.5);
     const [kind_of_diet, setKind_of_diet] = useState(0)
@@ -21,7 +21,7 @@ const MuscleBuilding: FunctionComponent<MuscleBuildingProps> = ({ prepareAnalize
     const [activity, setActivity] = useState(1.2)
 
     const handleNextStep = () => {
-        prepareAnalize({
+        prepareCreate({
             goal,
             kind_of_diet,
             sport_active,

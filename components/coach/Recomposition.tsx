@@ -10,16 +10,16 @@ import { DIET_ACTIVITY, DIET_KIND } from '../../utils/manageCoach'
 import useTranslation from "next-translate/useTranslation";
 
 interface RecompositionProps {
-    prepareAnalize: (arg0: Object) => void
+    prepareCreate: (arg0: Object) => void
 }
 
-const Recomposition: FunctionComponent<RecompositionProps> = ({ prepareAnalize }) => {
+const Recomposition: FunctionComponent<RecompositionProps> = ({ prepareCreate }) => {
     const { t } = useTranslation('coach')
     const [kind_of_diet, setKind_of_diet] = useState(0)
     const [activity, setActivity] = useState(1.2)
 
     const handleNextStep = () => {
-        prepareAnalize({
+        prepareCreate({
             'goal': 0,
             kind_of_diet,
             'sport_active': true,

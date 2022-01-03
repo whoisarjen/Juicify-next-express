@@ -9,6 +9,7 @@ import CheckingTodayData from "../components/coach/CheckingTodayData";
 import Recomposition from '../components/coach/Recomposition';
 import LosingWeight from '../components/coach/LosingWeight';
 import CheckingWeekData from '../components/coach/CheckingWeekData';
+import ChooseCaloriesSource from '../components/coach/ChooseCaloriesSource';
 import Loading from '../components/coach/Loading';
 import { useAppSelector } from "../hooks/useRedux";
 import useCoach from "../hooks/useCoach";
@@ -19,9 +20,10 @@ const Coach: FunctionComponent = () => {
     expectLoggedIN()
     const [createDiet] = useCoach()
     const token: any = useAppSelector(state => state.token.value)
-    const [step, setStep] = useState(token.coach_analyze ? 'Standard' : 'Welcome')
+    // const [step, setStep] = useState(token.coach_analyze ? 'Standard' : 'Welcome')
+    const [step, setStep] = useState('CheckingWeekData')
 
-    const prepareAnalize = async (object) => {
+    const prepareCreate = async (object) => {
         setStep('Loading')
         const daily = await getIndexedDBbyID('daily_measurement', getDailyDate())
         await createDiet({
@@ -33,6 +35,13 @@ const Coach: FunctionComponent = () => {
             }
         })
             .then(() => setStep('Result'))
+    }
+
+    const prepareAnalize = async (isUseData) => {
+        setStep('Loading')
+        console.log('isUseData', isUseData)
+
+        // reload daily before using it or get on your own
     }
 
     return (
@@ -53,15 +62,15 @@ const Coach: FunctionComponent = () => {
                         </>
                     ) : step === 'MuscleBuilding' ? (
                         <>
-                            <MuscleBuilding prepareAnalize={prepareAnalize} />
+                            <MuscleBuilding prepareCreate={prepareCreate} />
                         </>
                     ) : step === 'Recomposition' ? (
                         <>
-                            <Recomposition prepareAnalize={prepareAnalize} />
+                            <Recomposition prepareCreate={prepareCreate} />
                         </>
                     ) : step === 'LosingWeight' ? (
                         <>
-                            <LosingWeight prepareAnalize={prepareAnalize} />
+                            <LosingWeight prepareCreate={prepareCreate} />
                         </>
                     ) : step === 'Loading' ? (
                         <>
@@ -74,6 +83,10 @@ const Coach: FunctionComponent = () => {
                     ) : step === 'CheckingWeekData' ? (
                         <>
                             <CheckingWeekData setStep={setStep} />
+                        </>
+                    ) : step === 'ChooseCaloriesSource' ? (
+                        <>
+                            <ChooseCaloriesSource prepareAnalize={prepareAnalize} />
                         </>
                     ) : step === 'Result' ? (
                         <>
