@@ -1,8 +1,8 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useState, useEffect } from "react";
 import Button from '@mui/material/Button';
 import styles from '../../styles/coach.module.css'
 import { useDailyMeasurements } from "../../hooks/useDailyMeasurements";
-import { getShortDate, reverseDateDotes } from "../../utils/manageDate";
+import { addDaysToDate, getShortDate, reverseDateDotes } from "../../utils/manageDate";
 import Weights from '../common/Weights'
 import useTranslation from "next-translate/useTranslation";
 
@@ -12,8 +12,27 @@ interface ChooseDietProps {
 
 const CheckingWeekData: FunctionComponent<ChooseDietProps> = ({ setStep }) => {
     const { t } = useTranslation('coach')
-    const [{ data }, reload]: any = useDailyMeasurements(getShortDate(), 8)
+    const [{ data }, reload]: any = useDailyMeasurements(getShortDate(), 15)
     const [isWeights, setIsWeights] = useState(false)
+    const [allowNextStep, setAllowNextStep] = useState(false)
+
+    useEffect(() => {
+        let count = 0;
+        if (data) {
+            data.forEach(x => {
+                if (new Date(getShortDate()).toJSON() == x.whenAdded && x.weight > 0) {
+                    count++;
+                } else if (addDaysToDate(getShortDate(), -7) > x.whenAdded && x.weight > 0) {
+                    count++;
+                }
+            })
+        }
+        if (count == 2) {
+            setAllowNextStep(true)
+        } else {
+            setAllowNextStep(false)
+        }
+    }, [data])
 
     return (
         <div className={styles.checkingWeekData}>
@@ -28,7 +47,7 @@ const CheckingWeekData: FunctionComponent<ChooseDietProps> = ({ setStep }) => {
                                 data &&
                                 data.length &&
                                 data.map(x =>
-                                    <tr>
+                                    <tr key={x._id}>
                                         <td>{reverseDateDotes(x.whenAdded)}</td>
                                         <td>{x.weight}kg</td>
                                     </tr>
@@ -36,11 +55,22 @@ const CheckingWeekData: FunctionComponent<ChooseDietProps> = ({ setStep }) => {
                             }
                         </tbody>
                     </table>
-                    <div>{t('CHECKING_WEEK_DESCRIPTION')}</div>
+                    {
+                        !allowNextStep
+                            ?
+                            <div className={styles.checkingWeekDataDescription}>{t('CHECKING_WEEK_DESCRIPTION_ALTERNATIVE')}</div>
+                            :
+                            <div className={styles.checkingWeekDataDescription}>{t('CHECKING_WEEK_DESCRIPTION')}</div>
+                    }
                     <Button variant="contained" onClick={() => setIsWeights(true)}>{t('CHANGE_WEIGHT')}</Button>
                 </>
             }
-            <Button variant="contained" onClick={() => setStep('ChooseCaloriesSource')} disabled={!data || data.weight == 0}>{t('CHECKING_TODAY_BUTTON')}</Button>
+            <Button
+                variant="contained"
+                onClick={() => setStep('ChooseCaloriesSource')}
+                disabled={!allowNextStep}>
+                {t('CHECKING_TODAY_BUTTON')}
+            </Button>
             <Weights
                 isWeights={isWeights}
                 closeWeights={() => {
