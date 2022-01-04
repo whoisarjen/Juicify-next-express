@@ -10,7 +10,6 @@ import CircularWithLabelReverse from "./CircularWithLabelReverse";
 import useMacro from "../../hooks/useMacro";
 import { useAppSelector } from "../../hooks/useRedux";
 import { useRouter } from "next/router";
-import countCalories from "./utils/countCalories";
 
 interface DiagramsProps {
     array: Array<any>

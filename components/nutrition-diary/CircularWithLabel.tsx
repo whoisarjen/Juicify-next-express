@@ -50,7 +50,7 @@ const CircularWithLabel: FunctionComponent<CircularWithLabelProps> = ({ array })
                         trailColor: '#d6d6d6',
                         backgroundColor: '#3e98c7',
                     })}
-                />;
+                />
             </div>
         </div>
     )
