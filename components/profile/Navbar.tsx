@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
-import WebIcon from '@mui/icons-material/Web';
+import LinkIcon from '@mui/icons-material/Link';
 import { useRouter } from "next/router";
 import TabsInterface from './TabsInterface'
 import Avatar from '../common/Avatar';
@@ -64,7 +64,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({ user, tab }) => {
                         {
                             user.website &&
                             <IconButton onClick={() => window.open(`${user.website}`, '_blank')} aria-label="Facebook" color="primary">
-                                <WebIcon />
+                                <LinkIcon />
                             </IconButton>
                         }
                     </div>

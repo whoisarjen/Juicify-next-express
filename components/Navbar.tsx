@@ -101,20 +101,36 @@ const Navbar = () => {
                     </Tabs>
                 </li>
                 <li className="mobileOnly">
-                    <IconButton color="primary" aria-label="add to shopping cart">
-                        <SearchIcon />
-                    </IconButton>
-                    <IconButton color="primary" aria-label="add to shopping cart">
-                        <AutoStoriesIcon />
-                    </IconButton>
+                    <Link passHref href="/search">
+                        <a>
+                            <IconButton color="primary" aria-label="Search">
+                                <SearchIcon />
+                            </IconButton>
+                        </a>
+                    </Link>
+                    <Link passHref href="/blog">
+                        <a>
+                            <IconButton color="primary" aria-label="blog">
+                                <AutoStoriesIcon />
+                            </IconButton>
+                        </a>
+                    </Link>
                     {token.login ? (
-                        <IconButton color="primary" aria-label="add to shopping cart">
-                            <Settings />
-                        </IconButton>
+                    <Link passHref href="/settings">
+                        <a>
+                            <IconButton color="primary" aria-label="settings">
+                                <Settings />
+                            </IconButton>
+                        </a>
+                    </Link>
                     ) : (
-                        <IconButton color="primary" aria-label="add to shopping cart">
-                            <LoginIcon />
-                        </IconButton>
+                        <Link passHref href="/login">
+                            <a>
+                                <IconButton color="primary" aria-label="login">
+                                    <LoginIcon />
+                                </IconButton>
+                            </a>
+                        </Link>
                     )}
                 </li>
             </ul>
