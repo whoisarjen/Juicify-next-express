@@ -64,8 +64,8 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array }) => {
                             variant="fullWidth"
                             sx={{ marginBottom: '24px' }}
                         >
-                            <Tab label="Consumed" value="1" />
-                            <Tab label="Remaining" value="2" />
+                            <Tab label="Consumed" value="1" key={1} />
+                            <Tab label="Remaining" value="2" key={2} />
                         </TabList>
                     </Box>
                     <TabPanel value="1" className={styles.diagramsGrid}>
@@ -76,7 +76,7 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array }) => {
                         <table className={styles.diagramsTable}>
                             {
                                 Object.keys(object).map(x =>
-                                    <tr>
+                                    <tr key={x}>
                                         <th>{x}:</th>
                                         <td>{Math.round(object[x].value * 10) / 10}g</td>
                                         <td>{Math.round(object[x].macro * 10) / 10}g</td>
@@ -93,7 +93,7 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array }) => {
                         <table className={styles.diagramsTable}>
                             {
                                 Object.keys(object).map(x =>
-                                    <tr>
+                                    <tr key={x}>
                                         <th>{x}:</th>
                                         <td>{Math.round((object[x].macro - object[x].value) * 10) / 10}g</td>
                                         <td>{Math.round(object[x].macro * 10) / 10}g</td>
