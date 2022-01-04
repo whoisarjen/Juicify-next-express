@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useState, useEffect } from "react";
 import Standard from "../components/coach/Standard";
 import Result from "../components/coach/Result";
 import Welcome from "../components/coach/Welcome";
@@ -21,7 +21,7 @@ const Coach: FunctionComponent = () => {
     expectLoggedIN()
     const [createDiet, analyzeDiet] = useCoach()
     const token: any = useAppSelector(state => state.token.value)
-    const [step, setStep] = useState(token.coach_analyze ? 'Standard' : 'Welcome')
+    const [step, setStep] = useState('Loading')
 
     const prepareCreate = async (object) => {
         setStep('Loading')
@@ -47,6 +47,12 @@ const Coach: FunctionComponent = () => {
         })
             .then(() => setStep('Result'))
     }
+
+    useEffect(() => {
+        if (step != 'Result') {
+            setStep(token.coach_analyze ? 'Standard' : 'Welcome')
+        }
+    }, [token])
 
     return (
         <div className="coach">
