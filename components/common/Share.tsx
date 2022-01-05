@@ -3,8 +3,15 @@ import ShareIcon from '@mui/icons-material/Share';
 import IconButton from '@mui/material/IconButton';
 
 const Share: FunctionComponent = () => {
+    const handleShare = () => {
+        navigator.share({
+            url: location.href,
+            title: 'Juicify.app'
+        })
+    }
+
     return (
-        <IconButton>
+        <IconButton onClick={handleShare}>
             <ShareIcon />
         </IconButton>
     )
