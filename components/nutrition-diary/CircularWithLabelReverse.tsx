@@ -1,3 +1,4 @@
+import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
 import { FunctionComponent, useState, useEffect } from "react";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
@@ -16,6 +17,7 @@ const CircularWithLabel: FunctionComponent<CircularWithLabelProps> = ({ array })
     const token = useAppSelector(state => state.token.value)
     const router = useRouter()
     const [getDay] = useMacro()
+    const { t } = useTranslation('nutrition-diary')
 
     useEffect(() => {
         if (array) {
@@ -41,7 +43,7 @@ const CircularWithLabel: FunctionComponent<CircularWithLabelProps> = ({ array })
             <div style={{ maxWidth: '110px', maxHeight: '110px', margin: 'auto' }}>
                 <CircularProgressbar
                     value={100 - progress}
-                    text={`${calories}kcal`}
+                    text={`${calories}${t('Kcal')}`}
                     styles={buildStyles({
                         textSize: '15px',
                         pathTransitionDuration: 0.5,

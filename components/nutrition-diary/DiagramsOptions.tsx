@@ -3,9 +3,11 @@ import Button from '@mui/material/Button';
 import PieChartIcon from '@mui/icons-material/PieChart';
 import styles from '../../styles/nutrition-diary.module.css'
 import { useRouter } from "next/router";
+import useTranslation from "next-translate/useTranslation";
 
 const DiagramsOptions: FunctionComponent = () => {
     const router = useRouter()
+    const { t } = useTranslation('nutrition-diary')
 
     return (
         <div className={styles.diagramsOptions}>
@@ -18,7 +20,7 @@ const DiagramsOptions: FunctionComponent = () => {
                 startIcon={<PieChartIcon />}
                 sx={{ margin: 'auto' }}
             >
-                Macronutrients
+                {t('Macronutrients')}
             </Button>
         </div>
     )

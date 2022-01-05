@@ -10,6 +10,7 @@ import CircularWithLabelReverse from "./CircularWithLabelReverse";
 import useMacro from "../../hooks/useMacro";
 import { useAppSelector } from "../../hooks/useRedux";
 import { useRouter } from "next/router";
+import useTranslation from "next-translate/useTranslation";
 
 interface DiagramsProps {
     array: Array<any>
@@ -21,6 +22,7 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array }) => {
     const router = useRouter()
     const token: any = useAppSelector(state => state.token.value)
     const [object, setObject] = useState({})
+    const { t } = useTranslation('nutrition-diary')
 
     useEffect(() => {
         if (token) {
@@ -64,8 +66,8 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array }) => {
                             variant="fullWidth"
                             sx={{ marginBottom: '24px' }}
                         >
-                            <Tab label="Consumed" value="1" key={1} />
-                            <Tab label="Remaining" value="2" key={2} />
+                            <Tab label={t('consumed')} value="1" key={1} />
+                            <Tab label={t('remaining')} value="2" key={2} />
                         </TabList>
                     </Box>
                     <TabPanel value="1" className={styles.diagramsGrid}>
@@ -77,7 +79,7 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array }) => {
                             {
                                 Object.keys(object).map(x =>
                                     <tr key={x}>
-                                        <th>{x}:</th>
+                                        <th>{t(x)}:</th>
                                         <td>{Math.round(object[x].value * 10) / 10}g</td>
                                         <td>{Math.round(object[x].macro * 10) / 10}g</td>
                                     </tr>
@@ -94,7 +96,7 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array }) => {
                             {
                                 Object.keys(object).map(x =>
                                     <tr key={x}>
-                                        <th>{x}:</th>
+                                        <th>{t(x)}:</th>
                                         <td>{Math.round((object[x].macro - object[x].value) * 10) / 10}g</td>
                                         <td>{Math.round(object[x].macro * 10) / 10}g</td>
                                     </tr>

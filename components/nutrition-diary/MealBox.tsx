@@ -61,7 +61,7 @@ const MealBox: FunctionComponent<MealBoxProps> = ({ index, products, openDialog,
                     )
                 }
             </div>
-            <div>{prepareNumber(p)}P {prepareNumber(c)}C {prepareNumber(f)}F {parseInt((p * 4 + c * 4 + f * 9).toString())}Kcal</div>
+            <div>{prepareNumber(p)}{t('P')} {prepareNumber(c)}{t('C')} {prepareNumber(f)}{t('F')} {parseInt((p * 4 + c * 4 + f * 9).toString())}{t('Kcal')}</div>
             {
                 products && products.map((product: any) => (
                     <div className={style.boxProduct} key={product._id}>
@@ -87,7 +87,7 @@ const MealBox: FunctionComponent<MealBoxProps> = ({ index, products, openDialog,
                                 product.how_many
                                     ?
                                     <>
-                                        <div>{count(product, 'p')}{t('nutrition-diary:P')} {count(product, 'c')}{t('nutrition-diary:C')} {count(product, 'f')}{t('nutrition-diary:F')}</div>
+                                        <div>{count(product, 'p')}{t('P')} {count(product, 'c')}{t('C')} {count(product, 'f')}{t('F')}</div>
                                         <div>{parseFloat(product.how_many) * 100}g/ml</div>
                                     </>
                                     :
