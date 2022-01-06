@@ -68,7 +68,7 @@ const OwnMacro: FunctionComponent<OwnMacroProps> = ({ isOwnMacro, close }) => {
                 keepMounted
                 onClose={close}
             >
-                <DialogTitle>{"Use own macro"}</DialogTitle>
+                <DialogTitle>{t('BUTTON')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
                         {t('OWN_MACRO_DESCRIPTION')}
@@ -123,8 +123,8 @@ const OwnMacro: FunctionComponent<OwnMacroProps> = ({ isOwnMacro, close }) => {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={close}>Close</Button>
-                    <Button onClick={() => setIsDialog(true)}>Change all days</Button>
+                    <Button onClick={close}>{t('CLOSE')}</Button>
+                    <Button onClick={() => setIsDialog(true)}>{t('CHANGE_ALL_DAYS')}</Button>
                 </DialogActions>
             </Dialog>
             <ConfirmDialog isDialog={isDialog} closeDialog={() => setIsDialog(false)} confirm={handleConfirm} />
