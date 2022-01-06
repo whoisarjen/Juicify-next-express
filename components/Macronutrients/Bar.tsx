@@ -21,28 +21,28 @@ interface BarProps {
 
 const Bar: FunctionComponent<BarProps> = ({ object, click, toggleLock }) => {
     const [, getShortDayName] = useMacro()
-    const { t } = useTranslation('home')
-    
+    const { t } = useTranslation('macronutrients')
+
     return (
         <div className={styles.barBox}>
             <div className={styles.barBoxDay}>
-                <div>{t(getShortDayName(object.day))}</div>
+                <div>{t(getShortDayName(object.day).toUpperCase())}</div>
 
             </div>
             <div className={object.choosen ? styles.macroChoosen : styles.macro} onClick={() => click(object)}>
                 <div className={styles.barBoxProteins}>
                     <div className="marginAuto">
-                        {object.proteins} P
+                        {object.proteins} {t('P')}
                     </div>
                 </div>
                 <div className={styles.barBoxCarbs}>
                     <div className="marginAuto">
-                        {object.carbs} C
+                        {object.carbs} {t('C')}
                     </div>
                 </div>
                 <div className={styles.barBoxFats}>
                     <div className="marginAuto">
-                        {object.fats} F
+                        {object.fats} {t('F')}
                     </div>
                 </div>
                 <div className={styles.barBoxCalories}>

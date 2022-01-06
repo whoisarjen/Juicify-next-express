@@ -10,6 +10,7 @@
         "/[login]/workout-plans/[id]": ["workout"],
         "/[login]/workout-results": ["workout"],
         "/[login]/workout-results/[date]/[id]": ["workout"],
-        "/coach": ["coach"]
+        "/coach": ["coach"],
+        "/macronutrients": ["macronutrients"]
     }
 }

@@ -9,6 +9,7 @@ import BottomFlyingButton from '../components/common/BottomFlyingButton'
 import useSettings from '../hooks/useSettings'
 import Button from '@mui/material/Button';
 import OwnMacro from "../components/Macronutrients/OwnMacro";
+import useTranslation from "next-translate/useTranslation";
 
 const Macronutrients: FunctionComponent = () => {
     expectLoggedIN()
@@ -17,6 +18,7 @@ const Macronutrients: FunctionComponent = () => {
     const [macro, setMacro] = useState<Array<any>>([])
     const [changeObject, setChangeObject] = useState<any>({})
     const [isOwnMacro, setIsOwnMacro] = useState(false)
+    const { t } = useTranslation('macronutrients')
 
     const changed = (newValue, key) => {
         let newMacro = JSON.parse(JSON.stringify(macro))
@@ -115,7 +117,7 @@ const Macronutrients: FunctionComponent = () => {
                 <div>
                     {
                         Object.keys(changeObject).length == 0 &&
-                        <div className="title">Macronutrients</div>
+                        <div className="title">{t('TITLE')}</div>
                     }
                     <div className={styles.mainGrid}>
                         <div className={styles.mainGridMacroBox}>
@@ -142,7 +144,7 @@ const Macronutrients: FunctionComponent = () => {
                                                 x != 'choosen' &&
                                                 <SimpleSlider
                                                     day={changeObject['day'] + changeObject[x]}
-                                                    title={x}
+                                                    title={t(x.toUpperCase())}
                                                     beginValue={changeObject[x]}
                                                     macro={macro}
                                                     changed={(value) => changed(value, x)}
@@ -153,9 +155,9 @@ const Macronutrients: FunctionComponent = () => {
                                 ) : (
                                     <div className={styles.mainGridDescription}>
                                         <div>
-                                            Click bar to change macro for this day. The diffrent will put on unlocked days. Click <LockOpenIcon /> to lock day. Week macro will stay same.
+                                            {t('DESCRIPTION')} <LockOpenIcon /> {t('DESCRIPTION_2')}
                                         </div>
-                                        <Button variant="contained" onClick={() => setIsOwnMacro(true)}>Use own macro</Button>
+                                        <Button variant="contained" onClick={() => setIsOwnMacro(true)}>{t('BUTTON')}</Button>
                                     </div>
                                 )
                         }

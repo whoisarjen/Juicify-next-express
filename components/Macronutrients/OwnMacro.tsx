@@ -12,6 +12,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import ConfirmDialog from "../common/ConfirmDialog";
 import useSettings from '../../hooks/useSettings'
 import { useAppSelector } from "../../hooks/useRedux";
+import useTranslation from "next-translate/useTranslation";
 
 interface OwnMacroProps {
     isOwnMacro: boolean,
@@ -34,6 +35,7 @@ const OwnMacro: FunctionComponent<OwnMacroProps> = ({ isOwnMacro, close }) => {
     const [carbs, setCarbs] = useState(0)
     const [fats, setFats] = useState(0)
     const [changeSettings] = useSettings()
+    const { t } = useTranslation('macronutrients')
 
     const handleConfirm = async () => {
         setIsDialog(false)
@@ -69,13 +71,13 @@ const OwnMacro: FunctionComponent<OwnMacroProps> = ({ isOwnMacro, close }) => {
                 <DialogTitle>{"Use own macro"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        You can settle own macro, but it's only for people, who knows how to play w macro. Mostly you want coach to does it for you.
+                        {t('OWN_MACRO_DESCRIPTION')}
                     </DialogContentText>
                     <TextField
                         fullWidth
                         sx={{ marginTop: '5px' }}
                         id="outlined-basic"
-                        label="Proteins"
+                        label={t('PROTEINS')}
                         value={proteins}
                         onChange={(e) => setProteins(parseInt(e.target.value.toString()))}
                         variant="outlined"
@@ -91,7 +93,7 @@ const OwnMacro: FunctionComponent<OwnMacroProps> = ({ isOwnMacro, close }) => {
                         fullWidth
                         sx={{ marginTop: '5px' }}
                         id="outlined-basic"
-                        label="Carbs"
+                        label={t('CARBS')}
                         value={carbs}
                         onChange={(e) => setCarbs(parseInt(e.target.value.toString()))}
                         variant="outlined"
@@ -107,7 +109,7 @@ const OwnMacro: FunctionComponent<OwnMacroProps> = ({ isOwnMacro, close }) => {
                         fullWidth
                         sx={{ marginTop: '5px' }}
                         id="outlined-basic"
-                        label="Fats"
+                        label={t('FATS')}
                         value={fats}
                         onChange={(e) => setFats(parseInt(e.target.value.toString()))}
                         variant="outlined"
