@@ -1,6 +1,5 @@
 import { FunctionComponent, useState } from "react";
 import { useAppSelector } from "../../hooks/useRedux";
-import styles from '../../styles/settings.module.css'
 import useSettings from "../../hooks/useSettings";
 import TextField from '@mui/material/TextField';
 import useTranslation from "next-translate/useTranslation";
@@ -38,7 +37,7 @@ const Tab4: FunctionComponent<any> = ({ marginBottom }) => {
     }
 
     return (
-        <div className={styles.settingsTab}>
+        <div>
             <TextField
                 id="outlined-basic"
                 label="New password"

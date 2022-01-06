@@ -267,3 +267,14 @@ input[type="number"] {
 .css-1a1wxa0-MuiInputBase-root-MuiOutlinedInput-root {
   width: 100%;
 }
+
+.settings .MuiTextField-root{
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.settings .tabTitle{
+  font-size: 0.785rem;
+  font-weight: bold;
+  margin-bottom: 12px;
+}

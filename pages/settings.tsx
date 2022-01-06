@@ -1,87 +1,63 @@
-import { FunctionComponent, useState, SyntheticEvent, ReactNode } from "react";
+import { FunctionComponent, useState, useEffect } from "react";
 import { expectLoggedIN } from "../utils/checkAuth";
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 import Tab1 from "../components/settings/Tab1";
 import Tab2 from "../components/settings/Tab2";
 import Tab3 from "../components/settings/Tab3";
-import Tab4 from "../components/settings/Tab4";
-import BookIcon from "@mui/icons-material/Book";
-import SecurityIcon from '@mui/icons-material/Security';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import AppSettingsAltIcon from '@mui/icons-material/AppSettingsAlt';
 import { logout } from '../utils/checkAuth'
-import LogoutIcon from '@mui/icons-material/Logout';
-
-interface TabPanelProps {
-    children?: ReactNode;
-    index: number;
-    value: number;
-}
-
-function TabPanel(props: TabPanelProps) {
-    const { children, value, index } = props;
-
-    return (
-        <div
-            role="tabpanel"
-            style={{ width: '100%' }}
-            hidden={value !== index}
-            id={`vertical-tabpanel-${index}`}
-            aria-labelledby={`vertical-tab-${index}`}
-        >
-            {value === index && (
-                <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-}
+import BottomFlyingButton from "../components/common/BottomFlyingButton";
+import useSettings from "../hooks/useSettings";
 
 const Settings: FunctionComponent = () => {
     expectLoggedIN();
-    const [value, setValue] = useState(0);
+    const [isLoading, setIsLoading] = useState(false)
+    const [changedObject, setChangedObject] = useState({})
+    const [changeSettings] = useSettings()
+    const [tab1Val, setTab1Val] = useState({})
+    const [tab2Val, setTab2Val] = useState({})
+    const [tab3Val, setTab3Val] = useState({})
 
-    const handleChange = (event: SyntheticEvent, newValue: number) => setValue(newValue);
+    const handleSubmit = async () => {
+        setIsLoading(true)
+        if (Object.keys(changedObject).length) {
+            await changeSettings(changedObject)
+        }
+        setIsLoading(false)
+    }
 
-    return <div className="settings">
-        <Box
-            sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: '100%'}}
-        >
-            <Tabs
-                orientation="vertical"
-                variant="scrollable"
-                value={value}
-                onChange={handleChange}
-                aria-label="Vertical tabs example"
-                sx={{ borderRight: 1, borderColor: 'divider', overflow: 'visible'  }}
-            >
-                <Tab label={<AccountCircleIcon />} />
-                <Tab label={<BookIcon />} />
-                <Tab label={<AppSettingsAltIcon />} />
-                <Tab label={<SecurityIcon />} />
-                <Tab onClick={logout} label={<LogoutIcon />} />
-            </Tabs>
-            <TabPanel value={value} index={0}>
-                <Tab1 marginBottom='12px' />
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-                <Tab2 marginBottom='12px' />
-            </TabPanel>
-            <TabPanel value={value} index={2}>
-                <Tab3 marginBottom='12px' />
-            </TabPanel>
-            <TabPanel value={value} index={3}>
-                <Tab4 marginBottom='12px' />
-            </TabPanel>
-            <TabPanel value={value} index={4}>
-                Goodbye...!
-            </TabPanel>
-        </Box>
-    </div>;
+    const changeObject = (object, where) => {
+        if (where === 'Tab1') {
+            setTab1Val(object)
+        }
+        if (where === 'Tab2') {
+            setTab2Val(object)
+        }
+        if (where === 'Tab3') {
+            setTab3Val(object)
+        }
+    }
+
+    useEffect(() => {
+        setChangedObject({
+            ...tab1Val,
+            ...tab2Val,
+            ...tab3Val
+        })
+    }, [tab1Val, tab2Val, tab3Val])
+
+    return (
+        <div className="settings">
+            <div className="tabTitle">Preferencje</div>
+            <Tab1 changeObject={(object) => changeObject(object, 'Tab1')} />
+            <div className="tabTitle">Dziennik</div>
+            <Tab2 changeObject={(object) => changeObject(object, 'Tab2')} />
+            <div className="tabTitle">Profil</div>
+            <Tab3 changeObject={(object) => changeObject(object, 'Tab3')} />
+            {
+                Object.keys(changedObject).length > 0 &&
+                <BottomFlyingButton clicked={handleSubmit} isLoading={isLoading} showNumberValue={Object.keys(changedObject).length} />
+            }
+        </div>
+    );
 };
 
 export default Settings;
