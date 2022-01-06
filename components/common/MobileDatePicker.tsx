@@ -7,20 +7,18 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider'
 
 interface MobileDatePickerExportProps {
     change: (arg0: any) => void,
-    defaultDate?: Date,
+    defaultDate: Date,
     label?: string,
     marginBottom?: string
 }
 
-const MobileDatePickerExport: FunctionComponent<MobileDatePickerExportProps> = ({ change, defaultDate = new Date(), label = "Pick date", marginBottom = 0 }) => {
+const MobileDatePickerExport: FunctionComponent<MobileDatePickerExportProps> = ({ change, defaultDate, label = "Pick date", marginBottom = 0 }) => {
     const [value, setValue] = useState<any>(defaultDate)
 
     const handleChange = (newValue) => {
         setValue(newValue)
         change(newValue)
     }
-
-    useEffect(() => setValue(defaultDate), [defaultDate])
 
     return (
         <div className="mobileDatePicker">

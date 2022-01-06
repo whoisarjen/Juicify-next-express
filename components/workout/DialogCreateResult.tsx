@@ -15,6 +15,7 @@ import useWorkoutPlans from '../../hooks/useWorkoutPlans'
 import DialogContentText from '@mui/material/DialogContentText'
 import DatePicker from '../common/MobileDatePicker'
 import Link from 'next/link'
+import { getShortDate } from '../../utils/manageDate'
 
 const DialogCreateResult: FunctionComponent = () => {
     const router = useRouter()
@@ -79,7 +80,7 @@ const DialogCreateResult: FunctionComponent = () => {
                     <DialogContentText>
                         Choose workout plan for which you want to create result.
                     </DialogContentText>
-                    <DatePicker change={(value) => setWhenAdded(value)} />
+                    <DatePicker change={(value) => setWhenAdded(value)} defaultDate={new Date(getShortDate())} />
                     <FormControl fullWidth sx={{ marginTop: '12px' }}>
                         <InputLabel id="demo-simple-select-label">Workout plan</InputLabel>
                         <Select

@@ -72,21 +72,25 @@ const NutritionDiary: FunctionComponent = () => {
             <Diagrams array={nutrition_diary} key={nutrition_diary.length} />
             <DiagramsOptions />
             {
-                nutrition_diary && nutrition_diary.map((x, i) => (
-                    <MealBox
-                        key={i}
-                        index={i}
-                        products={x}
-                        openDialog={() => {
-                            setIndex(i)
-                            setIsAddDialog(true)
-                        }}
-                        openEditProduct={(product) => {
-                            setProduct(product)
-                            setIsEditDialog(true)
-                        }}
-                    />
-                ))
+                nutrition_diary
+                    ?
+                    nutrition_diary.map((x, i) => (
+                        <MealBox
+                            key={i}
+                            index={i}
+                            products={x}
+                            openDialog={() => {
+                                setIndex(i)
+                                setIsAddDialog(true)
+                            }}
+                            openEditProduct={(product) => {
+                                setProduct(product)
+                                setIsEditDialog(true)
+                            }}
+                        />
+                    ))
+                    :
+                    <></>
             }
             {
                 token && token.login == router.query.login &&

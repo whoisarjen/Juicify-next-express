@@ -1,6 +1,7 @@
 import { getIndexedDBbyID, addIndexedDB, deleteIndexedDB, putIndexedDB, getAllIndexedDB } from "./indexedDB"
 import { store } from '../redux/store'
 import { getCookie } from "./checkAuth"
+import { refreshTodayDaily } from "../redux/features/keySlice"
 
 const API = async (url: string, body: any): Promise<any> => {
     let response = {}
@@ -119,6 +120,7 @@ const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, whatToUp
             }
         }
         await addIndexedDB(where, array)
+        await refreshKeys(where)
         return resolve(array)
     })
 }
@@ -167,6 +169,7 @@ const overwriteThoseIDSinDB = async (where: string, sentArray: Array<any>): Prom
                 }
             }
             await addIndexedDB(where, array)
+            await refreshKeys(where)
             resolve(array);
         })();
     })
@@ -208,6 +211,7 @@ const deleteThoseIDSfromDB = async (where: string, array: Array<any>, isNewValue
                     if (array.length > 0) await addIndexedDB(where, array)
                 }
             }
+            await refreshKeys(where)
             resolve(true);
         })();
     })
@@ -265,6 +269,15 @@ const is_id = async (_id: string) => {
 
 const setLastUpdated = () => {
     localStorage.setItem('lastUpdated', new Date().getTime().toString())
+}
+
+const refreshKeys = async (where: string) => {
+    return new Promise(resolve => {
+        if(where == 'daily_measurement'){
+            store.dispatch(refreshTodayDaily())
+        }
+        resolve(true)
+    })
 }
 
 export {

@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import tokenReducer from "./features/tokenSlice";
 import configReducer from "./features/configSlice";
 import onlineReducer from "./features/onlineSlice";
+import keyReducer from "./features/keySlice";
 
 export const store = configureStore({
   reducer: {
     token: tokenReducer,
     config: configReducer,
     online: onlineReducer,
+    key: keyReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

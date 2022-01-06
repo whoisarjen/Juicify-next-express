@@ -4,6 +4,7 @@ import Tab1 from "../components/settings/Tab1";
 import Tab2 from "../components/settings/Tab2";
 import Tab3 from "../components/settings/Tab3";
 import { logout } from '../utils/checkAuth'
+import Button from '@mui/material/Button';
 import BottomFlyingButton from "../components/common/BottomFlyingButton";
 import useSettings from "../hooks/useSettings";
 
@@ -52,6 +53,10 @@ const Settings: FunctionComponent = () => {
             <Tab2 changeObject={(object) => changeObject(object, 'Tab2')} />
             <div className="tabTitle">Profil</div>
             <Tab3 changeObject={(object) => changeObject(object, 'Tab3')} />
+            <div className="tabTitle">Logout</div>
+            <Button color="error" onClick={async () => await logout()}>
+                Logout
+            </Button>
             {
                 Object.keys(changedObject).length > 0 &&
                 <BottomFlyingButton clicked={handleSubmit} isLoading={isLoading} showNumberValue={Object.keys(changedObject).length} />

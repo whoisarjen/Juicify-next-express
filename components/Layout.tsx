@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import { FunctionComponent } from 'react'
 import SidebarLeft from './SidebarLeft'
 import SidebarRight from './SidebarRight'
+import { useAppSelector } from '../hooks/useRedux'
 
 interface LayoutProps {
     children: any
@@ -12,6 +13,7 @@ interface LayoutProps {
 
 const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
     const router = useRouter()
+    const token: any = useAppSelector(state => state.token.value)
 
     return (
         <div className='layout'>
@@ -20,11 +22,31 @@ const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
                 <meta name='viewport' content='initial-scale=1.0, width=device-width' />
             </Head>
             <Navbar />
-            <div id="gridOverContent">
-                <SidebarLeft />
-                <div className={router.pathname.includes('blog') ? '' : 'content'}>{children}</div>
-                <SidebarRight />
-            </div>
+            {
+                router.pathname.includes('blog')
+                    ?
+                    <div>{children}</div>
+                    :
+                    <div id="gridOverContent">
+                        {
+                            token.login &&
+                                router.pathname !== '/login'
+                                ?
+                                <SidebarLeft />
+                                :
+                                <div id="sidebarLeft" />
+                        }
+                        <div className='content'>{children}</div>
+                        {
+                            token.login &&
+                                router.pathname !== '/login'
+                                ?
+                                <SidebarRight />
+                                :
+                                <div id="sidebarRight" />
+                        }
+                    </div>
+            }
             <Footer />
         </div>
     )

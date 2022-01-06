@@ -3,19 +3,24 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import { useDailyMeasurement } from "../hooks/useDailyMeasurement";
 import useMacro from "../hooks/useMacro";
 import { useAppSelector } from "../hooks/useRedux";
-import { getDiffrentBetweenDays, getShortDate } from "../utils/manageDate";
+import { getDiffrentBetweenDays, getShortDate, reverseDateDotes } from "../utils/manageDate";
 import countCalories from "./nutrition-diary/utils/countCalories";
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import Link from "next/link";
+import ListSubheader from '@mui/material/ListSubheader';
+import useTranslation from "next-translate/useTranslation";
 
 const SidebarRight: FunctionComponent = () => {
-    const [{ data }] = useDailyMeasurement(getShortDate())
+    const { t } = useTranslation('home')
+    const [{ data }, reload] = useDailyMeasurement(getShortDate())
     const token: any = useAppSelector(state => state.token.value)
+    const keyDaily = useAppSelector(state => state.key.daily_measurement)
     const [getDay] = useMacro()
     const [weight, setWeight] = useState(0)
     const [calories, setCalories] = useState(0)
     const [caloriesGoal, setCaloriesGoal] = useState(0)
+    const [workout, setWorkout] = useState(0)
     const [coach, setCoach] = useState(0)
     const [styles, setStyles]: any = useState()
 
@@ -32,6 +37,8 @@ const SidebarRight: FunctionComponent = () => {
             const macro = getDay(getShortDate(), token)
             setCaloriesGoal(macro.proteins * 4 + macro.carbs * 4 + macro.fats * 9)
 
+            setWorkout(data.workout_result.length)
+
             setCoach(getDiffrentBetweenDays(token.coach, getShortDate()))
 
             setStyles(buildStyles({
@@ -45,6 +52,8 @@ const SidebarRight: FunctionComponent = () => {
         }
     }, [data, token])
 
+    useEffect(() => reload(), [keyDaily])
+
     return (
         <div id="sidebarRight">
             {
@@ -52,6 +61,11 @@ const SidebarRight: FunctionComponent = () => {
                 <>
                     <List
                         sx={{ width: '100%', bgcolor: 'background.paper' }}
+                        subheader={
+                            <ListSubheader component="div" id="nested-list-subheader">
+                                {t('Data for')} {reverseDateDotes()}:
+                            </ListSubheader>
+                        }
                     >
                         <ListItemButton>
                             <Link href={`/coach`}>
@@ -90,8 +104,8 @@ const SidebarRight: FunctionComponent = () => {
                                 <a>
                                     <div className="sidebarRightCircleBox">
                                         <CircularProgressbar
-                                            value={0}
-                                            text={`0`}
+                                            value={workout * 100}
+                                            text={`${workout}`}
                                             styles={styles}
                                         />
                                         <div>
@@ -107,7 +121,7 @@ const SidebarRight: FunctionComponent = () => {
                                     <div className="sidebarRightCircleBox">
                                         <CircularProgressbar
                                             value={(coach - 7) / 7 * 100}
-                                            text={`${coach}dni`}
+                                            text={`${coach >= 0 ? coach : 0}dni`}
                                             styles={styles}
                                         />
                                         <div>
