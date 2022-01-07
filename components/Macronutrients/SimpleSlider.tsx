@@ -5,6 +5,7 @@ import MuiInput from '@mui/material/Input';
 import { styled } from '@mui/material/styles';
 import { FunctionComponent, useState, useEffect } from 'react';
 import * as React from 'react';
+import useTranslation from 'next-translate/useTranslation';
 
 const Input = styled(MuiInput)`
   width: 42px;
@@ -22,15 +23,20 @@ const SimpleSlider: FunctionComponent<SimpleSliderProps> = ({ title, macro, begi
     const [value, setValue] = useState<any>(false);
     const [timer, setTimer] = useState<any>(null)
     const [maxValue, setMaxValue] = useState(0)
+    const { t } = useTranslation('macronutrients')
 
     useEffect(() => setValue(beginValue), [beginValue, day])
 
     useEffect(() => {
         const key = title.toLowerCase()
         let count = 0
+        console.log('macro', macro)
+        console.log('key', key)
         macro.forEach(x => {
+            console.log(x)
             if(!x.locked || x.day == day){
                 count += x[key]
+                console.log('count', count)
             }
         })
         setMaxValue(count)
@@ -71,7 +77,7 @@ const SimpleSlider: FunctionComponent<SimpleSliderProps> = ({ title, macro, begi
         <Box sx={{ margin: 'auto 0' }}>
             <Grid container spacing={2} alignItems="center">
                 <Grid item sx={{ minWidth: 75, textAlign: 'center' }}>
-                    {title}
+                    {t(title.toUpperCase())}
                 </Grid>
                 <Grid item xs>
                     <Slider

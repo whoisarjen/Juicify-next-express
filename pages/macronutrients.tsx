@@ -144,7 +144,7 @@ const Macronutrients: FunctionComponent = () => {
                                                 x != 'choosen' &&
                                                 <SimpleSlider
                                                     day={changeObject['day'] + changeObject[x]}
-                                                    title={t(x.toUpperCase())}
+                                                    title={x}
                                                     beginValue={changeObject[x]}
                                                     macro={macro}
                                                     changed={(value) => changed(value, x)}
