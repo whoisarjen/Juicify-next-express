@@ -83,7 +83,7 @@ const SidebarRight: FunctionComponent = () => {
                                             styles={styles}
                                         />
                                         <div>
-                                            Waga
+                                            {t("Weight")}
                                         </div>
                                     </div>
                                 </ListItemButton>
@@ -99,7 +99,7 @@ const SidebarRight: FunctionComponent = () => {
                                             styles={styles}
                                         />
                                         <div>
-                                            Kalorie
+                                            {t("Calories")}
                                         </div>
                                     </div>
                                 </ListItemButton>
@@ -115,7 +115,7 @@ const SidebarRight: FunctionComponent = () => {
                                             styles={styles}
                                         />
                                         <div>
-                                            Trening
+                                            {t("Workout")}
                                         </div>
                                     </div>
                                 </ListItemButton>
@@ -131,7 +131,7 @@ const SidebarRight: FunctionComponent = () => {
                                             styles={styles}
                                         />
                                         <div>
-                                            Trener
+                                            {t("Coach")}
                                         </div>
                                     </div>
                                 </ListItemButton>
