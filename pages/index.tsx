@@ -1,9 +1,10 @@
 import { FunctionComponent } from "react";
+import styles from '../styles/home.module.css'
 
 const Home: FunctionComponent = () => {
 
   return (
-    <div className="home">
+    <div className={styles.home}>
       Home
     </div>
   );

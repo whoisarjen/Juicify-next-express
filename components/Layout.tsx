@@ -23,7 +23,7 @@ const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
             </Head>
             <Navbar />
             {
-                router.pathname.includes('blog')
+                router.pathname.includes('blog') || router.pathname == '/'
                     ?
                     <div>{children}</div>
                     :
