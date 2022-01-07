@@ -220,7 +220,7 @@ a:active {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   z-index: 2;
-  background: #fff;
+  background: var(--theme-background);
 }
 
 .footerMenuElement {

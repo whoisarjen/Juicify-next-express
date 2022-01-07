@@ -18,22 +18,22 @@ const Footer = () => {
         <div className="footerMenu">
           <Link passHref href="/coach/">
             <a className="footerMenuElement">
-              <EmojiEventsIcon />
+              <EmojiEventsIcon color="primary" />
             </a>
           </Link>
           <Link passHref href="/workout">
             <div className="footerMenuElement">
-              <FitnessCenterIcon />
+              <FitnessCenterIcon color="primary" />
             </div>
           </Link>
           <Link passHref href="/barcode">
             <div className="footerMenuElement">
-              <PhotoCameraIcon />
+              <PhotoCameraIcon color="primary" />
             </div>
           </Link>
           <Link passHref href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
             <a className="footerMenuElement">
-              <BookIcon />
+              <BookIcon color="primary" />
             </a>
           </Link>
           <Link passHref href={`/${token.login}`}>
@@ -43,7 +43,7 @@ const Footer = () => {
                 alt={`${token.login} ${token.name} ${token.surname} on Juicify`}
                 src={`https://juicify.app:4000/server/avatar/${token._id}.jpg`}
               >
-                <AccountCircleIcon />
+                <AccountCircleIcon color="primary" />
               </Avatar>
             </a>
           </Link>
