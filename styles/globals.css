@@ -44,12 +44,14 @@
 :root {
   --BothNavHeightAndPadding: 141px;
   --MenuIconsColor: #212121;
+  --theme-background: '';
 }
 
 body {
   margin: 0;
   font-family: "Quicksand", sans-serif;
   color: #7a7a7a;
+  background: var(--theme-background);
 }
 
 a,
