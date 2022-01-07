@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { getCookie, readToken } from "../utils/checkAuth"
 import { getIndexedDBbyID } from '../utils/indexedDB'
 import { useDailyMeasurement } from './useDailyMeasurement'
+import { reverseDateDotes } from '../utils/manageDate'
 
 const useWorkoutResult = (): [any, () => void] => {
     const router: any = useRouter()
@@ -20,10 +21,12 @@ const useWorkoutResult = (): [any, () => void] => {
                     let cache = await getIndexedDBbyID('workout_result', router.query.id)
                     if (cache) {
                         res = cache
+                        res.whenAdded = reverseDateDotes(daily.whenAdded)
                     } else {
                         res = daily.workout_result.filter((workout: any) => workout._id == router.query.id)
                         if (res && res.length > 0) {
                             res = res[0]
+                            res.whenAdded = reverseDateDotes(daily.whenAdded)
                         } else {
                             router.push(`/${router.query.login}/workout-results`)
                         }
@@ -35,7 +38,7 @@ const useWorkoutResult = (): [any, () => void] => {
                         res = daily.workout_result.filter((workout: any) => workout._id == router.query.id)
                         if (res && res.length > 0) {
                             res = res[0]
-                            res.whenAdded = daily.whenAdded
+                            res.whenAdded = reverseDateDotes(daily.whenAdded)
                         } else {
                             router.push(`/${router.query.login}/workout-results`)
                         }

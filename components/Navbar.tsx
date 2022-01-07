@@ -3,8 +3,6 @@ import useTranslation from "next-translate/useTranslation";
 import { forwardRef } from "react";
 import { useAppSelector } from "../hooks/useRedux";
 import LoginIcon from "@mui/icons-material/Login";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import BookIcon from "@mui/icons-material/Book";
 import { getShortDate } from "../utils/manageDate";
@@ -17,7 +15,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useDarkMode } from '../hooks/useDarkMode'
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import Box from '@mui/material/Box';
 import { useRouter } from "next/router";
 
 const MyLogo = forwardRef<any, any>(({ onClick, href }, ref) => {
@@ -46,76 +43,66 @@ const Navbar = () => {
                 <li className="notMobileOnly">
                     <SearchBox />
                 </li>
-                <li className="notMobileOnly">
-                    <Tabs
-                        aria-label="Top menu"
-                        value={0}
-                        TabIndicatorProps={{ style: { display: "none" } }}
-                    >
-                        {/* <Link passHref href={`${router.asPath}`}>
-                            <a>
-                                <Tab
-                                    onClick={toggleDarkMode}
-                                    icon={theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-                                    wrapped
-                                    label={`${theme.palette.mode} mode`}
-                                />
-                            </a>
-                        </Link> */}
-                        <Link passHref href="/blog">
-                            <a>
-                                <Tab
-                                    icon={<AutoStoriesIcon />}
-                                    wrapped
-                                    label={t("Blog")}
-                                />
-                            </a>
-                        </Link>
-                        {token.login ? (
-                            <Link passHref href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
-                                <a>
-                                    <Tab
-                                        className="notMobileOnly"
-                                        icon={<BookIcon />}
-                                        wrapped
-                                        label={t("Diary")}
-                                    />
-                                </a>
-                            </Link>
+                <li className="notMobileOnly" style={{ padding: '16px 0' }}>
+                    <Link passHref href={`${router.asPath}`}>
+                        <a onClick={toggleDarkMode}>
+                            {
+                                theme.palette.mode === 'dark'
+                                    ?
+                                    <IconButton color="primary" aria-label="Dark / light mode">
+                                        <Brightness7Icon />
+                                    </IconButton>
+                                    :
+                                    <IconButton color="primary" aria-label="Dark / light mode">
+                                        <Brightness4Icon />
+                                    </IconButton>
+                            }
+                        </a>
+                    </Link>
+                    <Link passHref href="/blog">
+                        <a>
+                            <IconButton color="primary" aria-label="blog">
+                                <AutoStoriesIcon />
+                            </IconButton>
+                        </a>
+                    </Link>
+                    {
+                        token.login ? (
+                            <>
+                                <Link passHref href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
+                                    <a>
+                                        <IconButton color="primary" aria-label="Diary">
+                                            <BookIcon />
+                                        </IconButton>
+                                    </a>
+                                </Link>
+                                <Link passHref href="/settings">
+                                    <a>
+                                        <IconButton color="primary" aria-label="Settings">
+                                            <Settings />
+                                        </IconButton>
+                                    </a>
+                                </Link>
+                            </>
                         ) : (
-                            <Link passHref href="/login">
-                                <a>
-                                    <Tab
-                                        className="notMobileOnly"
-                                        icon={<BookIcon />}
-                                        wrapped
-                                        label={t("Diary")}
-                                    />
-                                </a>
-                            </Link>
-                        )}
-                        {token.login ? (
-                            <Link passHref href="/settings">
-                                <a>
-                                    <Tab
-                                        icon={<Settings />}
-                                        wrapped
-                                        label={t("Settings")}
-                                    />
-                                </a>
-                            </Link>
-                        ) : (
-                            <Link passHref href="/login">
-                                <a>
-                                    <Tab
-                                        icon={<LoginIcon />}
-                                        wrapped
-                                        label={t("Sign in")}
-                                    />
-                                </a>
-                            </Link>
-                        )}
-                    </Tabs>
+                            <>
+                                <Link passHref href="/login">
+                                    <a>
+                                        <IconButton color="primary" aria-label="Diary">
+                                            <BookIcon />
+                                        </IconButton>
+                                    </a>
+                                </Link>
+                                <Link passHref href="/login">
+                                    <a>
+                                        <IconButton color="primary" aria-label="Login">
+                                            <LoginIcon />
+                                        </IconButton>
+                                    </a>
+                                </Link>
+                            </>
+                        )
+                    }
                 </li>
                 <li className="mobileOnly">
                     <Link passHref href="/search">
