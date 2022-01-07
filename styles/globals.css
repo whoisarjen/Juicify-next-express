@@ -44,7 +44,7 @@
 :root {
   --BothNavHeightAndPadding: 141px;
   --MenuIconsColor: #212121;
-  --theme-background: '';
+  --theme-background: "";
 }
 
 body {
@@ -75,7 +75,7 @@ a:active {
   padding: 12px;
 }
 
-#sidebarLeft{
+#sidebarLeft {
   margin-left: auto;
   margin-right: 0;
   width: 100%;
@@ -101,6 +101,13 @@ a:active {
 
   #sidebarRight {
     display: none;
+  }
+}
+
+@media (max-width: 726px) {
+  #gridOverContent {
+    max-width: 100%;
+    grid-template-columns: 1fr;
   }
 }
 
@@ -154,7 +161,7 @@ a:active {
 }
 
 .navbar a,
-.navbar .css-12zv6qp-MuiButtonBase-root-MuiTab-root.Mui-selected{
+.navbar .css-12zv6qp-MuiButtonBase-root-MuiTab-root.Mui-selected {
   color: var(--MenuIconsColor);
 }
 
