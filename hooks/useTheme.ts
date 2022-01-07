@@ -1,10 +1,19 @@
 import { createContext, useContext } from "react";
-import { useTheme } from '@mui/material/styles';
+import { useTheme as useThemeDefault } from '@mui/material/styles';
+
+const THEME_VALUE = {
+    LIGHT: {
+        PRIMARY: '#1976d2'
+    },
+    DARK: {
+        PRIMARY: '#3e98c7'
+    }
+}
 
 const ColorModeContext = createContext({ toggleColorMode: () => { } });
 
-const useDarkMode = () => {
-    const theme = useTheme();
+const useTheme = () => {
+    const theme = useThemeDefault();
     const colorMode = useContext(ColorModeContext);
 
     const toggleDarkMode = () => {
@@ -16,10 +25,12 @@ const useDarkMode = () => {
         colorMode.toggleColorMode()
     }
 
-    return [toggleDarkMode, theme]
+    const getTheme = (what) => THEME_VALUE[theme.palette.mode.toUpperCase()][what]
+
+    return [getTheme, toggleDarkMode, theme]
 }
 
 export {
-    useDarkMode,
+    useTheme,
     ColorModeContext
 }

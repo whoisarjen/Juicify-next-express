@@ -12,7 +12,7 @@ import SearchBox from './common/SearchBox'
 import Settings from "@mui/icons-material/Settings";
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
-import { useDarkMode } from '../hooks/useDarkMode'
+import { useTheme } from '../hooks/useTheme'
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useRouter } from "next/router";
@@ -30,7 +30,7 @@ const Navbar = () => {
     const { t } = useTranslation("home");
     const router = useRouter()
     const token: any = useAppSelector((state) => state.token.value);
-    const [toggleDarkMode, theme]: any = useDarkMode()
+    const [, toggleDarkMode, theme]: any = useTheme()
 
     return (
         <nav className="navbar">

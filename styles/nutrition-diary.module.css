@@ -74,7 +74,7 @@
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  background: #fff;
+  background: var(--theme-background);
   z-index: 2;
 }
 

@@ -15,10 +15,12 @@ import { useRouter } from "next/router";
 import { getShortDate } from "../utils/manageDate";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import Settings from "@mui/icons-material/Settings";
+import { useTheme } from "../hooks/useTheme";
 
 const SidebarLeft: FunctionComponent = () => {
     const router = useRouter()
     const token: any = useAppSelector(state => state.token.value)
+    const [getTheme]: any = useTheme()
 
     return (
         <div id="sidebarLeft">
@@ -36,7 +38,7 @@ const SidebarLeft: FunctionComponent = () => {
                                             alt={`${token.login} ${token.name} ${token.surname} on Juicify`}
                                             src={`https://juicify.app:4000/server/avatar/${token._id}.jpg`}
                                         >
-                                            <AccountCircleIcon />
+                                            <AccountCircleIcon color="primary" />
                                         </Avatar>
                                     </ListItemIcon>
                                     <ListItemText primary="Profile" />
@@ -45,7 +47,7 @@ const SidebarLeft: FunctionComponent = () => {
                             <ListItem disablePadding>
                                 <ListItemButton onClick={() => router.push(`/${token.login}/nutrition-diary/${getShortDate()}`)}>
                                     <ListItemIcon>
-                                        <BookIcon />
+                                        <BookIcon color="primary" />
                                     </ListItemIcon>
                                     <ListItemText primary="Diary" />
                                 </ListItemButton>
@@ -53,7 +55,7 @@ const SidebarLeft: FunctionComponent = () => {
                             <ListItem disablePadding>
                                 <ListItemButton onClick={() => router.push(`/${token.login}/workout-results`)}>
                                     <ListItemIcon>
-                                        <FitnessCenterIcon />
+                                        <FitnessCenterIcon color="primary" />
                                     </ListItemIcon>
                                     <ListItemText primary="Workout" />
                                 </ListItemButton>
@@ -61,7 +63,7 @@ const SidebarLeft: FunctionComponent = () => {
                             <ListItem disablePadding>
                                 <ListItemButton onClick={() => router.push(`/coach`)}>
                                     <ListItemIcon>
-                                        <EmojiEventsIcon />
+                                        <EmojiEventsIcon color="primary" />
                                     </ListItemIcon>
                                     <ListItemText primary="Coach" />
                                 </ListItemButton>
@@ -69,7 +71,7 @@ const SidebarLeft: FunctionComponent = () => {
                             <ListItem disablePadding>
                                 <ListItemButton onClick={() => router.push(`/blog`)}>
                                     <ListItemIcon>
-                                        <AutoStoriesIcon />
+                                        <AutoStoriesIcon color="primary" />
                                     </ListItemIcon>
                                     <ListItemText primary="Blog" />
                                 </ListItemButton>
@@ -77,7 +79,7 @@ const SidebarLeft: FunctionComponent = () => {
                             <ListItem disablePadding>
                                 <ListItemButton onClick={() => router.push(`/settings`)}>
                                     <ListItemIcon>
-                                        <Settings />
+                                        <Settings color="primary" />
                                     </ListItemIcon>
                                     <ListItemText primary="Settings" />
                                 </ListItemButton>

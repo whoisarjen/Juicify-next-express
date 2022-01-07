@@ -5,6 +5,7 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import useMacro from "../../hooks/useMacro";
 import { useAppSelector } from "../../hooks/useRedux";
+import { useTheme } from "../../hooks/useTheme";
 import countCalories from './utils/countCalories'
 
 interface CircularWithLabelProps {
@@ -17,6 +18,7 @@ const CircularWithLabel: FunctionComponent<CircularWithLabelProps> = ({ array })
     const token = useAppSelector(state => state.token.value)
     const router = useRouter()
     const [getDay] = useMacro()
+    const [getTheme]: any = useTheme()
     const { t } = useTranslation('nutrition-diary')
 
     useEffect(() => {
@@ -47,10 +49,10 @@ const CircularWithLabel: FunctionComponent<CircularWithLabelProps> = ({ array })
                     styles={buildStyles({
                         textSize: '15px',
                         pathTransitionDuration: 0.5,
-                        pathColor: 'rgba(25, 118, 210, 1',
+                        pathColor: getTheme('PRIMARY'),
                         textColor: 'rgba(122, 122, 122, 1',
                         trailColor: '#d6d6d6',
-                        backgroundColor: '#3e98c7',
+                        backgroundColor: getTheme('PRIMARY'),
                     })}
                 />
             </div>

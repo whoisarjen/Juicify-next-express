@@ -12,6 +12,7 @@ import ListSubheader from '@mui/material/ListSubheader';
 import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
 import Weights from "./common/Weights";
+import { useTheme } from "../hooks/useTheme";
 
 const SidebarRight: FunctionComponent = () => {
     const { t } = useTranslation('home')
@@ -27,6 +28,7 @@ const SidebarRight: FunctionComponent = () => {
     const [workout, setWorkout] = useState(0)
     const [coach, setCoach] = useState(0)
     const [styles, setStyles]: any = useState()
+    const [getTheme]: any = useTheme()
 
     useEffect(() => {
         if (data && token) {
@@ -48,10 +50,10 @@ const SidebarRight: FunctionComponent = () => {
             setStyles(buildStyles({
                 textSize: '15px',
                 pathTransitionDuration: 0.5,
-                pathColor: 'rgba(25, 118, 210, 1',
+                pathColor: getTheme('PRIMARY'),
                 textColor: 'rgba(122, 122, 122, 1',
                 trailColor: '#d6d6d6',
-                backgroundColor: '#3e98c7',
+                backgroundColor: getTheme('PRIMARY'),
             }))
         }
     }, [data, token])
