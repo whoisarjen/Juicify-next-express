@@ -106,6 +106,7 @@ const AddProducts: FunctionComponent<AddproductsProps> = ({ index, isAddDialog, 
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={meal}
+                        fullWidth
                         onChange={(e) => setMeal(e.target.value)}
                     >
                         {
