@@ -3,7 +3,7 @@ import useTranslation from "next-translate/useTranslation";
 import { forwardRef } from "react";
 import { useAppSelector } from "../hooks/useRedux";
 import LoginIcon from "@mui/icons-material/Login";
-import AutoStoriesIcon from "@mui/icons-material/AutoStories";
+import SchoolIcon from '@mui/icons-material/School';
 import BookIcon from "@mui/icons-material/Book";
 import { getShortDate } from "../utils/manageDate";
 import Image from 'next/image'
@@ -44,6 +44,13 @@ const Navbar = () => {
                     <SearchBox />
                 </li>
                 <li>
+                    <Link passHref href="/search">
+                        <a>
+                            <IconButton color="primary" aria-label="blsearchog">
+                                <SearchIcon />
+                            </IconButton>
+                        </a>
+                    </Link>
                     <Link passHref href={`${router.asPath}`}>
                         <a onClick={toggleDarkMode}>
                             {
@@ -62,7 +69,7 @@ const Navbar = () => {
                     <Link passHref href="/blog">
                         <a>
                             <IconButton color="primary" aria-label="blog">
-                                <AutoStoriesIcon />
+                                <SchoolIcon />
                             </IconButton>
                         </a>
                     </Link>

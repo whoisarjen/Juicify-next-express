@@ -13,7 +13,7 @@ import { useAppSelector } from "../hooks/useRedux";
 import Avatar from '@mui/material/Avatar';
 import { useRouter } from "next/router";
 import { getShortDate } from "../utils/manageDate";
-import AutoStoriesIcon from "@mui/icons-material/AutoStories";
+import SchoolIcon from '@mui/icons-material/School';
 import Settings from "@mui/icons-material/Settings";
 import { useTheme } from "../hooks/useTheme";
 
@@ -71,7 +71,7 @@ const SidebarLeft: FunctionComponent = () => {
                             <ListItem disablePadding>
                                 <ListItemButton onClick={() => router.push(`/blog`)}>
                                     <ListItemIcon>
-                                        <AutoStoriesIcon color="primary" />
+                                        <SchoolIcon color="primary" />
                                     </ListItemIcon>
                                     <ListItemText primary="Blog" />
                                 </ListItemButton>
