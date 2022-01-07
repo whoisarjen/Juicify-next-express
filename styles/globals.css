@@ -274,7 +274,6 @@ input[type="number"] {
   font-size: 2rem;
   margin-bottom: 10px;
   font-weight: bold;
-  color: var(--MenuIconsColor);
 }
 
 .description {
