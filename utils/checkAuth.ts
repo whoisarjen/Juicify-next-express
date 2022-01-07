@@ -7,7 +7,11 @@ import { deleteDatabaseIndexedDB } from "./indexedDB";
 
 const logout = async () => {
     await deleteDatabaseIndexedDB();
+    const isDarkMode = localStorage.getItem('isDarkMode');
     localStorage.clear();
+    if (isDarkMode) {
+        localStorage.setItem('isDarkMode', isDarkMode)
+    }
     document.cookie = `token=''; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`
     document.cookie = `refresh_token=''; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`
     window.location.replace(`${window.location.origin}/login`)
@@ -39,10 +43,10 @@ const expectLoggedOUT = () => {
 const getCookie = async (name: string) => {
     let nameEQ = name + "=";
     let ca = document.cookie.split(';');
-    for(let i=0;i < ca.length;i++) {
+    for (let i = 0; i < ca.length; i++) {
         let c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
     }
     return null;
 }
