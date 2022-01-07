@@ -236,10 +236,6 @@ a:active {
   cursor: pointer;
 }
 
-.mobileOnly {
-  display: none;
-}
-
 @media (max-width: 800px) {
   .navbar ul {
     grid-template-columns: 1fr auto;
@@ -247,10 +243,6 @@ a:active {
 
   .notMobileOnly {
     display: none;
-  }
-
-  .mobileOnly {
-    display: block;
   }
 
   .paddingMenu {

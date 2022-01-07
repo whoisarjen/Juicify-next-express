@@ -43,7 +43,7 @@ const Navbar = () => {
                 <li className="notMobileOnly">
                     <SearchBox />
                 </li>
-                <li className="notMobileOnly" style={{ padding: '16px 0' }}>
+                <li style={{ padding: '16px 0' }}>
                     <Link passHref href={`${router.asPath}`}>
                         <a onClick={toggleDarkMode}>
                             {
@@ -103,39 +103,6 @@ const Navbar = () => {
                             </>
                         )
                     }
-                </li>
-                <li className="mobileOnly">
-                    <Link passHref href="/search">
-                        <a>
-                            <IconButton color="primary" aria-label="Search">
-                                <SearchIcon />
-                            </IconButton>
-                        </a>
-                    </Link>
-                    <Link passHref href="/blog">
-                        <a>
-                            <IconButton color="primary" aria-label="blog">
-                                <AutoStoriesIcon />
-                            </IconButton>
-                        </a>
-                    </Link>
-                    {token.login ? (
-                        <Link passHref href="/settings">
-                            <a>
-                                <IconButton color="primary" aria-label="settings">
-                                    <Settings />
-                                </IconButton>
-                            </a>
-                        </Link>
-                    ) : (
-                        <Link passHref href="/login">
-                            <a>
-                                <IconButton color="primary" aria-label="login">
-                                    <LoginIcon />
-                                </IconButton>
-                            </a>
-                        </Link>
-                    )}
                 </li>
             </ul>
         </nav>
