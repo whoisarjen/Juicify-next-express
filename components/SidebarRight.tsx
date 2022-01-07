@@ -73,10 +73,10 @@ const SidebarRight: FunctionComponent = () => {
                             </ListSubheader>
                         }
                     >
-                        <ListItemButton>
-                            <Link href={`${router.asPath}`}>
-                                <a>
-                                    <div onClick={() => setIsWeights(true)} className="sidebarRightCircleBox">
+                        <Link href={`${router.asPath}`}>
+                            <a>
+                                <ListItemButton onClick={() => setIsWeights(true)}>
+                                    <div className="sidebarRightCircleBox">
                                         <CircularProgressbar
                                             value={weight ? 100 : 0}
                                             text={`${weight}kg`}
@@ -86,12 +86,12 @@ const SidebarRight: FunctionComponent = () => {
                                             Waga
                                         </div>
                                     </div>
-                                </a>
-                            </Link>
-                        </ListItemButton>
-                        <ListItemButton>
-                            <Link href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
-                                <a>
+                                </ListItemButton>
+                            </a>
+                        </Link>
+                        <Link href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
+                            <a>
+                                <ListItemButton>
                                     <div className="sidebarRightCircleBox">
                                         <CircularProgressbar
                                             value={calories ? calories / caloriesGoal * 100 : 0}
@@ -102,12 +102,12 @@ const SidebarRight: FunctionComponent = () => {
                                             Kalorie
                                         </div>
                                     </div>
-                                </a>
-                            </Link>
-                        </ListItemButton>
-                        <ListItemButton>
-                            <Link href={`/${token.login}/workout-results/`}>
-                                <a>
+                                </ListItemButton>
+                            </a>
+                        </Link>
+                        <Link href={`/${token.login}/workout-results/`}>
+                            <a>
+                                <ListItemButton>
                                     <div className="sidebarRightCircleBox">
                                         <CircularProgressbar
                                             value={workout * 100}
@@ -118,12 +118,12 @@ const SidebarRight: FunctionComponent = () => {
                                             Trening
                                         </div>
                                     </div>
-                                </a>
-                            </Link>
-                        </ListItemButton>
-                        <ListItemButton>
-                            <Link href={`/coach`}>
-                                <a>
+                                </ListItemButton>
+                            </a>
+                        </Link>
+                        <Link href={`/coach`}>
+                            <a>
+                                <ListItemButton>
                                     <div className="sidebarRightCircleBox">
                                         <CircularProgressbar
                                             value={(7 - coach) / 7 * 100}
@@ -134,9 +134,9 @@ const SidebarRight: FunctionComponent = () => {
                                             Trener
                                         </div>
                                     </div>
-                                </a>
-                            </Link>
-                        </ListItemButton>
+                                </ListItemButton>
+                            </a>
+                        </Link>
                     </List>
                     <Weights
                         isWeights={isWeights}
