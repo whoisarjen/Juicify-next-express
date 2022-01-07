@@ -5,6 +5,7 @@ import useTranslation from "next-translate/useTranslation";
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
 import { FunctionComponent } from 'react';
 import { reverseDateDotes } from '../../utils/manageDate';
+import { useTheme } from '../../hooks/useTheme';
 
 interface BoxProps {
     title: string,
@@ -17,11 +18,12 @@ interface BoxProps {
 
 const Box: FunctionComponent<BoxProps> = ({ title, description, route, type, isNotSaved, whenAdded }) => {
     const { t } = useTranslation('workout');
+    const [getTheme]: any = useTheme()
 
     return (
         <Link href={route}>
             <a>
-                <div className={styles.box} style={{ background: isNotSaved ? 'red' : '' }}>
+                <div className={styles.box} style={{ background: isNotSaved ? 'red' : getTheme('PRIMARY') }}>
                     <div className={styles.boxText}>
                         <h2>{title}</h2>
                         <div className={styles.boxTextDescription}>{description}</div>
