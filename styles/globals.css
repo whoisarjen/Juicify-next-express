@@ -151,6 +151,11 @@ a:active {
   border-bottom: 1px solid #e4e4e4;
 }
 
+.navbar a,
+.navbar .css-12zv6qp-MuiButtonBase-root-MuiTab-root.Mui-selected{
+  color: var(--MenuIconsColor);
+}
+
 .navbar ul {
   max-width: 1200px;
   list-style-type: none;

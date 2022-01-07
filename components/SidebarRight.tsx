@@ -10,9 +10,13 @@ import ListItemButton from '@mui/material/ListItemButton';
 import Link from "next/link";
 import ListSubheader from '@mui/material/ListSubheader';
 import useTranslation from "next-translate/useTranslation";
+import { useRouter } from "next/router";
+import Weights from "./common/Weights";
 
 const SidebarRight: FunctionComponent = () => {
     const { t } = useTranslation('home')
+    const router = useRouter()
+    const [isWeights, setIsWeights] = useState(false)
     const [{ data }, reload] = useDailyMeasurement(getShortDate())
     const token: any = useAppSelector(state => state.token.value)
     const keyDaily = useAppSelector(state => state.key.daily_measurement)
@@ -68,9 +72,9 @@ const SidebarRight: FunctionComponent = () => {
                         }
                     >
                         <ListItemButton>
-                            <Link href={`/coach`}>
+                            <Link href={`${router.asPath}`}>
                                 <a>
-                                    <div className="sidebarRightCircleBox">
+                                    <div onClick={() => setIsWeights(true)} className="sidebarRightCircleBox">
                                         <CircularProgressbar
                                             value={weight ? 100 : 0}
                                             text={`${weight}kg`}
@@ -132,6 +136,13 @@ const SidebarRight: FunctionComponent = () => {
                             </Link>
                         </ListItemButton>
                     </List>
+                    <Weights
+                        isWeights={isWeights}
+                        closeWeights={() => {
+                            reload()
+                            setIsWeights(false)
+                        }}
+                    />
                 </>
             }
         </div>

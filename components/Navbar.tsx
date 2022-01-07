@@ -18,6 +18,7 @@ import { useDarkMode } from '../hooks/useDarkMode'
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import Box from '@mui/material/Box';
+import { useRouter } from "next/router";
 
 const MyLogo = forwardRef<any, any>(({ onClick, href }, ref) => {
     return (
@@ -30,6 +31,7 @@ MyLogo.displayName = "MyLogo Navbar";
 
 const Navbar = () => {
     const { t } = useTranslation("home");
+    const router = useRouter()
     const token: any = useAppSelector((state) => state.token.value);
     const [toggleDarkMode, theme]: any = useDarkMode()
 
@@ -50,12 +52,16 @@ const Navbar = () => {
                         value={0}
                         TabIndicatorProps={{ style: { display: "none" } }}
                     >
-                        <Tab
-                            onClick={toggleDarkMode}
-                            icon={theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-                            wrapped
-                            label={`${theme.palette.mode} mode`}
-                        />
+                        {/* <Link passHref href={`${router.asPath}`}>
+                            <a>
+                                <Tab
+                                    onClick={toggleDarkMode}
+                                    icon={theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+                                    wrapped
+                                    label={`${theme.palette.mode} mode`}
+                                />
+                            </a>
+                        </Link> */}
                         <Link passHref href="/blog">
                             <a>
                                 <Tab

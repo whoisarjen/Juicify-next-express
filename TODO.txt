@@ -21,11 +21,8 @@ daily measurements optimization server site with limit
 Precache synchro / load / hooks etc
 user not found => js force 404
 user has blocked profile => js force 403
-remove settings's tabs and make it as one place
 settings need option to change password
-
-
-Move prepareDaily to schema and care about not only weight managming
+Launch dark mode
 
 profile
 coach
