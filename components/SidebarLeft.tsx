@@ -16,9 +16,11 @@ import { getShortDate } from "../utils/manageDate";
 import SchoolIcon from '@mui/icons-material/School';
 import Settings from "@mui/icons-material/Settings";
 import { useTheme } from "../hooks/useTheme";
+import useTranslation from "next-translate/useTranslation";
 
 const SidebarLeft: FunctionComponent = () => {
     const router = useRouter()
+    const { t } = useTranslation('home')
     const token: any = useAppSelector(state => state.token.value)
     const [getTheme]: any = useTheme()
 
@@ -49,7 +51,7 @@ const SidebarLeft: FunctionComponent = () => {
                                     <ListItemIcon>
                                         <BookIcon color="primary" />
                                     </ListItemIcon>
-                                    <ListItemText primary="Diary" />
+                                    <ListItemText primary={t('Diary')} />
                                 </ListItemButton>
                             </ListItem>
                             <ListItem disablePadding>
@@ -57,7 +59,7 @@ const SidebarLeft: FunctionComponent = () => {
                                     <ListItemIcon>
                                         <FitnessCenterIcon color="primary" />
                                     </ListItemIcon>
-                                    <ListItemText primary="Workout" />
+                                    <ListItemText primary={t('Workout')} />
                                 </ListItemButton>
                             </ListItem>
                             <ListItem disablePadding>
@@ -65,7 +67,7 @@ const SidebarLeft: FunctionComponent = () => {
                                     <ListItemIcon>
                                         <EmojiEventsIcon color="primary" />
                                     </ListItemIcon>
-                                    <ListItemText primary="Coach" />
+                                    <ListItemText primary={t('Coach')}/>
                                 </ListItemButton>
                             </ListItem>
                             <ListItem disablePadding>
@@ -73,7 +75,7 @@ const SidebarLeft: FunctionComponent = () => {
                                     <ListItemIcon>
                                         <SchoolIcon color="primary" />
                                     </ListItemIcon>
-                                    <ListItemText primary="Blog" />
+                                    <ListItemText primary={t('Blog')} />
                                 </ListItemButton>
                             </ListItem>
                             <ListItem disablePadding>
@@ -81,7 +83,7 @@ const SidebarLeft: FunctionComponent = () => {
                                     <ListItemIcon>
                                         <Settings color="primary" />
                                     </ListItemIcon>
-                                    <ListItemText primary="Settings" />
+                                    <ListItemText primary={t('Settings')} />
                                 </ListItemButton>
                             </ListItem>
                         </List>

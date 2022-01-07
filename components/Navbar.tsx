@@ -54,11 +54,11 @@ const Navbar = () => {
                     </Link>
                     <Link passHref href="/blog">
                         <a>
-                            <IconButton className="NavbarMobile" color="primary" aria-label="blog">
+                            <IconButton className="NavbarMobile" color="primary" aria-label={t('Blog')}>
                                 <SchoolIcon />
                             </IconButton>
                             <Button className="NavbarWeb" startIcon={<SchoolIcon />}>
-                                Blog
+                            {t('Blog')}
                             </Button>
                         </a>
                     </Link>
@@ -67,21 +67,21 @@ const Navbar = () => {
                             <>
                                 <Link passHref href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
                                     <a>
-                                        <IconButton className="NavbarMobile" color="primary" aria-label="Diary">
+                                        <IconButton className="NavbarMobile" color="primary" aria-label={t('Diary')}>
                                             <BookIcon />
                                         </IconButton>
                                         <Button className="NavbarWeb" startIcon={<BookIcon />}>
-                                            Dziennik
+                                            {t('Diary')}
                                         </Button>
                                     </a>
                                 </Link>
                                 <Link passHref href="/settings">
                                     <a>
-                                        <IconButton className="NavbarMobile" color="primary" aria-label="Settings">
+                                        <IconButton className="NavbarMobile" color="primary" aria-label={t('Settings')}>
                                             <Settings />
                                         </IconButton>
                                         <Button className="NavbarWeb" startIcon={<Settings />}>
-                                            Ustawienia
+                                        {t('Settings')}
                                         </Button>
                                     </a>
                                 </Link>
@@ -90,21 +90,21 @@ const Navbar = () => {
                             <>
                                 <Link passHref href="/login">
                                     <a>
-                                        <IconButton className="NavbarMobile" color="primary" aria-label="Diary">
+                                        <IconButton className="NavbarMobile" color="primary" aria-label={t('Diary')}>
                                             <BookIcon />
                                         </IconButton>
                                         <Button className="NavbarWeb" startIcon={<BookIcon />}>
-                                            Dziennik
+                                            {t('Diary')}
                                         </Button>
                                     </a>
                                 </Link>
                                 <Link passHref href="/login">
                                     <a>
-                                        <IconButton className="NavbarMobile" color="primary" aria-label="Login">
+                                        <IconButton className="NavbarMobile" color="primary" aria-label={t('Login')}>
                                             <LoginIcon />
                                         </IconButton>
                                         <Button className="NavbarWeb" startIcon={<LoginIcon />}>
-                                            Logowanie
+                                        {t('Login')}
                                         </Button>
                                     </a>
                                 </Link>
