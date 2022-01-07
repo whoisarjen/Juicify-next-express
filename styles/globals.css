@@ -82,6 +82,47 @@ a:active {
   max-width: 200px;
 }
 
+.NavbarMobile {
+  display: none;
+}
+
+.navbar {
+  width: 100%;
+  min-height: 43px;
+  color: #fff;
+  border-bottom: 1px solid #e4e4e4;
+}
+
+.navbar a,
+.navbar .css-12zv6qp-MuiButtonBase-root-MuiTab-root.Mui-selected {
+  color: var(--MenuIconsColor);
+}
+
+.navbar ul {
+  padding: 11px;
+  max-width: 1200px;
+  list-style-type: none;
+  width: calc(100% - 22px);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  margin: 0 auto;
+}
+
+.navbar ul li {
+  color: rgba(0, 0, 0, 0.87);
+  text-align: center;
+  margin: auto;
+  cursor: pointer;
+}
+
+.navbar ul li:nth-child(1) {
+  margin: auto auto auto 8px;
+}
+
+.navbar ul li:nth-child(3) {
+  margin-right: 0;
+}
+
 @media (max-width: 1452px) {
   #gridOverContent {
     max-width: 1089px;
@@ -101,6 +142,24 @@ a:active {
 
   #sidebarRight {
     display: none;
+  }
+
+  .NavbarMobile {
+    display: inline-flex;
+  }
+
+  .NavbarWeb {
+    display: none;
+  }
+
+  .navbar ul {
+    padding: 11px;
+    width: calc(100% - 22px);
+    grid-template-columns: auto 1fr;
+  }
+
+  :root {
+    --BothNavHeightAndPadding: 113px;
   }
 }
 
@@ -153,43 +212,6 @@ a:active {
   width: 100%;
 }
 
-.navbar {
-  width: 100%;
-  min-height: 43px;
-  color: #fff;
-  border-bottom: 1px solid #e4e4e4;
-}
-
-.navbar a,
-.navbar .css-12zv6qp-MuiButtonBase-root-MuiTab-root.Mui-selected {
-  color: var(--MenuIconsColor);
-}
-
-.navbar ul {
-  padding: 11px;
-  max-width: 1200px;
-  list-style-type: none;
-  width: calc( 100% - 22px );
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  margin: 0 auto;
-}
-
-.navbar ul li {
-  color: rgba(0, 0, 0, 0.87);
-  text-align: center;
-  margin: auto;
-  cursor: pointer;
-}
-
-.navbar ul li:nth-child(1) {
-  margin: auto auto auto 8px;
-}
-
-.navbar ul li:nth-child(3) {
-  margin-right: 0;
-}
-
 .footer {
   width: 100%;
   min-height: 43px;
@@ -234,22 +256,6 @@ a:active {
   margin: auto;
   display: grid;
   cursor: pointer;
-}
-
-@media (max-width: 800px) {
-  .navbar ul {
-    padding: 11px;
-    width: calc( 100% - 22px );
-    grid-template-columns: 1fr auto;
-  }
-
-  .notMobileOnly {
-    display: none;
-  }
-
-  :root {
-    --BothNavHeightAndPadding: 113px;
-  }
 }
 
 input::-webkit-outer-spin-button,

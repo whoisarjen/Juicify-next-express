@@ -16,6 +16,7 @@ import { useTheme } from '../hooks/useTheme'
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useRouter } from "next/router";
+import Button from '@mui/material/Button';
 
 const MyLogo = forwardRef<any, any>(({ onClick, href }, ref) => {
     return (
@@ -40,17 +41,76 @@ const Navbar = () => {
                         <MyLogo />
                     </Link>
                 </li>
-                <li className="notMobileOnly">
+                <li className="NavbarWeb">
                     <SearchBox />
                 </li>
                 <li>
                     <Link passHref href="/search">
                         <a>
-                            <IconButton color="primary" aria-label="blsearchog">
+                            <IconButton className="NavbarMobile" color="primary" aria-label="search">
                                 <SearchIcon />
                             </IconButton>
                         </a>
                     </Link>
+                    <Link passHref href="/blog">
+                        <a>
+                            <IconButton className="NavbarMobile" color="primary" aria-label="blog">
+                                <SchoolIcon />
+                            </IconButton>
+                            <Button className="NavbarWeb" startIcon={<SchoolIcon />}>
+                                Blog
+                            </Button>
+                        </a>
+                    </Link>
+                    {
+                        token.login ? (
+                            <>
+                                <Link passHref href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
+                                    <a>
+                                        <IconButton className="NavbarMobile" color="primary" aria-label="Diary">
+                                            <BookIcon />
+                                        </IconButton>
+                                        <Button className="NavbarWeb" startIcon={<BookIcon />}>
+                                            Dziennik
+                                        </Button>
+                                    </a>
+                                </Link>
+                                <Link passHref href="/settings">
+                                    <a>
+                                        <IconButton className="NavbarMobile" color="primary" aria-label="Settings">
+                                            <Settings />
+                                        </IconButton>
+                                        <Button className="NavbarWeb" startIcon={<Settings />}>
+                                            Ustawienia
+                                        </Button>
+                                    </a>
+                                </Link>
+                            </>
+                        ) : (
+                            <>
+                                <Link passHref href="/login">
+                                    <a>
+                                        <IconButton className="NavbarMobile" color="primary" aria-label="Diary">
+                                            <BookIcon />
+                                        </IconButton>
+                                        <Button className="NavbarWeb" startIcon={<BookIcon />}>
+                                            Dziennik
+                                        </Button>
+                                    </a>
+                                </Link>
+                                <Link passHref href="/login">
+                                    <a>
+                                        <IconButton className="NavbarMobile" color="primary" aria-label="Login">
+                                            <LoginIcon />
+                                        </IconButton>
+                                        <Button className="NavbarWeb" startIcon={<LoginIcon />}>
+                                            Logowanie
+                                        </Button>
+                                    </a>
+                                </Link>
+                            </>
+                        )
+                    }
                     <Link passHref href={`${router.asPath}`}>
                         <a onClick={toggleDarkMode}>
                             {
@@ -66,50 +126,6 @@ const Navbar = () => {
                             }
                         </a>
                     </Link>
-                    <Link passHref href="/blog">
-                        <a>
-                            <IconButton color="primary" aria-label="blog">
-                                <SchoolIcon />
-                            </IconButton>
-                        </a>
-                    </Link>
-                    {
-                        token.login ? (
-                            <>
-                                <Link passHref href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
-                                    <a>
-                                        <IconButton color="primary" aria-label="Diary">
-                                            <BookIcon />
-                                        </IconButton>
-                                    </a>
-                                </Link>
-                                <Link passHref href="/settings">
-                                    <a>
-                                        <IconButton color="primary" aria-label="Settings">
-                                            <Settings />
-                                        </IconButton>
-                                    </a>
-                                </Link>
-                            </>
-                        ) : (
-                            <>
-                                <Link passHref href="/login">
-                                    <a>
-                                        <IconButton color="primary" aria-label="Diary">
-                                            <BookIcon />
-                                        </IconButton>
-                                    </a>
-                                </Link>
-                                <Link passHref href="/login">
-                                    <a>
-                                        <IconButton color="primary" aria-label="Login">
-                                            <LoginIcon />
-                                        </IconButton>
-                                    </a>
-                                </Link>
-                            </>
-                        )
-                    }
                 </li>
             </ul>
         </nav>
