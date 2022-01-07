@@ -14,6 +14,10 @@ import SearchBox from './common/SearchBox'
 import Settings from "@mui/icons-material/Settings";
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
+import { useDarkMode } from '../hooks/useDarkMode'
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import Box from '@mui/material/Box';
 
 const MyLogo = forwardRef<any, any>(({ onClick, href }, ref) => {
     return (
@@ -27,6 +31,7 @@ MyLogo.displayName = "MyLogo Navbar";
 const Navbar = () => {
     const { t } = useTranslation("home");
     const token: any = useAppSelector((state) => state.token.value);
+    const [toggleDarkMode, theme]: any = useDarkMode()
 
     return (
         <nav className="navbar">
@@ -45,6 +50,12 @@ const Navbar = () => {
                         value={0}
                         TabIndicatorProps={{ style: { display: "none" } }}
                     >
+                        <Tab
+                            onClick={toggleDarkMode}
+                            icon={theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+                            wrapped
+                            label={`${theme.palette.mode} mode`}
+                        />
                         <Link passHref href="/blog">
                             <a>
                                 <Tab
@@ -116,13 +127,13 @@ const Navbar = () => {
                         </a>
                     </Link>
                     {token.login ? (
-                    <Link passHref href="/settings">
-                        <a>
-                            <IconButton color="primary" aria-label="settings">
-                                <Settings />
-                            </IconButton>
-                        </a>
-                    </Link>
+                        <Link passHref href="/settings">
+                            <a>
+                                <IconButton color="primary" aria-label="settings">
+                                    <Settings />
+                                </IconButton>
+                            </a>
+                        </Link>
                     ) : (
                         <Link passHref href="/login">
                             <a>

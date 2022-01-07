@@ -2,33 +2,52 @@ import "../styles/globals.css";
 import 'react-toastify/dist/ReactToastify.css';
 import { store } from "../redux/store";
 import { Provider } from "react-redux";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Layout from "../components/Layout";
 import Socket from "../components/Socket";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState, useEffect, useMemo } from "react";
+import { createTheme, ThemeProvider as ThemeProviderMUI } from "@mui/material/styles";
+import { ColorModeContext } from '../hooks/useDarkMode'
 
 interface MyAppProps {
     Component: any,
     pageProps: any
 }
 
-const theme = createTheme({
-    typography: {
-        fontFamily: "Quicksand, sans-serif",
-    }
-});
-
 const MyApp: FunctionComponent<MyAppProps> = ({ Component, pageProps }) => {
+    const [mode, setMode]: any = useState('light')
+
+    const theme = createTheme({
+        typography: {
+            fontFamily: "Quicksand, sans-serif",
+        },
+        palette: {
+            mode
+        },
+    });
+
+    const colorMode = useMemo(
+        () => ({
+            toggleColorMode: () => {
+                setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+            },
+        }),
+        [],
+    );
+
+    useEffect(() => setMode(JSON.parse(localStorage.getItem('isDarkMode')) ? 'dark' : 'light'), [])
+
     return (
-        <ThemeProvider theme={theme}>
-            <Provider store={store}>
-                <Socket>
-                    <Layout>
-                        <Component {...pageProps} />
-                    </Layout>
-                </Socket>
-            </Provider>
-        </ThemeProvider>
+        <ColorModeContext.Provider value={colorMode}>
+            <ThemeProviderMUI theme={theme}>
+                <Provider store={store}>
+                    <Socket>
+                        <Layout>
+                            <Component {...pageProps} />
+                        </Layout>
+                    </Socket>
+                </Provider>
+            </ThemeProviderMUI>
+        </ColorModeContext.Provider>
     );
 }
 
