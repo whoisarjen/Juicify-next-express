@@ -120,7 +120,7 @@ const SidebarRight: FunctionComponent = () => {
                                 <a>
                                     <div className="sidebarRightCircleBox">
                                         <CircularProgressbar
-                                            value={(coach - 7) / 7 * 100}
+                                            value={(7 - coach) / 7 * 100}
                                             text={`${coach >= 0 ? coach : 0}dni`}
                                             styles={styles}
                                         />
