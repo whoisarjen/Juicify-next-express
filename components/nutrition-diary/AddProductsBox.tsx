@@ -9,6 +9,7 @@ import { FunctionComponent, useEffect, useState } from 'react'
 import { putIndexedDB, addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../utils/indexedDB';
 import useTranslation from "next-translate/useTranslation";
 import countCalories from './utils/countCalories';
+import { useTheme } from '../../hooks/useTheme';
 
 interface AddproductsBoxProps {
     product: any,
@@ -20,6 +21,7 @@ const AddProductsBox: FunctionComponent<AddproductsBoxProps> = ({ product, refre
     const [checked, setChecked] = useState(false);
     const [value, setValue] = useState('1.0')
     const [fav, setFav] = useState(false)
+    const [getTheme]: any = useTheme()
 
     const handleLike = async () => {
         if (fav) {
@@ -58,7 +60,7 @@ const AddProductsBox: FunctionComponent<AddproductsBoxProps> = ({ product, refre
     }, [])
 
     return (
-        <div className={styles.addProductsBox} style={{ borderLeft: product.v ? '5px solid #1976d2' : '' }}>
+        <div className={styles.addProductsBox} style={{ borderLeft: product.v ? `5px solid ${getTheme('PRIMARY')}` : '' }}>
             <div className={styles.addProductsBoxName}>
                 {product.name}
             </div>
