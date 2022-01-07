@@ -166,11 +166,11 @@ a:active {
 }
 
 .navbar ul {
+  padding: 11px;
   max-width: 1200px;
   list-style-type: none;
-  width: 100%;
+  width: calc( 100% - 22px );
   display: grid;
-  padding: 0;
   grid-template-columns: 1fr auto 1fr;
   margin: 0 auto;
 }
@@ -238,20 +238,13 @@ a:active {
 
 @media (max-width: 800px) {
   .navbar ul {
+    padding: 11px;
+    width: calc( 100% - 22px );
     grid-template-columns: 1fr auto;
   }
 
   .notMobileOnly {
     display: none;
-  }
-
-  .paddingMenu {
-    padding: 0 15px;
-  }
-
-  .paddingMenu:last-child {
-    margin-right: 0;
-    padding-right: 0;
   }
 
   :root {

@@ -43,7 +43,7 @@ const Navbar = () => {
                 <li className="notMobileOnly">
                     <SearchBox />
                 </li>
-                <li style={{ padding: '16px 0' }}>
+                <li>
                     <Link passHref href={`${router.asPath}`}>
                         <a onClick={toggleDarkMode}>
                             {
