@@ -190,6 +190,7 @@ a:active {
   margin: 0 auto;
   max-width: 702px;
   padding: 12px;
+  display: grid;
   min-height: calc(100vh - var(--BothNavHeightAndPadding));
 }
 
