@@ -11,9 +11,11 @@ const Share: FunctionComponent = () => {
     }
 
     return (
-        <IconButton onClick={handleShare}>
-            <ShareIcon />
-        </IconButton>
+        <div style={{ margin: 'auto' }}>
+            <IconButton onClick={handleShare}>
+                <ShareIcon color="primary" />
+            </IconButton>
+        </div>
     )
 }
 

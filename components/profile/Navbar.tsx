@@ -10,6 +10,7 @@ import LinkIcon from '@mui/icons-material/Link';
 import { useRouter } from "next/router";
 import TabsInterface from './TabsInterface'
 import Avatar from '../common/Avatar';
+import Share from "../common/Share";
 
 interface NavbarProps {
     user: any,
@@ -32,11 +33,17 @@ const Navbar: FunctionComponent<NavbarProps> = ({ user, tab }) => {
                         {
                             user.login == token.login ?
                                 (
-                                    <IconButton onClick={() => router.push('/settings')} sx={{ margin: 'auto' }} aria-label="settings" color="primary">
-                                        <SettingsIcon />
-                                    </IconButton>
+                                    <>
+                                        <Share />
+                                        <IconButton onClick={() => router.push('/settings')} sx={{ margin: 'auto' }} aria-label="settings" color="primary">
+                                            <SettingsIcon />
+                                        </IconButton>
+                                    </>
                                 ) : (
-                                    <div />
+                                    <>
+                                        <div />
+                                        <Share />
+                                    </>
                                 )
                         }
                     </div>

@@ -14,7 +14,6 @@ product site api for SEO
 Make better notify for create [...]
 in result => option to add exercise but synchro need to handle it too... + change order of exercises + delete
 sidebar need to random show profiles for better seo
-barcode to createProduct
 probably insert on whattoupdate might have issues, to check later with synchro
 wrap box on descirption, login etc to protect overflow?
 daily measurements optimization server site with limit
