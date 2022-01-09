@@ -1,10 +1,10 @@
-import { useAppSelector } from "../hooks/useRedux";
+import { useAppSelector } from "../../hooks/useRedux";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import BookIcon from "@mui/icons-material/Book";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { getShortDate } from "../utils/manageDate";
+import { getShortDate } from "../../utils/manageDate";
 import Avatar from '@mui/material/Avatar';
 import Link from "next/link";
 
@@ -13,7 +13,7 @@ const Footer = () => {
 
   return (
     <footer className="footer">
-      <div className="">©2022 Juicify.app</div>
+      <div>©2022 Juicify.app</div>
       {token.login && (
         <div className="footerMenu">
           <Link passHref href="/coach/">

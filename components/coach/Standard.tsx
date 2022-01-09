@@ -34,19 +34,19 @@ const Standard: FunctionComponent<StandardProps> = ({ setStep }) => {
                 <div className={styles.AddWeightMainIconsSites}>
                     <div onClick={() => setStep('Welcome')}>
                         <IconButton aria-label="reset">
-                            <RestartAltIcon />
+                            <RestartAltIcon color="primary" />
                         </IconButton>
                         <div>{t('NEW_GOAL')}</div>
                     </div>
                     <div onClick={() => setStep('Tutorial_1')}>
                         <IconButton aria-label="help">
-                            <HelpOutlineIcon />
+                            <HelpOutlineIcon color="primary" />
                         </IconButton>
                         <div>{t('HELP')}</div>
                     </div>
                     <div onClick={() => setIsWeights(true)}>
                         <IconButton aria-label="history">
-                            <HistoryIcon />
+                            <HistoryIcon color="primary" />
                         </IconButton>
                         <div>{t('HISTORY')}</div>
                     </div>

@@ -1,18 +1,18 @@
 import Link from "next/link";
 import useTranslation from "next-translate/useTranslation";
 import { forwardRef } from "react";
-import { useAppSelector } from "../hooks/useRedux";
+import { useAppSelector } from "../../hooks/useRedux";
 import LoginIcon from "@mui/icons-material/Login";
 import SchoolIcon from '@mui/icons-material/School';
 import BookIcon from "@mui/icons-material/Book";
-import { getShortDate } from "../utils/manageDate";
+import { getShortDate } from "../../utils/manageDate";
 import Image from 'next/image'
-import logo from '../public/images/logo.png'
-import SearchBox from './common/SearchBox'
+import logo from '../../public/images/logo.png'
+import SearchBox from '../common/SearchBox'
 import Settings from "@mui/icons-material/Settings";
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
-import { useTheme } from '../hooks/useTheme'
+import { useTheme } from '../../hooks/useTheme'
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useRouter } from "next/router";
@@ -58,7 +58,7 @@ const Navbar = () => {
                                 <SchoolIcon />
                             </IconButton>
                             <Button className="NavbarWeb" startIcon={<SchoolIcon />}>
-                            {t('Blog')}
+                                {t('Blog')}
                             </Button>
                         </a>
                     </Link>
@@ -81,7 +81,7 @@ const Navbar = () => {
                                             <Settings />
                                         </IconButton>
                                         <Button className="NavbarWeb" startIcon={<Settings />}>
-                                        {t('Settings')}
+                                            {t('Settings')}
                                         </Button>
                                     </a>
                                 </Link>
@@ -104,7 +104,7 @@ const Navbar = () => {
                                             <LoginIcon />
                                         </IconButton>
                                         <Button className="NavbarWeb" startIcon={<LoginIcon />}>
-                                        {t('Login')}
+                                            {t('Login')}
                                         </Button>
                                     </a>
                                 </Link>

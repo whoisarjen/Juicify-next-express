@@ -1,13 +1,13 @@
-import { setIsOnline } from '../redux/features/onlineSlice'
+import { setIsOnline } from '../../redux/features/onlineSlice'
 import io from "socket.io-client";
 import { useState, useEffect, FunctionComponent } from 'react'
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
-import { setToken } from "../redux/features/tokenSlice";
-import { is_id, API } from '../utils/API'
-import { getAllIndexedDB, deleteIndexedDB, getIndexedDBbyID, addIndexedDB } from '../utils/indexedDB'
-import { overwriteThoseIDSinDB, insertThoseIDStoDB, deleteThoseIDSfromDB, setLastUpdated } from '../utils/API'
-import { store } from '../redux/store'
+import { setToken } from "../../redux/features/tokenSlice";
+import { is_id, API } from '../../utils/API'
+import { getAllIndexedDB, deleteIndexedDB, getIndexedDBbyID, addIndexedDB } from '../../utils/indexedDB'
+import { overwriteThoseIDSinDB, insertThoseIDStoDB, deleteThoseIDSfromDB, setLastUpdated } from '../../utils/API'
+import { store } from '../../redux/store'
 
 const synchronizationAfterOfflineDailyMeasurement = async (isNewValueInDB: boolean = false) => {
     const theOldestSupportedDate = store.getState().config.theOldestSupportedDate();

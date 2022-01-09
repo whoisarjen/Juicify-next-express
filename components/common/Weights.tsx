@@ -67,9 +67,9 @@ const Weights: FunctionComponent<WeightsProps> = ({ isWeights, closeWeights }) =
                 TransitionComponent={Transition}
             >
                 <div className="content">
-                    <div className="title">Add weight</div>
+                    <div className="title">{t('Add weight')}</div>
                     <div className="description">
-                        Click weight to change the value. Tracking weight helps Juicify manage your calories better, which will make your goal achievable faster.
+                        {t('Add weight description')}
                     </div>
                     <Fragment>
                         <Timeline position="alternate">

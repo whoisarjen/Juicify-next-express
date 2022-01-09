@@ -1,16 +1,12 @@
-- head href language flag
 Site 404
 offline site
-Better protection on cookies
 block +30days in diary + notify it
-max value on inputs
 Clean DB from empty products
-useSocket logout
 deleteidsfromdb change response to response => data
-logout error
 Chcecking fake id on server side?
 block workout save if not diff
 product site api for SEO
+Create headers with component
 Make better notify for create [...]
 in result => option to add exercise but synchro need to handle it too... + change order of exercises + delete
 sidebar need to random show profiles for better seo
@@ -20,8 +16,6 @@ daily measurements optimization server site with limit
 Precache synchro / load / hooks etc
 user not found => js force 404
 user has blocked profile => js force 403
-
-notify with useContext
 
 profile
 coach

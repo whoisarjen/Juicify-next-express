@@ -1,18 +1,18 @@
 import { FunctionComponent, useState, useEffect } from "react"
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import { useDailyMeasurement } from "../hooks/useDailyMeasurement";
-import useMacro from "../hooks/useMacro";
-import { useAppSelector } from "../hooks/useRedux";
-import { getDiffrentBetweenDays, getShortDate, reverseDateDotes } from "../utils/manageDate";
-import countCalories from "./nutrition-diary/utils/countCalories";
+import { useDailyMeasurement } from "../../hooks/useDailyMeasurement";
+import useMacro from "../../hooks/useMacro";
+import { useAppSelector } from "../../hooks/useRedux";
+import { getDiffrentBetweenDays, getShortDate, reverseDateDotes } from "../../utils/manageDate";
+import countCalories from "../nutrition-diary/utils/countCalories";
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import Link from "next/link";
 import ListSubheader from '@mui/material/ListSubheader';
 import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
-import Weights from "./common/Weights";
-import { useTheme } from "../hooks/useTheme";
+import Weights from "../common/Weights";
+import { useTheme } from "../../hooks/useTheme";
 
 const SidebarRight: FunctionComponent = () => {
     const { t } = useTranslation('home')

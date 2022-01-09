@@ -1,6 +1,6 @@
 import { createTheme, ThemeProvider as ThemeProviderMUI } from "@mui/material/styles";
 import { FunctionComponent, useState, useMemo, useEffect } from "react";
-import { ColorModeContext } from '../hooks/useTheme'
+import { ColorModeContext } from '../../hooks/useTheme'
 
 interface MUIProps {
     children: any

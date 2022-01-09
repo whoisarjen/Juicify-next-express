@@ -11,8 +11,11 @@ import FastDateChanger from '../../../components/common/FastDateChanger'
 import Diagrams from '../../../components/nutrition-diary/Diagrams'
 import DiagramsOptions from '../../../components/nutrition-diary/DiagramsOptions'
 import BottomFlyingGuestBanner from '../../../components/common/BottomFlyingGuestBanner'
+import Header from "../../../components/layout/Header"
+import useTranslation from "next-translate/useTranslation"
 
 const NutritionDiary: FunctionComponent = () => {
+    const { t } = useTranslation('nutrition-diary')
     const router: any = useRouter()
     const [index, setIndex] = useState(0)
     const [product, setProduct] = useState({})
@@ -67,6 +70,10 @@ const NutritionDiary: FunctionComponent = () => {
 
     return (
         <div className="NutritionDiary">
+            <Header
+                title={`${t('title')} ${router.query.login} ${router.query.date}`}
+                description={`${t('title')} ${router.query.login} ${router.query.date}`}
+            />
             <Navbar />
             <FastDateChanger />
             <Diagrams array={nutrition_diary} key={nutrition_diary.length} />
