@@ -6,20 +6,12 @@ import useTranslation from "next-translate/useTranslation";
 
 const Tab2: FunctionComponent<any> = ({ changeObject }) => {
     const { t } = useTranslation()
-    const [fiber, setFiber] = useState<number>(10)
-    const [meal_number, setMeal_number] = useState<number>(5)
-    const [sugar_percent, setSugar_percent] = useState<number>(5)
     const token: any = useAppSelector(state => state.token.value)
+    const [fiber, setFiber] = useState<any>()
+    const [meal_number, setMeal_number] = useState<any>()
+    const [sugar_percent, setSugar_percent] = useState<any>()
     const requireMealNumber = useAppSelector(state => state.config.requireMealNumber)
     const requiredBasicInputNumber0TO100 = useAppSelector(state => state.config.requiredBasicInputNumber0TO100)
-
-    useEffect(() => {
-        let object = {};
-        if (fiber && fiber != token.fiber && requiredBasicInputNumber0TO100(fiber)) object['fiber'] = fiber
-        if (meal_number && meal_number != token.meal_number && requireMealNumber(meal_number)) object['meal_number'] = meal_number
-        if (sugar_percent && sugar_percent != token.sugar_percent && requiredBasicInputNumber0TO100(fiber)) object['sugar_percent'] = sugar_percent
-        changeObject(object)
-    }, [fiber, meal_number, sugar_percent, token])
 
     useEffect(() => {
         if (token) {
@@ -28,6 +20,14 @@ const Tab2: FunctionComponent<any> = ({ changeObject }) => {
             setSugar_percent(token.sugar_percent)
         }
     }, [token])
+
+    useEffect(() => {
+        let object = {};
+        if (fiber && fiber != token.fiber && requiredBasicInputNumber0TO100(fiber)) object['fiber'] = fiber
+        if (meal_number && meal_number != token.meal_number && requireMealNumber(meal_number)) object['meal_number'] = meal_number
+        if (sugar_percent && sugar_percent != token.sugar_percent && requiredBasicInputNumber0TO100(sugar_percent)) object['sugar_percent'] = sugar_percent
+        changeObject(object)
+    }, [fiber, meal_number, sugar_percent, token])
 
     return (
         <div>

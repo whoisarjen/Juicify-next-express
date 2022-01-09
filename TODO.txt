@@ -21,8 +21,6 @@ daily measurements optimization server site with limit
 Precache synchro / load / hooks etc
 user not found => js force 404
 user has blocked profile => js force 403
-settings need option to change password
-Launch dark mode
 
 profile
 coach

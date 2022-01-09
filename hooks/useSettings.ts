@@ -14,17 +14,7 @@ const useSettings = () => {
         }
     }
 
-    const changePassword = async (object) => {
-        const { response, isSuccess } = await API('/auth/changePassword', {
-            array: [object]
-        })
-        if(isSuccess){
-            setCookie('refresh_token', response.data.refresh_token)
-            setCookie('token', response.data.token)
-        }
-    }
-
-    return [changeSettings, changePassword]
+    return [changeSettings]
 }
 
 

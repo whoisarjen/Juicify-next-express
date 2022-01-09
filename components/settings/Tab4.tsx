@@ -1,40 +1,30 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { useAppSelector } from "../../hooks/useRedux";
-import useSettings from "../../hooks/useSettings";
 import TextField from '@mui/material/TextField';
 import useTranslation from "next-translate/useTranslation";
-import BottomFlyingButton from '../common/BottomFlyingButton'
 
-const Tab4: FunctionComponent<any> = ({ marginBottom }) => {
+const Tab4: FunctionComponent<any> = ({ changeObject }) => {
     const { t } = useTranslation()
-    const [, changePassword] = useSettings()
     const [repeat, setRepeat] = useState('')
     const [current, setCurrent] = useState('')
     const [password, setPassword] = useState('')
-    const [isLoading, setIsLoading] = useState(false)
+    const token: any = useAppSelector(state => state.token.value)
     const requirePassword = useAppSelector(state => state.config.requirePassword)
 
-    const handleSubmit = async () => {
-        setIsLoading(true)
-        if (
-            requirePassword(password)
+    useEffect(() => {
+        let object: any = {};
+        if (requirePassword(password)
             && requirePassword(repeat)
             && requirePassword(current)
             && password === repeat
             && password != current
         ) {
-            await changePassword({
-                password,
-                current
-            })
-                .then(() => {
-                    setRepeat('')
-                    setCurrent('')
-                    setPassword('')
-                })
+            object.current = current
+            object.password = password
+
         }
-        setIsLoading(false)
-    }
+        changeObject(object)
+    }, [password, repeat, current, token])
 
     return (
         <div>
@@ -44,17 +34,16 @@ const Tab4: FunctionComponent<any> = ({ marginBottom }) => {
                 variant="outlined"
                 value={password}
                 error={
-                    password.length > 0 &&
+                    (repeat.length || password.length) &&
                     !requirePassword(password)
                 }
                 helperText={
-                    password.length > 0 &&
+                    (repeat.length || password.length) &&
                         !requirePassword(password)
                         ? t("home:requirePassword")
                         : ""
                 }
                 onChange={(e) => setPassword(e.target.value)}
-                sx={{ marginBottom: marginBottom }}
             />
             <TextField
                 id="outlined-basic"
@@ -62,17 +51,18 @@ const Tab4: FunctionComponent<any> = ({ marginBottom }) => {
                 variant="outlined"
                 value={repeat}
                 error={
-                    repeat.length > 0 &&
-                    !requirePassword(repeat)
+                    (repeat != password) ||
+                    (repeat.length &&
+                        !requirePassword(repeat))
                 }
                 helperText={
-                    repeat.length > 0 &&
-                        !requirePassword(repeat)
+                    (repeat != password) ||
+                        (repeat.length &&
+                            !requirePassword(repeat))
                         ? t("home:requirePassword")
                         : ""
                 }
                 onChange={(e) => setRepeat(e.target.value)}
-                sx={{ marginBottom: marginBottom }}
             />
             <TextField
                 id="outlined-basic"
@@ -80,22 +70,17 @@ const Tab4: FunctionComponent<any> = ({ marginBottom }) => {
                 variant="outlined"
                 value={current}
                 error={
-                    current.length > 0 &&
+                    (current.length || repeat.length || password.length) &&
                     !requirePassword(current)
                 }
                 helperText={
-                    current.length > 0 &&
+                    (current.length || repeat.length || password.length) &&
                         !requirePassword(current)
                         ? t("home:requirePassword")
                         : ""
                 }
                 onChange={(e) => setCurrent(e.target.value)}
-                sx={{ marginBottom: marginBottom }}
             />
-            {
-                password.length > 0 &&
-                <BottomFlyingButton clicked={handleSubmit} isLoading={isLoading} />
-            }
         </div>
     )
 }

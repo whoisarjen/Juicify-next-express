@@ -50,36 +50,6 @@ app.post('/guest/:where', async (req, res) => {
         })
 });
 
-// app.post('/coach/:where', async (req, res) => {
-//     await verifyToken(req)
-//     require(`./mongoDB/coach/${req.params.where}`)(req)
-//         .then(async () => await handleSynchronization(req, res, req.body.array, ''))
-//         .catch(err => {
-//             console.log(err)
-//             res.status(404).send({ error: 'Wrong query' })
-//         })
-// });
-
-// app.post('/auth/change', async (req, res) => {
-//     await verifyToken(req)
-//     require('./mongoDB/auth/change')(req)
-//         .then(async () => await handleSynchronization(req, res, req.body.array, ''))
-//         .catch(err => {
-//             console.log(err)
-//             res.status(404).send({ error: 'Wrong query' })
-//         })
-// });
-
-// app.post('/auth/changePassword', async (req, res) => {
-//     await verifyToken(req)
-//     require('./mongoDB/auth/changePassword')(req, res)
-//         .then((data) => res.send({ data }))
-//         .catch(err => {
-//             console.log(err)
-//             res.status(404).send({ error: 'Wrong query' })
-//         })
-// });
-
 app.post('/delete', async (req, res) => {
     await verifyToken(req)
     await require(`./mongoDB/delete`)(req)
@@ -92,7 +62,7 @@ app.post('/delete', async (req, res) => {
 
 app.post('/:what/:where', async (req, res) => {
     await verifyToken(req)
-    await require(`./mongoDB/${req.params.what}/${req.params.where}`)(req)
+    await require(`./mongoDB/${req.params.what}/${req.params.where}`)(req, res)
         .then(async data => await handleSynchronization(req, res, data, 'change'))
         .catch(err => {
             console.log(err)
