@@ -25,6 +25,7 @@ const getAge = (date: Date) => {
 
 const getDailyDate = (date: Date | string = getShortDate()) => new Date(date).toJSON()
 
+// @ts-ignore
 const getDiffrentBetweenDays = (a, b) => (new Date(a) - new Date(b)) / 864e5 | 0;
 
 export {
