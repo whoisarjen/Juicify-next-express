@@ -8,9 +8,9 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import useTranslation from 'next-translate/useTranslation';
 import { useAppSelector } from "../../hooks/useRedux";
-import { ToastContainer, toast } from 'react-toastify'
 import { insertThoseIDStoDB } from '../../utils/API';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { useNotify } from '../../hooks/useNotify';
 
 interface CreateExerciseProps {
     closeCreateExercise: () => void,
@@ -24,6 +24,7 @@ const CreateExercise: FunctionComponent<CreateExerciseProps> = ({ closeCreateExe
     const [name, setName] = useState('')
     const token: any = useAppSelector(state => state.token.value)
     const requiredBasicInputLength = useAppSelector(state => state.config.requiredBasicInputLength)
+    const [{ success }] = useNotify()
 
     const handleCreateExercise = async () => {
         if (requiredBasicInputLength(name)) {
@@ -36,13 +37,7 @@ const CreateExercise: FunctionComponent<CreateExerciseProps> = ({ closeCreateExe
             }
             await insertThoseIDStoDB('exercise', [object])
                 .then(() => created(object.name))
-                .then(() => {
-                    toast.success(t('home:Success'), {
-                        position: "bottom-right",
-                        autoClose: 2000,
-                        closeOnClick: true,
-                    })
-                })
+                .then(() => success())
                 .finally(() => setLoading(false))
         }
     }
@@ -82,7 +77,6 @@ const CreateExercise: FunctionComponent<CreateExerciseProps> = ({ closeCreateExe
                         {t('Submit')}
                     </LoadingButton>
                 </DialogActions>
-                <ToastContainer />
             </Dialog>
         </div>
     );

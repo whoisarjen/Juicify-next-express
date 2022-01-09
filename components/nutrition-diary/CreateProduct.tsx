@@ -8,9 +8,9 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import useTranslation from 'next-translate/useTranslation';
 import { useAppSelector } from "../../hooks/useRedux";
-import { ToastContainer, toast } from 'react-toastify'
 import { insertThoseIDStoDB } from '../../utils/API';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { useNotify } from '../../hooks/useNotify';
 
 interface CreateProductProps {
         closeCreateProduct: () => void,
@@ -33,6 +33,7 @@ const CreateProduct: FunctionComponent<CreateProductProps> = ({ closeCreateProdu
     const numberOnlyPositive = useAppSelector(state => state.config.numberOnlyPositive)
     const token: any = useAppSelector(state => state.token.value)
     const requiredBasicInputLength = useAppSelector(state => state.config.requiredBasicInputLength)
+    const [{ success, error }] = useNotify()
 
     const handleCreateProduct = async () => {
         if (
@@ -77,20 +78,10 @@ const CreateProduct: FunctionComponent<CreateProductProps> = ({ closeCreateProdu
                 }
                 await insertThoseIDStoDB('product', [object])
                     .then(() => created(object.name))
-                    .then(() => {
-                        toast.success(t('home:Success'), {
-                            position: "bottom-right",
-                            autoClose: 2000,
-                            closeOnClick: true,
-                        })
-                    })
+                    .then(() => success())
                     .finally(() => setLoading(false))
             } else {
-                toast.error(t('Calories can NOT be equal to zero'), {
-                    position: "bottom-right",
-                    autoClose: 2000,
-                    closeOnClick: true,
-                })
+                error('Calories can NOT be equal to zero')
             }
         }
     }
@@ -291,7 +282,6 @@ const CreateProduct: FunctionComponent<CreateProductProps> = ({ closeCreateProdu
                     {t('Submit')}
                     </LoadingButton>
                 </DialogActions>
-                <ToastContainer />
             </Dialog>
         </div>
     );
