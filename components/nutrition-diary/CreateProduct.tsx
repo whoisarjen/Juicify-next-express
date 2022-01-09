@@ -2,6 +2,8 @@ import { useState, useEffect, FunctionComponent } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
+import Switch from '@mui/material/Switch';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
@@ -13,13 +15,16 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { useNotify } from '../../hooks/useNotify';
 
 interface CreateProductProps {
-        closeCreateProduct: () => void,
-        isCreateProduct: boolean,
-        created: (arg0: string) => void
+    closeCreateProduct: () => void,
+    isCreateProduct: boolean,
+    created: (arg0: string) => void
+    defaultBarcode?: string | number
 }
 
-const CreateProduct: FunctionComponent<CreateProductProps> = ({ closeCreateProduct, isCreateProduct, created }) => {
+const CreateProduct: FunctionComponent<CreateProductProps> = ({ closeCreateProduct, isCreateProduct, created, defaultBarcode }) => {
     const { t } = useTranslation('nutrition-diary')
+    const [code, setCode] = useState(defaultBarcode)
+    const [availableForAll, setAvailableForAll] = useState(false)
     const [loading, setLoading] = useState(false)
     const [proteins, setProteins] = useState<any>('')
     const [carbs, setCarbs] = useState<any>('')
@@ -31,6 +36,7 @@ const CreateProduct: FunctionComponent<CreateProductProps> = ({ closeCreateProdu
     const [calories, setCalories] = useState<any>(0)
     const [name, setName] = useState('')
     const numberOnlyPositive = useAppSelector(state => state.config.numberOnlyPositive)
+    const numberOnlyPositiveLong = useAppSelector(state => state.config.numberOnlyPositiveLong)
     const token: any = useAppSelector(state => state.token.value)
     const requiredBasicInputLength = useAppSelector(state => state.config.requiredBasicInputLength)
     const [{ success, error }] = useNotify()
@@ -76,9 +82,29 @@ const CreateProduct: FunctionComponent<CreateProductProps> = ({ closeCreateProdu
                 if (ethanol && parseFloat(ethanol) > 0) {
                     object.ethanol = ethanol
                 }
+                if (code) {
+                    object.code = code
+                }
+                if (availableForAll) {
+                    object.checkMe = true
+                }
                 await insertThoseIDStoDB('product', [object])
                     .then(() => created(object.name))
                     .then(() => success())
+                    .then(() => {
+                        setCode(defaultBarcode)
+                        setAvailableForAll(false)
+                        setLoading(false)
+                        setProteins('')
+                        setCarbs('')
+                        setSugar('')
+                        setFat('')
+                        setFiber('')
+                        setSalt('')
+                        setEthanol('')
+                        setCalories(0)
+                        setName('')
+                    })
                     .finally(() => setLoading(false))
             } else {
                 error('Calories can NOT be equal to zero')
@@ -131,6 +157,28 @@ const CreateProduct: FunctionComponent<CreateProductProps> = ({ closeCreateProdu
                         fullWidth
                         variant="standard"
                     />
+                    {
+                        defaultBarcode &&
+                        <TextField
+                            error={
+                                !numberOnlyPositiveLong(code)
+                            }
+                            helperText={
+                                !numberOnlyPositiveLong(code)
+                                    ? t("home:numberOnlyPositiveLong")
+                                    : ""
+                            }
+                            margin="dense"
+                            id="name"
+                            label="Barcode"
+                            value={code}
+                            onChange={(e) => setCode(e.target.value)}
+                            type="Number"
+                            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                            fullWidth
+                            variant="standard"
+                        />
+                    }
                     <TextField
                         error={
                             !numberOnlyPositive(proteins)
@@ -275,11 +323,12 @@ const CreateProduct: FunctionComponent<CreateProductProps> = ({ closeCreateProdu
                         fullWidth
                         variant="standard"
                     />
+                    <FormControlLabel control={<Switch value={availableForAll} onChange={() => setAvailableForAll(state => !state)} />} label={t('Should be available for all?')} />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={closeCreateProduct}>{t('Cancel')}</Button>
                     <LoadingButton loading={loading} onClick={handleCreateProduct}>
-                    {t('Submit')}
+                        {t('Submit')}
                     </LoadingButton>
                 </DialogActions>
             </Dialog>

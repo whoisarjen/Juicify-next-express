@@ -47,6 +47,13 @@ const initialState = {
             return false
         }
     },
+    numberOnlyPositiveLong: (value: any) => {
+        if (!value || 0 <= value) {
+            return true
+        } else {
+            return false
+        }
+    },
     numberOnlyPositive: (value: any) => {
         if (!value || (0 <= value && value <= 10000)) {
             return true
