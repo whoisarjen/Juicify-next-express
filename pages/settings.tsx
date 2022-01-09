@@ -8,9 +8,11 @@ import { logout } from '../utils/checkAuth'
 import Button from '@mui/material/Button';
 import BottomFlyingButton from "../components/common/BottomFlyingButton";
 import useSettings from "../hooks/useSettings";
+import useTranslation from "next-translate/useTranslation";
 
 const Settings: FunctionComponent = () => {
     expectLoggedIN();
+    const { t } = useTranslation('settings')
     const [key, setKey] = useState(0)
     const [isLoading, setIsLoading] = useState(false)
     const [changedObject, setChangedObject] = useState({})
@@ -56,15 +58,15 @@ const Settings: FunctionComponent = () => {
 
     return (
         <div className="settings" key={key}>
-            <div className="tabTitle">Preferencje</div>
+            <div className="tabTitle">{t('Preferences')}</div>
             <Tab1 changeObject={(object) => changeObject(object, 'Tab1')} />
-            <div className="tabTitle">Dziennik</div>
+            <div className="tabTitle">{t('Diary')}</div>
             <Tab2 changeObject={(object) => changeObject(object, 'Tab2')} />
-            <div className="tabTitle">Profil</div>
+            <div className="tabTitle">{t('Profile')}</div>
             <Tab3 changeObject={(object) => changeObject(object, 'Tab3')} />
-            <div className="tabTitle">Hasło</div>
+            <div className="tabTitle">{t('Password')}</div>
             <Tab4 changeObject={(object) => changeObject(object, 'Tab4')} />
-            <div className="tabTitle">Logout</div>
+            <div className="tabTitle">{t('Logout')}</div>
             <Button color="error" onClick={async () => await logout()}>
                 Logout
             </Button>

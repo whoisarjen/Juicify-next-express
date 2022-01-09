@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import useTranslation from "next-translate/useTranslation";
 
 const Tab2: FunctionComponent<any> = ({ changeObject }) => {
-    const { t } = useTranslation()
+    const { t } = useTranslation('settings')
     const token: any = useAppSelector(state => state.token.value)
     const [fiber, setFiber] = useState<any>()
     const [meal_number, setMeal_number] = useState<any>()
@@ -33,7 +33,7 @@ const Tab2: FunctionComponent<any> = ({ changeObject }) => {
         <div>
             <TextField
                 id="outlined-number"
-                label="Number of meals"
+                label={t('Number of meals')}
                 type="number"
                 value={meal_number}
                 onChange={(e) => setMeal_number(parseInt(e.target.value))}
@@ -51,7 +51,7 @@ const Tab2: FunctionComponent<any> = ({ changeObject }) => {
             />
             <TextField
                 id="outlined-number"
-                label="Fiber"
+                label={t("Fiber")}
                 type="number"
                 value={fiber}
                 onChange={(e) => setFiber(parseInt(e.target.value))}
@@ -72,7 +72,7 @@ const Tab2: FunctionComponent<any> = ({ changeObject }) => {
             />
             <TextField
                 id="outlined-number"
-                label="Sugar"
+                label={t("Sugar")}
                 type="number"
                 value={sugar_percent}
                 onChange={(e) => setSugar_percent(parseInt(e.target.value))}

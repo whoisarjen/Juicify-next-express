@@ -6,7 +6,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import useTranslation from "next-translate/useTranslation";
 
 const Tab1: FunctionComponent<any> = ({ changeObject }) => {
-    const { t } = useTranslation()
+    const { t } = useTranslation('settings')
     const token: any = useAppSelector(state => state.token.value)
     const [name, setName] = useState<string | null>('')
     const [surname, setSurname] = useState<string | null>('')
@@ -52,7 +52,7 @@ const Tab1: FunctionComponent<any> = ({ changeObject }) => {
         <div>
             <TextField
                 id="outlined-basic"
-                label="Name"
+                label={t("Name")}
                 variant="outlined"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -71,7 +71,7 @@ const Tab1: FunctionComponent<any> = ({ changeObject }) => {
             />
             <TextField
                 id="outlined-basic"
-                label="Surname"
+                label={t("Surname")}
                 variant="outlined"
                 value={surname}
                 onChange={(e) => setSurname(e.target.value)}
@@ -91,11 +91,11 @@ const Tab1: FunctionComponent<any> = ({ changeObject }) => {
             <MobileDatePicker
                 change={(newDate) => setBirth(newDate)}
                 defaultDate={birth}
-                label="Birth"
+                label={t("Birth")}
             />
             <TextField
                 id="outlined-number"
-                label="Height"
+                label={t("Height")}
                 type="number"
                 value={height}
                 onChange={(e) => setHeight(parseInt(e.target.value))}
@@ -116,7 +116,7 @@ const Tab1: FunctionComponent<any> = ({ changeObject }) => {
             />
             <TextField
                 id="outlined-basic"
-                label="Description"
+                label={t("Description")}
                 variant="outlined"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -135,7 +135,7 @@ const Tab1: FunctionComponent<any> = ({ changeObject }) => {
             />
             <TextField
                 id="outlined-basic"
-                label="Website"
+                label={t("Website")}
                 variant="outlined"
                 value={website}
                 onChange={(e) => setWebsite(e.target.value)}

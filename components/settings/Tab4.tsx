@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import useTranslation from "next-translate/useTranslation";
 
 const Tab4: FunctionComponent<any> = ({ changeObject }) => {
-    const { t } = useTranslation()
+    const { t } = useTranslation('settings')
     const [repeat, setRepeat] = useState('')
     const [current, setCurrent] = useState('')
     const [password, setPassword] = useState('')
@@ -30,7 +30,7 @@ const Tab4: FunctionComponent<any> = ({ changeObject }) => {
         <div>
             <TextField
                 id="outlined-basic"
-                label="New password"
+                label={t("New password")}
                 variant="outlined"
                 value={password}
                 error={
@@ -47,7 +47,7 @@ const Tab4: FunctionComponent<any> = ({ changeObject }) => {
             />
             <TextField
                 id="outlined-basic"
-                label="Repeat new password"
+                label={t("Repeat new password")}
                 variant="outlined"
                 value={repeat}
                 error={
@@ -66,7 +66,7 @@ const Tab4: FunctionComponent<any> = ({ changeObject }) => {
             />
             <TextField
                 id="outlined-basic"
-                label="Current password"
+                label={t("Current password")}
                 variant="outlined"
                 value={current}
                 error={
