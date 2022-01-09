@@ -185,7 +185,8 @@ a:active {
   margin: auto 12px;
 }
 
-.content {
+.content,
+.contentWithoutHeight {
   width: 100%;
   margin: 0 auto;
   max-width: 702px;
@@ -194,8 +195,13 @@ a:active {
   min-height: calc(100vh - var(--BothNavHeightAndPadding));
 }
 
+.contentWithoutHeight{
+  min-height: auto;
+}
+
 @media (max-width: 726px) {
-  .content {
+  .content,
+  .contentWithoutHeight {
     width: calc(100% - 24px);
   }
 }

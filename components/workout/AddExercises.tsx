@@ -78,7 +78,7 @@ const AddDialog: FunctionComponent<AddDialogProps> = ({ isAddDialog, closeDialog
                 open={isAddDialog}
                 TransitionComponent={Transition}
             >
-                <div className="content">
+                <div className="contentWithoutHeight">
                     <div className="title">{t('Add exercises')}</div>
                     <Autocomplete
                         sx={{ marginBottom: '10px' }}

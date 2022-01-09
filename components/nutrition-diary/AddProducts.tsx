@@ -99,7 +99,7 @@ const AddProducts: FunctionComponent<AddproductsProps> = ({ index, isAddDialog, 
                 open={isAddDialog}
                 TransitionComponent={Transition}
             >
-                <div className="content">
+                <div className="contentWithoutHeight">
                     <div className="title">{t('Add products')}</div>
                     <Select
                         sx={{ marginBottom: '10px' }}
