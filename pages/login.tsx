@@ -71,8 +71,9 @@ const Login = () => {
                     `/${readToken(response.token).login
                     }/nutrition-diary/${getShortDate()}`
                 );
+            } else {
+                setLoading(false);
             }
-            setLoading(false);
         }
     };
 
