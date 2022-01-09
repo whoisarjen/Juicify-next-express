@@ -1,14 +1,14 @@
 import { FunctionComponent, useState, useEffect } from "react";
 import { expectLoggedIN } from "../utils/checkAuth";
-import Bar from '../components/Macronutrients/Bar'
+import Bar from '../components/macronutrients/Bar'
 import styles from '../styles/macronutrients.module.css'
 import { useAppSelector } from "../hooks/useRedux";
 import LockOpenIcon from '@mui/icons-material/LockOpen';
-import SimpleSlider from "../components/Macronutrients/SimpleSlider";
+import SimpleSlider from "../components/macronutrients/SimpleSlider";
 import BottomFlyingButton from '../components/common/BottomFlyingButton'
 import useSettings from '../hooks/useSettings'
 import Button from '@mui/material/Button';
-import OwnMacro from "../components/Macronutrients/OwnMacro";
+import OwnMacro from "../components/macronutrients/OwnMacro";
 import useTranslation from "next-translate/useTranslation";
 
 const Macronutrients: FunctionComponent = () => {
