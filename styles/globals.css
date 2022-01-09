@@ -48,6 +48,7 @@
 }
 
 body {
+  word-break: break-word;
   margin: 0;
   font-family: "Quicksand", sans-serif;
   color: #7a7a7a;
