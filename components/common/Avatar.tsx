@@ -1,6 +1,6 @@
 import Avatar from '@mui/material/Avatar';
 
-export default ({ user, size = '110px' }) => {
+const AvatarMUI = ({ user, size = '110px' }) => {
     return (
         <Avatar
             sx={{ background: 'none !important', width: size, height: size, margin: 'auto' }}
@@ -15,3 +15,5 @@ export default ({ user, size = '110px' }) => {
         </Avatar>
     )
 }
+
+export default AvatarMUI;
