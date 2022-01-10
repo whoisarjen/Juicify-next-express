@@ -1,21 +1,30 @@
 import useTranslation from "next-translate/useTranslation";
 import { FunctionComponent } from "react";
-import StackedBarChart from "../../components/common/StackedBarChart";
+import SimpleLineChart from "../../components/diagrams/SimpleLineChart";
+import StackedBarChart from "../../components/diagrams/StackedBarChart";
+import countCalories from "../../components/nutrition-diary/utils/countCalories";
 import Navbar from "../../components/profile/Navbar";
 import { useDailyMeasurements } from "../../hooks/useDailyMeasurements";
+import { useTheme } from "../../hooks/useTheme";
 import styles from '../../styles/profile.module.css'
 import { addDaysToDate, getShortDate, reverseDateDotes } from '../../utils/manageDate';
 
 const Profile: FunctionComponent = () => {
+    const [getTheme]: any = useTheme()
     const { t } = useTranslation('profile')
     const [{ data, user }]: any = useDailyMeasurements(addDaysToDate(getShortDate(), -1), 7)
     const barNamesWithColor = [
-        {dataKey: t('p'), fill: '#ff8b42'},
-        {dataKey: t('c'), fill: '#ffbb33'},
-        {dataKey: t('f'), fill: '#90c253'}
+        { dataKey: t('p'), fill: '#ff8b42' },
+        { dataKey: t('c'), fill: '#ffbb33' },
+        { dataKey: t('f'), fill: '#90c253' }
+    ]
+    const barNamesWithColorCalories = [
+        { dataKey: t('Calories'), stroke: '#ff8b42' },
+        { dataKey: t('Burnt'), stroke: '#b1272f' },
+        { dataKey: t('Diffrent'), stroke: getTheme('PRIMARY') }
     ]
     const nutrition_diary = data.map(x => {
-        let object = {
+        let object: any = {
             name: '',
             [t('p')]: 0,
             [t('c')]: 0,
@@ -25,30 +34,54 @@ const Profile: FunctionComponent = () => {
             object.name = reverseDateDotes(x.whenAdded).slice(0, 5)
             x.nutrition_diary.map(meal => {
                 if (meal.p) {
-                    const p = object[t('p')]
-                    object[t('p')] = meal.p * meal.how_many + parseFloat(p.toString())
+                    object[t('p')] += meal.p * meal.how_many
                 }
                 if (meal.c) {
-                    const c = object[t('c')]
-                    object[t('c')] = meal.c * meal.how_many + parseFloat(c.toString())
+                    object[t('c')] += meal.c * meal.how_many
                 }
                 if (meal.f) {
-                    const f = object[t('f')]
-                    object[t('f')] = meal.f * meal.how_many + parseFloat(f.toString())
+                    object[t('f')] += meal.f * meal.how_many
                 }
             })
         }
-        console.log(object)
+        return object
+    })
+
+    const calories = data.map(x => {
+        let object: any = {
+            name: '',
+            [t('Calories')]: 0,
+            [t('Burnt')]: 0,
+            [t('Diffrent')]: 0
+        }
+        if (x.nutrition_diary) {
+            object.name = reverseDateDotes(x.whenAdded).slice(0, 5)
+            x.nutrition_diary.map(meal => {
+                if (meal.calories) {
+                    if (meal.calories > 0) {
+                        object[t('Calories')] = meal.calories
+                    } else {
+                        object[t('Burnt')] = meal.calories
+                    }
+                } else {
+                    object[t('Calories')] += countCalories(meal)
+                }
+            })
+            object[t('Diffrent')] = object[t('Calories')] + object[t('Burnt')]
+        }
         return object
     })
 
     return (
         <>
             <Navbar user={user} tab={0} />
-            <div className="profile">
+            <h3 style={{ color: getTheme('PRIMARY') }}>{t('Daily calories')}</h3>
+            <div className={styles.profileBox}>
+                <SimpleLineChart data={calories} barNamesWithColor={barNamesWithColorCalories} />
+            </div>
+            <h3 style={{ color: getTheme('PRIMARY') }}>{t("Daily macronutrients")}</h3>
+            <div className={styles.profileBox}>
                 <StackedBarChart data={nutrition_diary.reverse()} barNamesWithColor={barNamesWithColor} />
-                <div className={styles.profileContent}>
-                </div>
             </div>
         </>
     );

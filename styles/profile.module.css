@@ -38,6 +38,12 @@
     font-weight: bold;
 }
 
-.profileContent{
+.profileBox{
     width: 100%;
+    max-height: 702px;
+    min-height: 390px;
+}
+
+.profileBox .recharts-wrapper{
+    padding-bottom: 30px;
 }

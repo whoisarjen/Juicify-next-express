@@ -16,9 +16,7 @@ const StackedBarChart: FunctionComponent<StackedBarChartProps> = ({ data, barNam
                     top: 20,
                     right: 10,
                     left: 0,
-                    // right: 30,
-                    // left: 20,
-                    bottom: 5,
+                    bottom: 5
                 }}
             >
                 <CartesianGrid strokeDasharray="3 3" />

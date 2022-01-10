@@ -1,5 +1,10 @@
 {
     "p": "B",
     "c": "W",
-    "f": "T"
+    "f": "T",
+    "Calories": "Kalorie",
+    "Burnt": "Spalone",
+    "Diffrent": "Różnica",
+    "Daily calories": "Dzienne kalorie",
+    "Daily macronutrients": "Dziennie makroskładniki"
 }
