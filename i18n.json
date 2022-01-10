@@ -13,6 +13,6 @@
         "/coach": ["coach"],
         "/macronutrients": ["macronutrients"],
         "/settings": ["settings"],
-        "/profile": ["profile"]
+        "/[login]": ["profile"]
     }
 }
