@@ -61,7 +61,7 @@ const AddProductsBox: FunctionComponent<AddproductsBoxProps> = ({ product, refre
 
     return (
         <div className={styles.addProductsBox} style={{ borderLeft: product.v ? `5px solid ${getTheme('PRIMARY')}` : '' }}>
-            <div className={styles.addProductsBoxName}>
+            <div className={styles.addProductsBoxName} style={{ color: getTheme('PRIMARY') }}>
                 {product.name}
             </div>
             <div className={styles.addProductsBoxDescription}>

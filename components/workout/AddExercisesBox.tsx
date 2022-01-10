@@ -4,6 +4,7 @@ import Favorite from '@mui/icons-material/Favorite';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import { FunctionComponent, useEffect, useState } from 'react'
 import { addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../utils/indexedDB';
+import { useTheme } from '../../hooks/useTheme';
 
 interface AddProductsBox {
     exercise: any,
@@ -14,6 +15,7 @@ const AddProductsBox: FunctionComponent<AddProductsBox> = ({ exercise, refreshCh
     const [checked, setChecked] = useState(false);
     const [value, setValue] = useState('1.0')
     const [fav, setFav] = useState(false)
+    const [getTheme]: any = useTheme()
 
     const handleLike = async () => {
         if (fav) {
@@ -45,7 +47,7 @@ const AddProductsBox: FunctionComponent<AddProductsBox> = ({ exercise, refreshCh
 
     return (
         <div className={styles.addExercisesBox} style={{ borderLeft: exercise.v ? '5px solid #1976d2' : '' }}>
-            <div className={styles.addExercisesBoxName}>
+            <div className={styles.addExercisesBoxName} style={{ color: getTheme('PRIMARY') }}>
                 {exercise.name}
             </div>
             <div className={styles.addExercisesBoxFavourite} onClick={handleLike}>
