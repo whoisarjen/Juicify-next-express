@@ -77,7 +77,7 @@ const Profile: FunctionComponent = () => {
             <Navbar user={user} tab={0} />
             <h3 style={{ color: getTheme('PRIMARY') }}>{t('Daily calories')}</h3>
             <div className={styles.profileBox}>
-                <SimpleLineChart data={calories} barNamesWithColor={barNamesWithColorCalories} />
+                <SimpleLineChart data={calories.reverse()} barNamesWithColor={barNamesWithColorCalories} />
             </div>
             <h3 style={{ color: getTheme('PRIMARY') }}>{t("Daily macronutrients")}</h3>
             <div className={styles.profileBox}>
