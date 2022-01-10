@@ -116,7 +116,7 @@ const Standard: FunctionComponent<StandardProps> = ({ setStep }) => {
                         </>
                         :
                         <>
-                            <div>It's time to check your progress!</div>
+                            <div>It&apos;s time to check your progress!</div>
                             <div>
                                 <Button variant="contained" color="error">Check progress</Button>
                             </div>

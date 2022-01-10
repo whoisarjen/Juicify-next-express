@@ -33,7 +33,7 @@ const BottomFlyingGuestBanner: FunctionComponent<BottomFlyingGuestBannerProps> =
                             variant="contained"
                             startIcon={<Avatar user={user} size="24px" />}
                         >
-                            Watching {user.login}'s profile
+                            Watching {user.login}&apos;s profile
                         </Button>
                     </>
                 )
