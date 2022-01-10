@@ -6,7 +6,7 @@ const THEME_VALUE = {
         PRIMARY: '#1976d2'
     },
     DARK: {
-        PRIMARY: '#3e98c7'
+        PRIMARY: '#90caf9'
     }
 }
 
