@@ -20,6 +20,7 @@ const CircularWithLabel: FunctionComponent<CircularWithLabelProps> = ({ array })
     const [getDay] = useMacro()
     const [getTheme]: any = useTheme()
     const { t } = useTranslation('nutrition-diary')
+    const macro = getDay(router.query.date, token)
 
     useEffect(() => {
         if (array) {
@@ -33,12 +34,10 @@ const CircularWithLabel: FunctionComponent<CircularWithLabelProps> = ({ array })
                     }
                 }
             }
-            let macro = getDay(router.query.date, token)
-            macro = parseInt((macro.proteins * 4 + macro.carbs * 4 + macro.fats * 9).toString())
-            setCalories(macro - count)
-            setProgress(count / macro * 100)
+            setCalories(parseInt((macro.proteins * 4 + macro.carbs * 4 + macro.fats * 9).toString()) - count)
+            setProgress(count / parseInt((macro.proteins * 4 + macro.carbs * 4 + macro.fats * 9).toString()) * 100)
         }
-    }, [array, token])
+    }, [array, token, macro])
 
     return (
         <div style={{ width: '100%', height: '100%', display: 'grid' }}>

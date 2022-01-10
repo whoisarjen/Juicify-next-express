@@ -27,7 +27,7 @@ const Notify: FunctionComponent<NotifyProps> = ({ children }) => {
                 })
             },
         }),
-        [],
+        [t],
     );
 
     return (

@@ -23,10 +23,10 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array }) => {
     const token: any = useAppSelector(state => state.token.value)
     const [object, setObject] = useState({})
     const { t } = useTranslation('nutrition-diary')
+    const macro = getDay(router.query.date, token)
 
     useEffect(() => {
         if (token) {
-            let macro = getDay(router.query.date, token)
             let o = {
                 'Proteins': { 'value': 0, 'macro': macro.proteins },
                 'Carbs': { 'value': 0, 'macro': macro.carbs },
@@ -49,7 +49,7 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array }) => {
 
             setObject(o)
         }
-    }, [token, array])
+    }, [token, array, macro])
 
     const handleChange = (event: SyntheticEvent, newValue: string) => setValue(newValue);
 

@@ -83,8 +83,10 @@ a:active {
   max-width: 200px;
 }
 
-.NavbarMobile {
-  display: none;
+@media (min-width: 1089px) {
+  .NavbarMobile {
+    display: none !important;
+  }
 }
 
 .navbar {
@@ -145,12 +147,8 @@ a:active {
     display: none;
   }
 
-  .NavbarMobile {
-    display: inline-flex;
-  }
-
   .NavbarWeb {
-    display: none;
+    display: none !important;
   }
 
   .navbar ul {
