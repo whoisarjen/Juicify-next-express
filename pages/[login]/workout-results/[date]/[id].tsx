@@ -252,7 +252,7 @@ const WorkoutResultsID: FunctionComponent = () => {
             />
             {
                 results && results.map((result: any, index: number) =>
-                    <div style={results.length == (index + 1) ? { marginBottom: '100px' } : {}}>
+                    <div style={results.length == (index + 1) ? { marginBottom: '100px' } : {}} key={result._id + index}>
                         <AddResultValues
                             key={result._id + index}
                             result={result}

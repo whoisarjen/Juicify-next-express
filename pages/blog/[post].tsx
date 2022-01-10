@@ -5,7 +5,7 @@ const Post: FunctionComponent = () => {
     return (
         <div className={styles.blog}>
             <article className={styles.postGrid}>
-                <h1>The Witcher: Ronin has arrived on Kickstarter!</h1>
+                {/* <h1>The Witcher: Ronin has arrived on Kickstarter!</h1>
                 <img src="https://static.cdprojektred.com/cms.cdprojektred.com/16x9_big/7601a16f992ecc4bd95a2668d1a369320dd0f86b-1280x720.jpg" />
                 <div className={styles.content}>
                     {
@@ -18,7 +18,7 @@ const Post: FunctionComponent = () => {
                             </p>
                         )
                     }
-                </div>
+                </div> */}
             </article>
         </div >
     )

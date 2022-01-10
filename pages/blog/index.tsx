@@ -7,7 +7,7 @@ const Blog: FunctionComponent = () => {
         <div className={styles.blog}>
             <h1>Latest news</h1>
             <div className={styles.grid}>
-                {
+                {/* {
                     [...Array(9)].map((x, index) =>
                         <Link href={`/blog/${index}`}>
                             <a>
@@ -18,7 +18,7 @@ const Blog: FunctionComponent = () => {
                             </a>
                         </Link>
                     )
-                }
+                } */}
             </div>
         </div >
     );
