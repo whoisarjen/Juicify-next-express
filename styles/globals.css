@@ -346,6 +346,7 @@ input[type="number"] {
   margin-bottom: 12px;
 }
 
+/* It does have to be like that */
 .CircularProgressbar .CircularProgressbar-text{
   dominant-baseline: middle !important;
   text-anchor: middle !important;
