@@ -12,6 +12,7 @@
         "/[login]/workout-results/[date]/[id]": ["workout"],
         "/coach": ["coach"],
         "/macronutrients": ["macronutrients"],
-        "/settings": ["settings"]
+        "/settings": ["settings"],
+        "/profile": ["profile"]
     }
 }

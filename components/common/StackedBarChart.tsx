@@ -1,3 +1,4 @@
+import useTranslation from "next-translate/useTranslation";
 import { FunctionComponent } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
@@ -7,6 +8,8 @@ interface StackedBarChartProps {
 }
 
 const StackedBarChart: FunctionComponent<StackedBarChartProps> = ({ data, barNamesWithColor }) => {
+    const { t } = useTranslation('profile')
+
     return (
         <ResponsiveContainer width="100%" height="100%">
             <BarChart
@@ -26,7 +29,7 @@ const StackedBarChart: FunctionComponent<StackedBarChartProps> = ({ data, barNam
                 <Legend />
                 {
                     barNamesWithColor.map(bar =>
-                        <Bar dataKey={bar.dataKey} stackId="a" fill={bar.fill} />
+                        <Bar dataKey={t(bar.dataKey)} stackId="a" fill={bar.fill} />
                     )
                 }
             </BarChart>
