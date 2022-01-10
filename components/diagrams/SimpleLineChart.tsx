@@ -70,7 +70,7 @@ const SimpleLineChart: FunctionComponent<SimpleLineChartProps> = ({ data, barNam
                 <Legend />
                 {
                     barNamesWithColor.map(bar =>
-                        <Line type="monotone" dataKey={bar.dataKey} stroke={bar.stroke} activeDot={{ r: 8 }} />
+                        <Line key={bar.dataKey} type="monotone" dataKey={bar.dataKey} stroke={bar.stroke} activeDot={{ r: 8 }} />
                     )
                 }
             </LineChart>
