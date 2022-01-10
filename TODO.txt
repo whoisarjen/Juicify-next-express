@@ -1,14 +1,7 @@
-Site 404
-Clean DB from empty products
-Chcecking fake id on server side?
 block workout save if not diff
-Create headers with component
 in result => option to add exercise but synchro need to handle it too... + change order of exercises + delete
-sidebar need to random show profiles for better seo
 probably insert on whattoupdate might have issues, to check later with synchro
 Precache synchro / load / hooks etc
-user not found => js force 404
-user has blocked profile => js force 403
 
 coach
 barcode

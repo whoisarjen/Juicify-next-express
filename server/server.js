@@ -1,11 +1,12 @@
 const express = require('express');
 const jwt = require("jsonwebtoken");
 const tokenKEY = require("./mongoDB/auth/tokenKEY")
-const verifyToken = require('./mongoDB/auth/verifyToken')
 const app = express();
 const cors = require('cors');
 const port = 4000;
 const appVersion = 1
+import verifyToken from './mongoDB/functions/verifyToken'
+import verifyIDS from './mongoDB/functions/verifyIDS'
 
 require('./mongoDB/connection');
 
@@ -62,6 +63,7 @@ app.post('/delete', async (req, res) => {
 
 app.post('/:what/:where', async (req, res) => {
     await verifyToken(req)
+    await verifyIDS(req)
     await require(`./mongoDB/${req.params.what}/${req.params.where}`)(req, res)
         .then(async data => await handleSynchronization(req, res, data, 'change'))
         .catch(err => {

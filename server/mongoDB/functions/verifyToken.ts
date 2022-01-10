@@ -1,4 +1,4 @@
-module.exports = verifyToken = async (req) => {
+const verifyToken = async (req) => {
     req.body.user_ID = '60ba774fe0ecd72587eeaa29'
     req.body.token = {}
     req.body.token.goal = -0.5
@@ -51,3 +51,5 @@ module.exports = verifyToken = async (req) => {
         }
     ]
 };
+
+export default verifyToken;

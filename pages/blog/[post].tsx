@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { FunctionComponent } from "react";
 import styles from '../../styles/blog.module.css'
 
@@ -5,8 +6,8 @@ const Post: FunctionComponent = () => {
     return (
         <div className={styles.blog}>
             <article className={styles.postGrid}>
-                {/* <h1>The Witcher: Ronin has arrived on Kickstarter!</h1>
-                <img src="https://static.cdprojektred.com/cms.cdprojektred.com/16x9_big/7601a16f992ecc4bd95a2668d1a369320dd0f86b-1280x720.jpg" />
+                <h1>The Witcher: Ronin has arrived on Kickstarter!</h1>
+                <Image src="/images/witcher.jpg" width="970" height="545" alt="witcher" />
                 <div className={styles.content}>
                     {
                         [...Array(10)].map(x =>
@@ -18,7 +19,7 @@ const Post: FunctionComponent = () => {
                             </p>
                         )
                     }
-                </div> */}
+                </div>
             </article>
         </div >
     )
