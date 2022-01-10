@@ -13,6 +13,7 @@ import DiagramsOptions from '../../../components/nutrition-diary/DiagramsOptions
 import BottomFlyingGuestBanner from '../../../components/common/BottomFlyingGuestBanner'
 import Header from "../../../components/layout/Header"
 import useTranslation from "next-translate/useTranslation"
+import { reverseDateDotes } from "../../../utils/manageDate"
 
 const NutritionDiary: FunctionComponent = () => {
     const { t } = useTranslation('nutrition-diary')
@@ -71,8 +72,8 @@ const NutritionDiary: FunctionComponent = () => {
     return (
         <div className="NutritionDiary">
             <Header
-                title={`${t('title')} ${router.query.login} ${router.query.date}`}
-                description={`${t('title')} ${router.query.login} ${router.query.date}`}
+                title={`${t('title')} ${router.query.login} ${reverseDateDotes(router.query.date)}`}
+                description={`${t('title')} ${router.query.login} ${reverseDateDotes(router.query.date)}`}
             />
             <Navbar />
             <FastDateChanger />
