@@ -1,4 +1,7 @@
 const schema = (object, _id, when: any, user_ID: string) => {
+    if (!object) { // object can be undefinded, so we avoid issues like this
+        object = false;
+    }
     return {
         _id: object._id || _id,
         weight: object.weight || 0,

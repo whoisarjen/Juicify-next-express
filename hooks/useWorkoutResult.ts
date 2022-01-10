@@ -10,7 +10,7 @@ const useWorkoutResult = (): [any, () => void] => {
     const router: any = useRouter()
     const [reload, setReload] = useState(0)
     const [data, setData] = useState(false)
-    const [{ data: daily, user }] = useDailyMeasurement(router.query.date)
+    const [{ data: daily, user }] = useDailyMeasurement(router.query.date, router.query.login)
 
     useEffect(() => {
         (async () => {

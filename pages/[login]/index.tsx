@@ -1,4 +1,5 @@
 import useTranslation from "next-translate/useTranslation";
+import { useRouter } from "next/router";
 import { FunctionComponent } from "react";
 import SimpleLineChart from "../../components/diagrams/SimpleLineChart";
 import StackedBarChart from "../../components/diagrams/StackedBarChart";
@@ -12,7 +13,8 @@ import { addDaysToDate, getShortDate, reverseDateDotes } from '../../utils/manag
 const Profile: FunctionComponent = () => {
     const [getTheme]: any = useTheme()
     const { t } = useTranslation('profile')
-    const [{ data, user }]: any = useDailyMeasurements(addDaysToDate(getShortDate(), -1), 7)
+    const router = useRouter()
+    const [{ data, user }]: any = useDailyMeasurements(addDaysToDate(getShortDate(), -1), 7, router.query.login)
     const barNamesWithColor = [
         { dataKey: t('p'), fill: '#ff8b42' },
         { dataKey: t('c'), fill: '#ffbb33' },

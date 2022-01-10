@@ -15,12 +15,12 @@ import Weights from "../common/Weights";
 import { useTheme } from "../../hooks/useTheme";
 
 const SidebarRight: FunctionComponent = () => {
-    const { t } = useTranslation('home')
     const router = useRouter()
+    const { t } = useTranslation('home')
     const [isWeights, setIsWeights] = useState(false)
-    const [{ data }, reload] = useDailyMeasurement(getShortDate())
     const token: any = useAppSelector(state => state.token.value)
     const keyDaily = useAppSelector(state => state.key.daily_measurement)
+    const [{ data }, reload] = useDailyMeasurement(getShortDate(), token.login)
     const [getDay] = useMacro()
     const [weight, setWeight] = useState(0)
     const [calories, setCalories] = useState(0)

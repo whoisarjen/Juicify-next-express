@@ -24,7 +24,7 @@ const NutritionDiary: FunctionComponent = () => {
     const [isAddDialog, setIsAddDialog] = useState(false)
     const [isEditDialog, setIsEditDialog] = useState(false)
     const [nutrition_diary, setNutrition_diary] = useState([])
-    const [{ data, user }, reloadDailyMeasurement] = useDailyMeasurement(router.query.date)
+    const [{ data, user }, reloadDailyMeasurement] = useDailyMeasurement(router.query.date, router.query.login)
 
     const deleteProduct = async (_id: string) => {
         let copyDailyMeasurement = JSON.parse(JSON.stringify(data))
@@ -43,8 +43,10 @@ const NutritionDiary: FunctionComponent = () => {
         await overwriteThoseIDSinDB('daily_measurement', [copyDailyMeasurement])
         reloadDailyMeasurement()
     }
+    console.log('nutrition')
 
     useEffect(() => {
+        console.log("nutrition effect")
         if (data && data.nutrition_diary) {
             const arr: any = []
             const l = user.meal_number || 5
@@ -77,7 +79,10 @@ const NutritionDiary: FunctionComponent = () => {
             />
             <Navbar />
             <FastDateChanger />
-            <Diagrams array={nutrition_diary} key={nutrition_diary.length} />
+            {
+                nutrition_diary &&
+                <Diagrams array={nutrition_diary} user={user} />
+            }
             <DiagramsOptions />
             {
                 nutrition_diary

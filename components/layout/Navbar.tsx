@@ -30,7 +30,7 @@ MyLogo.displayName = "MyLogo Navbar";
 const Navbar = () => {
     const { t } = useTranslation("home");
     const router = useRouter()
-    const token: any = useAppSelector((state) => state.token.value);
+    const token: any = useAppSelector(state => state.token.value);
     const [, toggleDarkMode, theme]: any = useTheme()
 
     return (

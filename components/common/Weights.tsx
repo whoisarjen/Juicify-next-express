@@ -37,9 +37,11 @@ interface WeightsProps {
 }
 
 const Weights: FunctionComponent<WeightsProps> = ({ isWeights, closeWeights }) => {
+    const token: any = useAppSelector(state => state.token.value)
     const [{ data }, reload]: any = useDailyMeasurements(
         getShortDate(),
-        useAppSelector(state => state.config.numberSupportedDays)
+        useAppSelector(state => state.config.numberSupportedDays),
+        token.login
     )
     const [isDialog, setIsDialog] = useState(false)
     const [change, setChange]: any = useState({})

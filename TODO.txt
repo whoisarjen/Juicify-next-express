@@ -1,18 +1,11 @@
 Site 404
-offline site
-block +30days in diary + notify it
 Clean DB from empty products
-deleteidsfromdb change response to response => data
 Chcecking fake id on server side?
 block workout save if not diff
-product site api for SEO
 Create headers with component
-Make better notify for create [...]
 in result => option to add exercise but synchro need to handle it too... + change order of exercises + delete
 sidebar need to random show profiles for better seo
 probably insert on whattoupdate might have issues, to check later with synchro
-wrap box on descirption, login etc to protect overflow?
-daily measurements optimization server site with limit
 Precache synchro / load / hooks etc
 user not found => js force 404
 user has blocked profile => js force 403

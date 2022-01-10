@@ -4,26 +4,25 @@ import { FunctionComponent, useState, useEffect } from "react";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import useMacro from "../../hooks/useMacro";
-import { useAppSelector } from "../../hooks/useRedux";
 import { useTheme } from "../../hooks/useTheme";
 import countCalories from './utils/countCalories'
 
 interface CircularWithLabelProps {
-    array: Array<any>
+    array: Array<any>,
+    user: any
 }
 
-const CircularWithLabel: FunctionComponent<CircularWithLabelProps> = ({ array }) => {
+const CircularWithLabel: FunctionComponent<CircularWithLabelProps> = ({ array, user }) => {
     const [calories, setCalories] = useState(0)
     const [progress, setProgress] = useState(0)
-    const token = useAppSelector(state => state.token.value)
     const router = useRouter()
     const [getDay] = useMacro()
     const [getTheme]: any = useTheme()
     const { t } = useTranslation('nutrition-diary')
-    const macro = getDay(router.query.date, token)
 
     useEffect(() => {
         if (array) {
+            const macro = getDay(router.query.date, user)
             let count: any = 0;
             if (array.length > 0) {
                 for (let i = 0; i < array.length; i++) {
@@ -37,7 +36,7 @@ const CircularWithLabel: FunctionComponent<CircularWithLabelProps> = ({ array })
             setCalories(parseInt((macro.proteins * 4 + macro.carbs * 4 + macro.fats * 9).toString()) - count)
             setProgress(count / parseInt((macro.proteins * 4 + macro.carbs * 4 + macro.fats * 9).toString()) * 100)
         }
-    }, [array, token, macro])
+    }, [array, user])
 
     return (
         <div style={{ width: '100%', height: '100%', display: 'grid' }}>

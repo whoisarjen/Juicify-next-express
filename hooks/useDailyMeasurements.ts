@@ -36,7 +36,7 @@ const loadMissingDays = async (oryginalArray, user_ID, howManyDays, today) => {
     })
 }
 
-const useDailyMeasurements = (today, howManyDays = 7) => {
+const useDailyMeasurements = (today, howManyDays = 7, login) => {
     const [reload, setReload] = useState(0)
     const [data, setData] = useState<Array<any>>([])
     const [user, setUser] = useState('')
@@ -44,21 +44,23 @@ const useDailyMeasurements = (today, howManyDays = 7) => {
 
     useEffect(() => {
         (async () => {
-            const token = readToken(await getCookie('token'))
-            if (token.login == (router.query.login || token.login)) { // Sometimes need to use only in token's user case and this block errors
-                let res = await getAllIndexedDB('daily_measurement')
-                res = await loadMissingDays(res, token._id, howManyDays, today)
-                setData(res)
-                setUser(token)
-            } else {
-                let res = await loadValueByLogin(
-                    "daily_measurements",
-                    addDaysToDate(today, -howManyDays),
-                    router.query.login.toString()
-                );
-                setUser(res.user)
-                res = await loadMissingDays(res.data, res.user._id, howManyDays, today)
-                setData(res)
+            if(login){
+                const token = readToken(await getCookie('token'))
+                if (token.login == (login || token.login)) { // Sometimes need to use only in token's user case and this block errors
+                    let res = await getAllIndexedDB('daily_measurement')
+                    res = await loadMissingDays(res, token._id, howManyDays, today)
+                    setData(res)
+                    setUser(token)
+                } else {
+                    let res = await loadValueByLogin(
+                        "daily_measurements",
+                        addDaysToDate(today, -howManyDays),
+                        login.toString()
+                    );
+                    setUser(res.user)
+                    res = await loadMissingDays(res.data, res.user._id, howManyDays, today)
+                    setData(res)
+                }
             }
         })()
     }, [reload, router.query])

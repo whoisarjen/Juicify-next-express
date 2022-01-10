@@ -8,31 +8,30 @@ import styles from '../../styles/nutrition-diary.module.css'
 import CircularWithLabel from "./CircularWithLabel";
 import CircularWithLabelReverse from "./CircularWithLabelReverse";
 import useMacro from "../../hooks/useMacro";
-import { useAppSelector } from "../../hooks/useRedux";
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 
 interface DiagramsProps {
-    array: Array<any>
+    array: Array<any>,
+    user: any
 }
 
-const Diagrams: FunctionComponent<DiagramsProps> = ({ array }) => {
+const Diagrams: FunctionComponent<DiagramsProps> = ({ array, user }) => {
     const [value, setValue] = useState<string>('1');
     const [getDay] = useMacro()
     const router = useRouter()
-    const token: any = useAppSelector(state => state.token.value)
     const [object, setObject] = useState({})
     const { t } = useTranslation('nutrition-diary')
-    const macro = getDay(router.query.date, token)
 
     useEffect(() => {
-        if (token) {
+        if (user) {
+            const macro = getDay(router.query.date, user)
             let o = {
                 'Proteins': { 'value': 0, 'macro': macro.proteins },
                 'Carbs': { 'value': 0, 'macro': macro.carbs },
-                'Sugar': { 'value': 0, 'macro': token.sugar_percent * macro.carbs / 100 },
+                'Sugar': { 'value': 0, 'macro': (user.sugar_percent || 0) * macro.carbs / 100 },
                 'Fats': { 'value': 0, 'macro': macro.fats },
-                'Fiber': { 'value': 0, 'macro': token.fiber * (macro.proteins * 4 + macro.carbs * 4 + macro.fats * 9) / 1000 }
+                'Fiber': { 'value': 0, 'macro': (user.fiber || 0) * (macro.proteins * 4 + macro.carbs * 4 + macro.fats * 9) / 1000 }
             }
 
             array.forEach(meal => {
@@ -49,7 +48,7 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array }) => {
 
             setObject(o)
         }
-    }, [token, array, macro])
+    }, [user, array])
 
     const handleChange = (event: SyntheticEvent, newValue: string) => setValue(newValue);
 
@@ -72,7 +71,7 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array }) => {
                     </Box>
                     <TabPanel value="1" className={styles.diagramsGrid}>
                         <div>
-                            <CircularWithLabel array={array} />
+                            <CircularWithLabel array={array} user={user} />
                         </div>
                         <div />
                         <table className={styles.diagramsTable}>
@@ -89,7 +88,7 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array }) => {
                     </TabPanel>
                     <TabPanel value="2" className={styles.diagramsGrid}>
                         <div>
-                            <CircularWithLabelReverse array={array} />
+                            <CircularWithLabelReverse array={array} user={user} />
                         </div>
                         <div />
                         <table className={styles.diagramsTable}>
