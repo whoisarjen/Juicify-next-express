@@ -43,7 +43,6 @@ const NutritionDiary: FunctionComponent = () => {
         await overwriteThoseIDSinDB('daily_measurement', [copyDailyMeasurement])
         reloadDailyMeasurement()
     }
-    console.log('nutrition')
 
     useEffect(() => {
         console.log("nutrition effect")
