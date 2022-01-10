@@ -45,7 +45,6 @@ const NutritionDiary: FunctionComponent = () => {
     }
 
     useEffect(() => {
-        console.log("nutrition effect")
         if (data && data.nutrition_diary) {
             const arr: any = []
             const l = user.meal_number || 5
