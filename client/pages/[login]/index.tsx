@@ -76,15 +76,20 @@ const Profile: FunctionComponent = () => {
 
     return (
         <>
-            <Navbar user={user} tab={0} />
-            <h3 style={{ color: getTheme('PRIMARY') }}>{t('Daily calories')}</h3>
-            <div className={styles.profileBox}>
-                <SimpleLineChart data={calories.reverse()} barNamesWithColor={barNamesWithColorCalories} />
-            </div>
-            <h3 style={{ color: getTheme('PRIMARY') }}>{t("Daily macronutrients")}</h3>
-            <div className={styles.profileBox}>
-                <StackedBarChart data={nutrition_diary.reverse()} barNamesWithColor={barNamesWithColor} />
-            </div>
+            {
+                user &&
+                <>
+                    <Navbar user={user} tab={0} />
+                    <h3 style={{ color: getTheme('PRIMARY') }}>{t('Daily calories')}</h3>
+                    <div className={styles.profileBox}>
+                        <SimpleLineChart data={calories.reverse()} barNamesWithColor={barNamesWithColorCalories} />
+                    </div>
+                    <h3 style={{ color: getTheme('PRIMARY') }}>{t("Daily macronutrients")}</h3>
+                    <div className={styles.profileBox}>
+                        <StackedBarChart data={nutrition_diary.reverse()} barNamesWithColor={barNamesWithColor} />
+                    </div>
+                </>
+            }
         </>
     );
 };

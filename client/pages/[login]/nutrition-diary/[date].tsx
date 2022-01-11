@@ -71,61 +71,66 @@ const NutritionDiary: FunctionComponent = () => {
 
     return (
         <div className="NutritionDiary">
-            <Header
-                title={`${t('title')} ${router.query.login} ${reverseDateDotes(router.query.date)}`}
-                description={`${t('title')} ${router.query.login} ${reverseDateDotes(router.query.date)}`}
-            />
-            <Navbar />
-            <FastDateChanger />
             {
                 nutrition_diary &&
-                <Diagrams array={nutrition_diary} user={user} />
-            }
-            <DiagramsOptions />
-            {
-                nutrition_diary
-                    ?
-                    nutrition_diary.map((x, i) => (
-                        <MealBox
-                            key={i}
-                            index={i}
-                            products={x}
-                            openDialog={() => {
-                                setIndex(i)
-                                setIsAddDialog(true)
-                            }}
-                            openEditProduct={(product) => {
-                                setProduct(product)
-                                setIsEditDialog(true)
-                            }}
+                <>
+                    <Header
+                        title={`${t('title')} ${router.query.login} ${reverseDateDotes(router.query.date)}`}
+                        description={`${t('title')} ${router.query.login} ${reverseDateDotes(router.query.date)}`}
+                    />
+                    <Navbar />
+                    <FastDateChanger />
+                    {
+                        nutrition_diary &&
+                        <Diagrams array={nutrition_diary} user={user} />
+                    }
+                    <DiagramsOptions />
+                    {
+                        nutrition_diary
+                            ?
+                            nutrition_diary.map((x, i) => (
+                                <MealBox
+                                    key={i}
+                                    index={i}
+                                    products={x}
+                                    openDialog={() => {
+                                        setIndex(i)
+                                        setIsAddDialog(true)
+                                    }}
+                                    openEditProduct={(product) => {
+                                        setProduct(product)
+                                        setIsEditDialog(true)
+                                    }}
+                                />
+                            ))
+                            :
+                            <></>
+                    }
+                    {
+                        token && token.login == router.query.login &&
+                        <AddProducts
+                            index={index}
+                            isAddDialog={isAddDialog}
+                            dailyMeasurement={data}
+                            closeDialog={() => setIsAddDialog(false)}
+                            reload={reloadDailyMeasurement}
                         />
-                    ))
-                    :
-                    <></>
-            }
-            {
-                token && token.login == router.query.login &&
-                <AddProducts
-                    index={index}
-                    isAddDialog={isAddDialog}
-                    dailyMeasurement={data}
-                    closeDialog={() => setIsAddDialog(false)}
-                    reload={reloadDailyMeasurement}
-                />
-            }
-            {
-                token && token.login == router.query.login ?
-                    (
-                        <DialogEditProduct
-                            product={product}
-                            isDialog={isEditDialog}
-                            closeDialog={() => setIsEditDialog(false)}
-                            deleteProduct={(_id) => deleteProduct(_id)}
-                            changeProduct={(newProduct) => changeProduct(newProduct)}
-                        />
-                    ) : (
-                        <BottomFlyingGuestBanner user={user} />
-                    )
+                    }
+                    {
+                        token && token.login == router.query.login ?
+                            (
+                                <DialogEditProduct
+                                    product={product}
+                                    isDialog={isEditDialog}
+                                    closeDialog={() => setIsEditDialog(false)}
+                                    deleteProduct={(_id) => deleteProduct(_id)}
+                                    changeProduct={(newProduct) => changeProduct(newProduct)}
+                                />
+                            ) : (
+                                <BottomFlyingGuestBanner user={user} />
+                            )
+                    }
+                </>
             }
         </div>
     );
