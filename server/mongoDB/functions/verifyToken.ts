@@ -1,4 +1,4 @@
-const verifyToken = async (req) => {
+const verifyToken = async (req: any) => {
     req.body.user_ID = '60ba774fe0ecd72587eeaa29'
     req.body.token = {}
     req.body.token.goal = -0.5
