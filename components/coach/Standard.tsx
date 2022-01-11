@@ -18,9 +18,9 @@ interface StandardProps {
 const Standard: FunctionComponent<StandardProps> = ({ setStep }) => {
     const { t } = useTranslation('coach')
     const [daysToCoach, setDaysToCoach] = useState(7)
-    const [{ data }, reload] = useDailyMeasurement(getShortDate())
-    const [isWeights, setIsWeights] = useState(false)
     const token: any = useAppSelector(state => state.token.value)
+    const [{ data }, reload] = useDailyMeasurement(getShortDate(), token.login)
+    const [isWeights, setIsWeights] = useState(false)
 
     useEffect(() => {
         if (token) {
