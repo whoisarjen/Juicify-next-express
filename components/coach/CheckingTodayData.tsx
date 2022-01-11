@@ -13,9 +13,9 @@ interface ChooseDietProps {
 
 const CheckingTodayData: FunctionComponent<ChooseDietProps> = ({ setStep }) => {
     const { t } = useTranslation('coach')
-    const [{ data }, reload] = useDailyMeasurement(getShortDate())
-    const [isWeights, setIsWeights] = useState(false)
     const token: any = useAppSelector(state => state.token.value)
+    const [{ data }, reload] = useDailyMeasurement(getShortDate(), token.login)
+    const [isWeights, setIsWeights] = useState(false)
 
     return (
         <div className={styles.checkingTodayData}>

@@ -5,5 +5,4 @@ Precache synchro / load / hooks etc
 
 coach
 barcode
-statistics
 unit test react

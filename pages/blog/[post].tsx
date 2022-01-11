@@ -10,8 +10,8 @@ const Post: FunctionComponent = () => {
                 <Image src="/images/witcher.jpg" width="970" height="545" alt="witcher" />
                 <div className={styles.content}>
                     {
-                        [...Array(10)].map(x =>
-                            <p>
+                        [...Array(10)].map((x, index) =>
+                            <p key={index}>
                                 The Witcher: Ronin is an original comic, created and published by CD PROJEKT RED,
                                 which translates the dark fantasy world of The Witcher into a feudal Japanese setting.
                                 The story focuses on monster slayer Geralt, who must venture across Yokai-infested lands while attempting to track down the mysterious

@@ -5,6 +5,7 @@ import { useDailyMeasurements } from "../../hooks/useDailyMeasurements";
 import { addDaysToDate, getShortDate, reverseDateDotes } from "../../utils/manageDate";
 import Weights from '../common/Weights'
 import useTranslation from "next-translate/useTranslation";
+import { useAppSelector } from "../../hooks/useRedux";
 
 interface ChooseDietProps {
     setStep: (arg0: string) => void
@@ -12,7 +13,8 @@ interface ChooseDietProps {
 
 const CheckingWeekData: FunctionComponent<ChooseDietProps> = ({ setStep }) => {
     const { t } = useTranslation('coach')
-    const [{ data }, reload]: any = useDailyMeasurements(getShortDate(), 15)
+    const token: any = useAppSelector(state => state.token.value)
+    const [{ data }, reload]: any = useDailyMeasurements(getShortDate(), 15, token.login)
     const [isWeights, setIsWeights] = useState(false)
     const [allowNextStep, setAllowNextStep] = useState(false)
 

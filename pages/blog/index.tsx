@@ -10,7 +10,7 @@ const Blog: FunctionComponent = () => {
             <div className={styles.grid}>
                 {
                     [...Array(9)].map((x, index) =>
-                        <Link href={`/blog/${index}`}>
+                        <Link href={`/blog/${index}`} key={index}>
                             <a>
                                 <article>
                                     <Image src="/images/witcher.jpg" width="515" height="290" alt="witcher" />
