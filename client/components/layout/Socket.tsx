@@ -9,6 +9,10 @@ import { getAllIndexedDB, deleteIndexedDB, getIndexedDBbyID, addIndexedDB } from
 import { overwriteThoseIDSinDB, insertThoseIDStoDB, deleteThoseIDSfromDB, setLastUpdated } from '../../utils/API'
 import { store } from '../../redux/store'
 
+// CACHE - those functions need to be loaded to allow user's expierence in offline mode for now didn't find better way :(
+import * as cache from '../../utils/API'
+import * as cache2 from '../../utils/indexedDB'
+
 const synchronizationAfterOfflineDailyMeasurement = async (isNewValueInDB: boolean = false) => {
     const theOldestSupportedDate = store.getState().config.theOldestSupportedDate();
     return new Promise(resolve => {
