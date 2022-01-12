@@ -16,7 +16,7 @@ const useDailyMeasurement = (when: string, login: string): [any, () => void] => 
     useEffect(() => {
         if (when) {
             (async () => {
-                const token = readToken(await getCookie('token'))
+                const token = readToken(await getCookie('token') || '')
                 if (
                     token.login == (login || token.login) && // Sometimes need to use only in token's user case and this block errors
                     theOldestSupportedDate <= when

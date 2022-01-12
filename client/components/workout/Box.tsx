@@ -8,15 +8,15 @@ import { reverseDateDotes } from '../../utils/manageDate';
 import { useTheme } from '../../hooks/useTheme';
 
 interface BoxProps {
-    title: string,
-    description: string,
+    title?: string,
+    description?: string,
     route: string,
     type: number,
     isNotSaved?: boolean,
     whenAdded?: string
 }
 
-const Box: FunctionComponent<BoxProps> = ({ title, description, route, type, isNotSaved, whenAdded }) => {
+const Box: FunctionComponent<BoxProps> = ({ title = '', description = '', route, type, isNotSaved, whenAdded }) => {
     const { t } = useTranslation('workout');
     const [getTheme]: any = useTheme()
 

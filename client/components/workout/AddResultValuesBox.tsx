@@ -22,8 +22,8 @@ const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, inde
     const [reps, setReps] = useState('0')
     const [weight, setWeight] = useState('0')
     const [open, setOpen] = useState(false)
-    const [repsOptions, setRepsOptions] = useState([])
-    const [weightOptions, setWeightOptions] = useState([])
+    const [repsOptions, setRepsOptions] = useState(['0'])
+    const [weightOptions, setWeightOptions] = useState(['0'])
     const [isDialog, setIsDialog] = useState(false)
 
     const loadWeight = (choosenWeight: string) => {
@@ -41,7 +41,7 @@ const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, inde
                 weight.push((i / 4).toString())
             }
         }
-        setWeight(choosenWeight)
+        setWeight(choosenWeight.toString())
         setWeightOptions(weight)
     }
 
@@ -52,7 +52,7 @@ const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, inde
 
     useEffect(() => {
         if (value) {
-            setOpen(value.open)
+            setOpen(value.open || false)
             setReps(value.reps.toString())
             setWeight(value.weight.toString())
             loadWeight(value.weight.toString())
@@ -99,8 +99,9 @@ const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, inde
                             value={weight}
                             id="combo-box-demo"
                             options={weightOptions}
+                            onChange={(e, value) => changeResult(new Value(parseInt(reps), parseFloat((value || 0).toString())))}
                             onInputChange={(e, valueLocally) => loadWeight(valueLocally)}
-                            getOptionLabel={(option) => option || option === 0 ? option.toString() : ""}
+                            getOptionLabel={(option) => option ? option.toString() : ""}
                             renderInput={(params) => <TextField {...params} label="Weight" />}
                         />
                         <Autocomplete
@@ -109,8 +110,9 @@ const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, inde
                             value={reps}
                             id="combo-box-demo"
                             options={repsOptions}
+                            onChange={(e, value) => changeResult(new Value(parseInt((value || 0).toString()), parseFloat(weight)))}
                             onInputChange={(e, valueLocally) => setReps(valueLocally)}
-                            getOptionLabel={(option) => option || option === 0 ? option.toString() : ""}
+                            getOptionLabel={(option) => option ? option.toString() : ""}
                             renderInput={(params) => <TextField {...params} label="Reps" />}
                         />
                     </div>

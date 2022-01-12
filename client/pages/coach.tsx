@@ -23,7 +23,7 @@ const Coach: FunctionComponent = () => {
     const token: any = useAppSelector(state => state.token.value)
     const [step, setStep] = useState('Loading')
 
-    const prepareCreate = async (object) => {
+    const prepareCreate = async (object: any) => {
         setStep('Loading')
         const daily = await getIndexedDBbyID('daily_measurement', getDailyDate())
         await createDiet({
@@ -37,7 +37,7 @@ const Coach: FunctionComponent = () => {
             .then(() => setStep('Result'))
     }
 
-    const prepareAnalize = async (isUseData) => {
+    const prepareAnalize = async (isUseData: any) => {
         setStep('Loading')
         await analyzeDiet({
             isUseData,

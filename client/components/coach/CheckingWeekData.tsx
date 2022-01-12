@@ -6,6 +6,7 @@ import { addDaysToDate, getShortDate, reverseDateDotes } from "../../utils/manag
 import Weights from '../common/Weights'
 import useTranslation from "next-translate/useTranslation";
 import { useAppSelector } from "../../hooks/useRedux";
+import DailyMeasurementProps from "../../interfaces/dailyMeasurement";
 
 interface ChooseDietProps {
     setStep: (arg0: string) => void
@@ -21,10 +22,10 @@ const CheckingWeekData: FunctionComponent<ChooseDietProps> = ({ setStep }) => {
     useEffect(() => {
         let count = 0;
         if (data) {
-            data.forEach(x => {
-                if (new Date(getShortDate()).toJSON() == x.whenAdded && x.weight > 0) {
+            data.forEach((x: DailyMeasurementProps) => {
+                if (new Date(getShortDate()).toJSON() == new Date(x.whenAdded).toJSON()  && x.weight && x.weight > 0) {
                     count++;
-                } else if (addDaysToDate(getShortDate(), -7) > x.whenAdded && x.weight > 0) {
+                } else if (new Date(addDaysToDate(getShortDate(), -7)) > new Date(x.whenAdded)  && x.weight && x.weight > 0) {
                     count++;
                 }
             })
@@ -48,7 +49,7 @@ const CheckingWeekData: FunctionComponent<ChooseDietProps> = ({ setStep }) => {
                             {
                                 data &&
                                 data.length &&
-                                data.map(x =>
+                                data.map((x: DailyMeasurementProps) =>
                                     <tr key={x._id}>
                                         <td>{reverseDateDotes(x.whenAdded)}</td>
                                         <td>{x.weight}kg</td>

@@ -17,7 +17,7 @@ const CircularWithLabel: FunctionComponent<CircularWithLabelProps> = ({ array, u
     const [calories, setCalories] = useState(0)
     const [progress, setProgress] = useState(0)
     const router = useRouter()
-    const [getDay] = useMacro()
+    const [{ getDay }] = useMacro()
     const [getTheme]: any = useTheme()
     const { t } = useTranslation('nutrition-diary')
 

@@ -6,70 +6,70 @@ const initialState = {
     numberSupportedDays: 28,
     theOldestSupportedDate: () => new Date((new Date()).setDate((new Date()).getDate() - 28)).toJSON().slice(0, 10),
     requirePassword: (value: any) => {
-        if (7 < value.length && value.length < 61) {
+        if (value && (7 < value.length && value.length < 61)) {
             return true;
         } else {
             return false;
         }
     },
     requireMealNumber: (value: any) => {
-        if (0 < parseInt(value) && parseInt(value) < 11) {
+        if (value && (0 < parseInt(value) && parseInt(value) < 11)) {
             return true
         } else {
             return false
         }
     },
     requireHeightNumber: (value: any) => {
-        if (120 < parseInt(value) && parseInt(value) < 250) {
+        if (value && (120 < parseInt(value) && parseInt(value) < 250)) {
             return true
         } else {
             return false
         }
     },
     requireNumberDiffrentThanZero: (value: any) => {
-        if (0 < parseInt(value) || parseInt(value) < 0) {
+        if (value && (0 < parseInt(value) || parseInt(value) < 0)) {
             return true
         } else {
             return false
         }
     },
     requiredBasicInputNumber: (value: any) => {
-        if (0 < value && value <= 10000) {
+        if (value && (0 < value && value <= 10000)) {
             return true
         } else {
             return false
         }
     },
     requiredBasicInputNumber0TO100: (value: any) => {
-        if (0 <= value && value <= 100) {
+        if (value && (0 <= value && value <= 100)) {
             return true
         } else {
             return false
         }
     },
     numberOnlyPositiveLong: (value: any) => {
-        if (!value || 0 <= value) {
+        if (value && (!value || 0 <= value)) {
             return true
         } else {
             return false
         }
     },
     numberOnlyPositive: (value: any) => {
-        if (!value || (0 <= value && value <= 10000)) {
+        if (value && (!value || (0 <= value && value <= 10000))) {
             return true
         } else {
             return false
         }
     },
     basicInputLength: (value: string) => {
-        if (!value || (0 <= value.length && value.length <= 255)) {
+        if (value && (!value || (0 <= value.length && value.length <= 255))) {
             return true
         } else {
             return false
         }
     },
     requiredBasicInputLength: (value: string) => {
-        if (2 < value.length && value.length < 41) {
+        if (value && (2 < value.length && value.length < 41)) {
             return true
         } else {
             return false

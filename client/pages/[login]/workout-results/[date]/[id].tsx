@@ -26,7 +26,7 @@ const WorkoutResultsID: FunctionComponent = () => {
     const [burnt, setBurnt] = useState<any>(0)
     const [title, setTitle] = useState<any>('')
     const { t } = useTranslation('workout')
-    const [results, setResults] = useState([])
+    const [results, setResults] = useState<Array<ResultProps>>([])
     const [isOwner, setIsOwner] = useState(false)
     const [isDialog, setIsDialog] = useState(false)
     const [description, setDescription] = useState<any>('')
@@ -56,50 +56,45 @@ const WorkoutResultsID: FunctionComponent = () => {
     const saveWorkoutResult = async () => {
         setSaveLoading(true)
         let count = 0
-        for (let i = 0; i < results.length; i++) {
-            count += results[i].values.length
-            if (count > 0) {
-                break;
+        results.forEach((result: ResultProps) => {
+            if (result.values) {
+                count += result.values.length
             }
-        }
+        })
         if (count > 0) {
-            if (basicInputLength(description)) {
-                let newDaily = daily
-                newDaily.workout_result = newDaily.workout_result.filter((result: any) => result._id != router.query.id)
-                let object: any = {
-                    _id: router.query.id,
-                    title: data.title,
-                    workout_plan_ID: data.workout_plan_ID,
-                    results: results
-                }
-                if (description) {
-                    object.description = description
-                }
-                if (burnt) {
-                    object.burnt = burnt
-                }
-                if (await is_id(router.query.id)) {
-                    object._id = router.query.id
-                } else {
-                    if (burnt) {
-                        newDaily.nutrition_diary.push({
-                            _id: 'XD' + new Date().getTime(),
-                            activity: data.title,
-                            calories: -1 * parseInt(burnt)
-                        })
-                    }
-                }
-                newDaily.workout_result.push(object)
-                if (daily._id && await is_id(daily._id)) {
-                    await overwriteThoseIDSinDB('daily_measurement', [newDaily])
-                } else {
-                    await insertThoseIDStoDB('daily_measurement', [newDaily])
-                }
-                await deleteIndexedDB('workout_result', router.query.id)
-                router.push(`/${router.query.login}/workout-results`)
-            } else {
-                error(t('Description is incorrect'))
+            let newDaily = daily
+            newDaily.workout_result = newDaily.workout_result.filter((result: any) => result._id != router.query.id)
+            let object: any = {
+                _id: router.query.id,
+                title: data.title,
+                workout_plan_ID: data.workout_plan_ID,
+                results: results
             }
+            if (description) {
+                object.description = description
+            }
+            if (burnt) {
+                object.burnt = burnt
+            }
+            if (await is_id(router.query.id)) {
+                object._id = router.query.id
+            } else {
+                if (burnt) {
+                    newDaily.nutrition_diary.push({
+                        _id: 'XD' + new Date().getTime(),
+                        activity: data.title,
+                        calories: -1 * parseInt(burnt)
+                    })
+                }
+            }
+            newDaily.workout_result.push(object)
+            if (daily._id && await is_id(daily._id)) {
+                await overwriteThoseIDSinDB('daily_measurement', [newDaily])
+            } else {
+                await insertThoseIDStoDB('daily_measurement', [newDaily])
+            }
+            await deleteIndexedDB('workout_result', router.query.id)
+            router.push(`/${router.query.login}/workout-results`)
         } else {
             error(t('Add some results'))
         }
@@ -123,11 +118,8 @@ const WorkoutResultsID: FunctionComponent = () => {
     }
 
     const setNewValues = async (values: Array<ValueProps>, index: number) => {
-        let newResults = results
-        newResults[index] = {
-            ...newResults[index],
-            values
-        }
+        let newResults: Array<ResultProps> = results
+        newResults[index].values = values
         setResults(newResults)
         await autoSave(newResults)
     }
@@ -277,7 +269,11 @@ const WorkoutResultsID: FunctionComponent = () => {
                                 closeDialog={() => setIsDialog(false)}
                             />
                             <AddResultMoreOptions
-                                exercises={results}
+                                exercises={[...results.map((x: any) => {
+                                    delete x.values
+                                    x.l = x.name.length
+                                    return x
+                                })]}
                                 setExercises={handleNewExercises}
                             />
                         </>

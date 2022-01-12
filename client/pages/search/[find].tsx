@@ -10,7 +10,7 @@ import Avatar from '../../components/common/Avatar';
 import ListItemButton from '@mui/material/ListItemButton';
 
 const Search: FunctionComponent = () => {
-    const router = useRouter()
+    const router: any = useRouter()
     const [{ data, isLoading }] = useSearch(router.query.find, 'users')
 
     return (
@@ -24,7 +24,7 @@ const Search: FunctionComponent = () => {
 
                         <List sx={{ width: '100%', bgcolor: 'background.paper', marginTop: '12px' }}>
                             {
-                                data.map(user =>
+                                data.map((user: any) =>
                                     <ListItemButton onClick={() => router.push(`/${user.login}`)} key={user._id}>
                                         <ListItemAvatar>
                                             <Avatar user={user} size="40px" />

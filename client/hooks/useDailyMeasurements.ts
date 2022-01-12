@@ -7,13 +7,13 @@ import { loadValueByLogin } from '../utils/API';
 import { getCookie, readToken } from '../utils/checkAuth';
 import DailyMeasurementProps from '../interfaces/dailyMeasurement';
 
-const loadMissingDays = async (oryginalArray, user_ID, howManyDays, today) => {
+const loadMissingDays = async (oryginalArray: Array<DailyMeasurementProps>, user_ID: string, howManyDays: number, today: Date | string) => {
     return new Promise(resolve => {
         let newArray = []
         let checkingDate = JSON.parse(JSON.stringify(new Date(today)))
         let array = JSON.parse(JSON.stringify(oryginalArray))
         if (array.length > 0) {
-            array = array.sort((a, b) => {
+            array = array.sort((a: DailyMeasurementProps, b: DailyMeasurementProps) => {
                 if (a.whenAdded < b.whenAdded) {
                     return 1
                 } else {
@@ -21,7 +21,7 @@ const loadMissingDays = async (oryginalArray, user_ID, howManyDays, today) => {
                 }
             })
         }
-        let object = {}
+        let object: any = {}
         for (let i = 0; i < array.length; i++) {
             object[array[i].whenAdded] = array[i]
         }
@@ -37,7 +37,7 @@ const loadMissingDays = async (oryginalArray, user_ID, howManyDays, today) => {
     })
 }
 
-const useDailyMeasurements = (today, howManyDays = 7, login) => {
+const useDailyMeasurements = (today: Date | string, howManyDays: number = 7, login: string) => {
     const [reload, setReload] = useState(0)
     const [data, setData] = useState<Array<DailyMeasurementProps>>([])
     const [user, setUser] = useState('')
@@ -46,7 +46,7 @@ const useDailyMeasurements = (today, howManyDays = 7, login) => {
     useEffect(() => {
         (async () => {
             if(login){
-                const token = readToken(await getCookie('token'))
+                const token = readToken(await getCookie('token') || '')
                 if (token.login == (login || token.login)) { // Sometimes need to use only in token's user case and this block errors
                     let res = await getAllIndexedDB('daily_measurement')
                     res = await loadMissingDays(res, token._id, howManyDays, today)

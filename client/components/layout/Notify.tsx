@@ -12,14 +12,14 @@ const Notify: FunctionComponent<NotifyProps> = ({ children }) => {
 
     const notifyOptions = useMemo(
         () => ({
-            success: (text) => {
+            success: (text: string = 'Success') => {
                 toast.success(t(text), {
                     position: "bottom-right",
                     autoClose: 2000,
                     closeOnClick: true,
                 })
             },
-            error: (text) => {
+            error: (text: string = 'Error') => {
                 toast.error(t(text), {
                     position: "bottom-right",
                     autoClose: 2000,

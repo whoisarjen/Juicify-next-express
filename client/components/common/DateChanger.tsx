@@ -25,7 +25,7 @@ const Transition = forwardRef(function Transition(
 const DateChanger: FunctionComponent<{ where?: string }> = ({ where = 'nutrition-diary' }) => {
     const router = useRouter()
     const [isDialog, setIsDialog] = useState(false)
-    const [value, setValue] = useState<Date | null>(new Date());
+    const [value, setValue] = useState<Date>(new Date());
 
     const handleDateChange = () => {
         setIsDialog(false);
@@ -46,7 +46,7 @@ const DateChanger: FunctionComponent<{ where?: string }> = ({ where = 'nutrition
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
-                            <CalendarPicker date={value} onChange={(newDate) => setValue(newDate)} />
+                            <CalendarPicker date={value} onChange={(newDate) => setValue(newDate || new Date())} />
                         </LocalizationProvider>
                     </DialogContentText>
                 </DialogContent>

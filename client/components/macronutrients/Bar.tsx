@@ -20,16 +20,15 @@ interface BarProps {
 }
 
 const Bar: FunctionComponent<BarProps> = ({ object, click, toggleLock }) => {
-    const [, getShortDayName] = useMacro()
+    const [{ getShortDayName }] = useMacro()
     const { t } = useTranslation('macronutrients')
 
     return (
         <div className={styles.barBox}>
             <div className={styles.barBoxDay}>
                 <div>{t(getShortDayName(object.day).toUpperCase())}</div>
-
             </div>
-            <div className={object.choosen ? styles.macroChoosen : styles.macro} onClick={() => click(object)}>
+            <div className={object.choosen ? styles.macroChoosen : styles.macro} onClick={click}>
                 <div className={styles.barBoxProteins}>
                     <div className="marginAuto">
                         {object.proteins} {t('P')}
@@ -56,7 +55,7 @@ const Bar: FunctionComponent<BarProps> = ({ object, click, toggleLock }) => {
                     object.locked ?
                         (
                             <IconButton
-                                onClick={() => toggleLock(object)}
+                                onClick={toggleLock}
                                 color="secondary"
                                 className="marginAuto"
                             >
@@ -64,7 +63,7 @@ const Bar: FunctionComponent<BarProps> = ({ object, click, toggleLock }) => {
                             </IconButton>
                         ) : (
                             <IconButton
-                                onClick={() => toggleLock(object)}
+                                onClick={toggleLock}
                                 color="primary"
                                 className="marginAuto"
                             >

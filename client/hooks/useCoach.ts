@@ -4,7 +4,7 @@ import { API } from '../utils/API'
 const useCoach = () => {
     const [, setCookie] = useCookies()
 
-    const createDiet = async (object) => {
+    const createDiet = async (object: any) => {
         const { response, isSuccess } = await API('/coach/create', {
             array: [object]
         })
@@ -14,7 +14,7 @@ const useCoach = () => {
         }
     }
 
-    const analyzeDiet = async (object) => {
+    const analyzeDiet = async (object: any) => {
         const { response, isSuccess } = await API('/coach/analyze', {
             array: [object]
         })

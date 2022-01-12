@@ -40,18 +40,15 @@ const WorkoutPlansID: FunctionComponent = () => {
     const saveWorkoutPlan = async () => {
         setSaveLoading(true)
         const newWorkoutPlan = new WorkoutPlan(router.query.id, token._id, title, description, burnt, exercises).prepareForDB()
-        if (!requiredBasicInputLength(newWorkoutPlan.title)) {
+        if (!newWorkoutPlan.title || !requiredBasicInputLength(newWorkoutPlan.title)) {
             error(t('Title is incorrect'))
-        } else if (!basicInputLength(newWorkoutPlan.description)) {
-            error(t('Description is incorrect'))
-        } else if (newWorkoutPlan.exercises.length < 1) {
+        } else if (!newWorkoutPlan.exercises || newWorkoutPlan.exercises.length < 1) {
             error(t('Exercises are incorrect'))
         } else {
             if (await is_id(newWorkoutPlan._id)) {
                 await overwriteThoseIDSinDB('workout_plan', [newWorkoutPlan])
             } else {
                 await deleteIndexedDB('workout_plan', newWorkoutPlan._id)
-                delete newWorkoutPlan._id
                 await insertThoseIDStoDB('workout_plan', [newWorkoutPlan])
             }
             router.push(`/${token.login}/workout-plans/`)

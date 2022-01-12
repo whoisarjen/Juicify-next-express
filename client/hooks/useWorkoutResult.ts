@@ -15,7 +15,7 @@ const useWorkoutResult = (): [any, () => void] => {
     useEffect(() => {
         (async () => {
             if (daily) {
-                const token = readToken(await getCookie('token'))
+                const token = readToken(await getCookie('token') || '')
                 if (token.login == router.query.login) {
                     let res: any = {}
                     let cache = await getIndexedDBbyID('workout_result', router.query.id)

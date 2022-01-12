@@ -11,7 +11,7 @@ const useWorkoutPlans = (): any => {
 
     useEffect(() => {
         (async () => {
-            const token = readToken(await getCookie('token'))
+            const token = readToken(await getCookie('token') || '')
             if (token.login == router.query.login) {
                 setData(await getAllIndexedDB('workout_plan'))
                 setUser(token)

@@ -25,7 +25,7 @@ const MealBox: FunctionComponent<MealBoxProps> = ({ index, products, openDialog,
     const [{ p, c, f }, setMacro] = useState({ p: 0, c: 0, f: 0 })
 
     const prepareNumber = (number: number) => parseFloat((Math.round(number * 100) / 100).toFixed(1))
-    const count = (product: NutritionDiaryProps, key: string) => parseFloat((Math.round((product[key] * product.how_many) * 100) / 100).toFixed(1)) || 0
+    const count = (product: any, key: string) => parseFloat((Math.round((product[key] * product.how_many) * 100) / 100).toFixed(1)) || 0
 
     useEffect(() => {
         let macro = { p: 0, c: 0, f: 0 }

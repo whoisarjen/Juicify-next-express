@@ -12,6 +12,7 @@ interface AddResultMoreOptionsProps {
 }
 
 const AddResultMoreOptions: FunctionComponent<AddResultMoreOptionsProps> = ({ exercises, setExercises }) => {
+    console.log(exercises)
     const [open, setOpen] = useState(false);
     const [isAddDialog, setIsAddDialog] = useState(false)
     const handleOpen = () => setOpen(true);

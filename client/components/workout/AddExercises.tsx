@@ -121,7 +121,8 @@ const AddDialog: FunctionComponent<AddDialogProps> = ({ isAddDialog, closeDialog
                         <Tab wrapped label={`${t('Selected')} (${checked.length})`} />
                     </Tabs>
                     {
-                        items && items.map((item: ExerciseProps) =>
+                        items &&
+                        items.map((item: ExerciseProps) =>
                             <AddExercisesBox refreshCheckedExercises={() => setRefreshChecked(refreshChecked + 1)} exercise={item} key={item._id} />
                         )
                     }

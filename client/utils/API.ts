@@ -60,7 +60,9 @@ const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, whatToUp
             if (array[i]._id) {
                 await deleteIndexedDB(where, array[i][uniquePARAM])
                 arrayIDSbeforeInsert.push(array[i]._id)
-                delete array[i]._id
+                if (!await is_id(array[i]._id)) {
+                    delete array[i]._id
+                }
             }
             if (where == 'daily_measurement' && isOnline) {
                 array[i] = await prepareDailyToSend(array[i], true)
@@ -252,7 +254,7 @@ const prepareDailyToSend = async (daily_measurement: any, removeDeleted: boolean
             // DB think no value = 0, so we don't need values == 0 (can be string too!)
             const keys = Object.keys(object)
             keys.forEach(x => {
-                if(object[x] == 0){
+                if (object[x] == 0) {
                     delete object[x]
                 }
             })
@@ -273,7 +275,7 @@ const setLastUpdated = () => {
 
 const refreshKeys = async (where: string) => {
     return new Promise(resolve => {
-        if(where == 'daily_measurement'){
+        if (where == 'daily_measurement') {
             store.dispatch(refreshTodayDaily())
         }
         resolve(true)

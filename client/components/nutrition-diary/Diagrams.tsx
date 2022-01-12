@@ -19,9 +19,9 @@ interface DiagramsProps {
 
 const Diagrams: FunctionComponent<DiagramsProps> = ({ array, user }) => {
     const [value, setValue] = useState<string>('1');
-    const [getDay] = useMacro()
+    const [{ getDay }] = useMacro()
     const router = useRouter()
-    const [object, setObject] = useState({})
+    const [object, setObject] = useState<any>({})
     const { t } = useTranslation('nutrition-diary')
 
     useEffect(() => {
@@ -36,13 +36,15 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array, user }) => {
             }
 
             array.forEach(meal => {
-                if (meal.length > 0) {
-                    meal.forEach(product => {
-                        if (product.p) o['Proteins']['value'] += product.p * product.how_many
-                        if (product.c) o['Carbs']['value'] += product.c * product.how_many
-                        if (product.s) o['Sugar']['value'] += product.s * product.how_many
-                        if (product.f) o['Fats']['value'] += product.f * product.how_many
-                        if (product.fi) o['Fiber']['value'] += product.fi * product.how_many
+                if (meal.length) {
+                    meal.forEach((product: NutritionDiaryProps) => {
+                        if (product && product.how_many) {
+                            if (product.p) o['Proteins']['value'] += product.p * product.how_many
+                            if (product.c) o['Carbs']['value'] += product.c * product.how_many
+                            if (product.s) o['Sugar']['value'] += product.s * product.how_many
+                            if (product.f) o['Fats']['value'] += product.f * product.how_many
+                            if (product.fi) o['Fiber']['value'] += product.fi * product.how_many
+                        }
                     })
                 }
             })

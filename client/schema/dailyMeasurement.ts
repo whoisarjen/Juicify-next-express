@@ -1,4 +1,4 @@
-const schema = (object, _id, when: any, user_ID: string) => {
+const schema = (object: any, _id: string, when: any, user_ID: string) => {
     if (!object) { // object can be undefinded, so we avoid issues like this
         object = false;
     }

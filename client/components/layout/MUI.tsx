@@ -7,7 +7,7 @@ interface MUIProps {
 }
 
 const MUI: FunctionComponent<MUIProps> = ({ children }) => {
-    const [mode, setMode]: any = useState('light')
+    const [mode, setMode]: any = useState('dark')
 
     const theme = createTheme({
         typography: {
@@ -21,13 +21,13 @@ const MUI: FunctionComponent<MUIProps> = ({ children }) => {
     const colorMode = useMemo(
         () => ({
             toggleColorMode: () => {
-                setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+                setMode((prevMode: string) => (prevMode === 'light' ? 'dark' : 'light'));
             },
         }),
         [],
     );
 
-    useEffect(() => setMode(JSON.parse(localStorage.getItem('isDarkMode')) ? 'dark' : 'light'), [])
+    useEffect(() => setMode(localStorage.getItem('isDarkMode') ? 'dark' : 'light'), [])
 
     useEffect(() => {
         if (mode === 'dark') {

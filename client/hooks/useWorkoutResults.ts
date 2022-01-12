@@ -14,7 +14,7 @@ const useWorkoutResults = (): any => {
     useEffect(() => {
         (async () => {
             let results = []
-            const token = readToken(await getCookie('token'))
+            const token = readToken(await getCookie('token') || '')
             if (token.login == router.query.login) {
                 let cache = await getAllIndexedDB('workout_result')
                 let daily_measurements = await getAllIndexedDB('daily_measurement')

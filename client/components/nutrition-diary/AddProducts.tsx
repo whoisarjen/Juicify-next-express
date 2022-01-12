@@ -42,7 +42,7 @@ const Transition = forwardRef(function Transition(
 const AddProducts: FunctionComponent<AddproductsProps> = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload }) => {
     const { t } = useTranslation('nutrition-diary');
     const [tab, setTab] = useState(0)
-    const [find, setFind] = useState<string | null>(null)
+    const [find, setFind] = useState<any>(null)
     const [open, setOpen] = useState(false)
     const [meal, setMeal] = useState(index)
     const [checked, setChecked] = useState([])

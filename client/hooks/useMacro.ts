@@ -9,7 +9,7 @@ const useMacro = () => {
             5: 'short_thursday',
             6: 'short_friday',
             7: 'short_saturday'
-        }[day]
+        }[day] || 'short_sunday'
     }
 
     const getDay = (date: any, token: any = false) => {
@@ -27,7 +27,7 @@ const useMacro = () => {
         }
     }
 
-    return [getDay, getShortDayName]
+    return [{ getDay, getShortDayName }]
 }
 
 export default useMacro;

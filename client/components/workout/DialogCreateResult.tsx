@@ -34,7 +34,7 @@ const DialogCreateResult: FunctionComponent = () => {
         await addIndexedDB(
             'workout_result',
             [{
-                ...workoutPlan[0],
+                ...(({ exercises, ...o }) => o)(workoutPlan[0]),
                 ...{
                     description: '',
                     whenAdded: whenAddedChanged,
@@ -44,9 +44,7 @@ const DialogCreateResult: FunctionComponent = () => {
                         ...workoutPlan[0].exercises.map((exercise: ExerciseProps) => {
                             return {
                                 ...exercise,
-                                ...{
-                                    values: []
-                                }
+                                values: []
                             }
                         })
                     ]

@@ -16,7 +16,7 @@ const Settings: FunctionComponent = () => {
     expectLoggedIN();
     const { t } = useTranslation('settings')
     const [isLoading, setIsLoading] = useState(false)
-    const [changedObject, setChangedObject] = useState({})
+    const [changedObject, setChangedObject] = useState<any>({})
     const [changeSettings] = useSettings()
     const token: any = useAppSelector(state => state.token.value)
     const [fiber, setFiber] = useState<any>()
@@ -175,13 +175,17 @@ const Settings: FunctionComponent = () => {
                 value={name}
                 onChange={(e) => handleChange(parseInt(e.target.value), 'name')}
                 error={
-                    name &&
-                    name.length > 0 &&
-                    !basicInputLength(name)
+                    (
+                        name &&
+                        name.length &&
+                        !basicInputLength(name)
+                    )
+                    ||
+                    false
                 }
                 helperText={
                     name &&
-                        name.length > 0 &&
+                        name.length &&
                         !basicInputLength(name)
                         ? t("home:basicInputLength")
                         : ""
@@ -194,13 +198,17 @@ const Settings: FunctionComponent = () => {
                 value={surname}
                 onChange={(e) => handleChange(parseInt(e.target.value), 'surname')}
                 error={
-                    surname &&
-                    surname.length > 0 &&
-                    !basicInputLength(surname)
+                    (
+                        surname &&
+                        surname.length &&
+                        !basicInputLength(surname)
+                    )
+                    ||
+                    false
                 }
                 helperText={
                     surname &&
-                        surname.length > 0 &&
+                        surname.length &&
                         !basicInputLength(surname)
                         ? t("home:basicInputLength")
                         : ""
@@ -239,13 +247,17 @@ const Settings: FunctionComponent = () => {
                 value={description}
                 onChange={(e) => handleChange(parseInt(e.target.value), 'description')}
                 error={
-                    description &&
-                    description.length > 0 &&
-                    !basicInputLength(description)
+                    (
+                        description &&
+                        description.length &&
+                        !basicInputLength(description)
+                    )
+                    ||
+                    false
                 }
                 helperText={
                     description &&
-                        description.length > 0 &&
+                        description.length &&
                         !basicInputLength(description)
                         ? t("home:basicInputLength")
                         : ""
@@ -258,13 +270,17 @@ const Settings: FunctionComponent = () => {
                 value={website}
                 onChange={(e) => handleChange(parseInt(e.target.value), 'website')}
                 error={
-                    website &&
-                    website.length > 0 &&
-                    !basicInputLength(website)
+                    (
+                        website &&
+                        website.length &&
+                        !basicInputLength(website)
+                    )
+                    ||
+                    false
                 }
                 helperText={
                     website &&
-                        website.length > 0 &&
+                        website.length &&
                         !basicInputLength(website)
                         ? t("home:basicInputLength")
                         : ""
@@ -280,13 +296,17 @@ const Settings: FunctionComponent = () => {
                 value={facebook}
                 onChange={(e) => handleChange(parseInt(e.target.value), 'facebook')}
                 error={
-                    facebook &&
-                    facebook.length > 0 &&
-                    !basicInputLength(facebook)
+                    (
+                        facebook &&
+                        facebook.length &&
+                        !basicInputLength(facebook)
+                    )
+                    ||
+                    false
                 }
                 helperText={
                     facebook &&
-                        facebook.length > 0 &&
+                        facebook.length &&
                         !basicInputLength(facebook)
                         ? t("home:basicInputLength")
                         : ""
@@ -302,13 +322,17 @@ const Settings: FunctionComponent = () => {
                 value={instagram}
                 onChange={(e) => handleChange(parseInt(e.target.value), 'instagram')}
                 error={
-                    instagram &&
-                    instagram.length > 0 &&
-                    !basicInputLength(instagram)
+                    (
+                        instagram &&
+                        instagram.length &&
+                        !basicInputLength(instagram)
+                    )
+                    ||
+                    false
                 }
                 helperText={
                     instagram &&
-                        instagram.length > 0 &&
+                        instagram.length &&
                         !basicInputLength(instagram)
                         ? t("home:basicInputLength")
                         : ""
@@ -324,13 +348,17 @@ const Settings: FunctionComponent = () => {
                 value={twitter}
                 onChange={(e) => handleChange(parseInt(e.target.value), 'twitter')}
                 error={
-                    twitter &&
-                    twitter.length > 0 &&
-                    !basicInputLength(twitter)
+                    (
+                        twitter &&
+                        twitter.length &&
+                        !basicInputLength(twitter)
+                    )
+                    ||
+                    false
                 }
                 helperText={
                     twitter &&
-                        twitter.length > 0 &&
+                        twitter.length &&
                         !basicInputLength(twitter)
                         ? t("home:basicInputLength")
                         : ""
@@ -346,8 +374,12 @@ const Settings: FunctionComponent = () => {
                 variant="outlined"
                 value={password}
                 error={
-                    (repeat.length || password.length) &&
-                    !requirePassword(password)
+                    (
+                        (repeat.length || password.length) &&
+                        !requirePassword(password)
+                    )
+                    ||
+                    false
                 }
                 helperText={
                     (repeat.length || password.length) &&
@@ -363,9 +395,13 @@ const Settings: FunctionComponent = () => {
                 variant="outlined"
                 value={repeat}
                 error={
-                    (repeat != password) ||
-                    (repeat.length &&
-                        !requirePassword(repeat))
+                    (
+                        (repeat != password) ||
+                        (repeat.length &&
+                            !requirePassword(repeat))
+                    )
+                    ||
+                    false
                 }
                 helperText={
                     (repeat != password) ||
@@ -382,8 +418,12 @@ const Settings: FunctionComponent = () => {
                 variant="outlined"
                 value={current}
                 error={
-                    (current.length || repeat.length || password.length) &&
-                    !requirePassword(current)
+                    (
+                        (current.length || repeat.length || password.length) &&
+                        !requirePassword(current)
+                    )
+                    ||
+                    false
                 }
                 helperText={
                     (current.length || repeat.length || password.length) &&
@@ -399,7 +439,7 @@ const Settings: FunctionComponent = () => {
             </Button>
             {
                 Object.keys(changedObject) &&
-                Object.keys(changedObject).length > 0 &&
+                Object.keys(changedObject).length &&
                 <BottomFlyingButton clicked={handleSubmit} isLoading={isLoading} showNumberValue={Object.keys(changedObject).length} />
             }
         </div>

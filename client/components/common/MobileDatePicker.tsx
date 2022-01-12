@@ -13,9 +13,9 @@ interface MobileDatePickerExportProps {
 }
 
 const MobileDatePickerExport: FunctionComponent<MobileDatePickerExportProps> = ({ change, defaultDate, label = "Pick date", marginBottom = 0 }) => {
-    const [value, setValue] = useState<any>(defaultDate)
+    const [value, setValue] = useState<Date>(defaultDate)
 
-    const handleChange = (newValue) => {
+    const handleChange = (newValue: any) => {
         setValue(newValue)
         change(newValue)
     }

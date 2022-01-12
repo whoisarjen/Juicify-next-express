@@ -23,7 +23,7 @@ const SidebarRight: FunctionComponent = () => {
     const token: any = useAppSelector(state => state.token.value)
     const keyDaily = useAppSelector(state => state.key.daily_measurement)
     const [{ data }, reload] = useDailyMeasurement(getShortDate(), token.login)
-    const [getDay] = useMacro()
+    const [{ getDay }] = useMacro()
     const [weight, setWeight] = useState(0)
     const [calories, setCalories] = useState(0)
     const [caloriesGoal, setCaloriesGoal] = useState(0)
@@ -42,7 +42,7 @@ const SidebarRight: FunctionComponent = () => {
             })
             setCalories(calories)
 
-            const macro = getDay(getShortDate(), token)
+            const macro = getDay(new Date(getShortDate()), token)
             setCaloriesGoal(macro.proteins * 4 + macro.carbs * 4 + macro.fats * 9)
 
             setWorkout(data.workout_result.length)

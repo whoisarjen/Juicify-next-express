@@ -20,14 +20,14 @@ const Macronutrients: FunctionComponent = () => {
     const [isOwnMacro, setIsOwnMacro] = useState(false)
     const { t } = useTranslation('macronutrients')
 
-    const changed = (newValue, key) => {
+    const changed = (newValue: any, key: string) => {
         let newMacro = JSON.parse(JSON.stringify(macro))
         newMacro[changeObject.day - 1][key] = newValue
 
         let value = newValue - changeObject[key]
         let numberPossibleObjectChange = macro.filter(x => !x.locked && x.day != changeObject.day).length
 
-        newMacro.forEach(x => {
+        newMacro.forEach((x: any) => {
             if (!x.locked && x.day != changeObject.day) {
                 let minus = Math.ceil(value / numberPossibleObjectChange)
                 if (x[key] - minus < 0) {
@@ -40,7 +40,7 @@ const Macronutrients: FunctionComponent = () => {
         })
 
         if (value) {
-            newMacro.forEach(x => {
+            newMacro.forEach((x: any) => {
                 if (!x.locked && x.day != changeObject.day) {
                     let minus = value
                     if (x[key] - minus < 0) {
@@ -82,10 +82,10 @@ const Macronutrients: FunctionComponent = () => {
         }))
     }
 
-    const openChange = (object) => {
+    const openChange = (object: any) => {
         setChangeObject(object)
         let newMacro = macro
-        newMacro.map(x => {
+        newMacro.map((x: any) => {
             x.choosen = false
             if (object.day === x.day) {
                 x.choosen = true
@@ -95,7 +95,7 @@ const Macronutrients: FunctionComponent = () => {
         setMacro(newMacro)
     }
 
-    const toggleLock = (object) => {
+    const toggleLock = (object: any) => {
         let newMacro = JSON.parse(JSON.stringify(macro))
         newMacro[object.day - 1].locked = !newMacro[object.day - 1].locked
         setMacro(newMacro)
@@ -104,7 +104,7 @@ const Macronutrients: FunctionComponent = () => {
     useEffect(() => {
         if (token && token.macronutrients) {
             let newMacro = JSON.parse(JSON.stringify(token.macronutrients))
-            setMacro(newMacro.map(x => {
+            setMacro(newMacro.map((x: any) => {
                 x.locked = false
                 return x
             }))
@@ -123,12 +123,13 @@ const Macronutrients: FunctionComponent = () => {
                         <div className={styles.mainGridMacroBox}>
                             {
                                 macro &&
+                                macro.length &&
                                 macro.map(x =>
                                     <Bar
                                         key={x.day}
                                         object={x}
-                                        click={openChange}
-                                        toggleLock={toggleLock}
+                                        click={() => openChange(x)}
+                                        toggleLock={() => toggleLock(x)}
                                     />
                                 )
                             }

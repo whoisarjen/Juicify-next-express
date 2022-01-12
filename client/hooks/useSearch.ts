@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { API } from "../utils/API";
 
-const useSearch = (find, where) => {
+const useSearch = (find: string | number, where: string) => {
     const [data, setData] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const router = useRouter()

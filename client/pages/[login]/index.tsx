@@ -7,6 +7,7 @@ import StackedBarChart from "../../components/diagrams/StackedBarChart";
 import Navbar from "../../components/profile/Navbar";
 import { useDailyMeasurements } from "../../hooks/useDailyMeasurements";
 import { useTheme } from "../../hooks/useTheme";
+import DailyMeasurementProps from "../../interfaces/dailyMeasurement";
 import NutritionDiaryProps from "../../interfaces/nutritionDiary";
 import styles from '../../styles/profile.module.css'
 import { addDaysToDate, getShortDate, reverseDateDotes } from '../../utils/manageDate';
@@ -14,7 +15,7 @@ import { addDaysToDate, getShortDate, reverseDateDotes } from '../../utils/manag
 const Profile: FunctionComponent = () => {
     const [getTheme]: any = useTheme()
     const { t } = useTranslation('profile')
-    const router = useRouter()
+    const router: any = useRouter()
     const [{ data, user }]: any = useDailyMeasurements(addDaysToDate(getShortDate(), -1), 7, router.query.login)
     const barNamesWithColor = [
         { dataKey: t('p'), fill: '#ff8b42' },
@@ -26,7 +27,7 @@ const Profile: FunctionComponent = () => {
         { dataKey: t('Burnt'), stroke: '#b1272f' },
         { dataKey: t('Diffrent'), stroke: getTheme('PRIMARY') }
     ]
-    const nutrition_diary = data.map(x => {
+    const nutrition_diary = data.map((x: DailyMeasurementProps) => {
         let object: any = {
             name: '',
             [t('p')]: 0,
@@ -35,22 +36,24 @@ const Profile: FunctionComponent = () => {
         }
         if (x.nutrition_diary) {
             object.name = reverseDateDotes(x.whenAdded).slice(0, 5)
-            x.nutrition_diary.map(meal => {
-                if (meal.p) {
-                    object[t('p')] += meal.p * meal.how_many
-                }
-                if (meal.c) {
-                    object[t('c')] += meal.c * meal.how_many
-                }
-                if (meal.f) {
-                    object[t('f')] += meal.f * meal.how_many
+            x.nutrition_diary.map((meal: NutritionDiaryProps) => {
+                if (meal && meal.how_many) {
+                    if (meal.p) {
+                        object[t('p')] += meal.p * meal.how_many
+                    }
+                    if (meal.c) {
+                        object[t('c')] += meal.c * meal.how_many
+                    }
+                    if (meal.f) {
+                        object[t('f')] += meal.f * meal.how_many
+                    }
                 }
             })
         }
         return object
     })
 
-    const calories = data.map(x => {
+    const calories = data.map((x: DailyMeasurementProps) => {
         let object: any = {
             name: '',
             [t('Calories')]: 0,

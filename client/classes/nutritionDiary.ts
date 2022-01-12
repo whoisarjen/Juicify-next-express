@@ -25,10 +25,10 @@ export default class NutritionDiary implements NutritionDiaryProps {
     ) { }
 
     getCalories() {
-        if (this.calories && this.calories > 0 || this.calories < 0) {
+        if (this.calories) {
             return parseInt((this.calories).toString())
         } else {
-            return parseInt(((this.p || 0) * this.how_many * 4 + (this.c || 0) * this.how_many * 4 + (this.f || 0) * this.how_many * 9 + (this.ethanol || 0) * this.how_many * 7).toString())
+            return parseInt(((this.p || 0) * (this.how_many || 1) * 4 + (this.c || 0) * (this.how_many || 1) * 4 + (this.f || 0) * (this.how_many || 1) * 9 + (this.ethanol || 0) * (this.how_many || 1) * 7).toString())
         }
     }
 }
