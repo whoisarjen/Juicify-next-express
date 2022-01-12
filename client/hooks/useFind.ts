@@ -2,16 +2,23 @@ import { API } from '../utils/API'
 import { store } from '../redux/store'
 import { useState, useEffect } from "react";
 import { addIndexedDB, getAllIndexedDB, getIndexedDBbyID } from '../utils/indexedDB'
+import ExerciseProps from '../interfaces/workout/exercise';
+import NutritionDiaryProps from '../interfaces/nutritionDiary';
 
-const prepareItems = async (data: Array<any>, skipThoseIDS: Array<any>, where: string, value: string): Promise<Array<any>> => {
+const prepareItems = async (
+    data: Array<ExerciseProps | NutritionDiaryProps>,
+    skipThoseIDS: Array<ExerciseProps | NutritionDiaryProps>,
+    where: string,
+    value: string
+): Promise<Array<ExerciseProps | NutritionDiaryProps>> => {
     return new Promise(async resolve => {
-        let my: any = await getAllIndexedDB(where) || []
-        let newData: any = data.concat(my)
+        let my: Array<ExerciseProps | NutritionDiaryProps> = await getAllIndexedDB(where) || []
+        let newData: Array<ExerciseProps | NutritionDiaryProps> = data.concat(my)
         if (my.length > 0) {
-            newData = newData.filter((item: any) => item.name.toLowerCase().includes(value)).map((x: any) => {
+            newData = newData.filter((item: ExerciseProps | NutritionDiaryProps) => item.name.toLowerCase().includes(value)).map((x: ExerciseProps | NutritionDiaryProps) => {
                 if (!x.user_ID) x.user_ID = '0'
                 return x
-            }).sort((a: any, b: any) => b.user_ID.localeCompare(a.user_ID) || a.name.length - b.name.length || a.name.localeCompare(b.name));
+            }).sort((a: ExerciseProps | NutritionDiaryProps, b: ExerciseProps | NutritionDiaryProps) => b.user_ID.localeCompare(a.user_ID) || a.name.length - b.name.length || a.name.localeCompare(b.name));
 
             if (newData.length > 10) {
                 newData = newData.splice(0, 10)
@@ -31,8 +38,8 @@ const prepareItems = async (data: Array<any>, skipThoseIDS: Array<any>, where: s
     })
 }
 
-const useFind = (value: string, where: string, tab: number, skipThoseIDS: Array<any> = [], reload: number = 0): any => {
-    const [items, setItems] = useState<Array<any>>([])
+const useFind = (value: string, where: string, tab: number, skipThoseIDS: Array<ExerciseProps | NutritionDiaryProps> = [], reload: number = 0) => {
+    const [items, setItems] = useState<Array<ExerciseProps | NutritionDiaryProps>>([])
     const [loading, setLoading] = useState(false)
     const isOnline = store.getState().online.isOnline
     const [searchCache, setSearchCache] = useState<Array<any>>([])
@@ -64,7 +71,7 @@ const useFind = (value: string, where: string, tab: number, skipThoseIDS: Array<
                                     find: find
                                 });
                                 if (isSuccess) {
-                                    const receivedProducts = response.items.sort((a: any, b: any) => a.name.length - b.name.length)
+                                    const receivedProducts = response.items.sort((a: ExerciseProps | NutritionDiaryProps, b: ExerciseProps | NutritionDiaryProps) => a.name.length - b.name.length)
                                     setItems(await prepareItems(receivedProducts || [], skipThoseIDS, where, value))
                                     await addIndexedDB(`cache_${where}`, [{ _id: find, whenAdded: new Date(), items: receivedProducts }])
                                     setSearchCache([...searchCache, find])
@@ -88,7 +95,7 @@ const useFind = (value: string, where: string, tab: number, skipThoseIDS: Array<
 
     useEffect(() => {
         (async () => {
-            setSearchCache((await getAllIndexedDB(`cache_${where}`)).map((item: any) => item._id))
+            setSearchCache((await getAllIndexedDB(`cache_${where}`)).map((item: ExerciseProps | NutritionDiaryProps) => item._id))
         })()
     }, [])
 

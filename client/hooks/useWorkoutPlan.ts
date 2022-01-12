@@ -4,26 +4,24 @@ import { useState, useEffect } from 'react'
 import { getCookie, readToken } from '../utils/checkAuth'
 import { loadValueByLogin } from '../utils/API'
 import { getIndexedDBbyID } from '../utils/indexedDB'
+import WorkoutPlanProps from '../interfaces/workout/workoutPlan'
+import WorkoutPlan from '../classes/workout/workoutPlan'
 
 const useWorkoutPlan = (workoutPlanID: string): [any, () => void] => {
     const router: any = useRouter()
     const [user, setUser] = useState({})
     const [reload, setReload] = useState(0)
-    const [data, setData] = useState(false)
+    const [data, setData] = useState<boolean | WorkoutPlanProps>(false)
 
     useEffect(() => {
         (async () => {
             if (workoutPlanID) {
                 const token = readToken(await getCookie('token'))
                 if (token.login == router.query.login) {
-                    let object = await getIndexedDBbyID('workout_plan', workoutPlanID)
-                    if (object) {
-                        if (!object.title) object.title = ''
-                        if (!object.description) object.description = ''
-                        if (!object.burnt) object.burnt = 0
-                        if (!object.exercises) object.exercises = []
+                    const workoutPlan: WorkoutPlanProps = await getIndexedDBbyID('workout_plan', workoutPlanID)
+                    if (workoutPlan) {
                         setUser(token)
-                        setData(object)
+                        setData(Object.assign(new WorkoutPlan(workoutPlan._id, workoutPlan.user_ID), workoutPlan).getSchema())
                     } else {
                         router.push(`/${router.query.login}/workout-plans`)
                     }
@@ -31,12 +29,8 @@ const useWorkoutPlan = (workoutPlanID: string): [any, () => void] => {
                     if (await is_id(router.query.id)) {
                         let res = await loadValueByLogin('workout_plan', workoutPlanID, router.query.login)
                         if (res.data) {
-                            if (!res.data.title) res.data.title = ''
-                            if (!res.data.description) res.data.description = ''
-                            if (!res.data.burnt) res.data.burnt = 0
-                            if (!res.data.exercises) res.data.exercises = []
                             setUser(res.user)
-                            setData(res.data)
+                            setData(Object.assign(new WorkoutPlan(res.data._id, res.data.user_ID), res.data).getSchema())
                         } else {
                             router.push(`/${router.query.login}/workout-plans`)
                         }

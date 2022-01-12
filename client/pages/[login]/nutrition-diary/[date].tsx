@@ -19,7 +19,7 @@ const NutritionDiary: FunctionComponent = () => {
     const { t } = useTranslation('nutrition-diary')
     const router: any = useRouter()
     const [index, setIndex] = useState(0)
-    const [product, setProduct] = useState({})
+    const [product, setProduct] = useState({ _id: '' }) // Placeholder is necessary
     const token: any = useAppSelector(state => state.token.value)
     const [isAddDialog, setIsAddDialog] = useState(false)
     const [isEditDialog, setIsEditDialog] = useState(false)

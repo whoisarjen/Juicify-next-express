@@ -18,7 +18,7 @@ const WorkoutPlans: FunctionComponent = () => {
     const token: any = useAppSelector(state => state.token.value)
 
     const createWorkoutPlan = async () => {
-        const newWorkoutPlan = new WorkoutPlan('XD' + new Date().getTime(), '', '', token._id, 0, [])
+        const newWorkoutPlan = new WorkoutPlan('XD' + new Date().getTime(), token._id, '', '', 0, [])
         await addIndexedDB('workout_plan', [newWorkoutPlan])
         router.push(`/${router.query.login}/workout-plans/${newWorkoutPlan._id}`)
     }

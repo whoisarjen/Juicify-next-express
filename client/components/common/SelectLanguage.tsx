@@ -12,12 +12,12 @@ const useLanguage: FunctionComponent = () => {
     const { t } = useTranslation("home");
     const [, setCookie] = useCookies(["NEXT_LOCALE"]);
 
-    const setLanguage = (e: any) => {
-        setCookie("NEXT_LOCALE", e.target.value, {
+    const setLanguage = (value: string) => {
+        setCookie("NEXT_LOCALE", value, {
             path: "/",
             expires: new Date(new Date().setFullYear(new Date().getFullYear() + 20)),
         });
-        router.push(router.asPath, router.asPath, { locale: e.target.value });
+        router.push(router.asPath, router.asPath, { locale: value });
     }
 
     return (
@@ -28,7 +28,7 @@ const useLanguage: FunctionComponent = () => {
                 id="demo-simple-select"
                 value={router.locale}
                 autoWidth
-                onChange={(e) => setLanguage(e)}
+                onChange={(e) => setLanguage(e.target.value)}
                 label={t("Language")}
             >
                 {router.locales.map((locale: any) => (

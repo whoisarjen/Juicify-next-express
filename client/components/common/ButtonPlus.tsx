@@ -3,7 +3,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { FunctionComponent } from 'react';
 
 interface ButtonPlus {
-    click: any,
+    click: () => void,
     size?: any
 }
 

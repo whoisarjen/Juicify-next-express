@@ -1,6 +1,12 @@
 import Avatar from '@mui/material/Avatar';
+import { FunctionComponent } from 'react';
 
-const AvatarMUI = ({ user, size = '110px' }) => {
+interface AvatarMUIProps {
+    user: any,
+    size?: string
+}
+
+const AvatarMUI: FunctionComponent<AvatarMUIProps> = ({ user, size = '110px' }) => {
     return (
         <>
             {

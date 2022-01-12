@@ -5,6 +5,7 @@ import schema from "../schema/dailyMeasurement";
 import { addDaysToDate } from '../utils/manageDate';
 import { loadValueByLogin } from '../utils/API';
 import { getCookie, readToken } from '../utils/checkAuth';
+import DailyMeasurementProps from '../interfaces/dailyMeasurement';
 
 const loadMissingDays = async (oryginalArray, user_ID, howManyDays, today) => {
     return new Promise(resolve => {
@@ -38,7 +39,7 @@ const loadMissingDays = async (oryginalArray, user_ID, howManyDays, today) => {
 
 const useDailyMeasurements = (today, howManyDays = 7, login) => {
     const [reload, setReload] = useState(0)
-    const [data, setData] = useState<Array<any>>([])
+    const [data, setData] = useState<Array<DailyMeasurementProps>>([])
     const [user, setUser] = useState('')
     const router = useRouter()
 

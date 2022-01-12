@@ -14,7 +14,7 @@ const Input = styled(MuiInput)`
 interface SimpleSliderProps {
     title: string,
     macro: Array<any>,
-    beginValue: any,
+    beginValue: number,
     changed: (arg0: number) => void,
     day: number
 }
@@ -30,13 +30,9 @@ const SimpleSlider: FunctionComponent<SimpleSliderProps> = ({ title, macro, begi
     useEffect(() => {
         const key = title.toLowerCase()
         let count = 0
-        console.log('macro', macro)
-        console.log('key', key)
         macro.forEach(x => {
-            console.log(x)
-            if(!x.locked || x.day == day){
+            if (!x.locked || x.day == day) {
                 count += x[key]
-                console.log('count', count)
             }
         })
         setMaxValue(count)

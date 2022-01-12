@@ -39,7 +39,7 @@ const WorkoutPlansID: FunctionComponent = () => {
 
     const saveWorkoutPlan = async () => {
         setSaveLoading(true)
-        const newWorkoutPlan = new WorkoutPlan(router.query.id, title, description, token._id, burnt, exercises).prepareForDB()
+        const newWorkoutPlan = new WorkoutPlan(router.query.id, token._id, title, description, burnt, exercises).prepareForDB()
         if (!requiredBasicInputLength(newWorkoutPlan.title)) {
             error(t('Title is incorrect'))
         } else if (!basicInputLength(newWorkoutPlan.description)) {
@@ -92,7 +92,7 @@ const WorkoutPlansID: FunctionComponent = () => {
             if (!await is_id(router.query.id)) {
                 if (title != undefined && description != undefined && burnt != undefined && exercises != undefined) {
                     if (isOwner) {
-                        new WorkoutPlan(router.query.id, title, description, token._id, burnt, exercises).autoSave()
+                        new WorkoutPlan(router.query.id, token._id, title, description, burnt, exercises).autoSave()
                     }
                 }
             }

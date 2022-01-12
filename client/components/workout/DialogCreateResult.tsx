@@ -16,6 +16,9 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DatePicker from '../common/MobileDatePicker'
 import Link from 'next/link'
 import { getShortDate } from '../../utils/manageDate'
+import WorkoutResultProps from '../../interfaces/workout/workoutResult'
+import ExerciseProps from '../../interfaces/workout/exercise'
+import WorkoutPlanProps from '../../interfaces/workout/workoutPlan'
 
 const DialogCreateResult: FunctionComponent = () => {
     const router = useRouter()
@@ -25,7 +28,7 @@ const DialogCreateResult: FunctionComponent = () => {
     const [workoutPlanID, setWorkoutPlanID] = useState('')
 
     const createWorkoutResult = async () => {
-        const workoutPlan = data.filter((workout: any) => workout._id === workoutPlanID)
+        const workoutPlan = data.filter((workout: WorkoutResultProps) => workout._id === workoutPlanID)
         const createdID = 'XD' + new Date().getTime()
         let whenAddedChanged = new Date(whenAdded).toJSON().slice(0, 10)
         await addIndexedDB(
@@ -38,7 +41,7 @@ const DialogCreateResult: FunctionComponent = () => {
                     workout_plan_ID: workoutPlan[0]._id,
                     _id: createdID,
                     results: [
-                        ...workoutPlan[0].exercises.map((exercise: any) => {
+                        ...workoutPlan[0].exercises.map((exercise: ExerciseProps) => {
                             return {
                                 ...exercise,
                                 ...{
@@ -94,7 +97,7 @@ const DialogCreateResult: FunctionComponent = () => {
                             onChange={(event) => setWorkoutPlanID(event.target.value)}
                         >
                             {
-                                data && data.map((plan: any) =>
+                                data && data.map((plan: WorkoutPlanProps) =>
                                     <MenuItem value={plan._id} key={plan._id}>{plan.title}</MenuItem>
                                 )
                             }

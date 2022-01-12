@@ -4,10 +4,11 @@ import SpeedDialAction from '@mui/material/SpeedDialAction';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import { FunctionComponent, useState } from 'react'
 import AddExercises from './AddExercises'
+import ExerciseProps from '../../interfaces/workout/exercise';
 
 interface AddResultMoreOptionsProps {
-    exercises: Array<any>,
-    setExercises: (arg0: Array<any>) => void
+    exercises: Array<ExerciseProps>,
+    setExercises: (arg0: Array<ExerciseProps>) => void
 }
 
 const AddResultMoreOptions: FunctionComponent<AddResultMoreOptionsProps> = ({ exercises, setExercises }) => {

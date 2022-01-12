@@ -30,8 +30,8 @@ const Transition = forwardRef(function Transition(
 interface AddDialogProps {
     isAddDialog: boolean,
     closeDialog: () => void,
-    skipThoseIDS: Array<any>,
-    addThoseExercises: (Arg0: Array<any>) => void
+    skipThoseIDS: Array<ExerciseProps>,
+    addThoseExercises: (Arg0: Array<ExerciseProps>) => void
 }
 
 const AddDialog: FunctionComponent<AddDialogProps> = ({ isAddDialog, closeDialog, skipThoseIDS, addThoseExercises }) => {
@@ -47,7 +47,7 @@ const AddDialog: FunctionComponent<AddDialogProps> = ({ isAddDialog, closeDialog
 
     const addExercisesToWorkoutPlan = async () => {
         setLoadingButton(true)
-        checked.forEach(async (x: any) => await deleteIndexedDB('checked_exercise', x._id))
+        checked.forEach(async (x: ExerciseProps) => await deleteIndexedDB('checked_exercise', x._id))
         addThoseExercises(checked)
         setLoadingButton(false)
         closeDialog()
