@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react'
 import { getAllIndexedDB } from '../utils/indexedDB';
-import schema from "../schema/dailyMeasurement";
 import { addDaysToDate } from '../utils/manageDate';
 import { loadValueByLogin } from '../utils/API';
 import { getCookie, readToken } from '../utils/checkAuth';
 import DailyMeasurementProps from '../interfaces/dailyMeasurement';
+import DailyMeasurement from '../classes/dailyMeasurement';
 
 const loadMissingDays = async (oryginalArray: Array<DailyMeasurementProps>, user_ID: string, howManyDays: number, today: Date | string) => {
     return new Promise(resolve => {
@@ -26,11 +26,14 @@ const loadMissingDays = async (oryginalArray: Array<DailyMeasurementProps>, user
             object[array[i].whenAdded] = array[i]
         }
         for (let i = 0; i < howManyDays; i++) {
-            if (object[checkingDate]) {
-                newArray.push(schema(object[checkingDate], "XD" + new Date().getTime() + i, checkingDate, user_ID))
-            } else {
-                newArray.push(schema(false, "XD" + new Date().getTime() + i, checkingDate, user_ID))
-            }
+            newArray.push(
+                new DailyMeasurement(
+                    {
+                        ...{ _id: "XD" + new Date().getTime() + i, user_ID, whenAdded: checkingDate },
+                        ...object[checkingDate]
+                    }
+                )
+            );
             checkingDate = new Date(addDaysToDate(checkingDate, -1)).toJSON()
         }
         resolve(newArray)
@@ -45,7 +48,7 @@ const useDailyMeasurements = (today: Date | string, howManyDays: number = 7, log
 
     useEffect(() => {
         (async () => {
-            if(login){
+            if (login) {
                 const token = readToken(await getCookie('token') || '')
                 if (token.login == (login || token.login)) { // Sometimes need to use only in token's user case and this block errors
                     let res = await getAllIndexedDB('daily_measurement')

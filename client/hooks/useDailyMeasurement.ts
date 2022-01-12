@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { getCookie, readToken } from "../utils/checkAuth";
 import { getIndexedDBbyID } from "../utils/indexedDB";
 import { loadValueByLogin } from "../utils/API";
-import schema from "../schema/dailyMeasurement";
+import DailyMeasurement from "../classes/dailyMeasurement";
 
 const useDailyMeasurement = (when: string, login: string): [any, () => void] => {
     const router: any = useRouter();
@@ -21,12 +21,19 @@ const useDailyMeasurement = (when: string, login: string): [any, () => void] => 
                     token.login == (login || token.login) && // Sometimes need to use only in token's user case and this block errors
                     theOldestSupportedDate <= when
                 ) {
-                    let data = await getIndexedDBbyID(
-                        "daily_measurement",
-                        new Date(when).toISOString()
-                    );
                     setUser(token);
-                    setDataObject(schema(data, "XD" + new Date().getTime(), when, token._id));
+                    setDataObject(
+                        new DailyMeasurement(
+                            {
+                                ...{ _id: "XD" + new Date().getTime(), user_ID: token._id, whenAdded: when },
+                                ...await getIndexedDBbyID
+                                    (
+                                        "daily_measurement",
+                                        new Date(when).toISOString()
+                                    )
+                            }
+                        )
+                    );
                 } else {
                     let res = await loadValueByLogin(
                         "daily_measurement",
@@ -34,7 +41,14 @@ const useDailyMeasurement = (when: string, login: string): [any, () => void] => 
                         login
                     );
                     setUser(res.user);
-                    setDataObject(schema(res.data, "XD" + new Date().getTime(), when, res.user._id));
+                    setDataObject(
+                        new DailyMeasurement(
+                            {
+                                ...{ _id: "XD" + new Date().getTime(), user_ID: res._id, whenAdded: when },
+                                ...res.data
+                            }
+                        )
+                    );
                 }
             })();
         }
