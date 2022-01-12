@@ -3,14 +3,20 @@ import WorkoutPlanProps from "../../interfaces/workout/workoutPlan";
 import { addIndexedDB, deleteIndexedDB } from "../../utils/indexedDB";
 
 export default class WorkoutPlan implements WorkoutPlanProps {
-    constructor(
-        public _id: string,
-        public user_ID: string,
-        public title?: string,
-        public description?: string,
-        public burnt?: number,
-        public exercises?: Array<ExerciseProps>
-    ) { }
+    _id: string = 'XD' + Math.random();
+    user_ID: string = '';
+    title?: string = '';
+    description?: string = '';
+    burnt?: number = 0;
+    exercises?: ExerciseProps[] = [];
+
+    constructor(value: WorkoutPlanProps) {
+        const self: any = this;
+        const valueObject: any = value;
+        Object.keys(value).forEach((key: string) => {
+            self[key] = valueObject[key]
+        })
+    }
 
     autoSave() {
         (async () => {
@@ -25,17 +31,6 @@ export default class WorkoutPlan implements WorkoutPlanProps {
                 notSaved: true
             }])
         })()
-    }
-
-    getSchema() {
-        return {
-            _id: this._id, 
-            title: this.title || '', 
-            description: this.description || '', 
-            user_ID: this.user_ID,
-            burnt: this.burnt || 0, 
-            exercises: this.exercises || []
-        }
     }
 
     prepareForDB() {

@@ -6,5 +6,5 @@ export default interface WorkoutPlanProps {
     title?: string,
     description?: string,
     burnt?: number,
-    exercises?: Array<ExerciseProps>
+    exercises?: ExerciseProps[]
 }

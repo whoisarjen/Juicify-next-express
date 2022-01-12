@@ -21,7 +21,7 @@ const useWorkoutPlan = (workoutPlanID: string): [any, () => void] => {
                     const workoutPlan: WorkoutPlanProps = await getIndexedDBbyID('workout_plan', workoutPlanID)
                     if (workoutPlan) {
                         setUser(token)
-                        setData(Object.assign(new WorkoutPlan(workoutPlan._id, workoutPlan.user_ID), workoutPlan).getSchema())
+                        setData(new WorkoutPlan({ ...workoutPlan }))
                     } else {
                         router.push(`/${router.query.login}/workout-plans`)
                     }
@@ -30,7 +30,7 @@ const useWorkoutPlan = (workoutPlanID: string): [any, () => void] => {
                         let res = await loadValueByLogin('workout_plan', workoutPlanID, router.query.login)
                         if (res.data) {
                             setUser(res.user)
-                            setData(Object.assign(new WorkoutPlan(res.data._id, res.data.user_ID), res.data).getSchema())
+                            setData(new WorkoutPlan({ ...res.data }))
                         } else {
                             router.push(`/${router.query.login}/workout-plans`)
                         }

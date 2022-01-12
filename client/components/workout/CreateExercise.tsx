@@ -30,9 +30,9 @@ const CreateExercise: FunctionComponent<CreateExerciseProps> = ({ closeCreateExe
     const handleCreateExercise = async () => {
         if (requiredBasicInputLength(name)) {
             setLoading(true)
-            const object = new Exercise('XD' + new Date().getTime(), name, name.length, token._id)
-            await insertThoseIDStoDB('exercise', [object])
-                .then(() => created(object.name))
+            const newExercise = new Exercise({ _id: 'XD' + new Date().getTime(), name, l: name.length, user_ID: token._id })
+            await insertThoseIDStoDB('exercise', [newExercise])
+                .then(() => created(newExercise.name))
                 .then(() => success())
                 .finally(() => setLoading(false))
         }
