@@ -45,7 +45,6 @@ const CircularWithLabel: FunctionComponent<CircularWithLabelProps> = ({ array, u
                     value={100 - progress}
                     text={`${calories}${t('Kcal')}`}
                     styles={buildStyles({
-                        textSize: '15px',
                         pathTransitionDuration: 0.5,
                         pathColor: getTheme('PRIMARY'),
                         textColor: 'rgba(122, 122, 122, 1',

@@ -341,4 +341,5 @@ input[type="number"] {
 .CircularProgressbar .CircularProgressbar-text{
   dominant-baseline: middle !important;
   text-anchor: middle !important;
+  font-size: 15px !important;
 }
