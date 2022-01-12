@@ -9,12 +9,13 @@ import useTranslation from "next-translate/useTranslation";
 import style from "../../styles/nutrition-diary.module.css";
 import { useState, useEffect, FunctionComponent } from 'react'
 import NutritionDiary from '../../classes/nutritionDiary';
+import NutritionDiaryProps from '../../interfaces/nutritionDiary';
 
 interface MealBoxProps {
     index: number,
-    products: Array<any>,
+    products: Array<NutritionDiaryProps>,
     openDialog: () => void,
-    openEditProduct: (arg0: any) => void
+    openEditProduct: (arg0: NutritionDiaryProps) => void
 }
 
 const MealBox: FunctionComponent<MealBoxProps> = ({ index, products, openDialog, openEditProduct }) => {
@@ -24,7 +25,7 @@ const MealBox: FunctionComponent<MealBoxProps> = ({ index, products, openDialog,
     const [{ p, c, f }, setMacro] = useState({ p: 0, c: 0, f: 0 })
 
     const prepareNumber = (number: number) => parseFloat((Math.round(number * 100) / 100).toFixed(1))
-    const count = (product: any, key: string) => parseFloat((Math.round((product[key] * product.how_many) * 100) / 100).toFixed(1)) || 0
+    const count = (product: NutritionDiaryProps, key: string) => parseFloat((Math.round((product[key] * product.how_many) * 100) / 100).toFixed(1)) || 0
 
     useEffect(() => {
         let macro = { p: 0, c: 0, f: 0 }
@@ -63,7 +64,7 @@ const MealBox: FunctionComponent<MealBoxProps> = ({ index, products, openDialog,
             </div>
             <div>{prepareNumber(p)}{t('P')} {prepareNumber(c)}{t('C')} {prepareNumber(f)}{t('F')} {parseInt((p * 4 + c * 4 + f * 9).toString())}{t('Kcal')}</div>
             {
-                products && products.map((product: any) => (
+                products && products.map((product: NutritionDiaryProps) => (
                     <div className={style.boxProduct} key={product._id}>
                         <div className={style.boxProductEdit}>
                             {
@@ -88,7 +89,7 @@ const MealBox: FunctionComponent<MealBoxProps> = ({ index, products, openDialog,
                                     ?
                                     <>
                                         <div>{count(product, 'p')}{t('P')} {count(product, 'c')}{t('C')} {count(product, 'f')}{t('F')}</div>
-                                        <div>{parseFloat(product.how_many) * 100}g/ml</div>
+                                        <div>{parseFloat(product.how_many.toString()) * 100}g/ml</div>
                                     </>
                                     :
                                     <></>

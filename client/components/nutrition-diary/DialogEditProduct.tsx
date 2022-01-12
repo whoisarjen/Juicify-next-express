@@ -10,13 +10,14 @@ import { useAppSelector } from '../../hooks/useRedux';
 import MenuItem from '@mui/material/MenuItem';
 import ConfirmDialog from '../common/ConfirmDialog'
 import useTranslation from "next-translate/useTranslation";
+import NutritionDiaryProps from '../../interfaces/nutritionDiary';
 
 interface DialogEditProductProps {
-    product: any,
+    product: NutritionDiaryProps,
     isDialog: boolean,
     closeDialog: () => void,
     deleteProduct: (arg0: string) => void
-    changeProduct: (arg0: any) => void
+    changeProduct: (arg0: NutritionDiaryProps) => void
 }
 
 
@@ -76,7 +77,8 @@ const DialogEditProduct: FunctionComponent<DialogEditProductProps> = ({ product,
                 </DialogTitle>
                 <DialogContent>
                     {
-                        parseInt(product.meal) >= 0 &&
+                        product.meal &&
+                        parseInt(product.meal.toString()) >= 0 &&
                         <Select
                             sx={{ width: '100%' }}
                             labelId="demo-simple-select-label"

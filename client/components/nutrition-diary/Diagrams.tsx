@@ -10,9 +10,10 @@ import CircularWithLabelReverse from "./CircularWithLabelReverse";
 import useMacro from "../../hooks/useMacro";
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
+import NutritionDiaryProps from "../../interfaces/nutritionDiary";
 
 interface DiagramsProps {
-    array: Array<any>,
+    array: Array<Array<NutritionDiaryProps>>,
     user: any
 }
 
