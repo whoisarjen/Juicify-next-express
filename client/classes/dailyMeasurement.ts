@@ -1,23 +1,20 @@
 import DailyMeasurementProps from "../interfaces/dailyMeasurement";
+import nutritionDiary from "../interfaces/nutritionDiary";
 import WorkoutResultProps from "../interfaces/workout/workoutResult";
 
 export default class DailyMeasurement implements DailyMeasurementProps {
-    constructor(
-        public _id: string,
-        public whenAdded: Date,
-        public user_ID: string,
-        public nutrition_diary: Array<DailyMeasurementProps> = [],
-        public workout_result: Array<WorkoutResultProps> = [],
-        public weight: number = 0,
-        public weight_description?: string,
-        public neck?: number,
-        public shoulders?: number,
-        public chest?: number,
-        public biceps?: number,
-        public waist?: number,
-        public hips?: number,
-        public thigh?: number,
-        public calf?: number,
-        public water?: number
-    ) { }
+    _id: string = 'XD' + Math.random();
+    user_ID: string = '';
+    whenAdded: Date = new Date();
+    nutrition_diary?: nutritionDiary[] = [];
+    workout_result?: WorkoutResultProps[] = [];
+    weight?: number = 0;
+
+    constructor(value: DailyMeasurementProps) {
+        const self: any = this;
+        const valueObject: any = value;
+        Object.keys(value).forEach((key: string) => {
+            self[key] = valueObject[key]
+        })
+    }
 }

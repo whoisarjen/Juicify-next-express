@@ -29,7 +29,7 @@ const CircularWithLabel: FunctionComponent<CircularWithLabelProps> = ({ array, u
                 for (let i = 0; i < array.length; i++) {
                     if (array[i].length) {
                         for (let a = 0; a < array[i].length; a++) {
-                            count += Object.assign(new NutritionDiary(array[i][a]._id), array[i][a]).getCalories()
+                            count += new NutritionDiary(array[i][a]).getCalories()
                         }
                     }
                 }

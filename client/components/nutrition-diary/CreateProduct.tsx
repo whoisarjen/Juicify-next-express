@@ -56,8 +56,7 @@ const CreateProduct: FunctionComponent<CreateProductProps> = ({ closeCreateProdu
         ) {
             if (calories > 0) {
                 setLoading(true)
-                let object = Object.assign(
-                    new NutritionDiary('XD' + new Date().getTime()),
+                let object = new NutritionDiary(
                     {
                         _id: 'XD' + new Date().getTime(),
                         name: name,
@@ -93,7 +92,7 @@ const CreateProduct: FunctionComponent<CreateProductProps> = ({ closeCreateProdu
                     object.checkMe = true
                 }
                 await insertThoseIDStoDB('product', [object])
-                    .then(() => created(object.name))
+                    .then(() => created(name))
                     .then(() => success())
                     .then(() => {
                         setCode(defaultBarcode)

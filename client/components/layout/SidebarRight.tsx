@@ -38,7 +38,7 @@ const SidebarRight: FunctionComponent = () => {
 
             let calories = 0
             data.nutrition_diary.forEach((x: NutritionDiaryProps) => {
-                calories += Object.assign(new NutritionDiary(x._id), x).getCalories()
+                calories += new NutritionDiary(x).getCalories()
             })
             setCalories(calories)
 

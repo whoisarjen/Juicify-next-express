@@ -37,12 +37,12 @@ const AddResultValues: FunctionComponent<AddResultValuesProps> = ({ result, setN
         if (newValues.length > 0) {
             setValues([
                 ...newValues,
-                new Value(newValues[newValues.length - 1].reps, newValues[newValues.length - 1].weight, true)
+                new Value({ reps: newValues[newValues.length - 1].reps, weight: newValues[newValues.length - 1].weight, open: true })
             ])
         } else {
             setValues([
                 ...newValues,
-                new Value(0, 0, true)
+                new Value({ reps: 0, weight: 0, open: true })
             ])
         }
     }

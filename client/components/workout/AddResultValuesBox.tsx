@@ -77,7 +77,7 @@ const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, inde
                             className={styles.AddResultValuesBox}
                             onClick={() => {
                                 setOpen(false)
-                                changeResult(new Value(parseInt(reps), parseFloat(weight)))
+                                changeResult(new Value({ reps: parseInt(reps), weight: parseFloat(weight), open }))
                             }}
                         >
                             <div className={styles.AddResultValuesBoxConnectGrid}><div>Click to save</div></div>
@@ -99,7 +99,7 @@ const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, inde
                             value={weight}
                             id="combo-box-demo"
                             options={weightOptions}
-                            onChange={(e, value) => changeResult(new Value(parseInt(reps), parseFloat((value || 0).toString())))}
+                            onChange={(e, value) => changeResult(new Value({ reps: parseInt(reps), weight: parseFloat((value || 0).toString()), open }))}
                             onInputChange={(e, valueLocally) => loadWeight(valueLocally)}
                             getOptionLabel={(option) => option ? option.toString() : ""}
                             renderInput={(params) => <TextField {...params} label="Weight" />}
@@ -110,7 +110,7 @@ const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, inde
                             value={reps}
                             id="combo-box-demo"
                             options={repsOptions}
-                            onChange={(e, value) => changeResult(new Value(parseInt((value || 0).toString()), parseFloat(weight)))}
+                            onChange={(e, value) => changeResult(new Value({ reps: parseInt((value || 0).toString()), weight: parseFloat(weight), open }))}
                             onInputChange={(e, valueLocally) => setReps(valueLocally)}
                             getOptionLabel={(option) => option ? option.toString() : ""}
                             renderInput={(params) => <TextField {...params} label="Reps" />}

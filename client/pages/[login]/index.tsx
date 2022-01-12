@@ -70,7 +70,7 @@ const Profile: FunctionComponent = () => {
                         object[t('Burnt')] = meal.calories
                     }
                 } else {
-                    object[t('Calories')] += Object.assign(new NutritionDiary(meal._id), meal).getCalories()
+                    object[t('Calories')] += new NutritionDiary(meal).getCalories()
                 }
             })
             object[t('Diffrent')] = object[t('Calories')] + object[t('Burnt')]

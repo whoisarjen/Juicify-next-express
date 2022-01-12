@@ -1,28 +1,34 @@
 import NutritionDiaryProps from "../interfaces/nutritionDiary";
 
 export default class NutritionDiary implements NutritionDiaryProps {
-    constructor(
-        public _id: string,
-        public meal?: number,
-        public product_ID?: string,
-        public how_many?: number,
-        public name?: string,
-        public l?: number,
-        public v?: boolean,
-        public deleted?: boolean,
-        public user_ID?: string,
-        public checkMe?: boolean,
-        public code?: number,
-        public p?: number,
-        public c?: number,
-        public s?: number,
-        public f?: number,
-        public fi?: number,
-        public na?: number,
-        public ethanol?: number,
-        public activity?: string,
-        public calories?: number,
-    ) { }
+    _id: string = 'XD' + Math.random();
+    meal?: number;
+    product_ID?: string;
+    how_many?: number;
+    name?: string;
+    l?: number;
+    v?: boolean;
+    deleted?: boolean;
+    user_ID?: string;
+    checkMe?: boolean;
+    code?: number;
+    p?: number;
+    c?: number;
+    s?: number;
+    f?: number;
+    fi?: number;
+    na?: number;
+    ethanol?: number;
+    activity?: string;
+    calories?: number;
+
+    constructor(value: NutritionDiaryProps) {
+        const self: any = this;
+        const valueObject: any = value;
+        Object.keys(value).forEach((key: string) => {
+            self[key] = valueObject[key]
+        })
+    }
 
     getCalories() {
         if (this.calories) {

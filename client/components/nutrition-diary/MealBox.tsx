@@ -81,7 +81,7 @@ const MealBox: FunctionComponent<MealBoxProps> = ({ index, products, openDialog,
                         </div>
                         <div className={style.boxProductContent}>
                             <div>{product.name || product.activity}</div>
-                            <div>{Object.assign(new NutritionDiary(product._id), product).getCalories()}kcal</div>
+                            <div>{new NutritionDiary(product).getCalories()}kcal</div>
                         </div>
                         <div className={style.boxProductContent}>
                             {

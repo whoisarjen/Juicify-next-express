@@ -130,11 +130,11 @@ const WorkoutResultsID: FunctionComponent = () => {
             ...array.map(
                 (
                     exerciseLocally: ExerciseProps
-                ) => new Result(
-                    exerciseLocally._id,
-                    exerciseLocally.name,
-                    []
-                )
+                ) => new Result({
+                    _id: exerciseLocally._id,
+                    name: exerciseLocally.name,
+                    values: []
+                })
             )
         ]
         setResults(newResults)

@@ -5,5 +5,6 @@ export default interface WorkoutResultProps {
     workout_plan_ID: string,
     title: string,
     description: string,
+    burned: number,
     results: Array<ResultProps>
 }
