@@ -1,4 +1,5 @@
 export default interface ProductProps {
+    _id: string,
     name: string,
     l: number,
     v?: boolean,

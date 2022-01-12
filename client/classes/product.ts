@@ -2,6 +2,7 @@ import ProductProps from "../interfaces/product";
 
 export default class Product implements ProductProps {
     constructor(
+        public _id: string,
         public name: string,
         public l: number,
         public v?: boolean,

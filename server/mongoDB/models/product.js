@@ -3,7 +3,6 @@ require('mongoose-long')(mongoose);
 const Long = mongoose.Schema.Types.Long;
 const Schema = mongoose.Schema;
 
-
 let object = {
     name: {
         type: String,

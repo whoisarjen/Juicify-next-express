@@ -5,7 +5,6 @@ import { useAppSelector } from '../../../hooks/useRedux'
 import { useState, useEffect, FunctionComponent } from "react"
 import TextField from '@mui/material/TextField'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { ToastContainer, toast } from 'react-toastify'
 import Navbar from '../../../components/workout/Navbar'
 import SwapVertIcon from '@mui/icons-material/SwapVert'
 import useWorkoutPlan from "../../../hooks/useWorkoutPlan"
@@ -14,10 +13,12 @@ import ButtonPlus from '../../../components/common/ButtonPlus'
 import AddExercises from '../../../components/workout/AddExercises'
 import ConfirmDialog from '../../../components/common/ConfirmDialog'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
-import { addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from "../../../utils/indexedDB"
+import { deleteIndexedDB } from "../../../utils/indexedDB"
 import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB, deleteThoseIDSfromDB } from "../../../utils/API"
 import BottomFlyingGuestBanner from '../../../components/common/BottomFlyingGuestBanner'
 import ExerciseProps from '../../../interfaces/exercise'
+import WorkoutPlan from '../../../classes/workoutPlan'
+import { useNotify } from '../../../hooks/useNotify'
 
 const WorkoutPlansID: FunctionComponent = () => {
     const router: any = useRouter()
@@ -26,41 +27,32 @@ const WorkoutPlansID: FunctionComponent = () => {
     const { t } = useTranslation('workout')
     const [exercises, setExercises] = useState<Array<ExerciseProps>>([])
     const [description, setDescription] = useState<any>("")
-    const [isAddDialog, setIsAddDialog] = useState<any>(false)
-    const [saveLoading, setSaveLoading] = useState<any>(false)
+    const [isAddDialog, setIsAddDialog] = useState(false)
+    const [saveLoading, setSaveLoading] = useState(false)
     const token: any = useAppSelector(state => state.token.value)
     const isOwner = token && token.login == router.query.login
     const [{ data, user }] = useWorkoutPlan(router.query.id)
     const [isDialog, setIsDialog] = useState(false)
     const basicInputLength = useAppSelector(state => state.config.basicInputLength)
     const requiredBasicInputLength = useAppSelector(state => state.config.requiredBasicInputLength)
+    const [{ error }] = useNotify()
 
     const saveWorkoutPlan = async () => {
         setSaveLoading(true)
-        let object = await save(true)
-        if (!requiredBasicInputLength(title)) {
-            toast.error(t('Title is incorrect'), {
-                position: "bottom-right",
-                autoClose: 2000,
-                closeOnClick: true,
-            })
-        } else if (!basicInputLength(description)) {
-            toast.error(t('Description is incorrect'), {
-                position: "bottom-right",
-                autoClose: 2000,
-                closeOnClick: true,
-            })
-        }else if (object.exercises.length < 1) {
-            toast.error(t('Exercises are incorrect'), {
-                position: "bottom-right",
-                autoClose: 2000,
-                closeOnClick: true,
-            })
+        const newWorkoutPlan = new WorkoutPlan(router.query.id, title, description, token._id, burnt, exercises).prepareForDB()
+        if (!requiredBasicInputLength(newWorkoutPlan.title)) {
+            error(t('Title is incorrect'))
+        } else if (!basicInputLength(newWorkoutPlan.description)) {
+            error(t('Description is incorrect'))
+        } else if (newWorkoutPlan.exercises.length < 1) {
+            error(t('Exercises are incorrect'))
         } else {
-            if (object._id) {
-                await overwriteThoseIDSinDB('workout_plan', [object])
+            if (await is_id(newWorkoutPlan._id)) {
+                await overwriteThoseIDSinDB('workout_plan', [newWorkoutPlan])
             } else {
-                await insertThoseIDStoDB('workout_plan', [object])
+                await deleteIndexedDB('workout_plan', newWorkoutPlan._id)
+                delete newWorkoutPlan._id
+                await insertThoseIDStoDB('workout_plan', [newWorkoutPlan])
             }
             router.push(`/${token.login}/workout-plans/`)
         }
@@ -69,39 +61,13 @@ const WorkoutPlansID: FunctionComponent = () => {
 
     const deleteWorkoutPlan = async () => {
         setSaveLoading(true)
-        let object = await getIndexedDBbyID('workout_plan', router.query.id)
-        if (!await is_id(object._id)) {
-            await deleteIndexedDB('workout_plan', object._id)
+        if (!await is_id(router.query.id)) {
+            await deleteIndexedDB('workout_plan', router.query.id)
         } else {
-            await deleteThoseIDSfromDB('workout_plan', [object])
+            await deleteThoseIDSfromDB('workout_plan', [router.query.id])
         }
         router.push(`/${token.login}/workout-plans`)
         setSaveLoading(false)
-    }
-
-    const save = async (prepareForDB: any = false) => {
-        let object: any = {
-            _id: router.query.id,
-            title: title,
-            user_ID: token._id,
-            description: description,
-            burnt: burnt,
-            exercises: exercises
-        }
-        if (!object.burnt) {
-            delete object.burnt
-        }
-        if (!object.description) {
-            delete object.description
-        }
-        await deleteIndexedDB('workout_plan', router.query.id)
-        if (!prepareForDB) {
-            object.notSaved = new Date().getTime()
-            await addIndexedDB('workout_plan', [object])
-        } else if (!await is_id(object._id)) {
-            delete object._id
-        }
-        return object
     }
 
     const handleOnDragEnd = async (result: any) => {
@@ -123,10 +89,10 @@ const WorkoutPlansID: FunctionComponent = () => {
 
     useEffect(() => {
         (async () => {
-            if(!await is_id(router.query.id)){
+            if (!await is_id(router.query.id)) {
                 if (title != undefined && description != undefined && burnt != undefined && exercises != undefined) {
                     if (isOwner) {
-                        await save()
+                        new WorkoutPlan(router.query.id, title, description, token._id, burnt, exercises).autoSave()
                     }
                 }
             }
@@ -135,7 +101,6 @@ const WorkoutPlansID: FunctionComponent = () => {
 
     return (
         <div className="workoutPlansID">
-            <ToastContainer />
             <Navbar
                 title="Workout plan"
                 where="workout-plans"
@@ -233,24 +198,24 @@ const WorkoutPlansID: FunctionComponent = () => {
             </DragDropContext>
             {
                 isOwner ?
-                (
-                <>
-                    <ButtonPlus click={() => setIsAddDialog(true)} />
-                    <AddExercises
-                        isAddDialog={isAddDialog}
-                        skipThoseIDS={exercises}
-                        closeDialog={() => setIsAddDialog(false)}
-                        addThoseExercises={(array: Array<ExerciseProps>) => setExercises([...exercises, ...array])}
-                    />
-                    <ConfirmDialog
-                        isDialog={isDialog}
-                        confirm={deleteWorkoutPlan}
-                        closeDialog={() => setIsDialog(false)}
-                    />
-                </>
-                ) : (
-                    <BottomFlyingGuestBanner user={user} />
-                )
+                    (
+                        <>
+                            <ButtonPlus click={() => setIsAddDialog(true)} />
+                            <AddExercises
+                                isAddDialog={isAddDialog}
+                                skipThoseIDS={exercises}
+                                closeDialog={() => setIsAddDialog(false)}
+                                addThoseExercises={(array: Array<ExerciseProps>) => setExercises([...exercises, ...array])}
+                            />
+                            <ConfirmDialog
+                                isDialog={isDialog}
+                                confirm={deleteWorkoutPlan}
+                                closeDialog={() => setIsDialog(false)}
+                            />
+                        </>
+                    ) : (
+                        <BottomFlyingGuestBanner user={user} />
+                    )
             }
         </div>
     )

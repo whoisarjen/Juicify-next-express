@@ -8,6 +8,8 @@ import useTranslation from "next-translate/useTranslation";
 import { FunctionComponent } from 'react';
 import Navbar from '../../../components/profile/Navbar';
 import { useAppSelector } from '../../../hooks/useRedux';
+import WorkoutPlan from '../../../classes/workoutPlan';
+import WorkoutPlanProps from '../../../interfaces/workoutPlan';
 
 const WorkoutPlans: FunctionComponent = () => {
     const router = useRouter()
@@ -16,15 +18,9 @@ const WorkoutPlans: FunctionComponent = () => {
     const token: any = useAppSelector(state => state.token.value)
 
     const createWorkoutPlan = async () => {
-        const time = new Date().getTime()
-        await addIndexedDB('workout_plan', [{
-            _id: 'XD' + time,
-            description: "",
-            notSAVED: time,
-            title: "",
-            exercises: []
-        }])
-        router.push(`/${router.query.login}/workout-plans/XD${time}`)
+        const newWorkoutPlan = new WorkoutPlan('XD' + new Date().getTime(), '', '', token._id, 0, [])
+        await addIndexedDB('workout_plan', [newWorkoutPlan])
+        router.push(`/${router.query.login}/workout-plans/${newWorkoutPlan._id}`)
     }
 
     return (
@@ -45,7 +41,7 @@ const WorkoutPlans: FunctionComponent = () => {
                     ?
                     <Spinner />
                     :
-                    data && data.map((plan: any) =>
+                    data && data.map((plan: WorkoutPlanProps) =>
                         <Box
                             title={plan.title}
                             description={plan.description}
