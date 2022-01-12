@@ -13,6 +13,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import useTranslation from "next-translate/useTranslation";
 import AddResultMoreOptions from '../../../../components/workout/AddResultMoreOptions'
 import BottomFlyingGuestBanner from '../../../../components/common/BottomFlyingGuestBanner'
+import ExerciseProps from '../../../../interfaces/exercise';
 
 const WorkoutResultsID: FunctionComponent = () => {
     const router: any = useRouter()
@@ -134,7 +135,7 @@ const WorkoutResultsID: FunctionComponent = () => {
         await autoSave(newResults)
     }
 
-    const handleNewExercises = async (array: any) => {
+    const handleNewExercises = async (array: Array<ExerciseProps>) => {
         let newResults = [...results, ...array.map((x: any) => {
             x.values = []
             return x

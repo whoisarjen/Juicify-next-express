@@ -15,6 +15,7 @@ import useTranslation from "next-translate/useTranslation";
 import { deleteIndexedDB, getAllIndexedDB } from '../../utils/indexedDB';
 import CreateExercise from './CreateExercise';
 import { TransitionProps } from '@material-ui/core/transitions';
+import ExerciseProps from '../../interfaces/exercise';
 
 
 const Transition = forwardRef(function Transition(
@@ -120,7 +121,7 @@ const AddDialog: FunctionComponent<AddDialogProps> = ({ isAddDialog, closeDialog
                         <Tab wrapped label={`${t('Selected')} (${checked.length})`} />
                     </Tabs>
                     {
-                        items && items.map((item: any) =>
+                        items && items.map((item: ExerciseProps) =>
                             <AddExercisesBox refreshCheckedExercises={() => setRefreshChecked(refreshChecked + 1)} exercise={item} key={item._id} />
                         )
                     }

@@ -1,7 +1,6 @@
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
-import TimerIcon from '@mui/icons-material/Timer';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import { FunctionComponent, useState } from 'react'
 import AddExercises from './AddExercises'
@@ -23,10 +22,6 @@ const AddResultMoreOptions: FunctionComponent<AddResultMoreOptionsProps> = ({ ex
             name: 'Exercise',
             click: () => setIsAddDialog(true)
         },
-        // {
-        //     icon: <TimerIcon />,
-        //     name: 'Stopper'
-        // },
     ];
 
     return (

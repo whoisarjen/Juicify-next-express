@@ -6,7 +6,7 @@ export default interface ProductProps {
     user_ID?: string,
     checkMe?: boolean,
     code?: number,
-    p?: number
+    p?: number,
     c?: number,
     s?: number,
     f?: number,

@@ -5,15 +5,15 @@ import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import { FunctionComponent, useEffect, useState } from 'react'
 import { addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../utils/indexedDB';
 import { useTheme } from '../../hooks/useTheme';
+import ExerciseProps from '../../interfaces/exercise';
 
 interface AddProductsBox {
-    exercise: any,
+    exercise: ExerciseProps,
     refreshCheckedExercises: () => void
 }
 
 const AddProductsBox: FunctionComponent<AddProductsBox> = ({ exercise, refreshCheckedExercises }) => {
-    const [checked, setChecked] = useState(false);
-    const [value, setValue] = useState('1.0')
+    const [checked, setChecked] = useState(false)
     const [fav, setFav] = useState(false)
     const [getTheme]: any = useTheme()
 
@@ -33,7 +33,7 @@ const AddProductsBox: FunctionComponent<AddProductsBox> = ({ exercise, refreshCh
             await deleteIndexedDB('checked_exercise', exercise._id)
         } else {
             setChecked(true)
-            await addIndexedDB('checked_exercise', [{ ...exercise, how_many: value }])
+            await addIndexedDB('checked_exercise', [exercise])
         }
         refreshCheckedExercises()
     }
@@ -46,7 +46,7 @@ const AddProductsBox: FunctionComponent<AddProductsBox> = ({ exercise, refreshCh
     }, [])
 
     return (
-        <div className={styles.addExercisesBox} style={{ borderLeft: exercise.v ? '5px solid #1976d2' : '' }}>
+        <div className={styles.addExercisesBox}>
             <div className={styles.addExercisesBoxName} style={{ color: getTheme('PRIMARY') }}>
                 {exercise.name}
             </div>

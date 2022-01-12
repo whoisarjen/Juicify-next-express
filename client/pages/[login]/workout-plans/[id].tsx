@@ -17,13 +17,14 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from "../../../utils/indexedDB"
 import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB, deleteThoseIDSfromDB } from "../../../utils/API"
 import BottomFlyingGuestBanner from '../../../components/common/BottomFlyingGuestBanner'
+import ExerciseProps from '../../../interfaces/exercise'
 
 const WorkoutPlansID: FunctionComponent = () => {
     const router: any = useRouter()
     const [burnt, setBurnt] = useState<any>(0)
     const [title, setTitle] = useState<any>("")
     const { t } = useTranslation('workout')
-    const [exercises, setExercises] = useState<any>([])
+    const [exercises, setExercises] = useState<Array<ExerciseProps>>([])
     const [description, setDescription] = useState<any>("")
     const [isAddDialog, setIsAddDialog] = useState<any>(false)
     const [saveLoading, setSaveLoading] = useState<any>(false)
@@ -195,7 +196,7 @@ const WorkoutPlansID: FunctionComponent = () => {
                         (provided: any) => (
                             <Stack direction="column" spacing={1} {...provided.droppableProps} ref={provided.innerRef}>
                                 {
-                                    exercises && exercises.map((exercise: any, i: number) =>
+                                    exercises && exercises.map((exercise: ExerciseProps, i: number) =>
                                         <Draggable key={exercise._id} draggableId={exercise._id} index={i}>
                                             {
                                                 (provided: any) => (
@@ -205,7 +206,7 @@ const WorkoutPlansID: FunctionComponent = () => {
                                                         ref={provided.innerRef}
                                                         disabled={!isOwner}
                                                         label={`${i + 1}. ${exercise.name}`}
-                                                        onDelete={() => setExercises(exercises.filter((x: any) => x._id != exercise._id))}
+                                                        onDelete={() => setExercises(exercises.filter((x: ExerciseProps) => x._id != exercise._id))}
                                                         avatar={<SwapVertIcon />}
                                                         deleteIcon={<DeleteIcon />}
                                                         sx={{
@@ -239,7 +240,7 @@ const WorkoutPlansID: FunctionComponent = () => {
                         isAddDialog={isAddDialog}
                         skipThoseIDS={exercises}
                         closeDialog={() => setIsAddDialog(false)}
-                        addThoseExercises={(array: any) => setExercises([...exercises, ...array])}
+                        addThoseExercises={(array: Array<ExerciseProps>) => setExercises([...exercises, ...array])}
                     />
                     <ConfirmDialog
                         isDialog={isDialog}

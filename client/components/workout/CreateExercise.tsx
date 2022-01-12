@@ -11,6 +11,7 @@ import { useAppSelector } from "../../hooks/useRedux";
 import { insertThoseIDStoDB } from '../../utils/API';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNotify } from '../../hooks/useNotify';
+import Exercise from '../../classes/exercise';
 
 interface CreateExerciseProps {
     closeCreateExercise: () => void,
@@ -29,12 +30,7 @@ const CreateExercise: FunctionComponent<CreateExerciseProps> = ({ closeCreateExe
     const handleCreateExercise = async () => {
         if (requiredBasicInputLength(name)) {
             setLoading(true)
-            let object: any = {
-                _id: 'XD' + new Date().getTime(),
-                name: name,
-                l: name.length,
-                user_ID: token._id
-            }
+            const object = new Exercise('XD' + new Date().getTime(), name, name.length, token._id)
             await insertThoseIDStoDB('exercise', [object])
                 .then(() => created(object.name))
                 .then(() => success())
