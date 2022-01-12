@@ -1,7 +1,10 @@
-export default interface ProductProps {
+export default interface NutritionDiaryProps {
     _id: string,
-    name: string,
-    l: number,
+    meal?: number,
+    product_ID?: string,
+    how_many?: number,
+    name?: string,
+    l?: number,
     v?: boolean,
     deleted?: boolean,
     user_ID?: string,
@@ -13,5 +16,7 @@ export default interface ProductProps {
     f?: number,
     fi?: number,
     na?: number,
-    ethanol?: number
+    ethanol?: number,
+    activity?: string,
+    calories?: number
 }

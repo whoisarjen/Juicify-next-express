@@ -2,64 +2,47 @@ import styles from '../../styles/workout.module.css'
 import ButtonPlus from '../common/ButtonPlus'
 import { useState, useEffect, FunctionComponent } from 'react'
 import AddResultValuesBox from './AddResultValuesBox'
+import ResultProps from '../../interfaces/workout/result'
+import ValueProps from '../../interfaces/workout/value'
+import Value from '../../classes/workout/value'
 
 interface AddResultValuesProps {
-    result: any,
-    setNewValues: any,
+    result: ResultProps,
+    setNewValues: (arg0: Array<ValueProps>) => void,
     isOwner: boolean
 }
 
 const AddResultValues: FunctionComponent<AddResultValuesProps> = ({ result, setNewValues, isOwner }) => {
-    const [values, setValues] = useState<any>([])
+    const [values, setValues] = useState<Array<ValueProps>>([])
 
-    const changeResult = (object: any, index: number) => {
+    const changeResult = (object: ValueProps, index: number) => {
         let array = values
-        let newObject = object
-        if (!newObject.reps) {
-            newObject.reps = '0'
-        }
-        if (!newObject.weight) {
-            newObject.weight = '0'
-        }
-        array[index] = { ...newObject, open: false }
+        array[index] = { ...object, open: false }
         setValues(array)
         setNewValues(array)
     }
 
-    const deleteResult = (_id: string) => {
-        let array = values
-        array = array.filter((x: any) => x._id != _id)
+    const deleteResult = (index: number) => {
+        const array = values.filter((x, i) => i != index)
         setValues(array)
         setNewValues(array)
     }
 
     const openNewResult = () => {
-        let newValues = values
-        newValues.map((value: any) => {
+        const newValues = values.map((value: ValueProps) => {
             value.open = false;
             return value
         })
         setNewValues(newValues)
-
-        if (values.length > 0) {
+        if (newValues.length > 0) {
             setValues([
                 ...newValues,
-                {
-                    reps: values[values.length - 1].reps,
-                    weight: values[values.length - 1].weight,
-                    _id: 'XD' + new Date().getTime(),
-                    open: true
-                }
+                new Value(newValues[newValues.length - 1].reps, newValues[newValues.length - 1].weight, true)
             ])
         } else {
             setValues([
                 ...newValues,
-                {
-                    reps: '0',
-                    weight: '0',
-                    _id: 'XD' + new Date().getTime(),
-                    open: true
-                }
+                new Value(0, 0, true)
             ])
         }
     }
@@ -70,13 +53,13 @@ const AddResultValues: FunctionComponent<AddResultValuesProps> = ({ result, setN
         <div className={styles.addResultValues}>
             <div className={styles.addResultValuesName}>{result.name}</div>
             {
-                values && values.map((value: any, index: number) =>
+                values && values.map((value: ValueProps, index: number) =>
                     <AddResultValuesBox
-                        key={index + result._id}
+                        key={index + ' ' + value.open}
                         value={value}
                         index={index}
-                        deleteResult={() => deleteResult(value._id)}
-                        changeResult={(object: any) => changeResult(object, index)}
+                        deleteResult={() => deleteResult(index)}
+                        changeResult={(object: ValueProps) => changeResult(object, index)}
                     />
                 )
             }

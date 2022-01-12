@@ -13,6 +13,7 @@ import { useAppSelector } from "../../hooks/useRedux";
 import { insertThoseIDStoDB } from '../../utils/API';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNotify } from '../../hooks/useNotify';
+import NutritionDiary from '../../classes/nutritionDiary';
 
 interface CreateProductProps {
     closeCreateProduct: () => void,
@@ -33,7 +34,7 @@ const CreateProduct: FunctionComponent<CreateProductProps> = ({ closeCreateProdu
     const [fiber, setFiber] = useState<any>('')
     const [salt, setSalt] = useState<any>('')
     const [ethanol, setEthanol] = useState<any>('')
-    const [calories, setCalories] = useState<any>(0)
+    const [calories, setCalories] = useState(0)
     const [name, setName] = useState('')
     const numberOnlyPositive = useAppSelector(state => state.config.numberOnlyPositive)
     const numberOnlyPositiveLong = useAppSelector(state => state.config.numberOnlyPositiveLong)
@@ -55,12 +56,15 @@ const CreateProduct: FunctionComponent<CreateProductProps> = ({ closeCreateProdu
         ) {
             if (calories > 0) {
                 setLoading(true)
-                let object: any = {
-                    _id: 'XD' + new Date().getTime(),
-                    name: name,
-                    l: name.length,
-                    user_ID: token._id
-                }
+                let object = Object.assign(
+                    new NutritionDiary('XD' + new Date().getTime()),
+                    {
+                        _id: 'XD' + new Date().getTime(),
+                        name: name,
+                        l: name.length,
+                        user_ID: token._id
+                    }
+                )
                 if (proteins && parseFloat(proteins) > 0) {
                     object.p = proteins
                 }
@@ -83,7 +87,7 @@ const CreateProduct: FunctionComponent<CreateProductProps> = ({ closeCreateProdu
                     object.ethanol = ethanol
                 }
                 if (code) {
-                    object.code = code
+                    object.code = parseInt(code.toString())
                 }
                 if (availableForAll) {
                     object.checkMe = true

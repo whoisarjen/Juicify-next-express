@@ -11,7 +11,7 @@ import { useAppSelector } from "../../hooks/useRedux";
 import { insertThoseIDStoDB } from '../../utils/API';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNotify } from '../../hooks/useNotify';
-import Exercise from '../../classes/exercise';
+import Exercise from '../../classes/workout/exercise';
 
 interface CreateExerciseProps {
     closeCreateExercise: () => void,

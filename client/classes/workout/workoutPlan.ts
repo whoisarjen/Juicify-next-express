@@ -1,6 +1,6 @@
-import ExerciseProps from "../interfaces/exercise";
-import WorkoutPlanProps from "../interfaces/workoutPlan";
-import { addIndexedDB, deleteIndexedDB } from "../utils/indexedDB";
+import ExerciseProps from "../../interfaces/workout/exercise";
+import WorkoutPlanProps from "../../interfaces/workout/workoutPlan";
+import { addIndexedDB, deleteIndexedDB } from "../../utils/indexedDB";
 
 export default class WorkoutPlan implements WorkoutPlanProps {
     constructor(

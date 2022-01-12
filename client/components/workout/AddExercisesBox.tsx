@@ -5,7 +5,7 @@ import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import { FunctionComponent, useEffect, useState } from 'react'
 import { addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../utils/indexedDB';
 import { useTheme } from '../../hooks/useTheme';
-import ExerciseProps from '../../interfaces/exercise';
+import ExerciseProps from '../../interfaces/workout/exercise';
 
 interface AddProductsBox {
     exercise: ExerciseProps,

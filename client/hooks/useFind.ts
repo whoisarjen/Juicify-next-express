@@ -31,7 +31,7 @@ const prepareItems = async (data: Array<any>, skipThoseIDS: Array<any>, where: s
     })
 }
 
-const useFind = (value: any, where: string, tab: number, skipThoseIDS: Array<any> = [], reload: number = 0): any => {
+const useFind = (value: string, where: string, tab: number, skipThoseIDS: Array<any> = [], reload: number = 0): any => {
     const [items, setItems] = useState<Array<any>>([])
     const [loading, setLoading] = useState(false)
     const isOnline = store.getState().online.isOnline

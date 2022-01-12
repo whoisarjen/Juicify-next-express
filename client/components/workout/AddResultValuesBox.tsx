@@ -8,25 +8,27 @@ import Autocomplete from '@mui/material/Autocomplete';
 import ConfirmDialog from '../common/ConfirmDialog';
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
+import ValueProps from '../../interfaces/workout/value';
+import Value from '../../classes/workout/value';
 
 interface AddResultValuesBox {
-    value: any,
+    value: ValueProps,
     index: number,
-    changeResult: (arg0: any) => void,
+    changeResult: (arg0: ValueProps) => void,
     deleteResult: () => void
 }
 
 const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, index, changeResult, deleteResult }) => {
-    const [reps, setReps] = useState(value.reps)
-    const [weight, setWeight] = useState(value.weight)
+    const [reps, setReps] = useState('0')
+    const [weight, setWeight] = useState('0')
     const [open, setOpen] = useState(false)
     const [repsOptions, setRepsOptions] = useState([])
     const [weightOptions, setWeightOptions] = useState([])
     const [isDialog, setIsDialog] = useState(false)
 
-    const loadWeight = (choosenWeight: any) => {
-        const choosenWeightLocally = parseInt(choosenWeight)
-        let weight: any = ['0']
+    const loadWeight = (choosenWeight: string) => {
+        const choosenWeightLocally = parseFloat(choosenWeight)
+        let weight = ['0']
         if (choosenWeightLocally) {
             if (choosenWeight != '0') {
                 weight.push(choosenWeight)
@@ -43,17 +45,22 @@ const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, inde
         setWeightOptions(weight)
     }
 
+    const handleDelete = () => {
+        deleteResult()
+        setIsDialog(false)
+    }
+
     useEffect(() => {
         if (value) {
             setOpen(value.open)
-            setReps(value.reps)
-            setWeight(value.weight)
-            loadWeight(value.weight)
+            setReps(value.reps.toString())
+            setWeight(value.weight.toString())
+            loadWeight(value.weight.toString())
         }
     }, [value, value.open])
 
     useMemo(() => {
-        let reps: any = []
+        let reps = []
         for (let i = 0; i <= 100; i++) {
             reps.push(i.toString())
         }
@@ -70,7 +77,7 @@ const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, inde
                             className={styles.AddResultValuesBox}
                             onClick={() => {
                                 setOpen(false)
-                                changeResult({ reps, weight, _id: value._id })
+                                changeResult(new Value(parseInt(reps), parseFloat(weight)))
                             }}
                         >
                             <div className={styles.AddResultValuesBoxConnectGrid}><div>Click to save</div></div>
@@ -92,8 +99,8 @@ const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, inde
                             value={weight}
                             id="combo-box-demo"
                             options={weightOptions}
-                            onInputChange={(e, value) => loadWeight(value)}
-                            getOptionLabel={(option) => option ? option : ""}
+                            onInputChange={(e, valueLocally) => loadWeight(valueLocally)}
+                            getOptionLabel={(option) => option || option === 0 ? option.toString() : ""}
                             renderInput={(params) => <TextField {...params} label="Weight" />}
                         />
                         <Autocomplete
@@ -102,8 +109,8 @@ const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, inde
                             value={reps}
                             id="combo-box-demo"
                             options={repsOptions}
-                            onInputChange={(e, value) => setReps(value)}
-                            getOptionLabel={(option) => option ? option : ""}
+                            onInputChange={(e, valueLocally) => setReps(valueLocally)}
+                            getOptionLabel={(option) => option || option === 0 ? option.toString() : ""}
                             renderInput={(params) => <TextField {...params} label="Reps" />}
                         />
                     </div>
@@ -126,7 +133,7 @@ const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, inde
                         </div>
                         <ConfirmDialog
                             isDialog={isDialog}
-                            confirm={deleteResult}
+                            confirm={handleDelete}
                             closeDialog={() => setIsDialog(false)}
                         />
                     </>

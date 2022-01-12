@@ -1,4 +1,4 @@
-import ExerciseProps from '../interfaces/exercise'
+import ExerciseProps from '../../interfaces/workout/exercise'
 
 export default class Exercise implements ExerciseProps{
     constructor(

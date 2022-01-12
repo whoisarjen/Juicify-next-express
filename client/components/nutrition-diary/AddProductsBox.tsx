@@ -8,11 +8,12 @@ import InfoIcon from '@mui/icons-material/Info';
 import { FunctionComponent, useEffect, useState } from 'react'
 import { putIndexedDB, addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../utils/indexedDB';
 import useTranslation from "next-translate/useTranslation";
-import countCalories from './utils/countCalories';
 import { useTheme } from '../../hooks/useTheme';
+import NutritionDiaryProps from '../../interfaces/nutritionDiary';
+import NutritionDiary from '../../classes/nutritionDiary';
 
 interface AddproductsBoxProps {
-    product: any,
+    product: NutritionDiaryProps,
     refreshCheckedProducts: () => void
 }
 
@@ -44,10 +45,10 @@ const AddProductsBox: FunctionComponent<AddproductsBoxProps> = ({ product, refre
         refreshCheckedProducts()
     }
 
-    const handleValueChange = async (e: any) => {
-        setValue(e.target.value)
+    const handleValueChange = async (value: any) => {
+        setValue(value)
         if (await getIndexedDBbyID('checked_product', product._id)) {
-            await putIndexedDB('checked_product', product._id, 'how_many', e.target.value)
+            await putIndexedDB('checked_product', product._id, 'how_many', value)
         }
         refreshCheckedProducts()
     }
@@ -65,7 +66,7 @@ const AddProductsBox: FunctionComponent<AddproductsBoxProps> = ({ product, refre
                 {product.name}
             </div>
             <div className={styles.addProductsBoxDescription}>
-                {(product.p || 0)}{t('P')} {(product.c || 0)}{t('C')} {(product.f || 0)}{t('F')} {countCalories(product)}kcal
+                {(product.p || 0)}{t('P')} {(product.c || 0)}{t('C')} {(product.f || 0)}{t('F')} {Object.assign(new NutritionDiary(product._id), product).getCalories()}kcal
             </div>
             <div className={styles.addProductsBoxFavourite} onClick={handleLike}>
                 <Checkbox checked={fav} icon={<FavoriteBorder fontSize="small" />} checkedIcon={<Favorite fontSize="small" />} />
@@ -76,7 +77,7 @@ const AddProductsBox: FunctionComponent<AddproductsBoxProps> = ({ product, refre
                 </IconButton>
             </div>
             <div className={styles.addProductsBoxValue}>
-                <TextField type="number" value={value} onChange={(e) => handleValueChange(e)} inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} />
+                <TextField type="number" value={value} onChange={(e) => handleValueChange(e.target.value)} inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} />
             </div>
             <div className={styles.addProductsBoxSubmit} onChange={handleCheck}>
                 <Checkbox

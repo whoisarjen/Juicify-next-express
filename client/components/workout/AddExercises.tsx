@@ -15,7 +15,7 @@ import useTranslation from "next-translate/useTranslation";
 import { deleteIndexedDB, getAllIndexedDB } from '../../utils/indexedDB';
 import CreateExercise from './CreateExercise';
 import { TransitionProps } from '@material-ui/core/transitions';
-import ExerciseProps from '../../interfaces/exercise';
+import ExerciseProps from '../../interfaces/workout/exercise';
 
 
 const Transition = forwardRef(function Transition(

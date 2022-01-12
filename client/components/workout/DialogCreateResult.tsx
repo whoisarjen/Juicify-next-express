@@ -21,7 +21,7 @@ const DialogCreateResult: FunctionComponent = () => {
     const router = useRouter()
     const { data } = useWorkoutPlans()
     const [open, setOpen] = useState(false)
-    const [whenAdded, setWhenAdded] = useState('')
+    const [whenAdded, setWhenAdded] = useState(new Date(getShortDate()))
     const [workoutPlanID, setWorkoutPlanID] = useState('')
 
     const createWorkoutResult = async () => {

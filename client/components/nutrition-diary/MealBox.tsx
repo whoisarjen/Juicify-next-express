@@ -2,13 +2,13 @@ import MoreOptions from './MoreOptions'
 import { useRouter } from "next/router";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
-import countCalories from './utils/countCalories';
 import IconButton from "@mui/material/IconButton";
 import { useAppSelector } from "../../hooks/useRedux";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import useTranslation from "next-translate/useTranslation";
 import style from "../../styles/nutrition-diary.module.css";
 import { useState, useEffect, FunctionComponent } from 'react'
+import NutritionDiary from '../../classes/nutritionDiary';
 
 interface MealBoxProps {
     index: number,
@@ -80,7 +80,7 @@ const MealBox: FunctionComponent<MealBoxProps> = ({ index, products, openDialog,
                         </div>
                         <div className={style.boxProductContent}>
                             <div>{product.name || product.activity}</div>
-                            <div>{countCalories(product)}kcal</div>
+                            <div>{Object.assign(new NutritionDiary(product._id), product).getCalories()}kcal</div>
                         </div>
                         <div className={style.boxProductContent}>
                             {

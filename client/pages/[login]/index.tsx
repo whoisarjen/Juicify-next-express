@@ -1,12 +1,13 @@
 import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
 import { FunctionComponent } from "react";
+import NutritionDiary from "../../classes/nutritionDiary";
 import SimpleLineChart from "../../components/diagrams/SimpleLineChart";
 import StackedBarChart from "../../components/diagrams/StackedBarChart";
-import countCalories from "../../components/nutrition-diary/utils/countCalories";
 import Navbar from "../../components/profile/Navbar";
 import { useDailyMeasurements } from "../../hooks/useDailyMeasurements";
 import { useTheme } from "../../hooks/useTheme";
+import NutritionDiaryProps from "../../interfaces/nutritionDiary";
 import styles from '../../styles/profile.module.css'
 import { addDaysToDate, getShortDate, reverseDateDotes } from '../../utils/manageDate';
 
@@ -58,7 +59,7 @@ const Profile: FunctionComponent = () => {
         }
         if (x.nutrition_diary) {
             object.name = reverseDateDotes(x.whenAdded).slice(0, 5)
-            x.nutrition_diary.map(meal => {
+            x.nutrition_diary.map((meal: NutritionDiaryProps) => {
                 if (meal.calories) {
                     if (meal.calories > 0) {
                         object[t('Calories')] = meal.calories
@@ -66,7 +67,7 @@ const Profile: FunctionComponent = () => {
                         object[t('Burnt')] = meal.calories
                     }
                 } else {
-                    object[t('Calories')] += countCalories(meal)
+                    object[t('Calories')] += Object.assign(new NutritionDiary(meal._id), meal).getCalories()
                 }
             })
             object[t('Diffrent')] = object[t('Calories')] + object[t('Burnt')]

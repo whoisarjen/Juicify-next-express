@@ -9,22 +9,26 @@ import { useRouter } from 'next/router';
 import Navbar from '../../../../components/workout/Navbar'
 import ConfirmDialog from '../../../../components/common/ConfirmDialog';
 import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../../../utils/API';
-import { ToastContainer, toast } from 'react-toastify'
 import useTranslation from "next-translate/useTranslation";
 import AddResultMoreOptions from '../../../../components/workout/AddResultMoreOptions'
 import BottomFlyingGuestBanner from '../../../../components/common/BottomFlyingGuestBanner'
-import ExerciseProps from '../../../../interfaces/exercise';
+import ExerciseProps from '../../../../interfaces/workout/exercise';
+import WorkoutResultProps from '../../../../interfaces/workout/workoutResult';
+import { useNotify } from '../../../../hooks/useNotify';
+import ResultProps from '../../../../interfaces/workout/result';
+import Result from '../../../../classes/workout/result';
+import ValueProps from '../../../../interfaces/workout/value';
 
 const WorkoutResultsID: FunctionComponent = () => {
     const router: any = useRouter()
-    const [trueID, setTrueID] = useState<any>(false)
-    const [date, setDate] = useState<any>('')
+    const [trueID, setTrueID] = useState(false)
+    const [date, setDate] = useState(new Date())
     const [burnt, setBurnt] = useState<any>(0)
     const [title, setTitle] = useState<any>('')
     const { t } = useTranslation('workout')
-    const [results, setResults] = useState<any>([])
-    const [isOwner, setIsOwner] = useState<any>(false)
-    const [isDialog, setIsDialog] = useState<any>(false)
+    const [results, setResults] = useState([])
+    const [isOwner, setIsOwner] = useState(false)
+    const [isDialog, setIsDialog] = useState(false)
     const [description, setDescription] = useState<any>('')
     const [{ data, user, daily }] = useWorkoutResult()
     const token: any = useAppSelector(state => state.token.value)
@@ -33,11 +37,12 @@ const WorkoutResultsID: FunctionComponent = () => {
     const [descriptionWorkout, setDescriptionWorkout] = useState('')
     const theOldestSupportedDate = useAppSelector(state => state.config.theOldestSupportedDate())
     const basicInputLength = useAppSelector(state => state.config.basicInputLength)
+    const [{ error }] = useNotify()
 
     const deleteWorkoutResult = async () => {
         if (await is_id(router.query.id)) {
             let newDaily = daily
-            newDaily.workout_result = newDaily.workout_result.filter((result: any) => result._id != router.query.id)
+            newDaily.workout_result = newDaily.workout_result.filter((result: WorkoutResultProps) => result._id != router.query.id)
             if (daily._id && await is_id(daily._id)) {
                 await overwriteThoseIDSinDB('daily_measurement', [newDaily])
             } else {
@@ -93,26 +98,18 @@ const WorkoutResultsID: FunctionComponent = () => {
                 await deleteIndexedDB('workout_result', router.query.id)
                 router.push(`/${router.query.login}/workout-results`)
             } else {
-                toast.error(t('Description is incorrect'), {
-                    position: "bottom-right",
-                    autoClose: 2000,
-                    closeOnClick: true,
-                })
+                error(t('Description is incorrect'))
             }
         } else {
-            toast.error(t('Add some results'), {
-                position: "bottom-right",
-                autoClose: 2000,
-                closeOnClick: true,
-            })
+            error(t('Add some results'))
         }
         setSaveLoading(false)
     }
 
-    const autoSave = async (newResults: any = false) => {
+    const autoSave = async (newResults: Array<ResultProps> = []) => {
         if (theOldestSupportedDate <= router.query.date) {
             let object = data
-            if (newResults) {
+            if (newResults.length) {
                 object.results = newResults
             } else {
                 object.results = results
@@ -125,7 +122,7 @@ const WorkoutResultsID: FunctionComponent = () => {
         }
     }
 
-    const setNewValues = async (values: any, index: number) => {
+    const setNewValues = async (values: Array<ValueProps>, index: number) => {
         let newResults = results
         newResults[index] = {
             ...newResults[index],
@@ -136,10 +133,18 @@ const WorkoutResultsID: FunctionComponent = () => {
     }
 
     const handleNewExercises = async (array: Array<ExerciseProps>) => {
-        let newResults = [...results, ...array.map((x: any) => {
-            x.values = []
-            return x
-        })]
+        const newResults: Array<ResultProps> = [
+            ...results,
+            ...array.map(
+                (
+                    exerciseLocally: ExerciseProps
+                ) => new Result(
+                    exerciseLocally._id,
+                    exerciseLocally.name,
+                    []
+                )
+            )
+        ]
         setResults(newResults)
         await autoSave(newResults)
     }
@@ -182,7 +187,6 @@ const WorkoutResultsID: FunctionComponent = () => {
 
     return (
         <div className="workoutResultsID">
-            <ToastContainer />
             <Navbar
                 title="Workout result"
                 where="workout-results"
@@ -258,7 +262,7 @@ const WorkoutResultsID: FunctionComponent = () => {
                             key={result._id + index}
                             result={result}
                             isOwner={isOwner}
-                            setNewValues={(values: any) => setNewValues(values, index)}
+                            setNewValues={(values: Array<ValueProps>) => setNewValues(values, index)}
                         />
                     </div>
                 )

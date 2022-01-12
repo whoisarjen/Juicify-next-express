@@ -3,12 +3,13 @@ import { useRouter } from "next/router";
 import { FunctionComponent, useState, useEffect } from "react";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import NutritionDiary from "../../classes/nutritionDiary";
 import useMacro from "../../hooks/useMacro";
 import { useTheme } from "../../hooks/useTheme";
-import countCalories from './utils/countCalories'
+import NutritionDiaryProps from "../../interfaces/nutritionDiary";
 
 interface CircularWithLabelProps {
-    array: Array<any>,
+    array: Array<Array<NutritionDiaryProps>>,
     user: any
 }
 
@@ -24,11 +25,11 @@ const CircularWithLabel: FunctionComponent<CircularWithLabelProps> = ({ array, u
         if (array) {
             const macro = getDay(router.query.date, user)
             let count: any = 0;
-            if (array.length > 0) {
+            if (array.length) {
                 for (let i = 0; i < array.length; i++) {
-                    if (array[i].length > 0) {
+                    if (array[i].length) {
                         for (let a = 0; a < array[i].length; a++) {
-                            count += countCalories(array[i][a])
+                            count += Object.assign(new NutritionDiary(array[i][a]._id), array[i][a]).getCalories()
                         }
                     }
                 }

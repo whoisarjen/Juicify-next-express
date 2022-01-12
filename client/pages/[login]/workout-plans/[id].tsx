@@ -16,8 +16,8 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { deleteIndexedDB } from "../../../utils/indexedDB"
 import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB, deleteThoseIDSfromDB } from "../../../utils/API"
 import BottomFlyingGuestBanner from '../../../components/common/BottomFlyingGuestBanner'
-import ExerciseProps from '../../../interfaces/exercise'
-import WorkoutPlan from '../../../classes/workoutPlan'
+import ExerciseProps from '../../../interfaces/workout/exercise'
+import WorkoutPlan from '../../../classes/workout/workoutPlan'
 import { useNotify } from '../../../hooks/useNotify'
 
 const WorkoutPlansID: FunctionComponent = () => {

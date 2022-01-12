@@ -19,12 +19,14 @@ import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../utils/AP
 import CreateProduct from './CreateProduct';
 import { TransitionProps } from '@material-ui/core/transitions';
 import BottomFlyingButton from '../common/BottomFlyingButton';
+import NutritionDiaryProps from '../../interfaces/nutritionDiary';
+import DailyMeasurementProps from '../../interfaces/dailyMeasurement';
 
 interface AddproductsProps {
     index: number,
     isAddDialog: boolean,
     closeDialog: () => void,
-    dailyMeasurement: any,
+    dailyMeasurement: DailyMeasurementProps,
     reload: () => void
 }
 
@@ -42,7 +44,7 @@ const AddProducts: FunctionComponent<AddproductsProps> = ({ index, isAddDialog, 
     const [tab, setTab] = useState(0)
     const [find, setFind] = useState<string | null>(null)
     const [open, setOpen] = useState(false)
-    const [meal, setMeal] = useState<any>(index)
+    const [meal, setMeal] = useState(index)
     const [checked, setChecked] = useState([])
     const token: any = useAppSelector(state => state.token.value)
     const [refreshChecked, setRefreshChecked] = useState(0)
@@ -61,9 +63,9 @@ const AddProducts: FunctionComponent<AddproductsProps> = ({ index, isAddDialog, 
 
     const addProductsToDiary = async () => {
         setLoadingButton(true)
-        let object = JSON.parse(JSON.stringify(checked))
+        const array: Array<NutritionDiaryProps> = JSON.parse(JSON.stringify(checked))
         const time = new Date().getTime()
-        object.map(async (x: any, i: number) => {
+        array.map(async (x: NutritionDiaryProps, i: number) => {
             x.meal = meal
             x.product_ID = x._id
             x._id = 'XD' + time + i
@@ -72,7 +74,7 @@ const AddProducts: FunctionComponent<AddproductsProps> = ({ index, isAddDialog, 
         })
         setChecked([])
         if (!dailyMeasurement.nutrition_diary) dailyMeasurement.nutrition_diary = []
-        dailyMeasurement.nutrition_diary = dailyMeasurement.nutrition_diary.concat(object)
+        dailyMeasurement.nutrition_diary = dailyMeasurement.nutrition_diary.concat(array)
         if (await is_id(dailyMeasurement._id)) {
             await overwriteThoseIDSinDB('daily_measurement', [dailyMeasurement])
         } else {
@@ -107,7 +109,7 @@ const AddProducts: FunctionComponent<AddproductsProps> = ({ index, isAddDialog, 
                         id="demo-simple-select"
                         value={meal}
                         fullWidth
-                        onChange={(e) => setMeal(e.target.value)}
+                        onChange={(e) => setMeal(parseInt(e.target.value.toString()))}
                     >
                         {
                             [...Array(token.meal_number)].map((x, i) =>
@@ -155,7 +157,7 @@ const AddProducts: FunctionComponent<AddproductsProps> = ({ index, isAddDialog, 
                         <Tab wrapped label={`${t('Selected')} (${checked.length})`} />
                     </Tabs>
                     {
-                        items && items.map((product: any) =>
+                        items && items.map((product: NutritionDiaryProps) =>
                             <AddProductsBox refreshCheckedProducts={() => setRefreshChecked(refreshChecked + 1)} product={product} key={product._id} />
                         )
                     }

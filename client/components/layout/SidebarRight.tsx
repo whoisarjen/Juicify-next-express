@@ -4,7 +4,7 @@ import { useDailyMeasurement } from "../../hooks/useDailyMeasurement";
 import useMacro from "../../hooks/useMacro";
 import { useAppSelector } from "../../hooks/useRedux";
 import { getDiffrentBetweenDays, getShortDate, reverseDateDotes } from "../../utils/manageDate";
-import countCalories from "../nutrition-diary/utils/countCalories";
+// import countCalories from "../nutrition-diary/utils/countCalories";
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import Link from "next/link";
@@ -13,6 +13,8 @@ import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
 import Weights from "../common/Weights";
 import { useTheme } from "../../hooks/useTheme";
+import NutritionDiaryProps from "../../interfaces/nutritionDiary";
+import NutritionDiary from "../../classes/nutritionDiary";
 
 const SidebarRight: FunctionComponent = () => {
     const router = useRouter()
@@ -35,8 +37,8 @@ const SidebarRight: FunctionComponent = () => {
             setWeight(data.weight)
 
             let calories = 0
-            data.nutrition_diary.forEach(x => {
-                calories += parseInt(countCalories(x).toString())
+            data.nutrition_diary.forEach((x: NutritionDiaryProps) => {
+                calories += Object.assign(new NutritionDiary(x._id), x).getCalories()
             })
             setCalories(calories)
 
@@ -54,101 +56,101 @@ const SidebarRight: FunctionComponent = () => {
                 textColor: 'rgba(122, 122, 122, 1',
                 trailColor: '#d6d6d6',
                 backgroundColor: getTheme('PRIMARY')
-        }))
-}
+            }))
+        }
     }, [data, token])
 
-useEffect(() => reload(), [keyDaily])
+    useEffect(() => reload(), [keyDaily])
 
-return (
-    <div id="sidebarRight">
-        {
-            styles &&
-            <>
-                <List
-                    sx={{ width: '100%', bgcolor: 'background.paper' }}
-                    subheader={
-                        <ListSubheader component="div" id="nested-list-subheader">
-                            {t('Data for')} {reverseDateDotes()}:
-                        </ListSubheader>
-                    }
-                >
-                    <Link href={`${router.asPath}`}>
-                        <a>
-                            <ListItemButton onClick={() => setIsWeights(true)}>
-                                <div className="sidebarRightCircleBox">
-                                    <CircularProgressbar
-                                        value={weight ? 100 : 0}
-                                        text={`${weight}kg`}
-                                        styles={styles}
-                                    />
-                                    <div>
-                                        {t("Weight")}
+    return (
+        <div id="sidebarRight">
+            {
+                styles &&
+                <>
+                    <List
+                        sx={{ width: '100%', bgcolor: 'background.paper' }}
+                        subheader={
+                            <ListSubheader component="div" id="nested-list-subheader">
+                                {t('Data for')} {reverseDateDotes()}:
+                            </ListSubheader>
+                        }
+                    >
+                        <Link href={`${router.asPath}`}>
+                            <a>
+                                <ListItemButton onClick={() => setIsWeights(true)}>
+                                    <div className="sidebarRightCircleBox">
+                                        <CircularProgressbar
+                                            value={weight ? 100 : 0}
+                                            text={`${weight}kg`}
+                                            styles={styles}
+                                        />
+                                        <div>
+                                            {t("Weight")}
+                                        </div>
                                     </div>
-                                </div>
-                            </ListItemButton>
-                        </a>
-                    </Link>
-                    <Link href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
-                        <a>
-                            <ListItemButton>
-                                <div className="sidebarRightCircleBox">
-                                    <CircularProgressbar
-                                        value={calories ? calories / caloriesGoal * 100 : 0}
-                                        text={`${calories}Kcal`}
-                                        styles={styles}
-                                    />
-                                    <div>
-                                        {t("Calories")}
+                                </ListItemButton>
+                            </a>
+                        </Link>
+                        <Link href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
+                            <a>
+                                <ListItemButton>
+                                    <div className="sidebarRightCircleBox">
+                                        <CircularProgressbar
+                                            value={calories ? calories / caloriesGoal * 100 : 0}
+                                            text={`${calories}Kcal`}
+                                            styles={styles}
+                                        />
+                                        <div>
+                                            {t("Calories")}
+                                        </div>
                                     </div>
-                                </div>
-                            </ListItemButton>
-                        </a>
-                    </Link>
-                    <Link href={`/${token.login}/workout-results/`}>
-                        <a>
-                            <ListItemButton>
-                                <div className="sidebarRightCircleBox">
-                                    <CircularProgressbar
-                                        value={workout * 100}
-                                        text={`${workout}`}
-                                        styles={styles}
-                                    />
-                                    <div>
-                                        {t("Workout")}
+                                </ListItemButton>
+                            </a>
+                        </Link>
+                        <Link href={`/${token.login}/workout-results/`}>
+                            <a>
+                                <ListItemButton>
+                                    <div className="sidebarRightCircleBox">
+                                        <CircularProgressbar
+                                            value={workout * 100}
+                                            text={`${workout}`}
+                                            styles={styles}
+                                        />
+                                        <div>
+                                            {t("Workout")}
+                                        </div>
                                     </div>
-                                </div>
-                            </ListItemButton>
-                        </a>
-                    </Link>
-                    <Link href={`/coach`}>
-                        <a>
-                            <ListItemButton>
-                                <div className="sidebarRightCircleBox">
-                                    <CircularProgressbar
-                                        value={(7 - coach) / 7 * 100}
-                                        text={`${coach >= 0 ? coach : 0}dni`}
-                                        styles={styles}
-                                    />
-                                    <div>
-                                        {t("Coach")}
+                                </ListItemButton>
+                            </a>
+                        </Link>
+                        <Link href={`/coach`}>
+                            <a>
+                                <ListItemButton>
+                                    <div className="sidebarRightCircleBox">
+                                        <CircularProgressbar
+                                            value={(7 - coach) / 7 * 100}
+                                            text={`${coach >= 0 ? coach : 0}dni`}
+                                            styles={styles}
+                                        />
+                                        <div>
+                                            {t("Coach")}
+                                        </div>
                                     </div>
-                                </div>
-                            </ListItemButton>
-                        </a>
-                    </Link>
-                </List>
-                <Weights
-                    isWeights={isWeights}
-                    closeWeights={() => {
-                        reload()
-                        setIsWeights(false)
-                    }}
-                />
-            </>
-        }
-    </div>
-)
+                                </ListItemButton>
+                            </a>
+                        </Link>
+                    </List>
+                    <Weights
+                        isWeights={isWeights}
+                        closeWeights={() => {
+                            reload()
+                            setIsWeights(false)
+                        }}
+                    />
+                </>
+            }
+        </div>
+    )
 }
 
 export default SidebarRight;
