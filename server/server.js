@@ -5,8 +5,7 @@ const app = express();
 const cors = require('cors');
 const port = 4000;
 const appVersion = 1
-const verifyToken = require('./mongoDB/functions/verifyToken');
-const verifyIDS = require('./mongoDB/functions/verifyIDS');
+const verifyToken = require('./mongoDB/auth/verifyToken');
 
 require('./mongoDB/connection');
 
@@ -52,7 +51,8 @@ app.post('/guest/:where', async (req, res) => {
 });
 
 app.post('/delete', async (req, res) => {
-    await verifyToken(req)
+    await verifyToken(req, res)
+    console.log('After verifyToken')
     await require(`./mongoDB/delete`)(req)
         .then(async () => await handleSynchronization(req, res, req.body.array, 'delete'))
         .catch(err => {
@@ -62,8 +62,8 @@ app.post('/delete', async (req, res) => {
 })
 
 app.post('/:what/:where', async (req, res) => {
-    await verifyToken(req)
-    await verifyIDS(req)
+    await verifyToken(req, res)
+    console.log('After verifyToken')
     await require(`./mongoDB/${req.params.what}/${req.params.where}`)(req, res)
         .then(async data => await handleSynchronization(req, res, data, 'change'))
         .catch(err => {
@@ -111,7 +111,7 @@ const handleSynchronization = async (req, res, data, whatToDo) => {
         array: data,
         socket_ID: req.body.socket_ID
     })
-    return res.send({ data })
+    return res.send({ data, token: req.body.token, refresh_token: req.body.refresh_token })
 }
 
 const createSynchronizationObject = async (user_ID) => {

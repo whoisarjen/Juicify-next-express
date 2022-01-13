@@ -43,6 +43,6 @@ module.exports = function(array){
         sugar_percent: array[0].sugar_percent
     },
     tokenKEY, {
-        expiresIn: '300s'
+        expiresIn: '30s'
     })
 }

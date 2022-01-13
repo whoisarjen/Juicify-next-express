@@ -2,6 +2,7 @@ import { getIndexedDBbyID, addIndexedDB, deleteIndexedDB, putIndexedDB, getAllIn
 import { store } from '../redux/store'
 import { getCookie } from "./checkAuth"
 import { refreshTodayDaily } from "../redux/features/keySlice"
+import { addDaysToDate, getShortDate } from "./manageDate"
 
 const API = async (url: string, body: any): Promise<any> => {
     let response = {}
@@ -18,8 +19,11 @@ const API = async (url: string, body: any): Promise<any> => {
         .then((response) => response.json())
         .then((res) => {
             setLastUpdated()
-            // Verify token diff here and mb refresh?
-            // await gotNewToken(response.tokenGenerated, response.tokenRefreshGenerated)
+            if (token && res.token && refresh_token && res.refresh_token && res.token != token) {
+                console.log('Settled new token!')
+                document.cookie = `token=${res.token}; expires=${new Date(addDaysToDate(getShortDate(), 365))}; path=/`
+                document.cookie = `refresh_token=${res.refresh_token}; expires=${new Date(addDaysToDate(getShortDate(), 365))}; path=/`
+            }
             if (res.error) throw res
             response = res
             isSuccess = true
