@@ -19,6 +19,8 @@ import { getShortDate } from '../../utils/manageDate'
 import WorkoutResultProps from '../../interfaces/workout/workoutResult'
 import ExerciseProps from '../../interfaces/workout/exercise'
 import WorkoutPlanProps from '../../interfaces/workout/workoutPlan'
+import WorkoutResult from '../../classes/workout/workoutResult'
+import Value from '../../classes/workout/value'
 
 const DialogCreateResult: FunctionComponent = () => {
     const router = useRouter()
