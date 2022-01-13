@@ -33,10 +33,6 @@ yarn-error.log*
 # vercel
 .vercel
 
-#DB
-/server/mongoDB/connection.js
-/server/node_modules
-
 # PWA files
 **/public/sw.js
 **/public/workbox-*.js
