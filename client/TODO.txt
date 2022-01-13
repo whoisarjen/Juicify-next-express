@@ -1,7 +1,7 @@
 block workout save if not diff
 in result => option to add exercise but synchro need to handle it too... + change order of exercises + delete
 probably insert on whattoupdate might have issues, to check later with synchro
-Server => TS
+Server => TS!
 
 coach
 barcode
