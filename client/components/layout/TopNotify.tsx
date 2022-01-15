@@ -1,3 +1,4 @@
+import useTranslation from "next-translate/useTranslation";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FunctionComponent, useEffect, useState } from "react";
@@ -8,6 +9,7 @@ const TopNotify: FunctionComponent = () => {
     const [notSaved, setNotSaved]: any = useState([])
     const token: any = useAppSelector(state => state.token.value)
     const router: any = useRouter()
+    const { t } = useTranslation('home')
 
     useEffect(() => {
         (async () => {
@@ -30,7 +32,7 @@ const TopNotify: FunctionComponent = () => {
                 <Link href={`/${token.login}/workout-results/${notSaved[0].whenAdded}/${notSaved[0]._id}`}>
                     <a>
                         <div className="TopNotify">
-                            Comeback to not saved workout
+                            {t('Comeback to not saved workout')}
                         </div>
                     </a>
                 </Link>
