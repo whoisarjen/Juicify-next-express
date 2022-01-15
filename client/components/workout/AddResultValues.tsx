@@ -71,7 +71,7 @@ const AddResultValues: FunctionComponent<AddResultValuesProps> = ({ result, setN
             <div className={styles.addResultValuesName}>{result.name}</div>
             {
                 values &&
-                values.length &&
+                values.length > 0 &&
                 values.map((value: ValueProps, index: number) =>
                     <AddResultValuesBox
                         key={index + ' ' + value.open}

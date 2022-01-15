@@ -270,7 +270,6 @@ const WorkoutResultsID: FunctionComponent = () => {
                             />
                             <AddResultMoreOptions
                                 exercises={[...results.map((x: any) => {
-                                    delete x.values
                                     x.l = x.name.length
                                     return x
                                 })]}
