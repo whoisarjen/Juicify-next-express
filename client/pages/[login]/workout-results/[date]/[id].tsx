@@ -62,6 +62,7 @@ const WorkoutResultsID: FunctionComponent = () => {
             }
         })
         if (count > 0) {
+            setAutoSaveCheck(false)
             let newDaily = daily
             newDaily.workout_result = newDaily.workout_result.filter((result: any) => result._id != router.query.id)
             let object: any = {
@@ -102,18 +103,20 @@ const WorkoutResultsID: FunctionComponent = () => {
     }
 
     const autoSave = async (newResults: Array<ResultProps> = []) => {
-        if (theOldestSupportedDate <= router.query.date) {
-            let object = data
-            if (newResults.length) {
-                object.results = newResults
-            } else {
-                object.results = results
+        if (autoSaveCheck) {
+            if (theOldestSupportedDate <= router.query.date) {
+                let object = data
+                if (newResults.length) {
+                    object.results = newResults
+                } else {
+                    object.results = results
+                }
+                object.whenAdded = router.query.date
+                object.burnt = burnt
+                object.description = description
+                await deleteIndexedDB('workout_result', object._id)
+                await addIndexedDB('workout_result', [object])
             }
-            object.whenAdded = router.query.date
-            object.burnt = burnt
-            object.description = description
-            await deleteIndexedDB('workout_result', object._id)
-            await addIndexedDB('workout_result', [object])
         }
     }
 
