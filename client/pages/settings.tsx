@@ -439,7 +439,7 @@ const Settings: FunctionComponent = () => {
             </Button>
             {
                 Object.keys(changedObject) &&
-                Object.keys(changedObject).length &&
+                Object.keys(changedObject).length > 0 &&
                 <BottomFlyingButton clicked={handleSubmit} isLoading={isLoading} showNumberValue={Object.keys(changedObject).length} />
             }
         </div>

@@ -7,6 +7,7 @@ import SidebarRight from './SidebarRight'
 import { useAppSelector } from '../../hooks/useRedux'
 import SidebarRightLoggouted from './SidebarRightLoggouted'
 import SidebarLeftLoggouted from './SidebarLeftLoggouted'
+import TopNotify from './TopNotify'
 
 interface LayoutProps {
     children: any
@@ -25,6 +26,7 @@ const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
 
     return (
         <div className='layout'>
+            <TopNotify />
             <Navbar />
             {
                 router.pathname.includes('blog') || router.pathname == '/'

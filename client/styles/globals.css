@@ -42,7 +42,8 @@
 }
 
 :root {
-  --BothNavHeightAndPadding: 141px;
+  --BothNavHeightAndPaddingDefault: 141px;
+  --BothNavHeightAndPadding: var(--BothNavHeightAndPaddingDefault);
   --theme-background: "";
 }
 
@@ -150,7 +151,7 @@ a:active {
   }
 
   :root {
-    --BothNavHeightAndPadding: 113px;
+    --BothNavHeightAndPadding: calc(var(--BothNavHeightAndPaddingDefault) - 28) + 'px';
   }
 }
 
@@ -186,7 +187,7 @@ a:active {
   min-height: calc(100vh - var(--BothNavHeightAndPadding));
 }
 
-.contentWithoutHeight{
+.contentWithoutHeight {
   min-height: auto;
 }
 
@@ -338,8 +339,18 @@ input[type="number"] {
 }
 
 /* It has to be like that */
-.CircularProgressbar .CircularProgressbar-text{
+.CircularProgressbar .CircularProgressbar-text {
   dominant-baseline: middle !important;
   text-anchor: middle !important;
   font-size: 15px !important;
+}
+
+.TopNotify {
+  color: #fff;
+  background: #f44336;
+  width: 100%;
+  padding: 12px 0;
+  text-align: center;
+  font-size: 0.9rem;
+  box-shadow: 0 -2px -4px 1px rgb(0 0 0 / 20%), 0 4px 5px 0 rgb(0 0 0 / 14%),
 }
