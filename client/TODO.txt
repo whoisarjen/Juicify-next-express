@@ -6,7 +6,6 @@ workout add option to add cardio exercises + timer i guess
 Schema for dialogs
 I can remove days from macro & leng from token
 res cookie
-comeback to the workout from other pages
 
 coach
 barcode
