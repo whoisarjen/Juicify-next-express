@@ -186,3 +186,8 @@
     display: grid;
     margin-bottom: 24px;
 }
+
+.diagramsOptionsExtrButtons{
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+}

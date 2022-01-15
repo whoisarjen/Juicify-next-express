@@ -2,8 +2,6 @@ import { API } from '../utils/API'
 import { store } from '../redux/store'
 import { useState, useEffect } from "react";
 import { addIndexedDB, getAllIndexedDB, getIndexedDBbyID } from '../utils/indexedDB'
-import ExerciseProps from '../interfaces/workout/exercise';
-import NutritionDiaryProps from '../interfaces/nutritionDiary';
 
 const prepareItems = async (
     data: Array<any>,
