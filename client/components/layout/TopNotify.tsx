@@ -15,7 +15,7 @@ const TopNotify: FunctionComponent = () => {
             if (!router.pathname.includes('workout-results') && workoutResults.length) {
                 document.documentElement.style.setProperty('--BothNavHeightAndPaddingDefault', '183px')
             } else {
-                document.documentElement.style.setProperty('--BothNavHeightAndPaddingDefault', '143px')
+                document.documentElement.style.setProperty('--BothNavHeightAndPaddingDefault', '141px')
             }
             setNotSaved(workoutResults)
         })()
