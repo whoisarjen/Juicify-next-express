@@ -29,7 +29,7 @@ const io = new Server(server, {
 // // ----- ----- ROUTES ----- -----
 import login from './mongoDB/auth/login'
 
-app.post('/auth/login', (req, res) => login(req, res));
+app.post('/auth/login', (req, res, next) => login(req, res, next));
 
 // app.post('/find/:where', (req, res) => require(`./mongoDB/find/${req.params.where}`)(req, res)); // Need function to cache find things etc.
 

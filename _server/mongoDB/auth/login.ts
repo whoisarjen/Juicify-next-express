@@ -1,6 +1,5 @@
 import loadProduct from '../load/loadProduct'
 import loadExercise from '../load/loadExercise'
-import handleError from '../functions/handleError'
 import tokenGENERATOR from './createToken'
 import tokenRefreshGENERATOR from './createRefreshToken'
 import bcrypt from 'bcrypt';
@@ -10,8 +9,7 @@ import productModel from '../models/product'
 import exerciseModel from '../models/exercise'
 import dailyMeasurementModel from '../models/daily_measurement'
 
-export default (req: any, res: any) => {
-
+export default (req: any, res: any, next: any) => {
 	userModel.findOne({
 		'login': req.body.login
 	})
@@ -102,13 +100,12 @@ export default (req: any, res: any) => {
 															workout_plan,
 															daily_measurement
 														});
-													}).catch((err: any) => handleError(err, 'login'))
-											}).catch((err: any) => handleError(err, 'login'))
-									}).catch((err: any) => handleError(err, 'login'))
-							}).catch((err: any) => handleError(err, 'login'))
+													}).catch(next)
+											}).catch(next)
+									}).catch(next)
+							}).catch(next)
 					}
 				});
 			}
-		}).catch((err: any) => handleError(err, 'login'))
-
+		}).catch(next)
 }

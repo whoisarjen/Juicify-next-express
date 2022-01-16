@@ -1,3 +1,4 @@
+import handleError from '../functions/handleError';
 import exerciseModel from '../models/exercise'
 
 // const cache = {}
@@ -22,5 +23,6 @@ export default async (object: any) => {
                 console.log('loadExercise', { ...object, name: exercise.name })
                 resolve({ ...object, name: exercise.name })
             })
+            .catch((err: any) => handleError(err, 'loadUserProducts'))
     });
 }

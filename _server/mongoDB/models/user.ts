@@ -1,6 +1,25 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
+// const user_macronutrientSchema = new Schema({
+//     proteins: {
+//         type: Number,
+//         required: [true, 'required!']
+//     },
+//     carbs: {
+//         type: Number,
+//         required: [true, 'required!']
+//     },
+//     fats: {
+//         type: Number,
+//         required: [true, 'required!']
+//     },
+//     day: {
+//         type: Number,
+//         required: [true, 'required!']
+//     },
+// }, { _id : false })
+
 const user_macronutrientSchema = new Schema({
     proteins: {
         type: Number,
@@ -14,10 +33,10 @@ const user_macronutrientSchema = new Schema({
         type: Number,
         required: [true, 'required!']
     },
-    day: {
-        type: Number,
-        required: [true, 'required!']
-    },
+    // day: {
+    //     type: Number,
+    //     required: [true, 'required!']
+    // },
 }, { _id : false })
 
 const userSchema = new Schema({
@@ -48,10 +67,10 @@ const userSchema = new Schema({
         type: Boolean,
         required: [true, 'required!']
     },
-    lang: {
-        type: String,
-        required: [true, 'required!']
-    },
+    // lang: {
+    //     type: String,
+    //     required: [true, 'required!']
+    // },
     meal_number: {
         type: Number,
         default: 5
@@ -144,10 +163,10 @@ const userSchema = new Schema({
         type: Boolean,
         default: true
     },
-    reverse_diet: {
-        type: Boolean,
-        default: false
-    },
+    // reverse_diet: {
+    //     type: Boolean,
+    //     default: false
+    // },
     activity: {
         type: Number,
         default: 1

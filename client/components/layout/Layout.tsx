@@ -40,18 +40,12 @@ const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
                                 (
                                     except.filter(route => route == router.pathname).length
                                         ?
-                                        <div />
+                                        <SidebarLeftLoggouted />
                                         :
                                         <SidebarLeft />
                                 )
                                 :
-                                (
-                                    except.filter(route => route == router.pathname).length
-                                        ?
-                                        <div />
-                                        :
-                                        <SidebarLeftLoggouted />
-                                )
+                                <SidebarLeftLoggouted />
                         }
                         <div className='content'>{children}</div>
                         {
@@ -60,18 +54,12 @@ const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
                                 (
                                     except.filter(route => route == router.pathname).length
                                         ?
-                                        <div />
+                                        <SidebarRightLoggouted />
                                         :
                                         <SidebarRight />
                                 )
                                 :
-                                (
-                                    except.filter(route => route == router.pathname).length
-                                        ?
-                                        <div />
-                                        :
-                                        <SidebarRightLoggouted />
-                                )
+                                <SidebarRightLoggouted />
                         }
                     </div>
             }

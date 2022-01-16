@@ -20,8 +20,11 @@ interface MealBoxProps {
 
 const MealBox: FunctionComponent<MealBoxProps> = ({ index, products, openDialog, openEditProduct }) => {
     const { t } = useTranslation('nutrition-diary');
-    const router = useRouter();
+    const router: any = useRouter();
     const token: any = useAppSelector((state) => state.token.value);
+    const isOnline = useAppSelector(state => state.online.isOnline)
+    const theOldestSupportedDate = useAppSelector(state => state.config.theOldestSupportedDate)
+    const [isDisabled, setIsDisabled] = useState(false)
     const [{ p, c, f }, setMacro] = useState({ p: 0, c: 0, f: 0 })
 
     const prepareNumber = (number: number) => parseFloat((Math.round(number * 100) / 100).toFixed(1))
@@ -37,7 +40,8 @@ const MealBox: FunctionComponent<MealBoxProps> = ({ index, products, openDialog,
             }
         })
         setMacro(macro)
-    }, [products, index, router.query.date])
+        setIsDisabled(!isOnline && router.query.date < theOldestSupportedDate())
+    }, [products, index, router.query.date, theOldestSupportedDate, isOnline])
 
     return (
         <div className={style.box}>
@@ -45,7 +49,7 @@ const MealBox: FunctionComponent<MealBoxProps> = ({ index, products, openDialog,
             <div className={style.boxExtraOptions}>
                 {
                     token.login == router.query.login ? (
-                        <MoreOptions />
+                        <MoreOptions isDisabled={isDisabled}/>
                     ) : (
                         <div />
                     )
@@ -54,7 +58,7 @@ const MealBox: FunctionComponent<MealBoxProps> = ({ index, products, openDialog,
             <div className={style.boxAdd}>
                 {
                     token.login == router.query.login ? (
-                        <IconButton sx={{ margin: 'auto' }} aria-label="Add" color="primary" onClick={() => openDialog()}>
+                        <IconButton disabled={isDisabled} sx={{ margin: 'auto' }} aria-label="Add" color="primary" onClick={() => openDialog()}>
                             <AddIcon fontSize="small" />
                         </IconButton>
                     ) : (

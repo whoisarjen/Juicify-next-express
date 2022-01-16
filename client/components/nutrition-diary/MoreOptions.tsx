@@ -3,7 +3,12 @@ import IconButton from "@mui/material/IconButton";
 import { FunctionComponent } from "react";
 import styles from '../../styles/nutrition-diary.module.css'
 
-const MoreOptions: FunctionComponent = () => {
+interface MoreOptionsProps {
+    isDisabled: boolean
+}
+
+const MoreOptions: FunctionComponent<MoreOptionsProps> = ({ isDisabled }) => {
+    console.log(isDisabled)
     return (
         <div className={styles.moreOptions}>
             <IconButton aria-label="More" color="primary">
@@ -12,5 +17,5 @@ const MoreOptions: FunctionComponent = () => {
         </div>
     );
 }
- 
+
 export default MoreOptions;
