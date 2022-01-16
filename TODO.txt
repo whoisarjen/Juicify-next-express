@@ -2,7 +2,6 @@ in result => option to add exercise but synchro need to handle it too... + chang
 probably insert on whattoupdate might have issues, to check later with synchro
 Server => TS!
 workout add option to add cardio exercises + timer i guess
-Schema for dialogs
 res cookie
 server need option to well hanlding errors from all functions level => import req?
 own products / exercises to cache?

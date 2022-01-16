@@ -8,7 +8,7 @@ interface MoreOptionsProps {
 }
 
 const MoreOptions: FunctionComponent<MoreOptionsProps> = ({ isDisabled }) => {
-    console.log(isDisabled)
+
     return (
         <div className={styles.moreOptions}>
             <IconButton aria-label="More" color="primary">
