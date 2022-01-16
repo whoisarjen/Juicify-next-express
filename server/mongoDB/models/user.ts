@@ -1,26 +1,10 @@
+import MacronutrientsProps from "../../interfaces/macronutrients";
+import UserProps from "../../interfaces/user";
+
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
-// const user_macronutrientSchema = new Schema({
-//     proteins: {
-//         type: Number,
-//         required: [true, 'required!']
-//     },
-//     carbs: {
-//         type: Number,
-//         required: [true, 'required!']
-//     },
-//     fats: {
-//         type: Number,
-//         required: [true, 'required!']
-//     },
-//     day: {
-//         type: Number,
-//         required: [true, 'required!']
-//     },
-// }, { _id : false })
-
-const user_macronutrientSchema = new Schema({
+const macronutrientsSchema: MacronutrientsProps = new Schema({
     proteins: {
         type: Number,
         required: [true, 'required!']
@@ -33,11 +17,7 @@ const user_macronutrientSchema = new Schema({
         type: Number,
         required: [true, 'required!']
     },
-    // day: {
-    //     type: Number,
-    //     required: [true, 'required!']
-    // },
-}, { _id : false })
+}, { _id: false })
 
 const userSchema = new Schema({
     email: {
@@ -67,10 +47,6 @@ const userSchema = new Schema({
         type: Boolean,
         required: [true, 'required!']
     },
-    // lang: {
-    //     type: String,
-    //     required: [true, 'required!']
-    // },
     meal_number: {
         type: Number,
         default: 5
@@ -104,12 +80,12 @@ const userSchema = new Schema({
         default: false
     },
     registered: {
-        type: String,
-        default: new Date().toISOString()
+        type: Date,
+        default: new Date()
     },
     premium: {
-        type: String,
-        default: new Date().toISOString()
+        type: Date,
+        default: new Date()
     },
     twitter: {
         type: String,
@@ -163,10 +139,6 @@ const userSchema = new Schema({
         type: Boolean,
         default: true
     },
-    // reverse_diet: {
-    //     type: Boolean,
-    //     default: false
-    // },
     activity: {
         type: Number,
         default: 1
@@ -175,10 +147,6 @@ const userSchema = new Schema({
         type: Boolean,
         default: false
     },
-    proteinsG: Number,
-    proteins: Number,
-    carbs: Number,
-    fats: Number,
     fiber: {
         type: Number,
         default: 25
@@ -187,10 +155,9 @@ const userSchema = new Schema({
         type: Number,
         default: 10
     },
-    macronutrients: [user_macronutrientSchema]
+    macronutrients: [macronutrientsSchema]
 })
 
 const userModel = mongoose.model('user', userSchema)
 
-// module.exports = user
 export default userModel;

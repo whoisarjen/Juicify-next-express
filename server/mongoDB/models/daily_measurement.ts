@@ -1,7 +1,13 @@
+import NutritionDiaryProps from '../../interfaces/nutritionDiary'
+import WorkoutResultProps from '../../interfaces/workoutResult'
+import ResultProps from '../../interfaces/result'
+import ValueProps from '../../interfaces/value'
+import DailyMeasurementProps from '../../interfaces/dailyMeasurement'
+
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
-const nutrition_diarySchema = new Schema({
+const nutrition_diarySchema: NutritionDiaryProps = new Schema({
     meal: Number,
     how_many: Number,
     product_ID: String,
@@ -9,12 +15,12 @@ const nutrition_diarySchema = new Schema({
     activity: String
 })
 
-const valueSchema = new Schema({
+const valueSchema: ValueProps = new Schema({
     reps: Number,
     weight: Number
 }, { _id : false });
 
-const resultSchema = new Schema({
+const resultSchema: ResultProps = new Schema({
     _id: String,
     values: {
 	    type: [valueSchema],
@@ -22,7 +28,7 @@ const resultSchema = new Schema({
 	}
 }, { _id : false });
 
-const workout_resultSchema = new Schema({
+const workout_resultSchema: WorkoutResultProps = new Schema({
     workout_plan_ID: String,
     title: String,
     description: String,
@@ -32,7 +38,7 @@ const workout_resultSchema = new Schema({
 	}
 })
 
-const daily_measurementSchema = new Schema({
+const daily_measurementSchema: DailyMeasurementProps = new Schema({
     user_ID: {
         type: String,
         required: [true, 'required!']

@@ -1,9 +1,11 @@
+import ProductProps from "../../interfaces/product";
+
 const mongoose = require('mongoose')
 require('mongoose-long')(mongoose);
 const Long = mongoose.Schema.Types.Long;
 const Schema = mongoose.Schema;
 
-let object = {
+const productSchema: ProductProps = new Schema({
     name: {
         type: String,
         text: true,
@@ -22,9 +24,7 @@ let object = {
     fi: Number,
     na: Number,
     ethanol: Number
-}
-
-const productSchema = new Schema(object)
+})
 
 const productModel = mongoose.model('product', productSchema)
 

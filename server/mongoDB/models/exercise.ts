@@ -1,7 +1,9 @@
+import ExerciseProps from "../../interfaces/exercise";
+
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
-const exerciseSchema = new Schema({
+const exerciseSchema: ExerciseProps = new Schema({
     name: {
         type: String,
         text: true,

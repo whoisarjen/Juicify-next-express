@@ -1,14 +1,17 @@
+import ExerciseProps from "../../interfaces/exercise";
+import WorkoutPlanProps from "../../interfaces/workoutPlan";
+
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
-const exerciseSchema = new Schema({
+const exerciseSchema: ExerciseProps = new Schema({
     _id: {
         type: String,
         required: [true, 'required!']
     }
 }, { _id : false })
 
-const workout_planSchema = new Schema({
+const workout_planSchema: WorkoutPlanProps = new Schema({
     title: {
         type: String,
         required: [true, 'required!']

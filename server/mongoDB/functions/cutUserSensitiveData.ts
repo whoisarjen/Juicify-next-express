@@ -1,8 +1,10 @@
-module.exports = async function userInformationCutter(user){
+import UserProps from "../../interfaces/user";
+
+export default async function (Array: Array<UserProps>) {
     return new Promise(resolve => {
-        let array = []
-        for(let i=0; i<user.length; i++){
-            let object = JSON.parse(JSON.stringify(user[i]));
+        let response = []
+        for (let i = 0; i < Array.length; i++) {
+            let object = JSON.parse(JSON.stringify(Array[i]));
 
             delete object.email_confirmation
             delete object.meal_number
@@ -34,8 +36,8 @@ module.exports = async function userInformationCutter(user){
             // delete object.name
             // delete object.surname
 
-            array.push(object)
+            response.push(object)
         }
-        resolve(array)
+        resolve(response)
     });
 }
