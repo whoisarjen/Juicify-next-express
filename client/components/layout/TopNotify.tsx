@@ -13,20 +13,21 @@ const TopNotify: FunctionComponent = () => {
 
     useEffect(() => {
         (async () => {
-            document.documentElement.style.setProperty('--BothNavHeightAndPaddingDefault', '141px')
-            const workoutResults = await getAllIndexedDB('workout_result')
-            if (!router.pathname.includes('workout-results') && workoutResults.length) {
-                document.documentElement.style.setProperty('--BothNavHeightAndPaddingDefault', '183px')
-            } else {
+            if (token && token.login) {
                 document.documentElement.style.setProperty('--BothNavHeightAndPaddingDefault', '141px')
+                const workoutResults = await getAllIndexedDB('workout_result')
+                if (!router.pathname.includes('workout-results') && workoutResults.length) {
+                    document.documentElement.style.setProperty('--BothNavHeightAndPaddingDefault', '183px')
+                } else {
+                    document.documentElement.style.setProperty('--BothNavHeightAndPaddingDefault', '141px')
+                }
+                setNotSaved(workoutResults)
             }
-            setNotSaved(workoutResults)
         })()
-    }, [router.pathname])
+    }, [router.pathname, token])
     return (
         <>
             {
-                notSaved &&
                 notSaved.length > 0 &&
                 !router.pathname.includes('workout-results') &&
                 <Link href={`/${token.login}/workout-results/${notSaved[0].whenAdded}/${notSaved[0]._id}`}>

@@ -1,4 +1,3 @@
-block workout save if not diff
 in result => option to add exercise but synchro need to handle it too... + change order of exercises + delete
 probably insert on whattoupdate might have issues, to check later with synchro
 Server => TS!
@@ -6,6 +5,8 @@ workout add option to add cardio exercises + timer i guess
 Schema for dialogs
 I can remove days from macro & leng from token
 res cookie
+server need option to well hanlding errors from all functions level => import req?
+own products / exercises to cache?
 
 coach
 barcode
