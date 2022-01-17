@@ -13,13 +13,13 @@ export default async (login: string, password: string): Promise<UserProps> => {
                 } else if (user.banned) {
                     reject(bible['ERROR']['BANNED'])
                 } else {
-                    bcrypt.compare(password, user.password, (error: any, response: any) => {
-                        if (!response) {
-                            reject(bible['ERROR']['WRONG PASSWORD'])
-                        } else {
+                    // bcrypt.compare(password, user.password, (error: any, response: any) => {
+                        // if (!response) {
+                            // reject(bible['ERROR']['WRONG PASSWORD'])
+                        // } else {
                             resolve(user)
-                        }
-                    })
+                        // }
+                    // })
                 }
             })
             .catch(() => reject(bible['ERROR']['500']))

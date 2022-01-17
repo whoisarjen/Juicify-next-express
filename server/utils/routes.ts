@@ -1,12 +1,16 @@
-import { Express, Request, Response } from 'express'
-import { createProductHandler } from '../mongoDB/controller/product.controller';
+import { Express } from 'express'
+import { createUserHandler } from '../mongoDB/controller/user.controller';
+import { createUserSessionHandler, deleteUserSessionHandler, getUserSessionHandler } from '../mongoDB/controller/session.controller';
 import validateResource from '../mongoDB/middleware/validateResource'
-import { createProductSchema } from '../mongoDB/schema/product.schema'
+import { createUserSchema } from '../mongoDB/schema/user.schema';
+import { createSessionSchema } from '../mongoDB/schema/session.schema';
+import requireUser from '../mongoDB/middleware/requireUser'
 
 const routes = (app: Express) => {
-    app.get('/healthcheck', (req: Request, res: Response) => res.sendStatus(200));
-
-    app.get('/test', validateResource(createProductSchema), createProductHandler)
+    app.post('/register', validateResource(createUserSchema), createUserHandler)
+    app.post('/login', validateResource(createSessionSchema), createUserSessionHandler)
+    app.get('/login', requireUser, getUserSessionHandler)
+    app.delete('/login', requireUser, deleteUserSessionHandler)
 }
 
 export default routes;

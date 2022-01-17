@@ -9,65 +9,55 @@ export interface MacronutrientsProps extends mongoose.Document {
 }
 
 export interface UserProps extends mongoose.Document {
-    _id: string;
-    email: string,
-    email_confirmation: boolean,
-    login: string,
-    l: number,
-    password: string,
-    password_remind_hash: string,
-    sex: boolean,
-    meal_number: number,
-    users_roles_ID: number,
-    public_profile: number,
-    height: number,
-    birth: string,
-    goal: number,
-    coach: string,
-    coach_analyze: boolean,
-    registered: Date,
-    premium: Date,
-    twitter: string,
-    website: string,
-    facebook: string,
-    instagram: string,
-    name: string,
-    surname: string,
-    description: string,
-    banned: boolean,
-    avatar: boolean,
-    water_adder: boolean,
-    workout_watch: boolean,
-    kind_of_diet: number,
-    sport_active: boolean,
-    activity: number,
-    useProteinsG: boolean,
-    fiber: number,
-    sugar_percent: number,
-    macronutrients: Array<MacronutrientsProps>
+    email?: string,
+    email_confirmation?: boolean,
+    login?: string,
+    l?: number,
+    password?: string,
+    password_remind_hash?: string,
+    sex?: boolean,
+    meal_number?: number,
+    users_roles_ID?: number,
+    public_profile?: number,
+    height?: number,
+    birth?: Date,
+    goal?: number,
+    coach?: string,
+    coach_analyze?: boolean,
+    premium?: Date,
+    twitter?: string,
+    website?: string,
+    facebook?: string,
+    instagram?: string,
+    name?: string,
+    surname?: string,
+    description?: string,
+    banned?: boolean,
+    avatar?: boolean,
+    water_adder?: boolean,
+    workout_watch?: boolean,
+    kind_of_diet?: number,
+    sport_active?: boolean,
+    activity?: number,
+    fiber?: number,
+    sugar_percent?: number,
+    macronutrients?: Array<MacronutrientsProps>
+    createdAt?: Date,
+    updatedAt?: Date,
     comparePassword(candidatePassword: string): Promise<boolean>
 }
 
 const macronutrientsSchema = new mongoose.Schema({
-    proteins: {
-        type: Number,
-        required: [true, 'required!']
-    },
-    carbs: {
-        type: Number,
-        required: [true, 'required!']
-    },
-    fats: {
-        type: Number,
-        required: [true, 'required!']
-    },
+    proteins: Number,
+    carbs: Number,
+    fats: Number,
 }, { _id: false })
 
 const userSchema = new mongoose.Schema({
     email: {
         type: String,
         unique: true,
-        required: [true, 'required!']
+        required: true
     },
     email_confirmation: {
         type: Boolean,
@@ -76,20 +66,17 @@ const userSchema = new mongoose.Schema({
     login: {
         type: String,
         unique: true,
-        required: [true, 'required!']
+        required: true
     },
-    l: {
-        type: Number,
-        required: [true, 'required!']
-    },
+    l: Number,
     password: {
         type: String,
-        required: [true, 'required!']
+        required: true
     },
     password_remind_hash: String,
     sex: {
         type: Boolean,
-        required: [true, 'required!']
+        required: true
     },
     meal_number: {
         type: Number,
@@ -105,11 +92,11 @@ const userSchema = new mongoose.Schema({
     },
     height: {
         type: Number,
-        required: [true, 'required!']
+        required: true
     },
     birth: {
         type: String,
-        required: [true, 'required!']
+        required: true
     },
     goal: {
         type: Number,
@@ -122,10 +109,6 @@ const userSchema = new mongoose.Schema({
     coach_analyze: {
         type: Boolean,
         default: false
-    },
-    registered: {
-        type: Date,
-        default: new Date()
     },
     premium: {
         type: Date,
@@ -187,10 +170,6 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 1
     },
-    useProteinsG: {
-        type: Boolean,
-        default: false
-    },
     fiber: {
         type: Number,
         default: 25
@@ -200,28 +179,42 @@ const userSchema = new mongoose.Schema({
         default: 10
     },
     macronutrients: [macronutrientsSchema]
+}, {
+    timestamps: true
 })
 
-// userSchema.pre("save", async (next) => {
-//     let user = this as UserProps
+userSchema.pre("save", async function (next) {
+    let user: any = this
 
-//     if (user.isModified('password')) {
-//         return next();
-//     } else {
-//         const salt = await bcrypt.genSalt(config.get<number>('SALT_WORK_FACTORY'));
+    if (user.isNew) {
+        let macronutrients = []
+        for (let i = 0; i < 7; i++) {
+            macronutrients.push({
+                proteins: 0,
+                carbs: 0,
+                fats: 0
+            })
+        }
+        user.macronutrients = macronutrients
+        user.l = user.login.length
+    }
 
-//         const hash = await bcrypt.hashSync(user.password, salt);
+    if (!user.isModified('password')) {
+        return next();
+    }
 
-//         user.password = hash;
+    const salt = await bcrypt.genSalt(config.get<number>('SALT_WORK_FACTORY'));
+    const hash = await bcrypt.hashSync(user.password, salt);
+    user.password = hash;
 
-//         return next();
-//     }
-// })
+    return next();
 
-// userSchema.methods.comaprePassword = async (candidatePassword: string): Promise<boolean> => {
-//     const user = this as UserProps;
+})
 
-//     return bcrypt.compare(candidatePassword, user.password).catch(e => false)
-// }
+userSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
+    const user: any = this;
 
-export const UserModel = mongoose.model('Model', userSchema);
+    return bcrypt.compare(candidatePassword, user.password).catch(e => false)
+}
+
+export const UserModel = mongoose.model('user', userSchema);

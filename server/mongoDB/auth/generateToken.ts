@@ -18,7 +18,6 @@ export default (array: Array<UserProps>) => {
         coach: array[0].coach,
         coach_analyze: array[0].coach_analyze,
         goal: array[0].goal,
-        registered: array[0].registered,
         website: array[0].website,
         instagram: array[0].instagram,
         facebook: array[0].facebook,

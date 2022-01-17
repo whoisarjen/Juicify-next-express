@@ -11,6 +11,7 @@ dotenv.config()
 import config from 'config'
 import connect from './utils/connect'
 import routes from './utils/routes'
+import deserializeUser from './mongoDB/middleware/deserializeUser'
 
 const port = config.get<number>('PORT');
 const appVersion = 1
@@ -18,6 +19,7 @@ const appVersion = 1
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(deserializeUser)
 
 const redis: any = createClient();
 (async () => await redis.connect().then(() => logger.info("Connection with Redis has been made!")))();
