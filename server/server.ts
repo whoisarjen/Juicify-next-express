@@ -6,6 +6,8 @@ import { Server } from "socket.io";
 import { createClient } from 'redis';
 import logger from './utils/logger'
 import verifyToken from './mongoDB/auth/verifyToken'
+import dotenv from 'dotenv'
+dotenv.config()
 import config from 'config'
 import connect from './utils/connect'
 import routes from './utils/routes'
