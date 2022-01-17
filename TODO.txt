@@ -6,6 +6,11 @@ res cookie
 server need option to well hanlding errors from all functions level => import req?
 own products / exercises to cache?
 
+
+settle l directly when creating object in mongodb => product / exercise etc
+
+user schema can get created / modify so we can delete when registered
+
 coach
 barcode
 unit test react

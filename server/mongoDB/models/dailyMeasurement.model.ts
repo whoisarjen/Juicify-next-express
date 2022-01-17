@@ -68,6 +68,6 @@ const daily_measurementSchema: DailyMeasurementProps = new Schema({
 	}
 })
 
-const dailyMeasurementModel = mongoose.model('daily_measurement', daily_measurementSchema)
+const DailyMeasurement = mongoose.model('daily_measurement', daily_measurementSchema)
 
-export default dailyMeasurementModel;
+export default DailyMeasurement;

@@ -1,12 +1,11 @@
 import bible from '../../bible';
-import UserProps from '../../interfaces/user';
-import WorkoutPlanProps from '../../interfaces/workoutPlan';
-import workoutPlanModel from '../models/workout_plan';
+import { UserProps } from '../models/user.model';
+import { WorkoutPlanProps, WorkoutPlanModel } from '../models/workoutPlan.model';
 import loadExercise from './loadExercise';
 
 export default async (user: UserProps): Promise<Array<WorkoutPlanProps>> => {
     return new Promise((resolve, reject) => {
-        workoutPlanModel.find({
+        WorkoutPlanModel.find({
             $and: [
                 {
                     user_ID: user._id

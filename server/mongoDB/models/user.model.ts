@@ -1,10 +1,54 @@
-import MacronutrientsProps from "../../interfaces/macronutrients";
-import UserProps from "../../interfaces/user";
+import mongoose from "mongoose";
+import bcrypt from 'bcrypt'
+import config from 'config'
 
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema;
+export interface MacronutrientsProps extends mongoose.Document {
+    proteins: number,
+    carbs: number,
+    fats: number
+}
 
-const macronutrientsSchema: MacronutrientsProps = new Schema({
+export interface UserProps extends mongoose.Document {
+    _id: string;
+    email: string,
+    email_confirmation: boolean,
+    login: string,
+    l: number,
+    password: string,
+    password_remind_hash: string,
+    sex: boolean,
+    meal_number: number,
+    users_roles_ID: number,
+    public_profile: number,
+    height: number,
+    birth: string,
+    goal: number,
+    coach: string,
+    coach_analyze: boolean,
+    registered: Date,
+    premium: Date,
+    twitter: string,
+    website: string,
+    facebook: string,
+    instagram: string,
+    name: string,
+    surname: string,
+    description: string,
+    banned: boolean,
+    avatar: boolean,
+    water_adder: boolean,
+    workout_watch: boolean,
+    kind_of_diet: number,
+    sport_active: boolean,
+    activity: number,
+    useProteinsG: boolean,
+    fiber: number,
+    sugar_percent: number,
+    macronutrients: Array<MacronutrientsProps>
+    comparePassword(candidatePassword: string): Promise<boolean>
+}
+
+const macronutrientsSchema = new mongoose.Schema({
     proteins: {
         type: Number,
         required: [true, 'required!']
@@ -19,7 +63,7 @@ const macronutrientsSchema: MacronutrientsProps = new Schema({
     },
 }, { _id: false })
 
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
     email: {
         type: String,
         unique: true,
@@ -158,6 +202,26 @@ const userSchema = new Schema({
     macronutrients: [macronutrientsSchema]
 })
 
-const userModel = mongoose.model('user', userSchema)
+// userSchema.pre("save", async (next) => {
+//     let user = this as UserProps
 
-export default userModel;
+//     if (user.isModified('password')) {
+//         return next();
+//     } else {
+//         const salt = await bcrypt.genSalt(config.get<number>('SALT_WORK_FACTORY'));
+
+//         const hash = await bcrypt.hashSync(user.password, salt);
+
+//         user.password = hash;
+
+//         return next();
+//     }
+// })
+
+// userSchema.methods.comaprePassword = async (candidatePassword: string): Promise<boolean> => {
+//     const user = this as UserProps;
+
+//     return bcrypt.compare(candidatePassword, user.password).catch(e => false)
+// }
+
+export const UserModel = mongoose.model('Model', userSchema);

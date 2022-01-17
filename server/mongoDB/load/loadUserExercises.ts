@@ -1,11 +1,10 @@
 import bible from '../../bible';
-import ExerciseProps from '../../interfaces/exercise';
-import UserProps from '../../interfaces/user';
-import exerciseModel from '../models/exercise'
+import { ExerciseProps, ExerciseModel } from '../models/exercise.model';
+import { UserProps } from '../models/user.model';
 
 export default async (user: UserProps): Promise<Array<ExerciseProps>> => {
     return new Promise((resolve, reject) => {
-        exerciseModel.find({
+        ExerciseModel.find({
             $and: [
                 {
                     user_ID: user._id

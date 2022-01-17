@@ -1,13 +1,13 @@
 import bible from "../../bible";
 import DailyMeasurementProps from "../../interfaces/dailyMeasurement";
-import UserProps from "../../interfaces/user";
-import dailyMeasurementModel from "../models/daily_measurement";
+import { UserProps } from '../models/user.model';
+import DailyMeasurement from "../models/dailyMeasurement.model";
 import loadExercise from "./loadExercise";
 import loadProduct from "./loadProduct";
 
 export default async (user: UserProps): Promise<Array<DailyMeasurementProps>> => {
     return new Promise((resolve, reject) => {
-        dailyMeasurementModel.find({
+        DailyMeasurement.find({
             user_ID: user._id,
             whenAdded: {
                 $gte: new Date((new Date().setDate((new Date().getDate() - 29)))) // One more than what we support on client's site

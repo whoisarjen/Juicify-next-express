@@ -1,7 +1,6 @@
 import bible from '../../bible';
 import NutritionDiaryProps from '../../interfaces/nutritionDiary';
-import ProductProps from '../../interfaces/product';
-import productModel from '../models/product'
+import {ProductProps, ProductModel} from '../models/product.model';
 
 let cache: any = {}
 
@@ -10,7 +9,7 @@ export default async (object: NutritionDiaryProps) => {
         if (cache[object.product_ID]) {
             resolve(Object.assign(JSON.parse(JSON.stringify(cache[object.product_ID])), JSON.parse(JSON.stringify(object))));
         } else {
-            productModel.findOne({ _id: object.product_ID })
+            ProductModel.findOne({ _id: object.product_ID })
                 .then((product: ProductProps) => {
                     if (product) {
                         cache[object.product_ID] = JSON.parse(JSON.stringify(product))

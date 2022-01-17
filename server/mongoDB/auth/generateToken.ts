@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import UserProps from '../../interfaces/user'
+import { UserProps } from '../models/user.model'
 import tokenKEY from './tokenKEY'
 
 export default (array: Array<UserProps>) => {

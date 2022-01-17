@@ -4,21 +4,29 @@ import tokenKEY from './mongoDB/auth/tokenKEY'
 import cors from 'cors'
 import { Server } from "socket.io";
 import { createClient } from 'redis';
+import logger from './utils/logger'
 import verifyToken from './mongoDB/auth/verifyToken'
+import config from 'config'
+import connect from './utils/connect'
+import routes from './utils/routes'
 
-const port = 4000;
+const port = config.get<number>('PORT');
 const appVersion = 1
-
-require('./mongoDB/connection'); // Remember to change it into ES6
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 const redis: any = createClient();
-(async () => await redis.connect().then(() => console.log("Connection with Redis has been made!")))();
+(async () => await redis.connect().then(() => logger.info("Connection with Redis has been made!")))();
 
-const server = app.listen(port, () => console.log(`Listening on port ${port} (http://localhost:${port})`));
+const server = app.listen(port, async () => {
+    logger.info(`Listening on port ${port} (http://localhost:${port})`);
+
+    await connect();
+
+    routes(app);
+});
 const io = new Server(server, {
     cors: {
         origin: '*',
@@ -52,22 +60,22 @@ app.post('/auth/login', (req, res) => login(req, res));
 
 // app.post('/delete', async (req, res) => {
 //     await verifyToken(req, res)
-//     console.log('After verifyToken')
+//     logger.info('After verifyToken')
 //     await require(`./mongoDB/delete`)(req)
 //         .then(async () => await handleSynchronization(req, res, req.body.array, 'delete'))
 //         .catch(err => {
-//             console.log(err)
+//             logger.info(err)
 //             res.status(404).send({ error: 'Wrong query' })
 //         })
 // })
 
 // app.post('/:what/:where', async (req, res) => {
 //     await verifyToken(req, res)
-//     console.log('After verifyToken')
+//     logger.info('After verifyToken')
 //     await require(`./mongoDB/${req.params.what}/${req.params.where}`)(req, res)
 //         .then(async data => await handleSynchronization(req, res, data, 'change'))
 //         .catch(err => {
-//             console.log(err)
+//             logger.info(err)
 //             res.status(404).send({ error: 'Wrong query' })
 //         })
 // });
@@ -81,7 +89,7 @@ io.on('connection', async (socket) => {
     if (refresh_token) {
         jwt.verify(refresh_token, tokenKEY, async (err: any, user: any) => {
             if (user) {
-                console.log(`User ${user._id} connected to the socket`)
+                logger.info(`User ${user._id} connected to the socket`)
                 socket.join(user._id)
                 io.to(socket.id).emit('compareDatabases', {
                     "lastUpdated": JSON.parse(await redis.get(user._id)) || await createSynchronizationObject(user._id),
@@ -115,7 +123,7 @@ const handleSynchronization = async (req: any, res: any, data: any, whatToDo: st
 }
 
 const createSynchronizationObject = async (user_ID: string) => {
-    console.log(`Creating Synchronization Object for ${user_ID}`)
+    logger.info(`Creating Synchronization Object for ${user_ID}`)
     await redis.set(user_ID, JSON.stringify(await synchronizationObject()))
     return JSON.parse(await redis.get(user_ID))
 }
@@ -132,7 +140,7 @@ const synchronizationObject = async (timeMS = new Date().getTime()) => {
 }
 
 const updateSynchronizationObject = async (user_ID: string, where: string) => {
-    console.log(`Updating Synchronization Object (${where}) for ${user_ID}`)
+    logger.info(`Updating Synchronization Object (${where}) for ${user_ID}`)
     let object = JSON.parse(await redis.get(user_ID))
     object[where] = new Date().getTime();
     await redis.set(user_ID, JSON.stringify(object))

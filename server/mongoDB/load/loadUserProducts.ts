@@ -1,11 +1,10 @@
 import bible from '../../bible';
-import ProductProps from '../../interfaces/product';
-import UserProps from '../../interfaces/user';
-import productModel from '../models/product'
+import { ProductProps, ProductModel } from '../models/product.model';
+import { UserProps } from '../models/user.model';
 
 export default async (user: UserProps): Promise<Array<ProductProps>> => {
     return new Promise((resolve, reject) => {
-        productModel.find({
+        ProductModel.find({
             $and: [
                 {
                     user_ID: user._id

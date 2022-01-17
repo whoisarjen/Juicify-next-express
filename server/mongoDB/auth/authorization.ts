@@ -1,11 +1,10 @@
 import bcrypt from 'bcrypt';
-import userModel from '../models/user'
-import UserProps from '../../interfaces/user';
+import { UserProps, UserModel } from '../models/user.model'
 import bible from '../../bible';
 
 export default async (login: string, password: string): Promise<UserProps> => {
     return new Promise((resolve, reject) => {
-        userModel.findOne({
+        UserModel.findOne({
             login
         })
             .then((user: UserProps) => {

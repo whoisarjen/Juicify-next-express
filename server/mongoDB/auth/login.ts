@@ -1,11 +1,11 @@
 import generateToken from './generateToken'
 import generateRefreshToken from './generateRefreshToken'
 import authorization from './authorization';
-import ProductProps from '../../interfaces/product';
+import { ProductProps } from '../models/product.model';
 import loadUserProducts from '../load/loadUserProducts';
-import UserProps from '../../interfaces/user';
+import { UserProps } from '../models/user.model'
 import loadUserWorkoutPlans from '../load/loadUserWorkoutPlans';
-import ExerciseProps from '../../interfaces/exercise';
+import { ExerciseProps } from '../models/exercise.model';
 import loadUserExercises from '../load/loadUserExercises';
 import loadUserDailyMeasurements from '../load/loadUserDailyMeasurements';
 
