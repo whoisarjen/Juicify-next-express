@@ -45,6 +45,7 @@ const Login = () => {
                 password,
                 overDatePlusTheDate: theOldestSupportedDate()
             });
+            console.log(response)
             if (isSuccess) {
                 await createIndexedDB()
                 const keys = Object.keys(response)

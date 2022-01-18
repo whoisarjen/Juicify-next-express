@@ -287,6 +287,7 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
             const socket = io("http://localhost:4000", socketQuery)
 
             socket.on('compareDatabases', async (object) => {
+                console.log('compareDatabases', object)
                 let newTimeOfUpdate = 0
                 dispatch(setIsOnline(true))
                 const isOnline = store.getState().online.isOnline;
@@ -365,6 +366,7 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
             })
 
             socket.on('synchronizationMessege', async (messege) => {
+                console.log('synchronizationMessege', messege)
                 if (messege.socket_ID != localStorage.getItem('socket_ID')) {
                     console.log('synchronizationMessege', messege)
                     if (messege.where == 'settings') {

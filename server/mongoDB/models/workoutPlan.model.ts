@@ -1,13 +1,17 @@
 import mongoose from "mongoose";
 import { ExerciseProps } from "./exercise.model";
+import { Omit } from 'lodash'
 
-export interface WorkoutPlanProps extends mongoose.Document {
-    title: string,
-    description: string,
-    user_ID: string,
-    burnt: number,
-    exercises: Array<ExerciseProps>
+export interface WorkoutPlanPropsDry {
+    _id?: string,
+    title?: string,
+    description?: string,
+    user_ID?: string,
+    burnt?: number,
+    exercises?: Array<ExerciseProps>
 }
+
+export interface WorkoutPlanProps extends mongoose.Document, Omit<WorkoutPlanPropsDry, "_id"> { }
 
 const exerciseSchema = new mongoose.Schema({
     _id: {

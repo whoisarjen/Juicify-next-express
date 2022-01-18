@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { UserProps } from './user.model'
 
 export interface SessionProps extends mongoose.Document {
+    _id?: string,
     user_ID: UserProps['_id'],
     valid: boolean,
     createdAt: Date,

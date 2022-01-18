@@ -4,10 +4,14 @@ import errorBook from "../../utils/errorBook"
 import { createSession, findSessions, updateSession } from "../service/session.service"
 import config from "config"
 import { signJWT } from '../../utils/jwt.utils'
+import { getUserProducts } from '../service/product.service'
+import { getUserExercises } from '../service/exercise.service'
+import { getUserWorkoutPlans } from "../service/workoutPlan.service"
+import { getUserDailyMeasurements } from "../service/dailyMeasurement.service"
 
 export async function createUserSessionHandler(req: Request, res: Response) {
     const user = await validatePassword(req.body)
-    
+
     if (!user) {
         return res.status(errorBook['INVALID LOGIN OR PASSWORD']['CODE']).send(errorBook['INVALID LOGIN OR PASSWORD']['VALUE'])
     }
@@ -24,15 +28,24 @@ export async function createUserSessionHandler(req: Request, res: Response) {
         { expiresIn: config.get('refreshTokenTtl') }
     )
 
+    const product = await getUserProducts(user)
+    const exercise = await getUserExercises(user)
+    const workout_plan = await getUserWorkoutPlans(user)
+    const daily_measurement = await getUserDailyMeasurements(user)
+
     return res.send({
         token,
-        refresh_token
+        refresh_token,
+        product,
+        exercise,
+        workout_plan,
+        daily_measurement
     })
 }
 
 export async function getUserSessionHandler(req: Request, res: Response) {
     const user = res.locals.token
-    
+
     const sessions = await findSessions({ user: user._id, valid: true })
 
     return res.send(sessions);

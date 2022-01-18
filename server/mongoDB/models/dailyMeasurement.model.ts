@@ -1,13 +1,14 @@
-import NutritionDiaryProps from '../../interfaces/nutritionDiary'
-import WorkoutResultProps from '../../interfaces/workoutResult'
-import ResultProps from '../../interfaces/result'
-import ValueProps from '../../interfaces/value'
-import DailyMeasurementProps from '../../interfaces/dailyMeasurement'
+import mongoose from 'mongoose'
 
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema;
+export interface NutritionDiaryProps {
+    meal?: number,
+    how_many?: number,
+    product_ID?: string,
+    calories?: number,
+    activity?: string
+}
 
-const nutrition_diarySchema: NutritionDiaryProps = new Schema({
+const NutritionDiary = new mongoose.Schema({
     meal: Number,
     how_many: Number,
     product_ID: String,
@@ -15,30 +16,66 @@ const nutrition_diarySchema: NutritionDiaryProps = new Schema({
     activity: String
 })
 
-const valueSchema: ValueProps = new Schema({
+export interface ValueProps {
+    reps?: number,
+    weight?: number
+}
+
+const ValueSchema = new mongoose.Schema({
     reps: Number,
     weight: Number
-}, { _id : false });
+}, { _id: false });
 
-const resultSchema: ResultProps = new Schema({
+export interface ResultProps {
+    _id?: string,
+    values?: [ValueProps]
+}
+
+const ResultSchema = new mongoose.Schema({
     _id: String,
     values: {
-	    type: [valueSchema],
-	    default: undefined
-	}
-}, { _id : false });
+        type: [ValueSchema],
+        default: undefined
+    }
+}, { _id: false });
 
-const workout_resultSchema: WorkoutResultProps = new Schema({
+export interface WorkoutResultProps {
+    workout_plan_ID?: string,
+    title?: string,
+    description?: string,
+    results: [ResultProps]
+}
+
+const workoutResultSchema = new mongoose.Schema({
     workout_plan_ID: String,
     title: String,
     description: String,
     results: {
-	    type: [resultSchema],
-	    default: undefined
-	}
+        type: [ResultSchema],
+        default: undefined
+    }
 })
 
-const daily_measurementSchema: DailyMeasurementProps = new Schema({
+export interface DailyMeasurementProps {
+    _id?: string,
+    user_ID?: string,
+    whenAdded?: Date,
+    weight?: number,
+    neck?: number,
+    shoulders?: number,
+    chest?: number,
+    biceps?: number,
+    waist?: number,
+    hips?: number,
+    thigh?: number,
+    calf?: number,
+    water?: number,
+    weight_description?: string,
+    nutrition_diary?: [NutritionDiaryProps],
+    workout_result?: [WorkoutResultProps]
+}
+
+const dailyMeasurementSchema = new mongoose.Schema({
     user_ID: {
         type: String,
         required: [true, 'required!']
@@ -59,15 +96,13 @@ const daily_measurementSchema: DailyMeasurementProps = new Schema({
     water: Number,
     weight_description: String,
     nutrition_diary: {
-	    type: [nutrition_diarySchema],
-	    default: undefined
-	},
+        type: [NutritionDiary],
+        default: undefined
+    },
     workout_result: {
-	    type: [workout_resultSchema],
-	    default: undefined
-	}
+        type: [workoutResultSchema],
+        default: undefined
+    }
 })
 
-const DailyMeasurement = mongoose.model('daily_measurement', daily_measurementSchema)
-
-export default DailyMeasurement;
+export const DailyMeasurementModel = mongoose.model('daily_measurement', dailyMeasurementSchema)

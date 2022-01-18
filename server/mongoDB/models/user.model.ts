@@ -9,6 +9,7 @@ export interface MacronutrientsProps extends mongoose.Document {
 }
 
 export interface UserProps extends mongoose.Document {
+    _id?: string,
     email?: string,
     email_confirmation?: boolean,
     login?: string,

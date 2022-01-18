@@ -38,5 +38,21 @@ export default {
     'SEX IS REQUIRED': {
         CODE: 401,
         VALUE: 'SEX IS REQUIRED'
+    },
+    'NAME IS REQUIRED': {
+        CODE: 401,
+        VALUE: 'NAME IS REQUIRED'
+    },
+    'USER IS REQUIRED': {
+        CODE: 401,
+        VALUE: 'USER IS REQUIRED'
+    },
+    'TITLE IS REQUIRED': {
+        CODE: 401,
+        VALUE: 'TITLE IS REQUIRED'
+    },
+    'EXERCISE IS REQUIRED': {
+        CODE: 401,
+        VALUE: 'EXERCISE IS REQUIRED'
     }
 }

@@ -5,7 +5,8 @@ mongooseLong(mongoose);
 
 const Long = mongoose.Schema.Types.Long;
 
-export interface ProductProps extends mongoose.Document {
+export interface ProductProps {
+    _id?: string,
     name?: string,
     l?: number,
     v?: boolean,
@@ -26,7 +27,7 @@ const productSchema = new mongoose.Schema({
     name: {
         type: String,
         text: true,
-        required: [true, 'required!']
+        required: true
     },
     l: Number,
     v: Boolean,
@@ -41,6 +42,17 @@ const productSchema = new mongoose.Schema({
     fi: Number,
     na: Number,
     ethanol: Number
+})
+
+productSchema.pre("save", async function (next) {
+    let product: any = this
+
+    if (product.isNew) {
+        product.l = product.name.length
+    }
+
+    return next();
+
 })
 
 export const ProductModel = mongoose.model('product', productSchema);
