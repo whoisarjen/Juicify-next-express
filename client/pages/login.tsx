@@ -6,9 +6,9 @@ import Stack from "@mui/material/Stack";
 import logo from '../public/images/logo.png'
 import styles from "../styles/login.module.css";
 import TextField from "@mui/material/TextField";
-import { API, setLastUpdated } from '../utils/API'
+import { setLastUpdated } from '../utils/API'
 import LoadingButton from "@mui/lab/LoadingButton";
-import { useAppDispatch, useAppSelector } from "../hooks/useRedux";
+import { useAppDispatch } from "../hooks/useRedux";
 import { setToken } from "../redux/features/tokenSlice";
 import useTranslation from "next-translate/useTranslation";
 import { expectLoggedOUT, readToken } from "../utils/checkAuth";
@@ -16,35 +16,23 @@ import { createIndexedDB, addIndexedDB } from "../utils/indexedDB";
 import { getShortDate } from "../utils/manageDate";
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import { object, string, TypeOf } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod';
-import errorBook from '../../server/utils/errorBook'
 import { useNotify } from "../hooks/useNotify";
+import { createSessionSchema, CreateSessionProps } from '../schema/session.schema'
 
 const Login = () => {
     expectLoggedOUT();
-    const { t } = useTranslation();
-    const [loading, setLoading] = useState(false)
     const router = useRouter();
-    const dispatch = useAppDispatch();
+    const { t } = useTranslation();
     const [{ error }] = useNotify()
+    const dispatch = useAppDispatch();
+    const [loading, setLoading] = useState(false)
 
     const handleKeyPress = (event: any) => {
         if (event.key === "Enter") {
             handleSubmit(onSubmit)
         }
     };
-
-    type CreateSessionProps = TypeOf<typeof createSessionSchema>
-
-    const createSessionSchema = object({
-        login: string({
-            required_error: errorBook['LOGIN IS REQUIRED']['VALUE']
-        }).min(3),
-        password: string({
-            required_error: errorBook['PASSWORD IS REQUIRED']['VALUE']
-        }).min(8)
-    })
 
     const { register, formState: { errors }, handleSubmit } = useForm<CreateSessionProps>({
         resolver: zodResolver(createSessionSchema)
