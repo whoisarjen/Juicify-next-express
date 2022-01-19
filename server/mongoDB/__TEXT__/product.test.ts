@@ -1,3 +1,5 @@
+import supertest from 'supertest'
+
 test('product', () => {
     // describe('checking product route', () => {
         // console.log('halo')
@@ -7,7 +9,9 @@ test('product', () => {
 describe('get product route', () => {
     describe('given product does not exists', () => {
         describe('it should return an empty array', () => {
-            expect(true).toBe(true);
+            it('should return an empty array', () => {
+                expect(true).toBe(true);
+            })
         })
     })
 })
