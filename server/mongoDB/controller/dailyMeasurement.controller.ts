@@ -6,7 +6,6 @@ import { socketHandleUserSynchronization } from '../../utils/socket'
 
 export const createDailyMeasurementHandler = async (req: Request<{}, {}, CreateDailyMeasurementInput['body']>, res: Response) => {
     try {
-        console.log('createDailyMeasurementHandler')
         const DailyMeasurement = await createDailyMeasurement(req.body.array)
         await socketHandleUserSynchronization({ req, res, data: DailyMeasurement, whatToDo: 'change', where: 'DailyMeasurement' })
         return res.send(DailyMeasurement);
