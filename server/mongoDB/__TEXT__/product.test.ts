@@ -1,16 +1,15 @@
 import supertest from 'supertest'
+import createServer from '../../utils/server'
 
-test('product', () => {
-    // describe('checking product route', () => {
-        // console.log('halo')
-    // })
-})
+const app = createServer();
 
 describe('get product route', () => {
     describe('given product does not exists', () => {
         describe('it should return an empty array', () => {
-            it('should return an empty array', () => {
-                expect(true).toBe(true);
+            it('should return an empty array', async () => {
+                const productId = 'product-123'
+                await supertest(app).get(`/find/products`)
+                expect([])
             })
         })
     })

@@ -7,7 +7,7 @@ server need option to well hanlding errors from all functions level => import re
 own products / exercises to cache?
 coach arrows back
 
-axiot => headers => token
+socket might not be available on routes
 
 coach
 barcode
