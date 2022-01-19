@@ -15,6 +15,7 @@ import { createDailyMeasurementSchema } from '../mongoDB/schema/dailyMeasurement
 import { createDailyMeasurementHandler, changeDailyMeasurementHandler } from '../mongoDB/controller/dailyMeasurement.controller'
 
 const routes = (app: Express) => {
+    console.log('On my way!')
     // app.post('/register', validateResource(createUserSchema), createUserHandler)
     app.post('/find/users', getUsersByLoginHandler)
     app.post('/auth/login', validateResource(createSessionSchema), createUserSessionHandler)

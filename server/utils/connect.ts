@@ -1,12 +1,9 @@
 import mongoose from 'mongoose'
-import config from 'config'
 import logger from './logger'
 
 const connect = async () => {
-    const dbURI = config.get<string>('DB_URI')
-
     try {
-        await mongoose.connect(dbURI)
+        await mongoose.connect('mongodb://Arjen:Preetini49e89d5b@86.106.91.210:27017/test?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false')
             .then(() => logger.info("Connection with mongoDB has been made!"))
     } catch (err) {
         logger.error(`Connection with mongoDB ended with error: ${err}`)

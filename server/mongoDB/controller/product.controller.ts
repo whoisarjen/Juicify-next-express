@@ -8,7 +8,7 @@ import { socketHandleUserSynchronization } from '../../utils/socket'
 export const createProductHandler = async (req: Request<{}, {}, CreateProductInput['body']>, res: Response) => {
     try {
         const product = await createProduct(req.body.array)
-        await socketHandleUserSynchronization({ req, res, data: product, whatToDo: 'change', where: 'product' })
+        await socketHandleUserSynchronization({ req, res, data: product, whatToDo: 'change', where: 'product' });
         return res.send(product);
     } catch (error: any) {
         logger.error(error)

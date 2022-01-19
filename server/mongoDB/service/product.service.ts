@@ -1,9 +1,7 @@
 import { DocumentDefinition } from 'mongoose'
-import { NutritionDiaryProps } from '../models/dailyMeasurement.model'
 import { ProductModel, ProductProps } from '../models/product.model'
 import { UserProps } from '../models/user.model'
 import { omit } from 'lodash'
-import { Request } from 'express'
 
 export const createProduct = async (input: DocumentDefinition<Array<ProductProps>>) => {
     try {
