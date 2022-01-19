@@ -58,3 +58,23 @@ export const getExercise = async (_id: string | undefined): Promise<ExerciseProp
         throw new Error(error)
     }
 }
+
+export const getExerciseByName = async (find: string) => {
+    try {
+        let regex: any = { name: { $regex: find, $options: 'im' } }
+        if (find.split(" ").length > 1) regex = { $text: { $search: find.split(" ").map((str: any) => "\"" + str + "\"").join(' ') } }
+        const products = await ExerciseModel.find({
+            $and:
+                [
+                    { user_ID: { $exists: false } },
+                    { deleted: { $exists: false } },
+                    regex
+                ]
+        })
+            .sort({ l: 1, v: -1 })
+            .limit(10)
+        return products
+    } catch (error: any) {
+        throw new Error(error)
+    }
+}

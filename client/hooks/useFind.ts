@@ -66,7 +66,7 @@ const useFind = (value: any, where: string, tab: number, skipThoseIDS: Array<any
                             setLoading(true);
                             if (isOnline) {
                                 const { response, isSuccess } = await API(`/find/${where}s`, {
-                                    find: find
+                                    find
                                 });
                                 if (isSuccess) {
                                     const receivedProducts = response.items.sort((a: any, b: any) => a.name.length - b.name.length)

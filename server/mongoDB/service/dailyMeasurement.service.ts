@@ -1,15 +1,33 @@
 import { DocumentDefinition } from 'mongoose'
-import { DailyMeasurementModel, DailyMeasurementProps, NutritionDiaryProps } from '../models/dailyMeasurement.model'
+import { DailyMeasurementModel, DailyMeasurementProps } from '../models/dailyMeasurement.model'
 import { UserProps } from '../models/user.model'
 import config from 'config'
 import { getProduct } from './product.service'
 import { getExercise } from './exercise.service'
-import { WorkoutResultProps } from '../models/dailyMeasurement.model'
 
 export const createDailyMeasurement = async (input: DocumentDefinition<Array<DailyMeasurementProps>>) => {
     try {
         const DailyMeasurement = await DailyMeasurementModel.create(input)
         return DailyMeasurement
+    } catch (error: any) {
+        throw new Error(error)
+    }
+}
+
+export const changeDailyMeasurement = async (array: Array<DailyMeasurementProps>) => {
+    try {
+        let newArray = []
+        for (let i = 0; i < array.length; i++) {
+            const newDaily = await DailyMeasurementModel.findOneAndReplace({
+                "_id": array[i]._id,
+                "user_ID": array[i].user_ID
+            },
+                array[i],
+                { returnOriginal: false }
+            )
+            newArray.push(await loadDailyMeasurementMissingData(newDaily))
+        }
+        return newArray
     } catch (error: any) {
         throw new Error(error)
     }

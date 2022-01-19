@@ -3,6 +3,7 @@ import { NutritionDiaryProps } from '../models/dailyMeasurement.model'
 import { ProductModel, ProductProps } from '../models/product.model'
 import { UserProps } from '../models/user.model'
 import { omit } from 'lodash'
+import { Request } from 'express'
 
 export const createProduct = async (input: DocumentDefinition<Array<ProductProps>>) => {
     try {
@@ -54,6 +55,26 @@ export const getProduct = async (_id: string | undefined) => {
     try {
         const product = omit((await ProductModel.findOne({ _id })).toJSON(), 'deleted')
         return product
+    } catch (error: any) {
+        throw new Error(error)
+    }
+}
+
+export const getProductByName = async (find: string) => {
+    try {
+        let regex: any = { name: { $regex: find, $options: 'im' } }
+        if (find.split(" ").length > 1) regex = { $text: { $search: find.split(" ").map((str: any) => "\"" + str + "\"").join(' ') } }
+        const products = await ProductModel.find({
+            $and:
+                [
+                    { user_ID: { $exists: false } },
+                    { deleted: { $exists: false } },
+                    regex
+                ]
+        })
+            .sort({ l: 1, v: -1 })
+            .limit(10)
+        return products
     } catch (error: any) {
         throw new Error(error)
     }

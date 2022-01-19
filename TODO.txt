@@ -7,6 +7,8 @@ server need option to well hanlding errors from all functions level => import re
 own products / exercises to cache?
 coach arrows back
 
+axiot => headers => token
+
 
 settle l directly when creating object in mongodb => product / exercise etc
 

@@ -54,5 +54,9 @@ export default {
     'EXERCISE IS REQUIRED': {
         CODE: 401,
         VALUE: 'EXERCISE IS REQUIRED'
+    },
+    'DATE IS REQUIRED': {
+        CODE: 401,
+        VALUE: 'DATE IS REQUIRED'
     }
 }

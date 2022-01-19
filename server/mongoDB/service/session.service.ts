@@ -2,7 +2,7 @@ import { FilterQuery, UpdateQuery } from "mongoose";
 import { signJWT, verifyJWT } from "../../utils/jwt.utils";
 import { SessionModel, SessionProps } from "../models/session.model";
 import { get } from 'lodash'
-import { findUser } from './user.service'
+import { getUser } from './user.service'
 import config from "config";
 
 export async function createSession(user_ID: string, userAgent: string) {
@@ -32,7 +32,7 @@ export async function reIssueAccessToken(refresh_token: string) {
         return false;
     }
 
-    const user = await findUser({ _id: session.user_ID })
+    const user = await getUser({ _id: session.user_ID })
 
     if (!user) {
         return false;

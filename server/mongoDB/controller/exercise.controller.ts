@@ -2,7 +2,7 @@ import logger from '../../utils/logger'
 import { Request, Response } from "express"
 import { ExerciseProps } from "../models/exercise.model"
 import { CreateExerciseInput } from "../schema/exercise.schema"
-import { createExercise, deleteManyExercise, getUserExercises } from "../service/exercise.service"
+import { createExercise, deleteManyExercise, getExerciseByName, getUserExercises } from "../service/exercise.service"
 import { socketHandleUserSynchronization } from '../../utils/socket'
 
 export const createExerciseHandler = async (req: Request<{}, {}, CreateExerciseInput['body']>, res: Response) => {
@@ -36,6 +36,16 @@ export const getUserExercisesHandler = async (req: Request<{}, {}, CreateExercis
     try {
         const exercises = await getUserExercises(res.locals.token)
         return res.send(exercises);
+    } catch (error: any) {
+        logger.error(error)
+        return res.status(409).send(error.message)
+    }
+}
+
+export const getExerciseByNameHandler = async (req: Request, res: Response) => {
+    try {
+        const items = await getExerciseByName(req.body.find)
+        return res.send({ items });
     } catch (error: any) {
         logger.error(error)
         return res.status(409).send(error.message)

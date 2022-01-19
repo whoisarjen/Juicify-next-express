@@ -26,7 +26,20 @@ export async function validatePassword({ login, password }: { login: string, pas
     return omit(user.toJSON(), 'password')
 }
 
-export async function findUser(query: FilterQuery<UserProps>) {
+export async function getUser(query: FilterQuery<UserProps>) {
     return UserModel.findOne(query).lean()
 }
 
+export const getUsersByLogin = async (find: string) => {
+    try {
+        const users = await UserModel.find({
+            login: { '$regex': find, '$options': 'i' }
+        })
+            .limit(10)
+            .sort({ l: 1 })
+
+        return users
+    } catch (error: any) {
+        throw new Error(error)
+    }
+}
