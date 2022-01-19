@@ -8,6 +8,7 @@ import { getUserProducts } from '../service/product.service'
 import { getUserExercises } from '../service/exercise.service'
 import { getUserWorkoutPlans } from "../service/workoutPlan.service"
 import { getUserDailyMeasurements } from "../service/dailyMeasurement.service"
+import { strict } from "assert"
 
 export async function createUserSessionHandler(req: Request, res: Response) {
     const user = await validatePassword(req.body)
@@ -20,18 +21,36 @@ export async function createUserSessionHandler(req: Request, res: Response) {
 
     const token = signJWT(
         { ...user, session: session._id },
-        { expiresIn: config.get('accesssTokenTtl') }
+        { expiresIn: config.get<number>('TOKEN_LIFE_TIME_IN_S') + 's' }
     )
 
     const refresh_token = signJWT(
         { ...user, session: session._id },
-        { expiresIn: config.get('refreshTokenTtl') }
+        { expiresIn: config.get<number>('REFRESH_TOKEN_LIFE_TIME_IN_S') + 's' }
     )
 
     const product = await getUserProducts(user)
     const exercise = await getUserExercises(user)
     const workout_plan = await getUserWorkoutPlans(user)
     const daily_measurement = await getUserDailyMeasurements(user)
+
+    res.cookie('token', token, {
+        maxAge: config.get<number>('TOKEN_LIFE_TIME_IN_S'),
+        httpOnly: true,
+        domain: config.get<string>('COOKIE_DOMAIN'),
+        path: '/',
+        sameSite: 'strict',
+        secure: config.get<boolean>('COOKIE_SECURE')
+    })
+
+    res.cookie('refresh_token', refresh_token, {
+        maxAge: config.get<number>('REFRESH_TOKEN_LIFE_TIME_IN_S'),
+        httpOnly: true,
+        domain: config.get<string>('COOKIE_DOMAIN'),
+        path: '/',
+        sameSite: 'strict',
+        secure: config.get<boolean>('COOKIE_SECURE')
+    })
 
     return res.send({
         token,

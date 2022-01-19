@@ -9,11 +9,6 @@ coach arrows back
 
 axiot => headers => token
 
-
-settle l directly when creating object in mongodb => product / exercise etc
-
-user schema can get created / modify so we can delete when registered
-
 coach
 barcode
 unit test react
