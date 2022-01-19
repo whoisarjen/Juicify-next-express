@@ -34,6 +34,24 @@ const routes = (app: Express) => {
 
     app.post('/insert/daily_measurement', requireUser, validateResource(createDailyMeasurementSchema), createDailyMeasurementHandler)
     app.post('/change/daily_measurement', requireUser, validateResource(createDailyMeasurementSchema), changeDailyMeasurementHandler)
+
+    // app.post('/guest/:where', async (req, res) => {
+    //     const loadUserByLogin = require('./mongoDB/load/loadUserByLogin')
+    //     req.body.user = await loadUserByLogin(req.body.login)
+    //     if (!req.body.user) {
+    //         return res.status(404).send({ error: 'Not found' })
+    //     }
+    //     if (parseInt(req.body.user.public_profile) == 0) {
+    //         return res.status(403).send({ user: req.body.user })
+    //     }
+    //     await require(`./mongoDB/find/${req.params.where}`)(req)
+    //         .then((data) => {
+    //             return res.send({
+    //                 user: req.body.user,
+    //                 data
+    //             })
+    //         })
+    // });
 }
 
 export default routes;

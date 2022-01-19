@@ -26,8 +26,8 @@ const deserializeUser = async (req: Request, res: Response, next: NextFunction) 
             res.setHeader('x-access-token', newToken)
 
             res.cookie('token', newToken, {
-                maxAge: config.get<number>('TOKEN_LIFE_TIME_IN_S'),
-                httpOnly: true,
+                maxAge: config.get<number>('COOKIE_TOKEN_LIFE_TIME_IN_S'),
+                httpOnly: config.get<boolean>('COOKIE_HTTPONLY'),
                 domain: config.get<string>('COOKIE_DOMAIN'),
                 path: '/',
                 sameSite: 'strict',

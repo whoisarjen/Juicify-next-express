@@ -35,8 +35,8 @@ export async function createUserSessionHandler(req: Request, res: Response) {
     const daily_measurement = await getUserDailyMeasurements(user)
 
     res.cookie('token', token, {
-        maxAge: config.get<number>('TOKEN_LIFE_TIME_IN_S'),
-        httpOnly: true,
+        maxAge: config.get<number>('COOKIE_TOKEN_LIFE_TIME_IN_S'),
+        httpOnly: config.get<boolean>('COOKIE_HTTPONLY'),
         domain: config.get<string>('COOKIE_DOMAIN'),
         path: '/',
         sameSite: 'strict',
@@ -44,8 +44,8 @@ export async function createUserSessionHandler(req: Request, res: Response) {
     })
 
     res.cookie('refresh_token', refresh_token, {
-        maxAge: config.get<number>('REFRESH_TOKEN_LIFE_TIME_IN_S'),
-        httpOnly: true,
+        maxAge: config.get<number>('COOKIE_REFRESH_TOKEN_LIFE_TIME_IN_S'),
+        httpOnly: config.get<boolean>('COOKIE_HTTPONLY'),
         domain: config.get<string>('COOKIE_DOMAIN'),
         path: '/',
         sameSite: 'strict',

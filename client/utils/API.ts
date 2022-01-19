@@ -11,7 +11,7 @@ const API = async (url: string, body: any): Promise<any> => {
     const token = await getCookie('token')
     const refresh_token = await getCookie('refresh_token')
     const socket_ID = localStorage.getItem('socket_ID')
-    await fetch(`http://localhost:4000${url}`, {
+    await fetch(`${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}${url}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...body, token, refresh_token, socket_ID }),

@@ -40,7 +40,7 @@ export async function reIssueAccessToken(refresh_token: string) {
 
     const token = signJWT(
         { ...user, session: session._id },
-        { expiresIn: config.get('accesssTokenTtl') }
+        { expiresIn: config.get('TOKEN_LIFE_TIME_IN_S') }
     )
 
     return token;
