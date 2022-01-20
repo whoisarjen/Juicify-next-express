@@ -35,7 +35,7 @@ const routes = (app: Express) => {
     app.post('/guest/daily_measurement', getUserByLogin, getGuestDailyMeasurementHandler)
     app.post('/guest/daily_measurements', getUserByLogin, getGuestDailyMeasurementsHandler)
     app.post('/insert/daily_measurement', requireUser, validateResource(createDailyMeasurementSchema), createDailyMeasurementHandler)
-    app.post('/change/daily_measurement', requireUser, validateResource(createDailyMeasurementSchema), changeDailyMeasurementHandler)
+    app.post('/update/daily_measurement', requireUser, validateResource(createDailyMeasurementSchema), changeDailyMeasurementHandler)
 
     // app.post('/guest/:where', async (req, res) => {
     //     const loadUserByLogin = require('./mongoDB/load/loadUserByLogin')
