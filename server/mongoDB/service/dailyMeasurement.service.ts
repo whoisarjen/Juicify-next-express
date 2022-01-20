@@ -7,7 +7,6 @@ import { getExercise } from './exercise.service'
 
 export const createDailyMeasurement = async (input: DocumentDefinition<Array<DailyMeasurementProps>>) => {
     try {
-        // Check if already not exsists
         const DailyMeasurement = await DailyMeasurementModel.create(input)
         return DailyMeasurement
     } catch (error: any) {
@@ -34,9 +33,18 @@ export const changeDailyMeasurement = async (array: Array<DailyMeasurementProps>
     }
 }
 
-export const getDailyMeasurement = async (input: DocumentDefinition<DailyMeasurementProps>) => {
+export const getDryDailyMeasurement = async (input: DocumentDefinition<DailyMeasurementProps>) => {
     try {
         const DailyMeasurement = await DailyMeasurementModel.findOne(input)
+        return DailyMeasurement
+    } catch (error: any) {
+        throw new Error(error)
+    }
+}
+
+export const getDailyMeasurement = async (input: DocumentDefinition<DailyMeasurementProps>) => {
+    try {
+        const DailyMeasurement = await getDryDailyMeasurement(input)
         const DailyMeasurementCorrect = await loadDailyMeasurementMissingData(DailyMeasurement)
         return DailyMeasurementCorrect
     } catch (error: any) {
@@ -95,4 +103,30 @@ export const loadDailyMeasurementMissingData = async (daily_measurement: DailyMe
         }
     }
     return { ...JSON.parse(JSON.stringify(daily_measurement)), nutrition_diary, workout_result }
+}
+
+export const connectTwoDailyMeasurements = async (object: DailyMeasurementProps, object2: DailyMeasurementProps) => {
+    try {
+        let response = JSON.parse(JSON.stringify(object))
+        if (object2.weight && !response.weight) response.weight = object2.weight
+        if (object2.weight_description && !response.weight_description) response.weight_description = object2.weight_description
+        if (object2.neck && !response.neck) response.neck = object2.neck
+        if (object2.shoulders && !response.shoulders) response.shoulders = object2.shoulders
+        if (object2.chest && !response.chest) response.chest = object2.chest
+        if (object2.biceps && !response.biceps) response.biceps = object2.biceps
+        if (object2.waist && !response.waist) response.waist = object2.waist
+        if (object2.hips && !response.hips) response.hips = object2.hips
+        if (object2.thigh && !response.thigh) response.thigh = object2.thigh
+        if (object2.calf && !response.calf) response.calf = object2.calf
+        if (object2.water && !response.water) response.water = object2.water
+
+        if (object2.nutrition_diary && !response.nutrition_diary) response.nutrition_diary = object2.nutrition_diary
+        else if (object2.nutrition_diary && response.nutrition_diary) response.nutrition_diary = response.nutrition_diary.concat(object2.nutrition_diary)
+
+        if (object2.workout_result && !response.workout_result) response.workout_result = object2.workout_result
+
+        return response
+    } catch (error: any) {
+        throw new Error(error)
+    }
 }

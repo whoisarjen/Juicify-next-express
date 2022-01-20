@@ -2,11 +2,13 @@ import useTranslation from "next-translate/useTranslation";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FunctionComponent, useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 import { useAppSelector } from "../../hooks/useRedux";
 import { getAllIndexedDB } from "../../utils/indexedDB";
 
 const TopNotify: FunctionComponent = () => {
     const [notSaved, setNotSaved]: any = useState([])
+    const [cookie] = useCookies()
     const token: any = useAppSelector(state => state.token.value)
     const isOnline: boolean = useAppSelector(state => state.online.isOnline)
     const router: any = useRouter()
@@ -42,7 +44,7 @@ const TopNotify: FunctionComponent = () => {
                         </Link>
                     )
                     :
-                    !isOnline
+                    !isOnline && cookie.token
                         ?
                         (
                             <div className="TopNotify">

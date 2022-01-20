@@ -1,15 +1,45 @@
 import logger from '../../utils/logger'
 import { Request, Response } from "express"
 import { CreateDailyMeasurementInput } from "../schema/dailyMeasurement.schema"
-import { changeDailyMeasurement, createDailyMeasurement, getDailyMeasurement } from "../service/dailyMeasurement.service"
+import { changeDailyMeasurement, connectTwoDailyMeasurements, createDailyMeasurement, getDailyMeasurement, getDryDailyMeasurement } from "../service/dailyMeasurement.service"
 import { socketHandleUserSynchronization } from '../../utils/socket'
 import errorBook from '../../utils/errorBook'
 
 export const createDailyMeasurementHandler = async (req: Request<{}, {}, CreateDailyMeasurementInput['body']>, res: Response) => {
     try {
-        const DailyMeasurement = await createDailyMeasurement(req.body.array)
-        await socketHandleUserSynchronization({ req, res, data: DailyMeasurement, whatToDo: 'change', where: 'DailyMeasurement' })
-        return res.send(DailyMeasurement);
+        const responseArray = []
+        for (let i = 0; i < req.body.array.length; i++) {
+            try {
+                const res = await getDryDailyMeasurement({
+                    whenAdded: req.body.array[i].whenAdded,
+                    user_ID: req.body.array[i].user_ID
+                })
+                if (res && res._id) {
+                    responseArray.push(
+                        await changeDailyMeasurement(
+                            [
+                                await connectTwoDailyMeasurements(res, req.body.array[i])
+                            ]
+                        )
+                    )
+                } else {
+                    responseArray.push(
+                        await createDailyMeasurement(
+                            [
+                                req.body.array[i]
+                            ]
+                        )
+                    )
+                }
+            } catch (error: any) {
+                logger.error(error)
+                return res.status(409).send(error.message)
+            }
+        }
+        console.log('res', responseArray)
+        await socketHandleUserSynchronization({ req, res, data: responseArray, whatToDo: 'change', where: 'DailyMeasurement' })
+        return res.send(responseArray);
+        return res.send()
     } catch (error: any) {
         logger.error(error)
         return res.status(409).send(error.message)
