@@ -21,5 +21,4 @@ user mongo is not unique lettersize sensitive
 notify for not public users / 404 redirect
 coach
 barcode
-unit test react
 need to block IE
