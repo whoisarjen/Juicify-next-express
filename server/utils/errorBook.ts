@@ -58,5 +58,13 @@ export default {
     'DATE IS REQUIRED': {
         CODE: 401,
         VALUE: 'DATE IS REQUIRED'
+    },
+    'CONTENT NOT AVAILABLE': {
+        CODE: 403,
+        VALUE: 'CONTENT NOT AVAILABLE'
+    },
+    'USER NOT AVAILABLE': {
+        CODE: 404,
+        VALUE: 'USER NOT AVAILABLE'
     }
 }

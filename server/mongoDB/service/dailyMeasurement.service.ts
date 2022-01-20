@@ -33,6 +33,16 @@ export const changeDailyMeasurement = async (array: Array<DailyMeasurementProps>
     }
 }
 
+export const getDailyMeasurement = async (input: DocumentDefinition<DailyMeasurementProps>) => {
+    try {
+        const DailyMeasurement = await DailyMeasurementModel.findOne(input)
+        const DailyMeasurementCorrect = await loadDailyMeasurementMissingData(DailyMeasurement)
+        return DailyMeasurementCorrect
+    } catch (error: any) {
+        throw new Error(error)
+    }
+}
+
 export const getUserDailyMeasurements = async (token: DocumentDefinition<UserProps> | DocumentDefinition<Omit<UserProps, 'comparePassword'>>) => {
     try {
         const daily_measurement = await DailyMeasurementModel.find({

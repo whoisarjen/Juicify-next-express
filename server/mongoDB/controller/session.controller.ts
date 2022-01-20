@@ -8,7 +8,6 @@ import { getUserProducts } from '../service/product.service'
 import { getUserExercises } from '../service/exercise.service'
 import { getUserWorkoutPlans } from "../service/workoutPlan.service"
 import { getUserDailyMeasurements } from "../service/dailyMeasurement.service"
-import { strict } from "assert"
 
 export async function createUserSessionHandler(req: Request, res: Response) {
     const user = await validatePassword(req.body)
@@ -62,21 +61,21 @@ export async function createUserSessionHandler(req: Request, res: Response) {
     })
 }
 
-export async function getUserSessionHandler(req: Request, res: Response) {
-    const user = res.locals.token
+// export async function getUserSessionHandler(req: Request, res: Response) {
+//     const user = res.locals.token
 
-    const sessions = await findSessions({ user: user._id, valid: true })
+//     const sessions = await findSessions({ user: user._id, valid: true })
 
-    return res.send(sessions);
-}
+//     return res.send(sessions);
+// }
 
-export async function deleteUserSessionHandler(req: Request, res: Response) {
-    const sessionId = res.locals.token.session
+// export async function deleteUserSessionHandler(req: Request, res: Response) {
+//     const sessionId = res.locals.token.session
 
-    await updateSession({ _id: sessionId }, { valid: false })
+//     await updateSession({ _id: sessionId }, { valid: false })
 
-    return res.send({
-        token: null,
-        refresh_token: null
-    })
-}
+//     return res.send({
+//         token: null,
+//         refresh_token: null
+//     })
+// }

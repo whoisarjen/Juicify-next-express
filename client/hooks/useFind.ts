@@ -64,7 +64,7 @@ const useFind = (value: any, where: string, tab: number, skipThoseIDS: Array<any
                     } else {
                         const searchFunction = (find: string) => setTimeout(async () => {
                             setLoading(true);
-                            if (isOnline) {
+                            if (isOnline && find.length > 2) {
                                 const { response, isSuccess } = await API(`/find/${where}s`, {
                                     find
                                 });

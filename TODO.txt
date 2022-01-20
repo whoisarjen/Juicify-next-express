@@ -9,6 +9,14 @@ coach arrows back
 
 socket might not be available on routes
 
+
+user's schema should always check if when change, user didnt change premium etc.
+
+
+One fetch sucks. Need to seperate with hooks and probably let dailyMeasurementS send the lowest and highest date
+
+
+notify for not public users / 404 redirect
 coach
 barcode
 unit test react

@@ -14,7 +14,7 @@ const API = async (url: string, body: any): Promise<any> => {
     await fetch(`${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}${url}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...body, token, refresh_token, socket_ID }),
+        body: JSON.stringify({ ...body, socket_ID }),
     })
         .then((response) => response.json())
         .then((res) => {

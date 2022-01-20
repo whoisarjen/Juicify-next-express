@@ -1,14 +1,4 @@
-import supertest from 'supertest'
-import { signJWT } from '../../utils/jwt.utils';
-import createServer from '../../utils/server'
-import mongoose from 'mongoose';
-import connect from '../../utils/connect';
-
-const app = createServer();
-
-(async () => await connect())()
-
-const userPayload = {
+export const userPayload = {
     "premium": "2022-01-19T20:46:31.766Z",
     "_id": "60ba774fe0ecd72587eeaa29",
     "email_confirmation": true,
@@ -100,56 +90,13 @@ const userPayload = {
     "exp": 34492626436
 }
 
-const productPayload = {
-    _id: new mongoose.Types.ObjectId().toString(),
-    name: "Megan",
-};
-
-jest.setTimeout(30000);
-
-
-describe('find products route', () => {
-    describe('given the find string', () => {
-        it('should return an array with products', async () => {
-            const { statusCode, body } = await supertest(app).post(`/find/products`).send({
-                find: 'mleko'
-            })
-
-            expect(statusCode).toBe(200)
-            expect(body).toEqual({ items: expect.any(Array) })
-        })
-    })
-})
-
-describe('create product route', () => {
-    describe('given the user is not logged in', () => {
-        it('should return a 403 error', async () => {
-            const { statusCode } = await supertest(app).post(`/insert/product`)
-            expect(statusCode).toBe(403)
-        })
-    })
-})
-
-describe('create product route', () => {
-    describe('given the user is logged in', () => {
-        it('should return a 200 and new product', async () => {
-            const jwt = signJWT(userPayload);
-
-            const { statusCode, body } = await supertest(app)
-                .post("/insert/product")
-                .set("Authorization", `Bearer ${jwt}`)
-                .send({
-                    array: [productPayload]
-                });
-
-            expect(statusCode).toBe(200)
-            expect(body).toEqual([{
-                _id: expect.any(String),
-                name: productPayload.name,
-                user_ID: userPayload._id,
-                l: productPayload.name.length,
-                "__v": 0,
-            }])
-        })
-    })
-})
+export function generateString(length: number) {
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() *
+            charactersLength));
+    }
+    return result;
+}
