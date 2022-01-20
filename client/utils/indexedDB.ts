@@ -88,7 +88,6 @@ const putIndexedDB = async (
   what: string,
   value: any
 ): Promise<any> => {
-  await putInformationAboutNeededUpdate(where);
   value = value.toString();
   let request3 = await connectIndexedDB();
   return new Promise((resolve) => {
@@ -109,7 +108,6 @@ const putIndexedDB = async (
 
 const deleteIndexedDB = async (where: string, _id: string): Promise<any> => {
   _id = _id.toString();
-  await putInformationAboutNeededUpdate(where);
   let request = await connectIndexedDB();
   return new Promise((resolve) => {
     request.onsuccess = async function () {
@@ -172,4 +170,5 @@ export {
   addIndexedDB,
   deleteIndexedDB,
   putIndexedDB,
+  putInformationAboutNeededUpdate
 };

@@ -8,6 +8,7 @@ import { getAllIndexedDB } from "../../utils/indexedDB";
 const TopNotify: FunctionComponent = () => {
     const [notSaved, setNotSaved]: any = useState([])
     const token: any = useAppSelector(state => state.token.value)
+    const isOnline: boolean = useAppSelector(state => state.online.isOnline)
     const router: any = useRouter()
     const { t } = useTranslation('home')
 
@@ -29,14 +30,27 @@ const TopNotify: FunctionComponent = () => {
         <>
             {
                 notSaved.length > 0 &&
-                !router.pathname.includes('workout-results') &&
-                <Link href={`/${token.login}/workout-results/${notSaved[0].whenAdded}/${notSaved[0]._id}`}>
-                    <a>
-                        <div className="TopNotify">
-                            {t('Comeback to not saved workout')}
-                        </div>
-                    </a>
-                </Link>
+                    !router.pathname.includes('workout-results')
+                    ?
+                    (
+                        <Link href={`/${token.login}/workout-results/${notSaved[0].whenAdded}/${notSaved[0]._id}`}>
+                            <a>
+                                <div className="TopNotify">
+                                    {t('Comeback to not saved workout')}
+                                </div>
+                            </a>
+                        </Link>
+                    )
+                    :
+                    !isOnline
+                        ?
+                        (
+                            <div className="TopNotify">
+                                {t('YOU_ARE_WORKING_IN_OFFLINE_MODE')}
+                            </div>
+                        )
+                        :
+                        <></>
             }
         </>
     )

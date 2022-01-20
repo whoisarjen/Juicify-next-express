@@ -7,6 +7,7 @@ import { getExercise } from './exercise.service'
 
 export const createDailyMeasurement = async (input: DocumentDefinition<Array<DailyMeasurementProps>>) => {
     try {
+        // Check if already not exsists
         const DailyMeasurement = await DailyMeasurementModel.create(input)
         return DailyMeasurement
     } catch (error: any) {

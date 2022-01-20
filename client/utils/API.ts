@@ -1,34 +1,27 @@
-import { getIndexedDBbyID, addIndexedDB, deleteIndexedDB, putIndexedDB, getAllIndexedDB } from "./indexedDB"
+import { getIndexedDBbyID, addIndexedDB, deleteIndexedDB, putIndexedDB, getAllIndexedDB, putInformationAboutNeededUpdate } from "./indexedDB"
 import { store } from '../redux/store'
-import { getCookie } from "./checkAuth"
 import { refreshTodayDaily } from "../redux/features/keySlice"
-import { addDaysToDate, getShortDate } from "./manageDate"
+import config from '../config/default'
+import axios from "axios"
+import { setIsOnline } from "../redux/features/onlineSlice"
 
 const API = async (url: string, body: any): Promise<any> => {
     let response = {}
     let isSuccess = false
     console.log(url, body)
-    const token = await getCookie('token')
-    const refresh_token = await getCookie('refresh_token')
     const socket_ID = localStorage.getItem('socket_ID')
-    await fetch(`${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}${url}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...body, socket_ID }),
-    })
-        .then((response) => response.json())
-        .then((res) => {
-            setLastUpdated()
-            if (token && res.token && refresh_token && res.refresh_token && res.token != token) {
-                console.log('Settled new token!')
-                document.cookie = `token=${res.token}; expires=${new Date(addDaysToDate(getShortDate(), 365))}; path=/`
-                document.cookie = `refresh_token=${res.refresh_token}; expires=${new Date(addDaysToDate(getShortDate(), 365))}; path=/`
-            }
-            if (res.error) throw res
-            response = res
-            isSuccess = true
-        })
-        .catch((err) => console.log(err))
+    try {
+        const res = await axios.post(
+            `${config.server}${url}`,
+            { ...body, socket_ID },
+            { withCredentials: true }
+        );
+        response = res.data
+        isSuccess = true
+        console.log(res)
+    } catch (error: any) {
+        console.log(error)
+    }
     return { response, isSuccess }
 }
 
@@ -68,15 +61,21 @@ const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, whatToUp
                     delete array[i]._id
                 }
             }
-            if (where == 'daily_measurement' && isOnline) {
-                array[i] = await prepareDailyToSend(array[i], true)
+            if (where == 'daily_measurement') {
+                array[i].whenAdded = new Date(array[i].whenAdded).toISOString()
+                if (isOnline) {
+                    array[i] = await prepareDailyToSend(array[i], true)
+                }
             }
         }
         if (isOnline) {
+            console.log(where, sentArray, whatToUpdate, value, whatToUpdate2, value2)
             if (whatToUpdate) {
+                console.log('whatToUpdate', 'whatToUpdate')
                 whatToUpdateARRAY = await getAllIndexedDB('daily_measurement')
             }
             if (whatToUpdate2) {
+                console.log('whatToUpdate2', 'whatToUpdate2')
                 whatToUpdateARRAY2 = await getAllIndexedDB(whatToUpdate2)
             }
             const { response, isSuccess } = await API(`/insert/${where}`, {
@@ -118,6 +117,8 @@ const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, whatToUp
                     }
                 }
             } else {
+                store.dispatch(setIsOnline(false))
+                await putInformationAboutNeededUpdate(where);
                 return resolve(await insertThoseIDStoDB(where, copyArray, whatToUpdate, value, whatToUpdate2, value2))
             }
         } else {
@@ -145,10 +146,13 @@ const overwriteThoseIDSinDB = async (where: string, sentArray: Array<any>): Prom
             })));
             for (let i = 0; i < array.length; i++) {
                 await deleteIndexedDB(where, array[i][uniquePARAM])
-                if (where == 'daily_measurement' && isOnline) {
-                    console.log('before prepare', sentArray[i])
-                    array[i] = await prepareDailyToSend(array[i], true)
-                    console.log('After prepare', array[i])
+                if (where == 'daily_measurement') {
+                    array[i].whenAdded = new Date(array[i].whenAdded).toISOString()
+                    if (isOnline) {
+                        console.log('before prepare', sentArray[i])
+                        array[i] = await prepareDailyToSend(array[i], true)
+                        console.log('After prepare', array[i])
+                    }
                 }
             }
             if (isOnline) {
@@ -171,6 +175,8 @@ const overwriteThoseIDSinDB = async (where: string, sentArray: Array<any>): Prom
                         }
                     }
                 } else {
+                    store.dispatch(setIsOnline(false))
+                    await putInformationAboutNeededUpdate(where);
                     return await overwriteThoseIDSinDB(where, originalArray)
                 }
             }
@@ -204,6 +210,8 @@ const deleteThoseIDSfromDB = async (where: string, array: Array<any>, isNewValue
                             array
                         })
                         if (!isSuccess) {
+                            store.dispatch(setIsOnline(false))
+                            await putInformationAboutNeededUpdate(where);
                             return await deleteThoseIDSfromDB(where, originalArray, isNewValueInDB)
                         }
                     }

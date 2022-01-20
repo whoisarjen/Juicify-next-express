@@ -111,7 +111,12 @@ const synchronizationAfterOfflineDailyMeasurement = async (isNewValueInDB: boole
                     logout = true // if problem with get new value => logout
                 }
             }
-            if (inserted.length > 0) await insertThoseIDStoDB('daily_measurement', inserted, '', '', 'whenAdded')
+            // if (inserted.length > 0) await insertThoseIDStoDB('daily_measurement', inserted, '', '', 'whenAdded') THIS WAS BEFORE
+            console.log('inserted.length', inserted.length)
+            console.log('changed.length', changed.length)
+            if (inserted.length > 0) {
+                await insertThoseIDStoDB('daily_measurement', inserted)
+            }
             if (changed.length > 0) {
                 if (isNewValueInDB) {
                     for (let i = 0; i < changed.length; i++) {
@@ -195,7 +200,10 @@ const synchronizationAfterOfflineDailyMeasurement = async (isNewValueInDB: boole
                 }
                 await overwriteThoseIDSinDB("daily_measurement", changed)
             }
-            await deleteIndexedDB("whatToUpdate", 'daily_measurement')
+            // That's important to don't allow it delete the flag, when user went again into offline mode
+            if (store.getState().online.isOnline) {
+                await deleteIndexedDB("whatToUpdate", 'daily_measurement')
+            }
             if (logout) {
 
 

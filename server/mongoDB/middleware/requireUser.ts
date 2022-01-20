@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 
 const requireUser = (req: Request, res: Response, next: NextFunction) => {
+    console.log(req.body)
     const user = res.locals.token;
     if (!user) {
         return res.sendStatus(403);
