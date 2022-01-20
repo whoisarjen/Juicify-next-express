@@ -1,4 +1,5 @@
 #DB
 /node_modules
 /utils/connect
+/utils/connect.ts
 .env
