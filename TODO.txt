@@ -19,6 +19,9 @@ One fetch sucks. Need to seperate with hooks and probably let dailyMeasurementS 
 block find for length < 3 on server site I guess
 
 
+user mongo is not unique lettersize sensitive
+
+
 notify for not public users / 404 redirect
 coach
 barcode

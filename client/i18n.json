@@ -3,7 +3,8 @@
     "defaultLocale": "en",
     "pages": {
         "*": ["home"],
-        "/login": ["login"],
+        "/login": ["auth"],
+        "/register": ["auth"],
         "/[login]/nutrition-diary/[date]": ["nutrition-diary"],
         "/workout": ["workout"],
         "/[login]/workout-plans": ["workout"],

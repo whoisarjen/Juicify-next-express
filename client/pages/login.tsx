@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import Stack from "@mui/material/Stack";
 import logo from '../public/images/logo.png'
-import styles from "../styles/login.module.css";
+import styles from "../styles/auth.module.css";
 import TextField from "@mui/material/TextField";
 import { setLastUpdated } from '../utils/API'
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -77,7 +77,7 @@ const Login = () => {
                         <Stack direction="column" spacing={2}>
                             <TextField
                                 variant="outlined"
-                                label={t("login:Login")}
+                                label={t("auth:LOGIN")}
                                 type="text"
                                 onKeyPress={handleKeyPress}
                                 {...register('login')}
@@ -91,7 +91,7 @@ const Login = () => {
                             <TextField
                                 type="password"
                                 variant="outlined"
-                                label={t("login:Password")}
+                                label={t("auth:PASSWORD")}
                                 onKeyPress={handleKeyPress}
                                 {...register('password')}
                                 error={typeof errors.password === 'undefined' ? false : true}
@@ -106,10 +106,10 @@ const Login = () => {
                                 variant="contained"
                                 type="submit"
                             >
-                                {t("login:Sign in")}
+                                {t("auth:SIGN_IN")}
                             </LoadingButton>
                             <Link passHref href="/reset-password">
-                                {t("login:Forgot password? Reset it")}
+                                {t("auth:FORGOT_PASSWORD_RESET_IT")}
                             </Link>
                         </Stack>
                     </div>
@@ -120,7 +120,7 @@ const Login = () => {
                                 className="marginAutoVertical"
                                 variant="contained"
                             >
-                                {t("login:First time? Create account")}
+                                {t("auth:FIRST_TIME_CREATE_ACCOUNT")}
                             </LoadingButton>
                         </Link>
                     </div>

@@ -1,4 +1,4 @@
 #DB
-/mongoDB/connection.ts
 /node_modules
+/utils/connect.ts
 .env
