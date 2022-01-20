@@ -22,9 +22,6 @@ block find for length < 3 on server site I guess
 user mongo is not unique lettersize sensitive
 
 
-dailyMeasurement Check if already not exsists
-
-
 notify for not public users / 404 redirect
 coach
 barcode
