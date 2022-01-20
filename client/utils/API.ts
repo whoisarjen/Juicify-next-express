@@ -69,19 +69,19 @@ const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, whatToUp
             }
         }
         if (isOnline) {
-            console.log(where, sentArray, whatToUpdate, value, whatToUpdate2, value2)
             if (whatToUpdate) {
-                console.log('whatToUpdate', 'whatToUpdate')
                 whatToUpdateARRAY = await getAllIndexedDB('daily_measurement')
             }
             if (whatToUpdate2) {
-                console.log('whatToUpdate2', 'whatToUpdate2')
                 whatToUpdateARRAY2 = await getAllIndexedDB(whatToUpdate2)
             }
-            const { response, isSuccess } = await API(`/insert/${where}`, {
-                array
-            })
-            if (isSuccess) {
+            try {
+                const res = await axios.post(
+                    `${config.server}/insert/${where}`,
+                    { array },
+                    { withCredentials: true }
+                );
+                const response = res.data
                 array = JSON.parse(JSON.stringify(response.data));
                 if (where == 'daily_measurement') {
                     for (let i = 0; i < array.length; i++) {
@@ -116,7 +116,8 @@ const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, whatToUp
                         }
                     }
                 }
-            } else {
+            } catch (error: any) {
+                console.log(error)
                 store.dispatch(setIsOnline(false))
                 await putInformationAboutNeededUpdate(where);
                 return resolve(await insertThoseIDStoDB(where, copyArray, whatToUpdate, value, whatToUpdate2, value2))
@@ -156,10 +157,13 @@ const overwriteThoseIDSinDB = async (where: string, sentArray: Array<any>): Prom
                 }
             }
             if (isOnline) {
-                const { response, isSuccess } = await API(`/update/${where}`, {
-                    array
-                })
-                if (isSuccess) {
+                try {
+                    const res = await axios.post(
+                        `${config.server}/update/${where}`,
+                        { array },
+                        { withCredentials: true }
+                    );
+                    const response = res.data
                     let originalSentArray = JSON.parse(JSON.stringify(array));
                     array = JSON.parse(JSON.stringify(response.data));
                     console.log('overwriteThoseIDSinDB originalSentArray', originalSentArray)
@@ -174,7 +178,8 @@ const overwriteThoseIDSinDB = async (where: string, sentArray: Array<any>): Prom
                             }
                         }
                     }
-                } else {
+                } catch (error: any) {
+                    console.log(error)
                     store.dispatch(setIsOnline(false))
                     await putInformationAboutNeededUpdate(where);
                     return await overwriteThoseIDSinDB(where, originalArray)
@@ -205,11 +210,17 @@ const deleteThoseIDSfromDB = async (where: string, array: Array<any>, isNewValue
                 }
                 if (isOnline) {
                     if (await is_id(array[0]._id)) {
-                        const { response, isSuccess } = await API(`/delete`, {
-                            where,
-                            array
-                        })
-                        if (!isSuccess) {
+                        try {
+                            await axios.post(
+                                `${config.server}/delete`,
+                                {
+                                    where,
+                                    array
+                                },
+                                { withCredentials: true }
+                            );
+                        } catch (error: any) {
+                            console.log(error)
                             store.dispatch(setIsOnline(false))
                             await putInformationAboutNeededUpdate(where);
                             return await deleteThoseIDSfromDB(where, originalArray, isNewValueInDB)
