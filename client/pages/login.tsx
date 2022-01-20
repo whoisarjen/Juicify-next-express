@@ -19,6 +19,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNotify } from "../hooks/useNotify";
 import { createSessionSchema, CreateSessionProps } from '../schema/session.schema'
+import config from "../config/default";
+import { useCookies } from "react-cookie";
 
 const Login = () => {
     expectLoggedOUT();
@@ -27,6 +29,7 @@ const Login = () => {
     const [{ error }] = useNotify()
     const dispatch = useAppDispatch();
     const [loading, setLoading] = useState(false)
+    const [, setCookie] = useCookies()
 
     const handleKeyPress = (event: any) => {
         if (event.key === "Enter") {
@@ -42,7 +45,7 @@ const Login = () => {
         try {
             setLoading(true);
             const response = await axios.post(
-                `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/auth/login`,
+                `${config.server}/auth/login`,
                 values,
                 { withCredentials: true }
             );
@@ -55,6 +58,7 @@ const Login = () => {
                 }
             }
             setLastUpdated();
+            setCookie('token', response.data.token) // it has to be here to force connection query to socket
             router.push(
                 `/${readToken(response.data.token).login
                 }/nutrition-diary/${getShortDate()}`

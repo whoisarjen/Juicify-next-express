@@ -21,6 +21,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import config from "../config/default";
 
 const Register = () => {
     expectLoggedOUT();
@@ -45,7 +46,7 @@ const Register = () => {
         try {
             setLoading(true);
             await axios.post(
-                `${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/auth/register`,
+                `${config.server}/auth/register`,
                 values,
                 { withCredentials: true }
             );
