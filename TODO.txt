@@ -16,6 +16,9 @@ user's schema should always check if when change, user didnt change premium etc.
 One fetch sucks. Need to seperate with hooks and probably let dailyMeasurementS send the lowest and highest date
 
 
+block find for length < 3 on server site I guess
+
+
 notify for not public users / 404 redirect
 coach
 barcode
