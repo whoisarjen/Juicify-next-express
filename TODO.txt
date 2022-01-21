@@ -3,8 +3,6 @@ probably insert on whattoupdate might have issues, to check later with synchro
 workout add option to add cardio exercises + timer i guess
 coach arrows back
 
-socket might not be available on routes
-
 
 user's schema should always check if when change, user didnt change premium etc.
 

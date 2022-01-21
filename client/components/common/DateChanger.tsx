@@ -44,11 +44,9 @@ const DateChanger: FunctionComponent<{ where?: string }> = ({ where = 'nutrition
                 aria-describedby="alert-dialog-slide-description"
             >
                 <DialogContent>
-                    <DialogContentText id="alert-dialog-slide-description">
-                        <LocalizationProvider dateAdapter={AdapterDateFns}>
-                            <CalendarPicker date={value} onChange={(newDate) => setValue(newDate || new Date())} />
-                        </LocalizationProvider>
-                    </DialogContentText>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <CalendarPicker date={value} onChange={(newDate) => setValue(newDate || new Date())} />
+                    </LocalizationProvider>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => setIsDialog(false)}>Close</Button>

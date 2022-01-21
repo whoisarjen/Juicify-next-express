@@ -78,15 +78,17 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array, user }) => {
                         </div>
                         <div />
                         <table className={styles.diagramsTable}>
-                            {
-                                Object.keys(object).map(x =>
-                                    <tr key={x}>
-                                        <th>{t(x)}:</th>
-                                        <td>{Math.round(object[x].value * 10) / 10}g</td>
-                                        <td>{Math.round(object[x].macro * 10) / 10}g</td>
-                                    </tr>
-                                )
-                            }
+                            <tbody>
+                                {
+                                    Object.keys(object).map(x =>
+                                        <tr key={x}>
+                                            <th>{t(x)}:</th>
+                                            <td>{Math.round(object[x].value * 10) / 10}g</td>
+                                            <td>{Math.round(object[x].macro * 10) / 10}g</td>
+                                        </tr>
+                                    )
+                                }
+                            </tbody>
                         </table>
                     </TabPanel>
                     <TabPanel value="2" className={styles.diagramsGrid}>
@@ -95,15 +97,17 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array, user }) => {
                         </div>
                         <div />
                         <table className={styles.diagramsTable}>
-                            {
-                                Object.keys(object).map(x =>
-                                    <tr key={x}>
-                                        <th>{t(x)}:</th>
-                                        <td>{Math.round((object[x].macro - object[x].value) * 10) / 10}g</td>
-                                        <td>{Math.round(object[x].macro * 10) / 10}g</td>
-                                    </tr>
-                                )
-                            }
+                            <tbody>
+                                {
+                                    Object.keys(object).map(x =>
+                                        <tr key={x}>
+                                            <th>{t(x)}:</th>
+                                            <td>{Math.round((object[x].macro - object[x].value) * 10) / 10}g</td>
+                                            <td>{Math.round(object[x].macro * 10) / 10}g</td>
+                                        </tr>
+                                    )
+                                }
+                            </tbody>
                         </table>
                     </TabPanel>
                 </TabContext>
