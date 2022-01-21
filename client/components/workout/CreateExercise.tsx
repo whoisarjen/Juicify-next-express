@@ -7,11 +7,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import useTranslation from 'next-translate/useTranslation';
-import { useAppSelector } from "../../hooks/useRedux";
-import { insertThoseIDStoDB } from '../../utils/API';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNotify } from '../../hooks/useNotify';
-import Exercise from '../../classes/workout/exercise';
+import { zodResolver } from '@hookform/resolvers/zod';
+import config from '../../config/default'
+import { CreateExerciseInput, createExerciseSchema } from '../../schema/exercise.schema';
+import { useForm } from 'react-hook-form';
+import axios from 'axios';
 
 interface CreateExerciseProps {
     closeCreateExercise: () => void,
@@ -22,59 +24,72 @@ interface CreateExerciseProps {
 const CreateExercise: FunctionComponent<CreateExerciseProps> = ({ closeCreateExercise, isCreateExercise, created }) => {
     const { t } = useTranslation('workout')
     const [loading, setLoading] = useState(false)
-    const [name, setName] = useState('')
-    const token: any = useAppSelector(state => state.token.value)
-    const requiredBasicInputLength = useAppSelector(state => state.config.requiredBasicInputLength)
-    const [{ success }] = useNotify()
+    const [{ success, error }] = useNotify()
 
-    const handleCreateExercise = async () => {
-        if (requiredBasicInputLength(name)) {
-            setLoading(true)
-            const newExercise = new Exercise({ _id: 'XD' + new Date().getTime(), name, l: name.length, user_ID: token._id })
-            await insertThoseIDStoDB('exercise', [newExercise])
-                .then(() => created(newExercise.name))
-                .then(() => success())
-                .finally(() => setLoading(false))
+    const handleKeyPress = (event: any) => {
+        if (event.key === "Enter") {
+            handleSubmit(onSubmit)
+        }
+    };
+
+    const { register, formState: { errors }, handleSubmit } = useForm<CreateExerciseInput>({
+        resolver: zodResolver(createExerciseSchema)
+    })
+
+    const onSubmit = async (values: CreateExerciseInput) => {
+        try {
+            setLoading(true);
+            const response = await axios.post(
+                `${config.server}/insert/exercise`,
+                { array: [values] },
+                { withCredentials: true }
+            );
+            created(response.data[0].name)
+            success()
+        } catch (e: any) {
+            error(e.message)
+        } finally {
+            setLoading(false);
         }
     }
 
     return (
         <div>
             <Dialog open={isCreateExercise}>
-                <DialogTitle>{t('Create exercise')}</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        {t('Create exercise description')}
-                    </DialogContentText>
-                    <TextField
-                        error={
-                            name.length > 0 && !requiredBasicInputLength(name)
-                        }
-                        helperText={
-                            name.length > 0 && !requiredBasicInputLength(name)
-                                ? t("home:requiredBasicInputLength")
-                                : ""
-                        }
-                        required
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label={t('Name of exercise')}
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        type="text"
-                        fullWidth
-                        variant="standard"
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={closeCreateExercise}>{t('Cancel')}</Button>
-                    <LoadingButton loading={loading} onClick={handleCreateExercise}>
-                        {t('Submit')}
-                    </LoadingButton>
-                </DialogActions>
+                <form style={{ margin: 'auto 0' }} onSubmit={handleSubmit(onSubmit)}>
+                    <DialogTitle>{t('Create exercise')}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            {t('Create exercise description')}
+                        </DialogContentText>
+                        <TextField
+                            onKeyPress={handleKeyPress}
+                            {...register('name')}
+                            error={typeof errors.name === 'undefined' ? false : true}
+                            helperText={
+                                errors.name?.message &&
+                                errors.name?.message.length &&
+                                errors.name?.message
+                            }
+                            required
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label={t('Name of exercise')}
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={closeCreateExercise}>{t('Cancel')}</Button>
+                        <LoadingButton loading={loading} type="submit">
+                            {t('Submit')}
+                        </LoadingButton>
+                    </DialogActions>
+                </form>
             </Dialog>
-        </div>
+        </div >
     );
 }
 

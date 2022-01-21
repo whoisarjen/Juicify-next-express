@@ -9,11 +9,10 @@ const API = async (url: string, body: any): Promise<any> => {
     let response = {}
     let isSuccess = false
     console.log(url, body)
-    const socket_ID = localStorage.getItem('socket_ID')
     try {
         const res = await axios.post(
             `${config.server}${url}`,
-            { ...body, socket_ID },
+            { ...body },
             { withCredentials: true }
         );
         response = res.data
