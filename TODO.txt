@@ -16,6 +16,12 @@ block find for length < 3 on server site I guess
 user mongo is not unique lettersize sensitive
 
 
+refresh_token need option to refresh
+
+
+protecting user from overwritting settings options witch we dont want to let change
+
+
 notify for not public users / 404 redirect
 coach
 barcode

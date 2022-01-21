@@ -11,6 +11,25 @@ export const createUser = async (input: DocumentDefinition<Omit<UserProps, 'crea
     }
 }
 
+export const changeUser = async (input: DocumentDefinition<Omit<UserProps, 'createdAt' | 'updatedAt' | 'comparePassword' | 'birth'>>) => {
+    try {
+        const user = await UserModel.findOneAndUpdate(
+            {
+                _id: input._id
+            },
+            {
+                $set: { ...omit(input, '_id') }
+            },
+            {
+                new: true
+            }
+        )
+        return omit(user.toJSON(), 'password')
+    } catch (error: any) {
+        throw new Error(error)
+    }
+}
+
 export async function validatePassword({ login, password }: { login: string, password: string }) {
     const user = await UserModel.findOne({ login })
     if (!user) {

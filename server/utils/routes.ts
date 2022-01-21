@@ -1,5 +1,5 @@
 import { Express } from 'express'
-import { createUserHandler, getUsersByLoginHandler } from '../mongoDB/controller/user.controller';
+import { createUserHandler, changeUserHandler, getUsersByLoginHandler } from '../mongoDB/controller/user.controller';
 import { createUserSessionHandler, synchronizationUserSessionHandler } from '../mongoDB/controller/session.controller';
 import validateResource from '../mongoDB/middleware/validateResource'
 import { createUserSchema } from '../mongoDB/schema/user.schema';
@@ -22,6 +22,7 @@ const routes = (app: Express) => {
 
     app.post('/find/users', getUsersByLoginHandler)
     app.post('/auth/login', validateResource(createSessionSchema), createUserSessionHandler)
+    app.post('/auth/change', requireUser, changeUserHandler)
     app.post('/auth/register', validateResource(createUserSchema as any), createUserHandler)
 
     app.post('/find/products', getProductByNameHandler)
@@ -39,7 +40,7 @@ const routes = (app: Express) => {
     app.post('/guest/daily_measurements', getUserByLogin, getGuestDailyMeasurementsHandler)
     app.post('/insert/daily_measurement', requireUser, validateResource(createDailyMeasurementSchema), createDailyMeasurementHandler)
     app.post('/update/daily_measurement', requireUser, validateResource(createDailyMeasurementSchema), changeDailyMeasurementHandler)
-    
+
 }
 
 export default routes;
