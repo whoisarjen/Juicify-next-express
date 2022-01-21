@@ -61,6 +61,31 @@ export async function createUserSessionHandler(req: Request, res: Response) {
     })
 }
 
+export async function synchronizationUserSessionHandler(req: Request, res: Response) {
+    const user = res.locals.token;
+
+    if (req.body.where == 'product') {
+        const product = await getUserProducts(user)
+        res.send(product)
+    }
+
+    if (req.body.where == 'exercise') {
+        const exercise = await getUserExercises(user)
+        res.send(exercise)
+    }
+
+    if (req.body.where == 'workout_plan') {
+        const workout_plan = await getUserWorkoutPlans(user)
+        res.send(workout_plan)
+    }
+
+    if (req.body.where == 'daily_measurement') {
+        const daily_measurement = await getUserDailyMeasurements(user)
+        res.send(daily_measurement)
+    }
+
+}
+
 // export async function getUserSessionHandler(req: Request, res: Response) {
 //     const user = res.locals.token
 

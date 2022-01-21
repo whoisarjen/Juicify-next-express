@@ -1,6 +1,6 @@
 import { Express } from 'express'
 import { createUserHandler, getUsersByLoginHandler } from '../mongoDB/controller/user.controller';
-import { createUserSessionHandler } from '../mongoDB/controller/session.controller';
+import { createUserSessionHandler, synchronizationUserSessionHandler } from '../mongoDB/controller/session.controller';
 import validateResource from '../mongoDB/middleware/validateResource'
 import { createUserSchema } from '../mongoDB/schema/user.schema';
 import { createSessionSchema } from '../mongoDB/schema/session.schema';
@@ -17,6 +17,9 @@ import { getGuestDailyMeasurementsHandler } from '../mongoDB/controller/dailyMea
 import getUserByLogin from '../mongoDB/middleware/getUserByLogin';
 
 const routes = (app: Express) => {
+
+    app.post('/synchronization', requireUser, synchronizationUserSessionHandler)
+
     app.post('/find/users', getUsersByLoginHandler)
     app.post('/auth/login', validateResource(createSessionSchema), createUserSessionHandler)
     app.post('/auth/register', validateResource(createUserSchema), createUserHandler)

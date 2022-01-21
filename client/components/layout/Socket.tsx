@@ -4,7 +4,7 @@ import { useState, useEffect, FunctionComponent } from 'react'
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../redux/features/tokenSlice";
-import { is_id, API } from '../../utils/API'
+import { is_id } from '../../utils/API'
 import { getAllIndexedDB, deleteIndexedDB, getIndexedDBbyID, addIndexedDB } from '../../utils/indexedDB'
 import { overwriteThoseIDSinDB, insertThoseIDStoDB, deleteThoseIDSfromDB, setLastUpdated } from '../../utils/API'
 import { store } from '../../redux/store'
@@ -15,209 +15,6 @@ import * as cache2 from '../../utils/indexedDB'
 import axios from 'axios';
 import config from '../../config/default'
 
-const synchronizationAfterOfflineDailyMeasurement = async (isNewValueInDB: boolean = false) => {
-    const theOldestSupportedDate = store.getState().config.theOldestSupportedDate();
-    return new Promise(resolve => {
-        (async () => {
-            let logout = false
-            let daily_measurement = await getAllIndexedDB('daily_measurement')
-            let inserted: any = []
-            let changed: any = []
-            if (daily_measurement.length > 0) {
-                for (let i = 0; i < daily_measurement.length; i++) {
-                    if (daily_measurement[i].whenAdded >= theOldestSupportedDate) {
-                        if (!(await is_id(daily_measurement[i]._id))) {
-                            inserted.push(daily_measurement[i])
-                        } else if (daily_measurement[i].changed) {
-                            console.log("GOT CHANGED")
-                            changed.push(daily_measurement[i])
-                        }
-                    }
-                }
-            }
-            if (isNewValueInDB) {
-                const { response, isSuccess } = await API('/find/daily_measurements', {
-                    overDatePlusTheDate: theOldestSupportedDate
-                })
-                if (isSuccess) {
-                    console.log('Success new daily', response, inserted, changed)
-                    if (response && response.length > 0) {
-                        for (let i = 0; i < response.length; i++) {
-                            await deleteIndexedDB('daily_measurement', response[i].whenAdded)
-                            if (response[i].workout_result && response[i].workout_result.length > 0) {
-                                for (let a = 0; a < response[i].workout_result.length; a++) {
-                                    await deleteIndexedDB("workout_result", response[i].workout_result[a]._id)
-                                }
-                            }
-                        }
-                        await addIndexedDB('daily_measurement', response)
-                    }
-                    if (inserted.length > 0) {
-                        for (let i = inserted.length - 1; i >= 0; i--) {
-                            const doesDateIsAlreadyInDB = await getIndexedDBbyID('daily_measurement', inserted[i].whenAdded) // Checking if there is the date already
-                            if (doesDateIsAlreadyInDB) { // If user already had the date, the new date get some values and change from inserted => changed
-                                inserted[i]._id = doesDateIsAlreadyInDB._id
-
-                                if (doesDateIsAlreadyInDB.weight && !inserted[i].weight) {
-                                    inserted[i].weight = doesDateIsAlreadyInDB.weight
-                                }
-                                if (doesDateIsAlreadyInDB.weight_description && !inserted[i].weight_description) {
-                                    inserted[i].weight_description = doesDateIsAlreadyInDB.weight_description
-                                }
-                                if (doesDateIsAlreadyInDB.neck && !inserted[i].neck) {
-                                    inserted[i].neck = doesDateIsAlreadyInDB.neck
-                                }
-                                if (doesDateIsAlreadyInDB.shoulders && !inserted[i].shoulders) {
-                                    inserted[i].shoulders = doesDateIsAlreadyInDB.shoulders
-                                }
-                                if (doesDateIsAlreadyInDB.chest && !inserted[i].chest) {
-                                    inserted[i].chest = doesDateIsAlreadyInDB.chest
-                                }
-                                if (doesDateIsAlreadyInDB.biceps && !inserted[i].biceps) {
-                                    inserted[i].biceps = doesDateIsAlreadyInDB.biceps
-                                }
-                                if (doesDateIsAlreadyInDB.waist && !inserted[i].waist) {
-                                    inserted[i].waist = doesDateIsAlreadyInDB.waist
-                                }
-                                if (doesDateIsAlreadyInDB.hips && !inserted[i].hips) {
-                                    inserted[i].hips = doesDateIsAlreadyInDB.hips
-                                }
-                                if (doesDateIsAlreadyInDB.thigh && !inserted[i].thigh) {
-                                    inserted[i].thigh = doesDateIsAlreadyInDB.thigh
-                                }
-                                if (doesDateIsAlreadyInDB.calf && !inserted[i].calf) {
-                                    inserted[i].calf = doesDateIsAlreadyInDB.calf
-                                }
-                                if (doesDateIsAlreadyInDB.water && !inserted[i].water) {
-                                    inserted[i].water = doesDateIsAlreadyInDB.water
-                                }
-
-                                if (doesDateIsAlreadyInDB.nutrition_diary && !inserted[i].nutrition_diary) {
-                                    inserted[i].nutrition_diary = doesDateIsAlreadyInDB.nutrition_diary
-                                } else if (doesDateIsAlreadyInDB.nutrition_diary && inserted[i].nutrition_diary) {
-                                    inserted[i].nutrition_diary = inserted[i].nutrition_diary.concat(doesDateIsAlreadyInDB.nutrition_diary)
-                                }
-
-                                if (doesDateIsAlreadyInDB.workout_result && !inserted[i].workout_result) {
-                                    inserted[i].workout_result = doesDateIsAlreadyInDB.workout_result
-                                } else if (doesDateIsAlreadyInDB.workout_result && inserted[i].workout_result) {
-                                    inserted[i].workout_result = inserted[i].workout_result.concat(doesDateIsAlreadyInDB.workout_result)
-                                }
-
-                                changed.push(inserted[i])
-                                inserted.splice(i, 1)
-                            }
-                        }
-                    }
-                } else {
-                    logout = true // if problem with get new value => logout
-                }
-            }
-            // if (inserted.length > 0) await insertThoseIDStoDB('daily_measurement', inserted, '', '', 'whenAdded') THIS WAS BEFORE
-            console.log('inserted.length', inserted.length)
-            console.log('changed.length', changed.length)
-            if (inserted.length > 0) {
-                await insertThoseIDStoDB('daily_measurement', inserted)
-            }
-            if (changed.length > 0) {
-                if (isNewValueInDB) {
-                    for (let i = 0; i < changed.length; i++) {
-                        let doesDateIsAlreadyInDB = await getIndexedDBbyID("daily_measurement", changed[i].whenAdded)
-                        if (doesDateIsAlreadyInDB) {
-                            if (doesDateIsAlreadyInDB.weight && !changed[i].weight) {
-                                changed[i].weight = doesDateIsAlreadyInDB.weight
-                            }
-                            if (doesDateIsAlreadyInDB.weight_description && !changed[i].weight_description) {
-                                changed[i].weight_description = doesDateIsAlreadyInDB.weight_description
-                            }
-                            if (doesDateIsAlreadyInDB.neck && !changed[i].neck) {
-                                changed[i].neck = doesDateIsAlreadyInDB.neck
-                            }
-                            if (doesDateIsAlreadyInDB.shoulders && !changed[i].shoulders) {
-                                changed[i].shoulders = doesDateIsAlreadyInDB.shoulders
-                            }
-                            if (doesDateIsAlreadyInDB.chest && !changed[i].chest) {
-                                changed[i].chest = doesDateIsAlreadyInDB.chest
-                            }
-                            if (doesDateIsAlreadyInDB.biceps && !changed[i].biceps) {
-                                changed[i].biceps = doesDateIsAlreadyInDB.biceps
-                            }
-                            if (doesDateIsAlreadyInDB.waist && !changed[i].waist) {
-                                changed[i].waist = doesDateIsAlreadyInDB.waist
-                            }
-                            if (doesDateIsAlreadyInDB.hips && !changed[i].hips) {
-                                changed[i].hips = doesDateIsAlreadyInDB.hips
-                            }
-                            if (doesDateIsAlreadyInDB.thigh && !changed[i].thigh) {
-                                changed[i].thigh = doesDateIsAlreadyInDB.thigh
-                            }
-                            if (doesDateIsAlreadyInDB.calf && !changed[i].calf) {
-                                changed[i].calf = doesDateIsAlreadyInDB.calf
-                            }
-                            if (doesDateIsAlreadyInDB.water && !changed[i].water) {
-                                changed[i].water = doesDateIsAlreadyInDB.water
-                            }
-
-                            if (doesDateIsAlreadyInDB.nutrition_diary && !changed[i].nutrition_diary) {
-                                changed[i].nutrition_diary = doesDateIsAlreadyInDB.nutrition_diary
-                            } else if (doesDateIsAlreadyInDB.nutrition_diary && changed[i].nutrition_diary) {
-                                if (changed[i].nutrition_diary.length > 0) {
-                                    for (let a = 0; a < changed[i].nutrition_diary.length; a++) {
-                                        if (changed[i].nutrition_diary[a].deleted) {
-                                            doesDateIsAlreadyInDB.nutrition_diary = doesDateIsAlreadyInDB.nutrition_diary.filter((x: any) => x._id != changed[i].nutrition_diary[a]._id)
-                                        } else if (!await is_id(changed[i].nutrition_diary[a]._id)) {
-                                            doesDateIsAlreadyInDB.nutrition_diary.push(changed[i].nutrition_diary[a])
-                                        } else if (changed[i].nutrition_diary[a].changed) {
-                                            const indexNumber = doesDateIsAlreadyInDB.nutrition_diary.findIndex((x: any) => x._id == changed[i].nutrition_diary[a]._id)
-                                            if (parseInt(indexNumber) >= 0) {
-                                                doesDateIsAlreadyInDB.nutrition_diary[indexNumber] = changed[i].nutrition_diary[a]
-                                            }
-                                        }
-                                    }
-                                }
-                                changed[i].nutrition_diary = doesDateIsAlreadyInDB.nutrition_diary
-                            }
-
-                            if (doesDateIsAlreadyInDB.workout_result && !changed[i].workout_result) {
-                                changed[i].workout_result = doesDateIsAlreadyInDB.workout_result
-                            } else if (doesDateIsAlreadyInDB.workout_result && changed[i].workout_result) {
-                                if (changed[i].workout_result.length.length > 0) {
-                                    for (let a = 0; a < changed[i].workout_result.length; a++) {
-                                        if (changed[i].workout_result[a].deleted) {
-                                            doesDateIsAlreadyInDB.workout_result = doesDateIsAlreadyInDB.workout_result.filter((x: any) => x._id != changed[i].workout_result[a]._id)
-                                        } else if (!await is_id(changed[i].workout_result[a]._id)) {
-                                            doesDateIsAlreadyInDB.workout_result.push(changed[i].workout_result[a])
-                                        } else if (changed[i].workout_result[a].changed) {
-                                            const indexNumber = doesDateIsAlreadyInDB.workout_result.findIndex((x: any) => x._id == changed[i].workout_result[a]._id)
-                                            if (parseInt(indexNumber) >= 0) {
-                                                doesDateIsAlreadyInDB.workout_result[indexNumber] = changed[i].workout_result[a]
-                                            }
-                                        }
-                                    }
-                                }
-                                changed[i].workout_result = doesDateIsAlreadyInDB.workout_result
-                            }
-                        }
-                    }
-                }
-                await overwriteThoseIDSinDB("daily_measurement", changed)
-            }
-            // That's important to don't allow it delete the flag, when user went again into offline mode
-            if (store.getState().online.isOnline) {
-                await deleteIndexedDB("whatToUpdate", 'daily_measurement')
-            }
-            if (logout) {
-
-
-                // LOGOUT THIS !!!!!!!!!!!!!
-
-
-            }
-            resolve(true);
-        })();
-    });
-}
-
 const synchronizationAfterOffline = async (isNewValueInDB: boolean = false, where: string, whatToUpdate: string = '', value: string = '', whatToUpdate2: string = '', value2: string = '') => {
     return new Promise((resolve, reject) => {
         (async () => {
@@ -225,51 +22,55 @@ const synchronizationAfterOffline = async (isNewValueInDB: boolean = false, wher
             let changed = []
             let inserted = []
             let whereArray = await getAllIndexedDB(where)
-            if (isNewValueInDB) {
-                try {
+            try {
+                if (whereArray.length) {
+                    for (let i = 0; i < whereArray.length; i++) {
+                        if (!whereArray[i].notSAVED) {
+                            if (!(await is_id(whereArray[i]._id))) {
+                                inserted.push(whereArray[i])
+                            } else if (whereArray[i].deleted) {
+                                deleted.push(whereArray[i])
+                            } else if (whereArray[i].changed) {
+                                changed.push(whereArray[i])
+                            }
+                        }
+                    }
+                }
+                if (isNewValueInDB) {
                     const res = await axios.post(
                         `${config.server}/synchronization`,
-                        {
-                            where
-                        },
+                        { where },
                         { withCredentials: true }
                     );
-                    const response = res.data
-                    console.log('Success new value downloaded', response)
-                    if (response && response.length > 0) {
-                        for (let i = 0; i < response.length; i++) {
-                            await deleteIndexedDB('daily_measurement', response[i].whenAdded)
-                            if (response[i].workout_result && response[i].workout_result.length > 0) {
-                                for (let a = 0; a < response[i].workout_result.length; a++) {
-                                    await deleteIndexedDB("workout_result", response[i].workout_result[a]._id)
+                    console.log('Success new value downloaded', res.data)
+                    if (res.data && res.data.length) {
+                        for (let i = 0; i < res.data.length; i++) {
+                            if (where == 'daily_measurement') {
+                                if (res.data[i].workout_result && res.data[i].workout_result.length) {
+                                    for (let a = 0; a < res.data[i].workout_result.length; a++) {
+                                        await deleteIndexedDB("workout_result", res.data[i].workout_result[a]._id)
+                                    }
                                 }
                             }
+                            await deleteIndexedDB(where, res.data[i][where == 'daily_measurement' ? 'whenAdded' : '_id'])
                         }
-                        await addIndexedDB('daily_measurement', response)
-                    }
-                    if (whereArray.length > 0) {
-                        for (let i = 0; i < whereArray.length; i++) {
-                            if (!whereArray[i].notSAVED) {
-                                if (!(await is_id(whereArray[i]._id))) {
-                                    inserted.push(whereArray[i])
-                                } else if (whereArray[i].deleted) {
-                                    deleted.push(whereArray[i])
-                                } else if (whereArray[i].changed) {
-                                    changed.push(whereArray[i])
-                                }
+                        await addIndexedDB(where, res.data)
+                        if (where == 'daily_measurement' && changed.length) {
+                            for (let a: number = changed.length - 1; a >= 0; a--) {
+                                changed[a] = await connectExistingDailyMeasurements(changed[a])
                             }
                         }
                     }
-                    if (inserted.length > 0) await insertThoseIDStoDB(where, inserted, whatToUpdate, value, whatToUpdate2, value2)
-                    if (changed.length > 0) await overwriteThoseIDSinDB(where, changed)
-                    if (deleted.length > 0) await deleteThoseIDSfromDB(where, deleted, isNewValueInDB)
-                    await deleteIndexedDB("whatToUpdate", where)
-                    resolve(true);
-                } catch (error: any) {
-                    console.log('synchronization call', error)
-                    store.dispatch(setIsOnline(false))
-                    reject(error)
                 }
+                if (inserted.length) await insertThoseIDStoDB(where, inserted, whatToUpdate, value, whatToUpdate2, value2)
+                if (changed.length) await overwriteThoseIDSinDB(where, changed)
+                if (deleted.length) await deleteThoseIDSfromDB(where, deleted, isNewValueInDB)
+                await deleteIndexedDB("whatToUpdate", where)
+                resolve(true);
+            } catch (error: any) {
+                console.log('synchronization call failed', error)
+                store.dispatch(setIsOnline(false))
+                reject(error)
             }
         })();
     })
@@ -278,7 +79,7 @@ const synchronizationAfterOffline = async (isNewValueInDB: boolean = false, wher
 const cleanCache = async (where: string) => {
     return new Promise(async resolve => {
         const cache = await getAllIndexedDB(where)
-        if (cache && cache.length > 0) {
+        if (cache && cache.length) {
             for (let i = 0; i < cache.length; i++) {
                 await deleteIndexedDB(where, cache[i]._id)
             }
@@ -331,7 +132,7 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                     if (isOnline && object.lastUpdated.workout_plan > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'workout_plan')) {
                         newTimeOfUpdate = object.lastUpdated.workout_plan
                         await synchronizationAfterOffline(object.lastUpdated.workout_plan > lastUpdated, "workout_plan", "workout_result", "workout_plan_ID");
-                        await cleanCache('workout_result')
+                        // await cleanCache('workout_result')
                         if (!isOnline) await addIndexedDB("whatToUpdate", [{ "_id": "workout_plan" }]);
                     }
 
@@ -339,7 +140,7 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                     if (isOnline && object.lastUpdated.daily_measurement > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'daily_measurement')) {
                         console.log('Synchronization daily_measurement')
                         newTimeOfUpdate = object.lastUpdated.daily_measurement
-                        await synchronizationAfterOfflineDailyMeasurement(object.lastUpdated.daily_measurement > lastUpdated);
+                        await synchronizationAfterOffline(object.lastUpdated.daily_measurement > lastUpdated, 'daily_measurement');
                         if (!isOnline) await addIndexedDB('whatToUpdate', [{ '_id': 'daily_measurement' }]);
                     }
 
@@ -366,7 +167,6 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                     //                             }
                     //                         }
                     //                     }
-                    //                     if(object.lastUpdated.logout > lastUpdated) await logout();
                     //                     if(newTimeOfUpdate > 0) localStorage.setItem('lastUpdated', newTimeOfUpdate)
                     //                     if(object.lastUpdated.refresh > lastUpdated){
                     //                         localStorage.setItem('lastUpdated', object.lastUpdated.refresh)
@@ -425,3 +225,87 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
 }
 
 export default Socket
+
+
+async function connectExistingDailyMeasurements(object: any) {
+    return new Promise(async resolve => {
+        let changed = JSON.parse(JSON.stringify(object))
+        let doesDateIsAlreadyInDB = await getIndexedDBbyID("daily_measurement", changed.whenAdded)
+        if (doesDateIsAlreadyInDB) {
+            if (doesDateIsAlreadyInDB.weight && !changed.weight) {
+                changed.weight = doesDateIsAlreadyInDB.weight
+            }
+            if (doesDateIsAlreadyInDB.weight_description && !changed.weight_description) {
+                changed.weight_description = doesDateIsAlreadyInDB.weight_description
+            }
+            if (doesDateIsAlreadyInDB.neck && !changed.neck) {
+                changed.neck = doesDateIsAlreadyInDB.neck
+            }
+            if (doesDateIsAlreadyInDB.shoulders && !changed.shoulders) {
+                changed.shoulders = doesDateIsAlreadyInDB.shoulders
+            }
+            if (doesDateIsAlreadyInDB.chest && !changed.chest) {
+                changed.chest = doesDateIsAlreadyInDB.chest
+            }
+            if (doesDateIsAlreadyInDB.biceps && !changed.biceps) {
+                changed.biceps = doesDateIsAlreadyInDB.biceps
+            }
+            if (doesDateIsAlreadyInDB.waist && !changed.waist) {
+                changed.waist = doesDateIsAlreadyInDB.waist
+            }
+            if (doesDateIsAlreadyInDB.hips && !changed.hips) {
+                changed.hips = doesDateIsAlreadyInDB.hips
+            }
+            if (doesDateIsAlreadyInDB.thigh && !changed.thigh) {
+                changed.thigh = doesDateIsAlreadyInDB.thigh
+            }
+            if (doesDateIsAlreadyInDB.calf && !changed.calf) {
+                changed.calf = doesDateIsAlreadyInDB.calf
+            }
+            if (doesDateIsAlreadyInDB.water && !changed.water) {
+                changed.water = doesDateIsAlreadyInDB.water
+            }
+
+            if (doesDateIsAlreadyInDB.nutrition_diary && !changed.nutrition_diary) {
+                changed.nutrition_diary = doesDateIsAlreadyInDB.nutrition_diary
+            } else if (doesDateIsAlreadyInDB.nutrition_diary && changed.nutrition_diary) {
+                if (changed.nutrition_diary.length) {
+                    for (let a = 0; a < changed.nutrition_diary.length; a++) {
+                        if (changed.nutrition_diary[a].deleted) {
+                            doesDateIsAlreadyInDB.nutrition_diary = doesDateIsAlreadyInDB.nutrition_diary.filter((x: any) => x._id != changed.nutrition_diary[a]._id)
+                        } else if (!await is_id(changed.nutrition_diary[a]._id)) {
+                            doesDateIsAlreadyInDB.nutrition_diary.push(changed.nutrition_diary[a])
+                        } else if (changed.nutrition_diary[a].changed) {
+                            const indexNumber = doesDateIsAlreadyInDB.nutrition_diary.findIndex((x: any) => x._id == changed.nutrition_diary[a]._id)
+                            if (parseInt(indexNumber) >= 0) {
+                                doesDateIsAlreadyInDB.nutrition_diary[indexNumber] = changed.nutrition_diary[a]
+                            }
+                        }
+                    }
+                }
+                changed.nutrition_diary = doesDateIsAlreadyInDB.nutrition_diary
+            }
+
+            if (doesDateIsAlreadyInDB.workout_result && !changed.workout_result) {
+                changed.workout_result = doesDateIsAlreadyInDB.workout_result
+            } else if (doesDateIsAlreadyInDB.workout_result && changed.workout_result) {
+                if (changed.workout_result.length.length) {
+                    for (let a = 0; a < changed.workout_result.length; a++) {
+                        if (changed.workout_result[a].deleted) {
+                            doesDateIsAlreadyInDB.workout_result = doesDateIsAlreadyInDB.workout_result.filter((x: any) => x._id != changed.workout_result[a]._id)
+                        } else if (!await is_id(changed.workout_result[a]._id)) {
+                            doesDateIsAlreadyInDB.workout_result.push(changed.workout_result[a])
+                        } else if (changed.workout_result[a].changed) {
+                            const indexNumber = doesDateIsAlreadyInDB.workout_result.findIndex((x: any) => x._id == changed.workout_result[a]._id)
+                            if (parseInt(indexNumber) >= 0) {
+                                doesDateIsAlreadyInDB.workout_result[indexNumber] = changed.workout_result[a]
+                            }
+                        }
+                    }
+                }
+                changed.workout_result = doesDateIsAlreadyInDB.workout_result
+            }
+        }
+        resolve(changed)
+    })
+} 

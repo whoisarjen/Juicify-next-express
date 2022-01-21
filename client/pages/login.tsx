@@ -12,7 +12,7 @@ import { useAppDispatch } from "../hooks/useRedux";
 import { setToken } from "../redux/features/tokenSlice";
 import useTranslation from "next-translate/useTranslation";
 import { expectLoggedOUT, readToken } from "../utils/checkAuth";
-import { createIndexedDB, addIndexedDB } from "../utils/indexedDB";
+import { createIndexedDB, addIndexedDB, deleteDatabaseIndexedDB } from "../utils/indexedDB";
 import { getShortDate } from "../utils/manageDate";
 import axios from "axios";
 import { useForm } from "react-hook-form";
@@ -50,6 +50,7 @@ const Login = () => {
                 { withCredentials: true }
             );
             dispatch(setToken(response.data.token));
+            await deleteDatabaseIndexedDB();
             await createIndexedDB()
             const keys = Object.keys(response.data)
             for (let i = 0; i < keys.length; i++) {
