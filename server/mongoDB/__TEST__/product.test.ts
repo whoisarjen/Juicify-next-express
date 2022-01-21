@@ -41,7 +41,7 @@ describe('create product route', () => {
     })
 })
 
-describe('create product route', () => {
+describe.skip('create product route', () => {
     describe('given the user is logged in', () => {
         it('should return a 200 and new product', async () => {
             const jwt = signJWT(userPayload);

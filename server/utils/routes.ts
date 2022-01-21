@@ -22,7 +22,7 @@ const routes = (app: Express) => {
 
     app.post('/find/users', getUsersByLoginHandler)
     app.post('/auth/login', validateResource(createSessionSchema), createUserSessionHandler)
-    app.post('/auth/register', validateResource(createUserSchema), createUserHandler)
+    app.post('/auth/register', validateResource(createUserSchema as any), createUserHandler)
 
     app.post('/find/products', getProductByNameHandler)
     app.post('/insert/product', requireUser, validateResource(createProductSchema), createProductHandler)
@@ -39,24 +39,7 @@ const routes = (app: Express) => {
     app.post('/guest/daily_measurements', getUserByLogin, getGuestDailyMeasurementsHandler)
     app.post('/insert/daily_measurement', requireUser, validateResource(createDailyMeasurementSchema), createDailyMeasurementHandler)
     app.post('/update/daily_measurement', requireUser, validateResource(createDailyMeasurementSchema), changeDailyMeasurementHandler)
-
-    // app.post('/guest/:where', async (req, res) => {
-    //     const loadUserByLogin = require('./mongoDB/load/loadUserByLogin')
-    //     req.body.user = await loadUserByLogin(req.body.login)
-    //     if (!req.body.user) {
-    //         return res.status(404).send({ error: 'Not found' })
-    //     }
-    //     if (parseInt(req.body.user.public_profile) == 0) {
-    //         return res.status(403).send({ user: req.body.user })
-    //     }
-    //     await require(`./mongoDB/find/${req.params.where}`)(req)
-    //         .then((data) => {
-    //             return res.send({
-    //                 user: req.body.user,
-    //                 data
-    //             })
-    //         })
-    // });
+    
 }
 
 export default routes;

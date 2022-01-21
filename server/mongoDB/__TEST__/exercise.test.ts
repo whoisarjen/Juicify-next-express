@@ -41,7 +41,7 @@ describe('create exercise route', () => {
     })
 })
 
-describe('create exercise route', () => {
+describe.skip('create exercise route', () => {
     describe('given the user is logged in', () => {
         it('should return a 200 and new exercise', async () => {
             const jwt = signJWT(userPayload);

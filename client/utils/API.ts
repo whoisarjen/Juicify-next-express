@@ -18,7 +18,6 @@ const API = async (url: string, body: any): Promise<any> => {
         );
         response = res.data
         isSuccess = true
-        console.log(res)
     } catch (error: any) {
         console.log(error)
     }
@@ -81,8 +80,7 @@ const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, whatToUp
                     { array },
                     { withCredentials: true }
                 );
-                const response = res.data
-                array = JSON.parse(JSON.stringify(response.data));
+                array = JSON.parse(JSON.stringify(res.data));
                 if (where == 'daily_measurement') {
                     for (let i = 0; i < array.length; i++) {
                         if (await getIndexedDBbyID(where, array[i].whenAdded)) {

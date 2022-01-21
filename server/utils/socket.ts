@@ -67,7 +67,7 @@ export async function socketHandleUserSynchronization({ req, res, data, where, w
         req.app.get('socket').in(res.locals.token._id).except(req.body.socket_ID).emit('synchronizationMessege', {
             where: where,
             whatToDo: whatToDo,
-            array: req.body.array,
+            array: data,
             socket_ID: req.body.socket_ID
         })
     }
