@@ -8,6 +8,9 @@ const deserializeUser = async (req: Request, res: Response, next: NextFunction) 
 
     const token = get(req, 'cookies.token') || get(req, 'headers.authorization', '').replace(/^Bearer\s/, '')
     const refresh_token = get(req, 'cookies.refresh_token') || get(req, 'headers.x-refresh', '').replace(/^Bearer\s/, '')
+    const socket_ID = get(req, 'cookies.socket_ID') || get(req, 'headers.x-socket_ID', '').replace(/^Bearer\s/, '')
+
+    console.log(socket_ID)
 
     if (!token) {
         return next();
@@ -38,6 +41,10 @@ const deserializeUser = async (req: Request, res: Response, next: NextFunction) 
 
             res.locals.token = result.decoded;
         }
+    }
+
+    if (socket_ID) {
+        res.locals.socket_ID = socket_ID;
     }
 
     return next();

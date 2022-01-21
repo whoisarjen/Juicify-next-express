@@ -63,12 +63,13 @@ const updateSynchronizationObject = async (user_ID: string, where: string) => {
 
 export async function socketHandleUserSynchronization({ req, res, data, where, whatToDo }: { req: Request, res: Response, data: Array<any>, where: string, whatToDo: string }) {
     await updateSynchronizationObject(res.locals.token._id, where)
-    if(req.app.get('socket')){
+    if (req.app.get('socket')) {
+        console.log(res.locals.socket_ID)
         req.app.get('socket').in(res.locals.token._id).except(req.body.socket_ID).emit('synchronizationMessege', {
             where: where,
             whatToDo: whatToDo,
             array: data,
-            socket_ID: req.body.socket_ID
+            socket_ID: res.locals.socket_ID
         })
     }
 }

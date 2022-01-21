@@ -8,6 +8,7 @@ import { is_id } from '../../utils/API'
 import { getAllIndexedDB, deleteIndexedDB, getIndexedDBbyID, addIndexedDB } from '../../utils/indexedDB'
 import { overwriteThoseIDSinDB, insertThoseIDStoDB, deleteThoseIDSfromDB, setLastUpdated } from '../../utils/API'
 import { store } from '../../redux/store'
+import { getCookie } from '../../utils/checkAuth'
 
 // CACHE - those functions need to be loaded to allow user's expierence in offline mode for now didn't find better way :(
 import * as cache from '../../utils/API'
@@ -91,7 +92,7 @@ const cleanCache = async (where: string) => {
 const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
     const [key, setKey] = useState(0)
     const dispatch = useDispatch()
-    const [cookies] = useCookies()
+    const [cookies, setCookie] = useCookies()
 
     useEffect(() => window.addEventListener('offline', () => dispatch(setIsOnline(false))), [])
 
@@ -108,10 +109,17 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
             socket.on('compareDatabases', async (object) => {
                 try {
                     console.log('compareDatabases', object)
+                    setCookie('socket_ID', object.socket_ID, {
+                        maxAge: 1000 * 60 * 60 * 24 * 365,
+                        httpOnly: false,
+                        domain: 'localhost',
+                        path: '/',
+                        sameSite: 'strict',
+                        secure: false
+                    })
                     let newTimeOfUpdate = 0
                     dispatch(setIsOnline(true))
                     const isOnline = store.getState().online.isOnline;
-                    localStorage.setItem("socket_ID", object.socket_ID);
                     const lastUpdated: any = localStorage.getItem('lastUpdated')
 
 
@@ -189,9 +197,8 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
             })
 
             socket.on('synchronizationMessege', async (messege) => {
-                console.log('synchronizationMessege', messege)
-                if (messege.socket_ID != localStorage.getItem('socket_ID')) {
-                    console.log('synchronizationMessege', messege)
+                console.log('synchronizationMessege', (messege.socket_ID != await getCookie('socket_ID')), await getCookie('socket_ID'), messege)
+                if (messege.socket_ID != getCookie('socket_ID')) {
                     if (messege.where == 'settings') {
                         dispatch(setToken(messege.array.token));
                     } else {
