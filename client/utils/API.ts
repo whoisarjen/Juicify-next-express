@@ -44,16 +44,12 @@ const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, whatToUp
         const copyArray = JSON.parse(JSON.stringify(array));
         const isOnline = store.getState().online.isOnline;
         console.log(`insertThoseIDStoDB is online: ${isOnline}`)
-        let uniquePARAM = '_id'
-        if (where == 'daily_measurement') {
-            uniquePARAM = "whenAdded"
-        }
         const arrayIDSbeforeInsert = []
         let whatToUpdateARRAY: any = false
         let whatToUpdateARRAY2: any = false
         for (let i = 0; i < array.length; i++) {
             if (array[i]._id) {
-                await deleteIndexedDB(where, array[i][uniquePARAM])
+                await deleteIndexedDB(where, array[i][where == 'daily_measurement' ? 'whenAdded' : '_id'])
                 arrayIDSbeforeInsert.push(array[i]._id)
                 if (!await is_id(array[i]._id)) {
                     delete array[i]._id
@@ -98,7 +94,7 @@ const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, whatToUp
                                 }
                             }
                             if (checker > 0) {
-                                await deleteIndexedDB('daily_measurement', new Date(whatToUpdateARRAY[a].whenAdded).toISOString())
+                                await deleteIndexedDB('daily_measurement', whatToUpdateARRAY[a].whenAdded)
                                 await addIndexedDB('daily_measurement', [whatToUpdateARRAY[a]])
                             }
                         }
@@ -134,8 +130,6 @@ const overwriteThoseIDSinDB = async (where: string, sentArray: Array<any>): Prom
     let array = JSON.parse(JSON.stringify(sentArray))
     const isOnline = store.getState().online.isOnline
     console.log(`overwriteThoseIDSinDB is online: ${isOnline}`)
-    let uniquePARAM = '_id'
-    if (where == 'daily_measurement') uniquePARAM = "whenAdded"
     return new Promise(resolve => {
         (async () => {
             let originalArray = JSON.parse(JSON.stringify(array.map((x: any) => {
@@ -143,7 +137,7 @@ const overwriteThoseIDSinDB = async (where: string, sentArray: Array<any>): Prom
                 return x
             })));
             for (let i = 0; i < array.length; i++) {
-                await deleteIndexedDB(where, array[i][uniquePARAM])
+                await deleteIndexedDB(where, array[i][where == 'daily_measurement' ? 'whenAdded' : '_id'])
                 if (where == 'daily_measurement') {
                     array[i].whenAdded = new Date(array[i].whenAdded).toISOString()
                     if (isOnline) {
@@ -160,9 +154,8 @@ const overwriteThoseIDSinDB = async (where: string, sentArray: Array<any>): Prom
                         { array },
                         { withCredentials: true }
                     );
-                    const response = res.data
                     let originalSentArray = JSON.parse(JSON.stringify(array));
-                    array = JSON.parse(JSON.stringify(response.data));
+                    array = JSON.parse(JSON.stringify(res.data));
                     console.log('overwriteThoseIDSinDB originalSentArray', originalSentArray)
                     console.log('overwriteThoseIDSinDB array', array)
                     if (where == 'daily_measurement') {

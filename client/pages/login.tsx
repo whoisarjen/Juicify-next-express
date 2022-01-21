@@ -49,7 +49,7 @@ const Login = () => {
                 values,
                 { withCredentials: true }
             );
-            dispatch(setToken(response.data.token));
+            setLastUpdated();
             await deleteDatabaseIndexedDB();
             await createIndexedDB()
             const keys = Object.keys(response.data)
@@ -58,7 +58,7 @@ const Login = () => {
                     await addIndexedDB(keys[i], response.data[keys[i]])
                 }
             }
-            setLastUpdated();
+            dispatch(setToken(response.data.token));
             setCookie('token', response.data.token) // it has to be here to force connection query to socket
             router.push(
                 `/${readToken(response.data.token).login

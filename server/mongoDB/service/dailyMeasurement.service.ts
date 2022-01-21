@@ -124,6 +124,7 @@ export const connectTwoDailyMeasurements = async (object: DailyMeasurementProps,
         else if (object2.nutrition_diary && response.nutrition_diary) response.nutrition_diary = response.nutrition_diary.concat(object2.nutrition_diary)
 
         if (object2.workout_result && !response.workout_result) response.workout_result = object2.workout_result
+        else if (object2.workout_result && response.workout_result) response.workout_result = response.workout_result.concat(object2.workout_result) // NOT SURE IF IT WONT MAKE ISSUES
 
         return response
     } catch (error: any) {

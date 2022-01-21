@@ -122,9 +122,6 @@ const deleteIndexedDB = async (where: string, _id: string): Promise<any> => {
 
 const addIndexedDB = async (where: string, value: Array<any>): Promise<any> => {
   if (value && value.length > 0) {
-    if (where != "whatToUpdate") {
-      await putInformationAboutNeededUpdate(where);
-    }
     for (let i = 0; i < value.length; i++) {
       value[i]._id = value[i]._id.toString();
     }

@@ -16,19 +16,23 @@ export const createDailyMeasurementHandler = async (req: Request<{}, {}, CreateD
                 })
                 if (res && res._id) {
                     responseArray.push(
-                        await changeDailyMeasurement(
-                            [
-                                await connectTwoDailyMeasurements(res, req.body.array[i])
-                            ]
-                        )
+                        (
+                            await changeDailyMeasurement(
+                                [
+                                    await connectTwoDailyMeasurements(req.body.array[i], res)
+                                ]
+                            )
+                        )[0]
                     )
                 } else {
                     responseArray.push(
-                        await createDailyMeasurement(
-                            [
-                                req.body.array[i]
-                            ]
-                        )
+                        (
+                            await createDailyMeasurement(
+                                [
+                                    req.body.array[i]
+                                ]
+                            )
+                        )[0]
                     )
                 }
             } catch (error: any) {
@@ -36,10 +40,8 @@ export const createDailyMeasurementHandler = async (req: Request<{}, {}, CreateD
                 return res.status(409).send(error.message)
             }
         }
-        console.log('res', responseArray)
         await socketHandleUserSynchronization({ req, res, data: responseArray, whatToDo: 'change', where: 'DailyMeasurement' })
         return res.send(responseArray);
-        return res.send()
     } catch (error: any) {
         logger.error(error)
         return res.status(409).send(error.message)

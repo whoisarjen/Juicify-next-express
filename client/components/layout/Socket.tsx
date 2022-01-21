@@ -198,7 +198,8 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
 
             socket.on('synchronizationMessege', async (messege) => {
                 console.log('synchronizationMessege', (messege.socket_ID != await getCookie('socket_ID')), await getCookie('socket_ID'), messege)
-                if (messege.socket_ID != getCookie('socket_ID')) {
+                if (messege.socket_ID != await getCookie('socket_ID')) {
+                    console.log('Thats the messege, which reached synchronization process', messege)
                     if (messege.where == 'settings') {
                         dispatch(setToken(messege.array.token));
                     } else {
