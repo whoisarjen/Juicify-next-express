@@ -1,6 +1,5 @@
 import { getIndexedDBbyID, addIndexedDB, deleteIndexedDB, putIndexedDB, getAllIndexedDB, putInformationAboutNeededUpdate } from "./indexedDB"
 import { store } from '../redux/store'
-import { refreshTodayDaily } from "../redux/features/keySlice"
 import config from '../config/default'
 import axios from "axios"
 import { setIsOnline } from "../redux/features/onlineSlice"
@@ -38,7 +37,7 @@ const loadValueByLogin = async (where: string, find: any, login: string = find) 
     }
 }
 
-const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, updateDailyKey: string = '', value: string = '', whatToUpdate: string = '', value2: string = '_id'): Promise<Array<any>> => {
+const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, updateDailyKey: any, updateDailyKey2: any, updateDailyKey3: any, whatToUpdate: any, whatToUpdate2: any, whatToUpdate3: any): Promise<Array<any>> => {
     return new Promise(async resolve => {
         let array = JSON.parse(JSON.stringify(sentArray))
         const copyArray = JSON.parse(JSON.stringify(array));
@@ -88,9 +87,21 @@ const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, updateDa
                         for (let a = 0; a < updateDailyKeyArray.length; a++) {
                             let checker = 0
                             for (let b = 0; b < updateDailyKeyArray[a][updateDailyKey].length; b++) {
-                                if (updateDailyKeyArray[a][updateDailyKey][b][value] == arrayIDSbeforeInsert[i]) {
-                                    updateDailyKeyArray[a][updateDailyKey][b][value] = array[i]._id
-                                    checker++
+                                if (!updateDailyKey3) {
+                                    if (updateDailyKeyArray[a][updateDailyKey][b][updateDailyKey2] == arrayIDSbeforeInsert[i]) {
+                                        updateDailyKeyArray[a][updateDailyKey][b][updateDailyKey2] = array[i]._id
+                                        checker++
+                                    }
+                                } else {
+                                    // 
+                                    if (updateDailyKeyArray[a][updateDailyKey][b][updateDailyKey2] && updateDailyKeyArray[a][updateDailyKey][b][updateDailyKey2].length) {
+                                        for (let c = 0; c < updateDailyKeyArray[a][updateDailyKey][b][updateDailyKey2].length; c++) {
+                                            if (updateDailyKeyArray[a][updateDailyKey][b][updateDailyKey2][c][updateDailyKey3] == arrayIDSbeforeInsert[i]) {
+                                                updateDailyKeyArray[a][updateDailyKey][b][updateDailyKey2][c][updateDailyKey3] = array[i]._id
+                                                checker++
+                                            }
+                                        }
+                                    }
                                 }
                             }
                             if (checker > 0) {
@@ -101,19 +112,40 @@ const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, updateDa
                     }
                 }
                 if (whatToUpdate && whatToUpdateArray.length > 0) {
+                    let count = 0;
+                    console.log('whatToUpdate', whatToUpdateArray)
                     for (let i = 0; i < array.length; i++) {
                         for (let a = 0; a < whatToUpdateArray.length; a++) {
-                            if (whatToUpdateArray[a][value] == arrayIDSbeforeInsert[i]) {
-                                await putIndexedDB(whatToUpdate, whatToUpdateArray[a][value2], value, array[i]._id)
+                            if (!whatToUpdate3) {
+                                if (whatToUpdateArray[a][whatToUpdate2] == arrayIDSbeforeInsert[i]) {
+                                    await putIndexedDB(whatToUpdate, whatToUpdateArray[a][whatToUpdate2], whatToUpdate2, array[i]._id)
+                                }
+                            } else {
+                                // 
+                                if (whatToUpdateArray[a][whatToUpdate2] && whatToUpdateArray[a][whatToUpdate2].length) {
+                                    for (let b = 0; b < whatToUpdateArray[a][whatToUpdate2].length; b++) {
+                                        if (whatToUpdateArray[a][whatToUpdate2][b][whatToUpdate3] == arrayIDSbeforeInsert[i]) {
+                                            whatToUpdateArray[a][whatToUpdate2][b][whatToUpdate3] = array[i]._id
+                                            count++;
+                                        }
+                                    }
+                                }
                             }
                         }
+                    }
+                    console.log('whatToUpdateAfter', whatToUpdateArray)
+                    if (count) {
+                        for (let a = 0; a < whatToUpdateArray.length; a++) {
+                            await deleteIndexedDB(whatToUpdate, whatToUpdateArray[a]._id)
+                        }
+                        await addIndexedDB(whatToUpdate, whatToUpdateArray)
                     }
                 }
             } catch (error: any) {
                 console.log(error)
                 store.dispatch(setIsOnline(false))
                 await putInformationAboutNeededUpdate(where);
-                return resolve(await insertThoseIDStoDB(where, copyArray, updateDailyKey, value, whatToUpdate, value2))
+                return resolve(await insertThoseIDStoDB(where, copyArray, updateDailyKey, updateDailyKey2, updateDailyKey3, whatToUpdate, whatToUpdate2, whatToUpdate3))
             }
         } else {
             for (let i = 0; i < array.length; i++) {
@@ -121,7 +153,6 @@ const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, updateDa
             }
         }
         await addIndexedDB(where, array)
-        // await refreshKeys(where)
         return resolve(array)
     })
 }

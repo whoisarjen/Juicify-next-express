@@ -12,7 +12,7 @@ import { getCookie, refreshToken } from '../../utils/checkAuth'
 import axios from 'axios';
 import config from '../../config/default'
 
-const synchronizationAfterOffline = async (isNewValueInDB: boolean = false, where: string, whatToUpdate: string = '', value: string = '', whatToUpdate2: string = '', value2: string = '') => {
+const synchronizationAfterOffline = async (isNewValueInDB: boolean = false, where: string, updateDailyKey: any, updateDailyKey2: any, updateDailyKey3: any, whatToUpdate: any, whatToUpdate2: any = '_id', whatToUpdate3: any) => {
     return new Promise((resolve, reject) => {
         (async () => {
             let deleted = []
@@ -59,7 +59,7 @@ const synchronizationAfterOffline = async (isNewValueInDB: boolean = false, wher
                         }
                     }
                 }
-                if (inserted.length) await insertThoseIDStoDB(where, inserted, whatToUpdate, value, whatToUpdate2, value2)
+                if (inserted.length) await insertThoseIDStoDB(where, inserted, updateDailyKey, updateDailyKey2, updateDailyKey3, whatToUpdate, whatToUpdate2, whatToUpdate3)
                 if (changed.length) await overwriteThoseIDSinDB(where, changed)
                 if (deleted.length) await deleteThoseIDSfromDB(where, deleted, isNewValueInDB)
                 await deleteIndexedDB("whatToUpdate", where)
@@ -100,7 +100,7 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
             const socketQuery: any = {
                 query: `refresh_token=${cookies.refresh_token}`
             }
-            const socket = io("http://localhost:4000", socketQuery)
+            const socket = io(config.server, socketQuery)
 
             socket.on('compareDatabases', async (object) => {
                 try {
@@ -126,59 +126,34 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
 
                     if (isOnline && object.lastUpdated.product > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'product')) {
                         newTimeOfUpdate = object.lastUpdated.product
-                        await synchronizationAfterOffline(object.lastUpdated.product > lastUpdated, "product", 'nutrition_diary', 'product_ID', 'favourite_product', '_id');
+                        await synchronizationAfterOffline(object.lastUpdated.product > lastUpdated, "product", 'nutrition_diary', 'product_ID', false, 'favourite_product', '_id', false);
                         await cleanCache('checked_product')
                         if (!isOnline) await addIndexedDB("whatToUpdate", [{ "_id": "product" }]);
                     }
 
-                    // if(isOnline && object.lastUpdated.exercise > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'exercise')){
-                    //     newTimeOfUpdate = object.lastUpdated.exercise
-                    //     await synchronizationAfterOffline(object.lastUpdated.exercise > lastUpdated, "exercise", 'workout_result', HERE NEED TO FIND WAY TO GET RESULTS[EXERCISE[]]);
-                    //     await cleanCache('checked_exercise')
-                    //     if(!isOnline) await addIndexedDB("whatToUpdate", [{"_id": 'exercise'}]);
-                    // }
+                    if (isOnline && object.lastUpdated.exercise > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'exercise')) {
+                        newTimeOfUpdate = object.lastUpdated.exercise
+                        await synchronizationAfterOffline(object.lastUpdated.exercise > lastUpdated, "exercise", 'workout_result', 'results', '_id', 'workout_plan', 'exercises', '_id');
+                        await cleanCache('checked_exercise')
+                        if (!isOnline) await addIndexedDB("whatToUpdate", [{ "_id": 'exercise' }]);
+                    }
 
                     if (isOnline && object.lastUpdated.workout_plan > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'workout_plan')) {
                         newTimeOfUpdate = object.lastUpdated.workout_plan
-                        await synchronizationAfterOffline(object.lastUpdated.workout_plan > lastUpdated, "workout_plan", "workout_result", "workout_plan_ID");
+                        await synchronizationAfterOffline(object.lastUpdated.workout_plan > lastUpdated, "workout_plan", "workout_result", "workout_plan_ID", false, false, false, false);
                         // await cleanCache('workout_result')
                         if (!isOnline) await addIndexedDB("whatToUpdate", [{ "_id": "workout_plan" }]);
                     }
 
 
                     if (isOnline && object.lastUpdated.daily_measurement > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'daily_measurement')) {
-                        console.log('Synchronization daily_measurement')
                         newTimeOfUpdate = object.lastUpdated.daily_measurement
-                        await synchronizationAfterOffline(object.lastUpdated.daily_measurement > lastUpdated, 'daily_measurement');
+                        await synchronizationAfterOffline(object.lastUpdated.daily_measurement > lastUpdated, 'daily_measurement', false, false, false, false, false, false);
                         if (!isOnline) await addIndexedDB('whatToUpdate', [{ '_id': 'daily_measurement' }]);
                     }
 
-                    //     if (isOnline) {
-                    //         localStorage.removeItem('last_offline_created_daily_measurement_date')
-                    //         if (localStorage.getItem('version') < object.versionOFapplication) {
-                    //             if ('serviceWorker' in navigator) {
-                    //                 try {
-                    //                     await navigator.serviceWorker.register('./service-worker.js').then(async registration => {
-                    //                         await registration.unregister().then(function () {
-                    //                             localStorage.setItem('version', object.versionOFapplication)
-                    //                             localStorage.removeItem('componentsLoaded')
-                    //                         });
-                    //                     });
-                    //                 } catch (err) {
-                    //                     console.log(err)
-                    //                 }
-                    //             }
-                    //         }
-                    //         if (newTimeOfUpdate > 0) localStorage.setItem('lastUpdated', newTimeOfUpdate)
-                    //         if (object.lastUpdated.refresh > lastUpdated) {
-                    //             localStorage.setItem('lastUpdated', object.lastUpdated.refresh)
-                    //             window.location.reload(true);
-                    //         }
-                    //     }
-
-                    // })
-
                     if (newTimeOfUpdate) {
+                        localStorage.setItem('lastUpdated', newTimeOfUpdate.toString())
                         setKey(new Date().getTime())
                     }
                 } catch (error: any) {
@@ -195,12 +170,8 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                         const newToken = await refreshToken()
                         dispatch(setToken(newToken));
                     } else {
-                        let keyIndexedDB = '_id'
-                        if (messege.where == 'daily_measurement') {
-                            keyIndexedDB = 'whenAdded'
-                        }
                         for (let i = 0; i < messege.array.length; i++) {
-                            await deleteIndexedDB(messege.where, messege.array[i][keyIndexedDB])
+                            await deleteIndexedDB(messege.where, messege.array[i][messege.where == 'daily_measurement' ? 'whenAdded' : '_id'])
                         }
                         if (messege.whatToDo == 'change') {
                             await addIndexedDB(messege.where, messege.array)

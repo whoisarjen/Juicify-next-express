@@ -1,5 +1,4 @@
-in result => option to add exercise but synchro need to handle it too... + change order of exercises + delete
-probably insert on whattoupdate might have issues, to check later with synchro
+change order of exercises + delete
 workout add option to add cardio exercises + timer i guess
 
 

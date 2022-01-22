@@ -1,5 +1,5 @@
 export default {
-    PORT: 4000,
+    PORT: 1337,
     SALT_WORK_FACTORY: 10,
     APP_VERSION: 1,
     numberSupportedDays: 28 + 1, // One more than client site is supporting

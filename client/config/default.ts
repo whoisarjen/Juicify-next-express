@@ -1,5 +1,5 @@
 export default {
-    server: 'http://localhost:4000',
+    server: 'http://localhost:1337',
     tokenSettings: {
 
     }
