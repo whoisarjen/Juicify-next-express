@@ -102,7 +102,7 @@ export const loadDailyMeasurementMissingData = async (daily_measurement: DailyMe
             }
         }
     }
-    return { ...JSON.parse(JSON.stringify(daily_measurement)), nutrition_diary, workout_result }
+    return { ...JSON.parse(JSON.stringify(daily_measurement)), nutrition_diary: nutrition_diary, workout_result: workout_result } // Dont try to cut keys, its necessery when array is empty! []
 }
 
 export const connectTwoDailyMeasurements = async (object: DailyMeasurementProps, object2: DailyMeasurementProps) => {
