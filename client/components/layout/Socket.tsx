@@ -9,10 +9,6 @@ import { getAllIndexedDB, deleteIndexedDB, getIndexedDBbyID, addIndexedDB } from
 import { overwriteThoseIDSinDB, insertThoseIDStoDB, deleteThoseIDSfromDB, setLastUpdated } from '../../utils/API'
 import { store } from '../../redux/store'
 import { getCookie } from '../../utils/checkAuth'
-
-// CACHE - those functions need to be loaded to allow user's expierence in offline mode for now didn't find better way :(
-import * as cache from '../../utils/API'
-import * as cache2 from '../../utils/indexedDB'
 import axios from 'axios';
 import config from '../../config/default'
 
@@ -153,84 +149,81 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                     }
 
 
-                    //                 if(isOnline && object.lastUpdated.settings > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'settings')){
-                    //                     newTimeOfUpdate = object.lastUpdated.settings
-                    //                     this.synchroMessage = true;
-                    //                     await refreshToken();
-                    //                 }
+                //     if (isOnline && object.lastUpdated.settings > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'settings')) {
+                //         newTimeOfUpdate = object.lastUpdated.settings
+                //         this.synchroMessage = true;
+                //         await refreshToken();
+                //     }
 
-                    //                 if(isOnline){
-                    //                     localStorage.removeItem('last_offline_created_daily_measurement_date')
-                    //                     if(localStorage.getItem('version') < object.versionOFapplication){
-                    //                         if('serviceWorker' in navigator){
-                    //                             try{
-                    //                                 await navigator.serviceWorker.register('./service-worker.js').then(async registration => {
-                    //                                     await registration.unregister().then(function(){
-                    //                                         localStorage.setItem('version', object.versionOFapplication)
-                    //                                         localStorage.removeItem('componentsLoaded')
-                    //                                     });
-                    //                                 });
-                    //                             }catch(err){
-                    //                                 console.log(err)
-                    //                             }
-                    //                         }
-                    //                     }
-                    //                     if(newTimeOfUpdate > 0) localStorage.setItem('lastUpdated', newTimeOfUpdate)
-                    //                     if(object.lastUpdated.refresh > lastUpdated){
-                    //                         localStorage.setItem('lastUpdated', object.lastUpdated.refresh)
-                    //                         window.location.reload(true);
-                    //                     }
-                    //                     store.state.number_of_messages = object.lastUpdated.message.number_of_messages
-                    //                     store.state.last_message_time = object.lastUpdated.message.last_message_time
-                    //                 }
+                //     if (isOnline) {
+                //         localStorage.removeItem('last_offline_created_daily_measurement_date')
+                //         if (localStorage.getItem('version') < object.versionOFapplication) {
+                //             if ('serviceWorker' in navigator) {
+                //                 try {
+                //                     await navigator.serviceWorker.register('./service-worker.js').then(async registration => {
+                //                         await registration.unregister().then(function () {
+                //                             localStorage.setItem('version', object.versionOFapplication)
+                //                             localStorage.removeItem('componentsLoaded')
+                //                         });
+                //                     });
+                //                 } catch (err) {
+                //                     console.log(err)
+                //                 }
+                //             }
+                //         }
+                //         if (newTimeOfUpdate > 0) localStorage.setItem('lastUpdated', newTimeOfUpdate)
+                //         if (object.lastUpdated.refresh > lastUpdated) {
+                //             localStorage.setItem('lastUpdated', object.lastUpdated.refresh)
+                //             window.location.reload(true);
+                //         }
+                //     }
 
-                    //                 this.synchroMessage = false
-                    //             })
+                // })
 
-                    if (newTimeOfUpdate) {
-                        setKey(new Date().getTime())
-                    }
-                } catch (error: any) {
-                    console.log('synchronization ended with error', error)
-                    dispatch(setIsOnline(false))
-                }
-            })
-
-            socket.on('synchronizationMessege', async (messege) => {
-                console.log('synchronizationMessege', (messege.socket_ID != await getCookie('socket_ID')), await getCookie('socket_ID'), messege)
-                if (messege.socket_ID != await getCookie('socket_ID')) {
-                    console.log('Thats the messege, which reached synchronization process', messege)
-                    if (messege.where == 'settings') {
-                        dispatch(setToken(messege.array[0].token));
-                        setCookie('token', messege.array[0].token, config.tokenSettings)
-                    } else {
-                        let keyIndexedDB = '_id'
-                        if (messege.where == 'daily_measurement') {
-                            keyIndexedDB = 'whenAdded'
-                        }
-                        for (let i = 0; i < messege.array.length; i++) {
-                            await deleteIndexedDB(messege.where, messege.array[i][keyIndexedDB])
-                        }
-                        if (messege.whatToDo == 'change') {
-                            await addIndexedDB(messege.where, messege.array)
-                        }
-                    }
-                    setKey(new Date().getTime())
-                    setLastUpdated()
-                } else {
-                    console.log('Normally would try synchro, but protection works!')
-                }
-            })
-
-            socket.on('disconnect', () => dispatch(setIsOnline(false))) // Closed socket => user has to be offline
+            if (newTimeOfUpdate) {
+                setKey(new Date().getTime())
+            }
+        } catch (error: any) {
+            console.log('synchronization ended with error', error)
+            dispatch(setIsOnline(false))
         }
+    })
+
+    socket.on('synchronizationMessege', async (messege) => {
+        console.log('synchronizationMessege', (messege.socket_ID != await getCookie('socket_ID')), await getCookie('socket_ID'), messege)
+        if (messege.socket_ID != await getCookie('socket_ID')) {
+            console.log('Thats the messege, which reached synchronization process', messege)
+            if (messege.where == 'settings') {
+                dispatch(setToken(messege.array[0].token));
+                setCookie('token', messege.array[0].token, config.tokenSettings)
+            } else {
+                let keyIndexedDB = '_id'
+                if (messege.where == 'daily_measurement') {
+                    keyIndexedDB = 'whenAdded'
+                }
+                for (let i = 0; i < messege.array.length; i++) {
+                    await deleteIndexedDB(messege.where, messege.array[i][keyIndexedDB])
+                }
+                if (messege.whatToDo == 'change') {
+                    await addIndexedDB(messege.where, messege.array)
+                }
+            }
+            setKey(new Date().getTime())
+            setLastUpdated()
+        } else {
+            console.log('Normally would try synchro, but protection works!')
+        }
+    })
+
+    socket.on('disconnect', () => dispatch(setIsOnline(false))) // Closed socket => user has to be offline
+}
     }, [cookies.token])
 
-    return (
-        <div className='socket' key={key}>
-            {children}
-        </div>
-    )
+return (
+    <div className='socket' key={key}>
+        {children}
+    </div>
+)
 }
 
 export default Socket
