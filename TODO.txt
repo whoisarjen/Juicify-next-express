@@ -7,9 +7,6 @@ user's schema should always check if when change, user didnt change premium etc.
 user mongo is not unique lettersize sensitive
 
 
-refresh_token need option to refresh
-
-
 test for backend
 
 

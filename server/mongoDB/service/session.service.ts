@@ -3,6 +3,7 @@ import { signJWT, verifyJWT } from "../../utils/jwt.utils";
 import { SessionModel, SessionProps } from "../models/session.model";
 import { get } from 'lodash'
 import { getUser } from './user.service'
+import { Response } from 'express'
 import config from "config";
 
 export async function createSession(user_ID: string, userAgent: string) {
@@ -19,8 +20,20 @@ export async function updateSession(query: FilterQuery<SessionProps>, update: Up
     return SessionModel.updateOne(query, update)
 }
 
-export async function reIssueAccessToken(refresh_token: string) {
-    const { decoded } = verifyJWT(refresh_token)
+export async function reIssueAccessToken(refresh_token: string, res: Response) {
+    const { decoded }: any = verifyJWT(refresh_token)
+
+    // 30 days before refresh_token expired, gona refresh it
+    if (new Date(decoded.exp) < new Date((new Date()).setDate((new Date()).getDate() + 30))) {
+        res.cookie('refresh_token', refresh_token, {
+            maxAge: config.get<number>('COOKIE_REFRESH_TOKEN_LIFE_TIME_IN_S'),
+            httpOnly: config.get<boolean>('COOKIE_HTTPONLY'),
+            domain: config.get<string>('COOKIE_DOMAIN'),
+            path: '/',
+            sameSite: 'strict',
+            secure: config.get<boolean>('COOKIE_SECURE')
+        })
+    }
 
     if (!decoded || !get(decoded, 'session')) {
         return false;
