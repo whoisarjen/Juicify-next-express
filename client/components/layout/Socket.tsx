@@ -8,7 +8,7 @@ import { is_id } from '../../utils/API'
 import { getAllIndexedDB, deleteIndexedDB, getIndexedDBbyID, addIndexedDB } from '../../utils/indexedDB'
 import { overwriteThoseIDSinDB, insertThoseIDStoDB, deleteThoseIDSfromDB, setLastUpdated } from '../../utils/API'
 import { store } from '../../redux/store'
-import { getCookie } from '../../utils/checkAuth'
+import { getCookie, refreshToken } from '../../utils/checkAuth'
 import axios from 'axios';
 import config from '../../config/default'
 
@@ -120,13 +120,8 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
 
                     if (isOnline && object.lastUpdated.settings > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'settings')) {
                         newTimeOfUpdate = object.lastUpdated.settings
-                        const response = await axios.post(
-                            `${config.server}/auth/refresh`,
-                            {},
-                            { withCredentials: true }
-                        );
-                        setLastUpdated();
-                        dispatch(setToken(response.data.token));
+                        const newToken = await refreshToken()
+                        dispatch(setToken(newToken));
                     }
 
                     if (isOnline && object.lastUpdated.product > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'product')) {
@@ -197,8 +192,8 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                 if (messege.socket_ID != await getCookie('socket_ID')) {
                     console.log('Thats the messege, which reached synchronization process', messege)
                     if (messege.where == 'settings') {
-                        dispatch(setToken(messege.array[0].token));
-                        setCookie('token', messege.array[0].token, config.tokenSettings)
+                        const newToken = await refreshToken()
+                        dispatch(setToken(newToken));
                     } else {
                         let keyIndexedDB = '_id'
                         if (messege.where == 'daily_measurement') {

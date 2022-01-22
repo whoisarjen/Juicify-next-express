@@ -4,6 +4,9 @@ import { useCookies } from "react-cookie";
 import { useAppSelector } from "../hooks/useRedux";
 import { getShortDate } from "./manageDate";
 import { deleteDatabaseIndexedDB } from "./indexedDB";
+import { setLastUpdated } from "./API";
+import axios from "axios";
+import config from '../config/default'
 
 const logout = async () => {
     await deleteDatabaseIndexedDB();
@@ -55,6 +58,16 @@ const readToken = (token: string) => {
     if (!token) return ''
     return JSON.parse(Buffer.from(token.split(".")[1], "base64").toString());
 };
+
+export const refreshToken = async () => {
+    const response = await axios.post(
+        `${config.server}/auth/refresh`,
+        {},
+        { withCredentials: true }
+    );
+    setLastUpdated();
+    return response.data.token
+}
 
 export {
     expectLoggedIN,

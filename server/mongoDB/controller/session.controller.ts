@@ -126,7 +126,7 @@ export async function updateToken(req: Request, res: Response, user: DocumentDef
         secure: config.get<boolean>('COOKIE_SECURE')
     })
 
-    await socketHandleUserSynchronization({ req, res, data: [token], whatToDo: 'change', where: 'settings' })
+    await socketHandleUserSynchronization({ req, res, data: [], whatToDo: 'change', where: 'settings' }) // We won't send token, client site will asked for refreshing token
 
     return token
 }
