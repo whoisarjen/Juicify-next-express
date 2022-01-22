@@ -61,13 +61,13 @@ export const changeDailyMeasurementHandler = async (req: Request<{}, {}, CreateD
 
 export const getGuestDailyMeasurementHandler = async (req: Request, res: Response) => {
     try {
-        if ((new Date(req.body.uniqueKey).toString() === 'Invalid Date')) {
-            logger.error(`getDailyMeasurementHandler blocked ${req.body.uniqueKey}. Invalid Date`)
+        if ((new Date(req.body.find).toString() === 'Invalid Date')) {
+            logger.error(`getDailyMeasurementHandler blocked ${req.body.find}. Invalid Date`)
             return res.status(errorBook['DATE IS REQUIRED']['CODE']).send(errorBook['DATE IS REQUIRED']['VALUE'])
         }
         const dailyMeasurement = await getDailyMeasurement({
             user_ID: res.locals.user._id,
-            whenAdded: req.body.uniqueKey
+            whenAdded: req.body.find
         })
         return res.send({ data: dailyMeasurement, user: res.locals.user });
     } catch (error: any) {

@@ -44,7 +44,7 @@ export const getUserWorkoutPlansHandler = async (req: Request<{}, {}, CreateWork
 
 export const getGuestWorkoutPlanHandler = async (req: Request, res: Response) => {
     try {
-        const WorkoutPlan = await getWorkoutPlanByID(req.body.uniqueKey)
+        const WorkoutPlan = await getWorkoutPlanByID(req.body.find)
         return res.send({ data: WorkoutPlan, user: res.locals.user });
     } catch (error: any) {
         logger.error(error)

@@ -4,15 +4,13 @@ workout add option to add cardio exercises + timer i guess
 
 
 user's schema should always check if when change, user didnt change premium etc.
-
-
 user mongo is not unique lettersize sensitive
 
 
 refresh_token need option to refresh
 
 
-all find and guest has to have check on server site
+test for backend
 
 
 notify for not public users / 404 redirect

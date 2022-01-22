@@ -23,9 +23,9 @@ const API = async (url: string, body: any): Promise<any> => {
     return { response, isSuccess }
 }
 
-const loadValueByLogin = async (where: string, uniqueKey: any, login: string = uniqueKey) => {
+const loadValueByLogin = async (where: string, find: any, login: string = find) => {
     const { response, isSuccess } = await API(`/guest/${where}`, {
-        uniqueKey,
+        find,
         login
     })
     if (!response.data) response.data = {}
