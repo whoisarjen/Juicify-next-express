@@ -150,9 +150,9 @@ a:active {
     grid-template-columns: auto 1fr;
   }
 
-  :root {
-    --BothNavHeightAndPadding: calc(var(--BothNavHeightAndPaddingDefault) - 28) + 'px';
-  }
+  /* :root {
+    --BothNavHeightAndPadding: calc(var(--BothNavHeightAndPaddingDefault) - 28px);
+  } */
 }
 
 @media (max-width: 726px) {

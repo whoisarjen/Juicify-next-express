@@ -8,12 +8,15 @@ import Box from '@mui/material/Box';
 import Select from '@mui/material/Select';
 import { DIET_GOAL, DIET_ACTIVITY, DIET_KIND, DIET_EXTRA_PROTEINS } from '../../utils/manageCoach'
 import useTranslation from "next-translate/useTranslation";
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import IconButton from '@mui/material/IconButton';
 
 interface MuscleBuildingProps {
-    prepareCreate: (arg0: Object) => void
+    prepareCreate: (arg0: Object) => void,
+    handlePreviousStep: (arg0: string) => void
 }
 
-const MuscleBuilding: FunctionComponent<MuscleBuildingProps> = ({ prepareCreate }) => {
+const MuscleBuilding: FunctionComponent<MuscleBuildingProps> = ({ prepareCreate, handlePreviousStep }) => {
     const { t } = useTranslation('coach')
     const [goal, setGoal] = useState(0.5);
     const [kind_of_diet, setKind_of_diet] = useState(0)
@@ -32,6 +35,12 @@ const MuscleBuilding: FunctionComponent<MuscleBuildingProps> = ({ prepareCreate 
 
     return (
         <div className={styles.muscleBuilding}>
+            <div className={styles.arrowBack}>
+                <IconButton aria-label="back" onClick={() => handlePreviousStep('ChooseDiet')}>
+                    <KeyboardBackspaceIcon />
+                    <div />
+                </IconButton>
+            </div>
             <div className={styles.AddWeightMainTitle}><div>{t('MUSCLE_BUILDING')}</div></div>
             <div>{t('MUSCLE_BUILDING_DESCRIPTION')}</div>
             <Box>

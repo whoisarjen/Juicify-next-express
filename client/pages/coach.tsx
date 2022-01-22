@@ -48,6 +48,8 @@ const Coach: FunctionComponent = () => {
             .then(() => setStep('Result'))
     }
 
+    const handlePreviousStep = (where: string = token.coach_analyze ? 'Standard' : 'Welcome') => setStep(where)
+
     useEffect(() => {
         if (step != 'Result') {
             setStep(token.coach_analyze ? 'Standard' : 'Welcome')
@@ -68,19 +70,19 @@ const Coach: FunctionComponent = () => {
                         </>
                     ) : step === 'ChooseDiet' ? (
                         <>
-                            <ChooseDiet setStep={setStep} />
+                            <ChooseDiet setStep={setStep} handlePreviousStep={handlePreviousStep} />
                         </>
                     ) : step === 'MuscleBuilding' ? (
                         <>
-                            <MuscleBuilding prepareCreate={prepareCreate} />
+                            <MuscleBuilding prepareCreate={prepareCreate} handlePreviousStep={handlePreviousStep} />
                         </>
                     ) : step === 'Recomposition' ? (
                         <>
-                            <Recomposition prepareCreate={prepareCreate} />
+                            <Recomposition prepareCreate={prepareCreate} handlePreviousStep={handlePreviousStep} />
                         </>
                     ) : step === 'LosingWeight' ? (
                         <>
-                            <LosingWeight prepareCreate={prepareCreate} />
+                            <LosingWeight prepareCreate={prepareCreate} handlePreviousStep={handlePreviousStep} />
                         </>
                     ) : step === 'Loading' ? (
                         <>

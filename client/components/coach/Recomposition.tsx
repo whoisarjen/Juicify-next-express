@@ -8,12 +8,15 @@ import Box from '@mui/material/Box';
 import Select from '@mui/material/Select';
 import { DIET_ACTIVITY, DIET_KIND } from '../../utils/manageCoach'
 import useTranslation from "next-translate/useTranslation";
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import IconButton from '@mui/material/IconButton';
 
 interface RecompositionProps {
-    prepareCreate: (arg0: Object) => void
+    prepareCreate: (arg0: Object) => void,
+    handlePreviousStep: (arg0: string) => void
 }
 
-const Recomposition: FunctionComponent<RecompositionProps> = ({ prepareCreate }) => {
+const Recomposition: FunctionComponent<RecompositionProps> = ({ prepareCreate, handlePreviousStep }) => {
     const { t } = useTranslation('coach')
     const [kind_of_diet, setKind_of_diet] = useState(0)
     const [activity, setActivity] = useState(1.2)
@@ -30,6 +33,12 @@ const Recomposition: FunctionComponent<RecompositionProps> = ({ prepareCreate })
 
     return (
         <div className={styles.recomposition}>
+            <div className={styles.arrowBack}>
+                <IconButton aria-label="back" onClick={() => handlePreviousStep('ChooseDiet')}>
+                    <KeyboardBackspaceIcon />
+                    <div />
+                </IconButton>
+            </div>
             <div className={styles.AddWeightMainTitle}><div>{t('RECOMPOSITION')}</div></div>
             <div>{t('RECOMPOSITION_DESCRIPTION')}</div>
             <Box>
