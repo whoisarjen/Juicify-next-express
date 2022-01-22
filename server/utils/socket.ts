@@ -15,7 +15,7 @@ export async function socket({ io }: { io: Server }) {
         logger.info(`${socket.id} connected to socket!`);
         const refresh_token: any = socket.handshake.query.refresh_token
         if (refresh_token) {
-            const { decoded, expired } = await verifyJWT(refresh_token)
+            const { decoded, expired }: any = await verifyJWT(refresh_token)
             if (expired || !decoded || !decoded._id) {
                 // If refresh_token is dead, logout user, but allow synchronization | Does it really gona work? Check token while synchro won't kill connection...?
                 io.to(socket.id).emit('compareDatabases', {

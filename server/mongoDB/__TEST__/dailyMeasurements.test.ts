@@ -63,7 +63,7 @@ describe('guest dailyMeasurements route', () => {
 
 describe('guest dailyMeasurements route', () => {
     describe('given the login and wrong date', () => {
-        it('should return 401', async () => {
+        it('should return 400', async () => {
             const { statusCode } = await supertest(app)
                 .post("/guest/daily_measurements")
                 .send({
@@ -71,7 +71,7 @@ describe('guest dailyMeasurements route', () => {
                     whenAdded: 'itshouldntwork'
                 });
 
-            expect(statusCode).toBe(401)
+            expect(statusCode).toBe(400)
         })
     })
 })
