@@ -12,6 +12,9 @@ user mongo is not unique lettersize sensitive
 refresh_token need option to refresh
 
 
+all find and guest has to have check on server site
+
+
 notify for not public users / 404 redirect
 coach
 barcode

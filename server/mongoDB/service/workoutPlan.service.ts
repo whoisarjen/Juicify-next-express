@@ -28,6 +28,18 @@ export const deleteManyWorkoutPlan = async (input: DocumentDefinition<WorkoutPla
     }
 }
 
+export const getWorkoutPlanByID = async (_id: string) => {
+    try {
+        const WorkoutPlan = await WorkoutPlanModel.findOne({ _id })
+
+        const response = await loadWorkoutPlanMissingData(WorkoutPlan)
+
+        return response
+    } catch (error: any) {
+        throw new Error(error)
+    }
+}
+
 export const getUserWorkoutPlans = async (token: DocumentDefinition<UserProps> | DocumentDefinition<Omit<UserProps, 'comparePassword'>>) => {
     try {
         const WorkoutPlans = await WorkoutPlanModel.find({

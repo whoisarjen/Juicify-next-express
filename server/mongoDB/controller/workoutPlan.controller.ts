@@ -2,7 +2,7 @@ import logger from '../../utils/logger'
 import { Request, Response } from "express"
 import { WorkoutPlanPropsDry } from "../models/workoutPlan.model"
 import { CreateWorkoutPlanInput } from "../schema/workoutPlan.schema"
-import { createWorkoutPlan, deleteManyWorkoutPlan, getUserWorkoutPlans } from "../service/workoutPlan.service"
+import { createWorkoutPlan, deleteManyWorkoutPlan, getUserWorkoutPlans, getWorkoutPlanByID } from "../service/workoutPlan.service"
 import { socketHandleUserSynchronization } from '../../utils/socket'
 
 export const createWorkoutPlanHandler = async (req: Request<{}, {}, CreateWorkoutPlanInput['body']>, res: Response) => {
@@ -36,6 +36,26 @@ export const getUserWorkoutPlansHandler = async (req: Request<{}, {}, CreateWork
     try {
         const WorkoutPlans = await getUserWorkoutPlans(res.locals.token)
         return res.send(WorkoutPlans);
+    } catch (error: any) {
+        logger.error(error)
+        return res.status(409).send(error.message)
+    }
+}
+
+export const getGuestWorkoutPlanHandler = async (req: Request, res: Response) => {
+    try {
+        const WorkoutPlan = await getWorkoutPlanByID(req.body.uniqueKey)
+        return res.send({ data: WorkoutPlan, user: res.locals.user });
+    } catch (error: any) {
+        logger.error(error)
+        return res.status(409).send(error.message)
+    }
+}
+
+export const getGuestWorkoutPlansHandler = async (req: Request<{}, {}, CreateWorkoutPlanInput['body']>, res: Response) => {
+    try {
+        const WorkoutPlans = await getUserWorkoutPlans(res.locals.user)
+        return res.send({ data: WorkoutPlans, user: res.locals.user });
     } catch (error: any) {
         logger.error(error)
         return res.status(409).send(error.message)

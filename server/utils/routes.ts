@@ -10,7 +10,7 @@ import { createProductHandler, deleteManyProductHandler, getProductByNameHandler
 import { createExerciseSchema } from '../mongoDB/schema/exercise.schema';
 import { createExerciseHandler, deleteManyExerciseHandler, getExerciseByNameHandler } from '../mongoDB/controller/exercise.controller';
 import { createWorkoutPlanSchema } from '../mongoDB/schema/workoutPlan.schema';
-import { createWorkoutPlanHandler, deleteManyWorkoutPlanHandler } from '../mongoDB/controller/workoutPlan.controller';
+import { createWorkoutPlanHandler, deleteManyWorkoutPlanHandler, getGuestWorkoutPlanHandler, getGuestWorkoutPlansHandler } from '../mongoDB/controller/workoutPlan.controller';
 import { createDailyMeasurementSchema } from '../mongoDB/schema/dailyMeasurement.schema'
 import { createDailyMeasurementHandler, changeDailyMeasurementHandler, getGuestDailyMeasurementHandler } from '../mongoDB/controller/dailyMeasurement.controller'
 import { getGuestDailyMeasurementsHandler } from '../mongoDB/controller/dailyMeasurements.controller'
@@ -34,8 +34,8 @@ const routes = (app: Express) => {
     app.post('/insert/exercise', requireUser, validateResource(createExerciseSchema), createExerciseHandler)
     app.post('/delete/exercise', requireUser, deleteManyExerciseHandler)
 
-    // app.post('/guest/workout_plan', getUserByLogin, )
-    // app.post('/guest/workout_plans', getUserByLogin, )
+    app.post('/guest/workout_plan', getUserByLogin, getGuestWorkoutPlanHandler)
+    app.post('/guest/workout_plans', getUserByLogin, getGuestWorkoutPlansHandler)
     app.post('/insert/workout_plan', requireUser, validateResource(createWorkoutPlanSchema), createWorkoutPlanHandler)
     app.post('/delete/workout_plan', requireUser, deleteManyWorkoutPlanHandler)
 
