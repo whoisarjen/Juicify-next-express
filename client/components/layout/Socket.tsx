@@ -118,6 +118,16 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                     const isOnline = store.getState().online.isOnline;
                     const lastUpdated: any = localStorage.getItem('lastUpdated')
 
+                    if (isOnline && object.lastUpdated.settings > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'settings')) {
+                        newTimeOfUpdate = object.lastUpdated.settings
+                        const response = await axios.post(
+                            `${config.server}/auth/refresh`,
+                            {},
+                            { withCredentials: true }
+                        );
+                        setLastUpdated();
+                        dispatch(setToken(response.data.token));
+                    }
 
                     if (isOnline && object.lastUpdated.product > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'product')) {
                         newTimeOfUpdate = object.lastUpdated.product
@@ -148,82 +158,75 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                         if (!isOnline) await addIndexedDB('whatToUpdate', [{ '_id': 'daily_measurement' }]);
                     }
 
+                    //     if (isOnline) {
+                    //         localStorage.removeItem('last_offline_created_daily_measurement_date')
+                    //         if (localStorage.getItem('version') < object.versionOFapplication) {
+                    //             if ('serviceWorker' in navigator) {
+                    //                 try {
+                    //                     await navigator.serviceWorker.register('./service-worker.js').then(async registration => {
+                    //                         await registration.unregister().then(function () {
+                    //                             localStorage.setItem('version', object.versionOFapplication)
+                    //                             localStorage.removeItem('componentsLoaded')
+                    //                         });
+                    //                     });
+                    //                 } catch (err) {
+                    //                     console.log(err)
+                    //                 }
+                    //             }
+                    //         }
+                    //         if (newTimeOfUpdate > 0) localStorage.setItem('lastUpdated', newTimeOfUpdate)
+                    //         if (object.lastUpdated.refresh > lastUpdated) {
+                    //             localStorage.setItem('lastUpdated', object.lastUpdated.refresh)
+                    //             window.location.reload(true);
+                    //         }
+                    //     }
 
-                //     if (isOnline && object.lastUpdated.settings > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'settings')) {
-                //         newTimeOfUpdate = object.lastUpdated.settings
-                //         this.synchroMessage = true;
-                //         await refreshToken();
-                //     }
+                    // })
 
-                //     if (isOnline) {
-                //         localStorage.removeItem('last_offline_created_daily_measurement_date')
-                //         if (localStorage.getItem('version') < object.versionOFapplication) {
-                //             if ('serviceWorker' in navigator) {
-                //                 try {
-                //                     await navigator.serviceWorker.register('./service-worker.js').then(async registration => {
-                //                         await registration.unregister().then(function () {
-                //                             localStorage.setItem('version', object.versionOFapplication)
-                //                             localStorage.removeItem('componentsLoaded')
-                //                         });
-                //                     });
-                //                 } catch (err) {
-                //                     console.log(err)
-                //                 }
-                //             }
-                //         }
-                //         if (newTimeOfUpdate > 0) localStorage.setItem('lastUpdated', newTimeOfUpdate)
-                //         if (object.lastUpdated.refresh > lastUpdated) {
-                //             localStorage.setItem('lastUpdated', object.lastUpdated.refresh)
-                //             window.location.reload(true);
-                //         }
-                //     }
+                    if (newTimeOfUpdate) {
+                        setKey(new Date().getTime())
+                    }
+                } catch (error: any) {
+                    console.log('synchronization ended with error', error)
+                    dispatch(setIsOnline(false))
+                }
+            })
 
-                // })
+            socket.on('synchronizationMessege', async (messege) => {
+                console.log('synchronizationMessege', (messege.socket_ID != await getCookie('socket_ID')), await getCookie('socket_ID'), messege)
+                if (messege.socket_ID != await getCookie('socket_ID')) {
+                    console.log('Thats the messege, which reached synchronization process', messege)
+                    if (messege.where == 'settings') {
+                        dispatch(setToken(messege.array[0].token));
+                        setCookie('token', messege.array[0].token, config.tokenSettings)
+                    } else {
+                        let keyIndexedDB = '_id'
+                        if (messege.where == 'daily_measurement') {
+                            keyIndexedDB = 'whenAdded'
+                        }
+                        for (let i = 0; i < messege.array.length; i++) {
+                            await deleteIndexedDB(messege.where, messege.array[i][keyIndexedDB])
+                        }
+                        if (messege.whatToDo == 'change') {
+                            await addIndexedDB(messege.where, messege.array)
+                        }
+                    }
+                    setKey(new Date().getTime())
+                    setLastUpdated()
+                } else {
+                    console.log('Normally would try synchro, but protection works!')
+                }
+            })
 
-            if (newTimeOfUpdate) {
-                setKey(new Date().getTime())
-            }
-        } catch (error: any) {
-            console.log('synchronization ended with error', error)
-            dispatch(setIsOnline(false))
+            socket.on('disconnect', () => dispatch(setIsOnline(false))) // Closed socket => user has to be offline
         }
-    })
-
-    socket.on('synchronizationMessege', async (messege) => {
-        console.log('synchronizationMessege', (messege.socket_ID != await getCookie('socket_ID')), await getCookie('socket_ID'), messege)
-        if (messege.socket_ID != await getCookie('socket_ID')) {
-            console.log('Thats the messege, which reached synchronization process', messege)
-            if (messege.where == 'settings') {
-                dispatch(setToken(messege.array[0].token));
-                setCookie('token', messege.array[0].token, config.tokenSettings)
-            } else {
-                let keyIndexedDB = '_id'
-                if (messege.where == 'daily_measurement') {
-                    keyIndexedDB = 'whenAdded'
-                }
-                for (let i = 0; i < messege.array.length; i++) {
-                    await deleteIndexedDB(messege.where, messege.array[i][keyIndexedDB])
-                }
-                if (messege.whatToDo == 'change') {
-                    await addIndexedDB(messege.where, messege.array)
-                }
-            }
-            setKey(new Date().getTime())
-            setLastUpdated()
-        } else {
-            console.log('Normally would try synchro, but protection works!')
-        }
-    })
-
-    socket.on('disconnect', () => dispatch(setIsOnline(false))) // Closed socket => user has to be offline
-}
     }, [cookies.token])
 
-return (
-    <div className='socket' key={key}>
-        {children}
-    </div>
-)
+    return (
+        <div className='socket' key={key}>
+            {children}
+        </div>
+    )
 }
 
 export default Socket

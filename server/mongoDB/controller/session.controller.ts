@@ -1,8 +1,9 @@
 import { Request, Response } from "express"
 import { validatePassword } from "../service/user.service"
 import errorBook from "../../utils/errorBook"
-import { createSession, findSessions, updateSession } from "../service/session.service"
+import { createSession, findSessions, reIssueAccessToken, updateSession } from "../service/session.service"
 import config from "config"
+import { get } from 'lodash'
 import { signJWT } from '../../utils/jwt.utils'
 import { getUserProducts } from '../service/product.service'
 import { getUserExercises } from '../service/exercise.service'
@@ -62,6 +63,27 @@ export async function createUserSessionHandler(req: Request, res: Response) {
         workout_plan,
         daily_measurement
     })
+}
+
+export async function refreshUserSessionHandler(req: Request, res: Response) {
+    const refresh_token = get(req, 'cookies.refresh_token') || get(req, 'headers.x-refresh', '').replace(/^Bearer\s/, '')
+    const token = await reIssueAccessToken(refresh_token, res)
+
+    if (token) {
+        res.setHeader('x-access-token', token)
+
+        res.cookie('token', token, {
+            maxAge: config.get<number>('COOKIE_TOKEN_LIFE_TIME_IN_S'),
+            httpOnly: config.get<boolean>('COOKIE_HTTPONLY'),
+            domain: config.get<string>('COOKIE_DOMAIN'),
+            path: '/',
+            sameSite: 'strict',
+            secure: config.get<boolean>('COOKIE_SECURE')
+        })
+
+    }
+
+    return res.send({ token })
 }
 
 export async function synchronizationUserSessionHandler(req: Request, res: Response) {
