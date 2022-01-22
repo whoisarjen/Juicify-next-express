@@ -14,12 +14,13 @@ export const createDailyMeasurementHandler = async (req: Request<{}, {}, CreateD
                     whenAdded: req.body.array[i].whenAdded,
                     user_ID: req.body.array[i].user_ID
                 })
+                
                 if (res && res._id) {
                     responseArray.push(
                         (
                             await changeDailyMeasurement(
                                 [
-                                    await connectTwoDailyMeasurements(req.body.array[i], res)
+                                    await connectTwoDailyMeasurements(res, req.body.array[i])
                                 ]
                             )
                         )[0]
