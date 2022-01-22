@@ -22,6 +22,9 @@ refresh_token need option to refresh
 protecting user from overwritting settings options witch we dont want to let change
 
 
+settings need to send socket info
+
+
 notify for not public users / 404 redirect
 coach
 barcode

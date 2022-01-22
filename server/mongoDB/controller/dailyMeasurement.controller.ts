@@ -40,7 +40,7 @@ export const createDailyMeasurementHandler = async (req: Request<{}, {}, CreateD
                 return res.status(409).send(error.message)
             }
         }
-        await socketHandleUserSynchronization({ req, res, data: responseArray, whatToDo: 'change', where: 'DailyMeasurement' })
+        await socketHandleUserSynchronization({ req, res, data: responseArray, whatToDo: 'change', where: 'daily_measurement' })
         return res.send(responseArray);
     } catch (error: any) {
         logger.error(error)
@@ -51,7 +51,7 @@ export const createDailyMeasurementHandler = async (req: Request<{}, {}, CreateD
 export const changeDailyMeasurementHandler = async (req: Request<{}, {}, CreateDailyMeasurementInput['body']>, res: Response) => {
     try {
         const DailyMeasurements = await changeDailyMeasurement(req.body.array)
-        await socketHandleUserSynchronization({ req, res, data: DailyMeasurements, whatToDo: 'change', where: 'DailyMeasurement' })
+        await socketHandleUserSynchronization({ req, res, data: DailyMeasurements, whatToDo: 'change', where: 'daily_measurement' })
         return res.send(DailyMeasurements);
     } catch (error: any) {
         logger.error(error)

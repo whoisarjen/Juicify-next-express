@@ -81,7 +81,7 @@ const Settings: FunctionComponent = () => {
             return true;
         }
         await changeSettings({ ...changedObject, current }) // Current needs to be send just in case, user try to change password
-        setIsLoading(false)
+        // setIsLoading(false)
     }
 
     useEffect(() => {
