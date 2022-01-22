@@ -11,7 +11,7 @@ describe('guest dailyMeasurement route', () => {
             const { statusCode, body } = await supertest(app)
                 .post("/guest/daily_measurement")
                 .send({
-                    uniqueKey: '2022-01-22',
+                    uniqueKey: '2022-01-16',
                     login: 'Arjen'
                 });
 
@@ -30,13 +30,14 @@ describe('guest dailyMeasurement route', () => {
             const { statusCode, body } = await supertest(app)
                 .post("/guest/daily_measurement")
                 .send({
-                    uniqueKey: '2022-01-22',
+                    uniqueKey: '2022-01-16',
                     login: 'Pycior'
                 });
 
             expect(statusCode).toBe(200)
             expect(body).toEqual({
-                user: expect.any(Object)
+                user: expect.any(Object),
+                // data: expect.any(Object)
             })
         })
     })
@@ -58,7 +59,7 @@ describe('guest dailyMeasurement route', () => {
 
 describe('guest dailyMeasurement route', () => {
     describe('given the login and wrong date', () => {
-        it('should return 400', async () => {
+        it('should return 401', async () => {
             const { statusCode } = await supertest(app)
                 .post("/guest/daily_measurement")
                 .send({
@@ -66,7 +67,7 @@ describe('guest dailyMeasurement route', () => {
                     whenAdded: 'itshouldntwork'
                 });
 
-            expect(statusCode).toBe(400)
+            expect(statusCode).toBe(401)
         })
     })
 })

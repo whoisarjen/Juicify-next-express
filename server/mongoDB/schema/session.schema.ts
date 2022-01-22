@@ -1,15 +1,8 @@
-import { object, string, TypeOf } from 'zod'
-import errorBook from '../../utils/errorBook'
+import { object, TypeOf } from 'zod'
+import { createSessionSchema as schema } from '../../../client/schema/session.schema'
 
 export const createSessionSchema = object({
-    body: object({
-        login: string({
-            required_error: errorBook['LOGIN IS REQUIRED']['VALUE']
-        }).min(3),
-        password: string({
-            required_error: errorBook['PASSWORD IS REQUIRED']['VALUE']
-        }).min(8)
-    })
+    body: schema
 })
 
 export type CreateSessionInput = TypeOf<typeof createSessionSchema>
