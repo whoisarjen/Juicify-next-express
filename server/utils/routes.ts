@@ -15,6 +15,7 @@ import { createDailyMeasurementSchema } from '../mongoDB/schema/dailyMeasurement
 import { createDailyMeasurementHandler, changeDailyMeasurementHandler, getGuestDailyMeasurementHandler } from '../mongoDB/controller/dailyMeasurement.controller'
 import { getGuestDailyMeasurementsHandler } from '../mongoDB/controller/dailyMeasurements.controller'
 import getUserByLogin from '../mongoDB/middleware/getUserByLogin';
+import { analyzeCoachHandler, createCoachHandler } from '../mongoDB/controller/coach.controller';
 
 const routes = (app: Express) => {
 
@@ -40,6 +41,9 @@ const routes = (app: Express) => {
     app.post('/guest/daily_measurements', getUserByLogin, getGuestDailyMeasurementsHandler)
     app.post('/insert/daily_measurement', requireUser, validateResource(createDailyMeasurementSchema), createDailyMeasurementHandler)
     app.post('/update/daily_measurement', requireUser, validateResource(createDailyMeasurementSchema), changeDailyMeasurementHandler)
+
+    app.post('/coach/create', requireUser, createCoachHandler)
+    app.post('/coach/create', requireUser, analyzeCoachHandler)
 
 }
 

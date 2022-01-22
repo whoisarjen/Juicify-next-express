@@ -8,6 +8,8 @@ import { getUserProducts } from '../service/product.service'
 import { getUserExercises } from '../service/exercise.service'
 import { getUserWorkoutPlans } from "../service/workoutPlan.service"
 import { getUserDailyMeasurements } from "../service/dailyMeasurement.service"
+import { DocumentDefinition } from "mongoose"
+import { UserProps } from "../models/user.model"
 
 export async function createUserSessionHandler(req: Request, res: Response) {
     const user = await validatePassword(req.body)
@@ -84,6 +86,24 @@ export async function synchronizationUserSessionHandler(req: Request, res: Respo
         res.send(daily_measurement)
     }
 
+}
+
+export async function updateToken(req: Request, res: Response, user: DocumentDefinition<Omit<UserProps, 'createdAt' | 'updatedAt' | 'comparePassword' | 'birth'>>) {
+    const token = signJWT(
+        { ...user, session: res.locals.token.session },
+        { expiresIn: config.get<number>('TOKEN_LIFE_TIME_IN_S') + 's' }
+    )
+
+    res.cookie('token', token, {
+        maxAge: config.get<number>('COOKIE_TOKEN_LIFE_TIME_IN_S'),
+        httpOnly: config.get<boolean>('COOKIE_HTTPONLY'),
+        domain: config.get<string>('COOKIE_DOMAIN'),
+        path: '/',
+        sameSite: 'strict',
+        secure: config.get<boolean>('COOKIE_SECURE')
+    })
+
+    return token
 }
 
 // export async function getUserSessionHandler(req: Request, res: Response) {

@@ -11,14 +11,17 @@ import LosingWeight from '../components/coach/LosingWeight';
 import CheckingWeekData from '../components/coach/CheckingWeekData';
 import ChooseCaloriesSource from '../components/coach/ChooseCaloriesSource';
 import Loading from '../components/coach/Loading';
-import { useAppSelector } from "../hooks/useRedux";
+import { useAppDispatch, useAppSelector } from "../hooks/useRedux";
 import useCoach from "../hooks/useCoach";
 import { getAllIndexedDB, getIndexedDBbyID } from "../utils/indexedDB";
 import { getAge, getDailyDate, getShortDate } from "../utils/manageDate";
 import { loadMissingDays } from "../hooks/useDailyMeasurements";
+import { setToken } from "../redux/features/tokenSlice";
 
 const Coach: FunctionComponent = () => {
     expectLoggedIN()
+    const [block, setBlock] = useState(true)
+    const dispatch = useAppDispatch();
     const [createDiet, analyzeDiet] = useCoach()
     const token: any = useAppSelector(state => state.token.value)
     const [step, setStep] = useState('Loading')
@@ -34,6 +37,9 @@ const Coach: FunctionComponent = () => {
                 today: getShortDate()
             }
         })
+            .then(async response => {
+                dispatch(setToken(response));
+            })
             .then(() => setStep('Result'))
     }
 
@@ -45,13 +51,17 @@ const Coach: FunctionComponent = () => {
             age: getAge(token.birth),
             data: await loadMissingDays(await getAllIndexedDB('daily_measurement'), token._id, 15, getShortDate())
         })
+            .then(async response => {
+                dispatch(setToken(response));
+            })
             .then(() => setStep('Result'))
     }
 
     const handlePreviousStep = (where: string = token.coach_analyze ? 'Standard' : 'Welcome') => setStep(where)
 
     useEffect(() => {
-        if (step != 'Result') {
+        if (block) {
+            setBlock(false)
             setStep(token.coach_analyze ? 'Standard' : 'Welcome')
         }
     }, [token])

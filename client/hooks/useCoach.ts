@@ -1,26 +1,33 @@
-import { useCookies } from "react-cookie"
-import { API } from '../utils/API'
+import axios from "axios";
+import { useCookies } from "react-cookie";
+import config from '../config/default'
 
 const useCoach = () => {
     const [, setCookie] = useCookies()
 
     const createDiet = async (object: any) => {
-        const { response, isSuccess } = await API('/coach/create', {
-            array: [object]
-        })
-        if (isSuccess) {
-            setCookie('refresh_token', response.data.refresh_token)
-            setCookie('token', response.data.token)
+        try {
+            const response = await axios.post(
+                `${config.server}/coach/create`,
+                { ...object },
+                { withCredentials: true }
+            );
+            return response.data
+        } catch (error: any) {
+            console.log(error)
         }
     }
 
     const analyzeDiet = async (object: any) => {
-        const { response, isSuccess } = await API('/coach/analyze', {
-            array: [object]
-        })
-        if (isSuccess) {
-            setCookie('refresh_token', response.data.refresh_token)
-            setCookie('token', response.data.token)
+        try {
+            const response = await axios.post(
+                `${config.server}/coach/analyze`,
+                { ...object },
+                { withCredentials: true }
+            );
+            return response.data
+        } catch (error: any) {
+            console.log(error)
         }
     }
 

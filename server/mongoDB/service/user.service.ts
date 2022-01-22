@@ -24,6 +24,7 @@ export const changeUser = async (input: DocumentDefinition<Omit<UserProps, 'crea
                 new: true
             }
         )
+        
         return omit(user.toJSON(), 'password')
     } catch (error: any) {
         throw new Error(error)

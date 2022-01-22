@@ -5,8 +5,7 @@ import { changeUser, createUser, getUsersByLogin } from "../service/user.service
 import { omit } from 'lodash'
 import { removeUsersSensitiveData } from '../../utils/guest.utils'
 import errorBook from "../../utils/errorBook"
-import config from "config"
-import { signJWT } from "../../utils/jwt.utils"
+import { updateToken } from "./session.controller"
 
 export const createUserHandler = async (req: Request<{}, {}, CreateUserInput['body']>, res: Response) => {
     try {
@@ -25,19 +24,7 @@ export const changeUserHandler = async (req: Request<{}, {}, CreateUserInput['bo
     try {
         const user = await changeUser({ ...req.body, _id: res.locals.token._id })
 
-        const token = signJWT(
-            { ...user, session: res.locals.token.session },
-            { expiresIn: config.get<number>('TOKEN_LIFE_TIME_IN_S') + 's' }
-        )
-
-        res.cookie('token', token, {
-            maxAge: config.get<number>('COOKIE_TOKEN_LIFE_TIME_IN_S'),
-            httpOnly: config.get<boolean>('COOKIE_HTTPONLY'),
-            domain: config.get<string>('COOKIE_DOMAIN'),
-            path: '/',
-            sameSite: 'strict',
-            secure: config.get<boolean>('COOKIE_SECURE')
-        })
+        const token = await updateToken(req, res, user)
 
         return res.send({
             token
