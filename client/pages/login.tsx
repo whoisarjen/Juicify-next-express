@@ -59,7 +59,7 @@ const Login = () => {
                 }
             }
             dispatch(setToken(response.data.token));
-            setCookie('token', response.data.token) // it has to be here to force connection query to socket
+            setCookie('token', response.data.token, config.tokenSettings) // it has to be here to force connection query to socket
             router.push(
                 `/${readToken(response.data.token).login
                 }/nutrition-diary/${getShortDate()}`

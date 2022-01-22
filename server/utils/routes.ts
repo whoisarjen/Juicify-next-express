@@ -34,6 +34,8 @@ const routes = (app: Express) => {
     app.post('/insert/exercise', requireUser, validateResource(createExerciseSchema), createExerciseHandler)
     app.post('/delete/exercise', requireUser, deleteManyExerciseHandler)
 
+    // app.post('/guest/workout_plan', getUserByLogin, )
+    // app.post('/guest/workout_plans', getUserByLogin, )
     app.post('/insert/workout_plan', requireUser, validateResource(createWorkoutPlanSchema), createWorkoutPlanHandler)
     app.post('/delete/workout_plan', requireUser, deleteManyWorkoutPlanHandler)
 

@@ -6,22 +6,10 @@ workout add option to add cardio exercises + timer i guess
 user's schema should always check if when change, user didnt change premium etc.
 
 
-One fetch sucks. Need to seperate with hooks and probably let dailyMeasurementS send the lowest and highest date
-
-
-block find for length < 3 on server site I guess
-
-
 user mongo is not unique lettersize sensitive
 
 
 refresh_token need option to refresh
-
-
-protecting user from overwritting settings options witch we dont want to let change
-
-
-settings need to send socket info
 
 
 notify for not public users / 404 redirect

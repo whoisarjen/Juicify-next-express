@@ -10,6 +10,7 @@ import { getUserWorkoutPlans } from "../service/workoutPlan.service"
 import { getUserDailyMeasurements } from "../service/dailyMeasurement.service"
 import { DocumentDefinition } from "mongoose"
 import { UserProps } from "../models/user.model"
+import { socketHandleUserSynchronization } from "../../utils/socket"
 
 export async function createUserSessionHandler(req: Request, res: Response) {
     const user = await validatePassword(req.body)
@@ -102,6 +103,8 @@ export async function updateToken(req: Request, res: Response, user: DocumentDef
         sameSite: 'strict',
         secure: config.get<boolean>('COOKIE_SECURE')
     })
+
+    await socketHandleUserSynchronization({ req, res, data: [token], whatToDo: 'change', where: 'settings' })
 
     return token
 }

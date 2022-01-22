@@ -201,7 +201,8 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                 if (messege.socket_ID != await getCookie('socket_ID')) {
                     console.log('Thats the messege, which reached synchronization process', messege)
                     if (messege.where == 'settings') {
-                        dispatch(setToken(messege.array.token));
+                        dispatch(setToken(messege.array[0].token));
+                        setCookie('token', messege.array[0].token, config.tokenSettings)
                     } else {
                         let keyIndexedDB = '_id'
                         if (messege.where == 'daily_measurement') {
