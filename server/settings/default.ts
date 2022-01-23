@@ -3,7 +3,7 @@ export default {
     SALT_WORK_FACTORY: 10,
     APP_VERSION: 1,
     numberSupportedDays: 28 + 1, // One more than client site is supporting
-    ORIGIN: 'http://localhost:3000',
+    ORIGIN: 'http://localhost',
     TOKEN_LIFE_TIME_IN_S: 1000 * 60 * 15,
     REFRESH_TOKEN_LIFE_TIME_IN_S: 1000 * 60 * 60 * 25 * 365,
     COOKIE_TOKEN_LIFE_TIME_IN_S: 1000 * 60 * 60 * 25 * 29, // 28 days support + 1
