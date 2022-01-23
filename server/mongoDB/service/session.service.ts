@@ -4,7 +4,7 @@ import { SessionModel, SessionProps } from "../models/session.model";
 import { get } from 'lodash'
 import { getUser } from './user.service'
 import { Response } from 'express'
-import config from "config";
+import settings from "../../settings/default";
 
 export async function createSession(user_ID: string, userAgent: string) {
     const session = await SessionModel.create({ user_ID: user_ID, userAgent })
@@ -26,12 +26,12 @@ export async function reIssueAccessToken(refresh_token: string, res: Response) {
     // 30 days before refresh_token expired, gona refresh it
     if (new Date(decoded.exp) < new Date((new Date()).setDate((new Date()).getDate() + 30))) {
         res.cookie('refresh_token', refresh_token, {
-            maxAge: config.get<number>('COOKIE_REFRESH_TOKEN_LIFE_TIME_IN_S'),
-            httpOnly: config.get<boolean>('COOKIE_HTTPONLY'),
-            domain: config.get<string>('COOKIE_DOMAIN'),
+            maxAge: settings.COOKIE_REFRESH_TOKEN_LIFE_TIME_IN_S,
+            httpOnly: settings.COOKIE_HTTPONLY,
+            domain: settings.COOKIE_DOMAIN,
             path: '/',
             sameSite: 'strict',
-            secure: config.get<boolean>('COOKIE_SECURE')
+            secure: settings.COOKIE_SECURE
         })
     }
 
@@ -53,7 +53,7 @@ export async function reIssueAccessToken(refresh_token: string, res: Response) {
 
     const token = signJWT(
         { ...user, session: session._id },
-        { expiresIn: config.get('TOKEN_LIFE_TIME_IN_S') }
+        { expiresIn: settings.TOKEN_LIFE_TIME_IN_S }
     )
 
     return token;

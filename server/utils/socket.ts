@@ -1,7 +1,7 @@
 import { Server, Socket } from "socket.io";
 import logger from "./logger";
 import { verifyJWT } from "./jwt.utils";
-import config from 'config'
+import settings from '../settings/default'
 import { createClient } from 'redis';
 import { Request, Response } from 'express'
 
@@ -20,7 +20,7 @@ export async function socket({ io }: { io: Server }) {
                 // If refresh_token is dead, logout user, but allow synchronization | Does it really gona work? Check token while synchro won't kill connection...?
                 io.to(socket.id).emit('compareDatabases', {
                     "lastUpdated": { ...await synchronizationObject(0), ...{ logout: new Date().getTime() + 999999999 } },
-                    "version": config.get<number>('APP_VERSION'),
+                    "version": settings.APP_VERSION,
                     "socket_ID": socket.id
                 })
             } else {
@@ -28,7 +28,7 @@ export async function socket({ io }: { io: Server }) {
                 socket.join(decoded._id)
                 io.to(socket.id).emit('compareDatabases', {
                     "lastUpdated": JSON.parse(await redis.get(decoded._id)) || await createSynchronizationObject(decoded._id),
-                    "version": config.get<number>('APP_VERSION'),
+                    "version": settings.APP_VERSION,
                     "socket_ID": socket.id
                 })
             }

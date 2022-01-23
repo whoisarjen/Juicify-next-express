@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
-import config from 'config'
+import settings from '../settings/default'
 
-const tokenKey = config.get<string>('TOKEN_KEY')
+const tokenKey = settings.TOKEN_KEY
 
 export function signJWT(object: Object, options?: jwt.SignOptions | undefined) {
     return jwt.sign(object, tokenKey, {

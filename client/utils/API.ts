@@ -37,7 +37,7 @@ const loadValueByLogin = async (where: string, find: any, login: string = find) 
     }
 }
 
-const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, updateDailyKey: any, updateDailyKey2: any, updateDailyKey3: any, whatToUpdate: any, whatToUpdate2: any, whatToUpdate3: any): Promise<Array<any>> => {
+const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, updateDailyKey: any = false, updateDailyKey2: any = false, updateDailyKey3: any = false, whatToUpdate: any = false, whatToUpdate2: any = false, whatToUpdate3: any = false): Promise<Array<any>> => {
     return new Promise(async resolve => {
         let array = JSON.parse(JSON.stringify(sentArray))
         const copyArray = JSON.parse(JSON.stringify(array));

@@ -1,7 +1,7 @@
 import { DocumentDefinition } from 'mongoose'
 import { DailyMeasurementModel, DailyMeasurementProps } from '../models/dailyMeasurement.model'
 import { UserProps } from '../models/user.model'
-import config from 'config'
+import settings from "../../settings/default";
 import { getProduct } from './product.service'
 import { getExercise } from './exercise.service'
 import logger from '../../utils/logger'
@@ -70,7 +70,7 @@ export const getUserDailyMeasurements = async (token: DocumentDefinition<UserPro
         const daily_measurement = await DailyMeasurementModel.find({
             user_ID: token._id,
             whenAdded: {
-                $gte: new Date((new Date().setDate((new Date().getDate() - config.get<number>('numberSupportedDays')))))
+                $gte: new Date((new Date().setDate((new Date().getDate() - settings.numberSupportedDays))))
             }
         })
 
@@ -120,7 +120,7 @@ export const loadDailyMeasurementMissingData = async (daily_measurement: DailyMe
             }
             response = { ...response, workout_result }
         }
-        
+
         return { ...JSON.parse(JSON.stringify(daily_measurement)), ...response }
     } catch (error: any) {
         logger.error(error)
