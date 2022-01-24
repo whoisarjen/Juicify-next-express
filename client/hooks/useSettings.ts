@@ -1,12 +1,11 @@
 import axios from "axios"
-import config from '../config/default'
 
 const useSettings = () => {
 
     const changeSettings = async (object: any) => {
         try {
             await axios.post(
-                `${config.server}/auth/change`,
+                `${process.env.NEXT_PUBLIC_SERVER}/auth/change`,
                 object,
                 { withCredentials: true }
             );

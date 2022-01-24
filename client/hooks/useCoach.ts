@@ -1,14 +1,10 @@
 import axios from "axios";
-import { useCookies } from "react-cookie";
-import config from '../config/default'
 
 const useCoach = () => {
-    const [, setCookie] = useCookies()
-
     const createDiet = async (object: any) => {
         try {
             const response = await axios.post(
-                `${config.server}/coach/create`,
+                `${process.env.NEXT_PUBLIC_SERVER}/coach/create`,
                 { ...object },
                 { withCredentials: true }
             );
@@ -21,7 +17,7 @@ const useCoach = () => {
     const analyzeDiet = async (object: any) => {
         try {
             const response = await axios.post(
-                `${config.server}/coach/analyze`,
+                `${process.env.NEXT_PUBLIC_SERVER}/coach/analyze`,
                 { ...object },
                 { withCredentials: true }
             );

@@ -19,7 +19,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNotify } from "../hooks/useNotify";
 import { createSessionSchema, CreateSessionProps } from '../schema/session.schema'
-import config from "../config/default";
 import { useCookies } from "react-cookie";
 
 const Login = () => {
@@ -45,7 +44,7 @@ const Login = () => {
         try {
             setLoading(true);
             const response = await axios.post(
-                `${config.server}/auth/login`,
+                `${process.env.NEXT_PUBLIC_SERVER}/auth/login`,
                 values,
                 { withCredentials: true }
             );
@@ -59,7 +58,15 @@ const Login = () => {
                 }
             }
             dispatch(setToken(response.data.token));
-            setCookie('token', response.data.token, config.tokenSettings) // it has to be here to force connection query to socket
+            // it has to be here to force connection query to socket
+            setCookie('token', response.data.token, {
+                maxAge: parseInt(process.env.NEXT_PUBLIC_COOKIE_TOKEN_LIFE_TIME_IN_S as string),
+                httpOnly: !!process.env.NEXT_PUBLIC_COOKIE_HTTPONLY,
+                domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN as string,
+                path: '/',
+                sameSite: 'strict',
+                secure: !!process.env.NEXT_PUBLIC_COOKIE_SECURE
+            })
             router.push(
                 `/${readToken(response.data.token).login
                 }/nutrition-diary/${getShortDate()}`

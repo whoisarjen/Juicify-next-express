@@ -2,7 +2,6 @@ import { store } from '../redux/store'
 import { useState, useEffect } from "react";
 import { addIndexedDB, getAllIndexedDB, getIndexedDBbyID } from '../utils/indexedDB'
 import axios from 'axios';
-import config from '../config/default'
 
 const prepareItems = async (
     data: Array<any>,
@@ -67,7 +66,7 @@ const useFind = (value: any, where: string, tab: number, skipThoseIDS: Array<any
                             if (store.getState().online.isOnline) {
                                 try {
                                     const response: any = await axios.post(
-                                        `${config.server}/find/${where}s`,
+                                        `${process.env.NEXT_PUBLIC_SERVER}/find/${where}s`,
                                         { find: find },
                                         { withCredentials: true }
                                     );

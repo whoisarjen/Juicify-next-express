@@ -1,6 +1,5 @@
 import { getIndexedDBbyID, addIndexedDB, deleteIndexedDB, putIndexedDB, getAllIndexedDB, putInformationAboutNeededUpdate } from "./indexedDB"
 import { store } from '../redux/store'
-import config from '../config/default'
 import axios from "axios"
 import { setIsOnline } from "../redux/features/onlineSlice"
 
@@ -10,7 +9,7 @@ const API = async (url: string, body: any): Promise<any> => {
     console.log(url, body)
     try {
         const res = await axios.post(
-            `${config.server}${url}`,
+            `${process.env.NEXT_PUBLIC_SERVER}${url}`,
             { ...body },
             { withCredentials: true }
         );
@@ -70,7 +69,7 @@ const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, updateDa
             }
             try {
                 const res = await axios.post(
-                    `${config.server}/insert/${where}`,
+                    `${process.env.NEXT_PUBLIC_SERVER}/insert/${where}`,
                     { array },
                     { withCredentials: true }
                 );
@@ -181,7 +180,7 @@ const overwriteThoseIDSinDB = async (where: string, sentArray: Array<any>): Prom
             if (isOnline) {
                 try {
                     const res = await axios.post(
-                        `${config.server}/update/${where}`,
+                        `${process.env.NEXT_PUBLIC_SERVER}/update/${where}`,
                         { array },
                         { withCredentials: true }
                     );
@@ -232,7 +231,7 @@ const deleteThoseIDSfromDB = async (where: string, array: Array<any>, isNewValue
                     if (await is_id(array[0]._id)) {
                         try {
                             await axios.post(
-                                `${config.server}/delete`,
+                                `${process.env.NEXT_PUBLIC_SERVER}/delete`,
                                 {
                                     where,
                                     array

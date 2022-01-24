@@ -10,7 +10,6 @@ import { overwriteThoseIDSinDB, insertThoseIDStoDB, deleteThoseIDSfromDB, setLas
 import { store } from '../../redux/store'
 import { getCookie, refreshToken } from '../../utils/checkAuth'
 import axios from 'axios';
-import config from '../../config/default'
 
 const synchronizationAfterOffline = async (isNewValueInDB: boolean = false, where: string, updateDailyKey: any, updateDailyKey2: any, updateDailyKey3: any, whatToUpdate: any, whatToUpdate2: any = '_id', whatToUpdate3: any) => {
     return new Promise((resolve, reject) => {
@@ -35,7 +34,7 @@ const synchronizationAfterOffline = async (isNewValueInDB: boolean = false, wher
                 }
                 if (isNewValueInDB) {
                     const res = await axios.post(
-                        `${config.server}/synchronization`,
+                        `${process.env.NEXT_PUBLIC_SERVER}/synchronization`,
                         { where },
                         { withCredentials: true }
                     );
@@ -100,7 +99,7 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
             const socketQuery: any = {
                 query: `refresh_token=${cookies.refresh_token}`
             }
-            const socket = io(config.server, socketQuery)
+            const socket = io(process.env.NEXT_PUBLIC_SERVER as any, socketQuery)
 
             socket.on('compareDatabases', async (object) => {
                 try {

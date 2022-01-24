@@ -29,13 +29,7 @@ const MUI: FunctionComponent<MUIProps> = ({ children }) => {
 
     useEffect(() => setMode(localStorage.getItem('isDarkMode') ? 'dark' : 'light'), [])
 
-    useEffect(() => {
-        if (mode === 'dark') {
-            document.documentElement.style.setProperty('--theme-background', '#121212')
-        } else {
-            document.documentElement.style.setProperty('--theme-background', '#ffffff')
-        }
-    }, [mode])
+    useEffect(() => document.documentElement.style.setProperty('--theme-background', mode == 'dark' ? '#121212' : '#ffffff'), [mode])
 
     return (
         <ColorModeContext.Provider value={colorMode}>

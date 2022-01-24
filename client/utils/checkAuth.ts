@@ -6,7 +6,6 @@ import { getShortDate } from "./manageDate";
 import { deleteDatabaseIndexedDB } from "./indexedDB";
 import { setLastUpdated } from "./API";
 import axios from "axios";
-import config from '../config/default'
 
 const logout = async () => {
     await deleteDatabaseIndexedDB();
@@ -61,7 +60,7 @@ const readToken = (token: string) => {
 
 export const refreshToken = async () => {
     const response = await axios.post(
-        `${config.server}/auth/refresh`,
+        `${process.env.NEXT_PUBLIC_SERVER}/auth/refresh`,
         {},
         { withCredentials: true }
     );
