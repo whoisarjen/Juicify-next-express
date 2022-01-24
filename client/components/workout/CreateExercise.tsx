@@ -10,10 +10,9 @@ import useTranslation from 'next-translate/useTranslation';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNotify } from '../../hooks/useNotify';
 import { zodResolver } from '@hookform/resolvers/zod';
-import config from '../../config/default'
 import { CreateExerciseInput, createExerciseSchema } from '../../schema/exercise.schema';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
+import { insertThoseIDStoDB } from '../../utils/API';
 
 interface CreateExerciseProps {
     closeCreateExercise: () => void,
@@ -39,13 +38,10 @@ const CreateExercise: FunctionComponent<CreateExerciseProps> = ({ closeCreateExe
     const onSubmit = async (values: CreateExerciseInput) => {
         try {
             setLoading(true);
-            const response = await axios.post(
-                `${config.server}/insert/exercise`,
-                { array: [values] },
-                { withCredentials: true }
-            );
-            created(response.data[0].name)
-            success()
+            await insertThoseIDStoDB('exercise', [values])
+                .then(() => created(values.name))
+                .then(() => success())
+                .finally(() => setLoading(false))
         } catch (e: any) {
             error(e.message)
         } finally {
