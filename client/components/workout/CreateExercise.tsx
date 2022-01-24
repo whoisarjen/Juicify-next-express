@@ -23,7 +23,7 @@ interface CreateExerciseProps {
 const CreateExercise: FunctionComponent<CreateExerciseProps> = ({ closeCreateExercise, isCreateExercise, created }) => {
     const { t } = useTranslation('workout')
     const [loading, setLoading] = useState(false)
-    const [{ success, error }] = useNotify()
+    const [{ success }] = useNotify()
 
     const handleKeyPress = (event: any) => {
         if (event.key === "Enter") {
@@ -36,17 +36,11 @@ const CreateExercise: FunctionComponent<CreateExerciseProps> = ({ closeCreateExe
     })
 
     const onSubmit = async (values: CreateExerciseInput) => {
-        try {
-            setLoading(true);
-            await insertThoseIDStoDB('exercise', [values])
-                .then(() => created(values.name))
-                .then(() => success())
-                .finally(() => setLoading(false))
-        } catch (e: any) {
-            error(e.message)
-        } finally {
-            setLoading(false);
-        }
+        setLoading(true);
+        await insertThoseIDStoDB('exercise', [values])
+            .then(() => created(values.name))
+            .then(() => success())
+            .finally(() => setLoading(false))
     }
 
     return (
