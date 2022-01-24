@@ -9,6 +9,9 @@ user mongo is not unique lettersize sensitive
 test for backend
 
 
+fix settings
+
+
 notify for not public users / 404 redirect
 coach
 barcode
