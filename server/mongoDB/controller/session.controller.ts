@@ -3,7 +3,7 @@ import { validatePassword } from "../service/user.service"
 import errorBook from "../../utils/errorBook"
 import { createSession, findSessions, reIssueAccessToken, updateSession } from "../service/session.service"
 import { get } from 'lodash'
-import { signJWT } from '../../utils/jwt.utils'
+import { parseBoolean, signJWT } from '../../utils/jwt.utils'
 import { getUserProducts } from '../service/product.service'
 import { getUserExercises } from '../service/exercise.service'
 import { getUserWorkoutPlans } from "../service/workoutPlan.service"
@@ -38,20 +38,20 @@ export async function createUserSessionHandler(req: Request, res: Response) {
 
     res.cookie('token', token, {
         maxAge: parseInt(process.env.COOKIE_TOKEN_LIFE_TIME_IN_S as string),
-        httpOnly: !!process.env.COOKIE_HTTPONLY,
+        httpOnly: parseBoolean(process.env.COOKIE_HTTPONLY as string),
         domain: process.env.COOKIE_DOMAIN,
         path: '/',
         sameSite: 'strict',
-        secure: !!process.env.COOKIE_SECURE
+        secure: parseBoolean(process.env.COOKIE_SECURE as string)
     })
 
     res.cookie('refresh_token', refresh_token, {
         maxAge: parseInt(process.env.COOKIE_REFRESH_TOKEN_LIFE_TIME_IN_S as string),
-        httpOnly: !!process.env.COOKIE_HTTPONLY,
+        httpOnly: parseBoolean(process.env.COOKIE_HTTPONLY as string),
         domain: process.env.COOKIE_DOMAIN,
         path: '/',
         sameSite: 'strict',
-        secure: !!process.env.COOKIE_SECURE
+        secure: parseBoolean(process.env.COOKIE_SECURE as string)
     })
 
     return res.send({
@@ -73,11 +73,11 @@ export async function refreshUserSessionHandler(req: Request, res: Response) {
 
         res.cookie('token', token, {
             maxAge: parseInt(process.env.COOKIE_TOKEN_LIFE_TIME_IN_S as string),
-            httpOnly: !!process.env.COOKIE_HTTPONLY,
+            httpOnly: parseBoolean(process.env.COOKIE_HTTPONLY as string),
             domain: process.env.COOKIE_DOMAIN,
             path: '/',
             sameSite: 'strict',
-            secure: !!process.env.COOKIE_SECURE
+            secure: parseBoolean(process.env.COOKIE_SECURE as string)
         })
 
     }
@@ -118,11 +118,11 @@ export async function updateToken(req: Request, res: Response, user: DocumentDef
 
     res.cookie('token', token, {
         maxAge: parseInt(process.env.COOKIE_TOKEN_LIFE_TIME_IN_S as string),
-        httpOnly: !!process.env.COOKIE_HTTPONLY,
+        httpOnly: parseBoolean(process.env.COOKIE_HTTPONLY as string),
         domain: process.env.COOKIE_DOMAIN,
         path: '/',
         sameSite: 'strict',
-        secure: !!process.env.COOKIE_SECURE
+        secure: parseBoolean(process.env.COOKIE_SECURE as string)
     })
 
     await socketHandleUserSynchronization({ req, res, data: [], whatToDo: 'change', where: 'settings' }) // We won't send token, client site will asked for refreshing token

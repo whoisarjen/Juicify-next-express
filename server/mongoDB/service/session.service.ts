@@ -1,5 +1,5 @@
 import { FilterQuery, UpdateQuery } from "mongoose";
-import { signJWT, verifyJWT } from "../../utils/jwt.utils";
+import { parseBoolean, signJWT, verifyJWT } from "../../utils/jwt.utils";
 import { SessionModel, SessionProps } from "../models/session.model";
 import { get } from 'lodash'
 import { getUser } from './user.service'
@@ -26,11 +26,11 @@ export async function reIssueAccessToken(refresh_token: string, res: Response) {
     if (new Date(decoded.exp) < new Date((new Date()).setDate((new Date()).getDate() + 30))) {
         res.cookie('refresh_token', refresh_token, {
             maxAge: parseInt(process.env.COOKIE_REFRESH_TOKEN_LIFE_TIME_IN_S as string),
-            httpOnly: !!process.env.COOKIE_HTTPONLY,
+            httpOnly: parseBoolean(process.env.COOKIE_HTTPONLY as string),
             domain: process.env.COOKIE_DOMAIN,
             path: '/',
             sameSite: 'strict',
-            secure: !!process.env.COOKIE_SECURE
+            secure: parseBoolean(process.env.COOKIE_SECURE as string)
         })
     }
 

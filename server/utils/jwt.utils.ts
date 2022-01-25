@@ -23,3 +23,5 @@ export function verifyJWT(token: string) {
         }
     }
 }
+
+export const parseBoolean = (value: string | boolean): boolean => value.toString().toLowerCase() === 'true' ? true : false

@@ -11,7 +11,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { useAppDispatch } from "../hooks/useRedux";
 import { setToken } from "../redux/features/tokenSlice";
 import useTranslation from "next-translate/useTranslation";
-import { expectLoggedOUT, readToken } from "../utils/checkAuth";
+import { expectLoggedOUT, parseBoolean, readToken } from "../utils/checkAuth";
 import { createIndexedDB, addIndexedDB, deleteDatabaseIndexedDB } from "../utils/indexedDB";
 import { getShortDate } from "../utils/manageDate";
 import axios from "axios";
@@ -61,11 +61,11 @@ const Login = () => {
             // it has to be here to force connection query to socket
             setCookie('token', response.data.token, {
                 maxAge: parseInt(process.env.NEXT_PUBLIC_COOKIE_TOKEN_LIFE_TIME_IN_S as string),
-                httpOnly: !!process.env.NEXT_PUBLIC_COOKIE_HTTPONLY,
+                httpOnly: parseBoolean(process.env.NEXT_PUBLIC_COOKIE_HTTPONLY as string),
                 domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN as string,
                 path: '/',
                 sameSite: 'strict',
-                secure: !!process.env.NEXT_PUBLIC_COOKIE_SECURE
+                secure: parseBoolean(process.env.NEXT_PUBLIC_COOKIE_SECURE as string)
             })
             router.push(
                 `/${readToken(response.data.token).login

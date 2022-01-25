@@ -4,7 +4,11 @@ import { verifyJWT } from "./jwt.utils";
 import { createClient } from 'redis';
 import { Request, Response } from 'express'
 
-const redis: any = createClient();
+const redis: any = createClient({
+    url: `redis://:@${process.env.REDIS}`
+});
+
+// const redis: any = createClient();
 (async () => await redis.connect().then(() => logger.info("Connection with Redis has been made!")))();
 
 export async function socket({ io }: { io: Server }) {

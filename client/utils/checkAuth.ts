@@ -68,6 +68,8 @@ export const refreshToken = async () => {
     return response.data.token
 }
 
+export const parseBoolean = (value: string | boolean): boolean => value.toString().toLowerCase() === 'true' ? true : false
+
 export {
     expectLoggedIN,
     expectLoggedOUT,

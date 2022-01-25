@@ -6,7 +6,6 @@
   "scripts": {
     "test": "jest --watchAll --detectOpenHandles",
     "start": "NODE_ENV=development nodemon server.ts",
-    "start-production": "NODE_ENV=production node server.js",
     "build": "tsc"
   },
   "keywords": [],
