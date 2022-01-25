@@ -14,4 +14,6 @@ WORKDIR /mongoDB
 
 RUN npm run build
 
+EXPOSE 1337
+
 CMD ["node", "build/server.js"]

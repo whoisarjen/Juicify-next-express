@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import bcrypt from 'bcrypt'
-import settings from "../../settings/default";
 
 export interface MacronutrientsProps extends mongoose.Document {
     proteins: number,
@@ -204,7 +203,7 @@ userSchema.pre("save", async function (next) {
         return next();
     }
 
-    const salt = await bcrypt.genSalt(settings.SALT_WORK_FACTORY);
+    const salt = await bcrypt.genSalt(parseInt(process.env.SALT_WORK_FACTORY as string));
     const hash = await bcrypt.hashSync(user.password, salt);
     user.password = hash;
 

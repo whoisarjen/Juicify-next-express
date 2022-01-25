@@ -1,4 +1,3 @@
-import settings from "../settings/default";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
@@ -12,7 +11,7 @@ function createServer(){
     app.use(express.json());
     app.use(deserializeUser)
     app.use(cors({
-        origin: settings.ORIGIN,
+        origin: process.env.ORIGIN,
         credentials: true
     }));
     

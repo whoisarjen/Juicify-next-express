@@ -1,7 +1,6 @@
 import { DocumentDefinition } from 'mongoose'
 import { DailyMeasurementModel, DailyMeasurementProps } from '../models/dailyMeasurement.model'
 import { UserProps } from '../models/user.model'
-import settings from "../../settings/default";
 import { getProduct } from './product.service'
 import { getExercise } from './exercise.service'
 import logger from '../../utils/logger'
@@ -70,7 +69,7 @@ export const getUserDailyMeasurements = async (token: DocumentDefinition<UserPro
         const daily_measurement = await DailyMeasurementModel.find({
             user_ID: token._id,
             whenAdded: {
-                $gte: new Date((new Date().setDate((new Date().getDate() - settings.numberSupportedDays))))
+                $gte: new Date((new Date().setDate((new Date().getDate() - parseInt(process.env.SUPPORTED_DAYS as string)))))
             }
         })
 

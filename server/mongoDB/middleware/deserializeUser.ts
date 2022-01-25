@@ -2,7 +2,6 @@ import { get } from 'lodash'
 import { Request, Response, NextFunction } from 'express'
 import { verifyJWT } from '../../utils/jwt.utils';
 import { reIssueAccessToken } from '../service/session.service';
-import settings from "../../settings/default";
 
 const deserializeUser = async (req: Request, res: Response, next: NextFunction) => {
 
@@ -27,12 +26,12 @@ const deserializeUser = async (req: Request, res: Response, next: NextFunction) 
             res.setHeader('x-access-token', newToken)
 
             res.cookie('token', newToken, {
-                maxAge: settings.COOKIE_TOKEN_LIFE_TIME_IN_S,
-                httpOnly: settings.COOKIE_HTTPONLY,
-                domain: settings.COOKIE_DOMAIN,
+                maxAge: parseInt(process.env.COOKIE_TOKEN_LIFE_TIME_IN_S as string),
+                httpOnly: !!process.env.COOKIE_HTTPONLY,
+                domain: process.env.COOKIE_DOMAIN,
                 path: '/',
                 sameSite: 'strict',
-                secure: settings.COOKIE_SECURE
+                secure: !!process.env.COOKIE_SECURE
             })
 
             const result = verifyJWT(newToken)

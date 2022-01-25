@@ -1,0 +1,33 @@
+version: "3.7"
+services:
+  app:
+    container_name: app
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    build:
+      context: ./client
+    expose:
+      - "3000:3000"
+    ports:
+      - "3000:3000"
+
+  server:
+    container_name: server
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    build:
+      context: ./server
+    expose:
+      - "1337:1337"
+    ports:
+      - "1337:1337"
+
+  redis:
+    container_name: redis
+    image: redis
+    expose:
+      - "6379:6379"
+    ports:
+      - "6379:6379"

@@ -1,8 +1,7 @@
 import { DailyMeasurementModel } from '../models/dailyMeasurement.model'
-import settings from "../../settings/default";
 import { loadDailyMeasurementMissingData } from './dailyMeasurement.service'
 
-export const getDailyMeasurements = async (user: any, whenAdded: any = new Date((new Date().setDate((new Date().getDate() - settings.numberSupportedDays))))) => {
+export const getDailyMeasurements = async (user: any, whenAdded: any = new Date((new Date().setDate((new Date().getDate() - parseInt(process.env.numberSupportedDays as string)))))) => {
     try {
         const daily_measurement = await DailyMeasurementModel.find({
             user_ID: user._id,
