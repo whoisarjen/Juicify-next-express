@@ -9,7 +9,6 @@
     "Meal": "Meal",
     "Edit": "Edit",
     "Delete": "Delete",
-    "Burnt calories": "Burnt calories",
     "How many times 100g/ml": "How many times 100g/ml?",
     "How many calories": "How many calories?",
     "All": "All",
@@ -43,7 +42,8 @@
     "Calories": "Calories",
     "Calories in 100g/ml": "Calories in 100g/ml",
     "Calories can NOT be equal to zero": "Calories can NOT be equal to zero",
-    "Macronutrients": "Macronutrients",
+    "Burnt calories": "Burnt",
+    "Macronutrients": "Macro",
     "Kcal": "Kcal",
     "Should be available for all?": "Should be available for all?"
 }

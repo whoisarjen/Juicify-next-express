@@ -9,7 +9,6 @@
     "Meal": "Posiłek",
     "Edit": "Edytuj",
     "Delete": "Usuń",
-    "Burnt calories": "Spalone kalorie",
     "How many times 100g/ml": "Ile razy 100g/ml?",
     "How many calories": "Ile kalorii?",
     "All": "Wszystkie",
@@ -43,7 +42,8 @@
     "Calories": "Kalorie",
     "Calories in 100g/ml": "Kalorie w 100g/ml",
     "Calories can NOT be equal to zero": "Kalorie nie mogą wynosić zero",
-    "Macronutrients": "Makroskładniki",
+    "Burnt calories": "Spalone",
+    "Macronutrients": "Makro",
     "Kcal": "Kcal",
     "Should be available for all?": "Powinnien być dostępny dla wszystkich?"
 }
