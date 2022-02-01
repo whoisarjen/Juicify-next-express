@@ -6,9 +6,6 @@ user's schema should always check if when change, user didnt change premium etc.
 user mongo is not unique lettersize sensitive
 
 
-test for backend
-
-
 service worker => new thread
 
 
