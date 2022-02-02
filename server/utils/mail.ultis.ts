@@ -1,4 +1,4 @@
-const emailSettings = async (cutomer_email, email_value) => {
+const emailSettings = async (cutomer_email: string, email_value: any) => {
 
     const nodemailer = require("nodemailer");
 
@@ -33,4 +33,4 @@ const emailSettings = async (cutomer_email, email_value) => {
 
 }
 
-module.exports = emailSettings;
+export default emailSettings;
