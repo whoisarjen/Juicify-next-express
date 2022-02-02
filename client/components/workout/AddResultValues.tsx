@@ -5,14 +5,17 @@ import AddResultValuesBox from './AddResultValuesBox'
 import ResultProps from '../../interfaces/workout/result'
 import ValueProps from '../../interfaces/workout/value'
 import Value from '../../classes/workout/value'
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface AddResultValuesProps {
     isOwner: boolean,
     result: ResultProps,
     setNewValues: (arg0: Array<ValueProps>) => void
+    openDeleteExercise: () => void
 }
 
-const AddResultValues: FunctionComponent<AddResultValuesProps> = ({ result, setNewValues, isOwner }) => {
+const AddResultValues: FunctionComponent<AddResultValuesProps> = ({ result, setNewValues, isOwner, openDeleteExercise }) => {
     const [values, setValues] = useState<Array<ValueProps>>(result.values)
 
     const changeResult = (object: ValueProps, index: number) => {
@@ -68,7 +71,15 @@ const AddResultValues: FunctionComponent<AddResultValuesProps> = ({ result, setN
 
     return (
         <div className={styles.addResultValues}>
-            <div className={styles.addResultValuesName}>{result.name}</div>
+            <div className={styles.addResultValuesName}>
+                <div>
+                    <IconButton color="primary" aria-label="upload picture" component="span" onClick={openDeleteExercise}>
+                        <DeleteIcon sx={{ fontSize: 20 }} />
+                    </IconButton>
+                </div>
+                <div>{result.name}</div>
+                <div />
+            </div>
             {
                 values &&
                 values.length > 0 &&

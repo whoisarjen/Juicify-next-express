@@ -34,6 +34,7 @@ const WorkoutResultsID: FunctionComponent = () => {
     const token: any = useAppSelector(state => state.token.value)
     const [saveLoading, setSaveLoading] = useState(false)
     const [autoSaveCheck, setAutoSaveCheck] = useState(false)
+    const [deleteExercises, setDeleteExercise] = useState<ResultProps | boolean>(false)
     const [descriptionWorkout, setDescriptionWorkout] = useState('')
     const theOldestSupportedDate = useAppSelector(state => state.config.theOldestSupportedDate())
     const basicInputLength = useAppSelector(state => state.config.basicInputLength)
@@ -125,6 +126,15 @@ const WorkoutResultsID: FunctionComponent = () => {
         newResults[index].values = values
         setResults(newResults)
         await autoSave(newResults)
+    }
+
+    const handleDeleteExercise = async (array: any) => {
+        const newResults: Array<ResultProps> = [
+            ...results.filter((x: ResultProps) => x._id != array[0]._id)
+        ]
+        setResults(newResults)
+        await autoSave(newResults)
+        setDeleteExercise(false)
     }
 
     const handleNewExercises = async (array: Array<ExerciseProps>) => {
@@ -258,6 +268,7 @@ const WorkoutResultsID: FunctionComponent = () => {
                             result={result}
                             isOwner={isOwner}
                             setNewValues={(values: Array<ValueProps>) => setNewValues(values, index)}
+                            openDeleteExercise={() => setDeleteExercise(result)}
                         />
                     </div>
                 )
@@ -266,6 +277,7 @@ const WorkoutResultsID: FunctionComponent = () => {
                 isOwner ?
                     (
                         <>
+                            <ConfirmDialog isDialog={deleteExercises ? true : false} closeDialog={() => setDeleteExercise(false)} confirm={() => handleDeleteExercise([deleteExercises])} />
                             <ConfirmDialog
                                 isDialog={isDialog}
                                 confirm={deleteWorkoutResult}

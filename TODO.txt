@@ -1,4 +1,3 @@
-change order of exercises + delete
 workout add option to add cardio exercises + timer i guess
 
 
