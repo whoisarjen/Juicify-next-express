@@ -8,6 +8,9 @@ user mongo is not unique lettersize sensitive
 service worker => new thread
 
 
+remind password
+
+
 barcode
 
 

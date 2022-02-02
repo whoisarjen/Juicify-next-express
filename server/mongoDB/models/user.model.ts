@@ -57,6 +57,9 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         unique: true,
+        collation: {
+            strength: 2
+        },
         required: true
     },
     email_confirmation: {
@@ -66,6 +69,9 @@ const userSchema = new mongoose.Schema({
     login: {
         type: String,
         unique: true,
+        collation: {
+            strength: 2
+        },
         required: true
     },
     l: Number,

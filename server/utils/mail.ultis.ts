@@ -1,4 +1,4 @@
-const emailSettings = async (cutomer_email: string, email_value: any) => {
+const sendMail = async (cutomer_email: string, email_value: any) => {
 
     const nodemailer = require("nodemailer");
 
@@ -20,7 +20,7 @@ const emailSettings = async (cutomer_email: string, email_value: any) => {
         });
 
         // send mail with defined transport object
-        let info = await transporter.sendMail({
+        await transporter.sendMail({
             from: 'contact@juicify.app', // sender address
             to: cutomer_email, // list of receivers
             subject: email_value.subject, // Subject line
@@ -33,4 +33,4 @@ const emailSettings = async (cutomer_email: string, email_value: any) => {
 
 }
 
-export default emailSettings;
+export default sendMail;
