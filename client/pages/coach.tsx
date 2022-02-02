@@ -17,6 +17,13 @@ import { getAllIndexedDB, getIndexedDBbyID } from "../utils/indexedDB";
 import { getAge, getDailyDate, getShortDate } from "../utils/manageDate";
 import { loadMissingDays } from "../hooks/useDailyMeasurements";
 import { setToken } from "../redux/features/tokenSlice";
+import Tutorial_1 from "../components/coach/Tutorial_1";
+import Tutorial_2 from "../components/coach/Tutorial_2";
+import Tutorial_3 from "../components/coach/Tutorial_3";
+import Tutorial_4 from "../components/coach/Tutorial_4";
+import Tutorial_5 from "../components/coach/Tutorial_5";
+import Tutorial_6 from "../components/coach/Tutorial_6";
+import Tutorial_7 from "../components/coach/Tutorial_7";
 
 const Coach: FunctionComponent = () => {
     expectLoggedIN()
@@ -57,7 +64,7 @@ const Coach: FunctionComponent = () => {
             .then(() => setStep('Result'))
     }
 
-    const handlePreviousStep = (where: string = token.coach_analyze ? 'Standard' : 'Welcome') => setStep(where)
+    const handlePreviousStep = () => setStep(token.coach_analyze ? 'Standard' : 'Welcome')
 
     useEffect(() => {
         if (block) {
@@ -113,6 +120,34 @@ const Coach: FunctionComponent = () => {
                     ) : step === 'Result' ? (
                         <>
                             <Result setStep={setStep} />
+                        </>
+                    ) : step === 'Tutorial_1' ? (
+                        <>
+                            <Tutorial_1 setStep={setStep} handlePreviousStep={handlePreviousStep} />
+                        </>
+                    ) : step === 'Tutorial_2' ? (
+                        <>
+                            <Tutorial_2 setStep={setStep} handlePreviousStep={handlePreviousStep} />
+                        </>
+                    ) : step === 'Tutorial_3' ? (
+                        <>
+                            <Tutorial_3 setStep={setStep} handlePreviousStep={handlePreviousStep} />
+                        </>
+                    ) : step === 'Tutorial_4' ? (
+                        <>
+                            <Tutorial_4 setStep={setStep} handlePreviousStep={handlePreviousStep} />
+                        </>
+                    ) : step === 'Tutorial_5' ? (
+                        <>
+                            <Tutorial_5 setStep={setStep} handlePreviousStep={handlePreviousStep} />
+                        </>
+                    ) : step === 'Tutorial_6' ? (
+                        <>
+                            <Tutorial_6 setStep={setStep} handlePreviousStep={handlePreviousStep} />
+                        </>
+                    ) : step === 'Tutorial_7' ? (
+                        <>
+                            <Tutorial_7 setStep={setStep} handlePreviousStep={handlePreviousStep} />
                         </>
                     ) : (
                         <>

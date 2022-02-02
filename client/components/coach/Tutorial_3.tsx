@@ -4,28 +4,34 @@ import styles from '../../styles/coach.module.css'
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
+import Image from 'next/image'
 
-interface Tutorial_1Props {
+interface Tutorial_3Props {
     setStep: (arg0: string) => void,
     handlePreviousStep: (arg0: string) => void
 }
 
-const Tutorial_1: FunctionComponent<Tutorial_1Props> = ({ setStep, handlePreviousStep }) => {
+const Tutorial_3: FunctionComponent<Tutorial_3Props> = ({ setStep, handlePreviousStep }) => {
     const { t } = useTranslation('coach')
 
     return (
         <div className={styles.tutorla}>
             <div className={styles.arrowBack}>
-                <IconButton aria-label="back" onClick={() => handlePreviousStep('ChooseDiet')}>
+                <IconButton aria-label="back" onClick={() => setStep('Tutorial_2')}>
                     <KeyboardBackspaceIcon />
                     <div />
                 </IconButton>
             </div>
-            <div className={styles.AddWeightMainTitle}><div>{t('HOW_DOES_IT_WORK')}</div></div>
-            <div>{t('TUTORIAL_1')}</div>
-            <Button variant="contained" onClick={() => setStep('Tutorial_2')}>{t('NEXT_STEP')}</Button>
+            <Image
+                src="/images/tutorial_3.jpg"
+                alt="Coach tutorial 3"
+                width="970"
+                height="728"
+            />
+            <div>{t('TUTORIAL_3')}</div>
+            <Button variant="contained" onClick={() => setStep('Tutorial_4')}>{t('NEXT_STEP')}</Button>
         </div>
     )
 }
 
-export default Tutorial_1;
+export default Tutorial_3;

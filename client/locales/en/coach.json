@@ -61,5 +61,19 @@
     "CHOOSE_CALORIES_SOURCE_DESCRIPTION": "Juicify will use proof data in app, which will give you perfect calculcation. Weekly calories might be diffrent than what Juicify calculated previously.",
     "CHOOSE_CALORIES_SOURCE_DESCRIPTION_2": "Juicify will count as you were eatting equal to previous calculaction.",
     "CHOOSE_CALORIES_SOURCE_BUTTON": "I used Juicify",
-    "CHOOSE_CALORIES_SOURCE_BUTTON_2": "I used diffrent application"
+    "CHOOSE_CALORIES_SOURCE_BUTTON_2": "I used diffrent application",
+    "TUTORIAL_1": "Body needs calories (energy) to survive. If you eat more calories than body needs, it starts to be held as fat. If you eat less, your body start to burn fat to balance the deficit. Every product you eat has calories, which we categorise as macronutrients - proteins, carbs and fats. Your body need specific number of all of them to properly function. As long as calories are right, you will achive your dreamt result.",
+    "TUTORIAL_2": "Weigh and count in application every product you eat (even oil to cook). If you want to cook it, count before cooking. Every product has macronutrition on back of package, but most of it, we already have in app.",
+    "TUTORIAL_3": "Choose product this way, to be as close with macronutrients as you can. Calories (kcal) has to be almost perfect, because they determine success. Remember, you can use junk food, but healthy foods have less calories and more volume, which lets you eat more.",
+    "TUTORIAL_4": "The numbers of meals per day does NOT matter when calories are right. You can eat as many meals as you prefer. Spliting meals for around 40g proteins per one meal might increase muscle growth.",
+    "TUTORIAL_5": "Everyday count weight in application. Weight has to be counted on empty stama and after toilet. Don't worry about your results, daily weight might change even with 2kg.",
+    "TUTORIAL_6": "If you will have extra activity, which you didn't count previously, you have to add it as burnt calories. You can also do extra activity to have more calories for food. As long as you count everything in the app.",
+    "TUTORIAL_7": "You got to know the secret of a diet that works, which doesn't make you give up on your favorite products. Key in all necessary data and analyze it every 7 (first time 14) days. The application will do the rest.",
+    "NEXT_STEP": "Next step",
+    "HOW_DOES_IT_WORK": "How does it work?",
+    "I_AM_READY": "I am ready",
+    "HOW_OFTEN_EAT": "How often eat?",
+    "WEIGHT_SELF": "Weight self",
+    "EXTRA_ACTIVITY": "Extra activity",
+    "THATS_ALL": "That's all"
 }

@@ -194,3 +194,16 @@
   text-transform: uppercase;
   font-size: 0.9rem;
 }
+
+.tutorla{
+  width: 100%;
+  height: calc(100vh - var(--BothNavHeightAndPadding));
+  display: grid;
+  grid-template-rows: 44px auto auto 44px;
+  grid-gap: 5px;
+  text-align: center;
+}
+
+.tutorla div{
+  margin: auto;
+}
