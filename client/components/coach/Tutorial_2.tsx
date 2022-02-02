@@ -7,11 +7,10 @@ import Button from '@mui/material/Button';
 import Image from 'next/image'
 
 interface Tutorial_2Props {
-    setStep: (arg0: string) => void,
-    handlePreviousStep: (arg0: string) => void
+    setStep: (arg0: string) => void
 }
 
-const Tutorial_2: FunctionComponent<Tutorial_2Props> = ({ setStep, handlePreviousStep }) => {
+const Tutorial_2: FunctionComponent<Tutorial_2Props> = ({ setStep }) => {
     const { t } = useTranslation('coach')
 
     return (

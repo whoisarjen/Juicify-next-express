@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 
 interface Tutorial_1Props {
     setStep: (arg0: string) => void,
-    handlePreviousStep: (arg0: string) => void
+    handlePreviousStep: () => void
 }
 
 const Tutorial_1: FunctionComponent<Tutorial_1Props> = ({ setStep, handlePreviousStep }) => {
@@ -16,7 +16,7 @@ const Tutorial_1: FunctionComponent<Tutorial_1Props> = ({ setStep, handlePreviou
     return (
         <div className={styles.tutorla}>
             <div className={styles.arrowBack}>
-                <IconButton aria-label="back" onClick={() => handlePreviousStep('ChooseDiet')}>
+                <IconButton aria-label="back" onClick={handlePreviousStep}>
                     <KeyboardBackspaceIcon />
                     <div />
                 </IconButton>

@@ -6,11 +6,10 @@ import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 
 interface Tutorial_5Props {
-    setStep: (arg0: string) => void,
-    handlePreviousStep: (arg0: string) => void
+    setStep: (arg0: string) => void
 }
 
-const Tutorial_5: FunctionComponent<Tutorial_5Props> = ({ setStep, handlePreviousStep }) => {
+const Tutorial_5: FunctionComponent<Tutorial_5Props> = ({ setStep }) => {
     const { t } = useTranslation('coach')
 
     return (

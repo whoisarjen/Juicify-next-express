@@ -127,23 +127,23 @@ const Coach: FunctionComponent = () => {
                         </>
                     ) : step === 'Tutorial_2' ? (
                         <>
-                            <Tutorial_2 setStep={setStep} handlePreviousStep={handlePreviousStep} />
+                            <Tutorial_2 setStep={setStep} />
                         </>
                     ) : step === 'Tutorial_3' ? (
                         <>
-                            <Tutorial_3 setStep={setStep} handlePreviousStep={handlePreviousStep} />
+                            <Tutorial_3 setStep={setStep} />
                         </>
                     ) : step === 'Tutorial_4' ? (
                         <>
-                            <Tutorial_4 setStep={setStep} handlePreviousStep={handlePreviousStep} />
+                            <Tutorial_4 setStep={setStep} />
                         </>
                     ) : step === 'Tutorial_5' ? (
                         <>
-                            <Tutorial_5 setStep={setStep} handlePreviousStep={handlePreviousStep} />
+                            <Tutorial_5 setStep={setStep} />
                         </>
                     ) : step === 'Tutorial_6' ? (
                         <>
-                            <Tutorial_6 setStep={setStep} handlePreviousStep={handlePreviousStep} />
+                            <Tutorial_6 setStep={setStep} />
                         </>
                     ) : step === 'Tutorial_7' ? (
                         <>
