@@ -45,5 +45,9 @@
     "Burnt calories": "Spalone",
     "Macronutrients": "Makro",
     "Kcal": "Kcal",
-    "Should be available for all?": "Powinnien być dostępny dla wszystkich?"
+    "Should be available for all?": "Powinnien być dostępny dla wszystkich?",
+    "ADD_BURNT_CALORIES": "Dodaj spalone kalorie",
+    "ADD_BURNT_CALORIES_DESCRIPTION": "Miałeś nieplanowaną aktywność? Świetnie! Dodaj spalone kalorie, to trener weźmie to pod uwagę przy kolejnej analizie.",
+    "NAME_OF_ACTIVITY": "Nazwa aktywności",
+    "BURNT_CALORIES": "Spalone kalorie"
 }

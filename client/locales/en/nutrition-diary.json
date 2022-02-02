@@ -45,5 +45,9 @@
     "Burnt calories": "Burnt",
     "Macronutrients": "Macro",
     "Kcal": "Kcal",
-    "Should be available for all?": "Should be available for all?"
+    "Should be available for all?": "Should be available for all?",
+    "ADD_BURNT_CALORIES": "Add burnt calories",
+    "ADD_BURNT_CALORIES_DESCRIPTION": "You had extra activity? Great! Add burnt calories, so coach will know it, when your check time will come.",
+    "NAME_OF_ACTIVITY": "Name of activity",
+    "BURNT_CALORIES": "Burnt calories"
 }

@@ -84,7 +84,7 @@ const NutritionDiary: FunctionComponent = () => {
                         nutrition_diary &&
                         <Diagrams array={nutrition_diary} user={user} />
                     }
-                    <DiagramsOptions />
+                    <DiagramsOptions data={data} reloadDailyMeasurement={reloadDailyMeasurement} />
                     {
                         nutrition_diary
                             ?
