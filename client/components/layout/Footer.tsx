@@ -15,7 +15,7 @@ const Footer = () => {
     <footer className="footer">
       <div>©2022 Juicify.app</div>
       {token.login && (
-        <div className="footerMenu">
+        <nav className="footerMenu">
           <Link passHref href="/coach/">
             <a className="footerMenuElement">
               <EmojiEventsIcon color="primary" />
@@ -47,7 +47,7 @@ const Footer = () => {
               </Avatar>
             </a>
           </Link>
-        </div>
+        </nav>
       )}
     </footer>
   );

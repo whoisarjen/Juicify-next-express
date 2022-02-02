@@ -34,101 +34,103 @@ const Navbar = () => {
     const [, toggleDarkMode, theme]: any = useTheme()
 
     return (
-        <nav className="navbar">
-            <ul>
-                <li>
-                    <Link passHref href="/">
-                        <MyLogo />
-                    </Link>
-                </li>
-                <li className="NavbarWeb">
-                    <SearchBox />
-                </li>
-                <li>
-                    <Link passHref href="/search">
-                        <a>
-                            <IconButton className="NavbarMobile" color="primary" aria-label="search">
-                                <SearchIcon />
-                            </IconButton>
-                        </a>
-                    </Link>
-                    <Link passHref href="/blog">
-                        <a>
-                            <IconButton className="NavbarMobile" color="primary" aria-label={t('Blog')}>
-                                <SchoolIcon />
-                            </IconButton>
-                            <Button className="NavbarWeb" startIcon={<SchoolIcon />}>
-                                {t('Blog')}
-                            </Button>
-                        </a>
-                    </Link>
-                    {
-                        token.login ? (
-                            <>
-                                <Link passHref href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
-                                    <a>
-                                        <IconButton className="NavbarMobile" color="primary" aria-label={t('Diary')}>
-                                            <BookIcon />
+        <header>
+            <nav className="navbar">
+                <ul>
+                    <li>
+                        <Link passHref href="/">
+                            <MyLogo />
+                        </Link>
+                    </li>
+                    <li className="NavbarWeb">
+                        <SearchBox />
+                    </li>
+                    <li>
+                        <Link passHref href="/search">
+                            <a>
+                                <IconButton className="NavbarMobile" color="primary" aria-label="search">
+                                    <SearchIcon />
+                                </IconButton>
+                            </a>
+                        </Link>
+                        <Link passHref href="/blog">
+                            <a>
+                                <IconButton className="NavbarMobile" color="primary" aria-label={t('Blog')}>
+                                    <SchoolIcon />
+                                </IconButton>
+                                <Button className="NavbarWeb" startIcon={<SchoolIcon />}>
+                                    {t('Blog')}
+                                </Button>
+                            </a>
+                        </Link>
+                        {
+                            token.login ? (
+                                <>
+                                    <Link passHref href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
+                                        <a>
+                                            <IconButton className="NavbarMobile" color="primary" aria-label={t('Diary')}>
+                                                <BookIcon />
+                                            </IconButton>
+                                            <Button className="NavbarWeb" startIcon={<BookIcon />}>
+                                                {t('Diary')}
+                                            </Button>
+                                        </a>
+                                    </Link>
+                                    <Link passHref href="/settings">
+                                        <a>
+                                            <IconButton className="NavbarMobile" color="primary" aria-label={t('Settings')}>
+                                                <Settings />
+                                            </IconButton>
+                                            <Button className="NavbarWeb" startIcon={<Settings />}>
+                                                {t('Settings')}
+                                            </Button>
+                                        </a>
+                                    </Link>
+                                </>
+                            ) : (
+                                <>
+                                    <Link passHref href="/login">
+                                        <a>
+                                            <IconButton className="NavbarMobile" color="primary" aria-label={t('Diary')}>
+                                                <BookIcon />
+                                            </IconButton>
+                                            <Button className="NavbarWeb" startIcon={<BookIcon />}>
+                                                {t('Diary')}
+                                            </Button>
+                                        </a>
+                                    </Link>
+                                    <Link passHref href="/login">
+                                        <a>
+                                            <IconButton className="NavbarMobile" color="primary" aria-label={t('Login')}>
+                                                <LoginIcon />
+                                            </IconButton>
+                                            <Button className="NavbarWeb" startIcon={<LoginIcon />}>
+                                                {t('Login')}
+                                            </Button>
+                                        </a>
+                                    </Link>
+                                </>
+                            )
+                        }
+                        <Link passHref href={`${router.asPath}`}>
+                            <a onClick={toggleDarkMode}>
+                                {
+                                    theme.palette.mode === 'dark'
+                                        ?
+                                        <IconButton color="primary" aria-label="Dark / light mode">
+                                            <Brightness7Icon />
                                         </IconButton>
-                                        <Button className="NavbarWeb" startIcon={<BookIcon />}>
-                                            {t('Diary')}
-                                        </Button>
-                                    </a>
-                                </Link>
-                                <Link passHref href="/settings">
-                                    <a>
-                                        <IconButton className="NavbarMobile" color="primary" aria-label={t('Settings')}>
-                                            <Settings />
+                                        :
+                                        <IconButton color="primary" aria-label="Dark / light mode">
+                                            <Brightness4Icon />
                                         </IconButton>
-                                        <Button className="NavbarWeb" startIcon={<Settings />}>
-                                            {t('Settings')}
-                                        </Button>
-                                    </a>
-                                </Link>
-                            </>
-                        ) : (
-                            <>
-                                <Link passHref href="/login">
-                                    <a>
-                                        <IconButton className="NavbarMobile" color="primary" aria-label={t('Diary')}>
-                                            <BookIcon />
-                                        </IconButton>
-                                        <Button className="NavbarWeb" startIcon={<BookIcon />}>
-                                            {t('Diary')}
-                                        </Button>
-                                    </a>
-                                </Link>
-                                <Link passHref href="/login">
-                                    <a>
-                                        <IconButton className="NavbarMobile" color="primary" aria-label={t('Login')}>
-                                            <LoginIcon />
-                                        </IconButton>
-                                        <Button className="NavbarWeb" startIcon={<LoginIcon />}>
-                                            {t('Login')}
-                                        </Button>
-                                    </a>
-                                </Link>
-                            </>
-                        )
-                    }
-                    <Link passHref href={`${router.asPath}`}>
-                        <a onClick={toggleDarkMode}>
-                            {
-                                theme.palette.mode === 'dark'
-                                    ?
-                                    <IconButton color="primary" aria-label="Dark / light mode">
-                                        <Brightness7Icon />
-                                    </IconButton>
-                                    :
-                                    <IconButton color="primary" aria-label="Dark / light mode">
-                                        <Brightness4Icon />
-                                    </IconButton>
-                            }
-                        </a>
-                    </Link>
-                </li>
-            </ul>
-        </nav>
+                                }
+                            </a>
+                        </Link>
+                    </li>
+                </ul>
+            </nav>
+        </header>
     );
 };
 

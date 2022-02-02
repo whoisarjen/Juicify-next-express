@@ -42,6 +42,7 @@ const DiagramsOptions: FunctionComponent<DiagramsOptionsProps> = ({ data, reload
             let calories = -burnt
             let object: any = { ...data }
             object.nutrition_diary.push({
+                _id: 'XD' + new Date().getTime(),
                 ...(activity && { activity }),
                 ...(calories && { calories })
             })

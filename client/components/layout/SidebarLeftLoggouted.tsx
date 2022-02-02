@@ -2,9 +2,9 @@ import { FunctionComponent } from "react";
 
 const SidebarLeftLoggouted: FunctionComponent = () => {
     return (
-        <div id="sidebarLeft">
+        <aside id="sidebarLeft">
             
-        </div>
+        </aside>
     )
 }
 

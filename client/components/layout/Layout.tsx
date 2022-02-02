@@ -25,7 +25,7 @@ const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
     const token: any = useAppSelector(state => state.token.value)
 
     return (
-        <div className='layout'>
+        <main className='layout'>
             <TopNotify />
             <Navbar />
             {
@@ -64,7 +64,7 @@ const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
                     </div>
             }
             <Footer />
-        </div>
+        </main>
     )
 }
 

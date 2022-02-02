@@ -25,7 +25,7 @@ const SidebarLeft: FunctionComponent = () => {
     const [getTheme]: any = useTheme()
 
     return (
-        <div id="sidebarLeft">
+        <aside id="sidebarLeft">
             {
                 token &&
                 token.login &&
@@ -67,7 +67,7 @@ const SidebarLeft: FunctionComponent = () => {
                                     <ListItemIcon>
                                         <EmojiEventsIcon color="primary" />
                                     </ListItemIcon>
-                                    <ListItemText primary={t('Coach')}/>
+                                    <ListItemText primary={t('Coach')} />
                                 </ListItemButton>
                             </ListItem>
                             <ListItem disablePadding>
@@ -90,7 +90,7 @@ const SidebarLeft: FunctionComponent = () => {
                     </nav>
                 </Box>
             }
-        </div >
+        </aside>
     )
 }
 

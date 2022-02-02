@@ -63,7 +63,7 @@ const SidebarRight: FunctionComponent = () => {
     useEffect(() => reload(), [keyDaily])
 
     return (
-        <div id="sidebarRight">
+        <aside id="sidebarRight">
             {
                 styles &&
                 <>
@@ -149,7 +149,7 @@ const SidebarRight: FunctionComponent = () => {
                     />
                 </>
             }
-        </div>
+        </aside>
     )
 }
 
