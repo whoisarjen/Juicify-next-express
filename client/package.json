@@ -34,6 +34,7 @@
     "react-loader-spinner": "^4.0.0",
     "react-redux": "^7.2.6",
     "react-toastify": "^8.1.0",
+    "react-webcam-barcode-scanner": "^0.0.2-rc2",
     "recharts": "^2.1.8",
     "socket.io-client": "^4.4.0",
     "zod": "^3.11.6"

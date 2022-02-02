@@ -26,7 +26,7 @@ const MUI: FunctionComponent<MUIProps> = ({ children }) => {
         }),
         [],
     );
-console.log(localStorage.getItem('isDarkMode') )
+
     useEffect(() => setMode(localStorage.getItem('isDarkMode') || localStorage.getItem('isDarkMode') === null ? 'dark' : 'light'), [])
 
     useEffect(() => document.documentElement.style.setProperty('--theme-background', mode == 'dark' ? '#121212' : '#ffffff'), [mode])
