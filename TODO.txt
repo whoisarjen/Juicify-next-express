@@ -17,6 +17,9 @@ security on cookie + move user's profile to localstorage
 docker seperatly for next.js
 
 
+blog needs placeholders
+
+
 barcode
 
 
