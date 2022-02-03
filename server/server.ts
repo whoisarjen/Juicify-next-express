@@ -26,8 +26,8 @@ if (process.env.NODE_ENV == "development") {
 
 if (process.env.NODE_ENV == "production") {
     server = https.createServer({
-        key: fs.readFileSync('./../../../../etc/letsencrypt/live/juicify.app/privkey.pem'),
-        cert: fs.readFileSync('./../../../../etc/letsencrypt/live/juicify.app/fullchain.pem')
+        key: fs.readFileSync(`./../../../../etc/letsencrypt/live/${process.env.COOKIE_DOMAIN}/privkey.pem`),
+        cert: fs.readFileSync(`./../../../../etc/letsencrypt/live/${process.env.COOKIE_DOMAIN}/fullchain.pem`)
     }, app).listen(process.env.PORT, async () => {
         logger.info(`Listening on port ${process.env.PORT} (http://localhost:${process.env.PORT})`);
         app.set('socket', io);
