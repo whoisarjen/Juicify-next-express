@@ -8,10 +8,9 @@ const redis: any = createClient({
     url: `redis://:@${process.env.REDIS}`
 });
 
-// const redis: any = createClient();
-(async () => await redis.connect().then(() => logger.info("Connection with Redis has been made!")))();
-
 export async function socket({ io }: { io: Server }) {
+    await redis.connect().then(() => logger.info("Connection with Redis has been made!"))
+
     logger.info(`Connection with socket has been made!`);
 
     io.on('connection', async (socket: Socket) => {

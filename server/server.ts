@@ -12,6 +12,7 @@ import * as https from 'https';
 const app = createServer();
 
 let server;
+logger.info(`Server is using ${process.env.NODE_ENV}`);
 
 if (process.env.NODE_ENV == "development") {
     server = app.listen(process.env.PORT, async () => {
