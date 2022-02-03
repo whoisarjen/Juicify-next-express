@@ -20,6 +20,12 @@ docker seperatly for next.js
 blog needs placeholders
 
 
+top navbar PWA need to change color
+
+
+offline is showing after close and reopen
+
+
 barcode
 
 
