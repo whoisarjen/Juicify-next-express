@@ -1,5 +1,5 @@
 workout add option to add cardio exercises + timer i guess
-
+fix autosave workout on load
 
 user's schema should always check if when change, user didnt change premium etc.
 user mongo is not unique lettersize sensitive
@@ -11,7 +11,13 @@ service worker => new thread
 remind password
 
 
+security on cookie + move user's profile to localstorage
+
+
 barcode
+
+
+delete console.logs
 
 
 notify for not public users / 404 redirect

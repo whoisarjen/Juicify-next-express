@@ -11,7 +11,6 @@ import * as https from 'https';
 
 const app = createServer();
 
-console.log(`Server is working with ${process.env.NODE_ENV}`)
 let server;
 
 if (process.env.NODE_ENV == "development") {
