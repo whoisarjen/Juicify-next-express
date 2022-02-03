@@ -166,7 +166,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: calc(50% - 12px) 12px auto;
-  padding: 0;
+  padding: 0 !important;
 }
 
 .diagramsTable {

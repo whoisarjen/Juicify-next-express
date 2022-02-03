@@ -26,10 +26,10 @@ services:
     volumes:
       - "/etc/letsencrypt:/etc/letsencrypt"
 
-  # redis:
-  #   container_name: redis
-  #   image: redis
-  #   expose:
-  #     - "6379"
-  #   ports:
-  #     - "6379:6379"
+  redis:
+    container_name: redis
+    image: redis
+    expose:
+      - "6379"
+    ports:
+      - "6379:6379"

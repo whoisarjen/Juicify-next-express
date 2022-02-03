@@ -14,7 +14,13 @@ remind password
 security on cookie + move user's profile to localstorage
 
 
+docker seperatly for next.js
+
+
 barcode
+
+
+background PWA
 
 
 delete console.logs
