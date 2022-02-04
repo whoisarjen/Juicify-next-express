@@ -1,8 +1,7 @@
-workout add option to add cardio exercises + timer i guess
+add cardio exercises + timer i guess
 fix autosave workout on load
 
 user's schema should always check if when change, user didnt change premium etc.
-user mongo is not unique lettersize sensitive
 
 
 service worker => new thread
@@ -12,9 +11,6 @@ remind password
 
 
 security on cookie + move user's profile to localstorage
-
-
-docker seperatly for next.js
 
 
 blog needs placeholders
@@ -29,10 +25,16 @@ offline is showing after close and reopen
 barcode
 
 
+PWA images and settings
+
+
 background PWA
 
 
 delete console.logs
+
+
+headers etc
 
 
 notify for not public users / 404 redirect
