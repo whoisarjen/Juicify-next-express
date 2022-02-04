@@ -4,6 +4,15 @@ fix autosave workout on load
 user's schema should always check if when change, user didnt change premium etc.
 
 
+https://nextjs.org/docs/api-reference/data-fetching/get-initial-props
+
+
+something is wrong with pwa store indexeddb bc of tokens?
+probably reading token should be before server site randering
+token should be used with usecontext?
+or its just about using awaiting data before rendering
+
+
 socket => cookie
 
 
@@ -34,13 +43,7 @@ barcode
 PWA images and settings
 
 
-background PWA
-
-
 delete console.logs
-
-
-headers etc
 
 
 notify for not public users / 404 redirect
