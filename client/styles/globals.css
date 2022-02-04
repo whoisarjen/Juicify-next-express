@@ -47,6 +47,10 @@
   --theme-background: "#121212";
 }
 
+html {
+  background: var(--theme-background);
+}
+
 body {
   word-break: break-word;
   margin: 0;
@@ -149,10 +153,6 @@ a:active {
     width: calc(100% - 22px);
     grid-template-columns: auto 1fr;
   }
-
-  /* :root {
-    --BothNavHeightAndPadding: calc(var(--BothNavHeightAndPaddingDefault) - 28px);
-  } */
 }
 
 @media (max-width: 726px) {
