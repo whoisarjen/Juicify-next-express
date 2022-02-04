@@ -49,6 +49,7 @@
 
 html {
   background: var(--theme-background);
+  background-color: var(--theme-background);
 }
 
 body {
@@ -57,6 +58,7 @@ body {
   font-family: "Quicksand", sans-serif;
   color: #7a7a7a;
   background: var(--theme-background);
+  background-color: var(--theme-background);
 }
 
 a,
