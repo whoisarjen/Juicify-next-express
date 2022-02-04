@@ -156,7 +156,7 @@ const Settings: FunctionComponent = () => {
                     shrink: true,
                 }}
                 InputProps={{
-                    endAdornment: <InputAdornment position="start">% / carbs</InputAdornment>
+                    endAdornment: <InputAdornment position="start">% / {t("Carbs")}</InputAdornment>
                 }}
                 error={
                     !requiredBasicInputNumber0TO100(sugar_percent)
