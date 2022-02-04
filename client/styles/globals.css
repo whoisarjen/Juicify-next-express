@@ -220,17 +220,17 @@ a:active {
 }
 
 .marginAuto {
-  margin: auto;
+  margin: auto !important;
 }
 
 .marginAutoVertical {
-  margin-top: auto;
-  margin-bottom: auto;
+  margin-top: auto !important;
+  margin-bottom: auto !important;
 }
 
 .marginAutoHorizontal {
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 .displayGrid {
