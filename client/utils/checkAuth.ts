@@ -20,26 +20,26 @@ const logout = async () => {
 }
 
 const expectLoggedIN = () => {
-    const router = useRouter();
-    const [cookies] = useCookies(["token"]);
+    // const router = useRouter();
+    // const [cookies] = useCookies(["token"]);
 
-    useEffect(() => {
-        if (!cookies.token) {
-            router.push("/login");
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (!cookies.token) {
+    //         router.push("/login");
+    //     }
+    // }, []);
 };
 
 const expectLoggedOUT = () => {
-    const router = useRouter();
-    const [cookies] = useCookies(["token"]);
-    const token: any = useAppSelector((state) => state.token.value);
+    // const router = useRouter();
+    // const [cookies] = useCookies(["token"]);
+    // const token: any = useAppSelector((state) => state.token.value);
 
-    useEffect(() => {
-        if (cookies.token) {
-            router.push(`/${token.login}/nutrition-diary/${getShortDate()}`);
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (cookies.token) {
+    //         router.push(`/${token.login}/nutrition-diary/${getShortDate()}`);
+    //     }
+    // }, []);
 };
 
 const getCookie = async (name: string) => {
