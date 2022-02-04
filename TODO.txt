@@ -11,6 +11,7 @@ something is wrong with pwa store indexeddb bc of tokens?
 probably reading token should be before server site randering
 token should be used with usecontext?
 or its just about using awaiting data before rendering
+        -- DIFFRENT way of handling acces to logged/loggouted pages
 
 
 socket => cookie
