@@ -4,6 +4,12 @@ fix autosave workout on load
 user's schema should always check if when change, user didnt change premium etc.
 
 
+socket => cookie
+
+
+logout => server => push
+
+
 service worker => new thread
 
 
