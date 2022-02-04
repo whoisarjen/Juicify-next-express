@@ -44,7 +44,7 @@ class MyDocument extends Document {
                     <meta name='twitter:title' content='Juicify' />
                     <meta name='twitter:description' content="Lets make your body juicy!" />
                     <meta name='twitter:image' content='https://juicify.app/icons/android-chrome-192x192.png' />
-                    <meta name='twitter:creator' content='@DavidWShadow' />
+                    <meta name='twitter:creator' content='@whoisarjen' />
                     <meta property='og:type' content='website' />
                     <meta property='og:title' content='Juicify' />
                     <meta property='og:description' content="Lets make your body juicy!" />
