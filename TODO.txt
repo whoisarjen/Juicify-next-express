@@ -25,9 +25,6 @@ remind password
 blog needs placeholders
 
 
-offline is showing after close and reopen
-
-
 barcode
 
 
