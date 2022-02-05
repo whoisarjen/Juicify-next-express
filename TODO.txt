@@ -12,6 +12,7 @@ probably reading token should be before server site randering
 token should be used with usecontext?
 or its just about using awaiting data before rendering
         -- DIFFRENT way of handling acces to logged/loggouted pages
+        -- it's bc of protection like above
 
 
 socket => cookie
