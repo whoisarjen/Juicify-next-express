@@ -1,5 +1,4 @@
 import { FunctionComponent, useState, useEffect } from "react";
-import { expectLoggedIN } from "../utils/checkAuth";
 import Bar from '../components/macronutrients/Bar'
 import styles from '../styles/macronutrients.module.css'
 import { useAppSelector } from "../hooks/useRedux";
@@ -12,7 +11,6 @@ import OwnMacro from "../components/macronutrients/OwnMacro";
 import useTranslation from "next-translate/useTranslation";
 
 const Macronutrients: FunctionComponent = () => {
-    expectLoggedIN()
     const [changeSettings] = useSettings()
     const token: any = useAppSelector(state => state.token.value)
     const [macro, setMacro] = useState<Array<any>>([])

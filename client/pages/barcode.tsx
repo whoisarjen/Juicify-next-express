@@ -1,10 +1,8 @@
 import { FunctionComponent } from "react";
-import { expectLoggedIN } from "../utils/checkAuth";
 // import React from 'react';
 // import BarcodeScannerComponent from "react-webcam-barcode-scanner";
 
 const Barcode: FunctionComponent = () => {
-    expectLoggedIN();
     // const [data, setData] = React.useState('Not Found');
 
     return (

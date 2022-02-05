@@ -19,29 +19,6 @@ const logout = async () => {
     window.location.replace(`${window.location.origin}/login`)
 }
 
-const expectLoggedIN = () => {
-    // const router = useRouter();
-    // const [cookies] = useCookies(["token"]);
-
-    // useEffect(() => {
-    //     if (!cookies.token) {
-    //         router.push("/login");
-    //     }
-    // }, []);
-};
-
-const expectLoggedOUT = () => {
-    // const router = useRouter();
-    // const [cookies] = useCookies(["token"]);
-    // const token: any = useAppSelector((state) => state.token.value);
-
-    // useEffect(() => {
-    //     if (cookies.token) {
-    //         router.push(`/${token.login}/nutrition-diary/${getShortDate()}`);
-    //     }
-    // }, []);
-};
-
 const getCookie = async (name: string) => {
     let nameEQ = name + "=";
     let ca = document.cookie.split(';');
@@ -71,8 +48,6 @@ export const refreshToken = async () => {
 export const parseBoolean = (value: string | boolean): boolean => value.toString().toLowerCase() === 'true' ? true : false
 
 export {
-    expectLoggedIN,
-    expectLoggedOUT,
     readToken,
     logout,
     getCookie

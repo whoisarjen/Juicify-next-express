@@ -11,7 +11,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { useAppDispatch } from "../hooks/useRedux";
 import { setToken } from "../redux/features/tokenSlice";
 import useTranslation from "next-translate/useTranslation";
-import { expectLoggedOUT, parseBoolean, readToken } from "../utils/checkAuth";
+import { parseBoolean, readToken } from "../utils/checkAuth";
 import { createIndexedDB, addIndexedDB, deleteDatabaseIndexedDB } from "../utils/indexedDB";
 import { getShortDate } from "../utils/manageDate";
 import axios from "axios";
@@ -22,7 +22,6 @@ import { createSessionSchema, CreateSessionProps } from '../schema/session.schem
 import { useCookies } from "react-cookie";
 
 const Login = () => {
-    expectLoggedOUT();
     const router = useRouter();
     const { t } = useTranslation();
     const [{ error }] = useNotify()

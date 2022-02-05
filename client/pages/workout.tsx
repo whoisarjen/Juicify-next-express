@@ -1,10 +1,8 @@
 import { useAppSelector } from '../hooks/useRedux';
 import Box from '../components/workout/Box'
-import { expectLoggedIN } from "../utils/checkAuth";
 import useTranslation from "next-translate/useTranslation";
 
 const Workout = () => {
-    expectLoggedIN();
     const { t } = useTranslation('workout');
     const token: any = useAppSelector(state => state.token.value)
 

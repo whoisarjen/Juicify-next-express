@@ -11,7 +11,6 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import useTranslation from "next-translate/useTranslation";
-import { expectLoggedOUT } from "../utils/checkAuth";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -23,7 +22,6 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 const Register = () => {
-    expectLoggedOUT();
     const router = useRouter();
     const { t } = useTranslation();
     const [{ error, success }] = useNotify()

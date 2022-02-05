@@ -1,5 +1,4 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import { expectLoggedIN } from "../utils/checkAuth";
 import { logout } from '../utils/checkAuth'
 import Button from '@mui/material/Button';
 import BottomFlyingButton from "../components/common/BottomFlyingButton";
@@ -13,7 +12,6 @@ import SelectLanguage from "../components/common/SelectLanguage";
 import { useCookies } from "react-cookie";
 
 const Settings: FunctionComponent = () => {
-    expectLoggedIN();
     const { t } = useTranslation('settings')
     const [isLoading, setIsLoading] = useState(false)
     const [changedObject, setChangedObject] = useState<any>({})

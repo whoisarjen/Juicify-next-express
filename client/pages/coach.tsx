@@ -2,7 +2,6 @@ import { FunctionComponent, useState, useEffect } from "react";
 import Standard from "../components/coach/Standard";
 import Result from "../components/coach/Result";
 import Welcome from "../components/coach/Welcome";
-import { expectLoggedIN } from "../utils/checkAuth";
 import MuscleBuilding from "../components/coach/MuscleBuilding";
 import ChooseDiet from "../components/coach/ChooseDiet";
 import CheckingTodayData from "../components/coach/CheckingTodayData";
@@ -26,7 +25,6 @@ import Tutorial_6 from "../components/coach/Tutorial_6";
 import Tutorial_7 from "../components/coach/Tutorial_7";
 
 const Coach: FunctionComponent = () => {
-    expectLoggedIN()
     const [block, setBlock] = useState(true)
     const dispatch = useAppDispatch();
     const [createDiet, analyzeDiet] = useCoach()
