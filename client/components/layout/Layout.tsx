@@ -38,17 +38,14 @@ const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
     const token: any = useAppSelector(state => state.token.value)
 
     useEffect(() => {
-        setAllowLoading(false)
         if (cookies.token && notRequiredAuth.includes(router.pathname)) {
             router.push(`/${readToken(cookies.token).login}/nutrition-diary/${getShortDate()}`);
-            setAllowLoading(true)
         } else if (!cookies.token && requiredAuth.includes(router.pathname)) {
             router.push('/login')
-            setAllowLoading(true)
         } else {
             setAllowLoading(true)
         }
-    }, [cookies])
+    }, [cookies, router])
 
     return (
         <main className='layout'>
