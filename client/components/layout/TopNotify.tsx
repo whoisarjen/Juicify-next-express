@@ -6,7 +6,6 @@ import { useAppSelector } from "../../hooks/useRedux";
 import { getAllIndexedDB } from "../../utils/indexedDB";
 
 const TopNotify: FunctionComponent = () => {
-    const [isTopNotify, setIsTopNotify] = useState(false)
     const [notSaved, setNotSaved]: any = useState([])
     const [allowed, setAllowed] = useState(false)
     const [timer, setTimer]: any = useState()
@@ -33,19 +32,6 @@ const TopNotify: FunctionComponent = () => {
         })()
     }, [router.pathname, token])
 
-    useEffect(() => {
-        document.addEventListener("visibilitychange", () => {
-            const state = document.visibilityState;
-            if (state === "hidden") {
-                setIsTopNotify(false)
-            }
-
-            if (state === "visible") {
-                setIsTopNotify(true)
-            }
-        });
-    }, [])
-
     return (
         <>
             {
@@ -64,7 +50,7 @@ const TopNotify: FunctionComponent = () => {
                             </Link>
                         )
                         :
-                        !isOnline && token && token._id && isTopNotify
+                        !isOnline && token && token._id
                             ?
                             (
                                 <div className="TopNotify">
