@@ -34,18 +34,19 @@ const notRequiredAuth = [
 const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
     const router = useRouter()
     const [cookies] = useCookies();
-    const [allowLoading, setAllowLoading] = useState(false)
+    // const [allowLoading, setAllowLoading] = useState(false)
+    const [allowLoading, setAllowLoading] = useState(true)
     const token: any = useAppSelector(state => state.token.value)
 
-    useEffect(() => {
-        if (cookies.token && notRequiredAuth.includes(router.pathname)) {
-            router.push(`/${readToken(cookies.token).login}/nutrition-diary/${getShortDate()}`);
-        } else if (!cookies.token && requiredAuth.includes(router.pathname)) {
-            router.push('/login')
-        } else {
-            setAllowLoading(true)
-        }
-    }, [cookies])
+    // useEffect(() => {
+    //     if (cookies.token && notRequiredAuth.includes(router.pathname)) {
+    //         router.push(`/${readToken(cookies.token).login}/nutrition-diary/${getShortDate()}`);
+    //     } else if (!cookies.token && requiredAuth.includes(router.pathname)) {
+    //         router.push('/login')
+    //     } else {
+    //         setAllowLoading(true)
+    //     }
+    // }, [cookies])
 
     return (
         <main className='layout'>
