@@ -45,7 +45,7 @@ const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
         } else {
             setAllowLoading(true)
         }
-    }, [])
+    }, [cookies])
 
     return (
         <main className='layout'>
