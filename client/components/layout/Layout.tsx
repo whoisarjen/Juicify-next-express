@@ -32,6 +32,7 @@ const notRequiredAuth = [
 ]
 
 const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
+    const [isTopNotify, setIsTopNotify] = useState(false)
     const router = useRouter()
     const [cookies] = useCookies();
     const [allowLoading, setAllowLoading] = useState(false)
@@ -47,9 +48,25 @@ const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
         }
     }, [cookies, router])
 
+    // useEffect(() => {
+    //     document.addEventListener("visibilitychange", () => {
+    //         const state = document.visibilityState;
+    //         if (state === "hidden") {
+    //             setIsTopNotify(false)
+    //         }
+
+    //         if (state === "visible") {
+    //             setIsTopNotify(true)
+    //         }
+    //     });
+    // }, [])
+
     return (
         <main className='layout'>
-            <TopNotify />
+            {
+                isTopNotify &&
+                <TopNotify />
+            }
             {
                 allowLoading &&
                 <>

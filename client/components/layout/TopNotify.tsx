@@ -31,6 +31,7 @@ const TopNotify: FunctionComponent = () => {
             setTimer(setTimeout(() => setAllowed(true), 1500))
         })()
     }, [router.pathname, token])
+
     return (
         <>
             {
