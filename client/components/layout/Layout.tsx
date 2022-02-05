@@ -48,18 +48,18 @@ const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
         }
     }, [cookies, router])
 
-    // useEffect(() => {
-    //     document.addEventListener("visibilitychange", () => {
-    //         const state = document.visibilityState;
-    //         if (state === "hidden") {
-    //             setIsTopNotify(false)
-    //         }
+    useEffect(() => {
+        document.addEventListener("visibilitychange", () => {
+            const state = document.visibilityState;
+            if (state === "hidden") {
+                setIsTopNotify(false)
+            }
 
-    //         if (state === "visible") {
-    //             setIsTopNotify(true)
-    //         }
-    //     });
-    // }, [])
+            if (state === "visible") {
+                setIsTopNotify(true)
+            }
+        });
+    }, [])
 
     return (
         <main className='layout'>
