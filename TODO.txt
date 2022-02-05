@@ -5,6 +5,7 @@ user's schema should always check if when change, user didnt change premium etc.
 
 
 socket => cookie
+security on cookie + move user's profile to localstorage
 
 
 logout => server => push
@@ -16,22 +17,13 @@ service worker => new thread
 remind password
 
 
-security on cookie + move user's profile to localstorage
-
-
 blog needs placeholders
-
-
-top navbar PWA need to change color
 
 
 offline is showing after close and reopen
 
 
 barcode
-
-
-PWA images and settings
 
 
 delete console.logs
