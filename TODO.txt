@@ -15,6 +15,9 @@ or its just about using awaiting data before rendering
         -- it's bc of protection like above
 
 
+pages auth
+
+
 socket => cookie
 
 
