@@ -1,11 +1,16 @@
 add cardio exercises + timer i guess
+
+
 fix autosave workout on load
+
 
 user's schema should always check if when change, user didnt change premium etc.
 
 
 socket => cookie
 security on cookie + move user's profile to localstorage
+socket can use _id from localstorage, anyway server is checking token before sending info to socket and the reaching refresh info is not sensitive data adn we avoid re reading token
+but we need to refresh app by localstorage not cookies, watching cookies start to be useless
 
 
 logout => server => push
