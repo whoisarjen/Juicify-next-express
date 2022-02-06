@@ -96,10 +96,9 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
             dispatch(setToken(cookies.token));
         }
         if (cookies.refresh_token) {
-            const socketQuery: any = {
-                query: `refresh_token=${cookies.refresh_token}`
-            }
-            const socket = io(process.env.NEXT_PUBLIC_SERVER as any, socketQuery)
+            const socket = io(process.env.NEXT_PUBLIC_SERVER as any, {
+                withCredentials: true,
+            })
 
             socket.on('compareDatabases', async (object) => {
                 try {

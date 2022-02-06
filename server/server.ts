@@ -40,5 +40,6 @@ if (process.env.NODE_ENV == "production") {
 const io = new Server(server, {
     cors: {
         origin: process.env.ORIGIN,
+        credentials: true
     }
 });

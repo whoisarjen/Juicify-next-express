@@ -1,6 +1,6 @@
 import { Server, Socket } from "socket.io";
 import logger from "./logger";
-import { verifyJWT } from "./jwt.utils";
+import { getCookie, verifyJWT } from "./jwt.utils";
 import { createClient } from 'redis';
 import { Request, Response } from 'express'
 
@@ -10,30 +10,34 @@ const redis: any = createClient({
 
 export async function socket({ io }: { io: Server }) {
     await redis.connect().then(() => logger.info("Connection with Redis has been made!"))
-
     logger.info(`Connection with socket has been made!`);
 
     io.on('connection', async (socket: Socket) => {
-        logger.info(`${socket.id} connected to socket!`);
-        const refresh_token: any = socket.handshake.query.refresh_token
-        if (refresh_token) {
-            const { decoded, expired }: any = await verifyJWT(refresh_token)
-            if (expired || !decoded || !decoded._id) {
-                // If refresh_token is dead, logout user, but allow synchronization | Does it really gona work? Check token while synchro won't kill connection...?
-                io.to(socket.id).emit('compareDatabases', {
-                    "lastUpdated": { ...await synchronizationObject(0), ...{ logout: new Date().getTime() + 999999999 } },
-                    "version": process.env.APP_VERSION,
-                    "socket_ID": socket.id
-                })
-            } else {
-                logger.info(`User ${decoded._id} connected to the socket`)
-                socket.join(decoded._id)
-                io.to(socket.id).emit('compareDatabases', {
-                    "lastUpdated": JSON.parse(await redis.get(decoded._id)) || await createSynchronizationObject(decoded._id),
-                    "version": process.env.APP_VERSION,
-                    "socket_ID": socket.id
-                })
+        try {
+            logger.info(`${socket.id} connected to socket!`);
+            const refresh_token: any = await verifyJWT(await getCookie('refresh_token', socket.handshake.headers.cookie) as string)
+            console.log('refresh_token', refresh_token)
+            if (refresh_token) {
+                const { decoded, expired }: any = await verifyJWT(refresh_token)
+                if (expired || !decoded || !decoded._id) {
+                    // If refresh_token is dead, logout user, but allow synchronization | Does it really gona work? Check token while synchro won't kill connection...?
+                    io.to(socket.id).emit('compareDatabases', {
+                        "lastUpdated": { ...await synchronizationObject(0), ...{ logout: new Date().getTime() + 999999999 } },
+                        "version": process.env.APP_VERSION,
+                        "socket_ID": socket.id
+                    })
+                } else {
+                    logger.info(`User ${decoded._id} connected to the socket`)
+                    socket.join(decoded._id)
+                    io.to(socket.id).emit('compareDatabases', {
+                        "lastUpdated": JSON.parse(await redis.get(decoded._id)) || await createSynchronizationObject(decoded._id),
+                        "version": process.env.APP_VERSION,
+                        "socket_ID": socket.id
+                    })
+                }
             }
+        } catch (error: any) {
+            logger.error(error)
         }
     });
 }
