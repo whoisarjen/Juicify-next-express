@@ -95,7 +95,7 @@ const AddResultValues: FunctionComponent<AddResultValuesProps> = ({ result, setN
             }
             {
                 isOwner &&
-                <ButtonPlus size="small" click={openNewResult} />
+                <ButtonPlus size="small" click={() => openNewResult()} />
             }
         </div>
     );

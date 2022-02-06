@@ -43,7 +43,7 @@ const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, inde
         }
         setWeight(choosenWeight.toString())
         setWeightOptions(weight)
-        changeResult(new Value({ reps: parseInt(reps), weight: parseFloat(choosenWeight.toString()), open }))
+        // changeResult(new Value({ reps: parseInt(reps), weight: parseFloat(choosenWeight.toString()), open }))
     }
 
     const handleDelete = () => {

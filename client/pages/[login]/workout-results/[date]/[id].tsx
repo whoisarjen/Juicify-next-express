@@ -33,7 +33,6 @@ const WorkoutResultsID: FunctionComponent = () => {
     const [{ data, user, daily }] = useWorkoutResult()
     const token: any = useAppSelector(state => state.token.value)
     const [saveLoading, setSaveLoading] = useState(false)
-    const [autoSaveCheck, setAutoSaveCheck] = useState(false)
     const [deleteExercises, setDeleteExercise] = useState<ResultProps | boolean>(false)
     const [descriptionWorkout, setDescriptionWorkout] = useState('')
     const theOldestSupportedDate = useAppSelector(state => state.config.theOldestSupportedDate())
@@ -63,7 +62,6 @@ const WorkoutResultsID: FunctionComponent = () => {
             }
         })
         if (count > 0) {
-            setAutoSaveCheck(false)
             let newDaily = daily
             newDaily.workout_result = newDaily.workout_result.filter((result: any) => result._id != router.query.id)
             let object: any = {
@@ -103,21 +101,13 @@ const WorkoutResultsID: FunctionComponent = () => {
         setSaveLoading(false)
     }
 
-    const autoSave = async (newResults: Array<ResultProps> = []) => {
-        if (autoSaveCheck) {
-            if (theOldestSupportedDate <= router.query.date) {
-                let object = data
-                if (newResults.length) {
-                    object.results = newResults
-                } else {
-                    object.results = results
-                }
-                object.whenAdded = router.query.date
-                object.burnt = burnt
-                object.description = description
-                await deleteIndexedDB('workout_result', object._id)
-                await addIndexedDB('workout_result', [object])
-            }
+    const autoSave = async (value: any, where: string = '') => {
+        if (theOldestSupportedDate <= router.query.date) {
+            let object = { ...data }
+            object[where] = value
+            object.whenAdded = object.whenAdded.slice(6, 10) + '-' + object.whenAdded.slice(3, 5) + '-' + object.whenAdded.slice(0, 2)
+            await deleteIndexedDB('workout_result', object._id)
+            await addIndexedDB('workout_result', [object])
         }
     }
 
@@ -125,7 +115,7 @@ const WorkoutResultsID: FunctionComponent = () => {
         let newResults: Array<ResultProps> = results
         newResults[index].values = values
         setResults(newResults)
-        await autoSave(newResults)
+        await autoSave(newResults, 'results')
     }
 
     const handleDeleteExercise = async (array: any) => {
@@ -133,7 +123,7 @@ const WorkoutResultsID: FunctionComponent = () => {
             ...results.filter((x: ResultProps) => x._id != array[0]._id)
         ]
         setResults(newResults)
-        await autoSave(newResults)
+        await autoSave(newResults, 'results')
         setDeleteExercise(false)
     }
 
@@ -151,16 +141,8 @@ const WorkoutResultsID: FunctionComponent = () => {
             )
         ]
         setResults(newResults)
-        await autoSave(newResults)
+        await autoSave(newResults, 'results')
     }
-
-    useEffect(() => {
-        (async () => {
-            if (autoSaveCheck) {
-                await autoSave()
-            }
-        })()
-    }, [burnt, description, results])
 
     useEffect(() => {
         (async () => {
@@ -176,7 +158,6 @@ const WorkoutResultsID: FunctionComponent = () => {
                 if (token && token.login == router.query.login) {
                     let newDescription = await getIndexedDBbyID('workout_plan', data.workout_plan_ID)
                     setDescriptionWorkout(newDescription.description)
-                    setAutoSaveCheck(true)
                 }
             }
         })()
@@ -234,7 +215,11 @@ const WorkoutResultsID: FunctionComponent = () => {
                     variant="outlined"
                     sx={{ width: '100%', marginTop: '10px' }}
                     value={burnt}
-                    onChange={e => setBurnt(e.target.value)}
+                    onChange={async e => {
+                        setBurnt(e.target.value)
+                        await autoSave(e.target.value, 'burnt')
+                    }
+                    }
                     disabled={!isOwner}
                     InputProps={{
                         endAdornment: <InputAdornment position="end">Kcal</InputAdornment>,
@@ -249,7 +234,11 @@ const WorkoutResultsID: FunctionComponent = () => {
                 variant="outlined"
                 value={description}
                 disabled={!isOwner}
-                onChange={e => setDescription(e.target.value)}
+                onChange={async e => {
+                    setDescription(e.target.value)
+                    await autoSave(e.target.value, 'notes')
+                }
+                }
                 sx={{ width: '100%', marginTop: '10px' }}
                 error={
                     description.length > 0 && !basicInputLength(description)

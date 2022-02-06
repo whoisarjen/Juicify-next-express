@@ -1,18 +1,6 @@
 add cardio exercises + timer i guess
 
 
-logout => useLogout?
-
-
-fix autosave workout on load
-
-
-security on cookie + move user's profile to localstorage
-socket can use _id from localstorage, anyway server is checking token before sending info to socket and the reaching refresh info is not sensitive data adn we avoid re reading token
-but we need to refresh app by localstorage not cookies, watching cookies start to be useless
-useContext
-
-
 service worker => new thread
 
 
