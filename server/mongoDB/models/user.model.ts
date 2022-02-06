@@ -60,7 +60,8 @@ const userSchema = new mongoose.Schema({
         collation: {
             strength: 2
         },
-        required: true
+        required: true,
+        immutable: true
     },
     email_confirmation: {
         type: Boolean,
@@ -72,7 +73,8 @@ const userSchema = new mongoose.Schema({
         collation: {
             strength: 2
         },
-        required: true
+        required: true,
+        immutable: true
     },
     l: Number,
     password: {
@@ -90,7 +92,8 @@ const userSchema = new mongoose.Schema({
     },
     users_roles_ID: {
         type: Number,
-        default: 1
+        default: 1,
+        immutable: true
     },
     public_profile: {
         type: Number,
@@ -118,7 +121,8 @@ const userSchema = new mongoose.Schema({
     },
     premium: {
         type: Date,
-        default: new Date()
+        default: new Date(),
+        immutable: true
     },
     twitter: {
         type: String,
@@ -212,6 +216,18 @@ userSchema.pre("save", async function (next) {
     const salt = await bcrypt.genSalt(parseInt(process.env.SALT_WORK_FACTORY as string));
     const hash = await bcrypt.hashSync(user.password, salt);
     user.password = hash;
+
+    return next();
+})
+
+userSchema.pre("findOneAndUpdate", async function (next) {
+    let user: any = this.getUpdate()
+
+    if (user['$set']['password']) {
+        const salt = await bcrypt.genSalt(parseInt(process.env.SALT_WORK_FACTORY as string));
+        const hash = await bcrypt.hashSync(user['$set']['password'], salt);
+        user['$set']['password'] = hash;
+    }
 
     return next();
 
