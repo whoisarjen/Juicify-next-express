@@ -8,7 +8,7 @@ import { is_id } from '../../utils/API'
 import { getAllIndexedDB, deleteIndexedDB, getIndexedDBbyID, addIndexedDB } from '../../utils/indexedDB'
 import { overwriteThoseIDSinDB, insertThoseIDStoDB, deleteThoseIDSfromDB, setLastUpdated } from '../../utils/API'
 import { store } from '../../redux/store'
-import { getCookie, refreshToken } from '../../utils/checkAuth'
+import { getCookie, parseBoolean, refreshToken } from '../../utils/checkAuth'
 import axios from 'axios';
 
 const synchronizationAfterOffline = async (isNewValueInDB: boolean = false, where: string, updateDailyKey: any, updateDailyKey2: any, updateDailyKey3: any, whatToUpdate: any, whatToUpdate2: any = '_id', whatToUpdate3: any) => {
@@ -106,11 +106,11 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                     console.log('compareDatabases', object)
                     setCookie('socket_ID', object.socket_ID, {
                         maxAge: 1000 * 60 * 60 * 24 * 365,
-                        httpOnly: false,
-                        domain: 'localhost',
+                        httpOnly: parseBoolean(process.env.NEXT_PUBLIC_COOKIE_HTTPONLY as string),
+                        domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN as string,
                         path: '/',
                         sameSite: 'strict',
-                        secure: false
+                        secure: parseBoolean(process.env.NEXT_PUBLIC_COOKIE_SECURE as string)
                     })
                     let newTimeOfUpdate = 0
                     dispatch(setIsOnline(true))
