@@ -3,9 +3,9 @@ import { useState, useEffect } from 'react'
 import { getAllIndexedDB } from '../utils/indexedDB';
 import { addDaysToDate } from '../utils/manageDate';
 import { loadValueByLogin } from '../utils/API';
-import { getCookie, readToken } from '../utils/checkAuth';
 import DailyMeasurementProps from '../interfaces/dailyMeasurement';
 import DailyMeasurement from '../classes/dailyMeasurement';
+import { useAppSelector } from './useRedux';
 
 const loadMissingDays = async (oryginalArray: Array<DailyMeasurementProps>, user_ID: string, howManyDays: number, today: Date | string) => {
     return new Promise(resolve => {
@@ -45,11 +45,11 @@ const useDailyMeasurements = (today: Date | string, howManyDays: number = 7, log
     const [data, setData] = useState<Array<DailyMeasurementProps>>([])
     const [user, setUser] = useState('')
     const router = useRouter()
+    const token: any = useAppSelector(state => state.token.value)
 
     useEffect(() => {
         (async () => {
             if (login) {
-                const token = readToken(await getCookie('token') || '')
                 if (token.login == (login || token.login)) { // Sometimes need to use only in token's user case and this block errors
                     let res = await getAllIndexedDB('daily_measurement')
                     res = await loadMissingDays(res, token._id, howManyDays, today)

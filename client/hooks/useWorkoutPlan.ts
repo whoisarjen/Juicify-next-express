@@ -1,22 +1,22 @@
 import { is_id } from '../utils/API'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
-import { getCookie, readToken } from '../utils/checkAuth'
 import { loadValueByLogin } from '../utils/API'
 import { getIndexedDBbyID } from '../utils/indexedDB'
 import WorkoutPlanProps from '../interfaces/workout/workoutPlan'
 import WorkoutPlan from '../classes/workout/workoutPlan'
+import { useAppSelector } from './useRedux'
 
 const useWorkoutPlan = (workoutPlanID: string): [any, () => void] => {
     const router: any = useRouter()
     const [user, setUser] = useState({})
     const [reload, setReload] = useState(0)
     const [data, setData] = useState<boolean | WorkoutPlanProps>(false)
+    const token: any = useAppSelector(state => state.token.value)
 
     useEffect(() => {
         (async () => {
             if (workoutPlanID) {
-                const token = readToken(await getCookie('token') || '')
                 if (token.login == router.query.login) {
                     const workoutPlan: WorkoutPlanProps = await getIndexedDBbyID('workout_plan', workoutPlanID)
                     if (workoutPlan) {

@@ -32,7 +32,7 @@ const getCookie = async (name: string) => {
     return null;
 }
 
-const readToken = (token: string) => {
+const readToken = async (token: string) => {
     if (!token) return ''
     return JSON.parse(Buffer.from(token.split(".")[1], "base64").toString());
 };

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    domainAdress: "https://juicify.app",
+    domainAdress: process.env.NEXT_PUBLIC_DOMAIN_ADDRESS,
     isOnline: false,
     numberSupportedDays: 28,
     theOldestSupportedDate: () => new Date((new Date()).setDate((new Date()).getDate() - 28)).toJSON().slice(0, 10),

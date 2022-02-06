@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { readToken } from "../../utils/checkAuth";
 
 const initialState = {
-    value: {},
+    value: false,
 };
 
 export const tokenSlice = createSlice({
@@ -10,10 +9,14 @@ export const tokenSlice = createSlice({
     initialState,
     reducers: {
         setToken: (state, action) => {
-            state.value = readToken(action.payload);
+            try{
+                state.value = JSON.parse(action.payload)
+            }catch{
+                state.value = JSON.parse(JSON.stringify(action.payload))
+            }
         },
         removeToken: (state) => {
-            state.value = {};
+            state.value = false;
         },
     },
 });

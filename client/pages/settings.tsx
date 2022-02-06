@@ -9,7 +9,6 @@ import TextField from '@mui/material/TextField';
 import { useAppSelector } from "../hooks/useRedux";
 import MobileDatePicker from "../components/common/MobileDatePicker";
 import SelectLanguage from "../components/common/SelectLanguage";
-import { useCookies } from "react-cookie";
 
 const Settings: FunctionComponent = () => {
     const { t } = useTranslation('settings')
@@ -37,7 +36,6 @@ const Settings: FunctionComponent = () => {
     const [current, setCurrent] = useState('')
     const [password, setPassword] = useState('')
     const requirePassword = useAppSelector(state => state.config.requirePassword)
-    const [cookies] = useCookies()
 
     const handleChange = (value: any, where: string) => {
         let newObject = JSON.parse(JSON.stringify(changedObject))
@@ -98,7 +96,7 @@ const Settings: FunctionComponent = () => {
             setMeal_number(token.meal_number === undefined ? 5 : token.meal_number)
             setSugar_percent(token.sugar_percent === undefined ? 5 : token.sugar_percent)
         }
-    }, [token, cookies])
+    }, [token])
 
     return (
         <div className="settings">

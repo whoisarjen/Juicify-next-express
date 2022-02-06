@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import { useAppSelector } from "./useRedux";
 import { useState, useEffect } from "react";
-import { getCookie, readToken } from "../utils/checkAuth"
 import { loadValueByLogin } from '../utils/API'
 import { getAllIndexedDB } from "../utils/indexedDB";
 
@@ -10,11 +9,11 @@ const useWorkoutResults = (): any => {
     const [data, setData] = useState([])
     const [user, setUser] = useState({})
     const theOldestSupportedDate = useAppSelector(state => state.config.theOldestSupportedDate)
+    const token: any = useAppSelector(state => state.token.value)
 
     useEffect(() => {
         (async () => {
             let results = []
-            const token = readToken(await getCookie('token') || '')
             if (token.login == router.query.login) {
                 let cache = await getAllIndexedDB('workout_result')
                 let daily_measurements = await getAllIndexedDB('daily_measurement')

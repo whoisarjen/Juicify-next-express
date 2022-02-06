@@ -11,7 +11,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { useAppDispatch } from "../hooks/useRedux";
 import { setToken } from "../redux/features/tokenSlice";
 import useTranslation from "next-translate/useTranslation";
-import { parseBoolean, readToken } from "../utils/checkAuth";
+import { readToken } from "../utils/checkAuth";
 import { createIndexedDB, addIndexedDB, deleteDatabaseIndexedDB } from "../utils/indexedDB";
 import { getShortDate } from "../utils/manageDate";
 import axios from "axios";
@@ -19,7 +19,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNotify } from "../hooks/useNotify";
 import { createSessionSchema, CreateSessionProps } from '../schema/session.schema'
-import { useCookies } from "react-cookie";
 
 const Login = () => {
     const router = useRouter();
@@ -27,7 +26,6 @@ const Login = () => {
     const [{ error }] = useNotify()
     const dispatch = useAppDispatch();
     const [loading, setLoading] = useState(false)
-    const [, setCookie] = useCookies()
 
     const handleKeyPress = (event: any) => {
         if (event.key === "Enter") {
@@ -56,18 +54,11 @@ const Login = () => {
                     await addIndexedDB(keys[i], response.data[keys[i]])
                 }
             }
-            dispatch(setToken(response.data.token));
-            // it has to be here to force connection query to socket
-            setCookie('token', response.data.token, {
-                maxAge: parseInt(process.env.NEXT_PUBLIC_COOKIE_TOKEN_LIFE_TIME_IN_S as string),
-                httpOnly: parseBoolean(process.env.NEXT_PUBLIC_COOKIE_HTTPONLY as string),
-                domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN as string,
-                path: '/',
-                sameSite: 'strict',
-                secure: parseBoolean(process.env.NEXT_PUBLIC_COOKIE_SECURE as string)
-            })
+            const readTokenValue = await readToken(response.data.token)
+            localStorage.setItem('token', JSON.stringify(readTokenValue))
+            dispatch(setToken(readTokenValue));
             router.push(
-                `/${readToken(response.data.token).login
+                `/${readTokenValue.login
                 }/nutrition-diary/${getShortDate()}`
             );
         } catch (e: any) {

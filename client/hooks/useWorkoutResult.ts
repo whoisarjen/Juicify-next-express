@@ -1,21 +1,21 @@
 import { is_id } from '../utils/API'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
-import { getCookie, readToken } from "../utils/checkAuth"
 import { getIndexedDBbyID } from '../utils/indexedDB'
 import { useDailyMeasurement } from './useDailyMeasurement'
 import { reverseDateDotes } from '../utils/manageDate'
+import { useAppSelector } from './useRedux'
 
 const useWorkoutResult = (): [any, () => void] => {
     const router: any = useRouter()
     const [reload, setReload] = useState(0)
     const [data, setData] = useState(false)
     const [{ data: daily, user }] = useDailyMeasurement(router.query.date, router.query.login)
+    const token: any = useAppSelector(state => state.token.value)
 
     useEffect(() => {
         (async () => {
             if (daily) {
-                const token = readToken(await getCookie('token') || '')
                 if (token.login == router.query.login) {
                     let res: any = {}
                     let cache = await getIndexedDBbyID('workout_result', router.query.id)

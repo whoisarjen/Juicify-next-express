@@ -14,7 +14,8 @@ const Footer = () => {
   return (
     <footer className="footer">
       {
-        token.login
+        token &&
+          token.login
           ?
           (
             <>

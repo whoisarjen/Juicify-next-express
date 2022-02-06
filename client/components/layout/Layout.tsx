@@ -9,8 +9,6 @@ import SidebarRightLoggouted from './SidebarRightLoggouted'
 import SidebarLeftLoggouted from './SidebarLeftLoggouted'
 import TopNotify from './TopNotify'
 import { getShortDate } from '../../utils/manageDate'
-import { readToken } from '../../utils/checkAuth'
-import { useCookies } from 'react-cookie'
 
 interface LayoutProps {
     children: any
@@ -33,19 +31,19 @@ const notRequiredAuth = [
 
 const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
     const router = useRouter()
-    const [cookies] = useCookies();
     const [allowLoading, setAllowLoading] = useState(false)
     const token: any = useAppSelector(state => state.token.value)
 
     useEffect(() => {
-        if (cookies.token && notRequiredAuth.includes(router.pathname)) {
-            router.push(`/${readToken(cookies.token).login}/nutrition-diary/${getShortDate()}`);
-        } else if (!cookies.token && requiredAuth.includes(router.pathname)) {
+        const tokenValue = JSON.parse(localStorage.getItem('token') as any) // it allow us to dodge the first push, when token is not settled yet
+        if (tokenValue && notRequiredAuth.includes(router.pathname)) {
+            router.push(`/${tokenValue.login}/nutrition-diary/${getShortDate()}`);
+        } else if (!tokenValue && requiredAuth.includes(router.pathname)) {
             router.push('/login')
         } else {
             setAllowLoading(true)
         }
-    }, [cookies, router])
+    }, [token, router])
 
     return (
         <main className='layout'>
@@ -61,7 +59,8 @@ const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
                             :
                             <div id="gridOverContent">
                                 {
-                                    token.login
+                                    token &&
+                                        token.login
                                         ?
                                         (
                                             notRequiredAuth.filter(route => route == router.pathname).length || router.pathname == '/'
@@ -75,7 +74,8 @@ const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
                                 }
                                 <div className='content'>{children}</div>
                                 {
-                                    token.login
+                                    token &&
+                                        token.login
                                         ?
                                         (
                                             notRequiredAuth.filter(route => route == router.pathname).length || router.pathname == '/'

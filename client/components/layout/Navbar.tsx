@@ -64,7 +64,8 @@ const Navbar = () => {
                             </a>
                         </Link>
                         {
-                            token.login ? (
+                            token &&
+                                token.login ? (
                                 <>
                                     <Link passHref href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
                                         <a>

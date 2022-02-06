@@ -1,15 +1,14 @@
 import { setIsOnline } from '../../redux/features/onlineSlice'
 import io from "socket.io-client";
 import { useState, useEffect, FunctionComponent } from 'react'
-import { useCookies } from "react-cookie";
-import { useDispatch } from "react-redux";
 import { setToken } from "../../redux/features/tokenSlice";
 import { is_id } from '../../utils/API'
 import { getAllIndexedDB, deleteIndexedDB, getIndexedDBbyID, addIndexedDB } from '../../utils/indexedDB'
 import { overwriteThoseIDSinDB, insertThoseIDStoDB, deleteThoseIDSfromDB, setLastUpdated } from '../../utils/API'
 import { store } from '../../redux/store'
-import { getCookie, parseBoolean, refreshToken } from '../../utils/checkAuth'
+import { refreshToken } from '../../utils/checkAuth'
 import axios from 'axios';
+import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 
 const synchronizationAfterOffline = async (isNewValueInDB: boolean = false, where: string, updateDailyKey: any, updateDailyKey2: any, updateDailyKey3: any, whatToUpdate: any, whatToUpdate2: any = '_id', whatToUpdate3: any) => {
     return new Promise((resolve, reject) => {
@@ -86,16 +85,18 @@ const cleanCache = async (where: string) => {
 
 const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
     const [key, setKey] = useState(0)
-    const dispatch = useDispatch()
-    const [cookies, setCookie] = useCookies()
-
-    useEffect(() => window.addEventListener('offline', () => dispatch(setIsOnline(false))), [])
+    const dispatch = useAppDispatch()
+    const token: any = useAppSelector(state => state.token.value)
 
     useEffect(() => {
-        if (cookies.token) {
-            dispatch(setToken(cookies.token));
+        if (localStorage.getItem('token')) {
+            dispatch(setToken(localStorage.getItem('token')))
         }
-        if (cookies.refresh_token) {
+        window.addEventListener('offline', () => dispatch(setIsOnline(false)))
+    }, [])
+
+    useEffect(() => {
+        if (token) {
             const socket = io(process.env.NEXT_PUBLIC_SERVER as any, {
                 withCredentials: true,
             })
@@ -177,7 +178,7 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
 
             socket.on('disconnect', () => dispatch(setIsOnline(false))) // Closed socket => user has to be offline
         }
-    }, [cookies.token])
+    }, [token])
 
     return (
         <div className='socket' key={key}>
@@ -270,4 +271,4 @@ async function connectExistingDailyMeasurements(object: any) {
         }
         resolve(changed)
     })
-} 
+}
