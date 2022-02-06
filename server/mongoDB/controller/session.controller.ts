@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import { validatePassword } from "../service/user.service"
 import errorBook from "../../utils/errorBook"
-import { createSession, findSessions, reIssueAccessToken, updateSession } from "../service/session.service"
+import { createSession, reIssueAccessToken, updateSession } from "../service/session.service"
 import { get } from 'lodash'
 import { parseBoolean, signJWT } from '../../utils/jwt.utils'
 import { getUserProducts } from '../service/product.service'
@@ -130,21 +130,31 @@ export async function updateToken(req: Request, res: Response, user: DocumentDef
     return token
 }
 
-// export async function getUserSessionHandler(req: Request, res: Response) {
-//     const user = res.locals.token
+export async function deleteUserSessionHandler(req: Request, res: Response) {
+    const sessionId = res.locals.token.session
 
-//     const sessions = await findSessions({ user: user._id, valid: true })
+    await updateSession({ _id: sessionId }, { valid: false })
 
-//     return res.send(sessions);
-// }
+    res.cookie('token', '', {
+        maxAge: 0,
+        httpOnly: parseBoolean(process.env.COOKIE_HTTPONLY as string),
+        domain: process.env.COOKIE_DOMAIN,
+        path: '/',
+        sameSite: 'strict',
+        secure: parseBoolean(process.env.COOKIE_SECURE as string)
+    })
 
-// export async function deleteUserSessionHandler(req: Request, res: Response) {
-//     const sessionId = res.locals.token.session
+    res.cookie('refresh_token', '', {
+        maxAge: 0,
+        httpOnly: parseBoolean(process.env.COOKIE_HTTPONLY as string),
+        domain: process.env.COOKIE_DOMAIN,
+        path: '/',
+        sameSite: 'strict',
+        secure: parseBoolean(process.env.COOKIE_SECURE as string)
+    })
 
-//     await updateSession({ _id: sessionId }, { valid: false })
-
-//     return res.send({
-//         token: null,
-//         refresh_token: null
-//     })
-// }
+    return res.send({
+        token: null,
+        refresh_token: null
+    })
+}

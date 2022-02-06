@@ -1,6 +1,6 @@
 import { Express } from 'express'
 import { createUserHandler, changeUserHandler, getUsersByLoginHandler } from '../mongoDB/controller/user.controller';
-import { createUserSessionHandler, synchronizationUserSessionHandler, refreshUserSessionHandler } from '../mongoDB/controller/session.controller';
+import { createUserSessionHandler, synchronizationUserSessionHandler, refreshUserSessionHandler, deleteUserSessionHandler } from '../mongoDB/controller/session.controller';
 import validateResource from '../mongoDB/middleware/validateResource'
 import { createUserSchema } from '../mongoDB/schema/user.schema';
 import { createSessionSchema } from '../mongoDB/schema/session.schema';
@@ -26,6 +26,7 @@ const routes = (app: Express) => {
     app.post('/auth/refresh', requireUser, refreshUserSessionHandler)
     app.post('/auth/change', requireUser, changeUserHandler)
     app.post('/auth/register', validateResource(createUserSchema as any), createUserHandler)
+    app.post('/auth/logout', requireUser, deleteUserSessionHandler)
 
     app.post('/find/products', validateResource(findSchema), getProductByNameHandler)
     app.post('/insert/product', requireUser, validateResource(createProductSchema), createProductHandler)

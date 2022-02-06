@@ -1,21 +1,19 @@
-import { useEffect } from "react";
-import { useRouter } from "next/router";
-import { useCookies } from "react-cookie";
-import { useAppSelector } from "../hooks/useRedux";
-import { getShortDate } from "./manageDate";
 import { deleteDatabaseIndexedDB } from "./indexedDB";
 import { setLastUpdated } from "./API";
 import axios from "axios";
 
 const logout = async () => {
+    await axios.post(
+        `${process.env.NEXT_PUBLIC_SERVER}/auth/logout`,
+        {},
+        { withCredentials: true }
+    );
     await deleteDatabaseIndexedDB();
     const isDarkMode = localStorage.getItem('isDarkMode');
     localStorage.clear();
     if (isDarkMode) {
         localStorage.setItem('isDarkMode', isDarkMode)
     }
-    document.cookie = `token=''; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`
-    document.cookie = `refresh_token=''; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`
     window.location.replace(`${window.location.origin}/login`)
 }
 

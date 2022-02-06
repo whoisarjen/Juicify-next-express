@@ -13,9 +13,6 @@ socket can use _id from localstorage, anyway server is checking token before sen
 but we need to refresh app by localstorage not cookies, watching cookies start to be useless
 
 
-logout => server => push
-
-
 service worker => new thread
 
 
