@@ -2,6 +2,7 @@ import { store } from '../redux/store'
 import { useState, useEffect } from "react";
 import { addIndexedDB, getAllIndexedDB, getIndexedDBbyID } from '../utils/indexedDB'
 import axios from 'axios';
+import { useAppSelector } from './useRedux';
 
 const prepareItems = async (
     data: Array<any>,
@@ -41,6 +42,7 @@ const useFind = (value: any, where: string, tab: number, skipThoseIDS: Array<any
     const [loading, setLoading] = useState(false)
     const [searchCache, setSearchCache] = useState<Array<any>>([])
     const [searchTimer, setSearchTimer] = useState<any>(null)
+    const reloadKey = useAppSelector(state => state.key[where as keyof typeof state.key])
 
     useEffect(() => {
         (async () => {
@@ -90,7 +92,7 @@ const useFind = (value: any, where: string, tab: number, skipThoseIDS: Array<any
                 setLoading(false)
             }
         })()
-    }, [value, where, tab, reload])
+    }, [value, where, tab, reload, reloadKey])
 
     useEffect(() => {
         (async () => {

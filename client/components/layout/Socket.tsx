@@ -84,7 +84,6 @@ const cleanCache = async (where: string) => {
 }
 
 const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
-    const [key, setKey] = useState(0)
     const dispatch = useAppDispatch()
     const token: any = useAppSelector(state => state.token.value)
 
@@ -143,11 +142,6 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                         await synchronizationAfterOffline(object.lastUpdated.daily_measurement > lastUpdated, 'daily_measurement', false, false, false, false, false, false);
                         if (!isOnline) await addIndexedDB('whatToUpdate', [{ '_id': 'daily_measurement' }]);
                     }
-
-                    if (newTimeOfUpdate) {
-                        localStorage.setItem('lastUpdated', newTimeOfUpdate.toString())
-                        setKey(new Date().getTime())
-                    }
                 } catch (error: any) {
                     console.log('synchronization ended with error', error)
                     dispatch(setIsOnline(false))
@@ -169,7 +163,6 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                             await addIndexedDB(messege.where, messege.array)
                         }
                     }
-                    setKey(new Date().getTime())
                     setLastUpdated()
                 } else {
                     console.log('Normally would try synchro, but protection works!')
@@ -181,7 +174,7 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
     }, [token])
 
     return (
-        <div className='socket' key={key}>
+        <div className='socket'>
             {children}
         </div>
     )

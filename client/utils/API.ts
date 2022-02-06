@@ -2,6 +2,7 @@ import { getIndexedDBbyID, addIndexedDB, deleteIndexedDB, putIndexedDB, getAllIn
 import { store } from '../redux/store'
 import axios from "axios"
 import { setIsOnline } from "../redux/features/onlineSlice"
+import { refreshKey } from "../redux/features/keySlice"
 
 const API = async (url: string, body: any): Promise<any> => {
     let response = {}
@@ -152,6 +153,7 @@ const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, updateDa
             }
         }
         await addIndexedDB(where, array)
+        store.dispatch(refreshKey(where))
         return resolve(array)
     })
 }
@@ -206,6 +208,7 @@ const overwriteThoseIDSinDB = async (where: string, sentArray: Array<any>): Prom
                 }
             }
             await addIndexedDB(where, array)
+            store.dispatch(refreshKey(where))
             resolve(array);
         })();
     })
@@ -255,6 +258,7 @@ const deleteThoseIDSfromDB = async (where: string, array: Array<any>, isNewValue
                     if (array.length > 0) await addIndexedDB(where, array)
                 }
             }
+            store.dispatch(refreshKey(where))
             resolve(true);
         })();
     })

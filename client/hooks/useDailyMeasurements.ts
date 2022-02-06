@@ -46,6 +46,7 @@ const useDailyMeasurements = (today: Date | string, howManyDays: number = 7, log
     const [user, setUser] = useState('')
     const router = useRouter()
     const token: any = useAppSelector(state => state.token.value)
+    const reloadKey = useAppSelector(state => state.key.daily_measurement)
 
     useEffect(() => {
         (async () => {
@@ -67,7 +68,7 @@ const useDailyMeasurements = (today: Date | string, howManyDays: number = 7, log
                 }
             }
         })()
-    }, [reload, router.query])
+    }, [reload, router.query, reloadKey])
 
     return [{ data, user }, () => setReload(reload + 1)];
 }

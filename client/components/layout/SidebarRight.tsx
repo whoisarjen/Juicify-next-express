@@ -4,7 +4,6 @@ import { useDailyMeasurement } from "../../hooks/useDailyMeasurement";
 import useMacro from "../../hooks/useMacro";
 import { useAppSelector } from "../../hooks/useRedux";
 import { getDiffrentBetweenDays, getShortDate, reverseDateDotes } from "../../utils/manageDate";
-// import countCalories from "../nutrition-diary/utils/countCalories";
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import Link from "next/link";

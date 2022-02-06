@@ -13,6 +13,7 @@ const useWorkoutPlan = (workoutPlanID: string): [any, () => void] => {
     const [reload, setReload] = useState(0)
     const [data, setData] = useState<boolean | WorkoutPlanProps>(false)
     const token: any = useAppSelector(state => state.token.value)
+    const reloadKey = useAppSelector(state => state.key.workout_plan)
 
     useEffect(() => {
         (async () => {
@@ -40,7 +41,7 @@ const useWorkoutPlan = (workoutPlanID: string): [any, () => void] => {
                 }
             }
         })()
-    }, [workoutPlanID, reload, router.query])
+    }, [workoutPlanID, reload, router.query, reloadKey])
 
     return [{ data, user }, () => setReload(reload + 1)]
 }

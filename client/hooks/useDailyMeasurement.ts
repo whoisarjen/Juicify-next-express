@@ -12,6 +12,7 @@ const useDailyMeasurement = (when: string, login: string): [any, () => void] => 
     const [data, setDataObject] = useState<Object>();
     const theOldestSupportedDate = useAppSelector(state => state.config.theOldestSupportedDate());
     const token: any = useAppSelector(state => state.token.value)
+    const reloadKey = useAppSelector(state => state.key.daily_measurement)
     
     useEffect(() => {
         if (when) {
@@ -51,7 +52,7 @@ const useDailyMeasurement = (when: string, login: string): [any, () => void] => 
                 }
             })();
         }
-    }, [when, login, reload, router.query]);
+    }, [when, login, reload, router.query, reloadKey]);
 
     return [{ data, user }, () => setReload(reload + 1)];
 };
