@@ -103,14 +103,7 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
             socket.on('compareDatabases', async (object) => {
                 try {
                     console.log('compareDatabases', object)
-                    setCookie('socket_ID', object.socket_ID, {
-                        maxAge: 1000 * 60 * 60 * 24 * 365,
-                        httpOnly: parseBoolean(process.env.NEXT_PUBLIC_COOKIE_HTTPONLY as string),
-                        domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN as string,
-                        path: '/',
-                        sameSite: 'strict',
-                        secure: parseBoolean(process.env.NEXT_PUBLIC_COOKIE_SECURE as string)
-                    })
+                    localStorage.setItem('socket_ID', object.socket_ID)
                     let newTimeOfUpdate = 0
                     dispatch(setIsOnline(true))
                     const isOnline = store.getState().online.isOnline;
@@ -161,8 +154,8 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
             })
 
             socket.on('synchronizationMessege', async (messege) => {
-                console.log('synchronizationMessege', (messege.socket_ID != await getCookie('socket_ID')), await getCookie('socket_ID'), messege)
-                if (messege.socket_ID != await getCookie('socket_ID')) {
+                console.log('synchronizationMessege', (messege.socket_ID != localStorage.getItem('socket_ID')), localStorage.getItem('socket_ID'), messege)
+                if (messege.socket_ID != localStorage.getItem('socket_ID')) {
                     console.log('Thats the messege, which reached synchronization process', messege)
                     if (messege.where == 'settings') {
                         const newToken = await refreshToken()

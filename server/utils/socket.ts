@@ -16,7 +16,6 @@ export async function socket({ io }: { io: Server }) {
         try {
             logger.info(`${socket.id} connected to socket!`);
             const refresh_token: any = await verifyJWT(await getCookie('refresh_token', socket.handshake.headers.cookie) as string)
-            console.log('refresh_token', refresh_token)
             if (refresh_token) {
                 const { decoded, expired }: any = await verifyJWT(refresh_token)
                 if (expired || !decoded || !decoded._id) {
