@@ -13,6 +13,8 @@ const TopNotify: FunctionComponent = () => {
     const isOnline: boolean = useAppSelector(state => state.online.isOnline)
     const router: any = useRouter()
     const { t } = useTranslation('home')
+    const [offlineBar, setOfflineBar] = useState(false)
+    const [offlineTimer, setOfflineTimer] = useState<any>()
 
     useEffect(() => {
         (async () => {
@@ -32,6 +34,17 @@ const TopNotify: FunctionComponent = () => {
         })()
     }, [router.pathname, token])
 
+    useEffect(() => {
+        document.addEventListener("visibilitychange", () => {
+            clearTimeout(offlineTimer)
+            if (document.visibilityState === 'visible') {
+                setOfflineTimer(setTimeout(() => setOfflineBar(true), 1500))
+            } else {
+                setOfflineBar(false)
+            }
+        });
+    }, [])
+
     return (
         <>
             {
@@ -50,7 +63,7 @@ const TopNotify: FunctionComponent = () => {
                             </Link>
                         )
                         :
-                        !isOnline && token && token._id
+                        !isOnline && token && token._id && offlineBar
                             ?
                             (
                                 <div className="TopNotify">
