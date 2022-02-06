@@ -38,7 +38,9 @@ const TopNotify: FunctionComponent = () => {
         document.addEventListener("visibilitychange", () => {
             clearTimeout(offlineTimer)
             if (document.visibilityState === 'visible') {
-                setOfflineTimer(setTimeout(() => setOfflineBar(true), 1500))
+                setOfflineTimer(setTimeout(() => {
+                    setOfflineBar(true)
+                }, 1500))
             } else {
                 setOfflineBar(false)
             }
@@ -63,12 +65,18 @@ const TopNotify: FunctionComponent = () => {
                             </Link>
                         )
                         :
-                        !isOnline && token && token._id && offlineBar
+                        offlineBar
                             ?
                             (
-                                <div className="TopNotify">
-                                    {t('YOU_ARE_WORKING_IN_OFFLINE_MODE')}
-                                </div>
+                                !isOnline && token && token._id
+                                    ?
+                                    (
+                                        <div className="TopNotify">
+                                            {t('YOU_ARE_WORKING_IN_OFFLINE_MODE')}
+                                        </div>
+                                    )
+                                    :
+                                    <></>
                             )
                             :
                             <></>
