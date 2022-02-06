@@ -1,13 +1,8 @@
 add cardio exercises + timer i guess
-
-
 service worker => new thread
 
 
 remind password
-
-
-blog needs placeholders
 
 
 barcode

@@ -7,7 +7,7 @@ const Post: FunctionComponent = () => {
         <div className={styles.blog}>
             <article className={styles.postGrid}>
                 <h1>The Witcher: Ronin has arrived on Kickstarter!</h1>
-                <Image src="/images/witcher.jpg" width="970" height="545" alt="witcher" />
+                <Image src="/images/logo_big.png" alt="Juicify" width="970" height="545" />
                 <div className={styles.content}>
                     {
                         [...Array(10)].map((x, index) =>

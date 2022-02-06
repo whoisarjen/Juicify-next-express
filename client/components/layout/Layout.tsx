@@ -15,6 +15,7 @@ interface LayoutProps {
 }
 
 const requiredAuth = [
+    '/',
     '/settings',
     '/workout',
     '/statistics',
@@ -24,6 +25,7 @@ const requiredAuth = [
 ]
 
 const notRequiredAuth = [
+    '/',
     '/login',
     '/register',
     '/reset-password'
