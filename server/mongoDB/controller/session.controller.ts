@@ -153,6 +153,15 @@ export async function deleteUserSessionHandler(req: Request, res: Response) {
         secure: parseBoolean(process.env.COOKIE_SECURE as string)
     })
 
+    res.cookie('socket_ID', '', {
+        maxAge: 0,
+        httpOnly: parseBoolean(process.env.COOKIE_HTTPONLY as string),
+        domain: process.env.COOKIE_DOMAIN,
+        path: '/',
+        sameSite: 'strict',
+        secure: parseBoolean(process.env.COOKIE_SECURE as string)
+    })
+
     return res.send({
         token: null,
         refresh_token: null
