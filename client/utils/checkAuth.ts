@@ -3,18 +3,22 @@ import { setLastUpdated } from "./API";
 import axios from "axios";
 
 const logout = async () => {
-    await axios.post(
-        `${process.env.NEXT_PUBLIC_SERVER}/auth/logout`,
-        {},
-        { withCredentials: true }
-    );
-    await deleteDatabaseIndexedDB();
-    const isDarkMode = localStorage.getItem('isDarkMode');
-    localStorage.clear();
-    if (isDarkMode) {
-        localStorage.setItem('isDarkMode', isDarkMode)
+    try {
+        await axios.post(
+            `${process.env.NEXT_PUBLIC_SERVER}/auth/logout`,
+            {},
+            { withCredentials: true }
+        );
+        await deleteDatabaseIndexedDB();
+        const isDarkMode = localStorage.getItem('isDarkMode');
+        localStorage.clear();
+        if (isDarkMode) {
+            localStorage.setItem('isDarkMode', isDarkMode)
+        }
+        window.location.replace(`${window.location.origin}/login`)
+    } catch (e: any) {
+        console.log(e.message)
     }
-    window.location.replace(`${window.location.origin}/login`)
 }
 
 const getCookie = async (name: string) => {
