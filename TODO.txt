@@ -2,6 +2,9 @@ add cardio exercises + timer i guess
 service worker => new thread
 
 
+Guest watching someone profile is not working
+
+
 right way to handle all API calls errors messege with notify
 
 
