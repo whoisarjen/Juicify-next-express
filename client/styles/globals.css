@@ -370,3 +370,13 @@ input[type="number"] {
   width: 100%;
   margin: auto;
 }
+
+#scanner-container {
+  position: relative;
+}
+ 
+.drawingBuffer {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
