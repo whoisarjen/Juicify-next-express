@@ -66,5 +66,9 @@ export default {
     'USER NOT AVAILABLE': {
         CODE: 404,
         VALUE: 'USER NOT AVAILABLE'
+    },
+    'ACCOUNT_NOT_ACTIVATED': {
+        CODE: 403,
+        VALUE: 'ACCOUNT IS NOT ACTIVATED'
     }
 }

@@ -67,6 +67,12 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    email_confirmation_hash: {
+        type: mongoose.Schema.Types.ObjectId,
+        index: true,
+        required: true,
+        auto: true,
+    },
     login: {
         type: String,
         unique: true,

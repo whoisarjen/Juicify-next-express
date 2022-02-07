@@ -19,6 +19,10 @@ export async function createUserSessionHandler(req: Request, res: Response) {
         return res.status(errorBook['INVALID LOGIN OR PASSWORD']['CODE']).send(errorBook['INVALID LOGIN OR PASSWORD']['VALUE'])
     }
 
+    if(!user.email_confirmation){
+        return res.status(errorBook['ACCOUNT_NOT_ACTIVATED']['CODE']).send(errorBook['ACCOUNT_NOT_ACTIVATED']['VALUE'])
+    }
+
     const session = await createSession(user._id, req.get('user-agent') || '')
 
     const token = signJWT(

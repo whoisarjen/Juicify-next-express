@@ -32,3 +32,11 @@ export const createUserSchema = object({
 })
 
 export type CreateUserInput = Omit<TypeOf<typeof createUserSchema>, "body.passwordConfirmation">
+
+export const confirmEmailSchema = object({
+    body: object({
+        email_confirmation_hash: string().min(3)
+    })
+})
+
+export type confirmEmailInput = Omit<TypeOf<typeof confirmEmailSchema>, "body.passwordConfirmation">

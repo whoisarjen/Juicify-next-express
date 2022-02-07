@@ -1,10 +1,16 @@
 import { DocumentDefinition, FilterQuery } from 'mongoose'
 import { UserModel, UserProps } from '../models/user.model'
 import { omit } from 'lodash'
+import { sendEmail } from '../../utils/mail.utils'
 
 export const createUser = async (input: DocumentDefinition<Omit<UserProps, 'createdAt' | 'updatedAt' | 'comparePassword'>>) => {
     try {
         const user = await UserModel.create(input)
+        await sendEmail({
+            clientEmail: user.toJSON().email,
+            subject: `Email Confirmation ${process.env.ORIGIN}`,
+            html: `Your account is created, but to make it active, you have to confirm your email. Please click the link: <a href="${process.env.ORIGIN}/confirm-password/${user.toJSON().email_confirmation_hash}">confirmation link</a>`
+        })
         return omit(user.toJSON(), 'password')
     } catch (error: any) {
         throw new Error(error)
@@ -24,7 +30,7 @@ export const changeUser = async (input: DocumentDefinition<Omit<UserProps, 'crea
                 new: true
             }
         )
-        
+
         return omit(user.toJSON(), 'password')
     } catch (error: any) {
         throw new Error(error)
@@ -61,5 +67,27 @@ export const getUsersByLogin = async (find: string) => {
         return users
     } catch (error: any) {
         throw new Error(error)
+    }
+}
+
+export async function confirmUser(email_confirmation_hash: string) {
+    try {
+        const user = await UserModel.findOneAndUpdate(
+            {
+                email_confirmation_hash: email_confirmation_hash
+            },
+            {
+                $set: {
+                    email_confirmation: true
+                }
+            },
+            {
+                new: true
+            }
+        )
+
+        return user.toJSON();
+    } catch (error: any) {
+
     }
 }
