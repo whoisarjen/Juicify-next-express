@@ -2,9 +2,6 @@ add cardio exercises + timer i guess
 service worker => new thread
 
 
-search has not schema over 3 letter on the client site
-
-
 right way to handle all API calls errors messege with notify
 
 

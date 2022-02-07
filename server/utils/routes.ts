@@ -21,7 +21,7 @@ import { findSchema } from '../mongoDB/schema/find.schema';
 const routes = (app: Express) => {
     app.post('/synchronization', requireUser, synchronizationUserSessionHandler)
 
-    app.post('/find/users', validateResource(findSchema), getUsersByLoginHandler)
+    app.post('/find/users', getUsersByLoginHandler)
     app.post('/auth/login', validateResource(createSessionSchema), createUserSessionHandler)
     app.post('/auth/refresh', requireUser, refreshUserSessionHandler)
     app.post('/auth/change', requireUser, changeUserHandler)
