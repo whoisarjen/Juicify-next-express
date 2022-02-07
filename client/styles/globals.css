@@ -373,8 +373,14 @@ input[type="number"] {
 
 #scanner-container {
   position: relative;
+  width: 100% !important;
 }
- 
+
+#scanner-container video,
+#scanner-container canvas {
+  width: 100% !important;
+}
+
 .drawingBuffer {
   position: absolute;
   left: 0;
