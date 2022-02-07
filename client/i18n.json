@@ -2,7 +2,7 @@
     "locales": ["en", "pl"],
     "defaultLocale": "en",
     "pages": {
-        "*": ["home"],
+        "*": ["home", "error"],
         "/login": ["auth"],
         "/register": ["auth"],
         "/[login]/nutrition-diary/[date]": ["nutrition-diary"],

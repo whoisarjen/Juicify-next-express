@@ -3,6 +3,7 @@ service worker => new thread
 
 
 remind password
+block log without confirm email
 
 
 barcode

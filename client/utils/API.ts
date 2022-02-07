@@ -17,23 +17,27 @@ const API = async (url: string, body: any): Promise<any> => {
         response = res.data
         isSuccess = true
     } catch (error: any) {
-        console.log(error)
+        const errorCode = error.toJSON().status;
+        if(errorCode === 403){
+            return window.location.replace(`${window.location.origin}/403`)
+        }
+        if(errorCode === 404){
+            return window.location.replace(`${window.location.origin}/404`)
+        }
+        throw error;
     }
     return { response, isSuccess }
 }
 
 const loadValueByLogin = async (where: string, find: any, login: string = find) => {
-    const { response, isSuccess } = await API(`/guest/${where}`, {
-        find,
-        login
-    })
-    if (!response.data) response.data = {}
-    if (isSuccess) {
-        console.log(`loadOneValueByLogin: ${response}`)
+    try {
+        const { response } = await API(`/guest/${where}`, {
+            find,
+            login
+        })
         return response
-    } else {
-        console.log('loadOneValueByLogin: server error')
-        return response
+    } catch (error: any) {
+        console.log('loadValueByLogin error', error)
     }
 }
 
