@@ -30,3 +30,9 @@ export const createUserSchema = object({
 })
 
 export type CreateUserInput = Omit<TypeOf<typeof createUserSchema>, "body.passwordConfirmation">
+
+export const remindPasswordUserSchema = object({
+    email: string()
+})
+
+export type RemindPasswordUserInput = Omit<TypeOf<typeof remindPasswordUserSchema>, "body.passwordConfirmation">

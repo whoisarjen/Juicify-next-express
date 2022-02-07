@@ -5,6 +5,8 @@
         "*": ["home", "error"],
         "/login": ["auth"],
         "/register": ["auth"],
+        "/reset-password": ["auth"],
+        "/reset-password/[reset_password_hash]": ["auth"],
         "/[login]/nutrition-diary/[date]": ["nutrition-diary"],
         "/workout": ["workout"],
         "/[login]/workout-plans": ["workout"],

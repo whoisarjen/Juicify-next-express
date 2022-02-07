@@ -40,3 +40,22 @@ export const confirmEmailSchema = object({
 })
 
 export type confirmEmailInput = Omit<TypeOf<typeof confirmEmailSchema>, "body.passwordConfirmation">
+
+export const resetPasswordSchema = object({
+    body: object({
+        email: string({
+            required_error: errorBook['EMAIL IS REQUIRED']['VALUE']
+        })
+            .email(errorBook['EMAIL IS NOT VALID']['VALUE']),
+    })
+})
+
+export type resetPasswordInput = Omit<TypeOf<typeof resetPasswordSchema>, "body.passwordConfirmation">
+
+export const resetPasswordConfirmationSchema = object({
+    body: object({
+        reset_password_hash: string().min(3)
+    })
+})
+
+export type resetPasswordConfirmationInput = Omit<TypeOf<typeof resetPasswordConfirmationSchema>, "body.passwordConfirmation">

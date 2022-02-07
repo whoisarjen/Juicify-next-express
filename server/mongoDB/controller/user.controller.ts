@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import logger from '../../utils/logger'
 import { CreateUserInput } from "../schema/user.schema"
-import { changeUser, createUser, getUsersByLogin, confirmUser } from "../service/user.service"
+import { changeUser, createUser, getUsersByLogin, confirmUser, resetPassword, resetPasswordConfirmation } from "../service/user.service"
 import { omit } from 'lodash'
 import { removeUsersSensitiveData } from '../../utils/guest.utils'
 import errorBook from "../../utils/errorBook"
@@ -49,6 +49,26 @@ export const getUsersByLoginHandler = async (req: Request, res: Response) => {
 export const confirmUserHandler = async (req: Request, res: Response) => {
     try {
         const user = await confirmUser(req.body.email_confirmation_hash)
+        return res.send(user);
+    } catch (error: any) {
+        logger.error(error)
+        return res.status(409).send(error.message)
+    }
+}
+
+export const resetPasswordHandler = async (req: Request, res: Response) => {
+    try {
+        const user = await resetPassword(req.body.email)
+        return res.send(user);
+    } catch (error: any) {
+        logger.error(error)
+        return res.status(409).send(error.message)
+    }
+}
+
+export const resetPasswordConfirmationHandler = async (req: Request, res: Response) => {
+    try {
+        const user = await resetPasswordConfirmation(req.body.reset_password_hash)
         return res.send(user);
     } catch (error: any) {
         logger.error(error)

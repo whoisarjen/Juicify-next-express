@@ -1,10 +1,12 @@
 import axios from "axios"
 import { setToken } from "../redux/features/tokenSlice";
 import { readToken } from "../utils/checkAuth";
+import { useNotify } from "./useNotify";
 import { useAppDispatch } from "./useRedux";
 
 const useSettings = () => {
     const dispatch = useAppDispatch();
+    const [{ success, error }] = useNotify()
 
     const changeSettings = async (object: any) => {
         try {
@@ -15,9 +17,11 @@ const useSettings = () => {
             );
             localStorage.setItem('token', JSON.stringify(await readToken(response.data.token)))
             dispatch(setToken(await readToken(response.data.token)));
+            success()
             window.location.reload()
-        } catch (error: any) {
-            console.log(error)
+        } catch (e: any) {
+            error()
+            console.log(e)
         }
     }
 

@@ -2,6 +2,7 @@ import { DocumentDefinition, FilterQuery } from 'mongoose'
 import { UserModel, UserProps } from '../models/user.model'
 import { omit } from 'lodash'
 import { sendEmail } from '../../utils/mail.utils'
+import mongoose from "mongoose";
 
 export const createUser = async (input: DocumentDefinition<Omit<UserProps, 'createdAt' | 'updatedAt' | 'comparePassword'>>) => {
     try {
@@ -86,6 +87,63 @@ export async function confirmUser(email_confirmation_hash: string) {
             }
         )
 
+        return user.toJSON();
+    } catch (error: any) {
+
+    }
+}
+
+export async function resetPassword(email: string) {
+    try {
+        const user = await UserModel.findOneAndUpdate(
+            {
+                email: { $regex: email, $options: 'im' }
+            },
+            {
+                $set: {
+                    password_remind_hash: new mongoose.Types.ObjectId()
+                }
+            },
+            {
+                new: true
+            }
+        )
+        if(user){
+            await sendEmail({
+                clientEmail: user.email,
+                subject: `Confirmation Password Reset ${process.env.ORIGIN}`,
+                html: `Before we reset your password, please confirm the request came from you by clicking this link: <a href="${process.env.ORIGIN}/reset-password/${user.toJSON().password_remind_hash}">confirmation link</a>`
+            })
+        }
+        return user.toJSON();
+    } catch (error: any) {
+
+    }
+}
+
+export async function resetPasswordConfirmation(reset_password_hash: string) {
+    try {
+        const password = new mongoose.Types.ObjectId().toJSON()
+        const user = await UserModel.findOneAndUpdate(
+            {
+                reset_password_hash: reset_password_hash
+            },
+            {
+                $set: {
+                    password: password
+                }
+            },
+            {
+                new: true
+            }
+        )
+        if(user){
+            await sendEmail({
+                clientEmail: user.email,
+                subject: `Confirmation Password Reset ${process.env.ORIGIN}`,
+                html: `Your password was changed to: ${password}`
+            })
+        }
         return user.toJSON();
     } catch (error: any) {
 

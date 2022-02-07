@@ -5,9 +5,6 @@ service worker => new thread
 right way to handle all API calls errors messege with notify
 
 
-remind password
-
-
 barcode
 
 
