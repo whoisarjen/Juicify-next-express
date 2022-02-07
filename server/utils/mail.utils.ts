@@ -9,7 +9,7 @@ const transporter = nodemailer.createTransport({
         user: 'contact@juicify.app',
         pass: 'Preetini49e89d5b'
     },
-    logger: true,
+    // logger: true,
     tls: { //<= it was available for last working time
         // do not fail on invalid certs
         rejectUnauthorized: false
