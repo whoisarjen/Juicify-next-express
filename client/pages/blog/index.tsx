@@ -1,14 +1,17 @@
+import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
 import Link from "next/link";
 import { FunctionComponent } from "react";
 import styles from '../../styles/blog.module.css'
 
 const Blog: FunctionComponent = () => {
+    const { t } = useTranslation('blog')
+
     return (
         <div className={styles.blog}>
-            <h1>Latest news</h1>
+            <h1>{t('LATEST_NEWS')}</h1>
             <div className={styles.grid}>
-                Coming soon.
+                {t('POSTS_COMMING_SOON')}
                 {/* {
                     [...Array(9)].map((x, index) =>
                         <Link href={`/blog/${index}`} key={index}>
