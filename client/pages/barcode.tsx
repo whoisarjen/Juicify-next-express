@@ -110,9 +110,9 @@ const App = (props: any) => {
     }, [])
 
     return (
-        <div>
+        <div className='barcode'>
             {scanner}
-            <span>Barcode: {barcode}</span>
+            <span>Scan barcode code: {barcode}</span>
         </div>
     )
 }
