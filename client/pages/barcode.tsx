@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 // @ts-ignore
 import Quagga from 'quagga';
 
@@ -101,11 +101,17 @@ const App = (props: any) => {
                 }
             }
         });
-    })
+    }, [])
+
+    const scanner = useMemo(() => {
+        return (
+            <div id="scanner-container" />
+        )
+    }, [])
 
     return (
         <div>
-            <div id="scanner-container" />
+            {scanner}
             <span>Barcode: {barcode}</span>
         </div>
     )
