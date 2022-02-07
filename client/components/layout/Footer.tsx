@@ -46,7 +46,7 @@ const Footer = () => {
                     <Avatar
                       sx={{ width: '28px', height: '28px' }}
                       alt={`${token.login} ${token.name} ${token.surname} on Juicify`}
-                      src={`https://juicify.app:4000/server/avatar/${token._id}.jpg`}
+                      src={`https://${process.env.NEXT_PUBLIC_SERVER}/server/avatar/${token._id}.jpg`}
                     >
                       <AccountCircleIcon color="primary" />
                     </Avatar>
