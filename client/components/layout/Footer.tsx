@@ -44,7 +44,7 @@ const Footer = () => {
                 <Link passHref href={`/${token.login}`}>
                   <a className="footerMenuElement">
                     <Avatar
-                      sx={{ width: '28px', height: '28px' }}
+                      sx={{ width: '28px', height: '28px', background: 'transparent' }}
                       alt={`${token.login} ${token.name} ${token.surname} on Juicify`}
                       src={`https://${process.env.NEXT_PUBLIC_SERVER}/server/avatar/${token._id}.jpg`}
                     >
