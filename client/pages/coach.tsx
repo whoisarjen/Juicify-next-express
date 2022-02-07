@@ -10,12 +10,11 @@ import LosingWeight from '../components/coach/LosingWeight';
 import CheckingWeekData from '../components/coach/CheckingWeekData';
 import ChooseCaloriesSource from '../components/coach/ChooseCaloriesSource';
 import Loading from '../components/coach/Loading';
-import { useAppDispatch, useAppSelector } from "../hooks/useRedux";
+import { useAppSelector } from "../hooks/useRedux";
 import useCoach from "../hooks/useCoach";
 import { getAllIndexedDB, getIndexedDBbyID } from "../utils/indexedDB";
 import { getAge, getDailyDate, getShortDate } from "../utils/manageDate";
 import { loadMissingDays } from "../hooks/useDailyMeasurements";
-import { setToken } from "../redux/features/tokenSlice";
 import Tutorial_1 from "../components/coach/Tutorial_1";
 import Tutorial_2 from "../components/coach/Tutorial_2";
 import Tutorial_3 from "../components/coach/Tutorial_3";
@@ -25,8 +24,6 @@ import Tutorial_6 from "../components/coach/Tutorial_6";
 import Tutorial_7 from "../components/coach/Tutorial_7";
 
 const Coach: FunctionComponent = () => {
-    const [block, setBlock] = useState(true)
-    const dispatch = useAppDispatch();
     const [createDiet, analyzeDiet] = useCoach()
     const token: any = useAppSelector(state => state.token.value)
     const [step, setStep] = useState('Loading')
@@ -42,9 +39,6 @@ const Coach: FunctionComponent = () => {
                 today: getShortDate()
             }
         })
-            .then(async response => {
-                dispatch(setToken(response));
-            })
             .then(() => setStep('Result'))
     }
 
@@ -56,20 +50,14 @@ const Coach: FunctionComponent = () => {
             age: getAge(token.birth),
             data: await loadMissingDays(await getAllIndexedDB('daily_measurement'), token._id, 15, getShortDate())
         })
-            .then(async response => {
-                dispatch(setToken(response));
-            })
             .then(() => setStep('Result'))
     }
 
     const handlePreviousStep = () => setStep(token.coach_analyze ? 'Standard' : 'Welcome')
 
     useEffect(() => {
-        if (block) {
-            setBlock(false)
-            setStep(token.coach_analyze ? 'Standard' : 'Welcome')
-        }
-    }, [token])
+        setStep(token.coach_analyze ? 'Standard' : 'Welcome')
+    }, [])
 
     return (
         <div className="coach">

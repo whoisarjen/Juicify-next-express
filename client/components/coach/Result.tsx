@@ -11,6 +11,7 @@ interface ResultProps {
 const Result: FunctionComponent<ResultProps> = ({ setStep }) => {
     const { t } = useTranslation('coach')
     const token: any = useAppSelector(state => state.token.value)
+    console.log(token)
 
     return (
         <div className={styles.results}>
@@ -18,7 +19,8 @@ const Result: FunctionComponent<ResultProps> = ({ setStep }) => {
             <table>
                 {
                     token &&
-                    token.macronutrients.length &&
+                    token.macronutrients &&
+                    token.macronutrients.length > 0 &&
                     (
                         <tr>
                             <td>
