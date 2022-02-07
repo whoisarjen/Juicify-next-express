@@ -11,7 +11,6 @@ barcode
 delete console.logs
 
 
-notify for not public users / 404 redirect
 need to block IE
 
 
