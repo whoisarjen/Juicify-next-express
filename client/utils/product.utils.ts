@@ -29,6 +29,9 @@ export const getProductInformations = (object: NutritionDiaryProps) => {
 }
 
 export const getCalories = (object: NutritionDiaryProps) => {
+    if (!object) {
+        return 0
+    }
     if (object.calories) {
         return parseInt((object.calories).toString())
     } else {
