@@ -1,7 +1,7 @@
 import { useRouter } from "next/router"
 import { useAppSelector } from '../../../hooks/useRedux'
 import { useState, useEffect, FunctionComponent } from 'react'
-import { overwriteThoseIDSinDB } from "../../../utils/API"
+import { overwriteThoseIDSinDB } from "../../../utils/db.utils"
 import { useDailyMeasurement } from '../../../hooks/useDailyMeasurement'
 import MealBox from "../../../components/nutrition-diary/MealBox"
 import AddProducts from '../../../components/nutrition-diary/AddProducts'

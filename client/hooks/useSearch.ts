@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { API } from "../utils/API";
+import { API } from "../utils/db.utils";
 
 const useSearch = (find: string | number, where: string) => {
     const [data, setData] = useState([])

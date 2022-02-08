@@ -10,7 +10,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import useTranslation from 'next-translate/useTranslation';
 import { useAppSelector } from "../../hooks/useRedux";
-import { insertThoseIDStoDB } from '../../utils/API';
+import { insertThoseIDStoDB } from '../../utils/db.utils';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNotify } from '../../hooks/useNotify';
 import NutritionDiaryProps from '../../interfaces/nutritionDiary.interface';

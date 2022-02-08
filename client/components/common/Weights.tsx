@@ -18,7 +18,7 @@ import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
-import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from "../../utils/API";
+import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from "../../utils/db.utils";
 import { TransitionProps } from '@mui/material/transitions';
 import Slide from '@mui/material/Slide';
 import DailyMeasurementProps from "../../interfaces/dailyMeasurement.interface";

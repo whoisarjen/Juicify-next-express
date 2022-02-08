@@ -14,7 +14,7 @@ import AddExercises from '../../../components/workout/AddExercises'
 import ConfirmDialog from '../../../components/common/ConfirmDialog'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { addIndexedDB, deleteIndexedDB } from "../../../utils/indexedDB.utils"
-import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB, deleteThoseIDSfromDB } from "../../../utils/API"
+import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB, deleteThoseIDSfromDB } from "../../../utils/db.utils"
 import BottomFlyingGuestBanner from '../../../components/common/BottomFlyingGuestBanner'
 import ExerciseProps from '../../../interfaces/workout/exercise.interface'
 import { useNotify } from '../../../hooks/useNotify'

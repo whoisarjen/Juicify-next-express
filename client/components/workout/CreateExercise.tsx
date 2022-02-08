@@ -12,7 +12,7 @@ import { useNotify } from '../../hooks/useNotify';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CreateExerciseInput, createExerciseSchema } from '../../schema/exercise.schema';
 import { useForm } from 'react-hook-form';
-import { insertThoseIDStoDB } from '../../utils/API';
+import { insertThoseIDStoDB } from '../../utils/db.utils';
 
 interface CreateExerciseProps {
     closeCreateExercise: () => void,

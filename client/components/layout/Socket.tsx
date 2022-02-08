@@ -2,9 +2,9 @@ import { setIsOnline } from '../../redux/features/online.slice'
 import io from "socket.io-client";
 import { useState, useEffect, FunctionComponent } from 'react'
 import { setToken } from "../../redux/features/token.slice";
-import { is_id } from '../../utils/API'
+import { is_id } from '../../utils/db.utils'
 import { getAllIndexedDB, deleteIndexedDB, getIndexedDBbyID, addIndexedDB } from '../../utils/indexedDB.utils'
-import { overwriteThoseIDSinDB, insertThoseIDStoDB, deleteThoseIDSfromDB, setLastUpdated } from '../../utils/API'
+import { overwriteThoseIDSinDB, insertThoseIDStoDB, deleteThoseIDSfromDB, setLastUpdated } from '../../utils/db.utils'
 import { store } from '../../redux/store'
 import { refreshToken } from '../../utils/auth.utils'
 import axios from 'axios';

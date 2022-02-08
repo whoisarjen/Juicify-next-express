@@ -6,7 +6,7 @@ import Stack from "@mui/material/Stack";
 import logo from '../public/images/logo.png'
 import styles from "../styles/auth.module.css";
 import TextField from "@mui/material/TextField";
-import { setLastUpdated } from '../utils/API'
+import { setLastUpdated } from '../utils/db.utils'
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useAppDispatch } from "../hooks/useRedux";
 import { setToken } from "../redux/features/token.slice";

@@ -8,21 +8,18 @@ import ListItemText from '@mui/material/ListItemText';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import BookIcon from "@mui/icons-material/Book";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useAppSelector } from "../../hooks/useRedux";
-import Avatar from '@mui/material/Avatar';
 import { useRouter } from "next/router";
 import { getShortDate } from "../../utils/date.utils";
 import SchoolIcon from '@mui/icons-material/School';
 import Settings from "@mui/icons-material/Settings";
-import { useTheme } from "../../hooks/useTheme";
 import useTranslation from "next-translate/useTranslation";
+import Avatar from "../common/Avatar";
 
 const SidebarLeft: FunctionComponent = () => {
     const router = useRouter()
     const { t } = useTranslation('home')
     const token: any = useAppSelector(state => state.token.value)
-    const [getTheme]: any = useTheme()
 
     return (
         <aside id="sidebarLeft">
@@ -35,13 +32,7 @@ const SidebarLeft: FunctionComponent = () => {
                             <ListItem disablePadding>
                                 <ListItemButton onClick={() => router.push(`/${token.login}`)}>
                                     <ListItemIcon>
-                                        <Avatar
-                                            sx={{ width: '28px', height: '28px', background: 'transparent' }}
-                                            alt={`${token.login} ${token.name} ${token.surname} on Juicify`}
-                                            src={`https://${process.env.NEXT_PUBLIC_SERVER}/server/avatar/${token._id}.jpg`}
-                                        >
-                                            <AccountCircleIcon color="primary" />
-                                        </Avatar>
+                                        <Avatar user={token} size="28px" margin="auto auto auto 0" />
                                     </ListItemIcon>
                                     <ListItemText primary="Profile" />
                                 </ListItemButton>

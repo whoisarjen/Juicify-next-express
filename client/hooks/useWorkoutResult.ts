@@ -1,4 +1,4 @@
-import { is_id } from '../utils/API'
+import { is_id } from '../utils/db.utils'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { getIndexedDBbyID } from '../utils/indexedDB.utils'

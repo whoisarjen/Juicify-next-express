@@ -15,7 +15,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import useTranslation from "next-translate/useTranslation";
 import { getAllIndexedDB, deleteIndexedDB } from '../../utils/indexedDB.utils';
-import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../utils/API'
+import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../utils/db.utils'
 import CreateProduct from './CreateProduct';
 import { TransitionProps } from '@material-ui/core/transitions';
 import BottomFlyingButton from '../common/BottomFlyingButton';

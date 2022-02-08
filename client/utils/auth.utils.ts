@@ -1,5 +1,5 @@
 import { deleteDatabaseIndexedDB } from "./indexedDB.utils";
-import { setLastUpdated } from "./API";
+import { setLastUpdated } from "./db.utils";
 import axios from "axios";
 
 export const logout = async () => {

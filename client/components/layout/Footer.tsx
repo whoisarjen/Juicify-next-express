@@ -3,10 +3,9 @@ import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import BookIcon from "@mui/icons-material/Book";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { getShortDate } from "../../utils/date.utils";
-import Avatar from '@mui/material/Avatar';
 import Link from "next/link";
+import Avatar from "../common/Avatar";
 
 const Footer = () => {
   const token: any = useAppSelector(state => state.token.value);
@@ -43,13 +42,7 @@ const Footer = () => {
                 </Link>
                 <Link passHref href={`/${token.login}`}>
                   <a className="footerMenuElement">
-                    <Avatar
-                      sx={{ width: '28px', height: '28px', background: 'transparent' }}
-                      alt={`${token.login} ${token.name} ${token.surname} on Juicify`}
-                      src={`https://${process.env.NEXT_PUBLIC_SERVER}/server/avatar/${token._id}.jpg`}
-                    >
-                      <AccountCircleIcon color="primary" />
-                    </Avatar>
+                    <Avatar user={token} size="28px" />
                   </a>
                 </Link>
               </nav>

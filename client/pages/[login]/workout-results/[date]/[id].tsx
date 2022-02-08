@@ -8,7 +8,7 @@ import { useAppSelector } from '../../../../hooks/useRedux';
 import { useRouter } from 'next/router';
 import Navbar from '../../../../components/workout/Navbar'
 import ConfirmDialog from '../../../../components/common/ConfirmDialog';
-import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../../../utils/API';
+import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../../../utils/db.utils';
 import useTranslation from "next-translate/useTranslation";
 import AddResultMoreOptions from '../../../../components/workout/AddResultMoreOptions'
 import BottomFlyingGuestBanner from '../../../../components/common/BottomFlyingGuestBanner'
