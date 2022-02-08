@@ -1,4 +1,4 @@
-import { FunctionComponent, useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import { useDailyMeasurement } from "../../hooks/useDailyMeasurement";
 import useMacro from "../../hooks/useMacro";
@@ -14,8 +14,26 @@ import Weights from "../common/Weights";
 import { useTheme } from "../../hooks/useTheme";
 import NutritionDiaryProps from "../../interfaces/nutritionDiary.interface";
 import { getCalories } from "../../utils/product.utils";
+import styled from 'styled-components'
 
-const SidebarRight: FunctionComponent = () => {
+const SidebarRight = styled.aside`
+    padding: 12px;
+    @media (max-width: 1089px) {
+        display: none;
+    }
+`
+
+const SidebarRightCircleBox = styled.aside`
+    padding: 6px;
+    display: grid;
+    grid-template-columns: 80px auto;
+    height: 80px;
+    ${this} div {
+        margin: auto 12px;
+    }
+`
+
+export default () => {
     const router = useRouter()
     const { t } = useTranslation('home')
     const [isWeights, setIsWeights] = useState(false)
@@ -62,7 +80,7 @@ const SidebarRight: FunctionComponent = () => {
     useEffect(() => reload(), [keyDaily])
 
     return (
-        <aside id="sidebarRight">
+        <SidebarRight>
             {
                 styles &&
                 <>
@@ -77,7 +95,7 @@ const SidebarRight: FunctionComponent = () => {
                         <Link href={`${router.asPath}`}>
                             <a>
                                 <ListItemButton onClick={() => setIsWeights(true)}>
-                                    <div className="sidebarRightCircleBox">
+                                    <SidebarRightCircleBox>
                                         <CircularProgressbar
                                             value={weight ? 100 : 0}
                                             text={`${weight}kg`}
@@ -86,14 +104,14 @@ const SidebarRight: FunctionComponent = () => {
                                         <div>
                                             {t("Weight")}
                                         </div>
-                                    </div>
+                                    </SidebarRightCircleBox>
                                 </ListItemButton>
                             </a>
                         </Link>
                         <Link href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
                             <a>
                                 <ListItemButton>
-                                    <div className="sidebarRightCircleBox">
+                                    <SidebarRightCircleBox>
                                         <CircularProgressbar
                                             value={calories ? calories / caloriesGoal * 100 : 0}
                                             text={`${calories}Kcal`}
@@ -102,14 +120,14 @@ const SidebarRight: FunctionComponent = () => {
                                         <div>
                                             {t("Calories")}
                                         </div>
-                                    </div>
+                                    </SidebarRightCircleBox>
                                 </ListItemButton>
                             </a>
                         </Link>
                         <Link href={`/${token.login}/workout-results/`}>
                             <a>
                                 <ListItemButton>
-                                    <div className="sidebarRightCircleBox">
+                                    <SidebarRightCircleBox>
                                         <CircularProgressbar
                                             value={workout * 100}
                                             text={`${workout}`}
@@ -118,14 +136,14 @@ const SidebarRight: FunctionComponent = () => {
                                         <div>
                                             {t("Workout")}
                                         </div>
-                                    </div>
+                                    </SidebarRightCircleBox>
                                 </ListItemButton>
                             </a>
                         </Link>
                         <Link href={`/coach`}>
                             <a>
                                 <ListItemButton>
-                                    <div className="sidebarRightCircleBox">
+                                    <SidebarRightCircleBox>
                                         <CircularProgressbar
                                             value={(7 - coach) / 7 * 100}
                                             text={`${coach >= 0 ? coach : 0}dni`}
@@ -134,7 +152,7 @@ const SidebarRight: FunctionComponent = () => {
                                         <div>
                                             {t("Coach")}
                                         </div>
-                                    </div>
+                                    </SidebarRightCircleBox>
                                 </ListItemButton>
                             </a>
                         </Link>
@@ -148,8 +166,6 @@ const SidebarRight: FunctionComponent = () => {
                     />
                 </>
             }
-        </aside>
+        </SidebarRight>
     )
 }
-
-export default SidebarRight;

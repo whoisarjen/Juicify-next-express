@@ -69,8 +69,7 @@ a:active {
   text-decoration: none;
 }
 
-#sidebarLeft,
-#sidebarRight {
+#sidebarLeft{
   padding: 12px;
 }
 
@@ -85,27 +84,6 @@ a:active {
   #sidebarLeft {
     display: none;
   }
-}
-
-@media (max-width: 1089px) {
-  #sidebarRight {
-    display: none;
-  }
-}
-
-.sidebarRightCircleBox {
-  padding: 6px;
-  display: grid;
-  grid-template-columns: 80px auto;
-  height: 80px;
-}
-
-#sidebarRight .css-cvhtoe-MuiButtonBase-root-MuiListItemButton-root {
-  border-bottom: 1px solid #e4e4e4;
-}
-
-.sidebarRightCircleBox div {
-  margin: auto 12px;
 }
 
 .contentWithoutHeight {
