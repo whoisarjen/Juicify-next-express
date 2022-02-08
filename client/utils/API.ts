@@ -4,7 +4,7 @@ import axios from "axios"
 import { setIsOnline } from "../redux/features/online.slice"
 import { refreshKey } from "../redux/features/key.slice"
 
-const API = async (url: string, body: any): Promise<any> => {
+export const API = async (url: string, body: any): Promise<any> => {
     let response = {}
     let isSuccess = false
     console.log(url, body)
@@ -29,7 +29,7 @@ const API = async (url: string, body: any): Promise<any> => {
     return { response, isSuccess }
 }
 
-const loadValueByLogin = async (where: string, find: any, login: string = find) => {
+export const loadValueByLogin = async (where: string, find: any, login: string = find) => {
     try {
         const { response } = await API(`/guest/${where}`, {
             find,
@@ -41,7 +41,7 @@ const loadValueByLogin = async (where: string, find: any, login: string = find) 
     }
 }
 
-const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, updateDailyKey: any = false, updateDailyKey2: any = false, updateDailyKey3: any = false, whatToUpdate: any = false, whatToUpdate2: any = false, whatToUpdate3: any = false): Promise<Array<any>> => {
+export const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, updateDailyKey: any = false, updateDailyKey2: any = false, updateDailyKey3: any = false, whatToUpdate: any = false, whatToUpdate2: any = false, whatToUpdate3: any = false): Promise<Array<any>> => {
     return new Promise(async resolve => {
         let array = JSON.parse(JSON.stringify(sentArray))
         const copyArray = JSON.parse(JSON.stringify(array));
@@ -162,7 +162,7 @@ const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, updateDa
     })
 }
 
-const overwriteThoseIDSinDB = async (where: string, sentArray: Array<any>): Promise<Array<any>> => {
+export const overwriteThoseIDSinDB = async (where: string, sentArray: Array<any>): Promise<Array<any>> => {
     let array = JSON.parse(JSON.stringify(sentArray))
     const isOnline = store.getState().online.isOnline
     console.log(`overwriteThoseIDSinDB is online: ${isOnline}`)
@@ -218,7 +218,7 @@ const overwriteThoseIDSinDB = async (where: string, sentArray: Array<any>): Prom
     })
 }
 
-const deleteThoseIDSfromDB = async (where: string, array: Array<any>, isNewValueInDB: boolean = false) => {
+export const deleteThoseIDSfromDB = async (where: string, array: Array<any>, isNewValueInDB: boolean = false) => {
     const isOnline = store.getState().online.isOnline
     if (isNewValueInDB) { // if there is new value in DB, check if still need to request delete
         for (let i = 0; i < array.length; i++) {
@@ -268,7 +268,7 @@ const deleteThoseIDSfromDB = async (where: string, array: Array<any>, isNewValue
     })
 }
 
-const prepareDailyToSend = async (daily_measurement: any, removeDeleted: boolean = false) => {
+export const prepareDailyToSend = async (daily_measurement: any, removeDeleted: boolean = false) => {
     const object = JSON.parse(JSON.stringify(daily_measurement))
     return new Promise(resolve => {
         (async () => {
@@ -312,22 +312,12 @@ const prepareDailyToSend = async (daily_measurement: any, removeDeleted: boolean
     });
 }
 
-const is_id = async (_id: string) => {
+export const is_id = async (_id: string) => {
     return new Promise(resolve => {
         (_id).substring(0, 2) != "XD" ? resolve(true) : resolve(false)
     })
 }
 
-const setLastUpdated = () => {
+export const setLastUpdated = () => {
     localStorage.setItem('lastUpdated', new Date().getTime().toString())
-}
-
-export {
-    API,
-    insertThoseIDStoDB,
-    is_id,
-    overwriteThoseIDSinDB,
-    loadValueByLogin,
-    setLastUpdated,
-    deleteThoseIDSfromDB
 }

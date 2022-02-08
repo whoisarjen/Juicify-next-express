@@ -3,7 +3,7 @@ const namOfIndexedDB = "test";
 
 const connectIndexedDB = async () => window.indexedDB.open(namOfIndexedDB);
 
-const createIndexedDB = async (): Promise<any> => {
+export const createIndexedDB = async (): Promise<any> => {
   await window.indexedDB.deleteDatabase(namOfIndexedDB);
   let request = window.indexedDB.open(namOfIndexedDB);
   return new Promise((resolve) => {
@@ -46,9 +46,9 @@ const createIndexedDB = async (): Promise<any> => {
   });
 };
 
-const deleteDatabaseIndexedDB = async () => window.indexedDB.deleteDatabase(namOfIndexedDB)
+export const deleteDatabaseIndexedDB = async () => window.indexedDB.deleteDatabase(namOfIndexedDB)
 
-const getAllIndexedDB = async (value: string): Promise<any> => {
+export const getAllIndexedDB = async (value: string): Promise<any> => {
   let request = await connectIndexedDB();
   return new Promise((resolve) => {
     request.onsuccess = async function () {
@@ -63,7 +63,7 @@ const getAllIndexedDB = async (value: string): Promise<any> => {
   });
 };
 
-const getIndexedDBbyID = async (where: string, id: string): Promise<any> => {
+export const getIndexedDBbyID = async (where: string, id: string): Promise<any> => {
   let request3 = await connectIndexedDB();
   return new Promise((resolve) => {
     request3.onsuccess = async function () {
@@ -78,7 +78,7 @@ const getIndexedDBbyID = async (where: string, id: string): Promise<any> => {
   });
 };
 
-const putIndexedDB = async (
+export const putIndexedDB = async (
   where: string,
   id: string,
   what: string,
@@ -102,7 +102,7 @@ const putIndexedDB = async (
   });
 };
 
-const deleteIndexedDB = async (where: string, _id: string): Promise<any> => {
+export const deleteIndexedDB = async (where: string, _id: string): Promise<any> => {
   _id = _id.toString();
   let request = await connectIndexedDB();
   return new Promise((resolve) => {
@@ -116,7 +116,7 @@ const deleteIndexedDB = async (where: string, _id: string): Promise<any> => {
   });
 };
 
-const addIndexedDB = async (where: string, value: Array<any>): Promise<any> => {
+export const addIndexedDB = async (where: string, value: Array<any>): Promise<any> => {
   if (value && value.length > 0) {
     for (let i = 0; i < value.length; i++) {
       value[i]._id = value[i]._id.toString();
@@ -136,7 +136,7 @@ const addIndexedDB = async (where: string, value: Array<any>): Promise<any> => {
   }
 };
 
-const putInformationAboutNeededUpdate = async (where: string): Promise<any> => {
+export const putInformationAboutNeededUpdate = async (where: string): Promise<any> => {
   return new Promise((resolve) => {
     (async () => {
       if (!store.getState().online.isOnline) {
@@ -153,15 +153,4 @@ const putInformationAboutNeededUpdate = async (where: string): Promise<any> => {
       resolve(true);
     })();
   });
-};
-
-export {
-  createIndexedDB,
-  deleteDatabaseIndexedDB,
-  getAllIndexedDB,
-  getIndexedDBbyID,
-  addIndexedDB,
-  deleteIndexedDB,
-  putIndexedDB,
-  putInformationAboutNeededUpdate
 };
