@@ -15,6 +15,3 @@ delete console.logs
 
 
 need to block IE
-
-
-change mongo's string
