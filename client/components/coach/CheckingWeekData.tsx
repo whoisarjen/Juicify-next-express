@@ -6,7 +6,7 @@ import { addDaysToDate, getShortDate, reverseDateDotes } from "../../utils/date.
 import Weights from '../common/Weights'
 import useTranslation from "next-translate/useTranslation";
 import { useAppSelector } from "../../hooks/useRedux";
-import DailyMeasurementProps from "../../interfaces/dailyMeasurement";
+import DailyMeasurementProps from "../../interfaces/dailyMeasurement.interface";
 
 interface ChooseDietProps {
     setStep: (arg0: string) => void

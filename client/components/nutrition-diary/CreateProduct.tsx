@@ -13,7 +13,7 @@ import { useAppSelector } from "../../hooks/useRedux";
 import { insertThoseIDStoDB } from '../../utils/API';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNotify } from '../../hooks/useNotify';
-import NutritionDiaryProps from '../../interfaces/nutritionDiary';
+import NutritionDiaryProps from '../../interfaces/nutritionDiary.interface';
 
 interface CreateProductProps {
     closeCreateProduct: () => void,

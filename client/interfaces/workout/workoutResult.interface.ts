@@ -1,4 +1,4 @@
-import ResultProps from "./result";
+import ResultProps from "./result.interface";
 
 export default interface WorkoutResultProps {
     _id: string,

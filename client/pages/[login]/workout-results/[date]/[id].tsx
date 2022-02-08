@@ -12,11 +12,11 @@ import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../../../ut
 import useTranslation from "next-translate/useTranslation";
 import AddResultMoreOptions from '../../../../components/workout/AddResultMoreOptions'
 import BottomFlyingGuestBanner from '../../../../components/common/BottomFlyingGuestBanner'
-import ExerciseProps from '../../../../interfaces/workout/exercise';
-import WorkoutResultProps from '../../../../interfaces/workout/workoutResult';
+import ExerciseProps from '../../../../interfaces/workout/exercise.interface';
+import WorkoutResultProps from '../../../../interfaces/workout/workoutResult.interface';
 import { useNotify } from '../../../../hooks/useNotify';
-import ResultProps from '../../../../interfaces/workout/result';
-import ValueProps from '../../../../interfaces/workout/value';
+import ResultProps from '../../../../interfaces/workout/result.interface';
+import ValueProps from '../../../../interfaces/workout/value.interface';
 
 const WorkoutResultsID: FunctionComponent = () => {
     const router: any = useRouter()

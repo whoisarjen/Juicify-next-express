@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { getAllIndexedDB } from '../utils/indexedDB.utils';
 import { addDaysToDate } from '../utils/date.utils';
 import { loadValueByLogin } from '../utils/API';
-import DailyMeasurementProps from '../interfaces/dailyMeasurement';
+import DailyMeasurementProps from '../interfaces/dailyMeasurement.interface';
 import { useAppSelector } from './useRedux';
 
 const loadMissingDays = async (oryginalArray: Array<DailyMeasurementProps>, user_ID: string, howManyDays: number, today: Date | string) => {

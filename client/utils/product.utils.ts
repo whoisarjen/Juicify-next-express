@@ -1,4 +1,4 @@
-import NutritionDiaryProps from "../interfaces/nutritionDiary"
+import NutritionDiaryProps from "../interfaces/nutritionDiary.interface"
 
 const getProductInformationsObject: any = {
     'p': 'Proteins',

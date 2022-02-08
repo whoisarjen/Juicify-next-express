@@ -12,7 +12,7 @@ import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
 import Weights from "../common/Weights";
 import { useTheme } from "../../hooks/useTheme";
-import NutritionDiaryProps from "../../interfaces/nutritionDiary";
+import NutritionDiaryProps from "../../interfaces/nutritionDiary.interface";
 import { getCalories } from "../../utils/product.utils";
 
 const SidebarRight: FunctionComponent = () => {

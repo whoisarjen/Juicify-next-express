@@ -8,7 +8,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import ConfirmDialog from '../common/ConfirmDialog';
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
-import ValueProps from '../../interfaces/workout/value';
+import ValueProps from '../../interfaces/workout/value.interface';
 
 interface AddResultValuesBox {
     value: ValueProps,

@@ -16,9 +16,9 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DatePicker from '../common/MobileDatePicker'
 import Link from 'next/link'
 import { getShortDate } from '../../utils/date.utils'
-import WorkoutResultProps from '../../interfaces/workout/workoutResult'
-import ExerciseProps from '../../interfaces/workout/exercise'
-import WorkoutPlanProps from '../../interfaces/workout/workoutPlan'
+import WorkoutResultProps from '../../interfaces/workout/workoutResult.interface'
+import ExerciseProps from '../../interfaces/workout/exercise.interface'
+import WorkoutPlanProps from '../../interfaces/workout/workoutPlan.interface'
 
 const DialogCreateResult: FunctionComponent = () => {
     const router = useRouter()

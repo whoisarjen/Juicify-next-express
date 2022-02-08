@@ -8,7 +8,7 @@ import useTranslation from "next-translate/useTranslation";
 import { FunctionComponent } from 'react';
 import Navbar from '../../../components/profile/Navbar';
 import { useAppSelector } from '../../../hooks/useRedux';
-import WorkoutPlanProps from '../../../interfaces/workout/workoutPlan';
+import WorkoutPlanProps from '../../../interfaces/workout/workoutPlan.interface';
 
 const WorkoutPlans: FunctionComponent = () => {
     const router = useRouter()

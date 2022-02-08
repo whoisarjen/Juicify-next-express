@@ -1,5 +1,5 @@
-import NutritionDiaryProps from "./nutritionDiary";
-import WorkoutResultProps from "./workout/workoutResult";
+import NutritionDiaryProps from "./nutritionDiary.interface";
+import WorkoutResultProps from "./workout/workoutResult.interface";
 
 export default interface DailyMeasurementProps {
     _id: string,

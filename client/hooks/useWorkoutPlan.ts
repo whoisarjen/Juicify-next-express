@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { loadValueByLogin } from '../utils/API'
 import { getIndexedDBbyID } from '../utils/indexedDB.utils'
-import WorkoutPlanProps from '../interfaces/workout/workoutPlan'
+import WorkoutPlanProps from '../interfaces/workout/workoutPlan.interface'
 import { useAppSelector } from './useRedux'
 
 const useWorkoutPlan = (workoutPlanID: string): [any, () => void] => {

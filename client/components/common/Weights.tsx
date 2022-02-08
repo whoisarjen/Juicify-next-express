@@ -21,7 +21,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from "../../utils/API";
 import { TransitionProps } from '@mui/material/transitions';
 import Slide from '@mui/material/Slide';
-import DailyMeasurementProps from "../../interfaces/dailyMeasurement";
+import DailyMeasurementProps from "../../interfaces/dailyMeasurement.interface";
 
 const Transition = forwardRef(function Transition(
     props: TransitionProps & {

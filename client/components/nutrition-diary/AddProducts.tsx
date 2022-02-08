@@ -19,8 +19,8 @@ import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../utils/AP
 import CreateProduct from './CreateProduct';
 import { TransitionProps } from '@material-ui/core/transitions';
 import BottomFlyingButton from '../common/BottomFlyingButton';
-import NutritionDiaryProps from '../../interfaces/nutritionDiary';
-import DailyMeasurementProps from '../../interfaces/dailyMeasurement';
+import NutritionDiaryProps from '../../interfaces/nutritionDiary.interface';
+import DailyMeasurementProps from '../../interfaces/dailyMeasurement.interface';
 import AddProductMoreInformation from './AddProductMoreInformation';
 
 interface AddproductsProps {

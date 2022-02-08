@@ -5,7 +5,7 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import useMacro from "../../hooks/useMacro";
 import { useTheme } from "../../hooks/useTheme";
-import NutritionDiaryProps from "../../interfaces/nutritionDiary";
+import NutritionDiaryProps from "../../interfaces/nutritionDiary.interface";
 import { getCalories } from "../../utils/product.utils";
 
 interface CircularWithLabelProps {

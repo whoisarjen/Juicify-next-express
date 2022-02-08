@@ -1,4 +1,4 @@
-import ExerciseProps from "./exercise"
+import ExerciseProps from "./exercise.interface"
 
 export default interface WorkoutPlanProps {
     _id: string,

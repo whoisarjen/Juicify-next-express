@@ -2,8 +2,8 @@ import styles from '../../styles/workout.module.css'
 import ButtonPlus from '../common/ButtonPlus'
 import { useState, useEffect, FunctionComponent } from 'react'
 import AddResultValuesBox from './AddResultValuesBox'
-import ResultProps from '../../interfaces/workout/result'
-import ValueProps from '../../interfaces/workout/value'
+import ResultProps from '../../interfaces/workout/result.interface'
+import ValueProps from '../../interfaces/workout/value.interface'
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 

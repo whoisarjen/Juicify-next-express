@@ -1,4 +1,4 @@
-import ValueProps from "./value";
+import ValueProps from "./value.interface";
 
 export default interface ResultProps {
     _id: string,

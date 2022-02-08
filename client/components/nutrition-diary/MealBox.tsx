@@ -8,7 +8,7 @@ import FastfoodIcon from "@mui/icons-material/Fastfood";
 import useTranslation from "next-translate/useTranslation";
 import style from "../../styles/nutrition-diary.module.css";
 import { useState, useEffect, FunctionComponent } from 'react'
-import NutritionDiaryProps from '../../interfaces/nutritionDiary';
+import NutritionDiaryProps from '../../interfaces/nutritionDiary.interface';
 import { getCalories } from '../../utils/product.utils';
 
 interface MealBoxProps {
