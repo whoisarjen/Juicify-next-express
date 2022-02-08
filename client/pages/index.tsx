@@ -5,10 +5,12 @@ const Box = styled.div`
     min-height: calc(calc(100vh - var(--BothNavHeightAndPadding) + 24px));
 `
 
-export default () => {
+const Home = () => {
     return (
         <Box>
             Coming soon.
         </Box>
     );
 }
+
+export default Home;

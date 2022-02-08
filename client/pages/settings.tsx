@@ -11,7 +11,7 @@ import MobileDatePicker from "../components/common/MobileDatePicker";
 import SelectLanguage from "../components/common/SelectLanguage";
 import styled from 'styled-components'
 
-const Settings = styled.div`
+const Box = styled.div`
     ${this} .MuiTextField-root {
         width: 100%;
         margin-bottom: 12px;
@@ -23,7 +23,7 @@ const Settings = styled.div`
     }
 `
 
-export default () => {
+const Settings = () => {
     const { t } = useTranslation('settings')
     const [isLoading, setIsLoading] = useState(false)
     const [changedObject, setChangedObject] = useState<any>({})
@@ -111,7 +111,7 @@ export default () => {
     }, [token])
 
     return (
-        <Settings>
+        <Box>
             <div className="tabTitle">{t('Preferences')}</div>
             <SelectLanguage />
             <div className="tabTitle">{t('Diary')}</div>
@@ -450,6 +450,8 @@ export default () => {
                 Object.keys(changedObject).length > 0 &&
                 <BottomFlyingButton clicked={handleSubmit} isLoading={isLoading} showNumberValue={Object.keys(changedObject).length} />
             }
-        </Settings>
+        </Box>
     );
 };
+
+export default Settings;

@@ -6,7 +6,7 @@ import { useAppSelector } from "../../hooks/useRedux";
 import { getAllIndexedDB } from "../../utils/indexedDB.utils";
 import styled from 'styled-components'
 
-const TopNotify = styled.div`
+const Box = styled.div`
     color: #fff;
     background: #f44336;
     width: 100%;
@@ -16,7 +16,7 @@ const TopNotify = styled.div`
     box-shadow: 0 -2px -4px 1px rgb(0 0 0 / 20%), 0 4px 5px 0 rgb(0 0 0 / 14%);
 `
 
-export default () => {
+const TopNotify = () => {
     const [notSaved, setNotSaved]: any = useState([])
     const [allowed, setAllowed] = useState(false)
     const [timer, setTimer]: any = useState()
@@ -69,7 +69,7 @@ export default () => {
                         (
                             <Link href={`/${token.login}/workout-results/${notSaved[0].whenAdded}/${notSaved[0]._id}`}>
                                 <a>
-                                    <TopNotify>{t('Comeback to not saved workout')}</TopNotify>
+                                    <Box>{t('Comeback to not saved workout')}</Box>
                                 </a>
                             </Link>
                         )
@@ -80,7 +80,7 @@ export default () => {
                                 !isOnline && token && token._id
                                     ?
                                     (
-                                        <TopNotify>{t('YOU_ARE_WORKING_IN_OFFLINE_MODE')}</TopNotify>
+                                        <Box>{t('YOU_ARE_WORKING_IN_OFFLINE_MODE')}</Box>
                                     )
                                     :
                                     <></>
@@ -92,3 +92,5 @@ export default () => {
         </>
     )
 };
+
+export default TopNotify;

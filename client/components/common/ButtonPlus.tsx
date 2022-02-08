@@ -7,7 +7,7 @@ interface ButtonPlusProps {
     size?: any
 }
 
-const ButtonPlus = styled.div`
+const Button = styled.div`
     width: 100%;
     display: grid;
     margin-top: 10px;
@@ -16,12 +16,14 @@ const ButtonPlus = styled.div`
     }
 `
 
-export default ({ click, size = 'normal' }: ButtonPlusProps) => {
+const ButtonPlus = ({ click, size = 'normal' }: ButtonPlusProps) => {
     return (
-        <ButtonPlus onClick={click}>
+        <Button onClick={click}>
             <Fab size={size} color="primary" aria-label="add">
                 <AddIcon />
             </Fab>
-        </ButtonPlus>
+        </Button>
     );
 }
+
+export default ButtonPlus;

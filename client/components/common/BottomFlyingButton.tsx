@@ -10,7 +10,7 @@ interface BottomFlyingButtonProps {
     showNumberValue?: number
 }
 
-const BottomFlyingButton = styled.div`
+const Button = styled.div`
     width: 100%;
     position: fixed;
     bottom: 56px;
@@ -20,12 +20,12 @@ const BottomFlyingButton = styled.div`
     z-index: 2;
 `
 
-const BottomFlyingButtonPlaceholder = styled.div`
+const Placeholder = styled.div`
     width: 100%;
     height: 44px;
 `
 
-export default ({ clicked, isLoading = false, buttonText = 'Submit', showNumberValue = 0 }: BottomFlyingButtonProps) => {
+const BottomFlyingButton = ({ clicked, isLoading = false, buttonText = 'Submit', showNumberValue = 0 }: BottomFlyingButtonProps) => {
     const { t } = useTranslation('home')
     const [loading, setLoading] = useState<boolean>(false)
 
@@ -33,7 +33,7 @@ export default ({ clicked, isLoading = false, buttonText = 'Submit', showNumberV
 
     return (
         <>
-            <BottomFlyingButton>
+            <Button>
                 <LoadingButton
                     onClick={clicked}
                     loading={loading}
@@ -41,8 +41,10 @@ export default ({ clicked, isLoading = false, buttonText = 'Submit', showNumberV
                 >
                     {t(buttonText)}{showNumberValue > 0 && ` (${showNumberValue})`}
                 </LoadingButton>
-            </BottomFlyingButton>
-            <BottomFlyingButtonPlaceholder />
+            </Button>
+            <Placeholder />
         </>
     )
 }
+
+export default BottomFlyingButton;

@@ -27,7 +27,7 @@ const MyLogo = forwardRef<any, any>(({ onClick, href }, ref) => {
 })
 MyLogo.displayName = "MyLogo Navbar";
 
-const Navbar = styled.nav`
+const Box = styled.nav`
     width: 100%;
     min-height: 43px;
     border-bottom: 1px solid #e4e4e4;
@@ -81,14 +81,14 @@ const Ul__li_web = styled.li`
     }
 `
 
-export default ({ token }: { token: any }) => {
+const Navbar = ({ token }: { token: any }) => {
     const { t } = useTranslation("home");
     const router = useRouter()
     const [, toggleDarkMode, theme]: any = useTheme()
 
     return (
         <header>
-            <Navbar>
+            <Box>
                 <Ul>
                     <Ul__li>
                         <Link passHref href="/">
@@ -225,7 +225,9 @@ export default ({ token }: { token: any }) => {
                         </Link>
                     </Ul__li_mobile>
                 </Ul>
-            </Navbar>
+            </Box>
         </header>
     );
 };
+
+export default Navbar;

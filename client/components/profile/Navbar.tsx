@@ -6,7 +6,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkIcon from '@mui/icons-material/Link';
 import { useRouter } from "next/router";
-import Tabs from './Tabs'
+import TabsMenu from './Tabs'
 import Avatar from '../common/Avatar';
 import Share from "../common/Share";
 import styled from 'styled-components'
@@ -16,7 +16,7 @@ interface NavbarProps {
     tab: number
 }
 
-const Navbar = styled.div`
+const Box = styled.div`
     width: 100%;
     display: grid;
     grid-template-columns: 130px auto;
@@ -47,13 +47,13 @@ const Content = styled.div`
     }
 `
 
-export default ({ user, tab }: NavbarProps) => {
+const Navbar = ({ user, tab }: NavbarProps) => {
     const router = useRouter()
     const token: any = useAppSelector(state => state.token.value)
 
     return (
         <>
-            <Navbar>
+            <Box>
                 <AvatarBox>
                     <Avatar user={user} />
                 </AvatarBox>
@@ -106,8 +106,10 @@ export default ({ user, tab }: NavbarProps) => {
                         }
                     </div>
                 </Content>
-            </Navbar>
-            <Tabs tab={tab} />
+            </Box>
+            <TabsMenu tab={tab} />
         </>
     )
 }
+
+export default Navbar;

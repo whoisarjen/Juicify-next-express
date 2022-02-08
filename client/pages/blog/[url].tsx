@@ -50,7 +50,7 @@ const Content = styled.div`
     line-height: 1.5;
 `
 
-export default () => {
+const Blog = () => {
     return (
         <Box>
             <PostGrid>
@@ -72,3 +72,5 @@ export default () => {
         </Box>
     )
 };
+
+export default Blog;

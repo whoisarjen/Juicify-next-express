@@ -11,7 +11,7 @@ interface TabsProps {
     tab: number
 }
 
-export default ({ tab }: TabsProps) => {
+const TabsMenu = ({ tab }: TabsProps) => {
     const router = useRouter()
 
     return (
@@ -29,3 +29,5 @@ export default ({ tab }: TabsProps) => {
         </Tabs>
     )
 }
+
+export default TabsMenu;

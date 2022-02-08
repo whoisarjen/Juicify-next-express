@@ -3,7 +3,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from "next/router";
 import Avatar from "./Avatar";
 
-export default ({ user }: { user: any }) => {
+const BottomFlyingGuestBanner = ({ user }: { user: any }) => {
     const router = useRouter()
     const { t } = useTranslation()
 
@@ -36,3 +36,5 @@ export default ({ user }: { user: any }) => {
         </>
     )
 }
+
+export default BottomFlyingGuestBanner;

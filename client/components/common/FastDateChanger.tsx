@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import styled from 'styled-components'
 import { addDaysToDate, reverseDateDotes } from "../../utils/date.utils";
 
-const FastDateChanger = styled.div`
+const Box = styled.div`
     width: 100%;
     display: grid;
     grid-template-columns: 47.5px 47.5px auto 47.5px 47.5px;
@@ -30,19 +30,21 @@ const FastDateChanger = styled.div`
     }
 `
 
-export default () => {
+const FastDateChanger = () => {
     const router: any = useRouter()
     const [today, setToday] = useState(new Date())
 
     useEffect(() => setToday(router.query.date), [router.query.date])
 
     return (
-        <FastDateChanger>
+        <Box>
             <Link href={`/${router.query.login}/nutrition-diary/${addDaysToDate(today, -2)}`}><a><div>{addDaysToDate(today, -2).slice(8, 10)}</div></a></Link>
             <Link href={`/${router.query.login}/nutrition-diary/${addDaysToDate(today, -1)}`}><a><div>{addDaysToDate(today, -1).slice(8, 10)}</div></a></Link>
             <div>{reverseDateDotes(today)}</div>
             <Link href={`/${router.query.login}/nutrition-diary/${addDaysToDate(today, 1)}`}><a><div>{addDaysToDate(today, 1).slice(8, 10)}</div></a></Link>
             <Link href={`/${router.query.login}/nutrition-diary/${addDaysToDate(today, 2)}`}><a><div>{addDaysToDate(today, 2).slice(8, 10)}</div></a></Link>
-        </FastDateChanger>
+        </Box>
     )
 }
+
+export default FastDateChanger;

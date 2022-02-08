@@ -16,14 +16,14 @@ import NutritionDiaryProps from "../../interfaces/nutritionDiary.interface";
 import { getCalories } from "../../utils/product.utils";
 import styled from 'styled-components'
 
-const SidebarRight = styled.aside`
+const Box = styled.aside`
     padding: 12px;
     @media (max-width: 1089px) {
         display: none;
     }
 `
 
-const SidebarRightCircleBox = styled.aside`
+const CircleBox = styled.aside`
     padding: 6px;
     display: grid;
     grid-template-columns: 80px auto;
@@ -33,7 +33,7 @@ const SidebarRightCircleBox = styled.aside`
     }
 `
 
-export default ({ token }: { token: any }) => {
+const SidebarRight =  ({ token }: { token: any }) => {
     const router = useRouter()
     const { t } = useTranslation('home')
     const [isWeights, setIsWeights] = useState(false)
@@ -79,7 +79,7 @@ export default ({ token }: { token: any }) => {
     useEffect(() => reload(), [keyDaily])
 
     return (
-        <SidebarRight>
+        <Box>
             {
                 styles &&
                 <>
@@ -94,7 +94,7 @@ export default ({ token }: { token: any }) => {
                         <Link href={`${router.asPath}`}>
                             <a>
                                 <ListItemButton onClick={() => setIsWeights(true)}>
-                                    <SidebarRightCircleBox>
+                                    <CircleBox>
                                         <CircularProgressbar
                                             value={weight ? 100 : 0}
                                             text={`${weight}kg`}
@@ -103,14 +103,14 @@ export default ({ token }: { token: any }) => {
                                         <div>
                                             {t("Weight")}
                                         </div>
-                                    </SidebarRightCircleBox>
+                                    </CircleBox>
                                 </ListItemButton>
                             </a>
                         </Link>
                         <Link href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
                             <a>
                                 <ListItemButton>
-                                    <SidebarRightCircleBox>
+                                    <CircleBox>
                                         <CircularProgressbar
                                             value={calories ? calories / caloriesGoal * 100 : 0}
                                             text={`${calories}Kcal`}
@@ -119,14 +119,14 @@ export default ({ token }: { token: any }) => {
                                         <div>
                                             {t("Calories")}
                                         </div>
-                                    </SidebarRightCircleBox>
+                                    </CircleBox>
                                 </ListItemButton>
                             </a>
                         </Link>
                         <Link href={`/${token.login}/workout-results/`}>
                             <a>
                                 <ListItemButton>
-                                    <SidebarRightCircleBox>
+                                    <CircleBox>
                                         <CircularProgressbar
                                             value={workout * 100}
                                             text={`${workout}`}
@@ -135,14 +135,14 @@ export default ({ token }: { token: any }) => {
                                         <div>
                                             {t("Workout")}
                                         </div>
-                                    </SidebarRightCircleBox>
+                                    </CircleBox>
                                 </ListItemButton>
                             </a>
                         </Link>
                         <Link href={`/coach`}>
                             <a>
                                 <ListItemButton>
-                                    <SidebarRightCircleBox>
+                                    <CircleBox>
                                         <CircularProgressbar
                                             value={(7 - coach) / 7 * 100}
                                             text={`${coach >= 0 ? coach : 0}dni`}
@@ -151,7 +151,7 @@ export default ({ token }: { token: any }) => {
                                         <div>
                                             {t("Coach")}
                                         </div>
-                                    </SidebarRightCircleBox>
+                                    </CircleBox>
                                 </ListItemButton>
                             </a>
                         </Link>
@@ -165,6 +165,8 @@ export default ({ token }: { token: any }) => {
                     />
                 </>
             }
-        </SidebarRight>
+        </Box>
     )
 }
+
+export default SidebarRight;

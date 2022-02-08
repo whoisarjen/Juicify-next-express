@@ -8,7 +8,6 @@ import ListItemText from '@mui/material/ListItemText';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import BookIcon from "@mui/icons-material/Book";
-import { useAppSelector } from "../../hooks/useRedux";
 import { useRouter } from "next/router";
 import { getShortDate } from "../../utils/date.utils";
 import SchoolIcon from '@mui/icons-material/School';
@@ -17,7 +16,7 @@ import useTranslation from "next-translate/useTranslation";
 import Avatar from "../common/Avatar";
 import styled from 'styled-components'
 
-const SidebarLeft = styled.aside`
+const Grid = styled.aside`
     padding: 12px;
     margin-left: auto;
     margin-right: 0;
@@ -28,12 +27,12 @@ const SidebarLeft = styled.aside`
     }
 `
 
-export default ({ token }: { token: any }) => {
+const SidebarLeft = ({ token }: { token: any }) => {
     const router = useRouter()
     const { t } = useTranslation('home')
 
     return (
-        <SidebarLeft>
+        <Grid>
             {
                 token &&
                 <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
@@ -91,6 +90,8 @@ export default ({ token }: { token: any }) => {
                     </nav>
                 </Box>
             }
-        </SidebarLeft>
+        </Grid>
     )
 }
+
+export default SidebarLeft;
