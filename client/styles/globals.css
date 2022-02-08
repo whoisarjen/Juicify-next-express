@@ -125,6 +125,12 @@ a:active {
   margin-right: 0;
 }
 
+@media (min-width: 1452px) {
+  footer{
+    display: none;
+  }
+}
+
 @media (max-width: 1452px) {
   #gridOverContent {
     max-width: 1089px;
