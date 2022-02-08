@@ -5,6 +5,7 @@ import { addDaysToDate } from '../utils/date.utils';
 import { loadValueByLogin } from '../utils/db.utils';
 import DailyMeasurementProps from '../interfaces/dailyMeasurement.interface';
 import { useAppSelector } from './useRedux';
+import { loadMissingData } from '../utils/dailyMeasurements.utils';
 
 const loadMissingDays = async (oryginalArray: Array<DailyMeasurementProps>, user_ID: string, howManyDays: number, today: Date | string) => {
     return new Promise(resolve => {
@@ -26,10 +27,10 @@ const loadMissingDays = async (oryginalArray: Array<DailyMeasurementProps>, user
         }
         for (let i = 0; i < howManyDays; i++) {
             newArray.push(
-                {
+                loadMissingData({
                     ...{ _id: "XD" + new Date().getTime() + i, user_ID, whenAdded: checkingDate },
-                    ...object[checkingDate]
-                }
+                    object: object[checkingDate]
+                })
             );
             checkingDate = new Date(addDaysToDate(checkingDate, -1)).toJSON()
         }

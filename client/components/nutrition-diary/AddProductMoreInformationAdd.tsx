@@ -42,7 +42,6 @@ const DiagramsOptions: FunctionComponent<DiagramsOptionsProps> = ({ isAdd, setIs
     const addNewProduct = async () => {
         if (parseFloat(howMany) > 0) {
             let object: any = { ...dailyMeasurement }
-            console.log('loadedProduct', loadedProduct)
             object.nutrition_diary.push({
                 ...loadedProduct,
                 "_id": 'XD' + new Date().getTime(),
