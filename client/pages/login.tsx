@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import Stack from "@mui/material/Stack";
 import logo from '../public/images/logo.png'
-import styles from "../styles/auth.module.css";
 import TextField from "@mui/material/TextField";
 import { setLastUpdated } from '../utils/db.utils'
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -19,6 +18,23 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNotify } from "../hooks/useNotify";
 import { createSessionSchema, CreateSessionProps } from '../schema/session.schema'
+import styled from 'styled-components'
+
+const Box = styled.div`
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 1fr auto 1fr;
+    a{
+        text-align: center;
+    }
+`
+
+const Logo = styled.div`
+    margin: auto;
+    padding: 10px;
+    max-width: 180px;
+`
 
 const Login = () => {
     const router = useRouter();
@@ -70,64 +86,58 @@ const Login = () => {
 
     return (
         <form style={{ margin: 'auto 0' }} onSubmit={handleSubmit(onSubmit)}>
-            <div className="login">
-                <div className={styles.loginBox}>
-                    <div className={styles.loginLogoBox}>
-                        <Image alt="Juicify.app" src={logo} />
-                    </div>
-                    <div>
-                        <Stack direction="column" spacing={2}>
-                            <TextField
-                                variant="outlined"
-                                label={t("auth:LOGIN")}
-                                type="text"
-                                onKeyPress={handleKeyPress}
-                                {...register('login')}
-                                error={typeof errors.login === 'undefined' ? false : true}
-                                helperText={
-                                    errors.login?.message &&
-                                    errors.login?.message.length &&
-                                    errors.login?.message
-                                }
-                            />
-                            <TextField
-                                type="password"
-                                variant="outlined"
-                                label={t("auth:PASSWORD")}
-                                onKeyPress={handleKeyPress}
-                                {...register('password')}
-                                error={typeof errors.password === 'undefined' ? false : true}
-                                helperText={
-                                    errors.password?.message &&
-                                    errors.password?.message.length &&
-                                    errors.password?.message
-                                }
-                            />
-                            <LoadingButton
-                                loading={loading}
-                                variant="contained"
-                                type="submit"
-                            >
-                                {t("auth:SIGN_IN")}
-                            </LoadingButton>
-                            <Link passHref href="/reset-password">
-                                {t("auth:FORGOT_PASSWORD_RESET_IT")}
-                            </Link>
-                        </Stack>
-                    </div>
-                    <div className="displayGrid">
-                        <Link passHref href="/register">
-                            <LoadingButton
-                                color="success"
-                                className="marginAutoVertical"
-                                variant="contained"
-                            >
-                                {t("auth:FIRST_TIME_CREATE_ACCOUNT")}
-                            </LoadingButton>
-                        </Link>
-                    </div>
-                </div>
-            </div>
+            <Box>
+                <Logo>
+                    <Image alt="Juicify.app" src={logo} />
+                </Logo>
+                <Stack direction="column" spacing={2}>
+                    <TextField
+                        variant="outlined"
+                        label={t("auth:LOGIN")}
+                        type="text"
+                        onKeyPress={handleKeyPress}
+                        {...register('login')}
+                        error={typeof errors.login === 'undefined' ? false : true}
+                        helperText={
+                            errors.login?.message &&
+                            errors.login?.message.length &&
+                            errors.login?.message
+                        }
+                    />
+                    <TextField
+                        type="password"
+                        variant="outlined"
+                        label={t("auth:PASSWORD")}
+                        onKeyPress={handleKeyPress}
+                        {...register('password')}
+                        error={typeof errors.password === 'undefined' ? false : true}
+                        helperText={
+                            errors.password?.message &&
+                            errors.password?.message.length &&
+                            errors.password?.message
+                        }
+                    />
+                    <LoadingButton
+                        loading={loading}
+                        variant="contained"
+                        type="submit"
+                    >
+                        {t("auth:SIGN_IN")}
+                    </LoadingButton>
+                    <Link passHref href="/reset-password">
+                        {t("auth:FORGOT_PASSWORD_RESET_IT")}
+                    </Link>
+                </Stack>
+                <Link passHref href="/register">
+                    <LoadingButton
+                        color="success"
+                        className="marginAutoVertical"
+                        variant="contained"
+                    >
+                        {t("auth:FIRST_TIME_CREATE_ACCOUNT")}
+                    </LoadingButton>
+                </Link>
+            </Box>
         </form>
     );
 };
