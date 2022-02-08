@@ -1,12 +1,14 @@
-import { FunctionComponent } from "react";
-import styles from '../styles/home.module.css'
+import styled from 'styled-components'
 
-const Home: FunctionComponent = () => {
+const Box = styled.div`
+    width: 100%;
+    min-height: calc(calc(100vh - var(--BothNavHeightAndPadding) + 24px));
+`
+
+export default () => {
     return (
-        <div className={styles.home}>
+        <Box>
             Coming soon.
-        </div>
+        </Box>
     );
 }
-
-export default Home;

@@ -1,4 +1,0 @@
-.home{
-    width: 100%;
-    min-height: calc(calc(100vh - var(--BothNavHeightAndPadding) + 24px));
-}
