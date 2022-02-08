@@ -8,9 +8,16 @@ import { useDailyMeasurements } from "../../hooks/useDailyMeasurements";
 import { useTheme } from "../../hooks/useTheme";
 import DailyMeasurementProps from "../../interfaces/dailyMeasurement.interface";
 import NutritionDiaryProps from "../../interfaces/nutritionDiary.interface";
-import styles from '../../styles/profile.module.css'
 import { addDaysToDate, getShortDate, reverseDateDotes } from '../../utils/date.utils';
 import { getCalories } from "../../utils/product.utils";
+import styled from 'styled-components'
+
+const Box = styled.div`
+    width: 100%;
+    max-height: 390px;
+    min-height: 390px;
+    padding-bottom: 30px;
+`
 
 const Profile: FunctionComponent = () => {
     const [getTheme]: any = useTheme()
@@ -85,13 +92,13 @@ const Profile: FunctionComponent = () => {
                 <>
                     <Navbar user={user} tab={0} />
                     <h3 style={{ color: getTheme('PRIMARY') }}>{t('Daily calories')}</h3>
-                    <div className={styles.profileBox}>
+                    <Box>
                         <SimpleLineChart data={calories.reverse()} barNamesWithColor={barNamesWithColorCalories} />
-                    </div>
+                    </Box>
                     <h3 style={{ color: getTheme('PRIMARY') }}>{t("Daily macronutrients")}</h3>
-                    <div className={styles.profileBox}>
+                    <Box>
                         <StackedBarChart data={nutrition_diary.reverse()} barNamesWithColor={barNamesWithColor} />
-                    </div>
+                    </Box>
                 </>
             }
         </>

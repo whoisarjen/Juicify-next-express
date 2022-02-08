@@ -15,7 +15,6 @@ export const loadMissingData = ({ _id, user_ID, whenAdded, object = {} }: { _id:
 export const loadMissingDays = async (oryginalArray: Array<DailyMeasurementProps> = [], user_ID: string, howManyDays: number, today: Date | string) => {
     let newArray = []
     let checkingDate = JSON.parse(JSON.stringify(new Date(today)))
-    console.log(oryginalArray)
     let array = JSON.parse(JSON.stringify(oryginalArray))
     if (array.length) {
         array = array.sort((a: DailyMeasurementProps, b: DailyMeasurementProps) => {

@@ -1,6 +1,4 @@
-import { FunctionComponent } from "react";
 import { useAppSelector } from "../../hooks/useRedux";
-import styles from '../../styles/profile.module.css'
 import SettingsIcon from '@mui/icons-material/Settings';
 import IconButton from '@mui/material/IconButton';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -8,26 +6,58 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkIcon from '@mui/icons-material/Link';
 import { useRouter } from "next/router";
-import TabsInterface from './TabsInterface'
+import Tabs from './Tabs'
 import Avatar from '../common/Avatar';
 import Share from "../common/Share";
+import styled from 'styled-components'
 
 interface NavbarProps {
     user: any,
     tab: number
 }
 
-const Navbar: FunctionComponent<NavbarProps> = ({ user, tab }) => {
+const Navbar = styled.div`
+    width: 100%;
+    display: grid;
+    grid-template-columns: 130px auto;
+`
+
+const AvatarBox = styled.div`
+    width: 120px;
+    height: 120px;
+    margin: auto;
+    border: 1px solid #e4e4e4;
+    border-radius: 50%;
+    display: grid;
+`
+
+const Content = styled.div`
+    width: calc( 100% - 20px );
+    padding: 10px;
+    display: grid;
+    grid-template-rows: auto auto auto auto;
+    ${this} div:nth-child(1){
+        display: grid;
+        grid-template-columns: auto 40px 40px;
+        width: 100%;
+        margin: auto;
+    }
+    ${this} div:nth-child(2){
+        font-weight: bold;
+    }
+`
+
+export default ({ user, tab }: NavbarProps) => {
     const router = useRouter()
     const token: any = useAppSelector(state => state.token.value)
 
     return (
         <>
-            <div className={styles.navbar}>
-                <div className={styles.navbarAvatar}>
+            <Navbar>
+                <AvatarBox>
                     <Avatar user={user} />
-                </div>
-                <div className={styles.navbarContent}>
+                </AvatarBox>
+                <Content>
                     <div>
                         <h2>{user.login}</h2>
                         {
@@ -75,11 +105,9 @@ const Navbar: FunctionComponent<NavbarProps> = ({ user, tab }) => {
                             </IconButton>
                         }
                     </div>
-                </div>
-            </div>
-            <TabsInterface tab={tab} />
+                </Content>
+            </Navbar>
+            <Tabs tab={tab} />
         </>
     )
 }
-
-export default Navbar;

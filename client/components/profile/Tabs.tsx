@@ -1,4 +1,3 @@
-import { FunctionComponent } from "react";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
@@ -12,7 +11,7 @@ interface TabsProps {
     tab: number
 }
 
-const TabsInterface: FunctionComponent<TabsProps> = ({ tab }) => {
+export default ({ tab }: TabsProps) => {
     const router = useRouter()
 
     return (
@@ -30,5 +29,3 @@ const TabsInterface: FunctionComponent<TabsProps> = ({ tab }) => {
         </Tabs>
     )
 }
-
-export default TabsInterface;
