@@ -94,30 +94,28 @@ const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
                             :
                             <Grid>
                                 {
-                                    token &&
-                                        token.login
+                                    token
                                         ?
                                         (
                                             notRequiredAuth.filter(route => route == router.pathname).length || router.pathname == '/'
                                                 ?
                                                 <SidebarLeftLoggouted />
                                                 :
-                                                <SidebarLeft />
+                                                <SidebarLeft {...{ token }} />
                                         )
                                         :
                                         <SidebarLeftLoggouted />
                                 }
                                 <Grid__content>{children}</Grid__content>
                                 {
-                                    token &&
-                                        token.login
+                                    token
                                         ?
                                         (
                                             notRequiredAuth.filter(route => route == router.pathname).length || router.pathname == '/'
                                                 ?
                                                 <SidebarRightLoggouted />
                                                 :
-                                                <SidebarRight />
+                                                <SidebarRight {...{ token }} />
                                         )
                                         :
                                         <SidebarRightLoggouted />

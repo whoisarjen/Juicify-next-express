@@ -15,17 +15,27 @@ import SchoolIcon from '@mui/icons-material/School';
 import Settings from "@mui/icons-material/Settings";
 import useTranslation from "next-translate/useTranslation";
 import Avatar from "../common/Avatar";
+import styled from 'styled-components'
 
-const SidebarLeft: FunctionComponent = () => {
+const SidebarLeft = styled.aside`
+    padding: 12px;
+    margin-left: auto;
+    margin-right: 0;
+    width: 100%;
+    max-width: 200px;
+    @media (max-width: 1452px) {
+        display: none;
+    }
+`
+
+export default ({ token }: { token: any }) => {
     const router = useRouter()
     const { t } = useTranslation('home')
-    const token: any = useAppSelector(state => state.token.value)
 
     return (
-        <aside id="sidebarLeft">
+        <SidebarLeft>
             {
                 token &&
-                token.login &&
                 <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
                     <nav>
                         <List>
@@ -81,8 +91,6 @@ const SidebarLeft: FunctionComponent = () => {
                     </nav>
                 </Box>
             }
-        </aside>
+        </SidebarLeft>
     )
 }
-
-export default SidebarLeft;

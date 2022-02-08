@@ -69,23 +69,6 @@ a:active {
   text-decoration: none;
 }
 
-#sidebarLeft{
-  padding: 12px;
-}
-
-#sidebarLeft {
-  margin-left: auto;
-  margin-right: 0;
-  width: 100%;
-  max-width: 200px;
-}
-
-@media (max-width: 1452px) {
-  #sidebarLeft {
-    display: none;
-  }
-}
-
 .contentWithoutHeight {
   width: 100%;
   margin: 0 auto;

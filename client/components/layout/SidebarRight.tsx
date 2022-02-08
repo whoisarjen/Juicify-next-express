@@ -33,11 +33,10 @@ const SidebarRightCircleBox = styled.aside`
     }
 `
 
-export default () => {
+export default ({ token }: { token: any }) => {
     const router = useRouter()
     const { t } = useTranslation('home')
     const [isWeights, setIsWeights] = useState(false)
-    const token: any = useAppSelector(state => state.token.value)
     const keyDaily = useAppSelector(state => state.key.daily_measurement)
     const [{ data }, reload] = useDailyMeasurement(getShortDate(), token.login)
     const [{ getDay }] = useMacro()
