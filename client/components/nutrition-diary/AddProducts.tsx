@@ -21,6 +21,7 @@ import { TransitionProps } from '@material-ui/core/transitions';
 import BottomFlyingButton from '../common/BottomFlyingButton';
 import NutritionDiaryProps from '../../interfaces/nutritionDiary';
 import DailyMeasurementProps from '../../interfaces/dailyMeasurement';
+import AddProductMoreInformation from './AddProductMoreInformation';
 
 interface AddproductsProps {
     index: number,
@@ -40,6 +41,7 @@ const Transition = forwardRef(function Transition(
 });
 
 const AddProducts: FunctionComponent<AddproductsProps> = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload }) => {
+    const [loadedProduct, setLoadedProduct] = useState<any>(false)
     const { t } = useTranslation('nutrition-diary');
     const [tab, setTab] = useState(0)
     const [open, setOpen] = useState(false)
@@ -158,7 +160,7 @@ const AddProducts: FunctionComponent<AddproductsProps> = ({ index, isAddDialog, 
                     </Tabs>
                     {
                         items && items.map((product: NutritionDiaryProps) =>
-                            <AddProductsBox refreshCheckedProducts={() => setRefreshChecked(refreshChecked + 1)} product={product} key={product._id} />
+                            <AddProductsBox refreshCheckedProducts={() => setRefreshChecked(refreshChecked + 1)} product={product} key={product._id} openMoreInformation={() => setLoadedProduct(product)} />
                         )
                     }
                     <div className='contentGridPureWidth'>
@@ -182,6 +184,7 @@ const AddProducts: FunctionComponent<AddproductsProps> = ({ index, isAddDialog, 
                         </Button>
                     </div>
                 </div>
+                <AddProductMoreInformation handleClose={() => setLoadedProduct(false)} loadedProduct={loadedProduct} />
             </Dialog>
         </div>
     );

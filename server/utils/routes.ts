@@ -6,7 +6,7 @@ import { createUserSchema, confirmEmailSchema, resetPasswordSchema, resetPasswor
 import { createSessionSchema } from '../mongoDB/schema/session.schema';
 import requireUser from '../mongoDB/middleware/requireUser'
 import { createProductSchema } from '../mongoDB/schema/product.schema';
-import { createProductHandler, deleteManyProductHandler, getProductByNameHandler } from '../mongoDB/controller/product.controller';
+import { createProductHandler, deleteManyProductHandler, getProductByCodeHandler, getProductByNameHandler } from '../mongoDB/controller/product.controller';
 import { createExerciseSchema } from '../mongoDB/schema/exercise.schema';
 import { createExerciseHandler, deleteManyExerciseHandler, getExerciseByNameHandler } from '../mongoDB/controller/exercise.controller';
 import { createWorkoutPlanSchema } from '../mongoDB/schema/workoutPlan.schema';
@@ -31,6 +31,7 @@ const routes = (app: Express) => {
     app.post('/auth/reset-password', validateResource(resetPasswordSchema), resetPasswordHandler)
     app.post('/auth/reset-password-confirmation', validateResource(resetPasswordConfirmationSchema), resetPasswordConfirmationHandler)
 
+    app.post('/find/product', getProductByCodeHandler)
     app.post('/find/products', validateResource(findSchema), getProductByNameHandler)
     app.post('/insert/product', requireUser, validateResource(createProductSchema), createProductHandler)
     app.post('/delete/product', requireUser, deleteManyProductHandler)

@@ -14,10 +14,11 @@ import NutritionDiary from '../../classes/nutritionDiary';
 
 interface AddproductsBoxProps {
     product: NutritionDiaryProps,
-    refreshCheckedProducts: () => void
+    refreshCheckedProducts: () => void,
+    openMoreInformation: () => void
 }
 
-const AddProductsBox: FunctionComponent<AddproductsBoxProps> = ({ product, refreshCheckedProducts }) => {
+const AddProductsBox: FunctionComponent<AddproductsBoxProps> = ({ product, refreshCheckedProducts, openMoreInformation }) => {
     const { t } = useTranslation('nutrition-diary');
     const [checked, setChecked] = useState(false);
     const [value, setValue] = useState('1.0')
@@ -71,7 +72,7 @@ const AddProductsBox: FunctionComponent<AddproductsBoxProps> = ({ product, refre
             <div className={styles.addProductsBoxFavourite} onClick={handleLike}>
                 <Checkbox checked={fav} icon={<FavoriteBorder fontSize="small" />} checkedIcon={<Favorite fontSize="small" />} />
             </div>
-            <div className={styles.addProductsBoxMoreInfo}>
+            <div className={styles.addProductsBoxMoreInfo} onClick={openMoreInformation}>
                 <IconButton color="primary">
                     <InfoIcon fontSize="small" />
                 </IconButton>

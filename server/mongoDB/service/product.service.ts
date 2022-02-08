@@ -77,3 +77,28 @@ export const getProductByName = async (find: string) => {
         throw new Error(error)
     }
 }
+
+export const getProductByCode = async (code: string) => {
+    try {
+        const product = await ProductModel.findOne({
+            $and: [
+                { code },
+                {
+                    $or:
+                        [
+                            {
+                                user_ID:
+                                {
+                                    $exists: false
+                                }
+                            }
+                        ]
+                }
+            ]
+        })
+
+        return product
+    } catch (error: any) {
+        throw new Error(error)
+    }
+}

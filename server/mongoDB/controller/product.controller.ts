@@ -2,7 +2,7 @@ import logger from '../../utils/logger'
 import { Request, Response } from "express"
 import { ProductProps } from "../models/product.model"
 import { CreateProductInput } from "../schema/product.schema"
-import { createProduct, deleteManyProduct, getProductByName, getUserProducts } from "../service/product.service"
+import { createProduct, deleteManyProduct, getProductByCode, getProductByName, getUserProducts } from "../service/product.service"
 import { socketHandleUserSynchronization } from '../../utils/socket'
 
 export const createProductHandler = async (req: Request<{}, {}, CreateProductInput['body']>, res: Response) => {
@@ -46,6 +46,16 @@ export const getProductByNameHandler = async (req: Request, res: Response) => {
     try {
         const items = await getProductByName(req.body.find)
         return res.send({ items });
+    } catch (error: any) {
+        logger.error(error)
+        return res.status(409).send(error.message)
+    }
+}
+
+export const getProductByCodeHandler = async (req: Request, res: Response) => {
+    try {
+        const item = await getProductByCode(req.body.code)
+        return res.send(item);
     } catch (error: any) {
         logger.error(error)
         return res.status(409).send(error.message)

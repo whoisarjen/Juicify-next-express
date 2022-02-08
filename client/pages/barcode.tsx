@@ -1,12 +1,44 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
 // @ts-ignore
 import Quagga from 'quagga';
+import axios from 'axios';
+import { getAllIndexedDB } from '../utils/indexedDB';
+import { useNotify } from '../hooks/useNotify';
+import CreateProduct from '../components/nutrition-diary/CreateProduct';
+import AddProductMoreInformation from '../components/nutrition-diary/AddProductMoreInformation';
 
-const App = (props: any) => {
-    const [barcode, setBarcode] = useState('');
+const Barcode: FunctionComponent = () => {
+    const [loadedBarcode, setLoadedBarcode] = useState(0)
+    const [isCreateProduct, setIsCreateProduct] = useState(false)
+    const [{ error }] = useNotify()
+    const [loadedProduct, setLoadedProduct] = useState<any>(false)
 
-    const _onDetected = (res: any) => {
-        setBarcode(res.codeResult.code);
+    const _onDetected = async (res: any) => {
+        try {
+            setLoadedBarcode(res.codeResult.code)
+            setIsCreateProduct(false)
+            const products = await getAllIndexedDB('product')
+            const product = products.filter((x: any) => x.code == res.codeResult.code)
+            if (product.length) {
+                const value = { ...product[0], code: res.codeResult.code }
+                setLoadedProduct(value)
+            } else {
+                const response = await axios.post(
+                    `${process.env.NEXT_PUBLIC_SERVER}/find/product`,
+                    { code: res.codeResult.code },
+                    { withCredentials: true }
+                );
+                if (response.data) {
+                    const value = { ...response.data, code: res.codeResult.code }
+                    setLoadedProduct(value)
+                } else {
+                    setIsCreateProduct(true)
+                }
+            }
+        } catch (e: any) {
+            error()
+            console.log(e)
+        }
     };
 
     useEffect(() => {
@@ -103,18 +135,21 @@ const App = (props: any) => {
         });
     }, [])
 
-    const scanner = useMemo(() => {
-        return (
-            <div id="scanner-container" />
-        )
-    }, [])
+    const scanner = useMemo(() => <div id="scanner-container" />, [])
 
     return (
-        <div className='barcode'>
-            {scanner}
-            <span>Scan barcode code: {barcode}</span>
-        </div>
+        <>
+            <div className='barcode'>
+                {scanner}
+                <span>Scan barcode code</span>
+            </div>
+            <AddProductMoreInformation handleClose={() => setLoadedProduct(false)} loadedProduct={loadedProduct} />
+            {
+                isCreateProduct &&
+                <CreateProduct closeCreateProduct={() => setIsCreateProduct(false)} isCreateProduct={isCreateProduct} created={() => _onDetected(loadedBarcode)} defaultBarcode={loadedBarcode} />
+            }
+        </>
     )
 }
 
-export default App;
+export default Barcode;

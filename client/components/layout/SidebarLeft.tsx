@@ -36,9 +36,9 @@ const SidebarLeft: FunctionComponent = () => {
                                 <ListItemButton onClick={() => router.push(`/${token.login}`)}>
                                     <ListItemIcon>
                                         <Avatar
-                                            sx={{ width: '28px', height: '28px' }}
+                                            sx={{ width: '28px', height: '28px', background: 'transparent' }}
                                             alt={`${token.login} ${token.name} ${token.surname} on Juicify`}
-                                            src={`https://juicify.app:4000/server/avatar/${token._id}.jpg`}
+                                            src={`https://${process.env.NEXT_PUBLIC_SERVER}/server/avatar/${token._id}.jpg`}
                                         >
                                             <AccountCircleIcon color="primary" />
                                         </Avatar>

@@ -2,6 +2,9 @@ add cardio exercises + timer i guess
 service worker => new thread
 
 
+create product schema
+
+
 reset service worker
 
 
