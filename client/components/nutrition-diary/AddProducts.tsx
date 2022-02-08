@@ -14,7 +14,7 @@ import useFind from '../../hooks/useFind';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import useTranslation from "next-translate/useTranslation";
-import { getAllIndexedDB, deleteIndexedDB } from '../../utils/indexedDB';
+import { getAllIndexedDB, deleteIndexedDB } from '../../utils/indexedDB.utils';
 import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../utils/API'
 import CreateProduct from './CreateProduct';
 import { TransitionProps } from '@material-ui/core/transitions';

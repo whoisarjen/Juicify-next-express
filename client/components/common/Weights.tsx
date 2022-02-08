@@ -9,7 +9,7 @@ import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 import { useDailyMeasurements } from "../../hooks/useDailyMeasurements";
-import { getShortDate, reverseDateDotes } from "../../utils/manageDate";
+import { getShortDate, reverseDateDotes } from "../../utils/date.utils";
 import { useAppSelector } from "../../hooks/useRedux";
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';

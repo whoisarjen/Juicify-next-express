@@ -6,7 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
 import Select from '@mui/material/Select';
-import { DIET_ACTIVITY, DIET_KIND } from '../../utils/manageCoach'
+import { DIET_ACTIVITY, DIET_KIND } from '../../utils/coach.utils'
 import useTranslation from "next-translate/useTranslation";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import IconButton from '@mui/material/IconButton';

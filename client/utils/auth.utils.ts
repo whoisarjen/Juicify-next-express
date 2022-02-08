@@ -1,8 +1,8 @@
-import { deleteDatabaseIndexedDB } from "./indexedDB";
+import { deleteDatabaseIndexedDB } from "./indexedDB.utils";
 import { setLastUpdated } from "./API";
 import axios from "axios";
 
-const logout = async () => {
+export const logout = async () => {
     try {
         await axios.post(
             `${process.env.NEXT_PUBLIC_SERVER}/auth/logout`,
@@ -21,7 +21,7 @@ const logout = async () => {
     }
 }
 
-const readToken = async (token: string) => {
+export const readToken = async (token: string) => {
     if (!token) return ''
     return JSON.parse(Buffer.from(token.split(".")[1], "base64").toString());
 };
@@ -37,8 +37,3 @@ export const refreshToken = async () => {
 }
 
 export const parseBoolean = (value: string | boolean): boolean => value.toString().toLowerCase() === 'true' ? true : false
-
-export {
-    readToken,
-    logout
-};

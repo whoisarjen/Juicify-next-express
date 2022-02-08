@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react'
-import { getAllIndexedDB } from '../utils/indexedDB';
-import { addDaysToDate } from '../utils/manageDate';
+import { getAllIndexedDB } from '../utils/indexedDB.utils';
+import { addDaysToDate } from '../utils/date.utils';
 import { loadValueByLogin } from '../utils/API';
 import DailyMeasurementProps from '../interfaces/dailyMeasurement';
 import { useAppSelector } from './useRedux';

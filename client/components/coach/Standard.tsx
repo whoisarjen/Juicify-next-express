@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import HistoryIcon from '@mui/icons-material/History';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { useDailyMeasurement } from "../../hooks/useDailyMeasurement";
-import { getShortDate, getDiffrentBetweenDays, addDaysToDate, reverseDateDotes } from "../../utils/manageDate";
+import { getShortDate, getDiffrentBetweenDays, addDaysToDate, reverseDateDotes } from "../../utils/date.utils";
 import { useAppSelector } from "../../hooks/useRedux";
 import Weights from "../common/Weights";
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';

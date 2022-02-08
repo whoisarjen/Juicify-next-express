@@ -9,7 +9,7 @@ import { useTheme } from "../../hooks/useTheme";
 import DailyMeasurementProps from "../../interfaces/dailyMeasurement";
 import NutritionDiaryProps from "../../interfaces/nutritionDiary";
 import styles from '../../styles/profile.module.css'
-import { addDaysToDate, getShortDate, reverseDateDotes } from '../../utils/manageDate';
+import { addDaysToDate, getShortDate, reverseDateDotes } from '../../utils/date.utils';
 import { getCalories } from "../../utils/product.utils";
 
 const Profile: FunctionComponent = () => {

@@ -2,7 +2,7 @@ import { FunctionComponent, useState, useEffect } from "react";
 import Button from '@mui/material/Button';
 import styles from '../../styles/coach.module.css'
 import { useDailyMeasurements } from "../../hooks/useDailyMeasurements";
-import { addDaysToDate, getShortDate, reverseDateDotes } from "../../utils/manageDate";
+import { addDaysToDate, getShortDate, reverseDateDotes } from "../../utils/date.utils";
 import Weights from '../common/Weights'
 import useTranslation from "next-translate/useTranslation";
 import { useAppSelector } from "../../hooks/useRedux";

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { addIndexedDB } from '../../../utils/indexedDB'
+import { addIndexedDB } from '../../../utils/indexedDB.utils'
 import useWorkoutPlans from '../../../hooks/useWorkoutPlans'
 import Spinner from '../../../components/common/Spinner';
 import ButtonPlus from '../../../components/common/ButtonPlus';

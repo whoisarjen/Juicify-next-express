@@ -3,7 +3,7 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import { useDailyMeasurement } from "../../hooks/useDailyMeasurement";
 import useMacro from "../../hooks/useMacro";
 import { useAppSelector } from "../../hooks/useRedux";
-import { getDiffrentBetweenDays, getShortDate, reverseDateDotes } from "../../utils/manageDate";
+import { getDiffrentBetweenDays, getShortDate, reverseDateDotes } from "../../utils/date.utils";
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import Link from "next/link";

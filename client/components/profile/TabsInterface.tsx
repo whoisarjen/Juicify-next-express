@@ -6,7 +6,7 @@ import BookIcon from "@mui/icons-material/Book";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import NoteAltIcon from '@mui/icons-material/NoteAlt'
 import { useRouter } from "next/router";
-import { getShortDate } from "../../utils/manageDate";
+import { getShortDate } from "../../utils/date.utils";
 
 interface TabsProps {
     tab: number

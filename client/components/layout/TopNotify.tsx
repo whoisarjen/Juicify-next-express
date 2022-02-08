@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { FunctionComponent, useEffect, useState } from "react";
 import { useAppSelector } from "../../hooks/useRedux";
-import { getAllIndexedDB } from "../../utils/indexedDB";
+import { getAllIndexedDB } from "../../utils/indexedDB.utils";
 
 const TopNotify: FunctionComponent = () => {
     const [notSaved, setNotSaved]: any = useState([])

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { setToken } from "../redux/features/tokenSlice";
-import { readToken } from "../utils/checkAuth";
+import { readToken } from "../utils/auth.utils";
 import { useAppDispatch } from "./useRedux";
 
 const useCoach = () => {

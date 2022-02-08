@@ -2,7 +2,7 @@ import useWorkoutResult from '../../../../hooks/useWorkoutResult'
 import { useState, useEffect, FunctionComponent } from 'react'
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
-import { addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../../../utils/indexedDB';
+import { addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../../../utils/indexedDB.utils';
 import AddResultValues from '../../../../components/workout/AddResultValues';
 import { useAppSelector } from '../../../../hooks/useRedux';
 import { useRouter } from 'next/router';

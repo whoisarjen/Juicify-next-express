@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { getAllIndexedDB } from "../utils/indexedDB";
+import { getAllIndexedDB } from "../utils/indexedDB.utils";
 import { loadValueByLogin } from '../utils/API'
 import { useAppSelector } from "./useRedux";
 

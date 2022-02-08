@@ -3,7 +3,7 @@ import Checkbox from '@mui/material/Checkbox';
 import Favorite from '@mui/icons-material/Favorite';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import { FunctionComponent, useEffect, useState } from 'react'
-import { addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../utils/indexedDB';
+import { addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../utils/indexedDB.utils';
 import { useTheme } from '../../hooks/useTheme';
 import ExerciseProps from '../../interfaces/workout/exercise';
 

@@ -1,4 +1,4 @@
-import { getIndexedDBbyID, addIndexedDB, deleteIndexedDB, putIndexedDB, getAllIndexedDB, putInformationAboutNeededUpdate } from "./indexedDB"
+import { getIndexedDBbyID, addIndexedDB, deleteIndexedDB, putIndexedDB, getAllIndexedDB, putInformationAboutNeededUpdate } from "./indexedDB.utils"
 import { store } from '../redux/store'
 import axios from "axios"
 import { setIsOnline } from "../redux/features/onlineSlice"

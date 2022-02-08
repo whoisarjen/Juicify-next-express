@@ -1,5 +1,5 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import { logout } from '../utils/checkAuth'
+import { logout } from '../utils/auth.utils'
 import Button from '@mui/material/Button';
 import BottomFlyingButton from "../components/common/BottomFlyingButton";
 import useSettings from "../hooks/useSettings";

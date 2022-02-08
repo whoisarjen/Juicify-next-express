@@ -2,7 +2,7 @@ import { is_id } from '../utils/API'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { loadValueByLogin } from '../utils/API'
-import { getIndexedDBbyID } from '../utils/indexedDB'
+import { getIndexedDBbyID } from '../utils/indexedDB.utils'
 import WorkoutPlanProps from '../interfaces/workout/workoutPlan'
 import { useAppSelector } from './useRedux'
 

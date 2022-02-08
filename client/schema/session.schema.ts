@@ -1,5 +1,5 @@
 import { object, string, TypeOf } from "zod"
-import errorBook from "../utils/errorBook"
+import errorBook from "../utils/error.utils"
 
 export const createSessionSchema = object({
     login: string({

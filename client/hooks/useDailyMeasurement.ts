@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useAppSelector } from "./useRedux";
 import { useState, useEffect } from "react";
-import { getIndexedDBbyID } from "../utils/indexedDB";
+import { getIndexedDBbyID } from "../utils/indexedDB.utils";
 import { loadValueByLogin } from "../utils/API";
 
 const useDailyMeasurement = (when: string, login: string): [any, () => void] => {

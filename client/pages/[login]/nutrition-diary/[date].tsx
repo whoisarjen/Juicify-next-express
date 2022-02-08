@@ -13,7 +13,7 @@ import DiagramsOptions from '../../../components/nutrition-diary/DiagramsOptions
 import BottomFlyingGuestBanner from '../../../components/common/BottomFlyingGuestBanner'
 import Header from "../../../components/layout/Header"
 import useTranslation from "next-translate/useTranslation"
-import { reverseDateDotes } from "../../../utils/manageDate"
+import { reverseDateDotes } from "../../../utils/date.utils"
 
 const NutritionDiary: FunctionComponent = () => {
     const { t } = useTranslation('nutrition-diary')

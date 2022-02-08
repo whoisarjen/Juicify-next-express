@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { FunctionComponent, useEffect, useState } from "react";
 import styles from '../../styles/fastDateChanger.module.css'
-import { addDaysToDate, reverseDateDotes } from "../../utils/manageDate";
+import { addDaysToDate, reverseDateDotes } from "../../utils/date.utils";
 
 const FastDateChanger: FunctionComponent = () => {
     const router: any = useRouter()

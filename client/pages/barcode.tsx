@@ -2,12 +2,12 @@ import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
 // @ts-ignore
 import Quagga from 'quagga';
 import axios from 'axios';
-import { getAllIndexedDB } from '../utils/indexedDB';
+import { getAllIndexedDB } from '../utils/indexedDB.utils';
 import { useNotify } from '../hooks/useNotify';
 import CreateProduct from '../components/nutrition-diary/CreateProduct';
 import AddProductMoreInformation from '../components/nutrition-diary/AddProductMoreInformation';
 import { useDailyMeasurement } from '../hooks/useDailyMeasurement';
-import { getShortDate } from '../utils/manageDate';
+import { getShortDate } from '../utils/date.utils';
 import { useAppSelector } from '../hooks/useRedux';
 
 const Barcode: FunctionComponent = () => {

@@ -6,7 +6,7 @@ import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
 import { FunctionComponent, useEffect, useState } from 'react'
-import { putIndexedDB, addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../utils/indexedDB';
+import { putIndexedDB, addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../utils/indexedDB.utils';
 import useTranslation from "next-translate/useTranslation";
 import { useTheme } from '../../hooks/useTheme';
 import NutritionDiaryProps from '../../interfaces/nutritionDiary';

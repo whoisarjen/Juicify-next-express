@@ -1,6 +1,6 @@
 import { store } from '../redux/store'
 import { useState, useEffect } from "react";
-import { addIndexedDB, getAllIndexedDB, getIndexedDBbyID } from '../utils/indexedDB'
+import { addIndexedDB, getAllIndexedDB, getIndexedDBbyID } from '../utils/indexedDB.utils'
 import axios from 'axios';
 import { useAppSelector } from './useRedux';
 

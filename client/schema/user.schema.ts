@@ -1,5 +1,5 @@
 import { boolean, number, object, preprocess, string, TypeOf } from 'zod'
-import errorBook from '../utils/errorBook'
+import errorBook from '../utils/error.utils'
 
 export const createUserSchema = object({
     login: string({

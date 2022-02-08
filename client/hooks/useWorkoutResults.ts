@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useAppSelector } from "./useRedux";
 import { useState, useEffect } from "react";
 import { loadValueByLogin } from '../utils/API'
-import { getAllIndexedDB } from "../utils/indexedDB";
+import { getAllIndexedDB } from "../utils/indexedDB.utils";
 
 const useWorkoutResults = (): any => {
     const router: any = useRouter()

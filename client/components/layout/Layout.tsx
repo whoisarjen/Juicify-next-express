@@ -8,7 +8,7 @@ import { useAppSelector } from '../../hooks/useRedux'
 import SidebarRightLoggouted from './SidebarRightLoggouted'
 import SidebarLeftLoggouted from './SidebarLeftLoggouted'
 import TopNotify from './TopNotify'
-import { getShortDate } from '../../utils/manageDate'
+import { getShortDate } from '../../utils/date.utils'
 
 interface LayoutProps {
     children: any

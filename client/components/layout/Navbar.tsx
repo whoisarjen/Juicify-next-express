@@ -5,7 +5,7 @@ import { useAppSelector } from "../../hooks/useRedux";
 import LoginIcon from "@mui/icons-material/Login";
 import SchoolIcon from '@mui/icons-material/School';
 import BookIcon from "@mui/icons-material/Book";
-import { getShortDate } from "../../utils/manageDate";
+import { getShortDate } from "../../utils/date.utils";
 import Image from 'next/image'
 import logo from '../../public/images/logo.png'
 import SearchBox from '../common/SearchBox'

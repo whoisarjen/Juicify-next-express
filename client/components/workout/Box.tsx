@@ -4,7 +4,7 @@ import NoteAltIcon from '@mui/icons-material/NoteAlt'
 import useTranslation from "next-translate/useTranslation";
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
 import { FunctionComponent } from 'react';
-import { reverseDateDotes } from '../../utils/manageDate';
+import { reverseDateDotes } from '../../utils/date.utils';
 import { useTheme } from '../../hooks/useTheme';
 
 interface BoxProps {

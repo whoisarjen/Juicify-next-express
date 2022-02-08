@@ -1,9 +1,9 @@
 import { is_id } from '../utils/API'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
-import { getIndexedDBbyID } from '../utils/indexedDB'
+import { getIndexedDBbyID } from '../utils/indexedDB.utils'
 import { useDailyMeasurement } from './useDailyMeasurement'
-import { reverseDateDotes } from '../utils/manageDate'
+import { reverseDateDotes } from '../utils/date.utils'
 import { useAppSelector } from './useRedux'
 
 const useWorkoutResult = (): [any, () => void] => {
