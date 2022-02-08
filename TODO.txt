@@ -2,9 +2,6 @@ add cardio exercises + timer i guess
 service worker => new thread
 
 
-more information need to reread property c => carbs
-
-
 create product schema
 
 

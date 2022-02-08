@@ -6,6 +6,7 @@ import { TransitionProps } from '@mui/material/transitions';
 import styles from '../../styles/nutrition-diary.module.css'
 import useTranslation from 'next-translate/useTranslation';
 import AddProductMoreInformationAdd from './AddProductMoreInformationAdd';
+import { getProductInformations } from '../../utils/product.utils';
 
 const Transition = forwardRef(function Transition(
     props: TransitionProps & {
@@ -39,8 +40,8 @@ const AddProductMoreInformation: FunctionComponent<AddProductMoreInformationProp
                         (
                             <ul>
                                 {
-                                    Object.keys(loadedProduct).map(x =>
-                                        <li key={x}>{x}: {loadedProduct[x]}</li>
+                                    Object.keys(getProductInformations(loadedProduct)).map(x =>
+                                        <li key={x}>{t(x)}: {getProductInformations(loadedProduct)[x]}</li>
                                     )
                                 }
                             </ul>

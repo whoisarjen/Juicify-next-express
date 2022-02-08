@@ -50,5 +50,8 @@
     "ADD_BURNT_CALORIES_DESCRIPTION": "You had extra activity? Great! Add burnt calories, so coach will know it, when your check time will come.",
     "NAME_OF_ACTIVITY": "Name of activity",
     "BURNT_CALORIES": "Burnt calories",
-    "ADD_TO_DIARY": "Add to diary"
+    "ADD_TO_DIARY": "Add to diary",
+    "Name": "Name",
+    "Code": "Barcode",
+    "Verified": "Verified"
 }
