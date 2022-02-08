@@ -125,12 +125,6 @@ a:active {
   margin-right: 0;
 }
 
-@media (min-width: 1452px) {
-  footer {
-    display: none;
-  }
-}
-
 @media (max-width: 1452px) {
   #gridOverContent {
     max-width: 1089px;
@@ -219,13 +213,6 @@ a:active {
   width: 100%;
 }
 
-footer {
-  width: 100%;
-  min-height: 43px;
-  line-height: 43px;
-  text-align: center;
-}
-
 .marginAuto {
   margin: auto !important;
 }
@@ -242,25 +229,6 @@ footer {
 
 .displayGrid {
   display: grid;
-}
-
-.footerMenu {
-  height: 44px;
-  box-shadow: 0 2px 4px -1px rgb(0 0 0 / 20%), 0 4px 5px 0 rgb(0 0 0 / 14%),
-    0 1px 10px 0 rgb(0 0 0 / 12%);
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  z-index: 2;
-  background: var(--theme-background);
-}
-
-.footerMenuElement {
-  margin: auto;
-  display: grid;
-  cursor: pointer;
 }
 
 input::-webkit-outer-spin-button,

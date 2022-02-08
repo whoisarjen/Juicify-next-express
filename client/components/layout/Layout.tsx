@@ -91,7 +91,7 @@ const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
                                 }
                             </div>
                     }
-                    <Footer />
+                    <Footer {...{ token }} />
                 </>
             }
         </main>
