@@ -53,7 +53,7 @@ const Profile: FunctionComponent = () => {
         return object
     })
 
-    const calories = data.map(async (x: DailyMeasurementProps) => {
+    const calories = data.map((x: DailyMeasurementProps) => {
         let object: any = {
             name: '',
             [t('Calories')]: 0,
@@ -70,7 +70,7 @@ const Profile: FunctionComponent = () => {
                         object[t('Burnt')] = meal.calories
                     }
                 } else {
-                    object[t('Calories')] += await getCalories(meal)
+                    object[t('Calories')] += getCalories(meal)
                 }
             })
             object[t('Diffrent')] = object[t('Calories')] + object[t('Burnt')]

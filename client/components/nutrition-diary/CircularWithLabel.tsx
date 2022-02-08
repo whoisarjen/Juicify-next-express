@@ -22,23 +22,21 @@ const CircularWithLabel: FunctionComponent<CircularWithLabelProps> = ({ array, u
     const { t } = useTranslation('nutrition-diary')
 
     useEffect(() => {
-        (async () => {
-            if (array) {
-                const macro = getDay(router.query.date, user)
-                let count: any = 0;
-                if (array.length) {
-                    for (let i = 0; i < array.length; i++) {
-                        if (array[i].length) {
-                            for (let a = 0; a < array[i].length; a++) {
-                                count += await getCalories(array[i][a])
-                            }
+        if (array) {
+            const macro = getDay(router.query.date, user)
+            let count: any = 0;
+            if (array.length) {
+                for (let i = 0; i < array.length; i++) {
+                    if (array[i].length) {
+                        for (let a = 0; a < array[i].length; a++) {
+                            count += getCalories(array[i][a])
                         }
                     }
                 }
-                setCalories(count)
-                setProgress(count / parseInt((macro.proteins * 4 + macro.carbs * 4 + macro.fats * 9).toString()) * 100)
             }
-        })()
+            setCalories(count)
+            setProgress(count / parseInt((macro.proteins * 4 + macro.carbs * 4 + macro.fats * 9).toString()) * 100)
+        }
     }, [array, user])
 
     return (

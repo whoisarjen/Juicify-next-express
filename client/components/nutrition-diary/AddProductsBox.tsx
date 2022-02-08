@@ -67,7 +67,7 @@ const AddProductsBox: FunctionComponent<AddproductsBoxProps> = ({ product, refre
                 {product.name}
             </div>
             <div className={styles.addProductsBoxDescription}>
-                {(product.p || 0)}{t('P')} {(product.c || 0)}{t('C')} {(product.f || 0)}{t('F')} {async () => await getCalories(product)}kcal
+                {(product.p || 0)}{t('P')} {(product.c || 0)}{t('C')} {(product.f || 0)}{t('F')} {getCalories(product)}kcal
             </div>
             <div className={styles.addProductsBoxFavourite} onClick={handleLike}>
                 <Checkbox checked={fav} icon={<FavoriteBorder fontSize="small" />} checkedIcon={<Favorite fontSize="small" />} />
