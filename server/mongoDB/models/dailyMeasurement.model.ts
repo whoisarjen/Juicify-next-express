@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 
 export interface NutritionDiaryProps {
+    _id?: string,
     meal?: number,
     how_many?: number,
     product_ID?: string,

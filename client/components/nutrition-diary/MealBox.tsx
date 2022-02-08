@@ -49,7 +49,8 @@ const MealBox: FunctionComponent<MealBoxProps> = ({ index, products, openDialog,
             <div className={style.boxExtraOptions}>
                 {
                     token.login == router.query.login ? (
-                        <MoreOptions isDisabled={isDisabled}/>
+                        // <MoreOptions isDisabled={isDisabled}/>
+                        <div />
                     ) : (
                         <div />
                     )

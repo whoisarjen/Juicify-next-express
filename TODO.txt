@@ -2,6 +2,9 @@ add cardio exercises + timer i guess
 service worker => new thread
 
 
+more information need to reread property c => carbs
+
+
 create product schema
 
 
@@ -9,9 +12,6 @@ reset service worker
 
 
 right way to handle all API calls errors messege with notify
-
-
-barcode
 
 
 delete console.logs

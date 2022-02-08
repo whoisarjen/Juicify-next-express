@@ -1,10 +1,11 @@
-import React, { forwardRef, FunctionComponent, ReactElement, Ref } from 'react';
+import React, { forwardRef, FunctionComponent, ReactElement, Ref, useState } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import styles from '../../styles/nutrition-diary.module.css'
 import useTranslation from 'next-translate/useTranslation';
+import AddProductMoreInformationAdd from './AddProductMoreInformationAdd';
 
 const Transition = forwardRef(function Transition(
     props: TransitionProps & {
@@ -17,11 +18,13 @@ const Transition = forwardRef(function Transition(
 
 interface AddProductMoreInformationProps {
     loadedProduct: any,
-    handleClose: () => void
+    handleClose: () => void,
+    dailyMeasurement: any
 }
 
-const AddProductMoreInformation: FunctionComponent<AddProductMoreInformationProps> = ({ loadedProduct, handleClose }) => {
+const AddProductMoreInformation: FunctionComponent<AddProductMoreInformationProps> = ({ loadedProduct, handleClose, dailyMeasurement }) => {
     const { t } = useTranslation('nutrition-diary');
+    const [isAdd, setIsAdd] = useState(false)
 
     return (
         <>
@@ -43,6 +46,12 @@ const AddProductMoreInformation: FunctionComponent<AddProductMoreInformationProp
                             </ul>
                         )
                     }
+                    <div className={styles.addProductsAddButtonPlaceholder} />
+                    <div className={styles.addProductsAddButton} onClick={() => setIsAdd(true)}>
+                        <Button variant="contained">
+                            {t('ADD_TO_DIARY')}
+                        </Button>
+                    </div>
                     <div className={styles.addProductsCloseButtonPlaceholder} />
                     <div className={styles.addProductsCloseButton} onClick={handleClose}>
                         <Button variant="contained">
@@ -50,6 +59,7 @@ const AddProductMoreInformation: FunctionComponent<AddProductMoreInformationProp
                         </Button>
                     </div>
                 </div>
+                <AddProductMoreInformationAdd isAdd={isAdd} dailyMeasurement={dailyMeasurement} setIsAdd={setIsAdd} loadedProduct={loadedProduct} />
             </Dialog>
         </>
     )

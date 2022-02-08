@@ -94,8 +94,8 @@ export const loadDailyMeasurementMissingData = async (daily_measurement: DailyMe
             const nutrition_diary = []
             for (let a = 0; a < daily_measurement.nutrition_diary.length; a++) {
                 if (!daily_measurement.nutrition_diary[a].calories && daily_measurement.nutrition_diary[a].product_ID) {
-                    const { meal, how_many, product_ID } = daily_measurement.nutrition_diary[a]
-                    nutrition_diary.push({ ...await getProduct(daily_measurement.nutrition_diary[a].product_ID), meal, how_many, product_ID })
+                    const { meal, how_many, product_ID, _id } = daily_measurement.nutrition_diary[a]
+                    nutrition_diary.push({ ...await getProduct(daily_measurement.nutrition_diary[a].product_ID), meal, how_many, product_ID, _id })
                 } else {
                     nutrition_diary.push(daily_measurement.nutrition_diary[a])
                 }

@@ -184,7 +184,7 @@ const AddProducts: FunctionComponent<AddproductsProps> = ({ index, isAddDialog, 
                         </Button>
                     </div>
                 </div>
-                <AddProductMoreInformation handleClose={() => setLoadedProduct(false)} loadedProduct={loadedProduct} />
+                <AddProductMoreInformation handleClose={() => setLoadedProduct(false)} loadedProduct={loadedProduct} dailyMeasurement={dailyMeasurement} />
             </Dialog>
         </div>
     );

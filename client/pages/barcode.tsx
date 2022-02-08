@@ -6,12 +6,17 @@ import { getAllIndexedDB } from '../utils/indexedDB';
 import { useNotify } from '../hooks/useNotify';
 import CreateProduct from '../components/nutrition-diary/CreateProduct';
 import AddProductMoreInformation from '../components/nutrition-diary/AddProductMoreInformation';
+import { useDailyMeasurement } from '../hooks/useDailyMeasurement';
+import { getShortDate } from '../utils/manageDate';
+import { useAppSelector } from '../hooks/useRedux';
 
 const Barcode: FunctionComponent = () => {
     const [loadedBarcode, setLoadedBarcode] = useState(0)
     const [isCreateProduct, setIsCreateProduct] = useState(false)
     const [{ error }] = useNotify()
     const [loadedProduct, setLoadedProduct] = useState<any>(false)
+    const token: any = useAppSelector(state => state.token.value)
+    const [{ data }] = useDailyMeasurement(getShortDate(), token.login)
 
     const _onDetected = async (res: any) => {
         try {
@@ -143,7 +148,7 @@ const Barcode: FunctionComponent = () => {
                 {scanner}
                 <span>Scan barcode code</span>
             </div>
-            <AddProductMoreInformation handleClose={() => setLoadedProduct(false)} loadedProduct={loadedProduct} />
+            <AddProductMoreInformation handleClose={() => setLoadedProduct(false)} loadedProduct={loadedProduct} dailyMeasurement={data} />
             {
                 isCreateProduct &&
                 <CreateProduct closeCreateProduct={() => setIsCreateProduct(false)} isCreateProduct={isCreateProduct} created={() => _onDetected(loadedBarcode)} defaultBarcode={loadedBarcode} />
