@@ -19,7 +19,6 @@ export const createDailyMeasurement = async (input: DocumentDefinition<Array<Dai
 }
 
 export const changeDailyMeasurement = async (array: Array<DailyMeasurementProps>) => {
-    console.log('change', array)
     try {
         let newArray = []
         for (let i = 0; i < array.length; i++) {
@@ -30,10 +29,8 @@ export const changeDailyMeasurement = async (array: Array<DailyMeasurementProps>
                 array[i],
                 { returnOriginal: false }
             )
-            console.log('newDaily', newDaily)
             newArray.push(await loadDailyMeasurementMissingData(newDaily))
         }
-        console.log('newArray', newArray)
         return newArray
     } catch (error: any) {
         logger.error(error)
