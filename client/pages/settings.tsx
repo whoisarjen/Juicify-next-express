@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { logout } from '../utils/auth.utils'
 import Button from '@mui/material/Button';
 import BottomFlyingButton from "../components/common/BottomFlyingButton";
@@ -9,8 +9,21 @@ import TextField from '@mui/material/TextField';
 import { useAppSelector } from "../hooks/useRedux";
 import MobileDatePicker from "../components/common/MobileDatePicker";
 import SelectLanguage from "../components/common/SelectLanguage";
+import styled from 'styled-components'
 
-const Settings: FunctionComponent = () => {
+const Settings = styled.div`
+    ${this} .MuiTextField-root {
+        width: 100%;
+        margin-bottom: 12px;
+    }
+    ${this} .tabTitle {
+        font-size: 0.785rem;
+        font-weight: bold;
+        margin-bottom: 12px;
+    }
+`
+
+export default () => {
     const { t } = useTranslation('settings')
     const [isLoading, setIsLoading] = useState(false)
     const [changedObject, setChangedObject] = useState<any>({})
@@ -77,7 +90,6 @@ const Settings: FunctionComponent = () => {
             return true;
         }
         await changeSettings({ ...changedObject, current }) // Current needs to be send just in case, user try to change password
-        // setIsLoading(false)
     }
 
     useEffect(() => {
@@ -99,7 +111,7 @@ const Settings: FunctionComponent = () => {
     }, [token])
 
     return (
-        <div className="settings">
+        <Settings>
             <div className="tabTitle">{t('Preferences')}</div>
             <SelectLanguage />
             <div className="tabTitle">{t('Diary')}</div>
@@ -438,8 +450,6 @@ const Settings: FunctionComponent = () => {
                 Object.keys(changedObject).length > 0 &&
                 <BottomFlyingButton clicked={handleSubmit} isLoading={isLoading} showNumberValue={Object.keys(changedObject).length} />
             }
-        </div>
+        </Settings>
     );
 };
-
-export default Settings;
