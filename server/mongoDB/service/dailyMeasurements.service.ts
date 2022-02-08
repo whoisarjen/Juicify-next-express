@@ -1,5 +1,5 @@
+import { loadDailyMeasurementMissingData } from '../../utils/dailyMeasurement.utils'
 import { DailyMeasurementModel } from '../models/dailyMeasurement.model'
-import { loadDailyMeasurementMissingData } from './dailyMeasurement.service'
 
 export const getDailyMeasurements = async (user: any, whenAdded: any = new Date((new Date().setDate((new Date().getDate() - parseInt(process.env.numberSupportedDays as string)))))) => {
     try {

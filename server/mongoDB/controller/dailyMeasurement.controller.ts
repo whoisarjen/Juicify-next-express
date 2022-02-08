@@ -1,9 +1,10 @@
 import logger from '../../utils/logger'
 import { Request, Response } from "express"
 import { CreateDailyMeasurementInput } from "../schema/dailyMeasurement.schema"
-import { changeDailyMeasurement, connectTwoDailyMeasurements, createDailyMeasurement, getDailyMeasurement, getDryDailyMeasurement } from "../service/dailyMeasurement.service"
+import { changeDailyMeasurement, createDailyMeasurement, getDailyMeasurement, getDryDailyMeasurement } from "../service/dailyMeasurement.service"
 import { socketHandleUserSynchronization } from '../../utils/socket'
 import errorBook from '../../utils/errorBook'
+import { connectTwoDailyMeasurements } from '../../utils/dailyMeasurement.utils'
 
 export const createDailyMeasurementHandler = async (req: Request<{}, {}, CreateDailyMeasurementInput['body']>, res: Response) => {
     try {
