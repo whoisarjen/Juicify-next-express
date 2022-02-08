@@ -9,7 +9,6 @@ import Recomposition from '../components/coach/Recomposition';
 import LosingWeight from '../components/coach/LosingWeight';
 import CheckingWeekData from '../components/coach/CheckingWeekData';
 import ChooseCaloriesSource from '../components/coach/ChooseCaloriesSource';
-import Loading from '../components/coach/Loading';
 import { useAppSelector } from "../hooks/useRedux";
 import useCoach from "../hooks/useCoach";
 import { getAllIndexedDB, getIndexedDBbyID } from "../utils/indexedDB.utils";
@@ -26,10 +25,9 @@ import Tutorial_7 from "../components/coach/Tutorial_7";
 const Coach: FunctionComponent = () => {
     const [createDiet, analyzeDiet] = useCoach()
     const token: any = useAppSelector(state => state.token.value)
-    const [step, setStep] = useState('Loading')
+    const [step, setStep] = useState(token.coach_analyze ? 'Standard' : 'Welcome')
 
     const prepareCreate = async (object: any) => {
-        setStep('Loading')
         const daily = await getIndexedDBbyID('daily_measurement', getDailyDate())
         await createDiet({
             ...object,
@@ -43,7 +41,6 @@ const Coach: FunctionComponent = () => {
     }
 
     const prepareAnalize = async (isUseData: any) => {
-        setStep('Loading')
         await analyzeDiet({
             isUseData,
             today: getShortDate(),
@@ -86,10 +83,6 @@ const Coach: FunctionComponent = () => {
                     ) : step === 'LosingWeight' ? (
                         <>
                             <LosingWeight prepareCreate={prepareCreate} handlePreviousStep={handlePreviousStep} />
-                        </>
-                    ) : step === 'Loading' ? (
-                        <>
-                            <Loading />
                         </>
                     ) : step === 'Standard' ? (
                         <>
