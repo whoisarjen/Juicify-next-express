@@ -13,7 +13,7 @@ import { useAppSelector } from "../../hooks/useRedux";
 import { insertThoseIDStoDB } from '../../utils/API';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNotify } from '../../hooks/useNotify';
-import NutritionDiary from '../../classes/nutritionDiary';
+import NutritionDiaryProps from '../../interfaces/nutritionDiary';
 
 interface CreateProductProps {
     closeCreateProduct: () => void,
@@ -56,14 +56,12 @@ const CreateProduct: FunctionComponent<CreateProductProps> = ({ closeCreateProdu
         ) {
             if (calories > 0) {
                 setLoading(true)
-                let object = new NutritionDiary(
-                    {
-                        _id: 'XD' + new Date().getTime(),
-                        name: name,
-                        l: name.length,
-                        user_ID: token._id
-                    }
-                )
+                let object: NutritionDiaryProps = {
+                    _id: 'XD' + new Date().getTime(),
+                    name: name,
+                    l: name.length,
+                    user_ID: token._id
+                }
                 if (proteins && parseFloat(proteins) > 0) {
                     object.p = proteins
                 }

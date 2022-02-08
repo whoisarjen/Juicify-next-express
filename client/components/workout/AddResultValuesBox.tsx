@@ -9,7 +9,6 @@ import ConfirmDialog from '../common/ConfirmDialog';
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
 import ValueProps from '../../interfaces/workout/value';
-import Value from '../../classes/workout/value';
 
 interface AddResultValuesBox {
     value: ValueProps,
@@ -78,7 +77,7 @@ const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, inde
                             className={styles.AddResultValuesBox}
                             onClick={() => {
                                 setOpen(false)
-                                changeResult(new Value({ reps: parseInt(reps), weight: parseFloat(weight), open }))
+                                changeResult({ reps: parseInt(reps), weight: parseFloat(weight), open })
                             }}
                         >
                             <div className={styles.AddResultValuesBoxConnectGrid}><div>Click to save</div></div>
@@ -100,7 +99,7 @@ const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, inde
                             value={weight}
                             id="combo-box-demo"
                             options={weightOptions}
-                            onChange={(e, value) => changeResult(new Value({ reps: parseInt(reps), weight: parseFloat((value || 0).toString()), open }))}
+                            onChange={(e, value) => changeResult({ reps: parseInt(reps), weight: parseFloat((value || 0).toString()), open })}
                             onInputChange={(e, valueLocally) => loadWeight(valueLocally)}
                             getOptionLabel={(option) => option ? option.toString() : ""}
                             renderInput={(params) => <TextField {...params} label="Weight" />}
@@ -111,7 +110,7 @@ const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, inde
                             value={reps}
                             id="combo-box-demo"
                             options={repsOptions}
-                            onChange={(e, value) => changeResult(new Value({ reps: parseInt((value || 0).toString()), weight: parseFloat(weight), open }))}
+                            onChange={(e, value) => changeResult({ reps: parseInt((value || 0).toString()), weight: parseFloat(weight), open })}
                             onInputChange={(e, valueLocally) => setReps(valueLocally)}
                             getOptionLabel={(option) => option ? option.toString() : ""}
                             renderInput={(params) => <TextField {...params} label="Reps" />}

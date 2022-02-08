@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { loadValueByLogin } from '../utils/API'
 import { getIndexedDBbyID } from '../utils/indexedDB'
 import WorkoutPlanProps from '../interfaces/workout/workoutPlan'
-import WorkoutPlan from '../classes/workout/workoutPlan'
 import { useAppSelector } from './useRedux'
 
 const useWorkoutPlan = (workoutPlanID: string): [any, () => void] => {
@@ -22,7 +21,7 @@ const useWorkoutPlan = (workoutPlanID: string): [any, () => void] => {
                     const workoutPlan: WorkoutPlanProps = await getIndexedDBbyID('workout_plan', workoutPlanID)
                     if (workoutPlan) {
                         setUser(token)
-                        setData(new WorkoutPlan({ ...workoutPlan }))
+                        setData({ ...workoutPlan })
                     } else {
                         router.push(`/${router.query.login}/workout-plans`)
                     }
@@ -31,7 +30,7 @@ const useWorkoutPlan = (workoutPlanID: string): [any, () => void] => {
                         let res = await loadValueByLogin('workout_plan', workoutPlanID, router.query.login)
                         if (res.data) {
                             setUser(res.user)
-                            setData(new WorkoutPlan({ ...res.data }))
+                            setData({ ...res.data })
                         } else {
                             router.push(`/${router.query.login}/workout-plans`)
                         }

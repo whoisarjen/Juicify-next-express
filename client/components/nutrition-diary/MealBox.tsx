@@ -8,8 +8,8 @@ import FastfoodIcon from "@mui/icons-material/Fastfood";
 import useTranslation from "next-translate/useTranslation";
 import style from "../../styles/nutrition-diary.module.css";
 import { useState, useEffect, FunctionComponent } from 'react'
-import NutritionDiary from '../../classes/nutritionDiary';
 import NutritionDiaryProps from '../../interfaces/nutritionDiary';
+import { getCalories } from '../../utils/product.utils';
 
 interface MealBoxProps {
     index: number,
@@ -86,7 +86,7 @@ const MealBox: FunctionComponent<MealBoxProps> = ({ index, products, openDialog,
                         </div>
                         <div className={style.boxProductContent}>
                             <div>{product.name || product.activity}</div>
-                            <div>{new NutritionDiary(product).getCalories()}kcal</div>
+                            <div>{getCalories(product)}kcal</div>
                         </div>
                         <div className={style.boxProductContent}>
                             {

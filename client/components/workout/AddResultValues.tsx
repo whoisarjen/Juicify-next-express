@@ -4,7 +4,6 @@ import { useState, useEffect, FunctionComponent } from 'react'
 import AddResultValuesBox from './AddResultValuesBox'
 import ResultProps from '../../interfaces/workout/result'
 import ValueProps from '../../interfaces/workout/value'
-import Value from '../../classes/workout/value'
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -43,25 +42,21 @@ const AddResultValues: FunctionComponent<AddResultValuesProps> = ({ result, setN
             setValues(
                 [
                     ...previousValues,
-                    new Value(
-                        {
-                            reps: values[values.length - 1].reps,
-                            weight: values[values.length - 1].weight,
-                            open: true
-                        }
-                    )
+                    {
+                        reps: values[values.length - 1].reps,
+                        weight: values[values.length - 1].weight,
+                        open: true
+                    }
                 ]
             )
         } else {
             setValues(
                 [
-                    new Value(
-                        {
-                            reps: 0,
-                            weight: 0,
-                            open: true
-                        }
-                    )
+                    {
+                        reps: 0,
+                        weight: 0,
+                        open: true
+                    }
                 ]
             )
         }

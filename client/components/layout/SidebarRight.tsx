@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 import Weights from "../common/Weights";
 import { useTheme } from "../../hooks/useTheme";
 import NutritionDiaryProps from "../../interfaces/nutritionDiary";
-import NutritionDiary from "../../classes/nutritionDiary";
+import { getCalories } from "../../utils/product.utils";
 
 const SidebarRight: FunctionComponent = () => {
     const router = useRouter()
@@ -37,7 +37,7 @@ const SidebarRight: FunctionComponent = () => {
 
             let calories = 0
             data.nutrition_diary.forEach((x: NutritionDiaryProps) => {
-                calories += new NutritionDiary(x).getCalories()
+                calories += getCalories(x)
             })
             setCalories(calories)
 

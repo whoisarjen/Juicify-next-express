@@ -8,7 +8,6 @@ import useTranslation from "next-translate/useTranslation";
 import { FunctionComponent } from 'react';
 import Navbar from '../../../components/profile/Navbar';
 import { useAppSelector } from '../../../hooks/useRedux';
-import WorkoutPlan from '../../../classes/workout/workoutPlan';
 import WorkoutPlanProps from '../../../interfaces/workout/workoutPlan';
 
 const WorkoutPlans: FunctionComponent = () => {
@@ -18,7 +17,7 @@ const WorkoutPlans: FunctionComponent = () => {
     const token: any = useAppSelector(state => state.token.value)
 
     const createWorkoutPlan = async () => {
-        const newWorkoutPlan = new WorkoutPlan({ _id: 'XD' + new Date().getTime(), user_ID: token._id })
+        const newWorkoutPlan = { _id: 'XD' + new Date().getTime(), user_ID: token._id }
         await addIndexedDB('workout_plan', [newWorkoutPlan])
         router.push(`/${router.query.login}/workout-plans/${newWorkoutPlan._id}`)
     }

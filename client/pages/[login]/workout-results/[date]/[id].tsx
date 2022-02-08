@@ -16,7 +16,6 @@ import ExerciseProps from '../../../../interfaces/workout/exercise';
 import WorkoutResultProps from '../../../../interfaces/workout/workoutResult';
 import { useNotify } from '../../../../hooks/useNotify';
 import ResultProps from '../../../../interfaces/workout/result';
-import Result from '../../../../classes/workout/result';
 import ValueProps from '../../../../interfaces/workout/value';
 
 const WorkoutResultsID: FunctionComponent = () => {
@@ -130,15 +129,13 @@ const WorkoutResultsID: FunctionComponent = () => {
     const handleNewExercises = async (array: Array<ExerciseProps>) => {
         const newResults: Array<ResultProps> = [
             ...results,
-            ...array.map(
-                (
-                    exerciseLocally: ExerciseProps
-                ) => new Result({
+            ...array.map((exerciseLocally: ExerciseProps) => {
+                return {
                     _id: exerciseLocally._id,
                     name: exerciseLocally.name,
                     values: []
-                })
-            )
+                }
+            })
         ]
         setResults(newResults)
         await autoSave(newResults, 'results')

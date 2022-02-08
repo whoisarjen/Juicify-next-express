@@ -1,7 +1,6 @@
 import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
 import { FunctionComponent } from "react";
-import NutritionDiary from "../../classes/nutritionDiary";
 import SimpleLineChart from "../../components/diagrams/SimpleLineChart";
 import StackedBarChart from "../../components/diagrams/StackedBarChart";
 import Navbar from "../../components/profile/Navbar";
@@ -11,6 +10,7 @@ import DailyMeasurementProps from "../../interfaces/dailyMeasurement";
 import NutritionDiaryProps from "../../interfaces/nutritionDiary";
 import styles from '../../styles/profile.module.css'
 import { addDaysToDate, getShortDate, reverseDateDotes } from '../../utils/manageDate';
+import { getCalories } from "../../utils/product.utils";
 
 const Profile: FunctionComponent = () => {
     const [getTheme]: any = useTheme()
@@ -70,7 +70,7 @@ const Profile: FunctionComponent = () => {
                         object[t('Burnt')] = meal.calories
                     }
                 } else {
-                    object[t('Calories')] += new NutritionDiary(meal).getCalories()
+                    object[t('Calories')] += getCalories(meal)
                 }
             })
             object[t('Diffrent')] = object[t('Calories')] + object[t('Burnt')]

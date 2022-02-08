@@ -13,11 +13,10 @@ import ButtonPlus from '../../../components/common/ButtonPlus'
 import AddExercises from '../../../components/workout/AddExercises'
 import ConfirmDialog from '../../../components/common/ConfirmDialog'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
-import { deleteIndexedDB } from "../../../utils/indexedDB"
+import { addIndexedDB, deleteIndexedDB } from "../../../utils/indexedDB"
 import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB, deleteThoseIDSfromDB } from "../../../utils/API"
 import BottomFlyingGuestBanner from '../../../components/common/BottomFlyingGuestBanner'
 import ExerciseProps from '../../../interfaces/workout/exercise'
-import WorkoutPlan from '../../../classes/workout/workoutPlan'
 import { useNotify } from '../../../hooks/useNotify'
 
 const WorkoutPlansID: FunctionComponent = () => {
@@ -39,7 +38,14 @@ const WorkoutPlansID: FunctionComponent = () => {
 
     const saveWorkoutPlan = async () => {
         setSaveLoading(true)
-        const newWorkoutPlan = new WorkoutPlan({ _id: router.query.id, user_ID: token._id, title, description, burnt, exercises }).prepareForDB()
+        const newWorkoutPlan = {
+            _id: router.query.id,
+            user_ID: token._id,
+            title,
+            ...(description && {description}),
+            ...(burnt && {burnt}),
+            exercises
+        }
         if (!newWorkoutPlan.title || !requiredBasicInputLength(newWorkoutPlan.title)) {
             error(t('Title is incorrect'))
         } else if (!newWorkoutPlan.exercises || newWorkoutPlan.exercises.length < 1) {
@@ -89,7 +95,16 @@ const WorkoutPlansID: FunctionComponent = () => {
             if (!await is_id(router.query.id)) {
                 if (title != undefined && description != undefined && burnt != undefined && exercises != undefined) {
                     if (isOwner) {
-                        new WorkoutPlan({ _id: router.query.id, user_ID: token._id, title, description, burnt, exercises }).autoSave()
+                        await deleteIndexedDB('workout_plan', router.query.id)
+                        await addIndexedDB('workout_plan', [{
+                            _id: router.query.id,
+                            title: title,
+                            description: description,
+                            user_ID: token._id,
+                            burnt: burnt,
+                            exercises: exercises,
+                            notSaved: true
+                        }])
                     }
                 }
             }

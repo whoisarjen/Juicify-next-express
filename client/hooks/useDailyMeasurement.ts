@@ -3,7 +3,6 @@ import { useAppSelector } from "./useRedux";
 import { useState, useEffect } from "react";
 import { getIndexedDBbyID } from "../utils/indexedDB";
 import { loadValueByLogin } from "../utils/API";
-import DailyMeasurement from "../classes/dailyMeasurement";
 
 const useDailyMeasurement = (when: string, login: string): [any, () => void] => {
     const router: any = useRouter();
@@ -13,7 +12,7 @@ const useDailyMeasurement = (when: string, login: string): [any, () => void] => 
     const theOldestSupportedDate = useAppSelector(state => state.config.theOldestSupportedDate());
     const token: any = useAppSelector(state => state.token.value)
     const reloadKey = useAppSelector(state => state.key.daily_measurement)
-    
+
     useEffect(() => {
         if (when) {
             (async () => {
@@ -23,16 +22,14 @@ const useDailyMeasurement = (when: string, login: string): [any, () => void] => 
                 ) {
                     setUser(token);
                     setDataObject(
-                        new DailyMeasurement(
-                            {
-                                ...{ _id: "XD" + new Date().getTime(), user_ID: token._id, whenAdded: when },
-                                ...await getIndexedDBbyID
-                                    (
-                                        "daily_measurement",
-                                        new Date(when).toISOString()
-                                    )
-                            }
-                        )
+                        {
+                            ...{ _id: "XD" + new Date().getTime(), user_ID: token._id, whenAdded: when },
+                            ...await getIndexedDBbyID
+                                (
+                                    "daily_measurement",
+                                    new Date(when).toISOString()
+                                )
+                        }
                     );
                 } else {
                     let res = await loadValueByLogin(
@@ -42,12 +39,10 @@ const useDailyMeasurement = (when: string, login: string): [any, () => void] => 
                     );
                     setUser(res.user);
                     setDataObject(
-                        new DailyMeasurement(
-                            {
-                                ...{ _id: "XD" + new Date().getTime(), user_ID: res._id, whenAdded: when },
-                                ...res.data
-                            }
-                        )
+                        {
+                            ...{ _id: "XD" + new Date().getTime(), user_ID: res._id, whenAdded: when },
+                            ...res.data
+                        }
                     );
                 }
             })();
