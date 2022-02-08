@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import { FunctionComponent, useEffect } from "react";
-import Spinner from "../../components/common/Spinner";
 import { useNotify } from "../../hooks/useNotify";
 
 const ResetPasswordHash: FunctionComponent = () => {
@@ -25,9 +24,7 @@ const ResetPasswordHash: FunctionComponent = () => {
     }, [])
 
     return (
-        <div className="ResetPasswordHash">
-            <Spinner />
-        </div>
+        <></>
     );
 };
 

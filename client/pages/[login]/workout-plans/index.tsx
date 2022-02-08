@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import { addIndexedDB } from '../../../utils/indexedDB.utils'
 import useWorkoutPlans from '../../../hooks/useWorkoutPlans'
-import Spinner from '../../../components/common/Spinner';
 import ButtonPlus from '../../../components/common/ButtonPlus';
 import Box from '../../../components/workout/Box';
 import useTranslation from "next-translate/useTranslation";
@@ -36,19 +35,15 @@ const WorkoutPlans: FunctionComponent = () => {
                     )
             }
             {
-                data === false
-                    ?
-                    <Spinner />
-                    :
-                    data && data.map((plan: WorkoutPlanProps) =>
-                        <Box
-                            title={plan.title}
-                            description={plan.description}
-                            route={`/${router.query.login}/workout-plans/${plan._id}`}
-                            type={1}
-                            key={plan._id}
-                        />
-                    )
+                data && data.map((plan: WorkoutPlanProps) =>
+                    <Box
+                        title={plan.title}
+                        description={plan.description}
+                        route={`/${router.query.login}/workout-plans/${plan._id}`}
+                        type={1}
+                        key={plan._id}
+                    />
+                )
             }
         </div>
     );

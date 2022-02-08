@@ -173,11 +173,7 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
         }
     }, [token])
 
-    return (
-        <div className='socket'>
-            {children}
-        </div>
-    )
+    return children
 }
 
 export default Socket
