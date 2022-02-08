@@ -1,20 +1,27 @@
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
-import { FunctionComponent } from 'react';
+import styled from 'styled-components'
 
-interface ButtonPlus {
+interface ButtonPlusProps {
     click: () => void,
     size?: any
 }
 
-const ButtonPlus: FunctionComponent<ButtonPlus> = ({ click, size = 'normal' }) => {
+const ButtonPlus = styled.div`
+    width: 100%;
+    display: grid;
+    margin-top: 10px;
+    ${this} button {
+        margin: auto;
+    }
+`
+
+export default ({ click, size = 'normal' }: ButtonPlusProps) => {
     return (
-        <div className="buttonPlus" onClick={click}>
+        <ButtonPlus onClick={click}>
             <Fab size={size} color="primary" aria-label="add">
                 <AddIcon />
             </Fab>
-        </div>
+        </ButtonPlus>
     );
 }
-
-export default ButtonPlus;
