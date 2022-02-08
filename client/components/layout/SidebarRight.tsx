@@ -33,7 +33,7 @@ const SidebarRight: FunctionComponent = () => {
 
     useEffect(() => {
         if (data && token) {
-            setWeight(data.weight)
+            setWeight(data.weight || 0)
 
             let calories = 0
             data.nutrition_diary.forEach((x: NutritionDiaryProps) => {
@@ -44,7 +44,7 @@ const SidebarRight: FunctionComponent = () => {
             const macro = getDay(new Date(getShortDate()), token)
             setCaloriesGoal(macro.proteins * 4 + macro.carbs * 4 + macro.fats * 9)
 
-            setWorkout(data.workout_result.length)
+            setWorkout(data.workout_result ? data.workout_result.length : 0)
 
             setCoach(getDiffrentBetweenDays(token.coach, getShortDate()))
 
