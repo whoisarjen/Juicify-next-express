@@ -53,7 +53,7 @@ const Profile: FunctionComponent = () => {
         return object
     })
 
-    const calories = data.map((x: DailyMeasurementProps) => {
+    const calories = data.map(async (x: DailyMeasurementProps) => {
         let object: any = {
             name: '',
             [t('Calories')]: 0,
@@ -62,7 +62,7 @@ const Profile: FunctionComponent = () => {
         }
         if (x.nutrition_diary) {
             object.name = reverseDateDotes(x.whenAdded).slice(0, 5)
-            x.nutrition_diary.map(async (meal: NutritionDiaryProps) => {
+            x.nutrition_diary.map((meal: NutritionDiaryProps) => {
                 if (meal.calories) {
                     if (meal.calories > 0) {
                         object[t('Calories')] = meal.calories
