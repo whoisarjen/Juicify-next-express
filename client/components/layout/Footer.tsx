@@ -1,4 +1,3 @@
-import { useAppSelector } from "../../hooks/useRedux";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
