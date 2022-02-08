@@ -1,8 +1,8 @@
 import { getIndexedDBbyID, addIndexedDB, deleteIndexedDB, putIndexedDB, getAllIndexedDB, putInformationAboutNeededUpdate } from "./indexedDB.utils"
 import { store } from '../redux/store'
 import axios from "axios"
-import { setIsOnline } from "../redux/features/onlineSlice"
-import { refreshKey } from "../redux/features/keySlice"
+import { setIsOnline } from "../redux/features/online.slice"
+import { refreshKey } from "../redux/features/key.slice"
 
 const API = async (url: string, body: any): Promise<any> => {
     let response = {}

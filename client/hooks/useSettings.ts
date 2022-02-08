@@ -1,5 +1,5 @@
 import axios from "axios"
-import { setToken } from "../redux/features/tokenSlice";
+import { setToken } from "../redux/features/token.slice";
 import { readToken } from "../utils/auth.utils";
 import { useNotify } from "./useNotify";
 import { useAppDispatch } from "./useRedux";

@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import tokenReducer from "./features/tokenSlice";
-import configReducer from "./features/configSlice";
-import onlineReducer from "./features/onlineSlice";
-import keyReducer from "./features/keySlice";
+import tokenReducer from "./features/token.slice";
+import configReducer from "./features/config.slice";
+import onlineReducer from "./features/online.slice";
+import keyReducer from "./features/key.slice";
 
 export const store = configureStore({
   reducer: {

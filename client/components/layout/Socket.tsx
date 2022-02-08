@@ -1,7 +1,7 @@
-import { setIsOnline } from '../../redux/features/onlineSlice'
+import { setIsOnline } from '../../redux/features/online.slice'
 import io from "socket.io-client";
 import { useState, useEffect, FunctionComponent } from 'react'
-import { setToken } from "../../redux/features/tokenSlice";
+import { setToken } from "../../redux/features/token.slice";
 import { is_id } from '../../utils/API'
 import { getAllIndexedDB, deleteIndexedDB, getIndexedDBbyID, addIndexedDB } from '../../utils/indexedDB.utils'
 import { overwriteThoseIDSinDB, insertThoseIDStoDB, deleteThoseIDSfromDB, setLastUpdated } from '../../utils/API'

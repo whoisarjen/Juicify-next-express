@@ -9,7 +9,7 @@ import TextField from "@mui/material/TextField";
 import { setLastUpdated } from '../utils/API'
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useAppDispatch } from "../hooks/useRedux";
-import { setToken } from "../redux/features/tokenSlice";
+import { setToken } from "../redux/features/token.slice";
 import useTranslation from "next-translate/useTranslation";
 import { readToken } from "../utils/auth.utils";
 import { createIndexedDB, addIndexedDB, deleteDatabaseIndexedDB } from "../utils/indexedDB.utils";
