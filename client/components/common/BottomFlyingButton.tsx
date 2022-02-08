@@ -11,13 +11,13 @@ interface BottomFlyingButtonProps {
 }
 
 const BottomFlyingButton = styled.div`
-    width: 100 %;
+    width: 100%;
     position: fixed;
     bottom: 56px;
-    left: 50 %;
-    transform: translateX(-50 %);
-    text - align: center;
-    z - index: 2;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 2;
 `
 
 const BottomFlyingButtonPlaceholder = styled.div`
