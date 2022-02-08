@@ -22,6 +22,7 @@ import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from "../../utils/db
 import { TransitionProps } from '@mui/material/transitions';
 import Slide from '@mui/material/Slide';
 import DailyMeasurementProps from "../../interfaces/dailyMeasurement.interface";
+import styled from 'styled-components'
 
 const Transition = forwardRef(function Transition(
     props: TransitionProps & {
@@ -36,6 +37,18 @@ interface WeightsProps {
     isWeights: boolean,
     closeWeights: () => void
 }
+
+const Content = styled.div`
+    width: 100%;
+    margin: 0 auto;
+    max-width: 702px;
+    padding: 12px;
+    display: grid;
+    min-height: calc(100vh - var(--BothNavHeightAndPadding));
+    @media (max-width: 726px) {
+        width: calc(100% - 24px);
+    }
+`
 
 const Weights: FunctionComponent<WeightsProps> = ({ isWeights, closeWeights }) => {
     const token: any = useAppSelector(state => state.token.value)
@@ -69,7 +82,7 @@ const Weights: FunctionComponent<WeightsProps> = ({ isWeights, closeWeights }) =
                 open={isWeights}
                 TransitionComponent={Transition}
             >
-                <div className="content">
+                <Content>
                     <div className="title">{t('Add weight')}</div>
                     <div className="description">
                         {t('Add weight description')}
@@ -119,7 +132,7 @@ const Weights: FunctionComponent<WeightsProps> = ({ isWeights, closeWeights }) =
                             {t('Close')}
                         </Button>
                     </div>
-                </div>
+                </Content>
                 <Dialog
                     open={isDialog}
                     onClose={() => setIsDialog(false)}

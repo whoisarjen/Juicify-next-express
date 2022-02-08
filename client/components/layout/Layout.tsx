@@ -9,10 +9,43 @@ import SidebarRightLoggouted from './SidebarRightLoggouted'
 import SidebarLeftLoggouted from './SidebarLeftLoggouted'
 import TopNotify from './TopNotify'
 import { getShortDate } from '../../utils/date.utils'
+import styled from 'styled-components'
 
 interface LayoutProps {
     children: any
 }
+
+const Grid = styled.div`
+    margin: auto;
+    display: grid;
+    width: 100%;
+    max-width: 1452px;
+    grid-template-columns: 363px 726px 363px;
+    @media (max-width: 1452px) {
+        max-width: 1089px;
+        grid-template-columns: 726px 363px;
+    }
+    @media (max-width: 1089px) {
+        max-width: 726px;
+        grid-template-columns: 726px;
+    }
+    @media (max-width: 726px) {
+        max-width: 100%;
+        grid-template-columns: 1fr;
+    }
+`
+
+const Grid__content = styled.div`
+    width: 100%;
+    margin: 0 auto;
+    max-width: 702px;
+    padding: 12px;
+    display: grid;
+    min-height: calc(100vh - var(--BothNavHeightAndPadding));
+    @media (max-width: 726px) {
+        width: calc(100% - 24px);
+    }
+`
 
 const requiredAuth = [
     '/',
@@ -33,7 +66,7 @@ const notRequiredAuth = [
 
 const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
     const router = useRouter()
-    const [allowLoading, setAllowLoading] = useState(false)
+    const [isAllowedLocation, setIsAllowedLocation] = useState(false)
     const token: any = useAppSelector(state => state.token.value)
 
     useEffect(() => {
@@ -43,23 +76,23 @@ const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
         } else if (!tokenValue && requiredAuth.includes(router.pathname)) {
             router.push('/login')
         } else {
-            setAllowLoading(true)
+            setIsAllowedLocation(true)
         }
     }, [token, router])
 
     return (
-        <main className='layout'>
+        <main>
             <TopNotify />
             {
-                allowLoading &&
+                isAllowedLocation &&
                 <>
-                    <Navbar />
+                    <Navbar {...{ token }} />
                     {
                         router.pathname.includes('blog') || router.pathname == '/'
                             ?
-                            <div>{children}</div>
+                            <>{children}</>
                             :
-                            <div id="gridOverContent">
+                            <Grid>
                                 {
                                     token &&
                                         token.login
@@ -74,7 +107,7 @@ const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
                                         :
                                         <SidebarLeftLoggouted />
                                 }
-                                <div className='content'>{children}</div>
+                                <Grid__content>{children}</Grid__content>
                                 {
                                     token &&
                                         token.login
@@ -89,7 +122,7 @@ const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
                                         :
                                         <SidebarRightLoggouted />
                                 }
-                            </div>
+                            </Grid>
                     }
                     <Footer {...{ token }} />
                 </>
@@ -98,4 +131,4 @@ const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
     )
 }
 
-export default Layout
+export default Layout;
