@@ -10,7 +10,7 @@ interface AvatarMUIProps {
 const AvatarMUI: FunctionComponent<AvatarMUIProps> = ({ user, size = '110px', margin = 'auto' }) => {
     return (
         <>
-            {
+            {/* {
                 user
                     ?
                     <Avatar
@@ -30,7 +30,7 @@ const AvatarMUI: FunctionComponent<AvatarMUIProps> = ({ user, size = '110px', ma
                         alt={`${user.login} ${user.name} ${user.surname} on Juicify`}
                         src='/images/logo.png'
                     />
-            }
+            } */}
         </>
     )
 }
