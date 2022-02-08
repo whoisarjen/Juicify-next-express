@@ -86,7 +86,7 @@ const MealBox: FunctionComponent<MealBoxProps> = ({ index, products, openDialog,
                         </div>
                         <div className={style.boxProductContent}>
                             <div>{product.name || product.activity}</div>
-                            <div>{getCalories(product)}kcal</div>
+                            <div>{async () => await getCalories(product)}kcal</div>
                         </div>
                         <div className={style.boxProductContent}>
                             {
