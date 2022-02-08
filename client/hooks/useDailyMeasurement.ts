@@ -3,7 +3,7 @@ import { useAppSelector } from "./useRedux";
 import { useState, useEffect } from "react";
 import { getIndexedDBbyID } from "../utils/indexedDB.utils";
 import { loadValueByLogin } from "../utils/db.utils";
-import { loadMissingData } from "../utils/dailyMeasurements.utils";
+import { loadMissingData } from "../utils/dailyMeasurement.utils";
 
 const useDailyMeasurement = (when: string, login: string): [any, () => void] => {
     const router: any = useRouter();

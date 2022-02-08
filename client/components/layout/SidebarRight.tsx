@@ -36,7 +36,6 @@ const SidebarRight: FunctionComponent = () => {
             setWeight(data.weight || 0)
 
             let calories = 0
-            console.log(data)
             data.nutrition_diary.forEach((x: NutritionDiaryProps) => {
                 calories += getCalories(x)
             })
