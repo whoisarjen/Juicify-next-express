@@ -75,91 +75,89 @@ const Weights: FunctionComponent<WeightsProps> = ({ isWeights, closeWeights }) =
     }
 
     return (
-        <div>
+        <Dialog
+            fullScreen
+            scroll='body'
+            open={isWeights}
+            TransitionComponent={Transition}
+        >
+            <Content>
+                <div className="title">{t('Add weight')}</div>
+                <div className="description">
+                    {t('Add weight description')}
+                </div>
+                <Fragment>
+                    <Timeline position="alternate">
+                        {
+                            data &&
+                            data.length > 0 &&
+                            data.map((x: DailyMeasurementProps) =>
+                                <TimelineItem key={x._id}>
+                                    <TimelineOppositeContent color="text.secondary">
+                                        {reverseDateDotes(x.whenAdded)}
+                                    </TimelineOppositeContent>
+                                    <TimelineSeparator>
+                                        <TimelineDot />
+                                        <TimelineConnector />
+                                    </TimelineSeparator>
+                                    {
+                                        x.weight &&
+                                            x.weight > 0
+                                            ?
+                                            <TimelineContent style={{ fontWeight: 'bold' }} onClick={() => {
+                                                setWeight(x.weight)
+                                                setChange(x)
+                                                setIsDialog(true)
+                                            }}>
+                                                {x.weight}kg
+                                            </TimelineContent>
+                                            :
+                                            <TimelineContent color="error" style={{ fontWeight: 'bold' }} onClick={() => {
+                                                setWeight(x.weight)
+                                                setChange(x)
+                                                setIsDialog(true)
+                                            }}>
+                                                {x.weight}kg
+                                            </TimelineContent>
+                                    }
+                                </TimelineItem>
+                            )
+                        }
+                    </Timeline>
+                </Fragment>
+                <div className={styles.addProductsCloseButtonPlaceholder} />
+                <div className={styles.addProductsCloseButton} onClick={closeWeights}>
+                    <Button variant="contained">
+                        {t('Close')}
+                    </Button>
+                </div>
+            </Content>
             <Dialog
-                fullScreen
-                scroll='body'
-                open={isWeights}
+                open={isDialog}
+                onClose={() => setIsDialog(false)}
                 TransitionComponent={Transition}
             >
-                <Content>
-                    <div className="title">{t('Add weight')}</div>
-                    <div className="description">
-                        {t('Add weight description')}
-                    </div>
-                    <Fragment>
-                        <Timeline position="alternate">
-                            {
-                                data &&
-                                data.length > 0 &&
-                                data.map((x: DailyMeasurementProps) =>
-                                    <TimelineItem key={x._id}>
-                                        <TimelineOppositeContent color="text.secondary">
-                                            {reverseDateDotes(x.whenAdded)}
-                                        </TimelineOppositeContent>
-                                        <TimelineSeparator>
-                                            <TimelineDot />
-                                            <TimelineConnector />
-                                        </TimelineSeparator>
-                                        {
-                                            x.weight &&
-                                                x.weight > 0
-                                                ?
-                                                <TimelineContent style={{ fontWeight: 'bold' }} onClick={() => {
-                                                    setWeight(x.weight)
-                                                    setChange(x)
-                                                    setIsDialog(true)
-                                                }}>
-                                                    {x.weight}kg
-                                                </TimelineContent>
-                                                :
-                                                <TimelineContent color="error" style={{ fontWeight: 'bold' }} onClick={() => {
-                                                    setWeight(x.weight)
-                                                    setChange(x)
-                                                    setIsDialog(true)
-                                                }}>
-                                                    {x.weight}kg
-                                                </TimelineContent>
-                                        }
-                                    </TimelineItem>
-                                )
-                            }
-                        </Timeline>
-                    </Fragment>
-                    <div className={styles.addProductsCloseButtonPlaceholder} />
-                    <div className={styles.addProductsCloseButton} onClick={closeWeights}>
-                        <Button variant="contained">
-                            {t('Close')}
-                        </Button>
-                    </div>
-                </Content>
-                <Dialog
-                    open={isDialog}
-                    onClose={() => setIsDialog(false)}
-                    TransitionComponent={Transition}
-                >
-                    <DialogTitle>{t('Add weight')}</DialogTitle>
-                    <DialogContent>
-                        <OutlinedInput
-                            id="outlined-adornment-weight"
-                            value={weight}
-                            fullWidth
-                            type="number"
-                            onChange={(e) => setWeight(e.target.value)}
-                            endAdornment={<InputAdornment position="end">kg</InputAdornment>}
-                            aria-describedby="outlined-weight-helper-text"
-                            inputProps={{
-                                'aria-label': 'weight',
-                            }}
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={() => setIsDialog(false)}>{t('Deny')}</Button>
-                        <Button onClick={submit}>{t('Confirm')}</Button>
-                    </DialogActions>
-                </Dialog>
+                <DialogTitle>{t('Add weight')}</DialogTitle>
+                <DialogContent>
+                    <OutlinedInput
+                        id="outlined-adornment-weight"
+                        value={weight}
+                        fullWidth
+                        type="number"
+                        onChange={(e) => setWeight(e.target.value)}
+                        endAdornment={<InputAdornment position="end">kg</InputAdornment>}
+                        aria-describedby="outlined-weight-helper-text"
+                        inputProps={{
+                            'aria-label': 'weight',
+                        }}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setIsDialog(false)}>{t('Deny')}</Button>
+                    <Button onClick={submit}>{t('Confirm')}</Button>
+                </DialogActions>
             </Dialog>
-        </div>
+        </Dialog>
     )
 }
 

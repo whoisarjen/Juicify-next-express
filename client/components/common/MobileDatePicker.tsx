@@ -1,5 +1,5 @@
 import Stack from '@mui/material/Stack'
-import { useState, useEffect, FunctionComponent } from 'react'
+import { useState, FunctionComponent } from 'react'
 import TextField from '@mui/material/TextField'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import MobileDatePicker from '@mui/lab/MobileDatePicker'
@@ -21,18 +21,16 @@ const MobileDatePickerExport: FunctionComponent<MobileDatePickerExportProps> = (
     }
 
     return (
-        <div className="mobileDatePicker">
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <Stack spacing={3} sx={{marginBottom: marginBottom}}>
-                    <MobileDatePicker
-                        label={label}
-                        value={value}
-                        onChange={handleChange}
-                        renderInput={(params) => <TextField {...params} />}
-                    />
-                </Stack>
-            </LocalizationProvider>
-        </div>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <Stack spacing={3} sx={{ marginBottom: marginBottom }}>
+                <MobileDatePicker
+                    label={label}
+                    value={value}
+                    onChange={handleChange}
+                    renderInput={(params) => <TextField {...params} />}
+                />
+            </Stack>
+        </LocalizationProvider>
     )
 }
 

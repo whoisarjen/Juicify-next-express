@@ -19,32 +19,33 @@ const ConfirmDialog: FunctionComponent<ConfirmDialogProps> = ({ isDialog, closeD
     const { t } = useTranslation('home')
 
     return (
-        <div className="confirmDialog">
-            <Dialog
-                open={isDialog}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">
-                    {t('Confirm Dialog Title')}
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        {t('This action can NOT be undone')}.
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={closeDialog}>{t('Deny')}</Button>
-                    <LoadingButton
-                        loading={loading}
-                        onClick={() => confirm()}
-                        autoFocus
-                    >
-                        {t('Confirm')}
-                    </LoadingButton>
-                </DialogActions>
-            </Dialog>
-        </div>
+        <Dialog
+            open={isDialog}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+        >
+            <DialogTitle id="alert-dialog-title">
+                {t('Confirm Dialog Title')}
+            </DialogTitle>
+            <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                    {t('This action can NOT be undone')}.
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={closeDialog}>{t('Deny')}</Button>
+                <LoadingButton
+                    loading={loading}
+                    onClick={() => {
+                        setLoading(true)
+                        confirm()
+                    }}
+                    autoFocus
+                >
+                    {t('Confirm')}
+                </LoadingButton>
+            </DialogActions>
+        </Dialog>
     )
 }
 
