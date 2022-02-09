@@ -20,14 +20,14 @@ export async function socket({ io }: { io: Server }) {
             const { decoded, expired }: any = await verifyJWT(await getCookie('refresh_token', socket.handshake.headers.cookie) as string)
             if (decoded) {
                 if (expired || !decoded || !decoded._id) {
-                    logger.error(`User ${decoded} has not valid refresh_token, so got logouted as ${socket.id}`)
+                    logger.error(`User ${decoded} has not valid refresh_token, so got logouted`)
                     io.to(socket.id).emit('compareDatabases', {
                         "lastUpdated": { ...await synchronizationObject(0), ...{ logout: new Date().getTime() + 1000 } },
                         "version": process.env.APP_VERSION,
                         "socket_ID": socket.id
                     })
                 } else {
-                    logger.info(`User ${decoded._id} has valid refresh_token, connected to the socket as ${socket.id}`)
+                    logger.info(`User ${decoded._id} has valid refresh_token, connected as ${socket.id}`)
                     socket.join(decoded._id)
                     io.to(socket.id).emit('compareDatabases', {
                         "lastUpdated": JSON.parse(await redis.get(decoded._id)) || await createSynchronizationObject(decoded._id),
