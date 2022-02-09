@@ -10,6 +10,7 @@ import SidebarLeftLoggouted from './SidebarLeftLoggouted'
 import TopNotify from './TopNotify'
 import { getShortDate } from '../../utils/date.utils'
 import styled from 'styled-components'
+import { isBrowserValid } from '../../utils/auth.utils'
 
 interface LayoutProps {
     children: any
@@ -70,14 +71,19 @@ const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
     const token: any = useAppSelector(state => state.token.value)
 
     useEffect(() => {
-        const tokenValue = JSON.parse(localStorage.getItem('token') as any) // it allow us to dodge the first push, when token is not settled yet
-        if (tokenValue && notRequiredAuth.includes(router.pathname)) {
-            router.push(`/${tokenValue.login}/nutrition-diary/${getShortDate()}`);
-        } else if (!tokenValue && requiredAuth.includes(router.pathname)) {
-            router.push('/login')
-        } else {
-            setIsAllowedLocation(true)
-        }
+        (async () => {
+            if (!await isBrowserValid() && router.pathname != '/not-supported') {
+                return router.push('/not-supported')
+            }
+            const tokenValue = JSON.parse(localStorage.getItem('token') as any) // it allow us to dodge the first push, when token is not settled yet
+            if (tokenValue && notRequiredAuth.includes(router.pathname)) {
+                router.push(`/${tokenValue.login}/nutrition-diary/${getShortDate()}`);
+            } else if (!tokenValue && requiredAuth.includes(router.pathname)) {
+                router.push('/login')
+            } else {
+                setIsAllowedLocation(true)
+            }
+        })()
     }, [token, router])
 
     return (
