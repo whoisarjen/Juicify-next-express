@@ -17,6 +17,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { productSchema, productSchemaProps } from '../../schema/product.schema';
 import InputAdornment from '@mui/material/InputAdornment';
+import { TypeOf } from 'zod';
 
 interface CreateProductProps {
     closeCreateProduct: () => void,
@@ -38,9 +39,15 @@ const CreateProduct: FunctionComponent<CreateProductProps> = ({ closeCreateProdu
 
     const onSubmit = async (values: productSchemaProps) => {
         try {
-            console.log(values)
-            // created(name)
-            // notify()
+            const copyValues = { ...values }
+            for (const key in copyValues) {
+                if (copyValues[key as keyof typeof copyValues] == false) {
+                    delete copyValues[key as keyof typeof copyValues];
+                }
+            }
+            await insertThoseIDStoDB('product', [{ ...copyValues, ...(code && { code }), user_ID: token._id }])
+            created(copyValues.name)
+            success()
         } catch (e: any) {
             error(e.message)
         } finally {
@@ -48,11 +55,9 @@ const CreateProduct: FunctionComponent<CreateProductProps> = ({ closeCreateProdu
         }
     }
 
-    console.log(errors)
-
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <Dialog open={isCreateProduct}>
+        <Dialog open={isCreateProduct}>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <DialogTitle>{t('Create product')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
@@ -72,26 +77,18 @@ const CreateProduct: FunctionComponent<CreateProductProps> = ({ closeCreateProdu
                         }
                     />
                     {
-                        // defaultBarcode &&
-                        // <TextField
-                        //     error={
-                        //         !numberOnlyPositiveLong(code)
-                        //     }
-                        //     helperText={
-                        //         !numberOnlyPositiveLong(code)
-                        //             ? t("home:numberOnlyPositiveLong")
-                        //             : ""
-                        //     }
-                        //     margin="dense"
-                        //     id="name"
-                        //     label="Barcode"
-                        //     value={code}
-                        //     onChange={(e) => setCode(e.target.value)}
-                        //     type="Number"
-                        //     inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                        //     fullWidth
-                        //     variant="standard"
-                        // />
+                        defaultBarcode &&
+                        <TextField
+                            margin="dense"
+                            id="name"
+                            label="Barcode"
+                            value={code}
+                            onChange={(e) => setCode(e.target.value)}
+                            type="Number"
+                            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                            fullWidth
+                            variant="standard"
+                        />
                     }
                     <TextField
                         sx={{ marginTop: '12px' }}
@@ -232,13 +229,14 @@ const CreateProduct: FunctionComponent<CreateProductProps> = ({ closeCreateProdu
                     <Button onClick={closeCreateProduct}>{t('Cancel')}</Button>
                     <LoadingButton
                         loading={loading}
+                        variant="contained"
                         type="submit"
                     >
                         {t('Submit')}
                     </LoadingButton>
                 </DialogActions>
-            </Dialog>
-        </form>
+            </form>
+        </Dialog>
     );
 }
 

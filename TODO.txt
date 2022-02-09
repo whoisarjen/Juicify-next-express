@@ -2,9 +2,6 @@ add cardio exercises + timer i guess
 service worker => new thread
 
 
-create product schema
-
-
 right way to handle all API calls errors messege with notify
 
 

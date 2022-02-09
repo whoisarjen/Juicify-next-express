@@ -109,7 +109,7 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                     const isOnline = store.getState().online.isOnline;
                     const lastUpdated: any = localStorage.getItem('lastUpdated')
 
-                    if (isOnline && object.lastUpdated.logout > new Date().getTime()) {
+                    if (isOnline && object.lastUpdated.logout > lastUpdated) {
                         return await logout()
                     }
 
@@ -152,7 +152,7 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
             })
 
             socket.on('synchronizationMessege', async (messege) => {
-                console.log('synchronizationMessege', (messege.socket_ID != localStorage.getItem('socket_ID')), localStorage.getItem('socket_ID'), messege)
+                console.log('synchronizationMessege', (messege.socket_ID != localStorage.getItem('socket_ID')), `compare ${localStorage.getItem('socket_ID')} and ${messege.socket_ID}`, messege)
                 if (messege.socket_ID != localStorage.getItem('socket_ID')) {
                     console.log('Thats the messege, which reached synchronization process', messege)
                     if (messege.where == 'settings') {
