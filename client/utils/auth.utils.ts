@@ -36,4 +36,14 @@ export const refreshToken = async () => {
     return response.data.token
 }
 
+export const getCookie = async (cookieName: string) => {
+    let cookie: any = {};
+    document.cookie.split(';').forEach(function (el) {
+        let [key, value] = el.split('=');
+        cookie[key.trim()] = value;
+    })
+    console.log(cookie[cookieName])
+    return cookie[cookieName];
+}
+
 export const parseBoolean = (value: string | boolean): boolean => value.toString().toLowerCase() === 'true' ? true : false

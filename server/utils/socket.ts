@@ -8,7 +8,10 @@ const redis: any = createClient({
     url: `redis://:@${process.env.REDIS}`
 });
 
+let socketClosure: any;
+
 export async function socket({ io }: { io: Server }) {
+    socketClosure = io;
     await redis.connect().then(() => logger.info("Connection with Redis has been made!"))
     logger.info(`Connection with socket has been made!`);
 
@@ -64,14 +67,12 @@ const updateSynchronizationObject = async (user_ID: string, where: string) => {
     return object
 }
 
-export async function socketHandleUserSynchronization({ req, res, data, where, whatToDo }: { req: Request, res: Response, data: Array<any>, where: string, whatToDo: string }) {
+export async function socketHandleUserSynchronization({ res, data, where, whatToDo }: { req: Request, res: Response, data: Array<any>, where: string, whatToDo: string }) {
     await updateSynchronizationObject(res.locals.token._id, where)
-    if (req.app.get('socket')) {
-        req.app.get('socket').in(res.locals.token._id).except(res.locals.socket_ID).emit('synchronizationMessege', {
-            where: where,
-            whatToDo: whatToDo,
-            array: data,
-            socket_ID: res.locals.socket_ID
-        })
-    }
+    socketClosure.in(res.locals.token._id).except(res.locals.socket_ID).emit('synchronizationMessege', {
+        where: where,
+        whatToDo: whatToDo,
+        array: data,
+        socket_ID: res.locals.socket_ID
+    })
 }

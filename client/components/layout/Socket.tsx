@@ -6,7 +6,7 @@ import { is_id } from '../../utils/db.utils'
 import { getAllIndexedDB, deleteIndexedDB, getIndexedDBbyID, addIndexedDB } from '../../utils/indexedDB.utils'
 import { overwriteThoseIDSinDB, insertThoseIDStoDB, deleteThoseIDSfromDB, setLastUpdated } from '../../utils/db.utils'
 import { store } from '../../redux/store'
-import { logout, refreshToken } from '../../utils/auth.utils'
+import { getCookie, logout, refreshToken } from '../../utils/auth.utils'
 import axios from 'axios';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 
@@ -152,9 +152,7 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
             })
 
             socket.on('synchronizationMessege', async (messege) => {
-                console.log('synchronizationMessege', (messege.socket_ID != localStorage.getItem('socket_ID')), `compare ${localStorage.getItem('socket_ID')} and ${messege.socket_ID}`, messege)
-                if (messege.socket_ID != localStorage.getItem('socket_ID')) {
-                    console.log('Thats the messege, which reached synchronization process', messege)
+                if (messege.socket_ID != await getCookie('socket_ID')) {
                     if (messege.where == 'settings') {
                         const newToken = await refreshToken()
                         dispatch(setToken(newToken));
@@ -167,8 +165,6 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                         }
                     }
                     setLastUpdated()
-                } else {
-                    console.log('Normally would try synchro, but protection works!')
                 }
             })
 
