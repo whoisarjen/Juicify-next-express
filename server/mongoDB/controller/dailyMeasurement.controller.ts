@@ -11,17 +11,17 @@ export const createDailyMeasurementHandler = async (req: Request<{}, {}, CreateD
         const responseArray = []
         for (let i = 0; i < req.body.array.length; i++) {
             try {
-                const res = await getDryDailyMeasurement({
+                const response = await getDryDailyMeasurement({
                     whenAdded: req.body.array[i].whenAdded,
-                    user_ID: req.body.array[i].user_ID
+                    user_ID: res.locals.user._id
                 })
                 
-                if (res && res._id) {
+                if (response && response._id) {
                     responseArray.push(
                         (
                             await changeDailyMeasurement(
                                 [
-                                    await connectTwoDailyMeasurements(res, req.body.array[i])
+                                    await connectTwoDailyMeasurements(response, req.body.array[i])
                                 ]
                             )
                         )[0]

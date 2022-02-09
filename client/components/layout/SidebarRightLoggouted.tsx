@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import styled from 'styled-components'
 
-const SidebarRight = styled.aside`
+const Box = styled.aside`
     padding: 12px;
     @media (max-width: 1089px) {
         display: none;
@@ -10,9 +10,9 @@ const SidebarRight = styled.aside`
 
 const SidebarRightLoggouted: FunctionComponent = () => {
     return (
-        <SidebarRight>
+        <Box>
             
-        </SidebarRight>
+        </Box>
     )
 }
 

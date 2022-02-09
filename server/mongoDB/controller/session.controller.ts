@@ -19,7 +19,7 @@ export async function createUserSessionHandler(req: Request, res: Response) {
         return res.status(errorBook['INVALID LOGIN OR PASSWORD']['CODE']).send(errorBook['INVALID LOGIN OR PASSWORD']['VALUE'])
     }
 
-    if(!user.email_confirmation){
+    if (!user.email_confirmation) {
         return res.status(errorBook['ACCOUNT_NOT_ACTIVATED']['CODE']).send(errorBook['ACCOUNT_NOT_ACTIVATED']['VALUE'])
     }
 
@@ -137,7 +137,9 @@ export async function updateToken(req: Request, res: Response, user: DocumentDef
 export async function deleteUserSessionHandler(req: Request, res: Response) {
     const sessionId = res.locals.token.session
 
-    await updateSession({ _id: sessionId }, { valid: false })
+    if (sessionId) {
+        await updateSession({ _id: sessionId }, { valid: false })
+    }
 
     res.cookie('token', '', {
         maxAge: 0,

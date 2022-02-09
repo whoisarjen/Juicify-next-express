@@ -26,7 +26,7 @@ const routes = (app: Express) => {
     app.post('/auth/refresh', requireUser, refreshUserSessionHandler)
     app.post('/auth/change', requireUser, changeUserHandler)
     app.post('/auth/register', validateResource(createUserSchema as any), createUserHandler)
-    app.post('/auth/logout', requireUser, deleteUserSessionHandler)
+    app.post('/auth/logout', deleteUserSessionHandler)
     app.post('/auth/confirm-email', validateResource(confirmEmailSchema), confirmUserHandler)
     app.post('/auth/reset-password', validateResource(resetPasswordSchema), resetPasswordHandler)
     app.post('/auth/reset-password-confirmation', validateResource(resetPasswordConfirmationSchema), resetPasswordConfirmationHandler)

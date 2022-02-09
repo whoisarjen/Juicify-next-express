@@ -22,7 +22,7 @@ const Grid = styled.aside`
     margin-right: 0;
     width: 100%;
     max-width: 200px;
-    @media (max-width: 1452px) {
+    @media(max-width: 1452px) {
         display: none;
     }
 `

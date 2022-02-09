@@ -6,7 +6,7 @@ import { is_id } from '../../utils/db.utils'
 import { getAllIndexedDB, deleteIndexedDB, getIndexedDBbyID, addIndexedDB } from '../../utils/indexedDB.utils'
 import { overwriteThoseIDSinDB, insertThoseIDStoDB, deleteThoseIDSfromDB, setLastUpdated } from '../../utils/db.utils'
 import { store } from '../../redux/store'
-import { refreshToken } from '../../utils/auth.utils'
+import { logout, refreshToken } from '../../utils/auth.utils'
 import axios from 'axios';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 
@@ -109,6 +109,10 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                     const isOnline = store.getState().online.isOnline;
                     const lastUpdated: any = localStorage.getItem('lastUpdated')
 
+                    if (isOnline && object.lastUpdated.logout > new Date().getTime()) {
+                        return await logout()
+                    }
+
                     if (isOnline && object.lastUpdated.settings > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'settings')) {
                         newTimeOfUpdate = object.lastUpdated.settings
                         const newToken = await refreshToken()
@@ -135,7 +139,6 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                         // await cleanCache('workout_result')
                         if (!isOnline) await addIndexedDB("whatToUpdate", [{ "_id": "workout_plan" }]);
                     }
-
 
                     if (isOnline && object.lastUpdated.daily_measurement > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'daily_measurement')) {
                         newTimeOfUpdate = object.lastUpdated.daily_measurement

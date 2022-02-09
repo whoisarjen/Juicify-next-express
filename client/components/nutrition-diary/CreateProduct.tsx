@@ -1,4 +1,4 @@
-import { useState, useEffect, FunctionComponent } from 'react';
+import { useState, FunctionComponent } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -13,7 +13,10 @@ import { useAppSelector } from "../../hooks/useRedux";
 import { insertThoseIDStoDB } from '../../utils/db.utils';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNotify } from '../../hooks/useNotify';
-import NutritionDiaryProps from '../../interfaces/nutritionDiary.interface';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { productSchema, productSchemaProps } from '../../schema/product.schema';
+import InputAdornment from '@mui/material/InputAdornment';
 
 interface CreateProductProps {
     closeCreateProduct: () => void,
@@ -25,113 +28,30 @@ interface CreateProductProps {
 const CreateProduct: FunctionComponent<CreateProductProps> = ({ closeCreateProduct, isCreateProduct, created, defaultBarcode }) => {
     const { t } = useTranslation('nutrition-diary')
     const [code, setCode] = useState(defaultBarcode)
-    const [availableForAll, setAvailableForAll] = useState(false)
     const [loading, setLoading] = useState(false)
-    const [proteins, setProteins] = useState<any>(0)
-    const [carbs, setCarbs] = useState<any>(0)
-    const [sugar, setSugar] = useState<any>(0)
-    const [fat, setFat] = useState<any>(0)
-    const [fiber, setFiber] = useState<any>(0)
-    const [salt, setSalt] = useState<any>(0)
-    const [ethanol, setEthanol] = useState<any>(0)
-    const [calories, setCalories] = useState(0)
-    const [name, setName] = useState('')
-    const numberOnlyPositive = useAppSelector(state => state.config.numberOnlyPositive)
-    const numberOnlyPositiveLong = useAppSelector(state => state.config.numberOnlyPositiveLong)
     const token: any = useAppSelector(state => state.token.value)
-    const requiredBasicInputLength = useAppSelector(state => state.config.requiredBasicInputLength)
     const [{ success, error }] = useNotify()
 
-    const handleCreateProduct = async () => {
-        if (
-            numberOnlyPositive(proteins) &&
-            numberOnlyPositive(carbs) &&
-            numberOnlyPositive(sugar) &&
-            numberOnlyPositive(fat) &&
-            numberOnlyPositive(fiber) &&
-            numberOnlyPositive(salt) &&
-            numberOnlyPositive(ethanol) &&
-            numberOnlyPositive(calories) &&
-            requiredBasicInputLength(name)
-        ) {
-            if (calories > 0) {
-                setLoading(true)
-                let object: NutritionDiaryProps = {
-                    _id: 'XD' + new Date().getTime(),
-                    name: name,
-                    l: name.length,
-                    user_ID: token._id
-                }
-                if (proteins && parseFloat(proteins) > 0) {
-                    object.p = proteins
-                }
-                if (carbs && parseFloat(carbs) > 0) {
-                    object.c = carbs
-                }
-                if (sugar && parseFloat(sugar) > 0) {
-                    object.s = sugar
-                }
-                if (fat && parseFloat(fat) > 0) {
-                    object.f = fat
-                }
-                if (fiber && parseFloat(fiber) > 0) {
-                    object.fi = fiber
-                }
-                if (salt && parseFloat(salt) > 0) {
-                    object.na = salt
-                }
-                if (ethanol && parseFloat(ethanol) > 0) {
-                    object.ethanol = ethanol
-                }
-                if (code) {
-                    object.code = parseInt(code.toString())
-                }
-                if (availableForAll) {
-                    object.checkMe = true
-                }
-                await insertThoseIDStoDB('product', [object])
-                    .then(() => created(name))
-                    .then(() => success())
-                    .then(() => {
-                        setCode(defaultBarcode)
-                        setAvailableForAll(false)
-                        setLoading(false)
-                        setProteins('')
-                        setCarbs('')
-                        setSugar('')
-                        setFat('')
-                        setFiber('')
-                        setSalt('')
-                        setEthanol('')
-                        setCalories(0)
-                        setName('')
-                    })
-                    .finally(() => setLoading(false))
-            } else {
-                error('Calories can NOT be equal to zero')
-            }
+    const { register, formState: { errors }, handleSubmit } = useForm<productSchemaProps>({
+        resolver: zodResolver(productSchema)
+    })
+
+    const onSubmit = async (values: productSchemaProps) => {
+        try {
+            console.log(values)
+            // created(name)
+            // notify()
+        } catch (e: any) {
+            error(e.message)
+        } finally {
+            setLoading(false);
         }
     }
 
-    useEffect(() => {
-        let count = 0
-        if (proteins) {
-            count += proteins * 4
-        }
-        if (carbs) {
-            count += carbs * 4
-        }
-        if (fat) {
-            count += fat * 9
-        }
-        if (ethanol) {
-            count += ethanol * 7
-        }
-        setCalories(count)
-    }, [proteins, carbs, fat, ethanol])
+    console.log(errors)
 
     return (
-        <div>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <Dialog open={isCreateProduct}>
                 <DialogTitle>{t('Create product')}</DialogTitle>
                 <DialogContent>
@@ -139,201 +59,186 @@ const CreateProduct: FunctionComponent<CreateProductProps> = ({ closeCreateProdu
                         {t('Create product description')}
                     </DialogContentText>
                     <TextField
-                        error={
-                            name.length > 0 && !requiredBasicInputLength(name)
-                        }
-                        helperText={
-                            name.length > 0 && !requiredBasicInputLength(name)
-                                ? t("home:requiredBasicInputLength")
-                                : ""
-                        }
-                        required
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label={t('Name of product')}
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
                         type="text"
                         fullWidth
                         variant="standard"
+                        label={t('Name of product')}
+                        {...register('name')}
+                        error={typeof errors.name === 'undefined' ? false : true}
+                        helperText={
+                            errors.name?.message &&
+                            errors.name?.message.length &&
+                            errors.name?.message
+                        }
                     />
                     {
-                        defaultBarcode &&
-                        <TextField
-                            error={
-                                !numberOnlyPositiveLong(code)
-                            }
-                            helperText={
-                                !numberOnlyPositiveLong(code)
-                                    ? t("home:numberOnlyPositiveLong")
-                                    : ""
-                            }
-                            margin="dense"
-                            id="name"
-                            label="Barcode"
-                            value={code}
-                            onChange={(e) => setCode(e.target.value)}
-                            type="Number"
-                            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                            fullWidth
-                            variant="standard"
-                        />
+                        // defaultBarcode &&
+                        // <TextField
+                        //     error={
+                        //         !numberOnlyPositiveLong(code)
+                        //     }
+                        //     helperText={
+                        //         !numberOnlyPositiveLong(code)
+                        //             ? t("home:numberOnlyPositiveLong")
+                        //             : ""
+                        //     }
+                        //     margin="dense"
+                        //     id="name"
+                        //     label="Barcode"
+                        //     value={code}
+                        //     onChange={(e) => setCode(e.target.value)}
+                        //     type="Number"
+                        //     inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                        //     fullWidth
+                        //     variant="standard"
+                        // />
                     }
                     <TextField
-                        error={
-                            !numberOnlyPositive(proteins)
-                        }
-                        helperText={
-                            !numberOnlyPositive(proteins)
-                                ? t("home:requiredBasicInputNumber")
-                                : ""
-                        }
-                        margin="dense"
-                        id="name"
-                        label={t('Proteins in 100g/ml')}
-                        value={proteins}
-                        onChange={(e) => setProteins(e.target.value)}
-                        type="Number"
+                        sx={{ marginTop: '12px' }}
+                        type="number"
                         inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                         fullWidth
                         variant="standard"
+                        label={t('Proteins')}
+                        {...register('p')}
+                        error={typeof errors.p === 'undefined' ? false : true}
+                        helperText={
+                            errors.p?.message &&
+                            errors.p?.message.length &&
+                            errors.p?.message
+                        }
+                        InputProps={{
+                            endAdornment: <InputAdornment position="end">{t('g in 100g/ml')}</InputAdornment>,
+                        }}
                     />
                     <TextField
-                        error={
-                            !numberOnlyPositive(carbs)
-                        }
-                        helperText={
-                            !numberOnlyPositive(carbs)
-                                ? t("home:requiredBasicInputNumber")
-                                : ""
-                        }
-                        margin="dense"
-                        id="name"
-                        label={t('Carbs in 100g/ml')}
-                        value={carbs}
-                        onChange={(e) => setCarbs(e.target.value)}
-                        type="Number"
+                        sx={{ marginTop: '12px' }}
+                        type="number"
                         inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                         fullWidth
                         variant="standard"
+                        label={t('Carbs')}
+                        {...register('c')}
+                        error={typeof errors.c === 'undefined' ? false : true}
+                        helperText={
+                            errors.c?.message &&
+                            errors.c?.message.length &&
+                            errors.c?.message
+                        }
+                        InputProps={{
+                            endAdornment: <InputAdornment position="end">{t('g in 100g/ml')}</InputAdornment>,
+                        }}
                     />
                     <TextField
-                        error={
-                            !numberOnlyPositive(sugar)
-                        }
-                        helperText={
-                            !numberOnlyPositive(sugar)
-                                ? t("home:requiredBasicInputNumber")
-                                : ""
-                        }
-                        margin="dense"
-                        id="name"
-                        label={t('Sugar in 100g/ml')}
-                        value={sugar}
-                        onChange={(e) => setSugar(e.target.value)}
-                        type="Number"
+                        sx={{ marginTop: '12px' }}
+                        type="number"
                         inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                         fullWidth
                         variant="standard"
+                        label={t('Sugar')}
+                        {...register('s')}
+                        error={typeof errors.s === 'undefined' ? false : true}
+                        helperText={
+                            errors.s?.message &&
+                            errors.s?.message.length &&
+                            errors.s?.message
+                        }
+                        InputProps={{
+                            endAdornment: <InputAdornment position="end">{t('g in 100g/ml')}</InputAdornment>,
+                        }}
                     />
                     <TextField
-                        error={
-                            !numberOnlyPositive(fat)
-                        }
-                        helperText={
-                            !numberOnlyPositive(fat)
-                                ? t("home:requiredBasicInputNumber")
-                                : ""
-                        }
-                        margin="dense"
-                        id="name"
-                        label={t('Fat in 100g/ml')}
-                        value={fat}
-                        onChange={(e) => setFat(e.target.value)}
-                        type="Number"
+                        sx={{ marginTop: '12px' }}
+                        type="number"
                         inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                         fullWidth
                         variant="standard"
+                        label={t('Fats')}
+                        {...register('f')}
+                        error={typeof errors.f === 'undefined' ? false : true}
+                        helperText={
+                            errors.f?.message &&
+                            errors.f?.message.length &&
+                            errors.f?.message
+                        }
+                        InputProps={{
+                            endAdornment: <InputAdornment position="end">{t('g in 100g/ml')}</InputAdornment>,
+                        }}
                     />
                     <TextField
-                        error={
-                            !numberOnlyPositive(fiber)
-                        }
-                        helperText={
-                            !numberOnlyPositive(fiber)
-                                ? t("home:requiredBasicInputNumber")
-                                : ""
-                        }
-                        margin="dense"
-                        id="name"
-                        label={t('Fiber in 100g/ml')}
-                        value={fiber}
-                        onChange={(e) => setFiber(e.target.value)}
-                        type="Number"
+                        sx={{ marginTop: '12px' }}
+                        type="number"
                         inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                         fullWidth
                         variant="standard"
+                        label={t('Fiber')}
+                        {...register('fi')}
+                        error={typeof errors.fi === 'undefined' ? false : true}
+                        helperText={
+                            errors.fi?.message &&
+                            errors.fi?.message.length &&
+                            errors.fi?.message
+                        }
+                        InputProps={{
+                            endAdornment: <InputAdornment position="end">{t('g in 100g/ml')}</InputAdornment>,
+                        }}
                     />
                     <TextField
-                        error={
-                            !numberOnlyPositive(salt)
-                        }
-                        helperText={
-                            !numberOnlyPositive(salt)
-                                ? t("home:requiredBasicInputNumber")
-                                : ""
-                        }
-                        margin="dense"
-                        id="name"
-                        label={t('Salt in 100g/ml')}
-                        value={salt}
-                        onChange={(e) => setSalt(e.target.value)}
-                        type="Number"
+                        sx={{ marginTop: '12px' }}
+                        type="number"
                         inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                         fullWidth
                         variant="standard"
+                        label={t('Salt')}
+                        {...register('na')}
+                        error={typeof errors.na === 'undefined' ? false : true}
+                        helperText={
+                            errors.na?.message &&
+                            errors.na?.message.length &&
+                            errors.na?.message
+                        }
+                        InputProps={{
+                            endAdornment: <InputAdornment position="end">{t('g in 100g/ml')}</InputAdornment>,
+                        }}
                     />
                     <TextField
-                        error={
-                            !numberOnlyPositive(ethanol)
-                        }
+                        sx={{ marginTop: '12px' }}
+                        type="number"
+                        inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                        fullWidth
+                        variant="standard"
+                        label={t('Ethanol')}
+                        {...register('ethanol')}
+                        error={typeof errors.ethanol === 'undefined' ? false : true}
                         helperText={
-                            !numberOnlyPositive(ethanol)
-                                ? t("home:requiredBasicInputNumber")
-                                : ""
+                            errors.ethanol?.message &&
+                            errors.ethanol?.message.length &&
+                            errors.ethanol?.message
                         }
-                        margin="dense"
-                        id="name"
-                        label={t('Ethanol in 100g/ml')}
-                        value={ethanol}
-                        onChange={(e) => setEthanol(e.target.value)}
-                        type="Number"
-                        inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                        fullWidth
-                        variant="standard"
+                        InputProps={{
+                            endAdornment: <InputAdornment position="end">{t('g in 100g/ml')}</InputAdornment>,
+                        }}
                     />
-                    <TextField
-                        margin="dense"
-                        id="name"
-                        disabled
-                        label={t('Calories in 100g/ml')}
-                        value={calories}
-                        type="Number"
-                        inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                        fullWidth
-                        variant="standard"
+                    <FormControlLabel
+                        control={
+                            <Switch
+                                {...register('checkMe')}
+                            />
+                        }
+                        label={t('Should be available for all?')}
                     />
-                    <FormControlLabel control={<Switch value={availableForAll} onChange={() => setAvailableForAll(state => !state)} />} label={t('Should be available for all?')} />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={closeCreateProduct}>{t('Cancel')}</Button>
-                    <LoadingButton loading={loading} onClick={handleCreateProduct}>
+                    <LoadingButton
+                        loading={loading}
+                        type="submit"
+                    >
                         {t('Submit')}
                     </LoadingButton>
                 </DialogActions>
             </Dialog>
-        </div>
+        </form>
     );
 }
 

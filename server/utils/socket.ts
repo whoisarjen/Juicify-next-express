@@ -15,18 +15,17 @@ export async function socket({ io }: { io: Server }) {
     io.on('connection', async (socket: Socket) => {
         try {
             logger.info(`${socket.id} connected to socket!`);
-            const refresh_token: any = await verifyJWT(await getCookie('refresh_token', socket.handshake.headers.cookie) as string)
-            if (refresh_token) {
-                const { decoded, expired }: any = await verifyJWT(refresh_token)
+            const { decoded, expired }: any = await verifyJWT(await getCookie('refresh_token', socket.handshake.headers.cookie) as string)
+            if (decoded) {
                 if (expired || !decoded || !decoded._id) {
-                    // If refresh_token is dead, logout user, but allow synchronization | Does it really gona work? Check token while synchro won't kill connection...?
+                    logger.error(`User ${decoded} has not valid refresh_token, so got logouted`)
                     io.to(socket.id).emit('compareDatabases', {
                         "lastUpdated": { ...await synchronizationObject(0), ...{ logout: new Date().getTime() + 999999999 } },
                         "version": process.env.APP_VERSION,
                         "socket_ID": socket.id
                     })
                 } else {
-                    logger.info(`User ${decoded._id} connected to the socket`)
+                    logger.info(`User ${decoded._id} has valid refresh_token, connected to the socket`)
                     socket.join(decoded._id)
                     io.to(socket.id).emit('compareDatabases', {
                         "lastUpdated": JSON.parse(await redis.get(decoded._id)) || await createSynchronizationObject(decoded._id),

@@ -8,10 +8,9 @@ const requireUser = (req: Request, res: Response, next: NextFunction) => {
     }
 
     if (req.body.array && req.body.array.length) {
-        req.body.array.forEach((x: any) => {
-            x.user_ID = user._id
-            return x;
-        })
+        for (let i = 0; i < req.body.array.length; i++) {
+            req.body.array[i].user_ID = user._id
+        }
     }
 
     return next();

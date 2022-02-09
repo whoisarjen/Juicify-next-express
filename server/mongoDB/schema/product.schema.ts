@@ -7,9 +7,6 @@ export const createProductSchema = object({
             object({
                 name: string({
                     required_error: errorBook['NAME IS REQUIRED']['VALUE']
-                }),
-                user_ID: string({
-                    required_error: errorBook['USER IS REQUIRED']['VALUE']
                 })
             })
         )

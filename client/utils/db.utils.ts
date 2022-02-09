@@ -238,9 +238,8 @@ export const deleteThoseIDSfromDB = async (where: string, array: Array<any>, isN
                     if (await is_id(array[0]._id)) {
                         try {
                             await axios.post(
-                                `${process.env.NEXT_PUBLIC_SERVER}/delete`,
+                                `${process.env.NEXT_PUBLIC_SERVER}/delete/${where}`,
                                 {
-                                    where,
                                     array
                                 },
                                 { withCredentials: true }
