@@ -1,5 +1,4 @@
 add cardio exercises + timer i guess
-service worker => new thread
 
 
 right way to handle all API calls errors messege with notify

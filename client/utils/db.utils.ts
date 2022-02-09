@@ -145,6 +145,7 @@ export const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, u
                         await addIndexedDB(whatToUpdate, whatToUpdateArray)
                     }
                 }
+                setLastUpdated();
             } catch (error: any) {
                 console.log(error)
                 store.dispatch(setIsOnline(false))
@@ -204,6 +205,7 @@ export const overwriteThoseIDSinDB = async (where: string, sentArray: Array<any>
                             }
                         }
                     }
+                    setLastUpdated();
                 } catch (error: any) {
                     console.log(error)
                     store.dispatch(setIsOnline(false))
@@ -244,6 +246,7 @@ export const deleteThoseIDSfromDB = async (where: string, array: Array<any>, isN
                                 },
                                 { withCredentials: true }
                             );
+                            setLastUpdated();
                         } catch (error: any) {
                             console.log(error)
                             store.dispatch(setIsOnline(false))
