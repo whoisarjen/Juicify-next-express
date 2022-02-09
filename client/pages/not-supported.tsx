@@ -1,3 +1,4 @@
+import useTranslation from 'next-translate/useTranslation'
 import styled from 'styled-components'
 
 const Box = styled.div`
@@ -13,11 +14,13 @@ const Content = styled.div`
 `
 
 const notSupported = () => {
+    const { t } = useTranslation('error')
+
     return (
         <Box>
             <Content>
-                <h1>We got a problem!</h1>
-                <h2>Your browser is too old. If you want to use Juicify, you have to use newest one.</h2>
+                <h1>{t('WE_GOT_A_PROBLEM')}</h1>
+                <h2>{t('WE_GOT_A_PROBLEM_DESCRIPTION')}</h2>
             </Content>
         </Box>
     )
