@@ -138,6 +138,10 @@ const Barcode: FunctionComponent = () => {
                 }
             }
         });
+
+        return () => {
+            Quagga.stop()
+        }
     }, [])
 
     const scanner = useMemo(() => <div id="scanner-container" />, [])
