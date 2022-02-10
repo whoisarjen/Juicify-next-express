@@ -1,4 +1,3 @@
-import { FunctionComponent } from "react"
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -22,7 +21,7 @@ const Grid = styled.aside`
     margin-right: 0;
     width: 100%;
     max-width: 200px;
-    @media(max-width: 1452px) {
+    @media(max-width: 1468px) {
         display: none;
     }
 `
