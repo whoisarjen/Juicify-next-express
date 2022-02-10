@@ -1,5 +1,4 @@
 import { store } from "../redux/store";
-import { setSocketUpdated } from "./synchronization.utils";
 const namOfIndexedDB = "test";
 
 const connectIndexedDB = async () => indexedDB.open(namOfIndexedDB);
@@ -130,8 +129,6 @@ export const putInformationAboutNeededUpdate = async (where: string, time?: numb
     if (!(await getIndexedDBbyID("whatToUpdate", where))) {
       await addIndexedDB("whatToUpdate", [{ _id: where, },]);
     }
-  } else {
-    await setSocketUpdated(where)
   }
   return true;
 };

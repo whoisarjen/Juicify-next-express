@@ -69,7 +69,7 @@ const updateSynchronizationObject = async (user_ID: string, where: string) => {
 
 export async function socketHandleUserSynchronization({ res, data, where, whatToDo }: { req: Request, res: Response, data: Array<any>, where: string, whatToDo: string }) {
     await updateSynchronizationObject(res.locals.token._id, where)
-    socketClosure.in(res.locals.token._id).except(res.locals.socket_ID).emit('synchronizationMessege', {
+    socketClosure.in(res.locals.token._id).emit('synchronizationMessege', {
         where: where,
         whatToDo: whatToDo,
         array: data,

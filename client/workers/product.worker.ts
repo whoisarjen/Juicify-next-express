@@ -1,12 +1,12 @@
 import { getIndexedDBbyID } from "../utils/indexedDB.utils";
-import { cleanCache, setSocketUpdated, synchronizationController } from "../utils/synchronization.utils";
+import { cleanCache, synchronizationController } from "../utils/synchronization.utils";
 
-self.onmessage = async ({ data: { socketUpdated, name } }) => {
+self.onmessage = async ({ data: { socketUpdated, updated } }) => {
     try {
-        console.log(`Worker ${name} is starting the job in ${navigator.onLine}`)
-        if (navigator.onLine && socketUpdated > (await getIndexedDBbyID('socketUpdated', 'product')).time || await getIndexedDBbyID('whatToUpdate', 'product')) {
+        console.log(`Product_worker is starting the job with updated ${updated}`)
+        if (navigator.onLine && socketUpdated > updated || await getIndexedDBbyID('whatToUpdate', 'product')) {
             await synchronizationController({
-                isNewValueInDB: socketUpdated > (await getIndexedDBbyID('socketUpdated', 'product')).time,
+                isNewValueInDB: socketUpdated > updated,
                 where: 'product',
                 updateDailyKey: 'nutrition_diary',
                 updateDailyKeyLevel2: 'product_ID',
@@ -16,11 +16,10 @@ self.onmessage = async ({ data: { socketUpdated, name } }) => {
                 whatToUpdateKeyLevel2: '',
             });
             await cleanCache('checked_product')
-            await setSocketUpdated('product')
         }
-        console.log(`${name} is done!`)
+        console.log(`Product_worker is done!`)
     } catch (error: any) {
-        console.log(`${name} ended with error! ${error}`)
+        console.log(`Product_worker ended with error! ${error}`)
     } finally {
         close()
     }

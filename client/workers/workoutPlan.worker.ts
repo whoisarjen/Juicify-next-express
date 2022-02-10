@@ -1,12 +1,12 @@
 import { getIndexedDBbyID } from "../utils/indexedDB.utils";
-import { setSocketUpdated, synchronizationController } from "../utils/synchronization.utils";
+import { synchronizationController } from "../utils/synchronization.utils";
 
-self.onmessage = async ({ data: { socketUpdated, name } }) => {
+self.onmessage = async ({ data: { socketUpdated, updated } }) => {
     try {
-        console.log(`Worker ${name} is starting the job in ${navigator.onLine}`)
-        if (navigator.onLine && socketUpdated > (await getIndexedDBbyID('socketUpdated', 'workout_plan')).time || await getIndexedDBbyID('whatToUpdate', 'workout_plan')) {
+        console.log(`WorkoutPlan_worker is starting the job with updated ${updated}`)
+        if (navigator.onLine && socketUpdated > updated || await getIndexedDBbyID('whatToUpdate', 'workout_plan')) {
             await synchronizationController({
-                isNewValueInDB: socketUpdated > (await getIndexedDBbyID('socketUpdated', 'workout_plan')).time,
+                isNewValueInDB: socketUpdated > updated,
                 where: 'workout_plan',
                 updateDailyKey: 'workout_result',
                 updateDailyKeyLevel2: '_id',
@@ -15,11 +15,10 @@ self.onmessage = async ({ data: { socketUpdated, name } }) => {
                 whatToUpdateKey: 'workout_plan_ID',
                 whatToUpdateKeyLevel2: '',
             });
-            await setSocketUpdated('workout_plan')
         }
-        console.log(`${name} is done!`)
+        console.log(`WorkoutPlan_worker is done!`)
     } catch (error: any) {
-        console.log(`${name} ended with error! ${error}`)
+        console.log(`WorkoutPlan_worker ended with error! ${error}`)
     } finally {
         close()
     }

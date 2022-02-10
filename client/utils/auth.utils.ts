@@ -1,6 +1,5 @@
 import { deleteDatabaseIndexedDB } from "./indexedDB.utils";
 import axios from "axios";
-import { setSocketUpdated } from "./synchronization.utils";
 
 export const logout = async () => {
     try {
@@ -32,8 +31,7 @@ export const refreshToken = async () => {
         {},
         { withCredentials: true }
     );
-    setSocketUpdated('settings');
-    return response.data.token
+    return await readToken(response.data.token)
 }
 
 export const getCookie = async (cookieName: string) => {
@@ -43,6 +41,16 @@ export const getCookie = async (cookieName: string) => {
         cookie[key.trim()] = value;
     })
     return cookie[cookieName];
+}
+
+export const setCookie = (name: string, value: string, days: number) => {
+    let expires = "";
+    if (days) {
+        let date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
 
 export const parseBoolean = (value: string | boolean): boolean => value.toString().toLowerCase() === 'true' ? true : false

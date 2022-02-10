@@ -13,7 +13,7 @@ export const createDailyMeasurementHandler = async (req: Request<{}, {}, CreateD
             try {
                 const response = await getDryDailyMeasurement({
                     whenAdded: req.body.array[i].whenAdded,
-                    user_ID: res.locals.user._id
+                    user_ID: req.body.array[i].user_ID
                 })
                 
                 if (response && response._id) {

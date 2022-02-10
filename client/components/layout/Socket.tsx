@@ -4,9 +4,8 @@ import { useEffect, FunctionComponent } from 'react'
 import { setToken } from "../../redux/features/token.slice";
 import { deleteIndexedDB, getIndexedDBbyID, addIndexedDB } from '../../utils/indexedDB.utils'
 import { store } from '../../redux/store'
-import { getCookie, refreshToken } from '../../utils/auth.utils'
+import { getCookie, refreshToken, setCookie } from '../../utils/auth.utils'
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
-import { setSocketUpdated } from '../../utils/synchronization.utils';
 
 const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
     const dispatch = useAppDispatch()
@@ -32,6 +31,7 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                         type: 'module'
                     })
                         .postMessage({
+                            updated: await getCookie('product'),
                             socketUpdated: object.lastUpdated.product,
                         })
 
@@ -40,6 +40,7 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                         type: 'module'
                     })
                         .postMessage({
+                            updated: await getCookie('exercise'),
                             socketUpdated: object.lastUpdated.exercise,
                         })
 
@@ -48,6 +49,7 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                         type: 'module'
                     })
                         .postMessage({
+                            updated: await getCookie('workout_plan'),
                             socketUpdated: object.lastUpdated.workout_plan,
                         })
 
@@ -56,13 +58,12 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                         type: 'module'
                     })
                         .postMessage({
+                            updated: await getCookie('daily_measurement'),
                             socketUpdated: object.lastUpdated.daily_measurement,
                         })
 
-                    if (store.getState().online.isOnline && object.lastUpdated.settings > (await getIndexedDBbyID('socketUpdated', 'settings') || { time: 0 }).time || await getIndexedDBbyID('whatToUpdate', 'settings')) {
-                        const newToken = await refreshToken()
-                        dispatch(setToken(newToken));
-                        await setSocketUpdated('settings');
+                    if (store.getState().online.isOnline && object.lastUpdated.settings > await getCookie('settings') || await getIndexedDBbyID('whatToUpdate', 'settings')) {
+                        dispatch(setToken(await refreshToken()));
                     }
 
                 } catch (error: any) {
@@ -71,12 +72,12 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                 }
             })
 
-            socket.on('synchronizationMessage', async (message) => {
+            socket.on('synchronizationMessege', async (message) => {
+                console.log('socket', message)
+                setCookie(message.where, new Date().getTime().toString(), 365)
                 if (message.socket_ID != await getCookie('socket_ID')) {
                     if (message.where == 'settings') {
-                        const newToken = await refreshToken()
-                        dispatch(setToken(newToken));
-                        await setSocketUpdated('settings');
+                        dispatch(setToken(await refreshToken()));
                     } else {
                         for (let i = 0; i < message.array.length; i++) {
                             await deleteIndexedDB(message.where, message.array[i][message.where == 'daily_measurement' ? 'whenAdded' : '_id'])
@@ -85,7 +86,6 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                             await addIndexedDB(message.where, message.array)
                         }
                     }
-                    await setSocketUpdated(message.where)
                 }
             })
 

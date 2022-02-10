@@ -58,6 +58,51 @@ export async function createUserSessionHandler(req: Request, res: Response) {
         secure: parseBoolean(process.env.COOKIE_SECURE as string)
     })
 
+    res.cookie('settings', new Date().getTime(), {
+        maxAge: parseInt(process.env.COOKIE_REFRESH_TOKEN_LIFE_TIME_IN_S as string),
+        httpOnly: false,
+        domain: process.env.COOKIE_DOMAIN,
+        path: '/',
+        sameSite: 'strict',
+        secure: false
+    })
+
+    res.cookie('product', new Date().getTime(), {
+        maxAge: parseInt(process.env.COOKIE_REFRESH_TOKEN_LIFE_TIME_IN_S as string),
+        httpOnly: false,
+        domain: process.env.COOKIE_DOMAIN,
+        path: '/',
+        sameSite: 'strict',
+        secure: false
+    })
+
+    res.cookie('exercise', new Date().getTime(), {
+        maxAge: parseInt(process.env.COOKIE_REFRESH_TOKEN_LIFE_TIME_IN_S as string),
+        httpOnly: false,
+        domain: process.env.COOKIE_DOMAIN,
+        path: '/',
+        sameSite: 'strict',
+        secure: false
+    })
+
+    res.cookie('workout_plan', new Date().getTime(), {
+        maxAge: parseInt(process.env.COOKIE_REFRESH_TOKEN_LIFE_TIME_IN_S as string),
+        httpOnly: false,
+        domain: process.env.COOKIE_DOMAIN,
+        path: '/',
+        sameSite: 'strict',
+        secure: false
+    })
+
+    res.cookie('daily_measurement', new Date().getTime(), {
+        maxAge: parseInt(process.env.COOKIE_REFRESH_TOKEN_LIFE_TIME_IN_S as string),
+        httpOnly: false,
+        domain: process.env.COOKIE_DOMAIN,
+        path: '/',
+        sameSite: 'strict',
+        secure: false
+    })
+
     return res.send({
         token,
         refresh_token,
@@ -94,21 +139,61 @@ export async function synchronizationUserSessionHandler(req: Request, res: Respo
 
     if (req.body.where == 'product') {
         const product = await getUserProducts(user)
+
+        res.cookie('product', new Date().getTime(), {
+            maxAge: parseInt(process.env.COOKIE_REFRESH_TOKEN_LIFE_TIME_IN_S as string),
+            httpOnly: false,
+            domain: process.env.COOKIE_DOMAIN,
+            path: '/',
+            sameSite: 'strict',
+            secure: false
+        })
+
         res.send(product)
     }
 
     if (req.body.where == 'exercise') {
         const exercise = await getUserExercises(user)
+
+        res.cookie('exercise', new Date().getTime(), {
+            maxAge: parseInt(process.env.COOKIE_REFRESH_TOKEN_LIFE_TIME_IN_S as string),
+            httpOnly: false,
+            domain: process.env.COOKIE_DOMAIN,
+            path: '/',
+            sameSite: 'strict',
+            secure: false
+        })
+
         res.send(exercise)
     }
 
     if (req.body.where == 'workout_plan') {
         const workout_plan = await getUserWorkoutPlans(user)
+
+        res.cookie('workout_plan', new Date().getTime(), {
+            maxAge: parseInt(process.env.COOKIE_REFRESH_TOKEN_LIFE_TIME_IN_S as string),
+            httpOnly: false,
+            domain: process.env.COOKIE_DOMAIN,
+            path: '/',
+            sameSite: 'strict',
+            secure: false
+        })
+
         res.send(workout_plan)
     }
 
     if (req.body.where == 'daily_measurement') {
         const daily_measurement = await getUserDailyMeasurements(user)
+
+        res.cookie('daily_measurement', new Date().getTime(), {
+            maxAge: parseInt(process.env.COOKIE_REFRESH_TOKEN_LIFE_TIME_IN_S as string),
+            httpOnly: false,
+            domain: process.env.COOKIE_DOMAIN,
+            path: '/',
+            sameSite: 'strict',
+            secure: false
+        })
+
         res.send(daily_measurement)
     }
 
@@ -127,6 +212,15 @@ export async function updateToken(req: Request, res: Response, user: DocumentDef
         path: '/',
         sameSite: 'strict',
         secure: parseBoolean(process.env.COOKIE_SECURE as string)
+    })
+
+    res.cookie('settings', new Date().getTime(), {
+        maxAge: parseInt(process.env.COOKIE_REFRESH_TOKEN_LIFE_TIME_IN_S as string),
+        httpOnly: false,
+        domain: process.env.COOKIE_DOMAIN,
+        path: '/',
+        sameSite: 'strict',
+        secure: false
     })
 
     await socketHandleUserSynchronization({ req, res, data: [], whatToDo: 'change', where: 'settings' }) // We won't send token, client site will asked for refreshing token
