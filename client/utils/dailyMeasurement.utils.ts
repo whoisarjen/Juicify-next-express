@@ -87,62 +87,60 @@ export const prepareToSend = async (daily_measurement: any, removeDeleted: boole
     });
 }
 
-export const createOneFromTwo = async (object: any) => {
-    let changed = JSON.parse(JSON.stringify(object))
-    let isDataAlreadyInIndexedDB = await getIndexedDBbyID("daily_measurement", changed.whenAdded)
-    if (isDataAlreadyInIndexedDB) {
-        if (!changed._id && isDataAlreadyInIndexedDB._id) changed._id = isDataAlreadyInIndexedDB._id
-        if (isDataAlreadyInIndexedDB.weight && !changed.weight) changed.weight = isDataAlreadyInIndexedDB.weight
-        if (isDataAlreadyInIndexedDB.weight_description && !changed.weight_description) changed.weight_description = isDataAlreadyInIndexedDB.weight_description
-        if (isDataAlreadyInIndexedDB.neck && !changed.neck) changed.neck = isDataAlreadyInIndexedDB.neck
-        if (isDataAlreadyInIndexedDB.shoulders && !changed.shoulders) changed.shoulders = isDataAlreadyInIndexedDB.shoulders
-        if (isDataAlreadyInIndexedDB.chest && !changed.chest) changed.chest = isDataAlreadyInIndexedDB.chest
-        if (isDataAlreadyInIndexedDB.biceps && !changed.biceps) changed.biceps = isDataAlreadyInIndexedDB.biceps
-        if (isDataAlreadyInIndexedDB.waist && !changed.waist) changed.waist = isDataAlreadyInIndexedDB.waist
-        if (isDataAlreadyInIndexedDB.hips && !changed.hips) changed.hips = isDataAlreadyInIndexedDB.hips
-        if (isDataAlreadyInIndexedDB.thigh && !changed.thigh) changed.thigh = isDataAlreadyInIndexedDB.thigh
-        if (isDataAlreadyInIndexedDB.calf && !changed.calf) changed.calf = isDataAlreadyInIndexedDB.calf
-        if (isDataAlreadyInIndexedDB.water && !changed.water) changed.water = isDataAlreadyInIndexedDB.water
+export const createOneFromTwo = async (callbackObject: any, secondObject: any) => {
+    let changed = JSON.parse(JSON.stringify(callbackObject))
+    let isDataAlreadyInIndexedDB = JSON.parse(JSON.stringify(secondObject))
+    if (!changed._id && isDataAlreadyInIndexedDB._id) changed._id = isDataAlreadyInIndexedDB._id
+    if (isDataAlreadyInIndexedDB.weight && !changed.weight) changed.weight = isDataAlreadyInIndexedDB.weight
+    if (isDataAlreadyInIndexedDB.weight_description && !changed.weight_description) changed.weight_description = isDataAlreadyInIndexedDB.weight_description
+    if (isDataAlreadyInIndexedDB.neck && !changed.neck) changed.neck = isDataAlreadyInIndexedDB.neck
+    if (isDataAlreadyInIndexedDB.shoulders && !changed.shoulders) changed.shoulders = isDataAlreadyInIndexedDB.shoulders
+    if (isDataAlreadyInIndexedDB.chest && !changed.chest) changed.chest = isDataAlreadyInIndexedDB.chest
+    if (isDataAlreadyInIndexedDB.biceps && !changed.biceps) changed.biceps = isDataAlreadyInIndexedDB.biceps
+    if (isDataAlreadyInIndexedDB.waist && !changed.waist) changed.waist = isDataAlreadyInIndexedDB.waist
+    if (isDataAlreadyInIndexedDB.hips && !changed.hips) changed.hips = isDataAlreadyInIndexedDB.hips
+    if (isDataAlreadyInIndexedDB.thigh && !changed.thigh) changed.thigh = isDataAlreadyInIndexedDB.thigh
+    if (isDataAlreadyInIndexedDB.calf && !changed.calf) changed.calf = isDataAlreadyInIndexedDB.calf
+    if (isDataAlreadyInIndexedDB.water && !changed.water) changed.water = isDataAlreadyInIndexedDB.water
 
-        if (isDataAlreadyInIndexedDB.nutrition_diary && !changed.nutrition_diary) {
-            changed.nutrition_diary = isDataAlreadyInIndexedDB.nutrition_diary
-        } else if (isDataAlreadyInIndexedDB.nutrition_diary && changed.nutrition_diary) {
-            if (changed.nutrition_diary.length) {
-                for (let a = 0; a < changed.nutrition_diary.length; a++) {
-                    if (changed.nutrition_diary[a].deleted) {
-                        isDataAlreadyInIndexedDB.nutrition_diary = isDataAlreadyInIndexedDB.nutrition_diary.filter((x: any) => x._id != changed.nutrition_diary[a]._id)
-                    } else if (!await is_id(changed.nutrition_diary[a]._id)) {
-                        isDataAlreadyInIndexedDB.nutrition_diary.push(changed.nutrition_diary[a])
-                    } else if (changed.nutrition_diary[a].changed) {
-                        const indexNumber = isDataAlreadyInIndexedDB.nutrition_diary.findIndex((x: any) => x._id == changed.nutrition_diary[a]._id)
-                        if (parseInt(indexNumber) >= 0) {
-                            isDataAlreadyInIndexedDB.nutrition_diary[indexNumber] = changed.nutrition_diary[a]
-                        }
+    if (isDataAlreadyInIndexedDB.nutrition_diary && !changed.nutrition_diary) {
+        changed.nutrition_diary = isDataAlreadyInIndexedDB.nutrition_diary
+    } else if (isDataAlreadyInIndexedDB.nutrition_diary && changed.nutrition_diary) {
+        if (changed.nutrition_diary.length) {
+            for (let a = 0; a < changed.nutrition_diary.length; a++) {
+                if (changed.nutrition_diary[a].deleted) {
+                    isDataAlreadyInIndexedDB.nutrition_diary = isDataAlreadyInIndexedDB.nutrition_diary.filter((x: any) => x._id != changed.nutrition_diary[a]._id)
+                } else if (!await is_id(changed.nutrition_diary[a]._id)) {
+                    isDataAlreadyInIndexedDB.nutrition_diary.push(changed.nutrition_diary[a])
+                } else if (changed.nutrition_diary[a].changed) {
+                    const indexNumber = isDataAlreadyInIndexedDB.nutrition_diary.findIndex((x: any) => x._id == changed.nutrition_diary[a]._id)
+                    if (parseInt(indexNumber) >= 0) {
+                        isDataAlreadyInIndexedDB.nutrition_diary[indexNumber] = changed.nutrition_diary[a]
                     }
                 }
             }
-            changed.nutrition_diary = isDataAlreadyInIndexedDB.nutrition_diary
         }
+        changed.nutrition_diary = isDataAlreadyInIndexedDB.nutrition_diary
+    }
 
-        if (isDataAlreadyInIndexedDB.workout_result && !changed.workout_result) {
-            changed.workout_result = isDataAlreadyInIndexedDB.workout_result
-        } else if (isDataAlreadyInIndexedDB.workout_result && changed.workout_result) {
-            if (changed.workout_result.length.length) {
-                for (let a = 0; a < changed.workout_result.length; a++) {
-                    if (changed.workout_result[a].deleted) {
-                        isDataAlreadyInIndexedDB.workout_result = isDataAlreadyInIndexedDB.workout_result.filter((x: any) => x._id != changed.workout_result[a]._id)
-                    } else if (!await is_id(changed.workout_result[a]._id)) {
-                        isDataAlreadyInIndexedDB.workout_result.push(changed.workout_result[a])
-                    } else if (changed.workout_result[a].changed) {
-                        const indexNumber = isDataAlreadyInIndexedDB.workout_result.findIndex((x: any) => x._id == changed.workout_result[a]._id)
-                        if (parseInt(indexNumber) >= 0) {
-                            isDataAlreadyInIndexedDB.workout_result[indexNumber] = changed.workout_result[a]
-                        }
+    if (isDataAlreadyInIndexedDB.workout_result && !changed.workout_result) {
+        changed.workout_result = isDataAlreadyInIndexedDB.workout_result
+    } else if (isDataAlreadyInIndexedDB.workout_result && changed.workout_result) {
+        if (changed.workout_result.length.length) {
+            for (let a = 0; a < changed.workout_result.length; a++) {
+                if (changed.workout_result[a].deleted) {
+                    isDataAlreadyInIndexedDB.workout_result = isDataAlreadyInIndexedDB.workout_result.filter((x: any) => x._id != changed.workout_result[a]._id)
+                } else if (!await is_id(changed.workout_result[a]._id)) {
+                    isDataAlreadyInIndexedDB.workout_result.push(changed.workout_result[a])
+                } else if (changed.workout_result[a].changed) {
+                    const indexNumber = isDataAlreadyInIndexedDB.workout_result.findIndex((x: any) => x._id == changed.workout_result[a]._id)
+                    if (parseInt(indexNumber) >= 0) {
+                        isDataAlreadyInIndexedDB.workout_result[indexNumber] = changed.workout_result[a]
                     }
                 }
             }
-            changed.workout_result = isDataAlreadyInIndexedDB.workout_result
         }
+        changed.workout_result = isDataAlreadyInIndexedDB.workout_result
     }
     return changed;
 }

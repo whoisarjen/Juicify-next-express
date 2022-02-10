@@ -4,9 +4,9 @@ import { cleanCache, setSocketUpdated, synchronizationController } from "../util
 self.onmessage = async ({ data: { socketUpdated, name } }) => {
     try {
         console.log(`Worker ${name} is starting the job in ${navigator.onLine}`)
-        if (navigator.onLine && socketUpdated > await getIndexedDBbyID('socketUpdated', 'product') || await getIndexedDBbyID('whatToUpdate', 'product')) {
+        if (navigator.onLine && socketUpdated > (await getIndexedDBbyID('socketUpdated', 'product')).time || await getIndexedDBbyID('whatToUpdate', 'product')) {
             await synchronizationController({
-                isNewValueInDB: socketUpdated > await getIndexedDBbyID('socketUpdated', 'product'),
+                isNewValueInDB: socketUpdated > (await getIndexedDBbyID('socketUpdated', 'product')).time,
                 where: 'product',
                 updateDailyKey: 'nutrition_diary',
                 updateDailyKeyLevel2: 'product_ID',

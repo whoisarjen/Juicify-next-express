@@ -37,9 +37,7 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                     //     await setSocketUpdated();
                     // }
 
-                    new Worker("../../workers/product.worker.ts", {
-                        type: "module",
-                    })
+                    new Worker(new URL("../../workers/product.worker.ts", import.meta.url))
                         .postMessage({
                             name: 1,
                             socketUpdated: object.lastUpdated.product,
@@ -53,7 +51,6 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
 
                     // if (store.getState().online.isOnline && object.lastUpdated.workout_plan > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'workout_plan')) {
                     //     await synchronizationAfterOffline(object.lastUpdated.workout_plan > lastUpdated, "workout_plan", "workout_result", "workout_plan_ID", false, false, false, false);
-                    //     // await cleanCache('workout_result')
                     //     if (!store.getState().online.isOnline) await addIndexedDB("whatToUpdate", [{ "_id": "workout_plan" }]);
                     // }
 

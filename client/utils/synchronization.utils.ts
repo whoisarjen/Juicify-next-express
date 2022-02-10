@@ -1,4 +1,5 @@
 import axios from "axios";
+import { createOneFromTwo } from "./dailyMeasurement.utils";
 import { deleteThoseIDSfromDB, insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from "./db.utils";
 import { addIndexedDB, deleteIndexedDB, getAllIndexedDB } from "./indexedDB.utils";
 
@@ -14,9 +15,11 @@ export const synchronizationController = async (
             if (!whereArray[i].notSAVED) {
                 if (!(await is_id(whereArray[i]._id))) {
                     inserted.push(whereArray[i])
-                } else if (whereArray[i].deleted) {
+                }
+                if (whereArray[i].deleted) {
                     deleted.push(whereArray[i])
-                } else if (whereArray[i].changed) {
+                }
+                if (whereArray[i].changed) {
                     changed.push(whereArray[i])
                 }
             }
@@ -33,28 +36,19 @@ export const synchronizationController = async (
         data = [...response.data]
         console.log(`${where} has downloaded new values`, data)
 
-
-        // 1. compaore daily before everything
-
-
-        //     if (data && data.length) {
-        //         for (let i = 0; i < data.length; i++) {
-        //             if (where == 'daily_measurement') {
-        //                 if (data[i].workout_result && data[i].workout_result.length) {
-        //                     for (let a = 0; a < data[i].workout_result.length; a++) {
-        //                         await deleteIndexedDB("workout_result", data[i].workout_result[a]._id)
-        //                     }
-        //                 }
-        //             }
-        //             await deleteIndexedDB(where, data[i][where == 'daily_measurement' ? 'whenAdded' : '_id'])
-        //         }
-        //         await addIndexedDB(where, data)
-        //         if (where == 'daily_measurement' && changed.length) {
-        //             for (let a: number = changed.length - 1; a >= 0; a--) {
-        //                 changed[a] = await createOneFromTwo(changed[a])
-        //             }
-        //         }
-        //     }
+        // 1. compaore changed daily before everything
+        if (where == 'daily_measurement' && data && data.length) {
+            for (let i = 0; i < data.length; i++) {
+                if (changed.length) {
+                    for (let a: number = changed.length - 1; a >= 0; a--) {
+                        if (data[i].whenAdded == changed[a].whenAdded) {
+                            changed[a] = await createOneFromTwo(changed[a], data[i])
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     // 2. insert etc.
@@ -62,8 +56,18 @@ export const synchronizationController = async (
     if (changed.length) changed = await overwriteThoseIDSinDB(where, changed)
     if (deleted.length) await deleteThoseIDSfromDB(where, deleted, isNewValueInDB)
 
-    // 3. add loaded db but except the one who got already changed (inserted can be skipped)
+    // 3. add loaded db but except the one who got already changed (inserted can NOT be skipped)
     if (isNewValueInDB) {
+        if (inserted.length) {
+            for (let i = 0; i < inserted.length; i++) {
+                for (let a = data.length - 1; a >= 0; a++) {
+                    if (inserted[i]._id == data[a]._id) {
+                        data.splice(a, 1)
+                        break;
+                    }
+                }
+            }
+        }
         if (changed.length) {
             for (let i = 0; i < changed.length; i++) {
                 for (let a = data.length - 1; a >= 0; a++) {
@@ -95,15 +99,13 @@ export const synchronizationController = async (
 }
 
 export const cleanCache = async (where: string) => {
-    return new Promise(async resolve => {
-        const cache = await getAllIndexedDB(where)
-        if (cache && cache.length) {
-            for (let i = 0; i < cache.length; i++) {
-                await deleteIndexedDB(where, cache[i]._id)
-            }
+    const cache = await getAllIndexedDB(where)
+    if (cache && cache.length) {
+        for (let i = 0; i < cache.length; i++) {
+            await deleteIndexedDB(where, cache[i]._id)
         }
-        resolve(true)
-    })
+    }
+    return true;
 }
 
 export const setSocketUpdated = async (where: string) => {
