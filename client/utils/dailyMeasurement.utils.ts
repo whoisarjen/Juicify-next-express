@@ -45,46 +45,42 @@ export const loadMissingDays = async (oryginalArray: Array<DailyMeasurementProps
 
 export const prepareToSend = async (daily_measurement: any, removeDeleted: boolean = false) => {
     const object = JSON.parse(JSON.stringify(daily_measurement))
-    return new Promise(resolve => {
-        (async () => {
-            if (object._id && !await is_id(object._id)) {
-                delete object._id
+    if (object._id && !await is_id(object._id)) {
+        delete object._id
+    }
+    if (object.nutrition_diary && object.nutrition_diary.length > 0) {
+        for (let i = object.nutrition_diary.length - 1; i >= 0; i--) {
+            if (removeDeleted && object.nutrition_diary[i].deleted) {
+                object.nutrition_diary.splice(i, 1)
+            } else if (object.nutrition_diary[i]._id && !await is_id(object.nutrition_diary[i]._id)) {
+                delete object.nutrition_diary[i]._id
             }
-            if (object.nutrition_diary && object.nutrition_diary.length > 0) {
-                for (let i = object.nutrition_diary.length - 1; i >= 0; i--) {
-                    if (removeDeleted && object.nutrition_diary[i].deleted) {
-                        object.nutrition_diary.splice(i, 1)
-                    } else if (object.nutrition_diary[i]._id && !await is_id(object.nutrition_diary[i]._id)) {
-                        delete object.nutrition_diary[i]._id
-                    }
-                }
+        }
+    }
+    if (object.workout_result && object.workout_result.length > 0) {
+        for (let i = object.workout_result.length - 1; i >= 0; i--) {
+            if (removeDeleted && object.workout_result[i].deleted) {
+                object.workout_result.splice(i, 1)
+            } else if (object.workout_result[i]._id && !await is_id(object.workout_result[i]._id)) {
+                delete object.workout_result[i]._id
             }
-            if (object.workout_result && object.workout_result.length > 0) {
-                for (let i = object.workout_result.length - 1; i >= 0; i--) {
-                    if (removeDeleted && object.workout_result[i].deleted) {
-                        object.workout_result.splice(i, 1)
-                    } else if (object.workout_result[i]._id && !await is_id(object.workout_result[i]._id)) {
-                        delete object.workout_result[i]._id
-                    }
-                }
-            }
-            if (object.nutrition_diary && object.nutrition_diary.length == 0) {
-                delete object.nutrition_diary
-            }
-            if (object.workout_result && object.workout_result.length == 0) {
-                delete object.workout_result
-            }
+        }
+    }
+    if (object.nutrition_diary && object.nutrition_diary.length == 0) {
+        delete object.nutrition_diary
+    }
+    if (object.workout_result && object.workout_result.length == 0) {
+        delete object.workout_result
+    }
 
-            // DB think no value = 0, so we don't need values == 0 (can be string too!)
-            const keys = Object.keys(object)
-            keys.forEach(x => {
-                if (object[x] == 0) {
-                    delete object[x]
-                }
-            })
-            resolve(object);
-        })();
-    });
+    // DB think no value = 0, so we don't need values == 0 (can be string too!)
+    const keys = Object.keys(object)
+    keys.forEach(x => {
+        if (object[x] == 0) {
+            delete object[x]
+        }
+    })
+    return object;
 }
 
 export const createOneFromTwo = async (callbackObject: any, secondObject: any) => {

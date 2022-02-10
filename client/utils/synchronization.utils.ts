@@ -54,7 +54,7 @@ export const synchronizationController = async (
     // 2. insert etc.
     if (inserted.length) inserted = await insertThoseIDStoDB(where, inserted, updateDailyKey, updateDailyKeyLevel2, updateDailyKeyLevel3, whatToUpdate, whatToUpdateKey, whatToUpdateKeyLevel2)
     if (changed.length) changed = await overwriteThoseIDSinDB(where, changed)
-    if (deleted.length) await deleteThoseIDSfromDB(where, deleted, isNewValueInDB)
+    if (deleted.length) await deleteThoseIDSfromDB(where, deleted)
 
     // 3. add loaded db but except the one who got already changed (inserted can NOT be skipped)
     if (isNewValueInDB) {

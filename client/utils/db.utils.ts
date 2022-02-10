@@ -144,7 +144,6 @@ export const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, u
         array = await insertThoseIDStoDBOFFLINE(array)
     }
     await addIndexedDB(where, array)
-    // store.dispatch(refreshKey(where))
     return array
 }
 
@@ -193,60 +192,42 @@ export const overwriteThoseIDSinDB = async (where: string, sentArray: Array<any>
         }
     }
     await addIndexedDB(where, array)
-    // store.dispatch(refreshKey(where))
     return array;
 }
 
-const deleteThoseIDSfromDBOFFLINE = async (where: string, array: Array<any>) => {
-    for (let i = array.length - 1; i >= 0; i--) {
-        if (!await is_id(array[i]._id)) {
-            await deleteIndexedDB(where, array[i]._id)
-            array.splice(i, 1)
+export const deleteThoseIDSfromDB = async (where: string, array: Array<any>) => {
+    try {
+        if (!store.getState().online.isOnline && !await isWorker()) {
+            throw 'User is offline. Skip to catch method';
         }
-    }
-    if (array.length > 0) await addIndexedDB(where, array)
-}
-
-export const deleteThoseIDSfromDB = async (where: string, array: Array<any>, isNewValueInDB: boolean = false): Promise<any> => {
-    if (isNewValueInDB) { // if there is new value in DB, check if still need to request delete
-        for (let i = array.length - 1; i >= i; i--) {
-            if (!await getIndexedDBbyID(where, array[i]._id)) {
-                array.splice(i, 1)
-            }
-        }
-    }
-    if (array.length > 0) {
-        const originalArray = JSON.parse(JSON.stringify(array));
         for (let i = 0; i < array.length; i++) {
-            array[i].deleted = true
-            await deleteIndexedDB(where, array[i]._id)
-            if (where == 'daily_measurement' && store.getState().online.isOnline) {
+            array[i].deleted = true;
+            if (!await is_id(array[i]._id)) {
+                await deleteIndexedDB(where, array[i]._id)
+                array.splice(i, 1)
+            } else if (where == 'daily_measurement') {
                 array[i] = await prepareToSend(array[i], true)
             }
         }
-        if (store.getState().online.isOnline || await isWorker()) {
-            try {
-                await axios.post(
-                    `${process.env.NEXT_PUBLIC_SERVER}/delete/${where}`,
-                    { array },
-                    { withCredentials: true }
-                );
-            } catch (error: any) {
-                if (await isWorker()) {
-                    await deleteThoseIDSfromDBOFFLINE(where, array)
-                } else {
-                    console.log(error)
-                    store.dispatch(setIsOnline(false))
-                    await putInformationAboutNeededUpdate(where);
-                    return await deleteThoseIDSfromDB(where, originalArray, isNewValueInDB)
-                }
-            }
-        } else {
-            await deleteThoseIDSfromDBOFFLINE(where, array)
+        if (!array.length) return true;
+        await axios.post(
+            `${process.env.NEXT_PUBLIC_SERVER}/delete/${where}`,
+            { array },
+            { withCredentials: true }
+        );
+        for (let i = 0; i < array.length; i++) {
+            await deleteIndexedDB(where, array[i]._id)
         }
+    } catch (error: any) {
+        console.log(error)
+        await addIndexedDB(where, array)
+        if (!await isWorker()) {
+            store.dispatch(setIsOnline(false))
+            await putInformationAboutNeededUpdate(where);
+        }
+    } finally {
+        return true;
     }
-    // store.dispatch(refreshKey(where))
-    return true;
 }
 
 export const is_id = async (_id: string) => {
