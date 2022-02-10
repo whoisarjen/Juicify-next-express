@@ -3,7 +3,7 @@ import io from "socket.io-client";
 import { useEffect, FunctionComponent } from 'react'
 import { setToken } from "../../redux/features/token.slice";
 import { deleteIndexedDB, getIndexedDBbyID, addIndexedDB } from '../../utils/indexedDB.utils'
-import {  setLastUpdated } from '../../utils/db.utils'
+import { setLastUpdated } from '../../utils/db.utils'
 import { store } from '../../redux/store'
 import { getCookie, refreshToken } from '../../utils/auth.utils'
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
@@ -36,7 +36,11 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                         setLastUpdated();
                     }
 
-                    new Worker(new URL("../../workers/product.worker.ts", import.meta.url)).postMessage({...object, lastSynchronization: localStorage.getItem('lastUpdated')});
+                    new Worker(new URL("../../workers/product.worker.ts", import.meta.url))
+                        .postMessage({
+                            isNewValueInDB: object.lastUpdated.product > (localStorage.getItem('lastUpdated') || 0),
+                            name: 1
+                        });
 
                     // if (store.getState().online.isOnline && object.lastUpdated.exercise > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'exercise')) {
                     //     await synchronizationAfterOffline(object.lastUpdated.exercise > lastUpdated, "exercise", 'workout_result', 'results', '_id', 'workout_plan', 'exercises', '_id');

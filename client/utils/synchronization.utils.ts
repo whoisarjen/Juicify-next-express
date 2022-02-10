@@ -25,14 +25,14 @@ export const synchronizationController = async (isNewValueInDB: boolean = false,
                         }
                     }
                 }
-                console.log('isNewValueInDB', isNewValueInDB)
+                console.log(`Is ${where} going to download new values?`, isNewValueInDB)
                 if (isNewValueInDB) {
                     const res = await axios.post(
                         `${process.env.NEXT_PUBLIC_SERVER}/synchronization`,
                         { where },
                         { withCredentials: true }
                     );
-                    console.log('Success new value downloaded', res.data)
+                    console.log(`${where} has downloaded new values`, res.data)
                     //     setLastUpdated();
                     //     if (res.data && res.data.length) {
                     //         for (let i = 0; i < res.data.length; i++) {
