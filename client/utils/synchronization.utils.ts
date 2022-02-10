@@ -1,68 +1,115 @@
 import axios from "axios";
-import { setIsOnline } from "../redux/features/online.slice";
-import { store } from "../redux/store";
-import { is_id } from "./db.utils";
-import { getAllIndexedDB } from "./indexedDB.utils";
+import { deleteThoseIDSfromDB, insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from "./db.utils";
+import { addIndexedDB, deleteIndexedDB, getAllIndexedDB } from "./indexedDB.utils";
 
-export const synchronizationController = async (isNewValueInDB: boolean = false, where: string, updateDailyKey: any, updateDailyKey2: any, updateDailyKey3: any, whatToUpdate: any, whatToUpdate2: any = '_id', whatToUpdate3: any) => {
-    return new Promise((resolve, reject) => {
-        (async () => {
-            try {
-                let deleted = []
-                let changed = []
-                let inserted = []
-                let whereArray = await getAllIndexedDB(where)
-                if (whereArray.length) {
-                    for (let i = 0; i < whereArray.length; i++) {
-                        if (!whereArray[i].notSAVED) {
-                            if (!(await is_id(whereArray[i]._id))) {
-                                inserted.push(whereArray[i])
-                            } else if (whereArray[i].deleted) {
-                                deleted.push(whereArray[i])
-                            } else if (whereArray[i].changed) {
-                                changed.push(whereArray[i])
-                            }
-                        }
+export const synchronizationController = async (
+    { isNewValueInDB, where, updateDailyKey, updateDailyKeyLevel2, updateDailyKeyLevel3, whatToUpdate, whatToUpdateKey, whatToUpdateKeyLevel2 }:
+        { isNewValueInDB: boolean, where: string, updateDailyKey: string, updateDailyKeyLevel2: string, updateDailyKeyLevel3: string, whatToUpdate: string, whatToUpdateKey: string, whatToUpdateKeyLevel2: string }) => {
+    let deleted = []
+    let changed = []
+    let inserted = []
+    let whereArray = await getAllIndexedDB(where)
+    if (whereArray.length) {
+        for (let i = 0; i < whereArray.length; i++) {
+            if (!whereArray[i].notSAVED) {
+                if (!(await is_id(whereArray[i]._id))) {
+                    inserted.push(whereArray[i])
+                } else if (whereArray[i].deleted) {
+                    deleted.push(whereArray[i])
+                } else if (whereArray[i].changed) {
+                    changed.push(whereArray[i])
+                }
+            }
+        }
+    }
+    console.log(`Is ${where} going to download new values?`, isNewValueInDB)
+    let data: any = []
+    if (isNewValueInDB) {
+        const response = await axios.post(
+            `${process.env.NEXT_PUBLIC_SERVER}/synchronization`,
+            { where },
+            { withCredentials: true }
+        );
+        data = [...response.data]
+        console.log(`${where} has downloaded new values`, data)
+
+
+        // 1. compaore daily before everything
+
+
+        //     if (data && data.length) {
+        //         for (let i = 0; i < data.length; i++) {
+        //             if (where == 'daily_measurement') {
+        //                 if (data[i].workout_result && data[i].workout_result.length) {
+        //                     for (let a = 0; a < data[i].workout_result.length; a++) {
+        //                         await deleteIndexedDB("workout_result", data[i].workout_result[a]._id)
+        //                     }
+        //                 }
+        //             }
+        //             await deleteIndexedDB(where, data[i][where == 'daily_measurement' ? 'whenAdded' : '_id'])
+        //         }
+        //         await addIndexedDB(where, data)
+        //         if (where == 'daily_measurement' && changed.length) {
+        //             for (let a: number = changed.length - 1; a >= 0; a--) {
+        //                 changed[a] = await createOneFromTwo(changed[a])
+        //             }
+        //         }
+        //     }
+    }
+
+    // 2. insert etc.
+    if (inserted.length) inserted = await insertThoseIDStoDB(where, inserted, updateDailyKey, updateDailyKeyLevel2, updateDailyKeyLevel3, whatToUpdate, whatToUpdateKey, whatToUpdateKeyLevel2)
+    if (changed.length) changed = await overwriteThoseIDSinDB(where, changed)
+    if (deleted.length) await deleteThoseIDSfromDB(where, deleted, isNewValueInDB)
+
+    // 3. add loaded db but except the one who got already changed (inserted can be skipped)
+    if (isNewValueInDB) {
+        if (changed.length) {
+            for (let i = 0; i < changed.length; i++) {
+                for (let a = data.length - 1; a >= 0; a++) {
+                    if (changed[i]._id == data[a]._id) {
+                        data.splice(a, 1)
+                        break;
                     }
                 }
-                console.log(`Is ${where} going to download new values?`, isNewValueInDB)
-                if (isNewValueInDB) {
-                    const res = await axios.post(
-                        `${process.env.NEXT_PUBLIC_SERVER}/synchronization`,
-                        { where },
-                        { withCredentials: true }
-                    );
-                    console.log(`${where} has downloaded new values`, res.data)
-                    //     setLastUpdated();
-                    //     if (res.data && res.data.length) {
-                    //         for (let i = 0; i < res.data.length; i++) {
-                    //             if (where == 'daily_measurement') {
-                    //                 if (res.data[i].workout_result && res.data[i].workout_result.length) {
-                    //                     for (let a = 0; a < res.data[i].workout_result.length; a++) {
-                    //                         await deleteIndexedDB("workout_result", res.data[i].workout_result[a]._id)
-                    //                     }
-                    //                 }
-                    //             }
-                    //             await deleteIndexedDB(where, res.data[i][where == 'daily_measurement' ? 'whenAdded' : '_id'])
-                    //         }
-                    //         await addIndexedDB(where, res.data)
-                    //         if (where == 'daily_measurement' && changed.length) {
-                    //             for (let a: number = changed.length - 1; a >= 0; a--) {
-                    //                 changed[a] = await createOneFromTwo(changed[a])
-                    //             }
-                    //         }
-                    //     }
-                }
-                // if (inserted.length) await insertThoseIDStoDB(where, inserted, updateDailyKey, updateDailyKey2, updateDailyKey3, whatToUpdate, whatToUpdate2, whatToUpdate3)
-                // if (changed.length) await overwriteThoseIDSinDB(where, changed)
-                // if (deleted.length) await deleteThoseIDSfromDB(where, deleted, isNewValueInDB)
-                // await deleteIndexedDB("whatToUpdate", where)
-                resolve(true);
-            } catch (error: any) {
-                console.log('synchronization call failed', error)
-                store.dispatch(setIsOnline(false))
-                reject(error)
             }
-        })();
+        }
+        if (deleted.length) {
+            for (let i = 0; i < deleted.length; i++) {
+                for (let a = data.length - 1; a >= 0; a++) {
+                    if (deleted[i]._id == data[a]._id) {
+                        data.splice(a, 1)
+                        break;
+                    }
+                }
+            }
+        }
+        if (data.length) {
+            for (let a = 0; a < data.length; a++) {
+                await deleteIndexedDB(where, data[a]._id)
+            }
+            await addIndexedDB(where, data)
+        }
+    }
+    return true;
+}
+
+export const cleanCache = async (where: string) => {
+    return new Promise(async resolve => {
+        const cache = await getAllIndexedDB(where)
+        if (cache && cache.length) {
+            for (let i = 0; i < cache.length; i++) {
+                await deleteIndexedDB(where, cache[i]._id)
+            }
+        }
+        resolve(true)
     })
+}
+
+export const setSocketUpdated = async (where: string) => {
+    await deleteIndexedDB('socketUpdated', where)
+    await addIndexedDB('socketUpdated', [{
+        where,
+        time: new Date().getTime()
+    }])
 }

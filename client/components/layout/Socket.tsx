@@ -3,10 +3,10 @@ import io from "socket.io-client";
 import { useEffect, FunctionComponent } from 'react'
 import { setToken } from "../../redux/features/token.slice";
 import { deleteIndexedDB, getIndexedDBbyID, addIndexedDB } from '../../utils/indexedDB.utils'
-import { setLastUpdated } from '../../utils/db.utils'
 import { store } from '../../redux/store'
 import { getCookie, refreshToken } from '../../utils/auth.utils'
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
+import { setSocketUpdated } from '../../utils/synchronization.utils';
 
 const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
     const dispatch = useAppDispatch()
@@ -30,17 +30,19 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                     localStorage.setItem('socket_ID', object.socket_ID)
                     dispatch(setIsOnline(true))
 
-                    if (store.getState().online.isOnline && object.lastUpdated.settings > (localStorage.getItem('lastUpdated') || 0) || await getIndexedDBbyID('whatToUpdate', 'settings')) {
-                        const newToken = await refreshToken()
-                        dispatch(setToken(newToken));
-                        setLastUpdated();
-                    }
+                    // Diff ORDER????? AND SET LAST UPDATED MIGHT MAKE PROBLEM LAST AFTER ALL WORKERS?
+                    // if (store.getState().online.isOnline && object.lastUpdated.settings > (localStorage.getItem('lastUpdated') || 0) || await getIndexedDBbyID('whatToUpdate', 'settings')) {
+                    //     const newToken = await refreshToken()
+                    //     dispatch(setToken(newToken));
+                    //     await setSocketUpdated();
+                    // }
 
                     new Worker(new URL("../../workers/product.worker.ts", import.meta.url))
                         .postMessage({
-                            isNewValueInDB: object.lastUpdated.product > (localStorage.getItem('lastUpdated') || 0),
-                            name: 1
-                        });
+                            name: 1,
+                            socketUpdated: object.lastUpdated.product,
+                            lastUpdated: localStorage.getItem('lastUpdated') || 0,
+                        })
 
                     // if (store.getState().online.isOnline && object.lastUpdated.exercise > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'exercise')) {
                     //     await synchronizationAfterOffline(object.lastUpdated.exercise > lastUpdated, "exercise", 'workout_result', 'results', '_id', 'workout_plan', 'exercises', '_id');
@@ -64,20 +66,20 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                 }
             })
 
-            socket.on('synchronizationMessege', async (messege) => {
-                if (messege.socket_ID != await getCookie('socket_ID')) {
-                    if (messege.where == 'settings') {
+            socket.on('synchronizationMessage', async (message) => {
+                if (message.socket_ID != await getCookie('socket_ID')) {
+                    if (message.where == 'settings') {
                         const newToken = await refreshToken()
                         dispatch(setToken(newToken));
                     } else {
-                        for (let i = 0; i < messege.array.length; i++) {
-                            await deleteIndexedDB(messege.where, messege.array[i][messege.where == 'daily_measurement' ? 'whenAdded' : '_id'])
+                        for (let i = 0; i < message.array.length; i++) {
+                            await deleteIndexedDB(message.where, message.array[i][message.where == 'daily_measurement' ? 'whenAdded' : '_id'])
                         }
-                        if (messege.whatToDo == 'change') {
-                            await addIndexedDB(messege.where, messege.array)
+                        if (message.whatToDo == 'change') {
+                            await addIndexedDB(message.where, message.array)
                         }
                     }
-                    setLastUpdated()
+                    await setSocketUpdated(message.where)
                 }
             })
 

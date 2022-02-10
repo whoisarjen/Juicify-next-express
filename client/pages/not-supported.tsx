@@ -13,7 +13,7 @@ const Content = styled.div`
     text-align: center;
 `
 
-const notSupported = () => {
+const NotSupported = () => {
     const { t } = useTranslation('error')
 
     return (
@@ -26,4 +26,4 @@ const notSupported = () => {
     )
 }
 
-export default notSupported;
+export default NotSupported;

@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import Stack from "@mui/material/Stack";
 import logo from '../public/images/logo.png'
 import TextField from "@mui/material/TextField";
-import { setLastUpdated } from '../utils/db.utils'
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useAppDispatch } from "../hooks/useRedux";
 import { setToken } from "../redux/features/token.slice";
@@ -19,6 +18,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useNotify } from "../hooks/useNotify";
 import { createSessionSchema, CreateSessionProps } from '../schema/session.schema'
 import styled from 'styled-components'
+import { setSocketUpdated } from "../utils/synchronization.utils";
 
 const Box = styled.div`
     height: 100%;
@@ -61,13 +61,13 @@ const Login = () => {
                 values,
                 { withCredentials: true }
             );
-            setLastUpdated();
             await deleteDatabaseIndexedDB();
             await createIndexedDB()
             const keys = Object.keys(response.data)
             for (let i = 0; i < keys.length; i++) {
                 if (keys[i] != 'token' && keys[i] != 'refresh_token') {
                     await addIndexedDB(keys[i], response.data[keys[i]])
+                    await setSocketUpdated(keys[i]);
                 }
             }
             const readTokenValue = await readToken(response.data.token)

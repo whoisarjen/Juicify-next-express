@@ -2,13 +2,11 @@ import { getIndexedDBbyID, addIndexedDB, deleteIndexedDB, putIndexedDB, getAllIn
 import { store } from '../redux/store'
 import axios from "axios"
 import { setIsOnline } from "../redux/features/online.slice"
-import { refreshKey } from "../redux/features/key.slice"
 import { prepareToSend } from "./dailyMeasurement.utils"
 
 export const API = async (url: string, body: any): Promise<any> => {
     let response = {}
     let isSuccess = false
-    console.log(url, body)
     try {
         const res = await axios.post(
             `${process.env.NEXT_PUBLIC_SERVER}${url}`,
@@ -19,10 +17,10 @@ export const API = async (url: string, body: any): Promise<any> => {
         isSuccess = true
     } catch (error: any) {
         const errorCode = error.toJSON().status;
-        if(errorCode === 403){
+        if (errorCode === 403) {
             return window.location.replace(`${window.location.origin}/403`)
         }
-        if(errorCode === 404){
+        if (errorCode === 404) {
             return window.location.replace(`${window.location.origin}/404`)
         }
         throw error;
@@ -42,233 +40,227 @@ export const loadValueByLogin = async (where: string, find: any, login: string =
     }
 }
 
-export const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, updateDailyKey: any = false, updateDailyKey2: any = false, updateDailyKey3: any = false, whatToUpdate: any = false, whatToUpdate2: any = false, whatToUpdate3: any = false): Promise<Array<any>> => {
-    return new Promise(async resolve => {
-        let array = JSON.parse(JSON.stringify(sentArray))
-        const copyArray = JSON.parse(JSON.stringify(array));
-        const isOnline = store.getState().online.isOnline;
-        console.log(`insertThoseIDStoDB is online: ${isOnline}`)
-        const arrayIDSbeforeInsert = []
-        let updateDailyKeyArray: any = false
-        let whatToUpdateArray: any = false
-        for (let i = 0; i < array.length; i++) {
-            if (array[i]._id) {
-                await deleteIndexedDB(where, array[i][where == 'daily_measurement' ? 'whenAdded' : '_id'])
-                arrayIDSbeforeInsert.push(array[i]._id)
-                if (!await is_id(array[i]._id)) {
-                    delete array[i]._id
-                }
-            }
-            if (where == 'daily_measurement') {
-                array[i].whenAdded = new Date(array[i].whenAdded).toISOString()
-                if (isOnline) {
-                    array[i] = await prepareToSend(array[i], true)
-                }
+const insertThoseIDStoDBOFFLINE = async (array: Array<any>) => {
+    for (let i = 0; i < array.length; i++) {
+        array[i]._id = "XD" + new Date().getTime() + i
+    }
+}
+
+export const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, updateDailyKey?: string, updateDailyKeyLevel2?: string, updateDailyKeyLevel3?: string, whatToUpdate?: string, whatToUpdateKey?: string, whatToUpdateKeyLevel2?: string): Promise<any> => {
+    let array = JSON.parse(JSON.stringify(sentArray))
+    const copyArray = JSON.parse(JSON.stringify(array));
+    const arrayIDSbeforeInsert = []
+    let updateDailyKeyArray: any = false
+    let whatToUpdateArray: any = false
+    for (let i = 0; i < array.length; i++) {
+        if (array[i]._id) {
+            await deleteIndexedDB(where, array[i][where == 'daily_measurement' ? 'whenAdded' : '_id'])
+            arrayIDSbeforeInsert.push(array[i]._id)
+            if (!await is_id(array[i]._id)) {
+                delete array[i]._id
             }
         }
-        if (isOnline) {
-            if (updateDailyKey) {
-                updateDailyKeyArray = await getAllIndexedDB('daily_measurement')
+        if (where == 'daily_measurement') {
+            array[i].whenAdded = new Date(array[i].whenAdded).toISOString()
+            if (store.getState().online.isOnline || await isWorker()) {
+                array[i] = await prepareToSend(array[i], true)
             }
-            if (whatToUpdate) {
-                whatToUpdateArray = await getAllIndexedDB(whatToUpdate)
-            }
-            try {
-                const res = await axios.post(
-                    `${process.env.NEXT_PUBLIC_SERVER}/insert/${where}`,
-                    { array },
-                    { withCredentials: true }
-                );
-                array = JSON.parse(JSON.stringify(res.data));
-                if (where == 'daily_measurement') {
-                    for (let i = 0; i < array.length; i++) {
-                        if (await getIndexedDBbyID(where, array[i].whenAdded)) {
-                            await deleteIndexedDB(where, array[i].whenAdded) // Server can return existing date
-                        }
+        }
+    }
+    if (store.getState().online.isOnline || await isWorker()) {
+        if (updateDailyKey) {
+            updateDailyKeyArray = await getAllIndexedDB('daily_measurement')
+        }
+        if (whatToUpdate) {
+            whatToUpdateArray = await getAllIndexedDB(whatToUpdate)
+        }
+        try {
+            const res = await axios.post(
+                `${process.env.NEXT_PUBLIC_SERVER}/insert/${where}`,
+                { array },
+                { withCredentials: true }
+            );
+            array = JSON.parse(JSON.stringify(res.data));
+            if (where == 'daily_measurement') {
+                for (let i = 0; i < array.length; i++) {
+                    if (await getIndexedDBbyID(where, array[i].whenAdded)) {
+                        await deleteIndexedDB(where, array[i].whenAdded) // Server can return existing date
                     }
                 }
-                if (updateDailyKey && updateDailyKeyArray.length > 0) {
-                    for (let i = 0; i < array.length; i++) {
-                        for (let a = 0; a < updateDailyKeyArray.length; a++) {
-                            let checker = 0
-                            for (let b = 0; b < updateDailyKeyArray[a][updateDailyKey].length; b++) {
-                                if (!updateDailyKey3) {
-                                    if (updateDailyKeyArray[a][updateDailyKey][b][updateDailyKey2] == arrayIDSbeforeInsert[i]) {
-                                        updateDailyKeyArray[a][updateDailyKey][b][updateDailyKey2] = array[i]._id
-                                        checker++
-                                    }
-                                } else {
-                                    // 
-                                    if (updateDailyKeyArray[a][updateDailyKey][b][updateDailyKey2] && updateDailyKeyArray[a][updateDailyKey][b][updateDailyKey2].length) {
-                                        for (let c = 0; c < updateDailyKeyArray[a][updateDailyKey][b][updateDailyKey2].length; c++) {
-                                            if (updateDailyKeyArray[a][updateDailyKey][b][updateDailyKey2][c][updateDailyKey3] == arrayIDSbeforeInsert[i]) {
-                                                updateDailyKeyArray[a][updateDailyKey][b][updateDailyKey2][c][updateDailyKey3] = array[i]._id
-                                                checker++
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            if (checker > 0) {
-                                await deleteIndexedDB('daily_measurement', updateDailyKeyArray[a].whenAdded)
-                                await addIndexedDB('daily_measurement', [updateDailyKeyArray[a]])
-                            }
-                        }
-                    }
-                }
-                if (whatToUpdate && whatToUpdateArray.length > 0) {
-                    let count = 0;
-                    console.log('whatToUpdate', whatToUpdateArray)
-                    for (let i = 0; i < array.length; i++) {
-                        for (let a = 0; a < whatToUpdateArray.length; a++) {
-                            if (!whatToUpdate3) {
-                                if (whatToUpdateArray[a][whatToUpdate2] == arrayIDSbeforeInsert[i]) {
-                                    await putIndexedDB(whatToUpdate, whatToUpdateArray[a][whatToUpdate2], whatToUpdate2, array[i]._id)
+            }
+            if (updateDailyKey && updateDailyKeyArray.length && updateDailyKeyLevel2) {
+                for (let i = 0; i < array.length; i++) {
+                    for (let a = 0; a < updateDailyKeyArray.length; a++) {
+                        let checker = 0
+                        for (let b = 0; b < updateDailyKeyArray[a][updateDailyKey].length; b++) {
+                            if (!updateDailyKeyLevel3) {
+                                if (updateDailyKeyArray[a][updateDailyKey][b][updateDailyKeyLevel2] == arrayIDSbeforeInsert[i]) {
+                                    updateDailyKeyArray[a][updateDailyKey][b][updateDailyKeyLevel2] = array[i]._id
+                                    checker++
                                 }
                             } else {
                                 // 
-                                if (whatToUpdateArray[a][whatToUpdate2] && whatToUpdateArray[a][whatToUpdate2].length) {
-                                    for (let b = 0; b < whatToUpdateArray[a][whatToUpdate2].length; b++) {
-                                        if (whatToUpdateArray[a][whatToUpdate2][b][whatToUpdate3] == arrayIDSbeforeInsert[i]) {
-                                            whatToUpdateArray[a][whatToUpdate2][b][whatToUpdate3] = array[i]._id
-                                            count++;
+                                if (updateDailyKeyArray[a][updateDailyKey][b][updateDailyKeyLevel2] && updateDailyKeyArray[a][updateDailyKey][b][updateDailyKeyLevel2].length) {
+                                    for (let c = 0; c < updateDailyKeyArray[a][updateDailyKey][b][updateDailyKeyLevel2].length; c++) {
+                                        if (updateDailyKeyArray[a][updateDailyKey][b][updateDailyKeyLevel2][c][updateDailyKeyLevel3] == arrayIDSbeforeInsert[i]) {
+                                            updateDailyKeyArray[a][updateDailyKey][b][updateDailyKeyLevel2][c][updateDailyKeyLevel3] = array[i]._id
+                                            checker++
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                    console.log('whatToUpdateAfter', whatToUpdateArray)
-                    if (count) {
-                        for (let a = 0; a < whatToUpdateArray.length; a++) {
-                            await deleteIndexedDB(whatToUpdate, whatToUpdateArray[a]._id)
+                        if (checker > 0) {
+                            await deleteIndexedDB('daily_measurement', updateDailyKeyArray[a].whenAdded)
+                            await addIndexedDB('daily_measurement', [updateDailyKeyArray[a]])
                         }
-                        await addIndexedDB(whatToUpdate, whatToUpdateArray)
                     }
                 }
-                setLastUpdated();
-            } catch (error: any) {
+            }
+            if (whatToUpdate && whatToUpdateArray.length && whatToUpdateKey) {
+                let count = 0;
+                for (let i = 0; i < array.length; i++) {
+                    for (let a = 0; a < whatToUpdateArray.length; a++) {
+                        if (!whatToUpdateKeyLevel2) {
+                            if (whatToUpdateArray[a][whatToUpdateKey] == arrayIDSbeforeInsert[i]) {
+                                await putIndexedDB(whatToUpdate, whatToUpdateArray[a][whatToUpdateKey]._id, whatToUpdateKey, array[i]._id)
+                            }
+                        } else {
+                            if (whatToUpdateArray[a][whatToUpdateKey] && whatToUpdateArray[a][whatToUpdateKey].length) {
+                                for (let b = 0; b < whatToUpdateArray[a][whatToUpdateKey].length; b++) {
+                                    if (whatToUpdateArray[a][whatToUpdateKey][b][whatToUpdateKeyLevel2] == arrayIDSbeforeInsert[i]) {
+                                        whatToUpdateArray[a][whatToUpdateKey][b][whatToUpdateKeyLevel2] = array[i]._id
+                                        count++;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if (count) {
+                    for (let a = 0; a < whatToUpdateArray.length; a++) {
+                        await deleteIndexedDB(whatToUpdate, whatToUpdateArray[a]._id)
+                    }
+                    await addIndexedDB(whatToUpdate, whatToUpdateArray)
+                }
+            }
+        } catch (error: any) {
+            if (await isWorker()) {
+                array = await insertThoseIDStoDBOFFLINE(array)
+            } else {
                 console.log(error)
                 store.dispatch(setIsOnline(false))
                 await putInformationAboutNeededUpdate(where);
-                return resolve(await insertThoseIDStoDB(where, copyArray, updateDailyKey, updateDailyKey2, updateDailyKey3, whatToUpdate, whatToUpdate2, whatToUpdate3))
-            }
-        } else {
-            for (let i = 0; i < array.length; i++) {
-                array[i]._id = "XD" + new Date().getTime() + i
+                return await insertThoseIDStoDB(where, copyArray, updateDailyKey, updateDailyKeyLevel2, updateDailyKeyLevel3, whatToUpdate, whatToUpdateKey, whatToUpdateKeyLevel2)
             }
         }
-        await addIndexedDB(where, array)
-        store.dispatch(refreshKey(where))
-        return resolve(array)
-    })
+    } else {
+        array = await insertThoseIDStoDBOFFLINE(array)
+    }
+    await addIndexedDB(where, array)
+    // store.dispatch(refreshKey(where))
+    return array
 }
 
 export const overwriteThoseIDSinDB = async (where: string, sentArray: Array<any>): Promise<Array<any>> => {
     let array = JSON.parse(JSON.stringify(sentArray))
     const isOnline = store.getState().online.isOnline
-    console.log(`overwriteThoseIDSinDB is online: ${isOnline}`)
-    return new Promise(resolve => {
-        (async () => {
-            let originalArray = JSON.parse(JSON.stringify(array.map((x: any) => {
-                x.changed = true
-                return x
-            })));
-            for (let i = 0; i < array.length; i++) {
-                await deleteIndexedDB(where, array[i][where == 'daily_measurement' ? 'whenAdded' : '_id'])
-                if (where == 'daily_measurement') {
-                    array[i].whenAdded = new Date(array[i].whenAdded).toISOString()
-                    if (isOnline) {
-                        console.log('before prepare', sentArray[i])
-                        array[i] = await prepareToSend(array[i], true)
-                        console.log('After prepare', array[i])
+    let originalArray = JSON.parse(JSON.stringify(array.map((x: any) => {
+        x.changed = true
+        return x
+    })));
+    for (let i = 0; i < array.length; i++) {
+        await deleteIndexedDB(where, array[i][where == 'daily_measurement' ? 'whenAdded' : '_id'])
+        if (where == 'daily_measurement') {
+            array[i].whenAdded = new Date(array[i].whenAdded).toISOString()
+            if (isOnline || await isWorker()) {
+                array[i] = await prepareToSend(array[i], true)
+            }
+        }
+    }
+    if (isOnline || await isWorker()) {
+        try {
+            const res = await axios.post(
+                `${process.env.NEXT_PUBLIC_SERVER}/update/${where}`,
+                { array },
+                { withCredentials: true }
+            );
+            let originalSentArray = JSON.parse(JSON.stringify(array));
+            array = JSON.parse(JSON.stringify(res.data));
+            if (where == 'daily_measurement') {
+                for (let i = 0; i < originalSentArray.length; i++) {
+                    if (originalSentArray[i].nutrition_diary && originalSentArray[i].nutrition_diary.length > 0) {
+                        for (let a = 0; a < originalSentArray[i].nutrition_diary.length; a++) {
+                            originalSentArray[i].nutrition_diary[a]._id = array[i].nutrition_diary[a]._id
+                            array[i].nutrition_diary[a] = originalSentArray[i].nutrition_diary[a]
+                        }
                     }
                 }
             }
-            if (isOnline) {
-                try {
-                    const res = await axios.post(
-                        `${process.env.NEXT_PUBLIC_SERVER}/update/${where}`,
-                        { array },
-                        { withCredentials: true }
-                    );
-                    let originalSentArray = JSON.parse(JSON.stringify(array));
-                    array = JSON.parse(JSON.stringify(res.data));
-                    console.log('overwriteThoseIDSinDB originalSentArray', originalSentArray)
-                    console.log('overwriteThoseIDSinDB array', array)
-                    if (where == 'daily_measurement') {
-                        for (let i = 0; i < originalSentArray.length; i++) {
-                            if (originalSentArray[i].nutrition_diary && originalSentArray[i].nutrition_diary.length > 0) {
-                                for (let a = 0; a < originalSentArray[i].nutrition_diary.length; a++) {
-                                    originalSentArray[i].nutrition_diary[a]._id = array[i].nutrition_diary[a]._id
-                                    array[i].nutrition_diary[a] = originalSentArray[i].nutrition_diary[a]
-                                }
-                            }
-                        }
-                    }
-                    setLastUpdated();
-                } catch (error: any) {
+        } catch (error: any) {
+            if (!await isWorker()) {
+                console.log(error)
+                store.dispatch(setIsOnline(false))
+                await putInformationAboutNeededUpdate(where);
+                return await overwriteThoseIDSinDB(where, originalArray)
+            }
+        }
+    }
+    await addIndexedDB(where, array)
+    // store.dispatch(refreshKey(where))
+    return array;
+}
+
+const deleteThoseIDSfromDBOFFLINE = async (where: string, array: Array<any>) => {
+    for (let i = array.length - 1; i >= 0; i--) {
+        if (!await is_id(array[i]._id)) {
+            await deleteIndexedDB(where, array[i]._id)
+            array.splice(i, 1)
+        }
+    }
+    if (array.length > 0) await addIndexedDB(where, array)
+}
+
+export const deleteThoseIDSfromDB = async (where: string, array: Array<any>, isNewValueInDB: boolean = false): Promise<any> => {
+    if (isNewValueInDB) { // if there is new value in DB, check if still need to request delete
+        for (let i = array.length - 1; i >= i; i--) {
+            if (!await getIndexedDBbyID(where, array[i]._id)) {
+                array.splice(i, 1)
+            }
+        }
+    }
+    if (array.length > 0) {
+        const originalArray = JSON.parse(JSON.stringify(array));
+        for (let i = 0; i < array.length; i++) {
+            array[i].deleted = true
+            await deleteIndexedDB(where, array[i]._id)
+            if (where == 'daily_measurement' && store.getState().online.isOnline) {
+                array[i] = await prepareToSend(array[i], true)
+            }
+        }
+        if (store.getState().online.isOnline || await isWorker()) {
+            try {
+                await axios.post(
+                    `${process.env.NEXT_PUBLIC_SERVER}/delete/${where}`,
+                    { array },
+                    { withCredentials: true }
+                );
+            } catch (error: any) {
+                if (await isWorker()) {
+                    await deleteThoseIDSfromDBOFFLINE(where, array)
+                } else {
                     console.log(error)
                     store.dispatch(setIsOnline(false))
                     await putInformationAboutNeededUpdate(where);
-                    return await overwriteThoseIDSinDB(where, originalArray)
+                    return await deleteThoseIDSfromDB(where, originalArray, isNewValueInDB)
                 }
             }
-            await addIndexedDB(where, array)
-            store.dispatch(refreshKey(where))
-            resolve(array);
-        })();
-    })
-}
-
-export const deleteThoseIDSfromDB = async (where: string, array: Array<any>, isNewValueInDB: boolean = false) => {
-    const isOnline = store.getState().online.isOnline
-    if (isNewValueInDB) { // if there is new value in DB, check if still need to request delete
-        for (let i = 0; i < array.length; i++) {
-            if (!await getIndexedDBbyID(where, array[i]._id)) array.splice(i, 1)
+        } else {
+            await deleteThoseIDSfromDBOFFLINE(where, array)
         }
     }
-    return new Promise(resolve => {
-        (async () => {
-            if (array.length > 0) {
-                const originalArray = JSON.parse(JSON.stringify(array));
-                for (let i = 0; i < array.length; i++) {
-                    array[i].deleted = true
-                    await deleteIndexedDB(where, array[i]._id)
-                    if (where == 'daily_measurement' && isOnline) array[i] = await prepareToSend(array[i], true)
-                }
-                if (isOnline) {
-                    if (await is_id(array[0]._id)) {
-                        try {
-                            await axios.post(
-                                `${process.env.NEXT_PUBLIC_SERVER}/delete/${where}`,
-                                {
-                                    array
-                                },
-                                { withCredentials: true }
-                            );
-                            setLastUpdated();
-                        } catch (error: any) {
-                            console.log(error)
-                            store.dispatch(setIsOnline(false))
-                            await putInformationAboutNeededUpdate(where);
-                            return await deleteThoseIDSfromDB(where, originalArray, isNewValueInDB)
-                        }
-                    }
-                } else {
-                    for (let i = array.length - 1; i >= 0; i--) {
-                        if (!await is_id(array[i]._id)) {
-                            await deleteIndexedDB(where, array[i]._id)
-                            array.splice(i, 1)
-                        }
-                    }
-                    if (array.length > 0) await addIndexedDB(where, array)
-                }
-            }
-            store.dispatch(refreshKey(where))
-            resolve(true);
-        })();
-    })
+    // store.dispatch(refreshKey(where))
+    return true;
 }
 
 export const is_id = async (_id: string) => {
@@ -277,18 +269,12 @@ export const is_id = async (_id: string) => {
     })
 }
 
-
-export const cleanCache = async (where: string) => {
-    return new Promise(async resolve => {
-        const cache = await getAllIndexedDB(where)
-        if (cache && cache.length) {
-            for (let i = 0; i < cache.length; i++) {
-                await deleteIndexedDB(where, cache[i]._id)
-            }
+export const isWorker = async () => {
+    try {
+        if (window) {
+            return false;
         }
-        resolve(true)
-    })
-}
-export const setLastUpdated = () => {
-    // localStorage.setItem('lastUpdated', new Date().getTime().toString())
+    } catch {
+        return true;
+    }
 }

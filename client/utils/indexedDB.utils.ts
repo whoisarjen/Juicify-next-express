@@ -1,4 +1,5 @@
 import { store } from "../redux/store";
+import { setSocketUpdated } from "./synchronization.utils";
 const namOfIndexedDB = "test";
 
 const connectIndexedDB = async () => indexedDB.open(namOfIndexedDB);
@@ -13,34 +14,22 @@ export const createIndexedDB = async (): Promise<any> => {
       objectStore = db.createObjectStore("product", { keyPath: "_id" });
       objectStore = db.createObjectStore("cache_product", { keyPath: "_id" });
       objectStore = db.createObjectStore("checked_product", { keyPath: "_id" });
-      objectStore = db.createObjectStore("last_used_product", {
-        keyPath: "_id",
-      });
-      objectStore = db.createObjectStore("favourite_product", {
-        keyPath: "_id",
-      });
+      objectStore = db.createObjectStore("last_used_product", { keyPath: "_id", });
+      objectStore = db.createObjectStore("favourite_product", { keyPath: "_id", });
 
       objectStore = db.createObjectStore("exercise", { keyPath: "_id" });
       objectStore = db.createObjectStore("cache_exercise", { keyPath: "_id" });
-      objectStore = db.createObjectStore("checked_exercise", {
-        keyPath: "_id",
-      });
-      objectStore = db.createObjectStore("last_used_exercise", {
-        keyPath: "_id",
-      });
-      objectStore = db.createObjectStore("favourite_exercise", {
-        keyPath: "_id",
-      });
+      objectStore = db.createObjectStore("checked_exercise", { keyPath: "_id", });
+      objectStore = db.createObjectStore("last_used_exercise", { keyPath: "_id", });
+      objectStore = db.createObjectStore("favourite_exercise", { keyPath: "_id", });
 
       objectStore = db.createObjectStore("workout_plan", { keyPath: "_id" });
       objectStore = db.createObjectStore("workout_result", { keyPath: "_id" });
-      objectStore = db.createObjectStore("daily_measurement", {
-        keyPath: "whenAdded",
-      });
-      objectStore = db.createObjectStore("last_searched_users", {
-        keyPath: "_id",
-      });
+      objectStore = db.createObjectStore("daily_measurement", { keyPath: "whenAdded", });
+      objectStore = db.createObjectStore("last_searched_users", { keyPath: "_id", });
+
       objectStore = db.createObjectStore("whatToUpdate", { keyPath: "_id" });
+      objectStore = db.createObjectStore("socketUpdated", { keyPath: "where" });
       objectStore.transaction.oncomplete = async () => resolve(true);
     };
   });
@@ -136,21 +125,13 @@ export const addIndexedDB = async (where: string, value: Array<any>): Promise<an
   }
 };
 
-export const putInformationAboutNeededUpdate = async (where: string): Promise<any> => {
-  return new Promise((resolve) => {
-    (async () => {
-      if (!store.getState().online.isOnline) {
-        if (!(await getIndexedDBbyID("whatToUpdate", where))) {
-          await addIndexedDB("whatToUpdate", [
-            {
-              _id: where,
-            },
-          ]);
-        }
-      } else {
-        localStorage.setItem("lastUpdated", new Date().getTime().toString());
-      }
-      resolve(true);
-    })();
-  });
+export const putInformationAboutNeededUpdate = async (where: string, time?: number): Promise<any> => {
+  if (!store.getState().online.isOnline) {
+    if (!(await getIndexedDBbyID("whatToUpdate", where))) {
+      await addIndexedDB("whatToUpdate", [{ _id: where, },]);
+    }
+  } else {
+    await setSocketUpdated(where)
+  }
+  return true;
 };
