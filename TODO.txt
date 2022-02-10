@@ -1,4 +1,7 @@
 add cardio exercises + timer i guess
 
 
+setLastUpdated is OFF
+
+
 right way to handle all API calls errors messege with notify

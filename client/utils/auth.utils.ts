@@ -42,7 +42,6 @@ export const getCookie = async (cookieName: string) => {
         let [key, value] = el.split('=');
         cookie[key.trim()] = value;
     })
-    console.log(cookie[cookieName])
     return cookie[cookieName];
 }
 

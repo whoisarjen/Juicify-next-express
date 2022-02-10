@@ -12,7 +12,7 @@ const AvatarMUI: FunctionComponent<AvatarMUIProps> = ({ user, size = '110px', ma
         <Avatar
             sx={{ background: 'none !important', width: size, height: size, margin }}
             alt={`${user.login} ${user.name} ${user.surname} on Juicify`}
-            src={`https://${process.env.NEXT_PUBLIC_SERVER}/server/avatar/${user._id}.jpg`}
+            src={`${process.env.NEXT_PUBLIC_SERVER}/avatar/${user._id}.jpg`}
         >
             <Avatar
                 sx={{ background: 'none !important', width: size, height: size, margin }}

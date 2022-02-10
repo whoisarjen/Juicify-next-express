@@ -17,9 +17,11 @@ import { getGuestDailyMeasurementsHandler } from '../mongoDB/controller/dailyMea
 import getUserByLogin from '../mongoDB/middleware/getUserByLogin';
 import { analyzeCoachHandler, createCoachHandler } from '../mongoDB/controller/coach.controller';
 import { findSchema } from '../mongoDB/schema/find.schema';
+import { getAvatarHandler } from '../mongoDB/controller/images.controller';
 
 const routes = (app: Express) => {
     app.post('/synchronization', requireUser, synchronizationUserSessionHandler)
+    app.get('/avatar/:id', getAvatarHandler)
 
     app.post('/find/users', getUsersByLoginHandler)
     app.post('/auth/login', validateResource(createSessionSchema), createUserSessionHandler)

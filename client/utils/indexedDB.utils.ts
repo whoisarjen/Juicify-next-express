@@ -1,7 +1,7 @@
 import { store } from "../redux/store";
 const namOfIndexedDB = "test";
 
-const connectIndexedDB = async () => window.indexedDB.open(namOfIndexedDB);
+const connectIndexedDB = async () => indexedDB.open(namOfIndexedDB);
 
 export const createIndexedDB = async (): Promise<any> => {
   await window.indexedDB.deleteDatabase(namOfIndexedDB);

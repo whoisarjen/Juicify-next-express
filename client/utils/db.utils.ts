@@ -3,6 +3,7 @@ import { store } from '../redux/store'
 import axios from "axios"
 import { setIsOnline } from "../redux/features/online.slice"
 import { refreshKey } from "../redux/features/key.slice"
+import { prepareToSend } from "./dailyMeasurement.utils"
 
 export const API = async (url: string, body: any): Promise<any> => {
     let response = {}
@@ -61,7 +62,7 @@ export const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, u
             if (where == 'daily_measurement') {
                 array[i].whenAdded = new Date(array[i].whenAdded).toISOString()
                 if (isOnline) {
-                    array[i] = await prepareDailyToSend(array[i], true)
+                    array[i] = await prepareToSend(array[i], true)
                 }
             }
         }
@@ -179,7 +180,7 @@ export const overwriteThoseIDSinDB = async (where: string, sentArray: Array<any>
                     array[i].whenAdded = new Date(array[i].whenAdded).toISOString()
                     if (isOnline) {
                         console.log('before prepare', sentArray[i])
-                        array[i] = await prepareDailyToSend(array[i], true)
+                        array[i] = await prepareToSend(array[i], true)
                         console.log('After prepare', array[i])
                     }
                 }
@@ -234,7 +235,7 @@ export const deleteThoseIDSfromDB = async (where: string, array: Array<any>, isN
                 for (let i = 0; i < array.length; i++) {
                     array[i].deleted = true
                     await deleteIndexedDB(where, array[i]._id)
-                    if (where == 'daily_measurement' && isOnline) array[i] = await prepareDailyToSend(array[i], true)
+                    if (where == 'daily_measurement' && isOnline) array[i] = await prepareToSend(array[i], true)
                 }
                 if (isOnline) {
                     if (await is_id(array[0]._id)) {
@@ -270,56 +271,24 @@ export const deleteThoseIDSfromDB = async (where: string, array: Array<any>, isN
     })
 }
 
-export const prepareDailyToSend = async (daily_measurement: any, removeDeleted: boolean = false) => {
-    const object = JSON.parse(JSON.stringify(daily_measurement))
-    return new Promise(resolve => {
-        (async () => {
-            if (object._id && !await is_id(object._id)) {
-                delete object._id
-            }
-            if (object.nutrition_diary && object.nutrition_diary.length > 0) {
-                for (let i = object.nutrition_diary.length - 1; i >= 0; i--) {
-                    if (removeDeleted && object.nutrition_diary[i].deleted) {
-                        object.nutrition_diary.splice(i, 1)
-                    } else if (object.nutrition_diary[i]._id && !await is_id(object.nutrition_diary[i]._id)) {
-                        delete object.nutrition_diary[i]._id
-                    }
-                }
-            }
-            if (object.workout_result && object.workout_result.length > 0) {
-                for (let i = object.workout_result.length - 1; i >= 0; i--) {
-                    if (removeDeleted && object.workout_result[i].deleted) {
-                        object.workout_result.splice(i, 1)
-                    } else if (object.workout_result[i]._id && !await is_id(object.workout_result[i]._id)) {
-                        delete object.workout_result[i]._id
-                    }
-                }
-            }
-            if (object.nutrition_diary && object.nutrition_diary.length == 0) {
-                delete object.nutrition_diary
-            }
-            if (object.workout_result && object.workout_result.length == 0) {
-                delete object.workout_result
-            }
-
-            // DB think no value = 0, so we don't need values == 0 (can be string too!)
-            const keys = Object.keys(object)
-            keys.forEach(x => {
-                if (object[x] == 0) {
-                    delete object[x]
-                }
-            })
-            resolve(object);
-        })();
-    });
-}
-
 export const is_id = async (_id: string) => {
     return new Promise(resolve => {
         (_id).substring(0, 2) != "XD" ? resolve(true) : resolve(false)
     })
 }
 
+
+export const cleanCache = async (where: string) => {
+    return new Promise(async resolve => {
+        const cache = await getAllIndexedDB(where)
+        if (cache && cache.length) {
+            for (let i = 0; i < cache.length; i++) {
+                await deleteIndexedDB(where, cache[i]._id)
+            }
+        }
+        resolve(true)
+    })
+}
 export const setLastUpdated = () => {
-    localStorage.setItem('lastUpdated', new Date().getTime().toString())
+    // localStorage.setItem('lastUpdated', new Date().getTime().toString())
 }
