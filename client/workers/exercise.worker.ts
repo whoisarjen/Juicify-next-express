@@ -18,9 +18,9 @@ self.onmessage = async ({ data: { socketUpdated, name } }) => {
             await cleanCache('checked_exercise')
             await setSocketUpdated('exercise')
         }
-        console.log(`Worker ${name} is done!`)
+        console.log(`${name} is done!`)
     } catch (error: any) {
-        console.log(`Worker ${name} ended with error! ${error}`)
+        console.log(`${name} ended with error! ${error}`)
     } finally {
         close()
     }

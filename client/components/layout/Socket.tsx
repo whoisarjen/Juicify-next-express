@@ -21,9 +21,7 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
 
     useEffect(() => {
         if (token) {
-            const socket = io(process.env.NEXT_PUBLIC_SERVER as any, {
-                withCredentials: true,
-            })
+            const socket = io(process.env.NEXT_PUBLIC_SERVER as any, { withCredentials: true })
 
             socket.on('compareDatabases', async (object) => {
                 try {
@@ -32,34 +30,33 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
 
                     new Worker(new URL("../../workers/product.worker.ts", import.meta.url), { type: 'module' })
                         .postMessage({
-                            name: 1,
+                            name: 'Worker_product',
                             socketUpdated: object.lastUpdated.product,
                         })
 
                     new Worker(new URL("../../workers/exercise.worker.ts", import.meta.url), { type: 'module' })
                         .postMessage({
-                            name: 2,
+                            name: 'Worker_exercise',
                             socketUpdated: object.lastUpdated.exercise,
                         })
 
                     new Worker(new URL("../../workers/workoutPlan.worker.ts", import.meta.url), { type: 'module' })
                         .postMessage({
-                            name: 3,
+                            name: 'Worker_workoutPlan',
                             socketUpdated: object.lastUpdated.workout_plan,
                         })
 
                     new Worker(new URL("../../workers/dailyMeasurement.worker.ts", import.meta.url), { type: 'module' })
                         .postMessage({
-                            name: 4,
+                            name: 'Worker_dailyMeasurement',
                             socketUpdated: object.lastUpdated.daily_measurement,
                         })
 
-                    // Diff ORDER????? AND SET LAST UPDATED MIGHT MAKE PROBLEM LAST AFTER ALL WORKERS?
-                    // if (store.getState().online.isOnline && object.lastUpdated.settings > (localStorage.getItem('lastUpdated') || 0) || await getIndexedDBbyID('whatToUpdate', 'settings')) {
-                    //     const newToken = await refreshToken()
-                    //     dispatch(setToken(newToken));
-                    //     await setSocketUpdated();
-                    // }
+                    if (store.getState().online.isOnline && object.lastUpdated.settings > ((await getIndexedDBbyID('socketUpdated', 'settings')).time || 0) || await getIndexedDBbyID('whatToUpdate', 'settings')) {
+                        const newToken = await refreshToken()
+                        dispatch(setToken(newToken));
+                        await setSocketUpdated('settings');
+                    }
 
                 } catch (error: any) {
                     console.log('synchronization ended with error', error)
@@ -72,6 +69,7 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                     if (message.where == 'settings') {
                         const newToken = await refreshToken()
                         dispatch(setToken(newToken));
+                        await setSocketUpdated('settings');
                     } else {
                         for (let i = 0; i < message.array.length; i++) {
                             await deleteIndexedDB(message.where, message.array[i][message.where == 'daily_measurement' ? 'whenAdded' : '_id'])
