@@ -37,11 +37,12 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                     //     await setSocketUpdated();
                     // }
 
-                    new Worker(new URL("../../workers/product.worker.ts", import.meta.url))
+                    new Worker("../../workers/product.worker.ts", {
+                        type: "module",
+                    })
                         .postMessage({
                             name: 1,
                             socketUpdated: object.lastUpdated.product,
-                            lastUpdated: localStorage.getItem('lastUpdated') || 0,
                         })
 
                     // if (store.getState().online.isOnline && object.lastUpdated.exercise > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'exercise')) {

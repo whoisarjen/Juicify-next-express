@@ -1,12 +1,12 @@
 import { getIndexedDBbyID } from "../utils/indexedDB.utils";
 import { cleanCache, setSocketUpdated, synchronizationController } from "../utils/synchronization.utils";
 
-self.onmessage = async ({ data: { socketUpdated, lastUpdated, name } }) => {
+self.onmessage = async ({ data: { socketUpdated, name } }) => {
     try {
         console.log(`Worker ${name} is starting the job in ${navigator.onLine}`)
-        if (navigator.onLine && socketUpdated > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'product')) {
+        if (navigator.onLine && socketUpdated > await getIndexedDBbyID('socketUpdated', 'product') || await getIndexedDBbyID('whatToUpdate', 'product')) {
             await synchronizationController({
-                isNewValueInDB: socketUpdated > lastUpdated,
+                isNewValueInDB: socketUpdated > await getIndexedDBbyID('socketUpdated', 'product'),
                 where: 'product',
                 updateDailyKey: 'nutrition_diary',
                 updateDailyKeyLevel2: 'product_ID',

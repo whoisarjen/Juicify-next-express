@@ -109,7 +109,8 @@ export const cleanCache = async (where: string) => {
 export const setSocketUpdated = async (where: string) => {
     await deleteIndexedDB('socketUpdated', where)
     await addIndexedDB('socketUpdated', [{
-        where,
+        _id: where,
         time: new Date().getTime()
     }])
+    return true;
 }

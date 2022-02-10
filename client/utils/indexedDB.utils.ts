@@ -29,7 +29,7 @@ export const createIndexedDB = async (): Promise<any> => {
       objectStore = db.createObjectStore("last_searched_users", { keyPath: "_id", });
 
       objectStore = db.createObjectStore("whatToUpdate", { keyPath: "_id" });
-      objectStore = db.createObjectStore("socketUpdated", { keyPath: "where" });
+      objectStore = db.createObjectStore("socketUpdated", { keyPath: "_id" });
       objectStore.transaction.oncomplete = async () => resolve(true);
     };
   });
