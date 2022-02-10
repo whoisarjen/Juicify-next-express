@@ -25,42 +25,37 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
 
             socket.on('compareDatabases', async (object) => {
                 try {
-                    localStorage.setItem('socket_ID', object.socket_ID)
                     dispatch(setIsOnline(true))
 
                     new Worker(new URL("../../workers/product.worker.ts", import.meta.url), {
-                        name: 'Worker_product',
+                        name: 'product', // SOMEHOW IT WON'T COMPILATE WITHOUT NAME AND TYPE
                         type: 'module'
                     })
                         .postMessage({
-                            name: 'Worker_product',
                             socketUpdated: object.lastUpdated.product,
                         })
 
                     new Worker(new URL("../../workers/exercise.worker.ts", import.meta.url), {
-                        name: 'Worker_exercise',
+                        name: 'exercise',
                         type: 'module'
                     })
                         .postMessage({
-                            name: 'Worker_exercise',
                             socketUpdated: object.lastUpdated.exercise,
                         })
 
                     new Worker(new URL("../../workers/workoutPlan.worker.ts", import.meta.url), {
-                        name: 'Worker_workoutPlan',
+                        name: 'workoutPlan',
                         type: 'module'
                     })
                         .postMessage({
-                            name: 'Worker_workoutPlan',
                             socketUpdated: object.lastUpdated.workout_plan,
                         })
 
                     new Worker(new URL("../../workers/dailyMeasurement.worker.ts", import.meta.url), {
-                        name: 'Worker_dailyMeasurement',
+                        name: 'dailyMeasurement',
                         type: 'module'
                     })
                         .postMessage({
-                            name: 'Worker_dailyMeasurement',
                             socketUpdated: object.lastUpdated.daily_measurement,
                         })
 
