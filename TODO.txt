@@ -10,5 +10,4 @@ setLastUpdated is OFF
 Promise all dla inserted deleted etc
 Cookie as answer for holding synchro time?
 Fix api call
-To avoid changing ondexeddb before confirm from.db
-Selecting On pwa turn off
+To avoid changing indexeddb before confirm from.db
