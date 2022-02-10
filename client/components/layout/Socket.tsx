@@ -37,7 +37,7 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                     //     await setSocketUpdated();
                     // }
 
-                    new Worker(new URL("../../workers/product.worker.ts", import.meta.url))
+                    new Worker(new URL("../../workers/product.worker.ts", import.meta.url), { type: 'module' })
                         .postMessage({
                             name: 1,
                             socketUpdated: object.lastUpdated.product,
