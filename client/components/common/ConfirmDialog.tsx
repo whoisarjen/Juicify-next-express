@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from 'react'
+import { FunctionComponent } from 'react'
 import Dialog from '@mui/material/Dialog'
 import Button from '@mui/material/Button'
 import LoadingButton from '@mui/lab/LoadingButton'
@@ -15,7 +15,6 @@ interface ConfirmDialogProps {
 }
 
 const ConfirmDialog: FunctionComponent<ConfirmDialogProps> = ({ isDialog, closeDialog, confirm }) => {
-    const [loading, setLoading] = useState(false)
     const { t } = useTranslation('home')
 
     return (
@@ -35,11 +34,7 @@ const ConfirmDialog: FunctionComponent<ConfirmDialogProps> = ({ isDialog, closeD
             <DialogActions>
                 <Button onClick={closeDialog}>{t('Deny')}</Button>
                 <LoadingButton
-                    loading={loading}
-                    onClick={() => {
-                        setLoading(true)
-                        confirm()
-                    }}
+                    onClick={() => confirm()}
                     autoFocus
                 >
                     {t('Confirm')}

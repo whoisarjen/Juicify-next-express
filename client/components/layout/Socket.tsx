@@ -6,6 +6,7 @@ import { deleteIndexedDB, getIndexedDBbyID, addIndexedDB } from '../../utils/ind
 import { store } from '../../redux/store'
 import { getCookie, refreshToken, setCookie } from '../../utils/auth.utils'
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
+import { refreshKey } from '../../redux/features/key.slice';
 
 const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
     const dispatch = useAppDispatch()
@@ -73,8 +74,7 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
             })
 
             socket.on('synchronizationMessege', async (message) => {
-                console.log('socket', message)
-                setCookie(message.where, new Date().getTime().toString(), 365)
+                console.log('synchronizationMessege', message)
                 if (message.socket_ID != await getCookie('socket_ID')) {
                     if (message.where == 'settings') {
                         dispatch(setToken(await refreshToken()));
@@ -87,6 +87,8 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                         }
                     }
                 }
+                setCookie(message.where, new Date().getTime().toString(), 365)
+                dispatch(refreshKey(message.where))
             })
 
             socket.on('disconnect', () => dispatch(setIsOnline(false))) // Closed socket => user has to be offline
