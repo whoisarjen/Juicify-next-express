@@ -64,7 +64,7 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                             socketUpdated: object.lastUpdated.daily_measurement,
                         })
 
-                    if (store.getState().online.isOnline && object.lastUpdated.settings > ((await getIndexedDBbyID('socketUpdated', 'settings')).time || 0) || await getIndexedDBbyID('whatToUpdate', 'settings')) {
+                    if (store.getState().online.isOnline && object.lastUpdated.settings > (await getIndexedDBbyID('socketUpdated', 'settings') || { time: 0 }).time || await getIndexedDBbyID('whatToUpdate', 'settings')) {
                         const newToken = await refreshToken()
                         dispatch(setToken(newToken));
                         await setSocketUpdated('settings');
