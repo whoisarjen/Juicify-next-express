@@ -30,6 +30,30 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                     localStorage.setItem('socket_ID', object.socket_ID)
                     dispatch(setIsOnline(true))
 
+                    new Worker(new URL("../../workers/product.worker.ts", import.meta.url), { type: 'module' })
+                        .postMessage({
+                            name: 1,
+                            socketUpdated: object.lastUpdated.product,
+                        })
+
+                    new Worker(new URL("../../workers/exercise.worker.ts", import.meta.url), { type: 'module' })
+                        .postMessage({
+                            name: 2,
+                            socketUpdated: object.lastUpdated.exercise,
+                        })
+
+                    new Worker(new URL("../../workers/workoutPlan.worker.ts", import.meta.url), { type: 'module' })
+                        .postMessage({
+                            name: 3,
+                            socketUpdated: object.lastUpdated.workout_plan,
+                        })
+
+                    new Worker(new URL("../../workers/dailyMeasurement.worker.ts", import.meta.url), { type: 'module' })
+                        .postMessage({
+                            name: 4,
+                            socketUpdated: object.lastUpdated.daily_measurement,
+                        })
+
                     // Diff ORDER????? AND SET LAST UPDATED MIGHT MAKE PROBLEM LAST AFTER ALL WORKERS?
                     // if (store.getState().online.isOnline && object.lastUpdated.settings > (localStorage.getItem('lastUpdated') || 0) || await getIndexedDBbyID('whatToUpdate', 'settings')) {
                     //     const newToken = await refreshToken()
@@ -37,27 +61,6 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                     //     await setSocketUpdated();
                     // }
 
-                    new Worker(new URL("../../workers/product.worker.ts", import.meta.url), { type: 'module' })
-                        .postMessage({
-                            name: 1,
-                            socketUpdated: object.lastUpdated.product,
-                        })
-
-                    // if (store.getState().online.isOnline && object.lastUpdated.exercise > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'exercise')) {
-                    //     await synchronizationAfterOffline(object.lastUpdated.exercise > lastUpdated, "exercise", 'workout_result', 'results', '_id', 'workout_plan', 'exercises', '_id');
-                    //     await cleanCache('checked_exercise')
-                    //     if (!store.getState().online.isOnline) await addIndexedDB("whatToUpdate", [{ "_id": 'exercise' }]);
-                    // }
-
-                    // if (store.getState().online.isOnline && object.lastUpdated.workout_plan > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'workout_plan')) {
-                    //     await synchronizationAfterOffline(object.lastUpdated.workout_plan > lastUpdated, "workout_plan", "workout_result", "workout_plan_ID", false, false, false, false);
-                    //     if (!store.getState().online.isOnline) await addIndexedDB("whatToUpdate", [{ "_id": "workout_plan" }]);
-                    // }
-
-                    // if (store.getState().online.isOnline && object.lastUpdated.daily_measurement > lastUpdated || await getIndexedDBbyID('whatToUpdate', 'daily_measurement')) {
-                    //     await synchronizationAfterOffline(object.lastUpdated.daily_measurement > lastUpdated, 'daily_measurement', false, false, false, false, false, false);
-                    //     if (!store.getState().online.isOnline) await addIndexedDB('whatToUpdate', [{ '_id': 'daily_measurement' }]);
-                    // }
                 } catch (error: any) {
                     console.log('synchronization ended with error', error)
                     dispatch(setIsOnline(false))
