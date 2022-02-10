@@ -230,11 +230,7 @@ export const deleteThoseIDSfromDB = async (where: string, array: Array<any>) => 
     }
 }
 
-export const is_id = async (_id: string) => {
-    return new Promise(resolve => {
-        (_id).substring(0, 2) != "XD" ? resolve(true) : resolve(false)
-    })
-}
+export const is_id = async (_id: string) => (_id).substring(0, 2) != "XD" ? true : false;
 
 export const isWorker = async () => {
     try {
