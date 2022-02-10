@@ -1,6 +1,6 @@
+import axios from "axios";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { API } from "../utils/db.utils";
 
 const useSearch = (find: string | number, where: string) => {
     const [data, setData] = useState([])
@@ -9,18 +9,24 @@ const useSearch = (find: string | number, where: string) => {
 
     useEffect(() => {
         (async () => {
-            setIsLoading(true)
             if (find) {
-                const { response, isSuccess } = await API(`/find/${where}`, {
-                    find
-                })
-                if (!response.items) response.items = []
-                if (isSuccess) {
-                    console.log(response.items)
-                    setData(response.items)
+                try {
+                    setIsLoading(true)
+                    const res = await axios.post(
+                        `${process.env.NEXT_PUBLIC_SERVER}/find/${where}`,
+                        {
+                            find
+                        },
+                        { withCredentials: true }
+                    );
+                    setData(res.data || []);
+                } catch (error: any) {
+                    console.log(error)
+                    setData([])
+                } finally {
+                    setIsLoading(false)
                 }
             }
-            setIsLoading(false)
         })()
     }, [find, router.query])
 

@@ -4,39 +4,25 @@ import axios from "axios"
 import { setIsOnline } from "../redux/features/online.slice"
 import { prepareToSend } from "./dailyMeasurement.utils"
 
-export const API = async (url: string, body: any): Promise<any> => {
-    let response = {}
-    let isSuccess = false
+export const loadValueByLogin = async (where: string, find: any, login: string = find) => {
     try {
         const res = await axios.post(
-            `${process.env.NEXT_PUBLIC_SERVER}${url}`,
-            { ...body },
+            `${process.env.NEXT_PUBLIC_SERVER}/guest/${where}`,
+            {
+                find,
+                login
+            },
             { withCredentials: true }
         );
-        response = res.data
-        isSuccess = true
+        return res.data;
     } catch (error: any) {
         const errorCode = error.toJSON().status;
         if (errorCode === 403) {
-            return window.location.replace(`${window.location.origin}/403`)
+            window.location.replace(`${window.location.origin}/403`)
         }
         if (errorCode === 404) {
-            return window.location.replace(`${window.location.origin}/404`)
+            window.location.replace(`${window.location.origin}/404`)
         }
-        throw error;
-    }
-    return { response, isSuccess }
-}
-
-export const loadValueByLogin = async (where: string, find: any, login: string = find) => {
-    try {
-        const { response } = await API(`/guest/${where}`, {
-            find,
-            login
-        })
-        return response
-    } catch (error: any) {
-        console.log('loadValueByLogin error', error)
     }
 }
 
