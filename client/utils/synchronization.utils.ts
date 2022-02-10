@@ -52,50 +52,62 @@ export const synchronizationController = async (
     }
 
     // 2. insert etc.
-    if (inserted.length) inserted = await insertThoseIDStoDB(where, inserted, updateDailyKey, updateDailyKeyLevel2, updateDailyKeyLevel3, whatToUpdate, whatToUpdateKey, whatToUpdateKeyLevel2)
-    if (changed.length) changed = await overwriteThoseIDSinDB(where, changed)
-    if (deleted.length) await deleteThoseIDSfromDB(where, deleted)
-
-    // 3. add loaded db but except the one who got already changed (inserted can NOT be skipped)
-    if (isNewValueInDB) {
-        if (inserted.length) {
-            for (let i = 0; i < inserted.length; i++) {
-                for (let a = data.length - 1; a >= 0; a++) {
-                    if (inserted[i]._id == data[a]._id) {
-                        data.splice(a, 1)
-                        break;
+    console.log(`${where} starting Promise all with: ${inserted.length} | ${changed.length} | ${deleted.length}`)
+    await Promise.all([
+        inserted.length && await insertThoseIDStoDB(where, inserted, updateDailyKey, updateDailyKeyLevel2, updateDailyKeyLevel3, whatToUpdate, whatToUpdateKey, whatToUpdateKeyLevel2),
+        changed.length && await overwriteThoseIDSinDB(where, changed),
+        deleted.length && await deleteThoseIDSfromDB(where, deleted),
+    ])
+        .then(async (promiseResponse: any) => {
+            console.log(`${where} ended promise with arrays: ${promiseResponse[0]} | ${promiseResponse[1]} | ${promiseResponse[2]}`)
+            inserted = [...(promiseResponse[0] ? [promiseResponse[0]] : [])]
+            changed = [...(promiseResponse[1] ? [promiseResponse[1]] : [])]
+            deleted = [...(promiseResponse[2] ? [promiseResponse[2]] : [])]
+            // 3. add loaded db but except the one who got already changed (inserted can NOT be skipped)
+            if (isNewValueInDB) {
+                if (inserted.length) {
+                    for (let i = 0; i < inserted.length; i++) {
+                        for (let a = data.length - 1; a >= 0; a++) {
+                            if (inserted[i]._id == data[a]._id) {
+                                data.splice(a, 1)
+                                break;
+                            }
+                        }
                     }
                 }
-            }
-        }
-        if (changed.length) {
-            for (let i = 0; i < changed.length; i++) {
-                for (let a = data.length - 1; a >= 0; a++) {
-                    if (changed[i]._id == data[a]._id) {
-                        data.splice(a, 1)
-                        break;
+                if (changed.length) {
+                    for (let i = 0; i < changed.length; i++) {
+                        for (let a = data.length - 1; a >= 0; a++) {
+                            if (changed[i]._id == data[a]._id) {
+                                data.splice(a, 1)
+                                break;
+                            }
+                        }
                     }
                 }
-            }
-        }
-        if (deleted.length) {
-            for (let i = 0; i < deleted.length; i++) {
-                for (let a = data.length - 1; a >= 0; a++) {
-                    if (deleted[i]._id == data[a]._id) {
-                        data.splice(a, 1)
-                        break;
+                if (deleted.length) {
+                    for (let i = 0; i < deleted.length; i++) {
+                        for (let a = data.length - 1; a >= 0; a++) {
+                            if (deleted[i]._id == data[a]._id) {
+                                data.splice(a, 1)
+                                break;
+                            }
+                        }
                     }
                 }
+                if (data.length) {
+                    for (let a = 0; a < data.length; a++) {
+                        await deleteIndexedDB(where, data[a]._id)
+                    }
+                    await addIndexedDB(where, data)
+                }
             }
-        }
-        if (data.length) {
-            for (let a = 0; a < data.length; a++) {
-                await deleteIndexedDB(where, data[a]._id)
-            }
-            await addIndexedDB(where, data)
-        }
-    }
-    return true;
+        })
+        .catch((error: any) => {
+            console.log(error)
+            throw error;
+        })
+        .finally(() => true)
 }
 
 export const cleanCache = async (where: string) => {

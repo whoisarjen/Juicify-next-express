@@ -5,8 +5,5 @@ keys need to update somehow smart or we can do this as callback from sw but then
 setLastUpdated is OFF
 
 
-
-
-Promise all dla inserted deleted etc
 Cookie as answer for holding synchro time?
 Fix api call To avoid changing indexeddb before confirm from.db

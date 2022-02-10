@@ -226,7 +226,7 @@ export const deleteThoseIDSfromDB = async (where: string, array: Array<any>) => 
             await putInformationAboutNeededUpdate(where);
         }
     } finally {
-        return true;
+        return array;
     }
 }
 
