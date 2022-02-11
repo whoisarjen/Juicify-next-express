@@ -1,11 +1,9 @@
-import { refreshKey } from "../redux/features/key.slice";
-import { store } from "../redux/store";
 import { getIndexedDBbyID } from "../utils/indexedDB.utils";
 import { synchronizationController } from "../utils/synchronization.utils";
 
 self.onmessage = async ({ data: { socketUpdated, updated } }) => {
     try {
-        console.log(`WorkoutPlan_worker is starting the job with updated ${updated}`)
+        console.log(`WorkoutPlan_worker is starting...`)
         if (navigator.onLine && socketUpdated > updated || await getIndexedDBbyID('whatToUpdate', 'workout_plan')) {
             await synchronizationController({
                 isNewValueInDB: socketUpdated > updated,
@@ -17,13 +15,11 @@ self.onmessage = async ({ data: { socketUpdated, updated } }) => {
                 whatToUpdateKey: 'workout_plan_ID',
                 whatToUpdateKeyLevel2: '',
             });
-            store.dispatch(refreshKey('workout_plan'))
         }
+        postMessage(true)
         console.log(`WorkoutPlan_worker is done!`)
     } catch (error: any) {
         console.log(`WorkoutPlan_worker ended with error! ${error}`)
-    } finally {
-        close()
     }
 };
 

@@ -44,6 +44,7 @@ export const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, u
                 delete array[i]._id
             }
             if (where == 'daily_measurement') {
+                array[i].whenAdded = new Date(array[i].whenAdded).toISOString()
                 array[i] = await prepareToSend(array[i], true)
             }
         }
@@ -66,6 +67,7 @@ export const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, u
         console.log(error)
         for (let i = 0; i < array.length; i++) {
             array[i]._id = "XD" + new Date().getTime() + i
+            array[i].whenAdded = new Date(array[i].whenAdded).toISOString()
         }
         if (!await isWorker()) {
             store.dispatch(setIsOnline(false))
@@ -112,7 +114,6 @@ export const overwriteThoseIDSinDB = async (where: string, sentArray: Array<any>
         }
 
     } finally {
-
         for (let i = 0; i < array.length; i++) {
             await deleteIndexedDB(where, array[i][where == 'daily_measurement' ? 'whenAdded' : '_id']) // Can't be connected above
         }

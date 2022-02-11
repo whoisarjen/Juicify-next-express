@@ -91,17 +91,14 @@ export const putIndexedDB = async (
 };
 
 export const deleteIndexedDB = async (where: string, _id: string): Promise<any> => {
-  _id = _id.toString();
   let request = await connectIndexedDB();
-  return new Promise((resolve) => {
-    request.onsuccess = async function () {
-      await request.result
-        .transaction(where, "readwrite")
-        .objectStore(where)
-        .delete(_id);
-    };
-    resolve(true);
-  });
+  request.onsuccess = async function () {
+    await request.result
+      .transaction(where, "readwrite")
+      .objectStore(where)
+      .delete(_id.toString());
+  };
+  return true;
 };
 
 export const addIndexedDB = async (where: string, value: Array<any>): Promise<any> => {

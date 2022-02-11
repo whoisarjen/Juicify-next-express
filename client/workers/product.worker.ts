@@ -1,11 +1,9 @@
-import { refreshKey } from "../redux/features/key.slice";
-import { store } from "../redux/store";
 import { getIndexedDBbyID } from "../utils/indexedDB.utils";
 import { cleanCache, synchronizationController } from "../utils/synchronization.utils";
 
 self.onmessage = async ({ data: { socketUpdated, updated } }) => {
     try {
-        console.log(`Product_worker is starting the job with updated ${updated}`)
+        console.log(`Product_worker is starting...`)
         if (navigator.onLine && socketUpdated > updated || await getIndexedDBbyID('whatToUpdate', 'product')) {
             await synchronizationController({
                 isNewValueInDB: socketUpdated > updated,
@@ -18,13 +16,11 @@ self.onmessage = async ({ data: { socketUpdated, updated } }) => {
                 whatToUpdateKeyLevel2: '',
             });
             await cleanCache('checked_product')
-            store.dispatch(refreshKey('product'))
         }
+        postMessage(true)
         console.log(`Product_worker is done!`)
     } catch (error: any) {
         console.log(`Product_worker ended with error! ${error}`)
-    } finally {
-        close()
     }
 };
 

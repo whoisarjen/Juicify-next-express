@@ -1,5 +1,6 @@
 import axios from "axios";
-import DailyMeasurementProps from "../interfaces/dailyMeasurement.interface";
+import { refreshKey } from "../redux/features/key.slice";
+import { store } from "../redux/store";
 import { createOneFromTwo } from "./dailyMeasurement.utils";
 import { deleteThoseIDSfromDB, insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from "./db.utils";
 import { addIndexedDB, deleteIndexedDB, getAllIndexedDB, putIndexedDB } from "./indexedDB.utils";
@@ -7,108 +8,128 @@ import { addIndexedDB, deleteIndexedDB, getAllIndexedDB, putIndexedDB } from "./
 export const synchronizationController = async (
     { isNewValueInDB, where, updateDailyKey, updateDailyKeyLevel2, updateDailyKeyLevel3, whatToUpdate, whatToUpdateKey, whatToUpdateKeyLevel2 }:
         { isNewValueInDB: boolean, where: string, updateDailyKey: string, updateDailyKeyLevel2: string, updateDailyKeyLevel3: string, whatToUpdate: string, whatToUpdateKey: string, whatToUpdateKeyLevel2: string }) => {
-    let deleted = []
-    let changed = []
-    let inserted = []
-    let whereArray = await getAllIndexedDB(where)
-    if (whereArray.length) {
-        for (let i = 0; i < whereArray.length; i++) {
-            if (!whereArray[i].notSAVED) {
-                if (!(await is_id(whereArray[i]._id))) {
-                    inserted.push(whereArray[i])
-                }
-                if (whereArray[i].deleted) {
-                    deleted.push(whereArray[i])
-                }
-                if (whereArray[i].changed) {
-                    changed.push(whereArray[i])
+    try {
+        let deleted: any = []
+        let changed = []
+        let inserted = []
+        let whereArray = await getAllIndexedDB(where)
+        if (whereArray.length) {
+            for (let i = 0; i < whereArray.length; i++) {
+                if (!whereArray[i].notSAVED) {
+                    if (!(await is_id(whereArray[i]._id))) {
+                        inserted.push(whereArray[i])
+                    }
+                    if (whereArray[i].deleted) {
+                        deleted.push(whereArray[i])
+                    }
+                    if (whereArray[i].changed) {
+                        changed.push(whereArray[i])
+                    }
                 }
             }
         }
-    }
-    console.log(`Is ${where} going to download new values?`, isNewValueInDB)
-    let data: any = []
-    if (isNewValueInDB) {
-        const response = await axios.post(
-            `${process.env.NEXT_PUBLIC_SERVER}/synchronization`,
-            { where },
-            { withCredentials: true }
-        );
-        data = [...response.data]
-        console.log(`${where} has downloaded new values`, data)
+        console.log(`Is ${where} going to download new values?`, isNewValueInDB)
+        let data: any = []
+        if (isNewValueInDB) {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_SERVER}/synchronization`, { where }, { withCredentials: true });
+            data = [...response.data]
+            console.log(`${where} has downloaded new values`, data)
 
-        // 1. compaore changed daily before everything
-        if (where == 'daily_measurement' && data && data.length) {
-            for (let i = 0; i < data.length; i++) {
-                if (changed.length) {
-                    for (let a: number = changed.length - 1; a >= 0; a--) {
-                        if (data[i].whenAdded == changed[a].whenAdded) {
-                            changed[a] = await createOneFromTwo(changed[a], data[i])
-                            break;
+            // 1. compaore changed daily before everything
+            if (where == 'daily_measurement' && data && data.length) {
+                for (let i = 0; i < data.length; i++) {
+                    if (changed.length) {
+                        for (let a: number = changed.length - 1; a >= 0; a--) {
+                            if (data[i].whenAdded == changed[a].whenAdded) {
+                                changed[a] = await createOneFromTwo(changed[a], data[i])
+                                break;
+                            }
                         }
                     }
                 }
             }
         }
-    }
 
-    // 2. insert etc.
-    console.log(`${where} starting Promise all with: ${inserted.length} | ${changed.length} | ${deleted.length}`)
-    await Promise.all([
-        inserted.length && await insertThoseIDStoDB(where, inserted, updateDailyKey, updateDailyKeyLevel2, updateDailyKeyLevel3, whatToUpdate, whatToUpdateKey, whatToUpdateKeyLevel2),
-        changed.length && await overwriteThoseIDSinDB(where, changed),
-        deleted.length && await deleteThoseIDSfromDB(where, deleted),
-    ])
-        .then(async (promiseResponse: any) => {
-            console.log(`${where} ended promise with arrays: ${promiseResponse[0]} | ${promiseResponse[1]} | ${promiseResponse[2]}`)
-            inserted = [...(promiseResponse[0] ? [promiseResponse[0]] : [])]
-            changed = [...(promiseResponse[1] ? [promiseResponse[1]] : [])]
-            deleted = [...(promiseResponse[2] ? [promiseResponse[2]] : [])]
-            // 3. add loaded db but except the one who got already changed (inserted can NOT be skipped)
-            if (isNewValueInDB) {
-                if (inserted.length) {
+        // 2. insert etc.
+        console.log(`${where} starting Promise all with: ${inserted.length} | ${changed.length} | ${deleted.length}`)
+        await Promise.all([
+            inserted.length && await insertThoseIDStoDB(where, inserted, updateDailyKey, updateDailyKeyLevel2, updateDailyKeyLevel3, whatToUpdate, whatToUpdateKey, whatToUpdateKeyLevel2),
+            changed.length && await overwriteThoseIDSinDB(where, changed),
+            deleted.length && await deleteThoseIDSfromDB(where, deleted),
+        ])
+            .then(async (promiseResponse: any) => {
+                console.log(`${where} ended promise with arrays: ${promiseResponse[0].length} | ${promiseResponse[1].length} | ${promiseResponse[2].length}`)
+
+                inserted = promiseResponse[0] || []
+                changed = promiseResponse[1] || []
+
+                // 3. add loaded db but except the one who got already changed (inserted can NOT be skipped)
+                if (inserted && inserted.length) {
                     for (let i = 0; i < inserted.length; i++) {
-                        for (let a = data.length - 1; a >= 0; a++) {
-                            if (inserted[i]._id == data[a]._id) {
-                                data.splice(a, 1)
-                                break;
+                        for (let i = 0; i < inserted.length; i++) {
+                            await deleteIndexedDB(where, inserted[i][where == 'daily_measurement' ? 'whenAdded' : '_id']) // Can't be connected above
+                            await addIndexedDB(where, [inserted[i]])
+                        }
+                        if (isNewValueInDB) {
+                            for (let a = data.length - 1; a >= 0; a--) {
+                                if (inserted[i]._id == data[a]._id) {
+                                    data.splice(a, 1)
+                                    break;
+                                }
                             }
                         }
                     }
                 }
-                if (changed.length) {
+                if (changed && changed.length) {
                     for (let i = 0; i < changed.length; i++) {
-                        for (let a = data.length - 1; a >= 0; a++) {
-                            if (changed[i]._id == data[a]._id) {
-                                data.splice(a, 1)
-                                break;
+                        for (let i = 0; i < changed.length; i++) {
+                            await deleteIndexedDB(where, changed[i][where == 'daily_measurement' ? 'whenAdded' : '_id']) // Can't be connected above
+                            await addIndexedDB(where, [changed[i]])
+                        }
+                        if (isNewValueInDB) {
+                            for (let a = data.length - 1; a >= 0; a--) {
+                                if (changed[i]._id == data[a]._id) {
+                                    data.splice(a, 1)
+                                    break;
+                                }
                             }
                         }
                     }
                 }
-                if (deleted.length) {
+                if (deleted && deleted.length) {
                     for (let i = 0; i < deleted.length; i++) {
-                        for (let a = data.length - 1; a >= 0; a++) {
-                            if (deleted[i]._id == data[a]._id) {
-                                data.splice(a, 1)
-                                break;
+                        for (let i = 0; i < deleted.length; i++) {
+                            await deleteIndexedDB(where, deleted[i][where == 'daily_measurement' ? 'whenAdded' : '_id']) // Can't be connected above
+                            await addIndexedDB(where, [deleted[i]])
+                        }
+                        if (isNewValueInDB) {
+                            for (let a = data.length - 1; a >= 0; a--) {
+                                if (deleted[i]._id == data[a]._id) {
+                                    data.splice(a, 1)
+                                    break;
+                                }
                             }
                         }
                     }
                 }
-                if (data.length) {
+                if (isNewValueInDB && data.length) {
                     for (let a = 0; a < data.length; a++) {
                         await deleteIndexedDB(where, data[a][where == 'daily_measurement' ? 'whenAdded' : '_id'])
                     }
                     await addIndexedDB(where, data)
                 }
-            }
-        })
-        .catch((error: any) => {
-            console.log(error)
-            throw error;
-        })
-        .finally(() => true)
+                await deleteIndexedDB('whatToUpdate', where)
+                store.dispatch(refreshKey(where))
+            })
+            .catch((error: any) => {
+                console.log(error)
+                throw error;
+            })
+            .finally(() => true)
+    } catch (error: any) {
+        console.log(error)
+        throw error;
+    }
 }
 
 export const cleanCache = async (where: string) => {
