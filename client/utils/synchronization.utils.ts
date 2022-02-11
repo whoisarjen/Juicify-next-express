@@ -124,31 +124,31 @@ export const cleanCache = async (where: string) => {
 export const handleUpdateDailyKey = async ({ updateDailyKey, updateDailyKeyLevel2, updateDailyKeyLevel3, arrayIDSbeforeInsert, array }:
     { updateDailyKey?: string, updateDailyKeyLevel2?: string, updateDailyKeyLevel3?: string, arrayIDSbeforeInsert: Array<string>, array: Array<any> }) => {
     if (updateDailyKey) {
-        const updateDailyKeyArray = await getAllIndexedDB('daily_measurement')
-        if (updateDailyKeyArray && updateDailyKeyArray.length && updateDailyKeyLevel2) {
+        const dailyArray = await getAllIndexedDB('daily_measurement')
+        if (dailyArray && dailyArray.length && updateDailyKeyLevel2) {
             for (let i = 0; i < array.length; i++) {
-                for (let a = 0; a < updateDailyKeyArray.length; a++) {
-                    let checker = 0
-                    for (let b = 0; b < updateDailyKeyArray[a][updateDailyKey].length; b++) {
+                for (let a = 0; a < dailyArray.length; a++) {
+                    let checker = false
+                    for (let b = 0; b < dailyArray[a][updateDailyKey].length; b++) {
                         if (!updateDailyKeyLevel3) {
-                            if (updateDailyKeyArray[a][updateDailyKey][b][updateDailyKeyLevel2] == arrayIDSbeforeInsert[i]) {
-                                updateDailyKeyArray[a][updateDailyKey][b][updateDailyKeyLevel2] = array[i]._id
-                                checker++
+                            if (dailyArray[a][updateDailyKey][b][updateDailyKeyLevel2] == arrayIDSbeforeInsert[i]) {
+                                dailyArray[a][updateDailyKey][b][updateDailyKeyLevel2] = array[i]._id
+                                checker = true;
                             }
                         } else {
-                            if (updateDailyKeyArray[a][updateDailyKey][b][updateDailyKeyLevel2] && updateDailyKeyArray[a][updateDailyKey][b][updateDailyKeyLevel2].length) {
-                                for (let c = 0; c < updateDailyKeyArray[a][updateDailyKey][b][updateDailyKeyLevel2].length; c++) {
-                                    if (updateDailyKeyArray[a][updateDailyKey][b][updateDailyKeyLevel2][c][updateDailyKeyLevel3] == arrayIDSbeforeInsert[i]) {
-                                        updateDailyKeyArray[a][updateDailyKey][b][updateDailyKeyLevel2][c][updateDailyKeyLevel3] = array[i]._id
-                                        checker++
+                            if (dailyArray[a][updateDailyKey][b][updateDailyKeyLevel2] && dailyArray[a][updateDailyKey][b][updateDailyKeyLevel2].length) {
+                                for (let c = 0; c < dailyArray[a][updateDailyKey][b][updateDailyKeyLevel2].length; c++) {
+                                    if (dailyArray[a][updateDailyKey][b][updateDailyKeyLevel2][c][updateDailyKeyLevel3] == arrayIDSbeforeInsert[i]) {
+                                        dailyArray[a][updateDailyKey][b][updateDailyKeyLevel2][c][updateDailyKeyLevel3] = array[i]._id
+                                        checker = true;
                                     }
                                 }
                             }
                         }
                     }
-                    if (checker > 0) {
-                        await deleteIndexedDB('daily_measurement', updateDailyKeyArray[a].whenAdded)
-                        await addIndexedDB('daily_measurement', [updateDailyKeyArray[a]])
+                    if (checker) {
+                        await deleteIndexedDB('daily_measurement', dailyArray[a].whenAdded)
+                        await addIndexedDB('daily_measurement', [dailyArray[a]])
                     }
                 }
             }
@@ -160,32 +160,30 @@ export const handleUpdateDailyKey = async ({ updateDailyKey, updateDailyKeyLevel
 export const handleUpdateKey = async ({ whatToUpdate, whatToUpdateKey, whatToUpdateKeyLevel2, arrayIDSbeforeInsert, array }:
     { whatToUpdate?: string, whatToUpdateKey?: string, whatToUpdateKeyLevel2?: string, arrayIDSbeforeInsert: Array<string>, array: Array<any> }) => {
     if (whatToUpdate) {
-        const whatToUpdateArray = await getAllIndexedDB(whatToUpdate)
-        if (whatToUpdateArray.length && whatToUpdateKey) {
-            let count = 0;
+        const cache = await getAllIndexedDB(whatToUpdate)
+        if (cache.length && whatToUpdateKey) {
             for (let i = 0; i < array.length; i++) {
-                for (let a = 0; a < whatToUpdateArray.length; a++) {
+                for (let a = 0; a < cache.length; a++) {
+                    let count = false;
                     if (!whatToUpdateKeyLevel2) {
-                        if (whatToUpdateArray[a][whatToUpdateKey] == arrayIDSbeforeInsert[i]) {
-                            await putIndexedDB(whatToUpdate, whatToUpdateArray[a][whatToUpdateKey]._id, whatToUpdateKey, array[i]._id)
+                        if (cache[a][whatToUpdateKey] == arrayIDSbeforeInsert[i]) {
+                            await putIndexedDB(whatToUpdate, cache[a]._id, whatToUpdateKey, array[i]._id)
                         }
                     } else {
-                        if (whatToUpdateArray[a][whatToUpdateKey] && whatToUpdateArray[a][whatToUpdateKey].length) {
-                            for (let b = 0; b < whatToUpdateArray[a][whatToUpdateKey].length; b++) {
-                                if (whatToUpdateArray[a][whatToUpdateKey][b][whatToUpdateKeyLevel2] == arrayIDSbeforeInsert[i]) {
-                                    whatToUpdateArray[a][whatToUpdateKey][b][whatToUpdateKeyLevel2] = array[i]._id
-                                    count++;
+                        if (cache[a][whatToUpdateKey] && cache[a][whatToUpdateKey].length) {
+                            for (let b = 0; b < cache[a][whatToUpdateKey].length; b++) {
+                                if (cache[a][whatToUpdateKey][b][whatToUpdateKeyLevel2] == arrayIDSbeforeInsert[i]) {
+                                    cache[a][whatToUpdateKey][b][whatToUpdateKeyLevel2] = array[i]._id
+                                    count = true;
                                 }
                             }
                         }
                     }
+                    if (count) {
+                        await deleteIndexedDB(whatToUpdate, cache[a]._id)
+                        await addIndexedDB(whatToUpdate, [cache[a]])
+                    }
                 }
-            }
-            if (count) {
-                for (let a = 0; a < whatToUpdateArray.length; a++) {
-                    await deleteIndexedDB(whatToUpdate, whatToUpdateArray[a]._id)
-                }
-                await addIndexedDB(whatToUpdate, whatToUpdateArray)
             }
         }
     }
