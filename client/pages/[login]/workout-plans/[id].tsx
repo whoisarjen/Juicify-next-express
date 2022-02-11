@@ -2,7 +2,7 @@ import Chip from '@mui/material/Chip'
 import Stack from '@mui/material/Stack'
 import { useRouter } from "next/router"
 import { useAppSelector } from '../../../hooks/useRedux'
-import { useState, FunctionComponent } from "react"
+import { useState, FunctionComponent, useEffect } from "react"
 import TextField from '@mui/material/TextField'
 import DeleteIcon from '@mui/icons-material/Delete'
 import Navbar from '../../../components/workout/Navbar'
@@ -95,6 +95,10 @@ const WorkoutPlansID: FunctionComponent = () => {
             setSaveLoading(false);
         }
     }
+
+    useEffect(() => {
+        setExercises(data.exercises)
+    }, [data])
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>

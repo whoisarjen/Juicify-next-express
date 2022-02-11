@@ -1,11 +1,11 @@
 import Link from 'next/link'
-import styles from '../../styles/workout.module.css'
 import NoteAltIcon from '@mui/icons-material/NoteAlt'
 import useTranslation from "next-translate/useTranslation";
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
 import { FunctionComponent } from 'react';
 import { reverseDateDotes } from '../../utils/date.utils';
 import { useTheme } from '../../hooks/useTheme';
+import styled from 'styled-components'
 
 interface BoxProps {
     title?: string,
@@ -16,6 +16,43 @@ interface BoxProps {
     whenAdded?: string
 }
 
+const Grid = styled.div`
+    min-height: 140px;
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-top: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+    background: #1976d2;
+    box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%),
+        0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%);
+    display: grid;
+    grid-template-columns: auto 100px;
+`
+
+const Text = styled.div`
+    margin-left: 10px;
+    margin-block-end: 0.83em;
+    ${this} h2 {
+        margin-block-end: 0.415em;
+    }
+`
+
+const Icon = styled.div`
+    margin: auto;
+    grid-column: 2;
+    grid-row: 1 / 3;
+    ${this} svg {
+        font-size: 2rem;
+    }
+`
+
+const NotSavedText = styled.div`
+    margin: auto;
+    margin-left: 10px;
+`
+
 const Box: FunctionComponent<BoxProps> = ({ title = '', description = '', route, type, isNotSaved, whenAdded }) => {
     const { t } = useTranslation('workout');
     const [getTheme]: any = useTheme()
@@ -23,12 +60,12 @@ const Box: FunctionComponent<BoxProps> = ({ title = '', description = '', route,
     return (
         <Link href={route}>
             <a>
-                <div className={styles.box} style={{ background: isNotSaved ? 'red' : getTheme('PRIMARY') }}>
-                    <div className={styles.boxText}>
+                <Grid style={{ background: isNotSaved ? 'red' : getTheme('PRIMARY') }}>
+                    <Text>
                         <h2>{title}</h2>
-                        <div className={styles.boxTextDescription}>{description}</div>
-                    </div>
-                    <div className={styles.boxImage}>
+                        <div>{description}</div>
+                    </Text>
+                    <Icon>
                         {
                             type === 0
                                 ?
@@ -36,20 +73,20 @@ const Box: FunctionComponent<BoxProps> = ({ title = '', description = '', route,
                                 :
                                 <NoteAltIcon />
                         }
-                    </div>
+                    </Icon>
                     {
                         whenAdded &&
-                        <div className={styles.boxTextNotSaved}>
+                        <NotSavedText>
                             {reverseDateDotes(whenAdded)}
-                        </div>
+                        </NotSavedText>
                     }
                     {
                         isNotSaved &&
-                        <div className={styles.boxTextNotSaved}>
+                        <NotSavedText>
                             {t('Not saved')}
-                        </div>
+                        </NotSavedText>
                     }
-                </div>
+                </Grid>
             </a>
         </Link>
     )
