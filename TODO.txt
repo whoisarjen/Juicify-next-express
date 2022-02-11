@@ -1,10 +1,4 @@
 add cardio exercises + timer i guess
 
 
-keys need to update somehow smart or we can do this as callback from sw but then we need way to refresh sidebar o normal used
-
-
 Fix api call To avoid changing indexeddb before confirm from.db
-
-
-worker need to refreshKey

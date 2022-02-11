@@ -1,3 +1,5 @@
+import { refreshKey } from "../redux/features/key.slice";
+import { store } from "../redux/store";
 import { getIndexedDBbyID } from "../utils/indexedDB.utils";
 import { synchronizationController } from "../utils/synchronization.utils";
 
@@ -15,6 +17,7 @@ self.onmessage = async ({ data: { socketUpdated, updated } }) => {
                 whatToUpdateKey: '',
                 whatToUpdateKeyLevel2: '',
             });
+            store.dispatch(refreshKey('daily_measurement'))
         }
         console.log(`DailyMeasurement_worker is done!`)
     } catch (error: any) {

@@ -1,3 +1,5 @@
+import { refreshKey } from "../redux/features/key.slice";
+import { store } from "../redux/store";
 import { getIndexedDBbyID } from "../utils/indexedDB.utils";
 import { cleanCache, synchronizationController } from "../utils/synchronization.utils";
 
@@ -16,6 +18,7 @@ self.onmessage = async ({ data: { socketUpdated, updated } }) => {
                 whatToUpdateKeyLevel2: '',
             });
             await cleanCache('checked_product')
+            store.dispatch(refreshKey('product'))
         }
         console.log(`Product_worker is done!`)
     } catch (error: any) {

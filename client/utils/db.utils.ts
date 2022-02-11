@@ -145,7 +145,7 @@ export const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, u
         array = await insertThoseIDStoDBOFFLINE(array)
     }
     await addIndexedDB(where, array)
-    if (!await isWorker()) store.dispatch(refreshKey(where))
+    if (!await isWorker()) store.dispatch(refreshKey(where)) // Worker is doing it by self, when ends all operaction, so we avoid multi relogs
     return array
 }
 
@@ -194,7 +194,7 @@ export const overwriteThoseIDSinDB = async (where: string, sentArray: Array<any>
         }
     }
     await addIndexedDB(where, array)
-    if (!await isWorker()) store.dispatch(refreshKey(where))
+    if (!await isWorker()) store.dispatch(refreshKey(where)) // Worker is doing it by self, when ends all operaction, so we avoid multi relogs
     return array;
 }
 
@@ -229,7 +229,7 @@ export const deleteThoseIDSfromDB = async (where: string, array: Array<any>) => 
             await putInformationAboutNeededUpdate(where);
         }
     } finally {
-        if (!await isWorker()) store.dispatch(refreshKey(where))
+        if (!await isWorker()) store.dispatch(refreshKey(where)) // Worker is doing it by self, when ends all operaction, so we avoid multi relogs
         return array;
     }
 }
