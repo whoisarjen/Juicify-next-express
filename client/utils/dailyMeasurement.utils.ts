@@ -1,7 +1,6 @@
 import DailyMeasurementProps from "../interfaces/dailyMeasurement.interface";
 import { addDaysToDate } from "./date.utils";
 import { is_id } from "./db.utils";
-import { getIndexedDBbyID } from "./indexedDB.utils";
 
 export const loadMissingData = ({ _id, user_ID, whenAdded, object = {} }: { _id: string, user_ID: string, whenAdded: string, object: any }) => {
     return {

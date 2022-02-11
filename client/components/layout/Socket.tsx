@@ -76,6 +76,7 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
             socket.on('synchronizationMessege', async (message) => {
                 console.log('synchronizationMessege', message)
                 if (message.socket_ID != await getCookie('socket_ID')) {
+                    console.log('synchronizationMessege passed')
                     if (message.where == 'settings') {
                         dispatch(setToken(await refreshToken()));
                     } else {
@@ -86,9 +87,9 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                             await addIndexedDB(message.where, message.array)
                         }
                     }
+                    dispatch(refreshKey(message.where))
                 }
                 setCookie(message.where, new Date().getTime().toString(), 365)
-                dispatch(refreshKey(message.where))
             })
 
             socket.on('disconnect', () => dispatch(setIsOnline(false))) // Closed socket => user has to be offline

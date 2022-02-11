@@ -5,3 +5,6 @@ keys need to update somehow smart or we can do this as callback from sw but then
 
 
 Fix api call To avoid changing indexeddb before confirm from.db
+
+
+worker need to refreshKey

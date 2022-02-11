@@ -3,6 +3,7 @@ import { store } from '../redux/store'
 import axios from "axios"
 import { setIsOnline } from "../redux/features/online.slice"
 import { prepareToSend } from "./dailyMeasurement.utils"
+import { refreshKey } from "../redux/features/key.slice"
 
 export const loadValueByLogin = async (where: string, find: any, login: string = find) => {
     try {
@@ -144,6 +145,7 @@ export const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, u
         array = await insertThoseIDStoDBOFFLINE(array)
     }
     await addIndexedDB(where, array)
+    if (!await isWorker()) store.dispatch(refreshKey(where))
     return array
 }
 
@@ -192,6 +194,7 @@ export const overwriteThoseIDSinDB = async (where: string, sentArray: Array<any>
         }
     }
     await addIndexedDB(where, array)
+    if (!await isWorker()) store.dispatch(refreshKey(where))
     return array;
 }
 
@@ -226,6 +229,7 @@ export const deleteThoseIDSfromDB = async (where: string, array: Array<any>) => 
             await putInformationAboutNeededUpdate(where);
         }
     } finally {
+        if (!await isWorker()) store.dispatch(refreshKey(where))
         return array;
     }
 }
@@ -240,4 +244,8 @@ export const isWorker = async () => {
     } catch {
         return true;
     }
+}
+
+function dispatch(arg0: any) {
+    throw new Error("Function not implemented.")
 }
