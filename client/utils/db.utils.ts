@@ -31,8 +31,6 @@ export const loadValueByLogin = async (where: string, find: any, login: string =
 export const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, updateDailyKey?: string, updateDailyKeyLevel2?: string, updateDailyKeyLevel3?: string, whatToUpdate?: string, whatToUpdateKey?: string, whatToUpdateKeyLevel2?: string) => {
     let array = JSON.parse(JSON.stringify(sentArray))
     const arrayIDSbeforeInsert = []
-    let updateDailyKeyArray: any = false
-    let whatToUpdateArray: any = false
     try {
 
         if (!store.getState().online.isOnline && !await isWorker()) {
@@ -50,9 +48,6 @@ export const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, u
             }
         }
 
-        if (updateDailyKey) updateDailyKeyArray = await getAllIndexedDB('daily_measurement')
-        if (whatToUpdate) whatToUpdateArray = await getAllIndexedDB(whatToUpdate)
-
         const res = await axios.post(`${process.env.NEXT_PUBLIC_SERVER}/insert/${where}`, { array }, { withCredentials: true });
 
         array = JSON.parse(JSON.stringify(res.data));
@@ -63,8 +58,8 @@ export const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, u
             }
         }
 
-        await handleUpdateDailyKey({ updateDailyKey, updateDailyKeyArray, updateDailyKeyLevel2, updateDailyKeyLevel3, arrayIDSbeforeInsert, array })
-        await handleUpdateKey({ whatToUpdate, whatToUpdateArray, whatToUpdateKey, whatToUpdateKeyLevel2, arrayIDSbeforeInsert, array })
+        await handleUpdateDailyKey({ updateDailyKey, updateDailyKeyLevel2, updateDailyKeyLevel3, arrayIDSbeforeInsert, array })
+        await handleUpdateKey({ whatToUpdate, whatToUpdateKey, whatToUpdateKeyLevel2, arrayIDSbeforeInsert, array })
 
     } catch (error: any) {
 

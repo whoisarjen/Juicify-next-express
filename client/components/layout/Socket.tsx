@@ -87,7 +87,7 @@ const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
                             await addIndexedDB(message.where, message.array)
                         }
                     }
-                    dispatch(refreshKey(message.where))
+                    dispatch(refreshKey(message.where)) // it can NOT be outsite. The call is reaching before indexedDB settle value
                 }
                 setCookie(message.where, new Date().getTime().toString(), 365)
             })
