@@ -19,7 +19,10 @@
     "Exercises are incorrect": "Ćwiczenia są niepoprawne",
     "Create exercise": "Stwórz ćwiczenie",
     "Create exercise description": "Możesz stworzyć własne ćwiczenie, a następnie zdecydować, czy chcesz, aby było ono dostępne dla każdego.",
-    "Submit": "Submit",
-    "Cancel": "Cancel",
-    "Name of exercise": "Name of exercise"
+    "Submit": "OK",
+    "Cancel": "Anuluj",
+    "Name of exercise": "Nazwa ćwiczenia",
+    "NAME_OF_WORKOUT": "Nazwa treningu",
+    "DESCRIPTION": "Opis",
+    "BURNT_CALORIES": "Spalone kalorie"
 }

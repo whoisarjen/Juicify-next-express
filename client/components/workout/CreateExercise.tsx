@@ -10,7 +10,7 @@ import useTranslation from 'next-translate/useTranslation';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNotify } from '../../hooks/useNotify';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CreateExerciseInput, createExerciseSchema } from '../../schema/exercise.schema';
+import { CreateExerciseSchema, CreateExerciseSchemaProps } from '../../schema/exercise.schema';
 import { useForm } from 'react-hook-form';
 import { insertThoseIDStoDB } from '../../utils/db.utils';
 
@@ -31,11 +31,11 @@ const CreateExercise: FunctionComponent<CreateExerciseProps> = ({ closeCreateExe
         }
     };
 
-    const { register, formState: { errors }, handleSubmit } = useForm<CreateExerciseInput>({
-        resolver: zodResolver(createExerciseSchema)
+    const { register, formState: { errors }, handleSubmit } = useForm<CreateExerciseSchemaProps>({
+        resolver: zodResolver(CreateExerciseSchema)
     })
 
-    const onSubmit = async (values: CreateExerciseInput) => {
+    const onSubmit = async (values: CreateExerciseSchemaProps) => {
         setLoading(true);
         await insertThoseIDStoDB('exercise', [values])
             .then(() => created(values.name))

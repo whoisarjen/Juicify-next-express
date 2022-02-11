@@ -14,7 +14,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNotify } from "../hooks/useNotify";
-import { createUserSchema, CreateUserInput } from '../schema/user.schema'
+import { CreateUserSchema, CreateUserSchemaProps } from '../schema/user.schema'
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -51,11 +51,11 @@ const Register = () => {
         }
     };
 
-    const { register, formState: { errors }, handleSubmit } = useForm<CreateUserInput>({
-        resolver: zodResolver(createUserSchema)
+    const { register, formState: { errors }, handleSubmit } = useForm<CreateUserSchemaProps>({
+        resolver: zodResolver(CreateUserSchema)
     })
 
-    const onSubmit = async (values: CreateUserInput) => {
+    const onSubmit = async (values: CreateUserSchemaProps) => {
         try {
             setLoading(true);
             await axios.post(

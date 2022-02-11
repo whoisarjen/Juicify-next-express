@@ -2,5 +2,6 @@
     "ERROR_403": "Strona nie jest dla Ciebie dostępna",
     "ERROR_404": "Strona nie istnieje",
     "WE_GOT_A_PROBLEM": "Mamy problem!",
-    "WE_GOT_A_PROBLEM_DESCRIPTION": "Twoja przeglądarka jest za stara. Jeżeli chcesz używać Juicify, musisz skorzystać z nowszej."
+    "WE_GOT_A_PROBLEM_DESCRIPTION": "Twoja przeglądarka jest za stara. Jeżeli chcesz używać Juicify, musisz skorzystać z nowszej.",
+    "ADD_SOME_EXERCISES": "Musisz dodać ćwiczenie"
 }

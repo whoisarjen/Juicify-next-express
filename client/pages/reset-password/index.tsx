@@ -10,7 +10,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNotify } from "../../hooks/useNotify";
-import { remindPasswordUserSchema, RemindPasswordUserInput } from '../../schema/user.schema'
+import { RemindPasswordUserSchema, RemindPasswordUserSchemaProps } from '../../schema/user.schema'
 import styled from 'styled-components'
 
 const Box = styled.div`
@@ -40,11 +40,11 @@ const ResetPassword = () => {
         }
     };
 
-    const { register, formState: { errors }, handleSubmit } = useForm<RemindPasswordUserInput>({
-        resolver: zodResolver(remindPasswordUserSchema)
+    const { register, formState: { errors }, handleSubmit } = useForm<RemindPasswordUserSchemaProps>({
+        resolver: zodResolver(RemindPasswordUserSchema)
     })
 
-    const onSubmit = async (values: RemindPasswordUserInput) => {
+    const onSubmit = async (values: RemindPasswordUserSchemaProps) => {
         try {
             setLoading(true);
             await axios.post(

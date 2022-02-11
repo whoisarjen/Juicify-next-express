@@ -7,6 +7,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import useTranslation from "next-translate/useTranslation"
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 import { FunctionComponent } from "react";
+import styled from 'styled-components'
 
 interface NavbarProps {
     title: string,
@@ -15,6 +16,13 @@ interface NavbarProps {
     setIsDialog: (arg0: boolean) => void,
     saveWorkout: () => void
 }
+
+const Grid = styled.div`
+    width: 100%;
+    display: grid;
+    grid-template-columns: 44px 1fr 44px auto;
+    margin: auto;
+`
 
 const Navbar: FunctionComponent<NavbarProps> = ({ title, where, saveLoading, setIsDialog, saveWorkout }) => {
     const router = useRouter()
@@ -25,7 +33,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({ title, where, saveLoading, set
     return (
         <>
             <div className="title">{t(`${title}`)}</div>
-            <div className="grid4WithButton">
+            <Grid>
                 <IconButton aria-label="route" onClick={() => router.push(`/${router.query.login}/${where}`)} sx={{ margin: 'auto' }}>
                     <KeyboardBackspaceIcon />
                 </IconButton>
@@ -52,7 +60,7 @@ const Navbar: FunctionComponent<NavbarProps> = ({ title, where, saveLoading, set
                             <div />
                         </>
                 }
-            </div>
+            </Grid>
         </>
     );
 }

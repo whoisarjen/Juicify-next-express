@@ -1,6 +1,6 @@
 import { boolean, number, object, preprocess, string, TypeOf } from 'zod'
 
-export const productSchema = object({
+export const CreateProductSchema = object({
     name: string().min(3),
     p: preprocess((val: any) => Number(val || 0), number().optional()),
     c: preprocess((val: any) => Number(val || 0), number().optional()),
@@ -13,4 +13,4 @@ export const productSchema = object({
     checkMe: boolean().optional(),
 })
 
-export type productSchemaProps = TypeOf<typeof productSchema>
+export type CreateProductSchemaProps = TypeOf<typeof CreateProductSchema>

@@ -15,9 +15,8 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { useNotify } from '../../hooks/useNotify';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { productSchema, productSchemaProps } from '../../schema/product.schema';
+import { CreateProductSchema, CreateProductSchemaProps } from '../../schema/product.schema';
 import InputAdornment from '@mui/material/InputAdornment';
-import { TypeOf } from 'zod';
 
 interface CreateProductProps {
     closeCreateProduct: () => void,
@@ -33,11 +32,11 @@ const CreateProduct: FunctionComponent<CreateProductProps> = ({ closeCreateProdu
     const token: any = useAppSelector(state => state.token.value)
     const [{ success, error }] = useNotify()
 
-    const { register, formState: { errors }, handleSubmit } = useForm<productSchemaProps>({
-        resolver: zodResolver(productSchema)
+    const { register, formState: { errors }, handleSubmit } = useForm<CreateProductSchemaProps>({
+        resolver: zodResolver(CreateProductSchema)
     })
 
-    const onSubmit = async (values: productSchemaProps) => {
+    const onSubmit = async (values: CreateProductSchemaProps) => {
         try {
             const copyValues = { ...values }
             for (const key in copyValues) {

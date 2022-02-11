@@ -146,13 +146,6 @@ input[type="number"] {
   margin: auto 0;
 }
 
-.grid4WithButton {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 44px 1fr 44px auto;
-  margin: auto;
-}
-
 .css-169iwlq-MuiCalendarPicker-root {
   max-width: 100%;
 }

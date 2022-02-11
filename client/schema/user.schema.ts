@@ -1,7 +1,7 @@
 import { boolean, number, object, preprocess, string, TypeOf } from 'zod'
 import errorBook from '../utils/error.utils'
 
-export const createUserSchema = object({
+export const CreateUserSchema = object({
     login: string({
         required_error: errorBook['LOGIN IS REQUIRED']['VALUE']
     }).min(3),
@@ -29,10 +29,10 @@ export const createUserSchema = object({
     path: ['passwordConfirmation']
 })
 
-export type CreateUserInput = Omit<TypeOf<typeof createUserSchema>, "body.passwordConfirmation">
+export type CreateUserSchemaProps = Omit<TypeOf<typeof CreateUserSchema>, "body.passwordConfirmation">
 
-export const remindPasswordUserSchema = object({
+export const RemindPasswordUserSchema = object({
     email: string()
 })
 
-export type RemindPasswordUserInput = Omit<TypeOf<typeof remindPasswordUserSchema>, "body.passwordConfirmation">
+export type RemindPasswordUserSchemaProps = Omit<TypeOf<typeof RemindPasswordUserSchema>, "body.passwordConfirmation">

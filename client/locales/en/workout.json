@@ -16,10 +16,12 @@
     "Add some results": "Add some results",
     "Title is incorrect": "Title is incorrect",
     "Description is incorrect": "Description is incorrect",
-    "Exercises are incorrect": "Exercises are incorrect",
     "Create exercise": "Create exercise",
     "Create exercise description": "You can create your own exercise and decide, if it should be available for every user.",
-    "Submit": "OK",
-    "Cancel": "Anuluj",
-    "Name of exercise": "Nazwa ćwiczenia"
+    "Submit": "Submit",
+    "Cancel": "Cancel",
+    "Name of exercise": "Name of exercise",
+    "NAME_OF_WORKOUT": "Name of workout",
+    "DESCRIPTION": "Description",
+    "BURNT_CALORIES": "Burnt calories"
 }

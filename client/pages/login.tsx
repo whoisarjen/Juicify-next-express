@@ -16,7 +16,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNotify } from "../hooks/useNotify";
-import { createSessionSchema, CreateSessionProps } from '../schema/session.schema'
+import { CreateSessionSchema, CreateSessionSchemaProps } from '../schema/session.schema'
 import styled from 'styled-components'
 
 const Box = styled.div`
@@ -48,11 +48,11 @@ const Login = () => {
         }
     };
 
-    const { register, formState: { errors }, handleSubmit } = useForm<CreateSessionProps>({
-        resolver: zodResolver(createSessionSchema)
+    const { register, formState: { errors }, handleSubmit } = useForm<CreateSessionSchemaProps>({
+        resolver: zodResolver(CreateSessionSchema)
     })
 
-    const onSubmit = async (values: CreateSessionProps) => {
+    const onSubmit = async (values: CreateSessionSchemaProps) => {
         try {
             setLoading(true);
             const response = await axios.post(

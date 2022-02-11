@@ -8,7 +8,7 @@ interface NotifyProps {
 }
 
 const Notify: FunctionComponent<NotifyProps> = ({ children }) => {
-    const { t } = useTranslation('home')
+    const { t } = useTranslation('error')
 
     const notifyOptions = useMemo(
         () => ({

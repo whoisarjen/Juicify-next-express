@@ -1,7 +1,7 @@
 import { object, string, TypeOf } from "zod"
 import errorBook from "../utils/error.utils"
 
-export const createSessionSchema = object({
+export const CreateSessionSchema = object({
     login: string({
         required_error: errorBook['LOGIN IS REQUIRED']['VALUE']
     }).min(3),
@@ -10,4 +10,4 @@ export const createSessionSchema = object({
     }).min(8)
 })
 
-export type CreateSessionProps = TypeOf<typeof createSessionSchema>
+export type CreateSessionSchemaProps = TypeOf<typeof CreateSessionSchema>
