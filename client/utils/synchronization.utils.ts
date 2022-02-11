@@ -97,7 +97,7 @@ export const synchronizationController = async (
                 }
                 if (data.length) {
                     for (let a = 0; a < data.length; a++) {
-                        await deleteIndexedDB(where, data[a]._id)
+                        await deleteIndexedDB(where, data[a][where == 'daily_measurement' ? 'whenAdded' : '_id'])
                     }
                     await addIndexedDB(where, data)
                 }

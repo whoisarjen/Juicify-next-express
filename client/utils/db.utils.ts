@@ -149,53 +149,41 @@ export const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, u
     return array
 }
 
-export const overwriteThoseIDSinDB = async (where: string, sentArray: Array<any>): Promise<Array<any>> => {
+export const overwriteThoseIDSinDB = async (where: string, sentArray: Array<any>) => {
     let array = JSON.parse(JSON.stringify(sentArray))
-    const isOnline = store.getState().online.isOnline
-    let originalArray = JSON.parse(JSON.stringify(array.map((x: any) => {
-        x.changed = true
-        return x
-    })));
-    for (let i = 0; i < array.length; i++) {
-        await deleteIndexedDB(where, array[i][where == 'daily_measurement' ? 'whenAdded' : '_id'])
+    try {
+        if (!store.getState().online.isOnline && !await isWorker()) {
+            throw 'User is offline. Skip to catch method';
+        }
         if (where == 'daily_measurement') {
-            array[i].whenAdded = new Date(array[i].whenAdded).toISOString()
-            if (isOnline || await isWorker()) {
+            for (let i = 0; i < array.length; i++) {
                 array[i] = await prepareToSend(array[i], true)
             }
         }
-    }
-    if (isOnline || await isWorker()) {
-        try {
-            const res = await axios.post(
-                `${process.env.NEXT_PUBLIC_SERVER}/update/${where}`,
-                { array },
-                { withCredentials: true }
-            );
-            let originalSentArray = JSON.parse(JSON.stringify(array));
-            array = JSON.parse(JSON.stringify(res.data));
-            if (where == 'daily_measurement') {
-                for (let i = 0; i < originalSentArray.length; i++) {
-                    if (originalSentArray[i].nutrition_diary && originalSentArray[i].nutrition_diary.length > 0) {
-                        for (let a = 0; a < originalSentArray[i].nutrition_diary.length; a++) {
-                            originalSentArray[i].nutrition_diary[a]._id = array[i].nutrition_diary[a]._id
-                            array[i].nutrition_diary[a] = originalSentArray[i].nutrition_diary[a]
-                        }
-                    }
-                }
-            }
-        } catch (error: any) {
-            if (!await isWorker()) {
-                console.log(error)
-                store.dispatch(setIsOnline(false))
-                await putInformationAboutNeededUpdate(where);
-                return await overwriteThoseIDSinDB(where, originalArray)
-            }
+        const res = await axios.post(
+            `${process.env.NEXT_PUBLIC_SERVER}/update/${where}`,
+            { array },
+            { withCredentials: true }
+        );
+        array = JSON.parse(JSON.stringify(res.data));
+    } catch (error: any) {
+        console.log(error)
+        if (!await isWorker()) {
+            store.dispatch(setIsOnline(false))
+            await putInformationAboutNeededUpdate(where);
+            array.map((x: any) => {
+                x.changed = true
+                return x
+            })
         }
+    } finally {
+        for (let i = 0; i < array.length; i++) {
+            await deleteIndexedDB(where, array[i][where == 'daily_measurement' ? 'whenAdded' : '_id']) // Can't be connected above
+        }
+        await addIndexedDB(where, array)
+        if (!await isWorker()) store.dispatch(refreshKey(where)) // Worker is doing it by self, when all operactions are done, so we avoid multi reloads
+        return array;
     }
-    await addIndexedDB(where, array)
-    if (!await isWorker()) store.dispatch(refreshKey(where)) // Worker is doing it by self, when ends all operaction, so we avoid multi relogs
-    return array;
 }
 
 export const deleteThoseIDSfromDB = async (where: string, array: Array<any>) => {
@@ -244,8 +232,4 @@ export const isWorker = async () => {
     } catch {
         return true;
     }
-}
-
-function dispatch(arg0: any) {
-    throw new Error("Function not implemented.")
 }

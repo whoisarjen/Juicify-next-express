@@ -5,7 +5,7 @@ import { synchronizationController } from "../utils/synchronization.utils";
 
 self.onmessage = async ({ data: { socketUpdated, updated } }) => {
     try {
-        console.log(`DailyMeasurement_worker is starting the job with updated ${updated}`)
+        console.log(`DailyMeasurement_worker is starting the job with updated ${store.getState().online.isOnline}`)
         if (navigator.onLine && socketUpdated > updated || await getIndexedDBbyID('whatToUpdate', 'daily_measurement')) {
             await synchronizationController({
                 isNewValueInDB: socketUpdated > updated,
