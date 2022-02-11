@@ -55,11 +55,7 @@ const Login = () => {
     const onSubmit = async (values: CreateSessionSchemaProps) => {
         try {
             setLoading(true);
-            const response = await axios.post(
-                `${process.env.NEXT_PUBLIC_SERVER}/auth/login`,
-                values,
-                { withCredentials: true }
-            );
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_SERVER}/auth/login`, values, { withCredentials: true });
             await deleteDatabaseIndexedDB();
             await createIndexedDB()
             const keys = Object.keys(response.data)

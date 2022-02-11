@@ -3,15 +3,15 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { loadValueByLogin } from '../utils/db.utils'
 import { getIndexedDBbyID } from '../utils/indexedDB.utils'
-import WorkoutPlanProps from '../interfaces/workout/workoutPlan.interface'
 import { useAppSelector } from './useRedux'
 import { loadMissingData } from '../utils/workoutPlan.utils'
+import { WorkoutPlanSchemaProps } from '../schema/workoutPlan.schema'
 
 const useWorkoutPlan = (workoutPlanID: string): [any, () => void] => {
     const router: any = useRouter()
     const [user, setUser] = useState({})
     const [reload, setReload] = useState(0)
-    const [data, setData] = useState<boolean | WorkoutPlanProps>(false)
+    const [data, setData] = useState<boolean | WorkoutPlanSchemaProps>(false)
     const token: any = useAppSelector(state => state.token.value)
     const reloadKey = useAppSelector(state => state.key.workout_plan)
 
@@ -19,7 +19,7 @@ const useWorkoutPlan = (workoutPlanID: string): [any, () => void] => {
         (async () => {
             if (workoutPlanID) {
                 if (token.login == router.query.login) {
-                    const workoutPlan: WorkoutPlanProps = await getIndexedDBbyID('workout_plan', workoutPlanID)
+                    const workoutPlan: WorkoutPlanSchemaProps = await getIndexedDBbyID('workout_plan', workoutPlanID)
                     if (workoutPlan) {
                         setUser(token)
                         setData(

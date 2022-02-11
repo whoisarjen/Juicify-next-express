@@ -12,11 +12,11 @@ import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../../../ut
 import useTranslation from "next-translate/useTranslation";
 import AddResultMoreOptions from '../../../../components/workout/AddResultMoreOptions'
 import BottomFlyingGuestBanner from '../../../../components/common/BottomFlyingGuestBanner'
-import ExerciseProps from '../../../../interfaces/workout/exercise.interface';
 import WorkoutResultProps from '../../../../interfaces/workout/workoutResult.interface';
 import { useNotify } from '../../../../hooks/useNotify';
 import ResultProps from '../../../../interfaces/workout/result.interface';
 import ValueProps from '../../../../interfaces/workout/value.interface';
+import { ExerciseSchemaProps } from '../../../../schema/exercise.schema';
 
 const WorkoutResultsID: FunctionComponent = () => {
     const router: any = useRouter()
@@ -126,13 +126,13 @@ const WorkoutResultsID: FunctionComponent = () => {
         setDeleteExercise(false)
     }
 
-    const handleNewExercises = async (array: Array<ExerciseProps>) => {
-        const newResults: Array<ResultProps> = [
+    const handleNewExercises = async (array: Array<ExerciseSchemaProps>) => {
+        const newResults = [
             ...results,
-            ...array.map((exerciseLocally: ExerciseProps) => {
+            ...array.map((exerciseLocally: ExerciseSchemaProps) => {
                 return {
-                    _id: exerciseLocally._id,
-                    name: exerciseLocally.name,
+                    ...(exerciseLocally._id && { _id: exerciseLocally._id }),
+                    ...(exerciseLocally.name && { name: exerciseLocally.name }),
                     values: []
                 }
             })
@@ -175,7 +175,7 @@ const WorkoutResultsID: FunctionComponent = () => {
                 where="workout-results"
                 saveLoading={saveLoading}
                 saveWorkout={saveWorkoutResult}
-                setIsDialog={(Boolean: boolean) => setIsDialog(Boolean)}
+                deleteWorkout={deleteWorkoutResult}
             />
             <TextField
                 id="outlined-basic"
@@ -248,9 +248,9 @@ const WorkoutResultsID: FunctionComponent = () => {
             />
             {
                 results && results.map((result: ResultProps, index: number) =>
-                    <div style={results.length == (index + 1) ? { marginBottom: '100px' } : {}} key={result._id + index}>
+                    <div style={results.length == (index + 1) ? { marginBottom: '100px' } : {}} key={(result._id || '') + index}>
                         <AddResultValues
-                            key={result._id + index}
+                            key={(result._id || '') + index}
                             result={result}
                             isOwner={isOwner}
                             setNewValues={(values: Array<ValueProps>) => setNewValues(values, index)}
@@ -264,11 +264,6 @@ const WorkoutResultsID: FunctionComponent = () => {
                     (
                         <>
                             <ConfirmDialog isDialog={deleteExercises ? true : false} closeDialog={() => setDeleteExercise(false)} confirm={() => handleDeleteExercise([deleteExercises])} />
-                            <ConfirmDialog
-                                isDialog={isDialog}
-                                confirm={deleteWorkoutResult}
-                                closeDialog={() => setIsDialog(false)}
-                            />
                             <AddResultMoreOptions
                                 exercises={[...results.map((x: any) => {
                                     x.l = x.name.length

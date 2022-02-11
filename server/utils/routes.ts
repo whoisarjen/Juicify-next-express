@@ -7,10 +7,10 @@ import { createSessionSchema } from '../mongoDB/schema/session.schema';
 import requireUser from '../mongoDB/middleware/requireUser'
 import { createProductSchema } from '../mongoDB/schema/product.schema';
 import { createProductHandler, deleteManyProductHandler, getProductByCodeHandler, getProductByNameHandler } from '../mongoDB/controller/product.controller';
-import { createExerciseSchema } from '../mongoDB/schema/exercise.schema';
+import { CreateExerciseSchema } from '../mongoDB/schema/exercise.schema';
 import { createExerciseHandler, deleteManyExerciseHandler, getExerciseByNameHandler } from '../mongoDB/controller/exercise.controller';
-import { createWorkoutPlanSchema } from '../mongoDB/schema/workoutPlan.schema';
-import { createWorkoutPlanHandler, deleteManyWorkoutPlanHandler, getGuestWorkoutPlanHandler, getGuestWorkoutPlansHandler } from '../mongoDB/controller/workoutPlan.controller';
+import { CreateWorkoutPlanSchema } from '../mongoDB/schema/workoutPlan.schema';
+import { createWorkoutPlansController, deleteWorkoutPlansController, getGuestWorkoutPlansController, getGuestWorkoutPlanController, updateWorkoutPlansController } from '../mongoDB/controller/workoutPlan.controller';
 import { createDailyMeasurementSchema } from '../mongoDB/schema/dailyMeasurement.schema'
 import { createDailyMeasurementHandler, changeDailyMeasurementHandler, getGuestDailyMeasurementHandler } from '../mongoDB/controller/dailyMeasurement.controller'
 import { getGuestDailyMeasurementsHandler } from '../mongoDB/controller/dailyMeasurements.controller'
@@ -39,13 +39,14 @@ const routes = (app: Express) => {
     app.post('/delete/product', requireUser, deleteManyProductHandler)
 
     app.post('/find/exercises', validateResource(findSchema), getExerciseByNameHandler)
-    app.post('/insert/exercise', requireUser, validateResource(createExerciseSchema), createExerciseHandler)
+    app.post('/insert/exercise', requireUser, validateResource(CreateExerciseSchema), createExerciseHandler)
     app.post('/delete/exercise', requireUser, deleteManyExerciseHandler)
 
-    app.post('/guest/workout_plan', getUserByLogin, validateResource(findSchema), getGuestWorkoutPlanHandler)
-    app.post('/guest/workout_plans', getUserByLogin, validateResource(findSchema), getGuestWorkoutPlansHandler)
-    app.post('/insert/workout_plan', requireUser, validateResource(createWorkoutPlanSchema), createWorkoutPlanHandler)
-    app.post('/delete/workout_plan', requireUser, deleteManyWorkoutPlanHandler)
+    app.post('/guest/workout_plan', getUserByLogin, validateResource(findSchema), getGuestWorkoutPlanController)
+    app.post('/guest/workout_plans', getUserByLogin, validateResource(findSchema), getGuestWorkoutPlansController)
+    app.post('/insert/workout_plan', requireUser, validateResource(CreateWorkoutPlanSchema), createWorkoutPlansController)
+    app.post('/update/workout_plan', requireUser, validateResource(CreateWorkoutPlanSchema), updateWorkoutPlansController)
+    app.post('/delete/workout_plan', requireUser, deleteWorkoutPlansController)
 
     app.post('/guest/daily_measurement', getUserByLogin, validateResource(findSchema), getGuestDailyMeasurementHandler)
     app.post('/guest/daily_measurements', getUserByLogin, validateResource(findSchema), getGuestDailyMeasurementsHandler)

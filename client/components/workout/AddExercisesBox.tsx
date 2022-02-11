@@ -5,10 +5,10 @@ import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import { FunctionComponent, useEffect, useState } from 'react'
 import { addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../utils/indexedDB.utils';
 import { useTheme } from '../../hooks/useTheme';
-import ExerciseProps from '../../interfaces/workout/exercise.interface';
+import { ExerciseSchemaProps } from '../../schema/exercise.schema';
 
 interface AddProductsBox {
-    exercise: ExerciseProps,
+    exercise: ExerciseSchemaProps,
     refreshCheckedExercises: () => void
 }
 
@@ -20,7 +20,7 @@ const AddProductsBox: FunctionComponent<AddProductsBox> = ({ exercise, refreshCh
     const handleLike = async () => {
         if (fav) {
             setFav(false)
-            await deleteIndexedDB('favourite_exercise', exercise._id)
+            if (exercise._id) await deleteIndexedDB('favourite_exercise', exercise._id)
         } else {
             setFav(true)
             await addIndexedDB('favourite_exercise', [exercise])
@@ -30,7 +30,7 @@ const AddProductsBox: FunctionComponent<AddProductsBox> = ({ exercise, refreshCh
     const handleCheck = async () => {
         if (checked) {
             setChecked(false)
-            await deleteIndexedDB('checked_exercise', exercise._id)
+            if (exercise._id) await deleteIndexedDB('checked_exercise', exercise._id)
         } else {
             setChecked(true)
             await addIndexedDB('checked_exercise', [exercise])
@@ -40,8 +40,8 @@ const AddProductsBox: FunctionComponent<AddProductsBox> = ({ exercise, refreshCh
 
     useEffect(() => {
         (async () => {
-            await getIndexedDBbyID('favourite_exercise', exercise._id) ? setFav(true) : setFav(false)
-            await getIndexedDBbyID('checked_exercise', exercise._id) ? setChecked(true) : setChecked(false)
+            if (exercise._id) await getIndexedDBbyID('favourite_exercise', exercise._id) ? setFav(true) : setFav(false)
+            if (exercise._id) await getIndexedDBbyID('checked_exercise', exercise._id) ? setChecked(true) : setChecked(false)
         })()
     }, [])
 

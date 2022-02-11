@@ -15,7 +15,7 @@ import useTranslation from "next-translate/useTranslation";
 import { deleteIndexedDB, getAllIndexedDB } from '../../utils/indexedDB.utils';
 import CreateExercise from './CreateExercise';
 import { TransitionProps } from '@material-ui/core/transitions';
-import ExerciseProps from '../../interfaces/workout/exercise.interface';
+import { ExerciseSchemaProps } from '../../schema/exercise.schema';
 
 
 const Transition = forwardRef(function Transition(
@@ -30,8 +30,8 @@ const Transition = forwardRef(function Transition(
 interface AddDialogProps {
     isAddDialog: boolean,
     closeDialog: () => void,
-    skipThoseIDS: Array<ExerciseProps>,
-    addThoseExercises: (Arg0: Array<ExerciseProps>) => void
+    skipThoseIDS: Array<ExerciseSchemaProps>,
+    addThoseExercises: (Arg0: Array<ExerciseSchemaProps>) => void
 }
 
 const AddDialog: FunctionComponent<AddDialogProps> = ({ isAddDialog, closeDialog, skipThoseIDS, addThoseExercises }) => {
@@ -47,7 +47,9 @@ const AddDialog: FunctionComponent<AddDialogProps> = ({ isAddDialog, closeDialog
 
     const addExercisesToWorkoutPlan = async () => {
         setLoadingButton(true)
-        checked.forEach(async (x: ExerciseProps) => await deleteIndexedDB('checked_exercise', x._id))
+        checked.forEach(async (x: ExerciseSchemaProps) => {
+            if (x._id) await deleteIndexedDB('checked_exercise', x._id)
+        })
         addThoseExercises(checked)
         setLoadingButton(false)
         closeDialog()
@@ -122,7 +124,7 @@ const AddDialog: FunctionComponent<AddDialogProps> = ({ isAddDialog, closeDialog
                     </Tabs>
                     {
                         items &&
-                        items.map((item: ExerciseProps) =>
+                        items.map((item: ExerciseSchemaProps) =>
                             <AddExercisesBox refreshCheckedExercises={() => setRefreshChecked(refreshChecked + 1)} exercise={item} key={item._id} />
                         )
                     }

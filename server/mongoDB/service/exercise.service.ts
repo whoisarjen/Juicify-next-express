@@ -1,6 +1,5 @@
 import { omit } from 'lodash'
 import { DocumentDefinition } from 'mongoose'
-import { ResultProps } from '../models/dailyMeasurement.model'
 import { ExerciseModel, ExerciseProps } from '../models/exercise.model'
 import { UserProps } from '../models/user.model'
 

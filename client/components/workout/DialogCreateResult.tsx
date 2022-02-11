@@ -17,8 +17,8 @@ import DatePicker from '../common/MobileDatePicker'
 import Link from 'next/link'
 import { getShortDate } from '../../utils/date.utils'
 import WorkoutResultProps from '../../interfaces/workout/workoutResult.interface'
-import ExerciseProps from '../../interfaces/workout/exercise.interface'
-import WorkoutPlanProps from '../../interfaces/workout/workoutPlan.interface'
+import { ExerciseSchemaProps } from '../../schema/exercise.schema'
+import { WorkoutPlanSchemaProps } from '../../schema/workoutPlan.schema'
 
 const DialogCreateResult: FunctionComponent = () => {
     const router = useRouter()
@@ -41,7 +41,7 @@ const DialogCreateResult: FunctionComponent = () => {
                     workout_plan_ID: workoutPlan[0]._id,
                     _id: createdID,
                     results: [
-                        ...workoutPlan[0].exercises.map((exercise: ExerciseProps) => {
+                        ...workoutPlan[0].exercises.map((exercise: ExerciseSchemaProps) => {
                             return {
                                 ...exercise,
                                 values: []
@@ -95,7 +95,7 @@ const DialogCreateResult: FunctionComponent = () => {
                             onChange={(event) => setWorkoutPlanID(event.target.value)}
                         >
                             {
-                                data && data.map((plan: WorkoutPlanProps) =>
+                                data && data.map((plan: WorkoutPlanSchemaProps) =>
                                     <MenuItem value={plan._id} key={plan._id}>{plan.title}</MenuItem>
                                 )
                             }

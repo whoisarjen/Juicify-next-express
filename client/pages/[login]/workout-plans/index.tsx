@@ -7,7 +7,7 @@ import useTranslation from "next-translate/useTranslation";
 import { FunctionComponent } from 'react';
 import Navbar from '../../../components/profile/Navbar';
 import { useAppSelector } from '../../../hooks/useRedux';
-import WorkoutPlanProps from '../../../interfaces/workout/workoutPlan.interface';
+import { WorkoutPlanSchemaProps } from '../../../schema/workoutPlan.schema';
 
 const WorkoutPlans: FunctionComponent = () => {
     const router = useRouter()
@@ -35,7 +35,7 @@ const WorkoutPlans: FunctionComponent = () => {
                     )
             }
             {
-                data && data.map((plan: WorkoutPlanProps) =>
+                data && data.map((plan: WorkoutPlanSchemaProps) =>
                     <Box
                         title={plan.title}
                         description={plan.description}

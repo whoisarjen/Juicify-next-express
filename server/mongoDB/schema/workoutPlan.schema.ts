@@ -1,20 +1,12 @@
-import { array, object, string, TypeOf } from 'zod'
-import errorBook from '../../utils/errorBook'
-import { exerciseSchema } from './exercise.schema'
+import { array, object, TypeOf } from 'zod'
+import { WorkoutPlanSchema } from '../../../client/schema/workoutPlan.schema'
 
-export const createWorkoutPlanSchema = object({
+export const CreateWorkoutPlanSchema = object({
     body: object({
         array: array(
-            object({
-                title: string({
-                    required_error: errorBook['TITLE IS REQUIRED']['VALUE']
-                }),
-                exercises: array(
-                    exerciseSchema
-                )
-            })
+            WorkoutPlanSchema
         )
     })
 })
 
-export type CreateWorkoutPlanInput = TypeOf<typeof createWorkoutPlanSchema>
+export type CreateWorkoutPlanSchemaProps = TypeOf<typeof CreateWorkoutPlanSchema>

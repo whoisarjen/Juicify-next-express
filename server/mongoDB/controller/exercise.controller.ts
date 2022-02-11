@@ -1,11 +1,11 @@
 import logger from '../../utils/logger'
 import { Request, Response } from "express"
 import { ExerciseProps } from "../models/exercise.model"
-import { CreateExerciseInput } from "../schema/exercise.schema"
+import { CreateExerciseSchemaProps } from "../schema/exercise.schema"
 import { createExercise, deleteManyExercise, getExerciseByName, getUserExercises } from "../service/exercise.service"
 import { socketHandleUserSynchronization } from '../../utils/socket'
 
-export const createExerciseHandler = async (req: Request<{}, {}, CreateExerciseInput['body']>, res: Response) => {
+export const createExerciseHandler = async (req: Request<{}, {}, CreateExerciseSchemaProps['body']>, res: Response) => {
     try {
         const exercise = await createExercise(req.body.array)
         await socketHandleUserSynchronization({ req, res, data: exercise, whatToDo: 'change', where: 'exercise' })
@@ -16,7 +16,7 @@ export const createExerciseHandler = async (req: Request<{}, {}, CreateExerciseI
     }
 }
 
-export const deleteManyExerciseHandler = async (req: Request<{}, {}, CreateExerciseInput['body']>, res: Response) => {
+export const deleteManyExerciseHandler = async (req: Request<{}, {}, CreateExerciseSchemaProps['body']>, res: Response) => {
     try {
         req.body.array.forEach(async (Exercise: ExerciseProps) => {
             await deleteManyExercise({
@@ -32,7 +32,7 @@ export const deleteManyExerciseHandler = async (req: Request<{}, {}, CreateExerc
     }
 }
 
-export const getUserExercisesHandler = async (req: Request<{}, {}, CreateExerciseInput['body']>, res: Response) => {
+export const getUserExercisesHandler = async (req: Request<{}, {}, CreateExerciseSchemaProps['body']>, res: Response) => {
     try {
         const exercises = await getUserExercises(res.locals.token)
         return res.send(exercises);

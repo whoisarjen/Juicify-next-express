@@ -1,10 +1,10 @@
-import { object, string, TypeOf } from 'zod'
-import errorBook from '../utils/error.utils'
+import { number, object, string, TypeOf } from 'zod'
 
-export const CreateExerciseSchema = object({
-    name: string({
-        required_error: errorBook['NAME IS REQUIRED']['VALUE']
-    }).min(3)
+export const ExerciseSchema = object({
+    _id: string().optional(),
+    user_ID: string().optional(),
+    name: string().min(3),
+    l: number().optional(),
 })
 
-export type CreateExerciseSchemaProps = TypeOf<typeof CreateExerciseSchema>
+export type ExerciseSchemaProps = TypeOf<typeof ExerciseSchema>
