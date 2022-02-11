@@ -20,11 +20,11 @@ const Grid = styled.div`
     margin: auto;
     display: grid;
     width: 100%;
-    max-width: 1468px;
-    grid-template-columns: 363px 726px 363px;
+    max-width: 1226px;
+    grid-template-columns: 250px 726px 250px;
     @media (max-width: 1468px) {
-        max-width: 1105px;
-        grid-template-columns: 726px 363px;
+        max-width: 976px;
+        grid-template-columns: 726px 250px;
     }
     @media (max-width: 1105px) {
         max-width: 726px;

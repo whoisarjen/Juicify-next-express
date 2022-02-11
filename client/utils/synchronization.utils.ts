@@ -1,7 +1,8 @@
 import axios from "axios";
+import DailyMeasurementProps from "../interfaces/dailyMeasurement.interface";
 import { createOneFromTwo } from "./dailyMeasurement.utils";
 import { deleteThoseIDSfromDB, insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from "./db.utils";
-import { addIndexedDB, deleteIndexedDB, getAllIndexedDB } from "./indexedDB.utils";
+import { addIndexedDB, deleteIndexedDB, getAllIndexedDB, putIndexedDB } from "./indexedDB.utils";
 
 export const synchronizationController = async (
     { isNewValueInDB, where, updateDailyKey, updateDailyKeyLevel2, updateDailyKeyLevel3, whatToUpdate, whatToUpdateKey, whatToUpdateKeyLevel2 }:
@@ -115,6 +116,71 @@ export const cleanCache = async (where: string) => {
     if (cache && cache.length) {
         for (let i = 0; i < cache.length; i++) {
             await deleteIndexedDB(where, cache[i]._id)
+        }
+    }
+    return true;
+}
+
+export const handleUpdateDailyKey = async ({ updateDailyKey, updateDailyKeyArray, updateDailyKeyLevel2, updateDailyKeyLevel3, arrayIDSbeforeInsert, array }:
+    { updateDailyKey?: string, updateDailyKeyArray?: Array<any>, updateDailyKeyLevel2?: string, updateDailyKeyLevel3?: string, arrayIDSbeforeInsert: Array<string>, array: Array<any> }) => {
+    if (updateDailyKey && updateDailyKeyArray && updateDailyKeyArray.length && updateDailyKeyLevel2) {
+        for (let i = 0; i < array.length; i++) {
+            for (let a = 0; a < updateDailyKeyArray.length; a++) {
+                let checker = 0
+                for (let b = 0; b < updateDailyKeyArray[a][updateDailyKey].length; b++) {
+                    if (!updateDailyKeyLevel3) {
+                        if (updateDailyKeyArray[a][updateDailyKey][b][updateDailyKeyLevel2] == arrayIDSbeforeInsert[i]) {
+                            updateDailyKeyArray[a][updateDailyKey][b][updateDailyKeyLevel2] = array[i]._id
+                            checker++
+                        }
+                    } else {
+                        if (updateDailyKeyArray[a][updateDailyKey][b][updateDailyKeyLevel2] && updateDailyKeyArray[a][updateDailyKey][b][updateDailyKeyLevel2].length) {
+                            for (let c = 0; c < updateDailyKeyArray[a][updateDailyKey][b][updateDailyKeyLevel2].length; c++) {
+                                if (updateDailyKeyArray[a][updateDailyKey][b][updateDailyKeyLevel2][c][updateDailyKeyLevel3] == arrayIDSbeforeInsert[i]) {
+                                    updateDailyKeyArray[a][updateDailyKey][b][updateDailyKeyLevel2][c][updateDailyKeyLevel3] = array[i]._id
+                                    checker++
+                                }
+                            }
+                        }
+                    }
+                }
+                if (checker > 0) {
+                    await deleteIndexedDB('daily_measurement', updateDailyKeyArray[a].whenAdded)
+                    await addIndexedDB('daily_measurement', [updateDailyKeyArray[a]])
+                }
+            }
+        }
+    }
+    return true;
+}
+
+export const handleUpdateKey = async ({ whatToUpdate, whatToUpdateArray, whatToUpdateKey, whatToUpdateKeyLevel2, arrayIDSbeforeInsert, array }:
+    { whatToUpdate?: string, whatToUpdateArray: Array<any>, whatToUpdateKey?: string, whatToUpdateKeyLevel2?: string, arrayIDSbeforeInsert: Array<string>, array: Array<any> }) => {
+    if (whatToUpdate && whatToUpdateArray.length && whatToUpdateKey) {
+        let count = 0;
+        for (let i = 0; i < array.length; i++) {
+            for (let a = 0; a < whatToUpdateArray.length; a++) {
+                if (!whatToUpdateKeyLevel2) {
+                    if (whatToUpdateArray[a][whatToUpdateKey] == arrayIDSbeforeInsert[i]) {
+                        await putIndexedDB(whatToUpdate, whatToUpdateArray[a][whatToUpdateKey]._id, whatToUpdateKey, array[i]._id)
+                    }
+                } else {
+                    if (whatToUpdateArray[a][whatToUpdateKey] && whatToUpdateArray[a][whatToUpdateKey].length) {
+                        for (let b = 0; b < whatToUpdateArray[a][whatToUpdateKey].length; b++) {
+                            if (whatToUpdateArray[a][whatToUpdateKey][b][whatToUpdateKeyLevel2] == arrayIDSbeforeInsert[i]) {
+                                whatToUpdateArray[a][whatToUpdateKey][b][whatToUpdateKeyLevel2] = array[i]._id
+                                count++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (count) {
+            for (let a = 0; a < whatToUpdateArray.length; a++) {
+                await deleteIndexedDB(whatToUpdate, whatToUpdateArray[a]._id)
+            }
+            await addIndexedDB(whatToUpdate, whatToUpdateArray)
         }
     }
     return true;
