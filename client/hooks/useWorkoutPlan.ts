@@ -5,6 +5,7 @@ import { loadValueByLogin } from '../utils/db.utils'
 import { getIndexedDBbyID } from '../utils/indexedDB.utils'
 import WorkoutPlanProps from '../interfaces/workout/workoutPlan.interface'
 import { useAppSelector } from './useRedux'
+import { loadMissingData } from '../utils/workoutPlan.utils'
 
 const useWorkoutPlan = (workoutPlanID: string): [any, () => void] => {
     const router: any = useRouter()
@@ -21,7 +22,13 @@ const useWorkoutPlan = (workoutPlanID: string): [any, () => void] => {
                     const workoutPlan: WorkoutPlanProps = await getIndexedDBbyID('workout_plan', workoutPlanID)
                     if (workoutPlan) {
                         setUser(token)
-                        setData({ ...workoutPlan })
+                        setData(
+                            loadMissingData({
+                                _id: 'XD' + new Date().getTime(),
+                                user_ID: token._id,
+                                object: workoutPlan
+                            })
+                        )
                     } else {
                         router.push(`/${router.query.login}/workout-plans`)
                     }
@@ -30,7 +37,13 @@ const useWorkoutPlan = (workoutPlanID: string): [any, () => void] => {
                         let res = await loadValueByLogin('workout_plan', workoutPlanID, router.query.login)
                         if (res.data) {
                             setUser(res.user)
-                            setData({ ...res.data })
+                            setData(
+                                loadMissingData({
+                                    _id: 'XD' + new Date().getTime(),
+                                    user_ID: res.user._id,
+                                    object: res.data
+                                })
+                            )
                         } else {
                             router.push(`/${router.query.login}/workout-plans`)
                         }
