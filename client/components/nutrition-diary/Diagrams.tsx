@@ -4,18 +4,29 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import styles from '../../styles/nutrition-diary.module.css'
 import CircularWithLabel from "./CircularWithLabel";
 import CircularWithLabelReverse from "./CircularWithLabelReverse";
 import useMacro from "../../hooks/useMacro";
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import { ProductSchemaProps } from "../../schema/product.schema";
+import styled from "styled-components";
 
 interface DiagramsProps {
     array: Array<Array<ProductSchemaProps>>,
     user: any
 }
+
+const Table = styled.table`
+    font-size: 0.875rem;
+    text-align: left;
+    ${this} td{
+        text-align: right;
+    }
+    ${this} tr td:first-of-type{
+        font-weight: bold;
+    }
+`
 
 const Diagrams: FunctionComponent<DiagramsProps> = ({ array, user }) => {
     const [value, setValue] = useState<string>('1');
@@ -56,8 +67,8 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array, user }) => {
     const handleChange = (event: SyntheticEvent, newValue: string) => setValue(newValue);
 
     return (
-        <div className={styles.diagrams}>
-            <Box sx={{ width: '100%' }} className={styles.diagramsOptions}>
+        <div style={{ width: '100%' }}>
+            <Box sx={{ width: '100%', display: 'grid', marginBottom: '24px' }}>
                 <TabContext value={value}>
                     <Box>
                         <TabList
@@ -72,12 +83,12 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array, user }) => {
                             <Tab label={t('remaining')} value="2" key={2} />
                         </TabList>
                     </Box>
-                    <TabPanel value="1" className={styles.diagramsGrid}>
+                    <TabPanel value="1" sx={{ width: '100%', display: 'grid', gridTemplateColumns: 'calc(50% - 12px) 12px auto', padding: '0 !important' }}>
                         <div>
                             <CircularWithLabel array={array} user={user} />
                         </div>
                         <div />
-                        <table className={styles.diagramsTable}>
+                        <Table>
                             <tbody>
                                 {
                                     Object.keys(object).map(x =>
@@ -89,14 +100,14 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array, user }) => {
                                     )
                                 }
                             </tbody>
-                        </table>
+                        </Table>
                     </TabPanel>
-                    <TabPanel value="2" className={styles.diagramsGrid}>
+                    <TabPanel value="2" sx={{ width: '100%', display: 'grid', gridTemplateColumns: 'calc(50% - 12px) 12px auto', padding: '0 !important' }}>
                         <div>
                             <CircularWithLabelReverse array={array} user={user} />
                         </div>
                         <div />
-                        <table className={styles.diagramsTable}>
+                        <Table>
                             <tbody>
                                 {
                                     Object.keys(object).map(x =>
@@ -108,11 +119,11 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array, user }) => {
                                     )
                                 }
                             </tbody>
-                        </table>
+                        </Table>
                     </TabPanel>
                 </TabContext>
             </Box>
-        </div>
+        </div >
     )
 }
 

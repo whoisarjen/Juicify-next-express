@@ -1,19 +1,27 @@
 import { FunctionComponent } from "react";
-import styles from '../../styles/nutrition-diary.module.css'
 import Share from "../common/Share";
 import DateChanger from "../common/DateChanger";
 import useTranslation from "next-translate/useTranslation";
+import styled from 'styled-components'
 
+const Box = styled.div`
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 36px 36px;
+    ${this} button {
+        margin: auto;
+    }
+`
 
 const Navbar: FunctionComponent = () => {
     const { t } = useTranslation('nutrition-diary')
 
     return (
-        <div className={styles.navbar}>
+        <Box>
             <div className="title">{t('title')}</div>
             <Share />
             <DateChanger />
-        </div>
+        </Box>
     )
 }
 

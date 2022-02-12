@@ -1,7 +1,6 @@
 import { forwardRef, FunctionComponent, useState } from "react";
 import Button from '@mui/material/Button';
 import PieChartIcon from '@mui/icons-material/PieChart';
-import styles from '../../styles/nutrition-diary.module.css'
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
@@ -15,6 +14,7 @@ import { TransitionProps } from '@mui/material/transitions';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from "../../utils/db.utils";
+import styled from "styled-components";
 
 const Transition = forwardRef(function Transition(
     props: TransitionProps & {
@@ -29,6 +29,16 @@ interface DiagramsOptionsProps {
     data: any,
     reloadDailyMeasurement: () => void
 }
+
+const Box = styled.div`
+    display: grid;
+    margin-bottom: 24px;
+`
+
+const Buttons = styled.div`
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+`
 
 const DiagramsOptions: FunctionComponent<DiagramsOptionsProps> = ({ data, reloadDailyMeasurement }) => {
     const router: any = useRouter()
@@ -59,8 +69,8 @@ const DiagramsOptions: FunctionComponent<DiagramsOptionsProps> = ({ data, reload
     }
 
     return (
-        <div className={styles.diagramsOptions}>
-            <div className={styles.diagramsOptionsExtrButtons}>
+        <Box>
+            <Buttons>
                 <div />
                 <Button
                     onClick={() => router.push('/macronutrients')}
@@ -86,7 +96,7 @@ const DiagramsOptions: FunctionComponent<DiagramsOptionsProps> = ({ data, reload
                     {t('Burnt calories')}
                 </Button>
                 <div />
-            </div>
+            </Buttons>
             <Dialog
                 open={isAddActivity}
                 TransitionComponent={Transition}
@@ -127,7 +137,7 @@ const DiagramsOptions: FunctionComponent<DiagramsOptionsProps> = ({ data, reload
                     <Button onClick={addNewActivity}>{t('Confirm')}</Button>
                 </DialogActions>
             </Dialog>
-        </div>
+        </Box>
     )
 }
 

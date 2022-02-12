@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
-import styles from '../../styles/nutrition-diary.module.css'
 import useTranslation from 'next-translate/useTranslation';
 import AddProductMoreInformationAdd from './AddProductMoreInformationAdd';
 import { getProductInformations } from '../../utils/product.utils';

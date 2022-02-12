@@ -1,5 +1,4 @@
 import { FunctionComponent, Fragment, useState, Ref, ReactElement, forwardRef } from "react";
-import styles from '../../styles/nutrition-diary.module.css'
 import useTranslation from "next-translate/useTranslation";
 import Timeline from '@mui/lab/Timeline';
 import TimelineItem from '@mui/lab/TimelineItem';
