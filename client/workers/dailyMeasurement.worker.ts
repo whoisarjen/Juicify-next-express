@@ -3,7 +3,7 @@ import { synchronizationController } from "../utils/synchronization.utils";
 
 self.onmessage = async ({ data: { socketUpdated, updated } }) => {
     try {
-        console.log(`DailyMeasurement_worker is starting...`)
+        console.log(`Daily synchronization is starting...`)
         if (navigator.onLine && socketUpdated > updated || await getIndexedDBbyID('whatToUpdate', 'daily_measurement')) {
             await synchronizationController({
                 isNewValueInDB: socketUpdated > updated,
@@ -17,9 +17,9 @@ self.onmessage = async ({ data: { socketUpdated, updated } }) => {
             });
         }
         postMessage(true)
-        console.log(`DailyMeasurement_worker is done!`)
+        console.log(`Daily synchronization is done!`)
     } catch (error: any) {
-        console.log(`DailyMeasurement_worker ended with error! ${error}`)
+        console.log(`Daily synchronization ended with error! ${error}`)
     }
 };
 

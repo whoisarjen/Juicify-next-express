@@ -1,4 +1,4 @@
-import "../styles/global.css";
+import "../global.css";
 import 'react-toastify/dist/ReactToastify.css';
 import { store } from "../redux/store";
 import { Provider } from "react-redux";

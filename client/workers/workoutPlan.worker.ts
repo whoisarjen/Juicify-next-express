@@ -3,7 +3,7 @@ import { synchronizationController } from "../utils/synchronization.utils";
 
 self.onmessage = async ({ data: { socketUpdated, updated } }) => {
     try {
-        console.log(`WorkoutPlan_worker is starting...`)
+        console.log(`Workout synchronization is starting...`)
         if (navigator.onLine && socketUpdated > updated || await getIndexedDBbyID('whatToUpdate', 'workout_plan')) {
             await synchronizationController({
                 isNewValueInDB: socketUpdated > updated,
@@ -17,9 +17,9 @@ self.onmessage = async ({ data: { socketUpdated, updated } }) => {
             });
         }
         postMessage(true)
-        console.log(`WorkoutPlan_worker is done!`)
+        console.log(`Workout synchronization is done!`)
     } catch (error: any) {
-        console.log(`WorkoutPlan_worker ended with error! ${error}`)
+        console.log(`Workout synchronization ended with error! ${error}`)
     }
 };
 

@@ -3,7 +3,7 @@ import { cleanCache, synchronizationController } from "../utils/synchronization.
 
 self.onmessage = async ({ data: { socketUpdated, updated } }) => {
     try {
-        console.log(`Exercise_worker is starting...`)
+        console.log(`Exercise synchronization is starting...`)
         if (navigator.onLine && socketUpdated > updated || await getIndexedDBbyID('whatToUpdate', 'exercise')) {
             await synchronizationController({
                 isNewValueInDB: socketUpdated > updated,
@@ -18,9 +18,9 @@ self.onmessage = async ({ data: { socketUpdated, updated } }) => {
             await cleanCache('checked_exercise')
         }
         postMessage(true)
-        console.log(`Exercise_worker is done!`)
+        console.log(`Exercise synchronization is done!`)
     } catch (error: any) {
-        console.log(`Exercise_worker ended with error! ${error}`)
+        console.log(`Exercise synchronization ended with error! ${error}`)
     }
 };
 

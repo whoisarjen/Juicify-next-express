@@ -3,7 +3,7 @@ import { cleanCache, synchronizationController } from "../utils/synchronization.
 
 self.onmessage = async ({ data: { socketUpdated, updated } }) => {
     try {
-        console.log(`Product_worker is starting...`)
+        console.log(`Product synchronization is starting...`)
         if (navigator.onLine && socketUpdated > updated || await getIndexedDBbyID('whatToUpdate', 'product')) {
             await synchronizationController({
                 isNewValueInDB: socketUpdated > updated,
@@ -18,9 +18,9 @@ self.onmessage = async ({ data: { socketUpdated, updated } }) => {
             await cleanCache('checked_product')
         }
         postMessage(true)
-        console.log(`Product_worker is done!`)
+        console.log(`Product synchronization is done!`)
     } catch (error: any) {
-        console.log(`Product_worker ended with error! ${error}`)
+        console.log(`Product synchronization ended with error! ${error}`)
     }
 };
 
