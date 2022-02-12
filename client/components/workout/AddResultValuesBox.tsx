@@ -153,7 +153,7 @@ const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, inde
                                 {
                                     isOwner &&
                                     <IconButton aria-label="save">
-                                        <CircleOutlinedIcon sx={{ fontSize: 20 }} />
+                                        <CheckCircleOutlinedIcon sx={{ fontSize: 20 }} />
                                     </IconButton>
                                 }
                             </div>
