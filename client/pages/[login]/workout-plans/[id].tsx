@@ -171,7 +171,7 @@ const WorkoutPlansID: FunctionComponent = () => {
                                                                 {...provided.dragHandleProps}
                                                                 ref={provided.innerRef}
                                                                 disabled={token.login != router.query.login}
-                                                                label={`${i + 1}. ${exercise.name} ${exercise._id}`}
+                                                                label={`${i + 1}. ${exercise.name}`}
                                                                 onDelete={() => remove(i)}
                                                                 avatar={<SwapVertIcon />}
                                                                 deleteIcon={<DeleteIcon />}
