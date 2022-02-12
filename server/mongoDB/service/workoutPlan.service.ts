@@ -2,10 +2,12 @@ import { DocumentDefinition } from 'mongoose'
 import { WorkoutPlanModel } from '../models/workoutPlan.model'
 import { UserProps } from '../models/user.model'
 import { WorkoutPlanSchemaProps } from '../../../client/schema/workoutPlan.schema'
+import { loadMissingData } from '../../utils/workoutPlan.utils'
 
 export const createWorkoutPlans = async (array: Array<WorkoutPlanSchemaProps>) => {
     try {
-        return await WorkoutPlanModel.create(array)
+        const query = await WorkoutPlanModel.create(array)
+        return await loadMissingData(query)
     } catch (error: any) {
         throw new Error(error)
     }
@@ -13,7 +15,8 @@ export const createWorkoutPlans = async (array: Array<WorkoutPlanSchemaProps>) =
 
 export const updateWorkoutPlan = async (object: WorkoutPlanSchemaProps) => {
     try {
-        return await WorkoutPlanModel.findOneAndUpdate({ _id: object._id }, object, { returnNewDocument: true })
+        const query = await WorkoutPlanModel.findOneAndUpdate({ _id: object._id }, object, { returnNewDocument: true, returnOriginal: false })
+        return (await loadMissingData([query]))[0]
     } catch (error: any) {
         throw new Error(error)
     }
@@ -29,7 +32,8 @@ export const deleteWorkoutPlan = async (object: WorkoutPlanSchemaProps) => {
 
 export const getWorkoutPlanByID = async (_id: string) => {
     try {
-        return await WorkoutPlanModel.findOne({ _id })
+        const query = await WorkoutPlanModel.findOne({ _id })
+        return (await loadMissingData([query]))[0]
     } catch (error: any) {
         throw new Error(error)
     }
@@ -37,7 +41,8 @@ export const getWorkoutPlanByID = async (_id: string) => {
 
 export const getUserWorkoutPlans = async (token: DocumentDefinition<UserProps> | DocumentDefinition<Omit<UserProps, 'comparePassword'>>) => {
     try {
-        return await WorkoutPlanModel.find({ user_ID: token._id })
+        const query = await WorkoutPlanModel.find({ user_ID: token._id })
+        return await loadMissingData(query)
     } catch (error: any) {
         throw new Error(error)
     }

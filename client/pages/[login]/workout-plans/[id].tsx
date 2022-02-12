@@ -70,7 +70,7 @@ const WorkoutPlansID: FunctionComponent = () => {
                     ...(values.title && { title: values.title }),
                     ...(values.description && { description: values.description }),
                     ...(values.burnt && { burnt: values.burnt }),
-                    ...(fields && { exercises: fields }),
+                    ...(fields && fields.length && { exercises: fields }),
                 }])
             } else {
                 await insertThoseIDStoDB('workout_plan', [{
@@ -78,7 +78,7 @@ const WorkoutPlansID: FunctionComponent = () => {
                     ...(values.title && { title: values.title }),
                     ...(values.description && { description: values.description }),
                     ...(values.burnt && { burnt: values.burnt }),
-                    ...(fields && { exercises: fields }),
+                    ...(fields && fields.length && { exercises: fields }),
                 }])
             }
             router.push(`/${token.login}/workout-plans/`)

@@ -3,17 +3,10 @@ import { Request, Response } from "express"
 import { CreateWorkoutPlanSchemaProps } from "../schema/workoutPlan.schema"
 import { createWorkoutPlans, updateWorkoutPlan, deleteWorkoutPlan, getUserWorkoutPlans, getWorkoutPlanByID } from "../service/workoutPlan.service"
 import { socketHandleUserSynchronization } from '../../utils/socket'
-import { loadWorkoutPlansMissingData } from '../../utils/exercise.utils'
 
 export const createWorkoutPlansController = async (req: Request<{}, {}, CreateWorkoutPlanSchemaProps['body']>, res: Response) => {
     try {
-        const response = []
-        const query = await createWorkoutPlans(req.body.array)
-        if (query.length) {
-            for (let i = 0; i < query.length; i++) {
-                response.push(await loadWorkoutPlansMissingData(query[i]))
-            }
-        }
+        const response = await createWorkoutPlans(req.body.array)
         await socketHandleUserSynchronization({ req, res, data: response, whatToDo: 'change', where: 'workout_plan' })
         return res.send(response);
     } catch (error: any) {
@@ -26,7 +19,7 @@ export const updateWorkoutPlansController = async (req: Request, res: Response) 
     try {
         const response = []
         for (let i = 0; i < req.body.array.length; i++) {
-            response.push(await loadWorkoutPlansMissingData(await updateWorkoutPlan(req.body.array[i])))
+            response.push(await updateWorkoutPlan(req.body.array[i]))
         }
         await socketHandleUserSynchronization({ req, res, data: response, whatToDo: 'change', where: 'workout_plan' })
         return res.send(response);
@@ -51,13 +44,7 @@ export const deleteWorkoutPlansController = async (req: Request, res: Response) 
 
 export const getUserWorkoutPlansController = async (req: Request<{}, {}, CreateWorkoutPlanSchemaProps['body']>, res: Response) => {
     try {
-        const response = []
-        const query = await getUserWorkoutPlans(res.locals.token)
-        if (query.length) {
-            for (let i = 0; i < query.length; i++) {
-                response.push(await loadWorkoutPlansMissingData(query[i]))
-            }
-        }
+        const response = await getUserWorkoutPlans(res.locals.token)
         return res.send(response);
     } catch (error: any) {
         logger.error(error)
@@ -67,8 +54,7 @@ export const getUserWorkoutPlansController = async (req: Request<{}, {}, CreateW
 
 export const getGuestWorkoutPlanController = async (req: Request, res: Response) => {
     try {
-        const query = await getWorkoutPlanByID(req.body.find)
-        const response = await loadWorkoutPlansMissingData(query)
+        const response = await getWorkoutPlanByID(req.body.find)
         return res.send({ data: response, user: res.locals.user });
     } catch (error: any) {
         logger.error(error)
