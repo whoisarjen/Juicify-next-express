@@ -1,16 +1,43 @@
 import { FunctionComponent, useState, useEffect } from "react";
 import Button from '@mui/material/Button';
-import styles from '../../styles/coach.module.css'
 import { useDailyMeasurements } from "../../hooks/useDailyMeasurements";
 import { addDaysToDate, getShortDate, reverseDateDotes } from "../../utils/date.utils";
 import Weights from '../common/Weights'
 import useTranslation from "next-translate/useTranslation";
 import { useAppSelector } from "../../hooks/useRedux";
 import { DailyMeasurementSchemaProps } from "../../schema/dailyMeasurement.schema";
+import styled from "styled-components";
 
 interface ChooseDietProps {
     setStep: (arg0: string) => void
 }
+
+const Grid = styled.div`
+    width: 100%;
+    min-height: calc(100vh - var(--BothNavHeightAndPadding));
+    display: grid;
+    grid-template-rows: 1fr 4fr 2fr auto auto;
+    grid-gap: 5px;
+    text-align: center;
+    ${this} table {
+        width: 100%;
+    }
+`
+
+const Title = styled.div`
+    font-size: 1.75rem;
+    font-weight: bold;
+    display: grid;
+    padding: 20px 0;
+    ${this} div {
+        margin: auto;
+    }
+`
+
+const Description = styled.div`
+    margin: auto;
+    padding: 20px 0;
+`
 
 const CheckingWeekData: FunctionComponent<ChooseDietProps> = ({ setStep }) => {
     const { t } = useTranslation('coach')
@@ -38,8 +65,8 @@ const CheckingWeekData: FunctionComponent<ChooseDietProps> = ({ setStep }) => {
     }, [data])
 
     return (
-        <div className={styles.checkingWeekData}>
-            <div className={styles.AddWeightMainTitle}><div>{t('CHECKING_TODAY_TITLE')}</div></div>
+        <Grid>
+            <Title><div>{t('CHECKING_TODAY_TITLE')}</div></Title>
             {
                 <>
                     <table>
@@ -61,9 +88,9 @@ const CheckingWeekData: FunctionComponent<ChooseDietProps> = ({ setStep }) => {
                     {
                         !allowNextStep
                             ?
-                            <div className={styles.checkingWeekDataDescription}>{t('CHECKING_WEEK_DESCRIPTION_ALTERNATIVE')}</div>
+                            <Description>{t('CHECKING_WEEK_DESCRIPTION_ALTERNATIVE')}</Description>
                             :
-                            <div className={styles.checkingWeekDataDescription}>{t('CHECKING_WEEK_DESCRIPTION')}</div>
+                            <Description>{t('CHECKING_WEEK_DESCRIPTION')}</Description>
                     }
                     <Button variant="contained" onClick={() => setIsWeights(true)}>{t('CHANGE_WEIGHT')}</Button>
                 </>
@@ -81,7 +108,7 @@ const CheckingWeekData: FunctionComponent<ChooseDietProps> = ({ setStep }) => {
                     setIsWeights(false)
                 }}
             />
-        </div>
+        </Grid>
     )
 }
 

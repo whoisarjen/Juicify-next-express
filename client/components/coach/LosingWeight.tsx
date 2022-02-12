@@ -1,6 +1,5 @@
 import { FunctionComponent, useState } from "react";
 import Button from '@mui/material/Button';
-import styles from '../../styles/coach.module.css'
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -10,11 +9,38 @@ import { DIET_GOAL, DIET_ACTIVITY, DIET_KIND, DIET_EXTRA_PROTEINS } from '../../
 import useTranslation from "next-translate/useTranslation";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import IconButton from '@mui/material/IconButton';
+import styled from "styled-components";
 
 interface LosingWeightProps {
     prepareCreate: (arg0: Object) => void,
     handlePreviousStep: (arg0: string) => void
 }
+
+const Grid = styled.div`
+    width: 100%;
+    height: calc(100vh - var(--BothNavHeightAndPadding));
+    display: grid;
+    grid-template-rows: 40px 2fr 2fr 1fr 1fr 1fr 1fr auto;
+    grid-gap: 5px;
+    text-align: center;
+`
+
+const ArrowBack = styled.div`
+    margin: auto 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 40px 1fr;
+`
+
+const Title = styled.div`
+    font-size: 1.75rem;
+    font-weight: bold;
+    display: grid;
+    padding: 20px 0;
+    ${this} div {
+        margin: auto;
+    }
+`
 
 const LosingWeight: FunctionComponent<LosingWeightProps> = ({ prepareCreate, handlePreviousStep }) => {
     const { t } = useTranslation('coach')
@@ -34,14 +60,14 @@ const LosingWeight: FunctionComponent<LosingWeightProps> = ({ prepareCreate, han
     }
 
     return (
-        <div className={styles.losingWeight}>
-            <div className={styles.arrowBack}>
+        <Grid>
+            <ArrowBack>
                 <IconButton aria-label="back" onClick={() => handlePreviousStep('ChooseDiet')}>
                     <KeyboardBackspaceIcon />
                     <div />
                 </IconButton>
-            </div>
-            <div className={styles.AddWeightMainTitle}><div>{t('LOSING_WEIGHT')}</div></div>
+            </ArrowBack>
+            <Title><div>{t('LOSING_WEIGHT')}</div></Title>
             <div>{t('LOSING_WEIGHT_DESCRIPTION')}</div>
             <Box>
                 <FormControl fullWidth>
@@ -116,7 +142,7 @@ const LosingWeight: FunctionComponent<LosingWeightProps> = ({ prepareCreate, han
                 </FormControl>
             </Box>
             <Button variant="contained" onClick={handleNextStep}>{t('COUNT_DIET')}</Button>
-        </div>
+        </Grid>
     )
 }
 

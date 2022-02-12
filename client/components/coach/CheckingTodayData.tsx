@@ -1,15 +1,38 @@
 import { FunctionComponent, useState } from "react";
 import Button from '@mui/material/Button';
-import styles from '../../styles/coach.module.css'
 import { useDailyMeasurement } from "../../hooks/useDailyMeasurement";
 import { getAge, getShortDate } from "../../utils/date.utils";
 import Weights from '../common/Weights'
 import { useAppSelector } from "../../hooks/useRedux";
 import useTranslation from "next-translate/useTranslation";
+import styled from "styled-components";
 
 interface ChooseDietProps {
     setStep: (arg0: string) => void
 }
+
+const Grid = styled.div`
+    width: 100%;
+    height: calc(100vh - var(--BothNavHeightAndPadding));
+    display: grid;
+    grid-template-rows: 1fr 2fr 1fr auto auto;
+    row-gap: 5px;
+    text-align: center;
+    ${this} table {
+        table-layout: fixed;
+        width: 100%;
+    }
+`
+
+const Title = styled.div`
+    font-size: 1.75rem;
+    font-weight: bold;
+    display: grid;
+    padding: 20px 0;
+    ${this} div {
+        margin: auto;
+    }
+`
 
 const CheckingTodayData: FunctionComponent<ChooseDietProps> = ({ setStep }) => {
     const { t } = useTranslation('coach')
@@ -18,8 +41,8 @@ const CheckingTodayData: FunctionComponent<ChooseDietProps> = ({ setStep }) => {
     const [isWeights, setIsWeights] = useState(false)
 
     return (
-        <div className={styles.checkingTodayData}>
-            <div className={styles.AddWeightMainTitle}><div>{t('CHECKING_TODAY_TITLE')}</div></div>
+        <Grid>
+            <Title><div>{t('CHECKING_TODAY_TITLE')}</div></Title>
             {
                 data &&
                 (
@@ -66,7 +89,7 @@ const CheckingTodayData: FunctionComponent<ChooseDietProps> = ({ setStep }) => {
                     setIsWeights(false)
                 }}
             />
-        </div>
+        </Grid>
     )
 }
 
