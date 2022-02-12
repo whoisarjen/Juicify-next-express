@@ -8,12 +8,12 @@ import Autocomplete from '@mui/material/Autocomplete';
 import ConfirmDialog from '../common/ConfirmDialog';
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
-import ValueProps from '../../interfaces/workout/value.interface';
+import { ValueSchemaProps } from '../../schema/workoutResult.schema';
 
 interface AddResultValuesBox {
-    value: ValueProps,
+    value: ValueSchemaProps,
     index: number,
-    changeResult: (arg0: ValueProps) => void,
+    changeResult: (arg0: ValueSchemaProps) => void,
     deleteResult: () => void
 }
 

@@ -1,14 +1,9 @@
-import { FunctionComponent } from "react";
 import Button from '@mui/material/Button';
 import styles from '../../styles/coach.module.css'
 import { useAppSelector } from "../../hooks/useRedux";
 import useTranslation from "next-translate/useTranslation";
 
-interface ResultProps {
-    setStep: (arg0: string) => void
-}
-
-const Result: FunctionComponent<ResultProps> = ({ setStep }) => {
+const Result = ({ setStep }: { setStep: (arg0: string) => void }) => {
     const { t } = useTranslation('coach')
     const token: any = useAppSelector(state => state.token.value)
     console.log(token)

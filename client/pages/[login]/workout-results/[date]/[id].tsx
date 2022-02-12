@@ -12,11 +12,9 @@ import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../../../ut
 import useTranslation from "next-translate/useTranslation";
 import AddResultMoreOptions from '../../../../components/workout/AddResultMoreOptions'
 import BottomFlyingGuestBanner from '../../../../components/common/BottomFlyingGuestBanner'
-import WorkoutResultProps from '../../../../interfaces/workout/workoutResult.interface';
 import { useNotify } from '../../../../hooks/useNotify';
-import ResultProps from '../../../../interfaces/workout/result.interface';
-import ValueProps from '../../../../interfaces/workout/value.interface';
 import { ExerciseSchemaProps } from '../../../../schema/exercise.schema';
+import { ResultSchemaProps, ValueSchemaProps, WorkoutResultSchemaProps } from '../../../../schema/workoutResult.schema';
 
 const WorkoutResultsID: FunctionComponent = () => {
     const router: any = useRouter()
@@ -25,14 +23,13 @@ const WorkoutResultsID: FunctionComponent = () => {
     const [burnt, setBurnt] = useState<any>(0)
     const [title, setTitle] = useState<any>('')
     const { t } = useTranslation('workout')
-    const [results, setResults] = useState<Array<ResultProps>>([])
+    const [results, setResults] = useState<Array<ResultSchemaProps>>([])
     const [isOwner, setIsOwner] = useState(false)
-    const [isDialog, setIsDialog] = useState(false)
     const [description, setDescription] = useState<any>('')
     const [{ data, user, daily }] = useWorkoutResult()
     const token: any = useAppSelector(state => state.token.value)
     const [saveLoading, setSaveLoading] = useState(false)
-    const [deleteExercises, setDeleteExercise] = useState<ResultProps | boolean>(false)
+    const [deleteExercises, setDeleteExercise] = useState<ResultSchemaProps | boolean>(false)
     const [descriptionWorkout, setDescriptionWorkout] = useState('')
     const theOldestSupportedDate = useAppSelector(state => state.config.theOldestSupportedDate())
     const basicInputLength = useAppSelector(state => state.config.basicInputLength)
@@ -41,7 +38,7 @@ const WorkoutResultsID: FunctionComponent = () => {
     const deleteWorkoutResult = async () => {
         if (await is_id(router.query.id)) {
             let newDaily = daily
-            newDaily.workout_result = newDaily.workout_result.filter((result: WorkoutResultProps) => result._id != router.query.id)
+            newDaily.workout_result = newDaily.workout_result.filter((result: WorkoutResultSchemaProps) => result._id != router.query.id)
             if (daily._id && await is_id(daily._id)) {
                 await overwriteThoseIDSinDB('daily_measurement', [newDaily])
             } else {
@@ -55,7 +52,7 @@ const WorkoutResultsID: FunctionComponent = () => {
     const saveWorkoutResult = async () => {
         setSaveLoading(true)
         let count = 0
-        results.forEach((result: ResultProps) => {
+        results.forEach((result: ResultSchemaProps) => {
             if (result.values) {
                 count += result.values.length
             }
@@ -110,16 +107,16 @@ const WorkoutResultsID: FunctionComponent = () => {
         }
     }
 
-    const setNewValues = async (values: Array<ValueProps>, index: number) => {
-        let newResults: Array<ResultProps> = results
+    const setNewValues = async (values: Array<ValueSchemaProps>, index: number) => {
+        let newResults: Array<ResultSchemaProps> = results
         newResults[index].values = values
         setResults(newResults)
         await autoSave(newResults, 'results')
     }
 
     const handleDeleteExercise = async (array: any) => {
-        const newResults: Array<ResultProps> = [
-            ...results.filter((x: ResultProps) => x._id != array[0]._id)
+        const newResults: Array<ResultSchemaProps> = [
+            ...results.filter((x: ResultSchemaProps) => x._id != array[0]._id)
         ]
         setResults(newResults)
         await autoSave(newResults, 'results')
@@ -247,13 +244,13 @@ const WorkoutResultsID: FunctionComponent = () => {
                 }
             />
             {
-                results && results.map((result: ResultProps, index: number) =>
+                results && results.map((result: ResultSchemaProps, index: number) =>
                     <div style={results.length == (index + 1) ? { marginBottom: '100px' } : {}} key={(result._id || '') + index}>
                         <AddResultValues
                             key={(result._id || '') + index}
                             result={result}
                             isOwner={isOwner}
-                            setNewValues={(values: Array<ValueProps>) => setNewValues(values, index)}
+                            setNewValues={(values: Array<ValueSchemaProps>) => setNewValues(values, index)}
                             openDeleteExercise={() => setDeleteExercise(result)}
                         />
                     </div>

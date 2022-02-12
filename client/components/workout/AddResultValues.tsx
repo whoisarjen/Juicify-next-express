@@ -2,22 +2,21 @@ import styles from '../../styles/workout.module.css'
 import ButtonPlus from '../common/ButtonPlus'
 import { useState, useEffect, FunctionComponent } from 'react'
 import AddResultValuesBox from './AddResultValuesBox'
-import ResultProps from '../../interfaces/workout/result.interface'
-import ValueProps from '../../interfaces/workout/value.interface'
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { ResultSchemaProps, ValueSchemaProps } from '../../schema/workoutResult.schema'
 
 interface AddResultValuesProps {
     isOwner: boolean,
-    result: ResultProps,
-    setNewValues: (arg0: Array<ValueProps>) => void
+    result: ResultSchemaProps,
+    setNewValues: (arg0: Array<ValueSchemaProps>) => void
     openDeleteExercise: () => void
 }
 
 const AddResultValues: FunctionComponent<AddResultValuesProps> = ({ result, setNewValues, isOwner, openDeleteExercise }) => {
-    const [values, setValues] = useState<Array<ValueProps>>(result.values)
+    const [values, setValues] = useState<Array<ValueSchemaProps>>(result.values)
 
-    const changeResult = (object: ValueProps, index: number) => {
+    const changeResult = (object: ValueSchemaProps, index: number) => {
         let array = values
         array[index] = { ...object, open: false }
         setValues(array)
@@ -33,7 +32,7 @@ const AddResultValues: FunctionComponent<AddResultValuesProps> = ({ result, setN
     const openNewResult = () => {
         if (values && values.length) {
             const previousValues = values.map(
-                (value: ValueProps) => {
+                (value: ValueSchemaProps) => {
                     value.open = false;
                     return value
                 }
@@ -78,13 +77,13 @@ const AddResultValues: FunctionComponent<AddResultValuesProps> = ({ result, setN
             {
                 values &&
                 values.length > 0 &&
-                values.map((value: ValueProps, index: number) =>
+                values.map((value: ValueSchemaProps, index: number) =>
                     <AddResultValuesBox
                         key={index + ' ' + value.open}
                         value={value}
                         index={index}
                         deleteResult={() => deleteResult(index)}
-                        changeResult={(object: ValueProps) => changeResult(object, index)}
+                        changeResult={(object: ValueSchemaProps) => changeResult(object, index)}
                     />
                 )
             }

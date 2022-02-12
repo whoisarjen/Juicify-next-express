@@ -16,9 +16,9 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DatePicker from '../common/MobileDatePicker'
 import Link from 'next/link'
 import { getShortDate } from '../../utils/date.utils'
-import WorkoutResultProps from '../../interfaces/workout/workoutResult.interface'
 import { ExerciseSchemaProps } from '../../schema/exercise.schema'
 import { WorkoutPlanSchemaProps } from '../../schema/workoutPlan.schema'
+import { WorkoutResultSchemaProps } from '../../schema/workoutResult.schema'
 
 const DialogCreateResult: FunctionComponent = () => {
     const router = useRouter()
@@ -28,7 +28,7 @@ const DialogCreateResult: FunctionComponent = () => {
     const [workoutPlanID, setWorkoutPlanID] = useState('')
 
     const createWorkoutResult = async () => {
-        const workoutPlan = data.filter((workout: WorkoutResultProps) => workout._id === workoutPlanID)
+        const workoutPlan = data.filter((workout: WorkoutResultSchemaProps) => workout._id === workoutPlanID)
         const createdID = 'XD' + new Date().getTime()
         let whenAddedChanged = new Date(whenAdded).toJSON().slice(0, 10)
         await addIndexedDB(
