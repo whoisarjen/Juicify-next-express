@@ -1,7 +1,7 @@
 import Navbar from './Navbar'
 import Footer from './Footer'
 import { useRouter } from 'next/router'
-import { FunctionComponent, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import SidebarLeft from './SidebarLeft'
 import SidebarRight from './SidebarRight'
 import { useAppSelector } from '../../hooks/useRedux'
@@ -11,10 +11,6 @@ import TopNotify from './TopNotify'
 import { getShortDate } from '../../utils/date.utils'
 import styled from 'styled-components'
 import { isBrowserValid } from '../../utils/auth.utils'
-
-interface LayoutProps {
-    children: any
-}
 
 const Grid = styled.div`
     margin: auto;
@@ -66,7 +62,7 @@ const notRequiredAuth = [
     '/reset-password'
 ]
 
-const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
+const Layout = ({ children }: { children: any }) => {
     const router = useRouter()
     const [isAllowedLocation, setIsAllowedLocation] = useState(false)
     const token: any = useAppSelector(state => state.token.value)
