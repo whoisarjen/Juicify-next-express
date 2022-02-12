@@ -57,10 +57,7 @@ const Login = () => {
             const tokenValue = await readToken(response.data.token)
             localStorage.setItem('token', JSON.stringify(tokenValue))
             dispatch(setToken(tokenValue));
-            router.push(
-                `/${tokenValue.login
-                }/nutrition-diary/${getShortDate()}`
-            );
+            router.push(`/${tokenValue.login}/nutrition-diary/${getShortDate()}`);
         } catch (e: any) {
             console.log(e.message)
         } finally {
