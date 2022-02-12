@@ -14,7 +14,6 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import useTranslation from "next-translate/useTranslation";
 import { getAllIndexedDB, deleteIndexedDB } from '../../utils/indexedDB.utils';
-import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../utils/db.utils'
 import CreateProduct from './CreateProduct';
 import { TransitionProps } from '@material-ui/core/transitions';
 import BottomFlyingButton from '../common/BottomFlyingButton';
@@ -22,6 +21,7 @@ import AddProductMoreInformation from './AddProductMoreInformation';
 import { DailyMeasurementSchemaProps } from '../../schema/dailyMeasurement.schema';
 import { ProductSchemaProps } from '../../schema/product.schema';
 import styled from 'styled-components'
+import { insertThoseIDStoDBController } from '../../utils/db.utils'
 
 interface AddproductsProps {
     index: number,
@@ -94,11 +94,7 @@ const AddProducts: FunctionComponent<AddproductsProps> = ({ index, isAddDialog, 
         setChecked([])
         if (!dailyMeasurement.nutrition_diary) dailyMeasurement.nutrition_diary = []
         dailyMeasurement.nutrition_diary = dailyMeasurement.nutrition_diary.concat(array)
-        if (await is_id(dailyMeasurement._id)) {
-            await overwriteThoseIDSinDB('daily_measurement', [dailyMeasurement])
-        } else {
-            await insertThoseIDStoDB('daily_measurement', [dailyMeasurement])
-        }
+        await insertThoseIDStoDBController('daily_measurement', [dailyMeasurement])
         reload()
         setLoadingButton(false)
         closeDialog()

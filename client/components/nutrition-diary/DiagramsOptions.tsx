@@ -13,8 +13,8 @@ import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
-import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from "../../utils/db.utils";
 import styled from "styled-components";
+import { insertThoseIDStoDBController } from "../../utils/db.utils";
 
 const Transition = forwardRef(function Transition(
     props: TransitionProps & {
@@ -56,11 +56,7 @@ const DiagramsOptions: FunctionComponent<DiagramsOptionsProps> = ({ data, reload
                 ...(activity && { activity }),
                 ...(calories && { calories })
             })
-            if (await is_id(data._id)) {
-                await overwriteThoseIDSinDB('daily_measurement', [object])
-            } else {
-                await insertThoseIDStoDB('daily_measurement', [object])
-            }
+            await insertThoseIDStoDBController('daily_measurement', [object])
             reloadDailyMeasurement()
         }
         setBurnt(0)

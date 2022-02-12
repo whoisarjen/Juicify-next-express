@@ -28,6 +28,14 @@ export const loadValueByLogin = async (where: string, find: any, login: string =
     }
 }
 
+export const insertThoseIDStoDBController = async (where: string, array: Array<any>) => {
+    if (await is_id(array[0]._id)) {
+        await overwriteThoseIDSinDB(where, array)
+    } else {
+        await insertThoseIDStoDB(where, array)
+    }
+}
+
 export const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, updateDailyKey?: string, updateDailyKeyLevel2?: string, updateDailyKeyLevel3?: string, whatToUpdate?: string, whatToUpdateKey?: string, whatToUpdateKeyLevel2?: string) => {
     let array = JSON.parse(JSON.stringify(sentArray))
     const arrayIDSbeforeInsert = []

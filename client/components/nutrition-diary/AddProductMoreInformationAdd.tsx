@@ -9,11 +9,11 @@ import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
-import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from "../../utils/db.utils";
 import { useAppSelector } from "../../hooks/useRedux";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { useNotify } from "../../hooks/useNotify";
+import { insertThoseIDStoDBController } from "../../utils/db.utils";
 
 const Transition = forwardRef(function Transition(
     props: TransitionProps & {
@@ -49,11 +49,7 @@ const DiagramsOptions: FunctionComponent<DiagramsOptionsProps> = ({ isAdd, setIs
                 "how_many": howMany,
                 "product_ID": loadedProduct._id
             })
-            if (await is_id(dailyMeasurement._id)) {
-                await overwriteThoseIDSinDB('daily_measurement', [object])
-            } else {
-                await insertThoseIDStoDB('daily_measurement', [object])
-            }
+            await insertThoseIDStoDBController('daily_measurement', [object])
         }
         setIsAdd(false)
         success()

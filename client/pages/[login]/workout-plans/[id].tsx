@@ -13,7 +13,7 @@ import ButtonPlus from '../../../components/common/ButtonPlus'
 import AddExercises from '../../../components/workout/AddExercises'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { deleteIndexedDB } from "../../../utils/indexedDB.utils"
-import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB, deleteThoseIDSfromDB } from "../../../utils/db.utils"
+import { is_id, deleteThoseIDSfromDB, insertThoseIDStoDBController } from "../../../utils/db.utils"
 import BottomFlyingGuestBanner from '../../../components/common/BottomFlyingGuestBanner'
 import { useNotify } from '../../../hooks/useNotify'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -64,23 +64,13 @@ const WorkoutPlansID: FunctionComponent = () => {
     const onSubmit = async (values: WorkoutPlanSchemaProps) => {
         try {
             setSaveLoading(true)
-            if (await is_id(router.query.id)) {
-                await overwriteThoseIDSinDB('workout_plan', [{
-                    _id: router.query.id,
-                    ...(values.title && { title: values.title }),
-                    ...(values.description && { description: values.description }),
-                    ...(values.burnt && { burnt: values.burnt }),
-                    ...(fields && fields.length && { exercises: fields }),
-                }])
-            } else {
-                await insertThoseIDStoDB('workout_plan', [{
-                    _id: router.query.id,
-                    ...(values.title && { title: values.title }),
-                    ...(values.description && { description: values.description }),
-                    ...(values.burnt && { burnt: values.burnt }),
-                    ...(fields && fields.length && { exercises: fields }),
-                }])
-            }
+            await insertThoseIDStoDBController('workout_plan', [{
+                _id: router.query.id,
+                ...(values.title && { title: values.title }),
+                ...(values.description && { description: values.description }),
+                ...(values.burnt && { burnt: values.burnt }),
+                ...(fields && fields.length && { exercises: fields }),
+            }])
             router.push(`/${token.login}/workout-plans/`)
         } catch (e: any) {
             console.log(e)

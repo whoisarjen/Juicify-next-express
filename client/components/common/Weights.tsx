@@ -17,7 +17,7 @@ import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
-import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from "../../utils/db.utils";
+import { insertThoseIDStoDBController } from "../../utils/db.utils";
 import { TransitionProps } from '@mui/material/transitions';
 import Slide from '@mui/material/Slide';
 import styled from 'styled-components'
@@ -80,11 +80,7 @@ const Weights: FunctionComponent<WeightsProps> = ({ isWeights, closeWeights }) =
 
     const submit = async () => {
         if (change.weight != weight) {
-            if (await is_id(change._id)) {
-                await overwriteThoseIDSinDB('daily_measurement', [{ ...change, ...{ weight } }])
-            } else {
-                await insertThoseIDStoDB('daily_measurement', [{ ...change, ...{ weight } }])
-            }
+            await insertThoseIDStoDBController('daily_measurement', [{ ...change, ...{ weight } }])
             reload()
         }
         setIsDialog(false)
