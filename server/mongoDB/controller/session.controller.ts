@@ -12,7 +12,7 @@ import { DocumentDefinition } from "mongoose"
 import { UserProps } from "../models/user.model"
 import { socketHandleUserSynchronization } from "../../utils/socket"
 
-export async function createUserSessionHandler(req: Request, res: Response) {
+export async function createUserSessionController(req: Request, res: Response) {
     const user = await validatePassword(req.body)
 
     if (!user) {
@@ -113,7 +113,7 @@ export async function createUserSessionHandler(req: Request, res: Response) {
     })
 }
 
-export async function refreshUserSessionHandler(req: Request, res: Response) {
+export async function refreshUserSessionController(req: Request, res: Response) {
     const refresh_token = get(req, 'cookies.refresh_token') || get(req, 'headers.x-refresh', '').replace(/^Bearer\s/, '')
     const token = await reIssueAccessToken(refresh_token, res)
 
@@ -134,7 +134,7 @@ export async function refreshUserSessionHandler(req: Request, res: Response) {
     return res.send({ token })
 }
 
-export async function synchronizationUserSessionHandler(req: Request, res: Response) {
+export async function synchronizationUserSessionController(req: Request, res: Response) {
     const user = res.locals.token;
 
     if (req.body.where == 'product') {
@@ -228,7 +228,7 @@ export async function updateToken(req: Request, res: Response, user: DocumentDef
     return token
 }
 
-export async function deleteUserSessionHandler(req: Request, res: Response) {
+export async function deleteUserSessionController(req: Request, res: Response) {
     const sessionId = res.locals.token.session
 
     if (sessionId) {

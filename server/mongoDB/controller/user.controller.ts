@@ -7,7 +7,7 @@ import { removeUsersSensitiveData } from '../../utils/guest.utils'
 import errorBook from "../../utils/errorBook"
 import { updateToken } from "./session.controller"
 
-export const createUserHandler = async (req: Request<{}, {}, CreateUserInput['body']>, res: Response) => {
+export const createUserController = async (req: Request<{}, {}, CreateUserInput['body']>, res: Response) => {
     try {
         if ((new Date(req.body.birth)).toString() === 'Invalid Date') {
             throw errorBook['BIRTHDAY IS REQUIRED']['VALUE']
@@ -20,7 +20,7 @@ export const createUserHandler = async (req: Request<{}, {}, CreateUserInput['bo
     }
 }
 
-export const changeUserHandler = async (req: Request<{}, {}, CreateUserInput['body']>, res: Response) => {
+export const changeUserController = async (req: Request<{}, {}, CreateUserInput['body']>, res: Response) => {
     try {
         const user = await changeUser({ ...req.body, _id: res.locals.token._id })
 
@@ -35,7 +35,7 @@ export const changeUserHandler = async (req: Request<{}, {}, CreateUserInput['bo
     }
 }
 
-export const getUsersByLoginHandler = async (req: Request, res: Response) => {
+export const getUsersByLoginController = async (req: Request, res: Response) => {
     try {
         const users = await getUsersByLogin(req.body.find)
         const items = await removeUsersSensitiveData(users)
@@ -46,7 +46,7 @@ export const getUsersByLoginHandler = async (req: Request, res: Response) => {
     }
 }
 
-export const confirmUserHandler = async (req: Request, res: Response) => {
+export const confirmUserController = async (req: Request, res: Response) => {
     try {
         const user = await confirmUser(req.body.email_confirmation_hash)
         return res.send(user);
@@ -56,7 +56,7 @@ export const confirmUserHandler = async (req: Request, res: Response) => {
     }
 }
 
-export const resetPasswordHandler = async (req: Request, res: Response) => {
+export const resetPasswordController = async (req: Request, res: Response) => {
     try {
         const user = await resetPassword(req.body.email)
         return res.send(user);
@@ -66,7 +66,7 @@ export const resetPasswordHandler = async (req: Request, res: Response) => {
     }
 }
 
-export const resetPasswordConfirmationHandler = async (req: Request, res: Response) => {
+export const resetPasswordConfirmationController = async (req: Request, res: Response) => {
     try {
         const user = await resetPasswordConfirmation(req.body.reset_password_hash)
         return res.send(user);

@@ -6,7 +6,7 @@ import { socketHandleUserSynchronization } from '../../utils/socket'
 import errorBook from '../../utils/errorBook'
 import { connectTwoDailyMeasurements } from '../../utils/dailyMeasurement.utils'
 
-export const createDailyMeasurementHandler = async (req: Request<{}, {}, CreateDailyMeasurementInput['body']>, res: Response) => {
+export const createDailyMeasurementController = async (req: Request<{}, {}, CreateDailyMeasurementInput['body']>, res: Response) => {
     try {
         const responseArray = []
         for (let i = 0; i < req.body.array.length; i++) {
@@ -50,7 +50,7 @@ export const createDailyMeasurementHandler = async (req: Request<{}, {}, CreateD
     }
 }
 
-export const changeDailyMeasurementHandler = async (req: Request<{}, {}, CreateDailyMeasurementInput['body']>, res: Response) => {
+export const changeDailyMeasurementController = async (req: Request<{}, {}, CreateDailyMeasurementInput['body']>, res: Response) => {
     try {
         const DailyMeasurements = await changeDailyMeasurement(req.body.array)
         await socketHandleUserSynchronization({ req, res, data: DailyMeasurements, whatToDo: 'change', where: 'daily_measurement' })
@@ -61,10 +61,10 @@ export const changeDailyMeasurementHandler = async (req: Request<{}, {}, CreateD
     }
 }
 
-export const getGuestDailyMeasurementHandler = async (req: Request, res: Response) => {
+export const getGuestDailyMeasurementController = async (req: Request, res: Response) => {
     try {
         if ((new Date(req.body.find).toString() === 'Invalid Date')) {
-            logger.error(`getDailyMeasurementHandler blocked ${req.body.find}. Invalid Date`)
+            logger.error(`getDailyMeasurementController blocked ${req.body.find}. Invalid Date`)
             return res.status(errorBook['DATE IS REQUIRED']['CODE']).send(errorBook['DATE IS REQUIRED']['VALUE'])
         }
         const dailyMeasurement = await getDailyMeasurement({

@@ -5,7 +5,7 @@ import { CreateProductInput } from "../schema/product.schema"
 import { createProduct, deleteManyProduct, getProductByCode, getProductByName, getUserProducts } from "../service/product.service"
 import { socketHandleUserSynchronization } from '../../utils/socket'
 
-export const createProductHandler = async (req: Request<{}, {}, CreateProductInput['body']>, res: Response) => {
+export const createProductController = async (req: Request<{}, {}, CreateProductInput['body']>, res: Response) => {
     try {
         const product = await createProduct(req.body.array)
         await socketHandleUserSynchronization({ req, res, data: product, whatToDo: 'change', where: 'product' });
@@ -16,7 +16,7 @@ export const createProductHandler = async (req: Request<{}, {}, CreateProductInp
     }
 }
 
-export const deleteManyProductHandler = async (req: Request<{}, {}, CreateProductInput['body']>, res: Response) => {
+export const deleteManyProductController = async (req: Request<{}, {}, CreateProductInput['body']>, res: Response) => {
     try {
         req.body.array.forEach(async (product: ProductProps) => {
             await deleteManyProduct({
@@ -32,7 +32,7 @@ export const deleteManyProductHandler = async (req: Request<{}, {}, CreateProduc
     }
 }
 
-export const getUserProductsHandler = async (req: Request<{}, {}, CreateProductInput['body']>, res: Response) => {
+export const getUserProductsController = async (req: Request<{}, {}, CreateProductInput['body']>, res: Response) => {
     try {
         const products = await getUserProducts(res.locals.token)
         return res.send(products);
@@ -42,7 +42,7 @@ export const getUserProductsHandler = async (req: Request<{}, {}, CreateProductI
     }
 }
 
-export const getProductByNameHandler = async (req: Request, res: Response) => {
+export const getProductByNameController = async (req: Request, res: Response) => {
     try {
         const items = await getProductByName(req.body.find)
         return res.send({ items });
@@ -52,7 +52,7 @@ export const getProductByNameHandler = async (req: Request, res: Response) => {
     }
 }
 
-export const getProductByCodeHandler = async (req: Request, res: Response) => {
+export const getProductByCodeController = async (req: Request, res: Response) => {
     try {
         const item = await getProductByCode(req.body.code)
         return res.send(item);

@@ -5,7 +5,7 @@ import { CreateExerciseSchemaProps } from "../schema/exercise.schema"
 import { createExercise, deleteManyExercise, getExerciseByName, getUserExercises } from "../service/exercise.service"
 import { socketHandleUserSynchronization } from '../../utils/socket'
 
-export const createExerciseHandler = async (req: Request<{}, {}, CreateExerciseSchemaProps['body']>, res: Response) => {
+export const createExerciseController = async (req: Request<{}, {}, CreateExerciseSchemaProps['body']>, res: Response) => {
     try {
         const exercise = await createExercise(req.body.array)
         await socketHandleUserSynchronization({ req, res, data: exercise, whatToDo: 'change', where: 'exercise' })
@@ -16,7 +16,7 @@ export const createExerciseHandler = async (req: Request<{}, {}, CreateExerciseS
     }
 }
 
-export const deleteManyExerciseHandler = async (req: Request<{}, {}, CreateExerciseSchemaProps['body']>, res: Response) => {
+export const deleteManyExerciseController = async (req: Request<{}, {}, CreateExerciseSchemaProps['body']>, res: Response) => {
     try {
         req.body.array.forEach(async (Exercise: ExerciseProps) => {
             await deleteManyExercise({
@@ -32,7 +32,7 @@ export const deleteManyExerciseHandler = async (req: Request<{}, {}, CreateExerc
     }
 }
 
-export const getUserExercisesHandler = async (req: Request<{}, {}, CreateExerciseSchemaProps['body']>, res: Response) => {
+export const getUserExercisesController = async (req: Request<{}, {}, CreateExerciseSchemaProps['body']>, res: Response) => {
     try {
         const exercises = await getUserExercises(res.locals.token)
         return res.send(exercises);
@@ -42,7 +42,7 @@ export const getUserExercisesHandler = async (req: Request<{}, {}, CreateExercis
     }
 }
 
-export const getExerciseByNameHandler = async (req: Request, res: Response) => {
+export const getExerciseByNameController = async (req: Request, res: Response) => {
     try {
         const items = await getExerciseByName(req.body.find)
         return res.send({ items });

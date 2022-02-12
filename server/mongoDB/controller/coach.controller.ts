@@ -3,7 +3,7 @@ import logger from '../../utils/logger';
 import { changeUser } from '../service/user.service';
 import { updateToken } from './session.controller';
 
-export const createCoachHandler = async (req: Request, res: Response) => {
+export const createCoachController = async (req: Request, res: Response) => {
     try {
         let calories = 0
 
@@ -45,7 +45,7 @@ export const createCoachHandler = async (req: Request, res: Response) => {
     }
 }
 
-export const analyzeCoachHandler = async (req: Request, res: Response) => {
+export const analyzeCoachController = async (req: Request, res: Response) => {
     try {
         let allWeightsWeek1 = 0
         let qualityDaysWeek1 = 0
