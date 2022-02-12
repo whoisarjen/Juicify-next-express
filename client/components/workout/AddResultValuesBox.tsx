@@ -150,9 +150,12 @@ const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, inde
                             <div onClick={() => setOpen(true)}><div>#{index + 1}</div></div>
                             <div onClick={() => setOpen(true)}><div>{reps}r.</div></div>
                             <div onClick={() => setOpen(true)}>
-                                <IconButton aria-label="save">
-                                    <CheckCircleOutlinedIcon sx={{ fontSize: 20 }} />
-                                </IconButton>
+                                {
+                                    isOwner &&
+                                    <IconButton aria-label="save">
+                                        <CircleOutlinedIcon sx={{ fontSize: 20 }} />
+                                    </IconButton>
+                                }
                             </div>
                         </Box>
                         <ConfirmDialog
