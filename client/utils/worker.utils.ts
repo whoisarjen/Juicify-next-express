@@ -8,18 +8,6 @@ export const workersController = (lastUpdated: any) => {
         daily_measurement: false,
     }
 
-    const productWorker = async () => {
-        const product = new Worker(new URL("../workers/product.worker.ts", import.meta.url), { name: 'product', type: 'module' })
-        product.postMessage({
-            updated: await getCookie('product'),
-            socketUpdated: lastUpdated.product,
-        })
-        product.onmessage = (() => {
-            workersController['product'] = true;
-            dailyMeasurementWorker()
-        })
-    }
-
     const exerciseWorker = async () => {
         const exercise = new Worker(new URL("../workers/exercise.worker.ts", import.meta.url), { name: 'exercise', type: 'module' })
         exercise.postMessage({
@@ -32,8 +20,20 @@ export const workersController = (lastUpdated: any) => {
         })
     }
 
-    productWorker()
+    const productWorker = async () => {
+        const product = new Worker(new URL("../workers/product.worker.ts", import.meta.url), { name: 'product', type: 'module' })
+        product.postMessage({
+            updated: await getCookie('product'),
+            socketUpdated: lastUpdated.product,
+        })
+        product.onmessage = (() => {
+            workersController['product'] = true;
+            dailyMeasurementWorker()
+        })
+    }
+
     exerciseWorker()
+    productWorker()
 
     const workoutPlanWorker = async () => {
         if (!workersController.workout_plan && workersController.exercise) {
