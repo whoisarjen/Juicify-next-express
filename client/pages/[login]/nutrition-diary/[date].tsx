@@ -70,7 +70,7 @@ const NutritionDiary: FunctionComponent = () => {
     }, [data])
 
     return (
-        <div className="NutritionDiary">
+        <>
             {
                 nutrition_diary &&
                 <>
@@ -85,36 +85,28 @@ const NutritionDiary: FunctionComponent = () => {
                         <Diagrams array={nutrition_diary} user={user} />
                     }
                     {
-                        token && token.login == router.query.login ?
-                            (
-                                <DiagramsOptions data={data} reloadDailyMeasurement={reloadDailyMeasurement} />
-                            )
-                            :
-                            <></>
+                        token?.login == router?.query.login &&
+                        <DiagramsOptions data={data} reloadDailyMeasurement={reloadDailyMeasurement} />
                     }
                     {
-                        nutrition_diary
-                            ?
-                            nutrition_diary.map((x, i) => (
-                                <MealBox
-                                    key={i}
-                                    index={i}
-                                    products={x}
-                                    openDialog={() => {
-                                        setIndex(i)
-                                        setIsAddDialog(true)
-                                    }}
-                                    openEditProduct={(product) => {
-                                        setProduct(product)
-                                        setIsEditDialog(true)
-                                    }}
-                                />
-                            ))
-                            :
-                            <></>
+                        nutrition_diary?.map((x, i) => (
+                            <MealBox
+                                key={i}
+                                index={i}
+                                products={x}
+                                openDialog={() => {
+                                    setIndex(i)
+                                    setIsAddDialog(true)
+                                }}
+                                openEditProduct={(product) => {
+                                    setProduct(product)
+                                    setIsEditDialog(true)
+                                }}
+                            />
+                        ))
                     }
                     {
-                        token && token.login == router.query.login &&
+                        token?.login == router?.query.login &&
                         <AddProducts
                             index={index}
                             isAddDialog={isAddDialog}
@@ -124,22 +116,21 @@ const NutritionDiary: FunctionComponent = () => {
                         />
                     }
                     {
-                        token && token.login == router.query.login ?
-                            (
-                                <DialogEditProduct
-                                    product={product}
-                                    isDialog={isEditDialog}
-                                    closeDialog={() => setIsEditDialog(false)}
-                                    deleteProduct={(_id) => deleteProduct(_id)}
-                                    changeProduct={(newProduct) => changeProduct(newProduct)}
-                                />
-                            ) : (
-                                <BottomFlyingGuestBanner user={user} />
-                            )
+                        token?.login == router?.query.login
+                            ?
+                            <DialogEditProduct
+                                product={product}
+                                isDialog={isEditDialog}
+                                closeDialog={() => setIsEditDialog(false)}
+                                deleteProduct={(_id) => deleteProduct(_id)}
+                                changeProduct={(newProduct) => changeProduct(newProduct)}
+                            />
+                            :
+                            <BottomFlyingGuestBanner user={user} />
                     }
                 </>
             }
-        </div>
+        </>
     );
 };
 
