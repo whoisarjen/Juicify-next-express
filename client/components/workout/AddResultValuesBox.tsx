@@ -1,4 +1,3 @@
-import styles from '../../styles/workout.module.css'
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete'
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
@@ -9,6 +8,7 @@ import ConfirmDialog from '../common/ConfirmDialog';
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
 import { ValueSchemaProps } from '../../schema/workoutResult.schema';
+import styled from 'styled-components';
 
 interface AddResultValuesBox {
     value: ValueSchemaProps,
@@ -16,6 +16,26 @@ interface AddResultValuesBox {
     changeResult: (arg0: ValueSchemaProps) => void,
     deleteResult: () => void
 }
+
+const Box = styled.div`
+    min-height: 36px;
+    width: 100%;
+    padding: 8px 0;
+    margin-top: 12px;
+    border-radius: 4px;
+    border: 1px solid #eee;
+    font-size: 0.875rem;
+    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    ${this} div {
+        margin: auto;
+    }
+`
+
+const Connected = styled.div`
+    grid-column: 1 / 3;
+`
 
 const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, index, changeResult, deleteResult }) => {
     const [reps, setReps] = useState('0')
@@ -72,15 +92,14 @@ const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, inde
             {
                 open
                     ?
-                    <div>
-                        <div
-                            className={styles.AddResultValuesBox}
+                    <>
+                        <Box
                             onClick={() => {
                                 setOpen(false)
                                 changeResult({ reps: parseInt(reps), weight: parseFloat(weight), open })
                             }}
                         >
-                            <div className={styles.AddResultValuesBoxConnectGrid}><div>Click to save</div></div>
+                            <Connected><div>Click to save</div></Connected>
                             <div><div>#{index + 1}</div></div>
                             <div>
                                 <IconButton aria-label="arrow">
@@ -92,7 +111,7 @@ const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, inde
                                     <CircleOutlinedIcon sx={{ fontSize: 20 }} />
                                 </IconButton>
                             </div>
-                        </div>
+                        </Box>
                         <Autocomplete
                             sx={{ marginTop: '8px' }}
                             disablePortal
@@ -115,10 +134,10 @@ const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, inde
                             getOptionLabel={(option) => option ? option.toString() : ""}
                             renderInput={(params) => <TextField {...params} label="Reps" />}
                         />
-                    </div>
+                    </>
                     :
                     <>
-                        <div className={styles.AddResultValuesBox}>
+                        <Box>
                             <div onClick={() => setIsDialog(true)} >
                                 <IconButton aria-label="delete">
                                     <DeleteIcon sx={{ fontSize: 20 }} />
@@ -132,7 +151,7 @@ const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, inde
                                     <CheckCircleOutlinedIcon sx={{ fontSize: 20 }} />
                                 </IconButton>
                             </div>
-                        </div>
+                        </Box>
                         <ConfirmDialog
                             isDialog={isDialog}
                             confirm={handleDelete}

@@ -22,6 +22,7 @@ import BottomFlyingButton from '../common/BottomFlyingButton';
 import AddProductMoreInformation from './AddProductMoreInformation';
 import { DailyMeasurementSchemaProps } from '../../schema/dailyMeasurement.schema';
 import { ProductSchemaProps } from '../../schema/product.schema';
+import styled from 'styled-components'
 
 interface AddproductsProps {
     index: number,
@@ -39,6 +40,23 @@ const Transition = forwardRef(function Transition(
 ) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
+
+const Close = styled.div`
+    display: grid;
+    width: calc(100% - 10px);
+    padding: 3.75px 5px;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--theme-background);
+    z-index: 2;
+`
+
+const Placeholder = styled.div`
+    width: 100%;
+    height: 44px;
+`
 
 const AddProducts: FunctionComponent<AddproductsProps> = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload }) => {
     const [loadedProduct, setLoadedProduct] = useState<any>(false)
@@ -177,12 +195,12 @@ const AddProducts: FunctionComponent<AddproductsProps> = ({ index, isAddDialog, 
                         checked && checked.length > 0 &&
                         <BottomFlyingButton clicked={addProductsToDiary} isLoading={loadingButton} showNumberValue={checked.length} />
                     }
-                    <div className={styles.addProductsCloseButtonPlaceholder} />
-                    <div className={styles.addProductsCloseButton} onClick={() => closeDialog()}>
+                    <Placeholder />
+                    <Close onClick={() => closeDialog()}>
                         <Button variant="contained">
                             {t('Close')}
                         </Button>
-                    </div>
+                    </Close>
                 </div>
                 <AddProductMoreInformation handleClose={() => setLoadedProduct(false)} loadedProduct={loadedProduct} dailyMeasurement={dailyMeasurement} />
             </Dialog>

@@ -7,6 +7,7 @@ import styles from '../../styles/nutrition-diary.module.css'
 import useTranslation from 'next-translate/useTranslation';
 import AddProductMoreInformationAdd from './AddProductMoreInformationAdd';
 import { getProductInformations } from '../../utils/product.utils';
+import styled from 'styled-components'
 
 const Transition = forwardRef(function Transition(
     props: TransitionProps & {
@@ -22,6 +23,23 @@ interface AddProductMoreInformationProps {
     handleClose: () => void,
     dailyMeasurement: any
 }
+
+const Close = styled.div`
+    display: grid;
+    width: calc(100% - 10px);
+    padding: 3.75px 5px;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--theme-background);
+    z-index: 2;
+`
+
+const Placeholder = styled.div`
+    width: 100%;
+    height: 44px;
+`
 
 const AddProductMoreInformation: FunctionComponent<AddProductMoreInformationProps> = ({ loadedProduct, handleClose, dailyMeasurement }) => {
     const { t } = useTranslation('nutrition-diary');
@@ -47,18 +65,18 @@ const AddProductMoreInformation: FunctionComponent<AddProductMoreInformationProp
                             </ul>
                         )
                     }
-                    <div className={styles.addProductsAddButtonPlaceholder} />
-                    <div className={styles.addProductsAddButton} onClick={() => setIsAdd(true)}>
+                    <Placeholder />
+                    <Close onClick={() => setIsAdd(true)}>
                         <Button variant="contained">
                             {t('ADD_TO_DIARY')}
                         </Button>
-                    </div>
-                    <div className={styles.addProductsCloseButtonPlaceholder} />
-                    <div className={styles.addProductsCloseButton} onClick={handleClose}>
+                    </Close>
+                    <Placeholder />
+                    <Close onClick={handleClose}>
                         <Button variant="contained">
                             {t('Close')}
                         </Button>
-                    </div>
+                    </Close>
                 </div>
                 <AddProductMoreInformationAdd isAdd={isAdd} dailyMeasurement={dailyMeasurement} setIsAdd={setIsAdd} loadedProduct={loadedProduct} />
             </Dialog>

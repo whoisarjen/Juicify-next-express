@@ -16,7 +16,7 @@ import { deleteIndexedDB, getAllIndexedDB } from '../../utils/indexedDB.utils';
 import CreateExercise from './CreateExercise';
 import { TransitionProps } from '@material-ui/core/transitions';
 import { ExerciseSchemaProps } from '../../schema/exercise.schema';
-
+import styled from 'styled-components'
 
 const Transition = forwardRef(function Transition(
     props: TransitionProps & {
@@ -33,6 +33,23 @@ interface AddDialogProps {
     skipThoseIDS: Array<ExerciseSchemaProps>,
     addThoseExercises: (Arg0: Array<ExerciseSchemaProps>) => void
 }
+
+const Close = styled.div`
+    display: grid;
+    width: calc(100% - 10px);
+    padding: 3.75px 5px;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--theme-background);
+    z-index: 2;
+`
+
+const Placeholder = styled.div`
+    width: 100%;
+    height: 44px;
+`
 
 const AddDialog: FunctionComponent<AddDialogProps> = ({ isAddDialog, closeDialog, skipThoseIDS, addThoseExercises }) => {
     const { t } = useTranslation('home');
@@ -142,12 +159,12 @@ const AddDialog: FunctionComponent<AddDialogProps> = ({ isAddDialog, closeDialog
                         checked && checked.length > 0 &&
                         <BottomFlyingButton clicked={addExercisesToWorkoutPlan} isLoading={loadingButton} showNumberValue={checked.length} />
                     }
-                    <div className={styles.addProductsCloseButtonPlaceholder} />
-                    <div className={styles.addProductsCloseButton} onClick={() => closeDialog()}>
+                    <Placeholder />
+                    <Close onClick={() => closeDialog()}>
                         <Button variant="contained">
                             {t('Close')}
                         </Button>
-                    </div>
+                    </Close>
                 </div>
             </Dialog>
         </div>

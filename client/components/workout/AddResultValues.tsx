@@ -1,10 +1,10 @@
-import styles from '../../styles/workout.module.css'
 import ButtonPlus from '../common/ButtonPlus'
 import { useState, useEffect, FunctionComponent } from 'react'
 import AddResultValuesBox from './AddResultValuesBox'
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ResultSchemaProps, ValueSchemaProps } from '../../schema/workoutResult.schema'
+import styled from 'styled-components';
 
 interface AddResultValuesProps {
     isOwner: boolean,
@@ -12,6 +12,28 @@ interface AddResultValuesProps {
     setNewValues: (arg0: Array<ValueSchemaProps>) => void
     openDeleteExercise: () => void
 }
+
+const Name = styled.div`
+    width: calc(100% - 30px);
+    padding: 7px 15px;
+    background: #333;
+    color: #fff;
+    margin-top: 12px;
+    text-align: center;
+    border-radius: 4px;
+    display: grid;
+    grid-template-columns: 44px auto 44px;
+    ${this} div {
+        margin: auto;
+        display: grid;
+    }
+    ${this} div button {
+        margin: auto;
+    }
+    ${this} div div {
+        margin: auto;
+    }
+`
 
 const AddResultValues: FunctionComponent<AddResultValuesProps> = ({ result, setNewValues, isOwner, openDeleteExercise }) => {
     const [values, setValues] = useState<Array<ValueSchemaProps>>(result.values)
@@ -64,16 +86,16 @@ const AddResultValues: FunctionComponent<AddResultValuesProps> = ({ result, setN
     useEffect(() => setValues(result.values), [result])
 
     return (
-        <div className={styles.addResultValues}>
-            <div className={styles.addResultValuesName}>
+        <div>
+            <Name>
                 <div>
-                    <IconButton color="primary" aria-label="upload picture" component="span" onClick={openDeleteExercise}>
+                    <IconButton color="primary" component="span" onClick={openDeleteExercise}>
                         <DeleteIcon sx={{ fontSize: 20 }} />
                     </IconButton>
                 </div>
                 <div>{result.name}</div>
                 <div />
-            </div>
+            </Name>
             {
                 values &&
                 values.length > 0 &&
