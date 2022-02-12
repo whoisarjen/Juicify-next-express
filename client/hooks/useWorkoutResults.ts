@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import { useAppSelector } from "./useRedux";
 import { useState, useEffect } from "react";
-import { loadValueByLogin } from '../utils/db.utils'
 import { getAllIndexedDB } from "../utils/indexedDB.utils";
+import useOtherUser from "./useOtherUser";
 
 const useWorkoutResults = (): any => {
     const router: any = useRouter()
@@ -10,6 +10,7 @@ const useWorkoutResults = (): any => {
     const [user, setUser] = useState({})
     const theOldestSupportedDate = useAppSelector(state => state.config.theOldestSupportedDate)
     const token: any = useAppSelector(state => state.token.value)
+    const { loadValueByLogin } = useOtherUser()
 
     useEffect(() => {
         (async () => {

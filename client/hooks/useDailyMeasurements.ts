@@ -2,10 +2,10 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react'
 import { getAllIndexedDB } from '../utils/indexedDB.utils';
 import { addDaysToDate } from '../utils/date.utils';
-import { loadValueByLogin } from '../utils/db.utils';
 import { useAppSelector } from './useRedux';
 import { loadMissingDays } from '../utils/dailyMeasurement.utils';
 import { DailyMeasurementSchemaProps } from '../schema/dailyMeasurement.schema';
+import useOtherUser from './useOtherUser';
 
 const useDailyMeasurements = (today: Date | string, howManyDays: number = 7, login: string) => {
     const [reload, setReload] = useState(0)
@@ -14,6 +14,7 @@ const useDailyMeasurements = (today: Date | string, howManyDays: number = 7, log
     const router = useRouter()
     const token: any = useAppSelector(state => state.token.value)
     const reloadKey = useAppSelector(state => state.key.daily_measurement)
+    const { loadValueByLogin } = useOtherUser()
 
     useEffect(() => {
         (async () => {

@@ -53,61 +53,66 @@ const Navbar = ({ user, tab }: NavbarProps) => {
 
     return (
         <>
-            <Box>
-                <AvatarBox>
-                    <Avatar user={user} />
-                </AvatarBox>
-                <Content>
-                    <div>
-                        <h2>{user.login}</h2>
-                        {
-                            user.login == token.login ?
-                                (
-                                    <>
-                                        <Share />
-                                        <IconButton onClick={() => router.push('/settings')} sx={{ margin: 'auto' }} aria-label="settings" color="primary">
-                                            <SettingsIcon />
-                                        </IconButton>
-                                    </>
-                                ) : (
-                                    <>
-                                        <div />
-                                        <Share />
-                                    </>
-                                )
-                        }
-                    </div>
-                    <div>{user.name} {user.surname}</div>
-                    <div>{user.description}</div>
-                    <div>
-                        {
-                            user.facebook &&
-                            <IconButton onClick={() => window.open(`https://facebook.com/${user.facebook}`, '_blank')} aria-label="Facebook" color="primary">
-                                <FacebookIcon />
-                            </IconButton>
-                        }
-                        {
-                            user.instagram &&
-                            <IconButton onClick={() => window.open(`https://instagram.com/${user.instagram}`, '_blank')} aria-label="Facebook" color="primary">
-                                <InstagramIcon />
-                            </IconButton>
-                        }
-                        {
-                            user.twitter &&
-                            <IconButton onClick={() => window.open(`https://twitter.com/${user.twitter}`, '_blank')} aria-label="Facebook" color="primary">
-                                <TwitterIcon />
-                            </IconButton>
-                        }
-                        {
-                            user.website &&
-                            <IconButton onClick={() => window.open(`${user.website}`, '_blank')} aria-label="Facebook" color="primary">
-                                <LinkIcon />
-                            </IconButton>
-                        }
-                    </div>
-                </Content>
-            </Box>
-            <TabsMenu tab={tab} />
+            {
+                user?.login &&
+                <>
+                    <Box>
+                        <AvatarBox>
+                            <Avatar user={user} />
+                        </AvatarBox>
+                        <Content>
+                            <div>
+                                <h2>{user.login}</h2>
+                                {
+                                    user.login == token.login ?
+                                        (
+                                            <>
+                                                <Share />
+                                                <IconButton onClick={() => router.push('/settings')} sx={{ margin: 'auto' }} aria-label="settings" color="primary">
+                                                    <SettingsIcon />
+                                                </IconButton>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <div />
+                                                <Share />
+                                            </>
+                                        )
+                                }
+                            </div>
+                            <div>{user.name} {user.surname}</div>
+                            <div>{user.description}</div>
+                            <div>
+                                {
+                                    user.facebook &&
+                                    <IconButton onClick={() => window.open(`https://facebook.com/${user.facebook}`, '_blank')} aria-label="Facebook" color="primary">
+                                        <FacebookIcon />
+                                    </IconButton>
+                                }
+                                {
+                                    user.instagram &&
+                                    <IconButton onClick={() => window.open(`https://instagram.com/${user.instagram}`, '_blank')} aria-label="Facebook" color="primary">
+                                        <InstagramIcon />
+                                    </IconButton>
+                                }
+                                {
+                                    user.twitter &&
+                                    <IconButton onClick={() => window.open(`https://twitter.com/${user.twitter}`, '_blank')} aria-label="Facebook" color="primary">
+                                        <TwitterIcon />
+                                    </IconButton>
+                                }
+                                {
+                                    user.website &&
+                                    <IconButton onClick={() => window.open(`${user.website}`, '_blank')} aria-label="Facebook" color="primary">
+                                        <LinkIcon />
+                                    </IconButton>
+                                }
+                            </div>
+                        </Content>
+                    </Box>
+                    <TabsMenu tab={tab} />
+                </>
+            }
         </>
     )
 }

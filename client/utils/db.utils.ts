@@ -1,32 +1,10 @@
-import { getIndexedDBbyID, addIndexedDB, deleteIndexedDB, getAllIndexedDB, putInformationAboutNeededUpdate } from "./indexedDB.utils"
+import { getIndexedDBbyID, addIndexedDB, deleteIndexedDB, putInformationAboutNeededUpdate } from "./indexedDB.utils"
 import { store } from '../redux/store'
 import axios from "axios"
 import { setIsOnline } from "../redux/features/online.slice"
 import { prepareToSend } from "./dailyMeasurement.utils"
 import { refreshKey } from "../redux/features/key.slice"
 import { handleUpdateDailyKey, handleUpdateKey } from "./synchronization.utils"
-
-export const loadValueByLogin = async (where: string, find: any, login: string = find) => {
-    try {
-        const res = await axios.post(
-            `${process.env.NEXT_PUBLIC_SERVER}/guest/${where}`,
-            {
-                find,
-                login
-            },
-            { withCredentials: true }
-        );
-        return res.data;
-    } catch (error: any) {
-        const errorCode = error.toJSON().status;
-        if (errorCode === 403) {
-            window.location.replace(`${window.location.origin}/403`)
-        }
-        if (errorCode === 404) {
-            window.location.replace(`${window.location.origin}/404`)
-        }
-    }
-}
 
 export const insertThoseIDStoDBController = async (where: string, array: Array<any>) => {
     if (await is_id(array[0]._id)) {

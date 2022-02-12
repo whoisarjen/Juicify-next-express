@@ -2,8 +2,8 @@ import { useRouter } from "next/router";
 import { useAppSelector } from "./useRedux";
 import { useState, useEffect } from "react";
 import { getIndexedDBbyID } from "../utils/indexedDB.utils";
-import { loadValueByLogin } from "../utils/db.utils";
 import { loadMissingData } from "../utils/dailyMeasurement.utils";
+import useOtherUser from "./useOtherUser";
 
 const useDailyMeasurement = (when: string, login: string): [any, () => void] => {
     const router: any = useRouter();
@@ -13,6 +13,7 @@ const useDailyMeasurement = (when: string, login: string): [any, () => void] => 
     const theOldestSupportedDate = useAppSelector(state => state.config.theOldestSupportedDate());
     const token: any = useAppSelector(state => state.token.value)
     const reloadKey = useAppSelector(state => state.key.daily_measurement)
+    const { loadValueByLogin } = useOtherUser()
 
     useEffect(() => {
         if (when) {

@@ -10,7 +10,6 @@ import { addDaysToDate, getShortDate, reverseDateDotes } from '../../utils/date.
 import { getCalories } from "../../utils/product.utils";
 import styled from 'styled-components'
 import { DailyMeasurementSchemaProps } from "../../schema/dailyMeasurement.schema";
-import { ActivitySchemaProps } from "../../schema/activity.schema";
 
 const Box = styled.div`
     width: 100%;
@@ -44,7 +43,7 @@ const Profile: FunctionComponent = () => {
         if (x.nutrition_diary && x.nutrition_diary.length) {
             object.name = reverseDateDotes(x.whenAdded).slice(0, 5)
             x.nutrition_diary.map((meal: any) => {
-            
+
                 if (meal && meal.how_many) {
                     if (meal.p) {
                         object[t('p')] += meal.p * meal.how_many
@@ -88,20 +87,15 @@ const Profile: FunctionComponent = () => {
 
     return (
         <>
-            {
-                user &&
-                <>
-                    <Navbar user={user} tab={0} />
-                    <h3 style={{ color: getTheme('PRIMARY') }}>{t('Daily calories')}</h3>
-                    <Box>
-                        <SimpleLineChart data={calories.reverse()} barNamesWithColor={barNamesWithColorCalories} />
-                    </Box>
-                    <h3 style={{ color: getTheme('PRIMARY') }}>{t("Daily macronutrients")}</h3>
-                    <Box>
-                        <StackedBarChart data={nutrition_diary.reverse()} barNamesWithColor={barNamesWithColor} />
-                    </Box>
-                </>
-            }
+            <Navbar user={user} tab={0} />
+            <h3 style={{ color: getTheme('PRIMARY') }}>{t('Daily calories')}</h3>
+            <Box>
+                <SimpleLineChart data={calories.reverse()} barNamesWithColor={barNamesWithColorCalories} />
+            </Box>
+            <h3 style={{ color: getTheme('PRIMARY') }}>{t("Daily macronutrients")}</h3>
+            <Box>
+                <StackedBarChart data={nutrition_diary.reverse()} barNamesWithColor={barNamesWithColor} />
+            </Box>
         </>
     );
 };

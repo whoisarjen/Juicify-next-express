@@ -1,11 +1,11 @@
 import { is_id } from '../utils/db.utils'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
-import { loadValueByLogin } from '../utils/db.utils'
 import { getIndexedDBbyID } from '../utils/indexedDB.utils'
 import { useAppSelector } from './useRedux'
 import { loadMissingData } from '../utils/workoutPlan.utils'
 import { WorkoutPlanSchemaProps } from '../schema/workoutPlan.schema'
+import useOtherUser from './useOtherUser'
 
 const useWorkoutPlan = (workoutPlanID: string): [any, () => void] => {
     const router: any = useRouter()
@@ -14,6 +14,7 @@ const useWorkoutPlan = (workoutPlanID: string): [any, () => void] => {
     const [data, setData] = useState<boolean | WorkoutPlanSchemaProps>(false)
     const token: any = useAppSelector(state => state.token.value)
     const reloadKey = useAppSelector(state => state.key.workout_plan)
+    const { loadValueByLogin } = useOtherUser()
 
     useEffect(() => {
         (async () => {

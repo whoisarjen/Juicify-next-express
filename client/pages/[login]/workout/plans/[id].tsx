@@ -1,25 +1,25 @@
 import Chip from '@mui/material/Chip'
 import Stack from '@mui/material/Stack'
 import { useRouter } from "next/router"
-import { useAppSelector } from '../../../hooks/useRedux'
+import { useAppSelector } from '../../../../hooks/useRedux'
 import { useState, FunctionComponent, useEffect } from "react"
 import TextField from '@mui/material/TextField'
 import DeleteIcon from '@mui/icons-material/Delete'
-import Navbar from '../../../components/workout/Navbar'
+import Navbar from '../../../../components/workout/Navbar'
 import SwapVertIcon from '@mui/icons-material/SwapVert'
-import useWorkoutPlan from "../../../hooks/useWorkoutPlan"
+import useWorkoutPlan from "../../../../hooks/useWorkoutPlan"
 import useTranslation from "next-translate/useTranslation"
-import ButtonPlus from '../../../components/common/ButtonPlus'
-import AddExercises from '../../../components/workout/AddExercises'
+import ButtonPlus from '../../../../components/common/ButtonPlus'
+import AddExercises from '../../../../components/workout/AddExercises'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
-import { deleteIndexedDB } from "../../../utils/indexedDB.utils"
-import { is_id, deleteThoseIDSfromDB, insertThoseIDStoDBController } from "../../../utils/db.utils"
-import BottomFlyingGuestBanner from '../../../components/common/BottomFlyingGuestBanner'
-import { useNotify } from '../../../hooks/useNotify'
+import { deleteIndexedDB } from "../../../../utils/indexedDB.utils"
+import { is_id, deleteThoseIDSfromDB, insertThoseIDStoDBController } from "../../../../utils/db.utils"
+import BottomFlyingGuestBanner from '../../../../components/common/BottomFlyingGuestBanner'
+import { useNotify } from '../../../../hooks/useNotify'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useFieldArray, useForm } from 'react-hook-form'
-import { WorkoutPlanSchemaProps, WorkoutPlanSchema } from '../../../schema/workoutPlan.schema'
-import { ExerciseSchemaProps } from '../../../schema/exercise.schema'
+import { WorkoutPlanSchemaProps, WorkoutPlanSchema } from '../../../../schema/workoutPlan.schema'
+import { ExerciseSchemaProps } from '../../../../schema/exercise.schema'
 
 const WorkoutPlansID: FunctionComponent = () => {
     const router: any = useRouter()
@@ -88,7 +88,7 @@ const WorkoutPlansID: FunctionComponent = () => {
                 <>
                     <Navbar
                         title="Workout plan"
-                        where="workout-plans"
+                        where="workout/plans"
                         saveLoading={saveLoading}
                         saveWorkout={handleSubmit(onSubmit)}
                         deleteWorkout={deleteWorkoutPlan}

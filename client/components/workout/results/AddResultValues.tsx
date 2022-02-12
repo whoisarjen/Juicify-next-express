@@ -1,9 +1,9 @@
-import ButtonPlus from '../common/ButtonPlus'
+import ButtonPlus from '../../common/ButtonPlus'
 import { useState, useEffect, FunctionComponent } from 'react'
 import AddResultValuesBox from './AddResultValuesBox'
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { ResultSchemaProps, ValueSchemaProps } from '../../schema/workoutResult.schema'
+import { ResultSchemaProps, ValueSchemaProps } from '../../../schema/workoutResult.schema'
 import styled from 'styled-components';
 
 interface AddResultValuesProps {

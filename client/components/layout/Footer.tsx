@@ -54,7 +54,7 @@ const Footer: FunctionComponent<FooterProps> = ({ token }) => {
                                 <EmojiEventsIcon color="primary" />
                             </A>
                         </Link>
-                        <Link passHref href="/workout">
+                        <Link passHref href={`/${token.login}/workout`}>
                             <A>
                                 <FitnessCenterIcon color="primary" />
                             </A>

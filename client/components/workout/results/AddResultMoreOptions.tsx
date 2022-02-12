@@ -3,8 +3,8 @@ import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import { FunctionComponent, useState } from 'react'
-import AddExercises from './AddExercises'
-import { ExerciseSchemaProps } from '../../schema/exercise.schema';
+import AddExercises from '../AddExercises'
+import { ExerciseSchemaProps } from '../../../schema/exercise.schema';
 
 interface AddResultMoreOptionsProps {
     exercises: Array<ExerciseSchemaProps>,

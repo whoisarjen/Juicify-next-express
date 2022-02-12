@@ -4,10 +4,10 @@ import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import { useState, useEffect, useMemo, FunctionComponent } from 'react'
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import ConfirmDialog from '../common/ConfirmDialog';
+import ConfirmDialog from '../../common/ConfirmDialog';
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
-import { ValueSchemaProps } from '../../schema/workoutResult.schema';
+import { ValueSchemaProps } from '../../../schema/workoutResult.schema';
 import styled from 'styled-components';
 
 interface AddResultValuesBox {

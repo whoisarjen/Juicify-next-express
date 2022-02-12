@@ -1,13 +1,13 @@
 import { useRouter } from 'next/router';
-import { addIndexedDB } from '../../../utils/indexedDB.utils'
-import useWorkoutPlans from '../../../hooks/useWorkoutPlans'
-import ButtonPlus from '../../../components/common/ButtonPlus';
-import Box from '../../../components/workout/Box';
+import { addIndexedDB } from '../../../../utils/indexedDB.utils'
+import useWorkoutPlans from '../../../../hooks/useWorkoutPlans'
+import ButtonPlus from '../../../../components/common/ButtonPlus';
+import Box from '../../../../components/workout/Box';
 import useTranslation from "next-translate/useTranslation";
 import { FunctionComponent } from 'react';
-import Navbar from '../../../components/profile/Navbar';
-import { useAppSelector } from '../../../hooks/useRedux';
-import { WorkoutPlanSchemaProps } from '../../../schema/workoutPlan.schema';
+import Navbar from '../../../../components/profile/Navbar';
+import { useAppSelector } from '../../../../hooks/useRedux';
+import { WorkoutPlanSchemaProps } from '../../../../schema/workoutPlan.schema';
 
 const WorkoutPlans: FunctionComponent = () => {
     const router = useRouter()
@@ -39,7 +39,7 @@ const WorkoutPlans: FunctionComponent = () => {
                     <Box
                         title={plan.title}
                         description={plan.description}
-                        route={`/${router.query.login}/workout-plans/${plan._id}`}
+                        route={`/${router.query.login}/workout/plans/${plan._id}`}
                         type={1}
                         key={plan._id}
                     />

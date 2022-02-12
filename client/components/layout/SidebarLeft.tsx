@@ -54,7 +54,7 @@ const SidebarLeft = ({ token }: { token: any }) => {
                                 </ListItemButton>
                             </ListItem>
                             <ListItem disablePadding>
-                                <ListItemButton onClick={() => router.push(`/${token.login}/workout-results`)}>
+                                <ListItemButton onClick={() => router.push(`/${token.login}/workout`)}>
                                     <ListItemIcon>
                                         <FitnessCenterIcon color="primary" />
                                     </ListItemIcon>

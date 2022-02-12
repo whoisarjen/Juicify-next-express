@@ -1,20 +1,20 @@
-import useWorkoutResult from '../../../../hooks/useWorkoutResult'
+import useWorkoutResult from '../../../../../hooks/useWorkoutResult'
 import { useState, useEffect, FunctionComponent } from 'react'
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
-import { addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../../../utils/indexedDB.utils';
-import AddResultValues from '../../../../components/workout/AddResultValues';
-import { useAppSelector } from '../../../../hooks/useRedux';
+import { addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../../../../utils/indexedDB.utils';
+import AddResultValues from '../../../../../components/workout/results/AddResultValues';
+import { useAppSelector } from '../../../../../hooks/useRedux';
 import { useRouter } from 'next/router';
-import Navbar from '../../../../components/workout/Navbar'
-import ConfirmDialog from '../../../../components/common/ConfirmDialog';
-import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../../../utils/db.utils';
+import Navbar from '../../../../../components/workout/Navbar'
+import ConfirmDialog from '../../../../../components/common/ConfirmDialog';
+import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../../../../utils/db.utils';
 import useTranslation from "next-translate/useTranslation";
-import AddResultMoreOptions from '../../../../components/workout/AddResultMoreOptions'
-import BottomFlyingGuestBanner from '../../../../components/common/BottomFlyingGuestBanner'
-import { useNotify } from '../../../../hooks/useNotify';
-import { ExerciseSchemaProps } from '../../../../schema/exercise.schema';
-import { ResultSchemaProps, ValueSchemaProps, WorkoutResultSchemaProps } from '../../../../schema/workoutResult.schema';
+import AddResultMoreOptions from '../../../../../components/workout/results/AddResultMoreOptions'
+import BottomFlyingGuestBanner from '../../../../../components/common/BottomFlyingGuestBanner'
+import { useNotify } from '../../../../../hooks/useNotify';
+import { ExerciseSchemaProps } from '../../../../../schema/exercise.schema';
+import { ResultSchemaProps, ValueSchemaProps, WorkoutResultSchemaProps } from '../../../../../schema/workoutResult.schema';
 
 const WorkoutResultsID: FunctionComponent = () => {
     const router: any = useRouter()
@@ -45,7 +45,7 @@ const WorkoutResultsID: FunctionComponent = () => {
             }
         }
         await deleteIndexedDB('workout_result', router.query.id)
-        router.push(`/${router.query.login}/workout-results`)
+        router.push(`/${router.query?.login}/workout-results`)
     }
 
     const saveWorkoutResult = async () => {
@@ -89,7 +89,7 @@ const WorkoutResultsID: FunctionComponent = () => {
                 await insertThoseIDStoDB('daily_measurement', [newDaily])
             }
             await deleteIndexedDB('workout_result', router.query.id)
-            router.push(`/${router.query.login}/workout-results`)
+            router.push(`/${router.query?.login}/workout-results`)
         } else {
             error(t('Add some results'))
         }
@@ -148,7 +148,7 @@ const WorkoutResultsID: FunctionComponent = () => {
                 setDate(data.whenAdded || '')
                 setDescription(data.description || '')
                 setResults(data.results || [])
-                if (token && token.login == router.query.login) {
+                if (token?.login == router?.query.login) {
                     let newDescription = await getIndexedDBbyID('workout_plan', data.workout_plan_ID)
                     setDescriptionWorkout(newDescription.description)
                 }
@@ -160,7 +160,7 @@ const WorkoutResultsID: FunctionComponent = () => {
         <div className="workoutResultsID">
             <Navbar
                 title="Workout result"
-                where="workout-results"
+                where="workout/results"
                 saveLoading={saveLoading}
                 saveWorkout={saveWorkoutResult}
                 deleteWorkout={deleteWorkoutResult}
@@ -205,7 +205,7 @@ const WorkoutResultsID: FunctionComponent = () => {
                         await autoSave(e.target.value, 'burnt')
                     }
                     }
-                    disabled={token.login != router.query.login}
+                    disabled={token?.login != router.query?.login}
                     InputProps={{
                         endAdornment: <InputAdornment position="end">Kcal</InputAdornment>,
                     }}
@@ -218,7 +218,7 @@ const WorkoutResultsID: FunctionComponent = () => {
                 label={t("Notes")}
                 variant="outlined"
                 value={description}
-                disabled={token.login != router.query.login}
+                disabled={token?.login != router.query?.login}
                 onChange={async e => {
                     setDescription(e.target.value)
                     await autoSave(e.target.value, 'notes')
@@ -240,7 +240,7 @@ const WorkoutResultsID: FunctionComponent = () => {
                         <AddResultValues
                             key={(result._id || '') + index}
                             result={result}
-                            isOwner={token.login == router.query.login}
+                            isOwner={token?.login == router.query?.login}
                             setNewValues={(values: Array<ValueSchemaProps>) => setNewValues(values, index)}
                             openDeleteExercise={() => setDeleteExercise(result)}
                         />
@@ -248,7 +248,7 @@ const WorkoutResultsID: FunctionComponent = () => {
                 )
             }
             {
-                token.login == router.query.login ?
+                token?.login == router.query?.login ?
                     (
                         <>
                             <ConfirmDialog isDialog={deleteExercises ? true : false} closeDialog={() => setDeleteExercise(false)} confirm={() => handleDeleteExercise([deleteExercises])} />
