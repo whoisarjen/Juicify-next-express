@@ -18,7 +18,7 @@ interface MealBoxProps {
     openEditProduct: (arg0: ProductSchemaProps & ActivitySchemaProps) => void
 }
 
-const Box = styled.div`
+const Grid = styled.div`
     width: calc(100% - 24px);
     border: 1px solid #e4e4e4;
     padding: 10px;
@@ -101,7 +101,7 @@ const MealBox: FunctionComponent<MealBoxProps> = ({ index, products, openDialog,
     }, [products, index, router.query.date, theOldestSupportedDate, isOnline])
 
     return (
-        <Box>
+        <Grid>
             <Bolded>{t('Meal')} {index + 1}</Bolded>
             <ExtraOptions>
                 {
@@ -126,7 +126,7 @@ const MealBox: FunctionComponent<MealBoxProps> = ({ index, products, openDialog,
             </Add>
             <div>{prepareNumber(p)}{t('P')} {prepareNumber(c)}{t('C')} {prepareNumber(f)}{t('F')} {parseInt((p * 4 + c * 4 + f * 9).toString())}{t('Kcal')}</div>
             {
-                products && products.map((product: ProductSchemaProps & ActivitySchemaProps) => (
+                products?.map((product: ProductSchemaProps & ActivitySchemaProps) => (
                     <Product key={product._id}>
                         <Edit>
                             {
@@ -160,7 +160,7 @@ const MealBox: FunctionComponent<MealBoxProps> = ({ index, products, openDialog,
                     </Product>
                 ))
             }
-        </Box>
+        </Grid >
     );
 };
 

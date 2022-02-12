@@ -3,13 +3,13 @@ import { useAppSelector } from '../../../hooks/useRedux'
 import { useState, useEffect, FunctionComponent } from 'react'
 import { overwriteThoseIDSinDB } from "../../../utils/db.utils"
 import { useDailyMeasurement } from '../../../hooks/useDailyMeasurement'
-import MealBox from "../../../components/nutrition-diary/MealBox"
-import AddProducts from '../../../components/nutrition-diary/AddProducts'
-import DialogEditProduct from '../../../components/nutrition-diary/DialogEditProduct'
+import Box from "../../../components/nutrition-diary/Box"
+import AddProducts from '../../../components/nutrition-diary/Add'
+import DialogEditProduct from '../../../components/nutrition-diary/Edit'
 import Navbar from "../../../components/nutrition-diary/Navbar"
 import FastDateChanger from '../../../components/common/FastDateChanger'
-import Diagrams from '../../../components/nutrition-diary/Diagrams'
-import DiagramsOptions from '../../../components/nutrition-diary/DiagramsOptions'
+import Diagrams from '../../../components/nutrition-diary/Diagram'
+import DiagramsOptions from '../../../components/nutrition-diary/DiagramButtons'
 import BottomFlyingGuestBanner from '../../../components/common/BottomFlyingGuestBanner'
 import Header from "../../../components/layout/Header"
 import useTranslation from "next-translate/useTranslation"
@@ -23,29 +23,29 @@ const NutritionDiary: FunctionComponent = () => {
     const token: any = useAppSelector(state => state.token.value)
     const [isAddDialog, setIsAddDialog] = useState(false)
     const [isEditDialog, setIsEditDialog] = useState(false)
-    const [nutrition_diary, setNutrition_diary] = useState([])
+    const [nutritionDiary, setNutritionDiary] = useState(Array(5).fill([]))
     const [{ data, user }, reloadDailyMeasurement] = useDailyMeasurement(router.query.date, router.query.login)
 
     const deleteProduct = async (_id: string) => {
-        let copyDailyMeasurement = JSON.parse(JSON.stringify(data))
-        copyDailyMeasurement.nutrition_diary = copyDailyMeasurement.nutrition_diary.map((obj: any) =>
+        let copy = JSON.parse(JSON.stringify(data))
+        copy.nutrition_diary = copy.nutrition_diary.map((obj: any) =>
             obj._id == _id ? { ...obj, deleted: true } : obj
         );
-        await overwriteThoseIDSinDB('daily_measurement', [copyDailyMeasurement])
+        await overwriteThoseIDSinDB('daily_measurement', [copy])
         reloadDailyMeasurement()
     }
 
     const changeProduct = async (newProduct: any) => {
-        let copyDailyMeasurement = JSON.parse(JSON.stringify(data))
-        copyDailyMeasurement.nutrition_diary = copyDailyMeasurement.nutrition_diary.map((obj: any) =>
+        let copy = JSON.parse(JSON.stringify(data))
+        copy.nutrition_diary = copy.nutrition_diary.map((obj: any) =>
             obj._id == newProduct._id ? { ...obj, ...{ changed: true }, ...newProduct } : obj
         );
-        await overwriteThoseIDSinDB('daily_measurement', [copyDailyMeasurement])
+        await overwriteThoseIDSinDB('daily_measurement', [copy])
         reloadDailyMeasurement()
     }
 
     useEffect(() => {
-        if (data && data.nutrition_diary) {
+        if (data?.nutrition_diary) {
             const arr: any = []
             const l = user.meal_number || 5
             for (let i = 0; i < l; i++) {
@@ -65,48 +65,44 @@ const NutritionDiary: FunctionComponent = () => {
                     arr[meal.meal].push(meal)
                 }
             })
-            setNutrition_diary(arr)
+            setNutritionDiary(arr)
         }
     }, [data])
 
     return (
         <>
+            <Header
+                title={`${t('title')} ${router.query.login} ${reverseDateDotes(router.query.date)}`}
+                description={`${t('title')} ${router.query.login} ${reverseDateDotes(router.query.date)}`}
+            />
+            <Navbar />
+            <FastDateChanger />
+            <Diagrams array={nutritionDiary} user={user} />
             {
-                nutrition_diary &&
-                <>
-                    <Header
-                        title={`${t('title')} ${router.query.login} ${reverseDateDotes(router.query.date)}`}
-                        description={`${t('title')} ${router.query.login} ${reverseDateDotes(router.query.date)}`}
+                token?.login == router?.query.login &&
+                <DiagramsOptions data={data} reloadDailyMeasurement={reloadDailyMeasurement} />
+            }
+            {
+                nutritionDiary.map((x, i) => (
+                    <Box
+                        key={i}
+                        index={i}
+                        products={x}
+                        openDialog={() => {
+                            setIndex(i)
+                            setIsAddDialog(true)
+                        }}
+                        openEditProduct={(product) => {
+                            setProduct(product)
+                            setIsEditDialog(true)
+                        }}
                     />
-                    <Navbar />
-                    <FastDateChanger />
-                    {
-                        nutrition_diary &&
-                        <Diagrams array={nutrition_diary} user={user} />
-                    }
-                    {
-                        token?.login == router?.query.login &&
-                        <DiagramsOptions data={data} reloadDailyMeasurement={reloadDailyMeasurement} />
-                    }
-                    {
-                        nutrition_diary?.map((x, i) => (
-                            <MealBox
-                                key={i}
-                                index={i}
-                                products={x}
-                                openDialog={() => {
-                                    setIndex(i)
-                                    setIsAddDialog(true)
-                                }}
-                                openEditProduct={(product) => {
-                                    setProduct(product)
-                                    setIsEditDialog(true)
-                                }}
-                            />
-                        ))
-                    }
-                    {
-                        token?.login == router?.query.login &&
+                ))
+            }
+            {
+                token?.login == router?.query.login
+                    ?
+                    <>
                         <AddProducts
                             index={index}
                             isAddDialog={isAddDialog}
@@ -114,21 +110,16 @@ const NutritionDiary: FunctionComponent = () => {
                             closeDialog={() => setIsAddDialog(false)}
                             reload={reloadDailyMeasurement}
                         />
-                    }
-                    {
-                        token?.login == router?.query.login
-                            ?
-                            <DialogEditProduct
-                                product={product}
-                                isDialog={isEditDialog}
-                                closeDialog={() => setIsEditDialog(false)}
-                                deleteProduct={(_id) => deleteProduct(_id)}
-                                changeProduct={(newProduct) => changeProduct(newProduct)}
-                            />
-                            :
-                            <BottomFlyingGuestBanner user={user} />
-                    }
-                </>
+                        <DialogEditProduct
+                            product={product}
+                            isDialog={isEditDialog}
+                            closeDialog={() => setIsEditDialog(false)}
+                            deleteProduct={(_id) => deleteProduct(_id)}
+                            changeProduct={(newProduct) => changeProduct(newProduct)}
+                        />
+                    </>
+                    :
+                    <BottomFlyingGuestBanner user={user} />
             }
         </>
     );

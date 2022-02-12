@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react'
-import AddProductsBox from '../nutrition-diary/AddProductsBox'
+import AddProductsBox from '../nutrition-diary/AddBox'
 
 describe('add products answer', () => {
     describe('given the find', () => {
