@@ -50,9 +50,11 @@ const AddProductsBox: FunctionComponent<AddProductsBox> = ({ exercise, refreshCh
             <div className={styles.addExercisesBoxName} style={{ color: getTheme('PRIMARY') }}>
                 {exercise.name}
             </div>
-            <div className={styles.addExercisesBoxFavourite} onClick={handleLike}>
+            <div />
+            {/* Need new way to handle synchronization with favourite exercise so for now OFF */}
+            {/* <div className={styles.addExercisesBoxFavourite} onClick={handleLike}>
                 <Checkbox checked={fav} icon={<FavoriteBorder fontSize="small" />} checkedIcon={<Favorite fontSize="small" />} />
-            </div>
+            </div> */}
             <div className={styles.addExercisesBoxSubmit} onChange={handleCheck}>
                 <Checkbox
                     checked={checked}
