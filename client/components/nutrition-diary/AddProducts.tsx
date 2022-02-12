@@ -19,15 +19,15 @@ import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../utils/db
 import CreateProduct from './CreateProduct';
 import { TransitionProps } from '@material-ui/core/transitions';
 import BottomFlyingButton from '../common/BottomFlyingButton';
-import NutritionDiaryProps from '../../interfaces/nutritionDiary.interface';
-import DailyMeasurementProps from '../../interfaces/dailyMeasurement.interface';
 import AddProductMoreInformation from './AddProductMoreInformation';
+import { DailyMeasurementSchemaProps } from '../../schema/dailyMeasurement.schema';
+import { ProductSchemaProps } from '../../schema/product.schema';
 
 interface AddproductsProps {
     index: number,
     isAddDialog: boolean,
     closeDialog: () => void,
-    dailyMeasurement: DailyMeasurementProps,
+    dailyMeasurement: DailyMeasurementSchemaProps,
     reload: () => void
 }
 
@@ -65,9 +65,9 @@ const AddProducts: FunctionComponent<AddproductsProps> = ({ index, isAddDialog, 
 
     const addProductsToDiary = async () => {
         setLoadingButton(true)
-        const array: Array<NutritionDiaryProps> = JSON.parse(JSON.stringify(checked))
+        const array: Array<ProductSchemaProps> = JSON.parse(JSON.stringify(checked))
         const time = new Date().getTime()
-        array.map(async (x: NutritionDiaryProps, i: number) => {
+        array.map(async (x: ProductSchemaProps, i: number) => {
             x.meal = meal
             x.product_ID = x._id
             x._id = 'XD' + time + i
@@ -159,7 +159,7 @@ const AddProducts: FunctionComponent<AddproductsProps> = ({ index, isAddDialog, 
                         <Tab wrapped label={`${t('Selected')} (${checked.length})`} />
                     </Tabs>
                     {
-                        items && items.map((product: NutritionDiaryProps) =>
+                        items && items.map((product: ProductSchemaProps) =>
                             <AddProductsBox refreshCheckedProducts={() => setRefreshChecked(refreshChecked + 1)} product={product} key={product._id} openMoreInformation={() => setLoadedProduct(product)} />
                         )
                     }

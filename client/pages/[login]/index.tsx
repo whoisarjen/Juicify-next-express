@@ -6,11 +6,11 @@ import StackedBarChart from "../../components/diagrams/StackedBarChart";
 import Navbar from "../../components/profile/Navbar";
 import { useDailyMeasurements } from "../../hooks/useDailyMeasurements";
 import { useTheme } from "../../hooks/useTheme";
-import DailyMeasurementProps from "../../interfaces/dailyMeasurement.interface";
-import NutritionDiaryProps from "../../interfaces/nutritionDiary.interface";
 import { addDaysToDate, getShortDate, reverseDateDotes } from '../../utils/date.utils';
 import { getCalories } from "../../utils/product.utils";
 import styled from 'styled-components'
+import { DailyMeasurementSchemaProps } from "../../schema/dailyMeasurement.schema";
+import { ActivitySchemaProps } from "../../schema/activity.schema";
 
 const Box = styled.div`
     width: 100%;
@@ -34,16 +34,17 @@ const Profile: FunctionComponent = () => {
         { dataKey: t('Burnt'), stroke: '#b1272f' },
         { dataKey: t('Diffrent'), stroke: getTheme('PRIMARY') }
     ]
-    const nutrition_diary = data.map((x: DailyMeasurementProps) => {
+    const nutrition_diary = data.map((x: DailyMeasurementSchemaProps) => {
         let object: any = {
             name: '',
             [t('p')]: 0,
             [t('c')]: 0,
             [t('f')]: 0
         }
-        if (x.nutrition_diary) {
+        if (x.nutrition_diary && x.nutrition_diary.length) {
             object.name = reverseDateDotes(x.whenAdded).slice(0, 5)
-            x.nutrition_diary.map((meal: NutritionDiaryProps) => {
+            x.nutrition_diary.map((meal: any) => {
+            
                 if (meal && meal.how_many) {
                     if (meal.p) {
                         object[t('p')] += meal.p * meal.how_many
@@ -60,16 +61,16 @@ const Profile: FunctionComponent = () => {
         return object
     })
 
-    const calories = data.map((x: DailyMeasurementProps) => {
+    const calories = data.map((x: DailyMeasurementSchemaProps) => {
         let object: any = {
             name: '',
             [t('Calories')]: 0,
             [t('Burnt')]: 0,
             [t('Diffrent')]: 0
         }
-        if (x.nutrition_diary) {
+        if (x.nutrition_diary && x.nutrition_diary.length) {
             object.name = reverseDateDotes(x.whenAdded).slice(0, 5)
-            x.nutrition_diary.map((meal: NutritionDiaryProps) => {
+            x.nutrition_diary.map((meal: any) => {
                 if (meal.calories) {
                     if (meal.calories > 0) {
                         object[t('Calories')] = meal.calories

@@ -10,14 +10,13 @@ import { useAppSelector } from '../../hooks/useRedux';
 import MenuItem from '@mui/material/MenuItem';
 import ConfirmDialog from '../common/ConfirmDialog'
 import useTranslation from "next-translate/useTranslation";
-import NutritionDiaryProps from '../../interfaces/nutritionDiary.interface';
 
 interface DialogEditProductProps {
-    product: NutritionDiaryProps,
+    product: any,
     isDialog: boolean,
     closeDialog: () => void,
     deleteProduct: (arg0: string) => void
-    changeProduct: (arg0: NutritionDiaryProps) => void
+    changeProduct: (arg0: any) => void
 }
 
 

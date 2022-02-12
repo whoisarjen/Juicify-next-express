@@ -12,7 +12,6 @@ import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
 import Weights from "../common/Weights";
 import { useTheme } from "../../hooks/useTheme";
-import NutritionDiaryProps from "../../interfaces/nutritionDiary.interface";
 import { getCalories } from "../../utils/product.utils";
 import styled from 'styled-components'
 
@@ -33,7 +32,7 @@ const CircleBox = styled.aside`
     }
 `
 
-const SidebarRight =  ({ token }: { token: any }) => {
+const SidebarRight = ({ token }: { token: any }) => {
     const router = useRouter()
     const { t } = useTranslation('home')
     const [isWeights, setIsWeights] = useState(false)
@@ -53,9 +52,11 @@ const SidebarRight =  ({ token }: { token: any }) => {
             setWeight(data.weight || 0)
 
             let calories = 0
-            data.nutrition_diary.forEach((x: NutritionDiaryProps) => {
-                calories += getCalories(x)
-            })
+            if (data.nutrition_diary && data.nutrition_diary.length) {
+                for (let i = 0; i < data.nutrition_diary.length; i++) {
+                    calories += getCalories(data.nutrition_diary[i])
+                }
+            }
             setCalories(calories)
 
             const macro = getDay(new Date(getShortDate()), token)

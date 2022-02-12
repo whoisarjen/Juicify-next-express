@@ -21,8 +21,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from "../../utils/db.utils";
 import { TransitionProps } from '@mui/material/transitions';
 import Slide from '@mui/material/Slide';
-import DailyMeasurementProps from "../../interfaces/dailyMeasurement.interface";
 import styled from 'styled-components'
+import { DailyMeasurementSchemaProps } from "../../schema/dailyMeasurement.schema";
 
 const Transition = forwardRef(function Transition(
     props: TransitionProps & {
@@ -91,7 +91,7 @@ const Weights: FunctionComponent<WeightsProps> = ({ isWeights, closeWeights }) =
                         {
                             data &&
                             data.length > 0 &&
-                            data.map((x: DailyMeasurementProps) =>
+                            data.map((x: DailyMeasurementSchemaProps) =>
                                 <TimelineItem key={x._id}>
                                     <TimelineOppositeContent color="text.secondary">
                                         {reverseDateDotes(x.whenAdded)}

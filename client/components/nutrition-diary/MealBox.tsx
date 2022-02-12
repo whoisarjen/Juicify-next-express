@@ -8,14 +8,15 @@ import FastfoodIcon from "@mui/icons-material/Fastfood";
 import useTranslation from "next-translate/useTranslation";
 import style from "../../styles/nutrition-diary.module.css";
 import { useState, useEffect, FunctionComponent } from 'react'
-import NutritionDiaryProps from '../../interfaces/nutritionDiary.interface';
 import { getCalories } from '../../utils/product.utils';
+import { ProductSchemaProps } from '../../schema/product.schema';
+import { ActivitySchemaProps } from '../../schema/activity.schema';
 
 interface MealBoxProps {
     index: number,
-    products: Array<NutritionDiaryProps>,
+    products: Array<ProductSchemaProps & ActivitySchemaProps>,
     openDialog: () => void,
-    openEditProduct: (arg0: NutritionDiaryProps) => void
+    openEditProduct: (arg0: ProductSchemaProps & ActivitySchemaProps) => void
 }
 
 const MealBox: FunctionComponent<MealBoxProps> = ({ index, products, openDialog, openEditProduct }) => {
@@ -69,7 +70,7 @@ const MealBox: FunctionComponent<MealBoxProps> = ({ index, products, openDialog,
             </div>
             <div>{prepareNumber(p)}{t('P')} {prepareNumber(c)}{t('C')} {prepareNumber(f)}{t('F')} {parseInt((p * 4 + c * 4 + f * 9).toString())}{t('Kcal')}</div>
             {
-                products && products.map((product: NutritionDiaryProps) => (
+                products && products.map((product: ProductSchemaProps & ActivitySchemaProps) => (
                     <div className={style.boxProduct} key={product._id}>
                         <div className={style.boxProductEdit}>
                             {

@@ -10,10 +10,10 @@ import CircularWithLabelReverse from "./CircularWithLabelReverse";
 import useMacro from "../../hooks/useMacro";
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
-import NutritionDiaryProps from "../../interfaces/nutritionDiary.interface";
+import { ProductSchemaProps } from "../../schema/product.schema";
 
 interface DiagramsProps {
-    array: Array<Array<NutritionDiaryProps>>,
+    array: Array<Array<ProductSchemaProps>>,
     user: any
 }
 
@@ -37,7 +37,7 @@ const Diagrams: FunctionComponent<DiagramsProps> = ({ array, user }) => {
 
             array.forEach(meal => {
                 if (meal.length) {
-                    meal.forEach((product: NutritionDiaryProps) => {
+                    meal.forEach((product: ProductSchemaProps) => {
                         if (product && product.how_many) {
                             if (product.p) o['Proteins']['value'] += product.p * product.how_many
                             if (product.c) o['Carbs']['value'] += product.c * product.how_many

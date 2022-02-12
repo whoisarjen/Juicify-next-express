@@ -1,16 +1,21 @@
 import { boolean, number, object, preprocess, string, TypeOf } from 'zod'
 
-export const CreateProductSchema = object({
+export const ProductSchema = object({
+    _id: string(),
     name: string().min(3),
-    p: preprocess((val: any) => Number(val || 0), number().optional()),
-    c: preprocess((val: any) => Number(val || 0), number().optional()),
-    s: preprocess((val: any) => Number(val || 0), number().optional()),
-    f: preprocess((val: any) => Number(val || 0), number().optional()),
-    fi: preprocess((val: any) => Number(val || 0), number().optional()),
-    na: preprocess((val: any) => Number(val || 0), number().optional()),
-    ethanol: preprocess((val: any) => Number(val || 0), number().optional()),
-    code: preprocess((val: any) => Number(val || 0), number().optional()),
+    product_ID: string().optional(),
+    meal: preprocess((val) => Number(val), number()).optional(),
+    p: preprocess((val) => Number(val), number()).optional(),
+    c: preprocess((val) => Number(val), number()).optional(),
+    s: preprocess((val) => Number(val), number()).optional(),
+    f: preprocess((val) => Number(val), number()).optional(),
+    fi: preprocess((val) => Number(val), number()).optional(),
+    na: preprocess((val) => Number(val), number()).optional(),
+    ethanol: preprocess((val) => Number(val), number()).optional(),
+    code: preprocess((val) => Number(val), number()).optional(),
     checkMe: boolean().optional(),
+    v: boolean().optional(),
+    how_many: preprocess((val) => Number(val), number()).optional(),
 })
 
-export type CreateProductSchemaProps = TypeOf<typeof CreateProductSchema>
+export type ProductSchemaProps = TypeOf<typeof ProductSchema>

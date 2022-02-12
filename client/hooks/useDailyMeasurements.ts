@@ -3,13 +3,13 @@ import { useState, useEffect } from 'react'
 import { getAllIndexedDB } from '../utils/indexedDB.utils';
 import { addDaysToDate } from '../utils/date.utils';
 import { loadValueByLogin } from '../utils/db.utils';
-import DailyMeasurementProps from '../interfaces/dailyMeasurement.interface';
 import { useAppSelector } from './useRedux';
 import { loadMissingDays } from '../utils/dailyMeasurement.utils';
+import { DailyMeasurementSchemaProps } from '../schema/dailyMeasurement.schema';
 
 const useDailyMeasurements = (today: Date | string, howManyDays: number = 7, login: string) => {
     const [reload, setReload] = useState(0)
-    const [data, setData] = useState<Array<DailyMeasurementProps>>([])
+    const [data, setData] = useState<Array<DailyMeasurementSchemaProps>>([])
     const [user, setUser] = useState('')
     const router = useRouter()
     const token: any = useAppSelector(state => state.token.value)

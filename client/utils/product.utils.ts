@@ -1,4 +1,5 @@
-import NutritionDiaryProps from "../interfaces/nutritionDiary.interface"
+import { ActivitySchemaProps } from "../schema/activity.schema"
+import { ProductSchemaProps } from "../schema/product.schema"
 
 const getProductInformationsObject: any = {
     'p': 'Proteins',
@@ -12,11 +13,11 @@ const getProductInformationsObject: any = {
     'v': 'Verified'
 }
 
-export const getProductInformations = (object: NutritionDiaryProps) => {
+export const getProductInformations = (object: ProductSchemaProps & ActivitySchemaProps) => {
     let newObject: any = {}
     Object.keys(getProductInformationsObject).forEach(x => {
-        if (object[x as keyof NutritionDiaryProps]) {
-            newObject[getProductInformationsObject[x]] = object[x as keyof NutritionDiaryProps]
+        if (object[x as keyof ProductSchemaProps]) {
+            newObject[getProductInformationsObject[x]] = object[x as keyof ProductSchemaProps]
         } else {
             newObject[getProductInformationsObject[x]] = 0
         }
@@ -28,7 +29,7 @@ export const getProductInformations = (object: NutritionDiaryProps) => {
     }
 }
 
-export const getCalories = (object: NutritionDiaryProps) => {
+export const getCalories = (object: ProductSchemaProps & ActivitySchemaProps) => {
     if (!object) {
         return 0
     }

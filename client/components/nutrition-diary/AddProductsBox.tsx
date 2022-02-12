@@ -9,11 +9,11 @@ import { FunctionComponent, useEffect, useState } from 'react'
 import { putIndexedDB, addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../utils/indexedDB.utils';
 import useTranslation from "next-translate/useTranslation";
 import { useTheme } from '../../hooks/useTheme';
-import NutritionDiaryProps from '../../interfaces/nutritionDiary.interface';
 import { getCalories } from '../../utils/product.utils';
+import { ProductSchemaProps } from '../../schema/product.schema';
 
 interface AddproductsBoxProps {
-    product: NutritionDiaryProps,
+    product: ProductSchemaProps,
     refreshCheckedProducts: () => void,
     openMoreInformation: () => void
 }

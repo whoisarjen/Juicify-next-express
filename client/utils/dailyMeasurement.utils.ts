@@ -1,4 +1,4 @@
-import DailyMeasurementProps from "../interfaces/dailyMeasurement.interface";
+import { DailyMeasurementSchemaProps } from "../schema/dailyMeasurement.schema";
 import { addDaysToDate } from "./date.utils";
 import { is_id } from "./db.utils";
 
@@ -13,12 +13,12 @@ export const loadMissingData = ({ _id, user_ID, whenAdded, object = {} }: { _id:
     }
 }
 
-export const loadMissingDays = async (oryginalArray: Array<DailyMeasurementProps> = [], user_ID: string, howManyDays: number, today: Date | string) => {
+export const loadMissingDays = async (oryginalArray: Array<DailyMeasurementSchemaProps> = [], user_ID: string, howManyDays: number, today: Date | string) => {
     let newArray = []
     let checkingDate = JSON.parse(JSON.stringify(new Date(today)))
     let array = JSON.parse(JSON.stringify(oryginalArray))
     if (array.length) {
-        array = array.sort((a: DailyMeasurementProps, b: DailyMeasurementProps) => {
+        array = array.sort((a: DailyMeasurementSchemaProps, b: DailyMeasurementSchemaProps) => {
             if (a.whenAdded < b.whenAdded) {
                 return 1
             } else {
