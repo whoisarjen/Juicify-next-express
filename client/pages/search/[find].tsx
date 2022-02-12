@@ -10,14 +10,14 @@ import ListItemButton from '@mui/material/ListItemButton';
 
 const Search: FunctionComponent = () => {
     const router: any = useRouter()
-    const [{ data }] = useSearch(router.query.find, 'users')
+    const [{ data }]: any = useSearch(router.query.find, 'users')
 
     return (
         <div className="search">
             <SearchBox />
             <List sx={{ width: '100%', bgcolor: 'background.paper', marginTop: '12px' }}>
                 {
-                    data.map((user: any) =>
+                    data?.items?.map((user: any) =>
                         <ListItemButton onClick={() => router.push(`/${user.login}`)} key={user._id}>
                             <ListItemAvatar>
                                 <Avatar user={user} size="40px" />

@@ -24,7 +24,6 @@ const WorkoutResultsID: FunctionComponent = () => {
     const [title, setTitle] = useState<any>('')
     const { t } = useTranslation('workout')
     const [results, setResults] = useState<Array<ResultSchemaProps>>([])
-    const [isOwner, setIsOwner] = useState(false)
     const [description, setDescription] = useState<any>('')
     const [{ data, user, daily }] = useWorkoutResult()
     const token: any = useAppSelector(state => state.token.value)
@@ -157,14 +156,6 @@ const WorkoutResultsID: FunctionComponent = () => {
         })()
     }, [data, user, daily, token])
 
-    useEffect(() => {
-        if (token && token.login == router.query.login) {
-            setIsOwner(true)
-        } else {
-            setIsOwner(false)
-        }
-    }, [token])
-
     return (
         <div className="workoutResultsID">
             <Navbar
@@ -214,7 +205,7 @@ const WorkoutResultsID: FunctionComponent = () => {
                         await autoSave(e.target.value, 'burnt')
                     }
                     }
-                    disabled={!isOwner}
+                    disabled={token.login != router.query.login}
                     InputProps={{
                         endAdornment: <InputAdornment position="end">Kcal</InputAdornment>,
                     }}
@@ -227,7 +218,7 @@ const WorkoutResultsID: FunctionComponent = () => {
                 label={t("Notes")}
                 variant="outlined"
                 value={description}
-                disabled={!isOwner}
+                disabled={token.login != router.query.login}
                 onChange={async e => {
                     setDescription(e.target.value)
                     await autoSave(e.target.value, 'notes')
@@ -249,7 +240,7 @@ const WorkoutResultsID: FunctionComponent = () => {
                         <AddResultValues
                             key={(result._id || '') + index}
                             result={result}
-                            isOwner={isOwner}
+                            isOwner={token.login == router.query.login}
                             setNewValues={(values: Array<ValueSchemaProps>) => setNewValues(values, index)}
                             openDeleteExercise={() => setDeleteExercise(result)}
                         />
@@ -257,7 +248,7 @@ const WorkoutResultsID: FunctionComponent = () => {
                 )
             }
             {
-                isOwner ?
+                token.login == router.query.login ?
                     (
                         <>
                             <ConfirmDialog isDialog={deleteExercises ? true : false} closeDialog={() => setDeleteExercise(false)} confirm={() => handleDeleteExercise([deleteExercises])} />

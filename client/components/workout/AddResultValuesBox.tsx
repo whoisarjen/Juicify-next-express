@@ -14,7 +14,8 @@ interface AddResultValuesBox {
     value: ValueSchemaProps,
     index: number,
     changeResult: (arg0: ValueSchemaProps) => void,
-    deleteResult: () => void
+    deleteResult: () => void,
+    isOwner: boolean,
 }
 
 const Box = styled.div`
@@ -37,7 +38,7 @@ const Connected = styled.div`
     grid-column: 1 / 3;
 `
 
-const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, index, changeResult, deleteResult }) => {
+const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, index, changeResult, deleteResult, isOwner }) => {
     const [reps, setReps] = useState('0')
     const [weight, setWeight] = useState('0')
     const [open, setOpen] = useState(false)
@@ -62,7 +63,6 @@ const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, inde
         }
         setWeight(choosenWeight.toString())
         setWeightOptions(weight)
-        // changeResult(new Value({ reps: parseInt(reps), weight: parseFloat(choosenWeight.toString()), open }))
     }
 
     const handleDelete = () => {
@@ -90,7 +90,7 @@ const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, inde
     return (
         <>
             {
-                open
+                open && isOwner
                     ?
                     <>
                         <Box
@@ -139,9 +139,12 @@ const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, inde
                     <>
                         <Box>
                             <div onClick={() => setIsDialog(true)} >
-                                <IconButton aria-label="delete">
-                                    <DeleteIcon sx={{ fontSize: 20 }} />
-                                </IconButton>
+                                {
+                                    isOwner &&
+                                    <IconButton aria-label="delete">
+                                        <DeleteIcon sx={{ fontSize: 20 }} />
+                                    </IconButton>
+                                }
                             </div>
                             <div onClick={() => setOpen(true)}><div>{weight}kg</div></div>
                             <div onClick={() => setOpen(true)}><div>#{index + 1}</div></div>

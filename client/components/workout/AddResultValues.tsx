@@ -14,6 +14,7 @@ interface AddResultValuesProps {
 }
 
 const Name = styled.div`
+    min-height: 36px;
     width: calc(100% - 30px);
     padding: 7px 15px;
     background: #333;
@@ -52,7 +53,7 @@ const AddResultValues: FunctionComponent<AddResultValuesProps> = ({ result, setN
     }
 
     const openNewResult = () => {
-        if (values && values.length) {
+        if (values?.length) {
             const previousValues = values.map(
                 (value: ValueSchemaProps) => {
                     value.open = false;
@@ -89,23 +90,25 @@ const AddResultValues: FunctionComponent<AddResultValuesProps> = ({ result, setN
         <div>
             <Name>
                 <div>
-                    <IconButton color="primary" component="span" onClick={openDeleteExercise}>
-                        <DeleteIcon sx={{ fontSize: 20 }} />
-                    </IconButton>
+                    {
+                        isOwner &&
+                        <IconButton color="primary" component="span" onClick={openDeleteExercise}>
+                            <DeleteIcon sx={{ fontSize: 20 }} />
+                        </IconButton>
+                    }
                 </div>
                 <div>{result.name}</div>
                 <div />
             </Name>
             {
-                values &&
-                values.length > 0 &&
-                values.map((value: ValueSchemaProps, index: number) =>
+                values?.map((value: ValueSchemaProps, index: number) =>
                     <AddResultValuesBox
                         key={index + ' ' + value.open}
                         value={value}
                         index={index}
                         deleteResult={() => deleteResult(index)}
                         changeResult={(object: ValueSchemaProps) => changeResult(object, index)}
+                        isOwner={isOwner}
                     />
                 )
             }
