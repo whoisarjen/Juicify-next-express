@@ -45,12 +45,6 @@ const Register = () => {
     const [sex, setSex] = useState(1)
     const [value, setValue] = useState(new Date())
 
-    const handleKeyPress = (event: any) => {
-        if (event.key === "Enter") {
-            handleSubmit(onSubmit)
-        }
-    };
-
     const { register, formState: { errors }, handleSubmit } = useForm<CreateUserSchemaProps>({
         resolver: zodResolver(CreateUserSchema)
     })
@@ -83,7 +77,6 @@ const Register = () => {
                         variant="outlined"
                         label={t("auth:LOGIN")}
                         type="text"
-                        onKeyPress={handleKeyPress}
                         {...register('login')}
                         error={typeof errors.login === 'undefined' ? false : true}
                         helperText={
@@ -96,7 +89,6 @@ const Register = () => {
                         type="email"
                         variant="outlined"
                         label={t("auth:EMAIL")}
-                        onKeyPress={handleKeyPress}
                         {...register('email')}
                         error={typeof errors.email === 'undefined' ? false : true}
                         helperText={
@@ -109,7 +101,6 @@ const Register = () => {
                         type="password"
                         variant="outlined"
                         label={t("auth:PASSWORD")}
-                        onKeyPress={handleKeyPress}
                         {...register('password')}
                         error={typeof errors.password === 'undefined' ? false : true}
                         helperText={
@@ -122,7 +113,6 @@ const Register = () => {
                         type="password"
                         variant="outlined"
                         label={t("auth:PASSWORD_CONFIRMATION")}
-                        onKeyPress={handleKeyPress}
                         {...register('passwordConfirmation')}
                         error={typeof errors.passwordConfirmation === 'undefined' ? false : true}
                         helperText={
@@ -147,7 +137,6 @@ const Register = () => {
                         inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                         variant="outlined"
                         label={t("auth:HEIGHT")}
-                        onKeyPress={handleKeyPress}
                         {...register('height')}
                         error={typeof errors.height === 'undefined' ? false : true}
                         helperText={

@@ -25,12 +25,6 @@ const CreateExercise: FunctionComponent<CreateExerciseProps> = ({ closeCreateExe
     const [loading, setLoading] = useState(false)
     const [{ success }] = useNotify()
 
-    const handleKeyPress = (event: any) => {
-        if (event.key === "Enter") {
-            handleSubmit(onSubmit)
-        }
-    };
-
     const { register, formState: { errors }, handleSubmit } = useForm<ExerciseSchemaProps>({
         resolver: zodResolver(ExerciseSchema)
     })
@@ -53,7 +47,6 @@ const CreateExercise: FunctionComponent<CreateExerciseProps> = ({ closeCreateExe
                             {t('Create exercise description')}
                         </DialogContentText>
                         <TextField
-                            onKeyPress={handleKeyPress}
                             {...register('name')}
                             error={typeof errors.name === 'undefined' ? false : true}
                             helperText={

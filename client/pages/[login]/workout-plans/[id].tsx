@@ -44,12 +44,6 @@ const WorkoutPlansID: FunctionComponent = () => {
         }
     }
 
-    const handleKeyPress = (event: any) => {
-        if (event.key === "Enter") {
-            handleSubmit(onSubmit)
-        }
-    };
-
     const { register, formState: { errors }, handleSubmit, control, reset } = useForm<WorkoutPlanSchemaProps>({
         resolver: zodResolver(WorkoutPlanSchema)
     })
@@ -104,7 +98,6 @@ const WorkoutPlansID: FunctionComponent = () => {
                         variant="outlined"
                         label={t('NAME_OF_WORKOUT')}
                         type="text"
-                        onKeyPress={handleKeyPress}
                         {...register('title')}
                         sx={{ width: '100%', marginTop: '10px' }}
                         error={typeof errors.title === 'undefined' ? false : true}
@@ -119,7 +112,6 @@ const WorkoutPlansID: FunctionComponent = () => {
                         variant="outlined"
                         label={t('DESCRIPTION')}
                         type="text"
-                        onKeyPress={handleKeyPress}
                         {...register('description')}
                         sx={{ width: '100%', marginTop: '10px' }}
                         error={typeof errors.description === 'undefined' ? false : true}
@@ -134,7 +126,6 @@ const WorkoutPlansID: FunctionComponent = () => {
                         variant="outlined"
                         label={t('BURNT_CALORIES')}
                         type="number"
-                        onKeyPress={handleKeyPress}
                         {...register('burnt')}
                         sx={{ width: '100%', marginTop: '10px' }}
                         inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}

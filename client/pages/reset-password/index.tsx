@@ -34,12 +34,6 @@ const ResetPassword = () => {
     const [{ error, success }] = useNotify()
     const [loading, setLoading] = useState(false)
 
-    const handleKeyPress = (event: any) => {
-        if (event.key === "Enter") {
-            handleSubmit(onSubmit)
-        }
-    };
-
     const { register, formState: { errors }, handleSubmit } = useForm<RemindPasswordUserSchemaProps>({
         resolver: zodResolver(RemindPasswordUserSchema)
     })
@@ -71,7 +65,6 @@ const ResetPassword = () => {
                         variant="outlined"
                         label={t("auth:EMAIL")}
                         type="text"
-                        onKeyPress={handleKeyPress}
                         {...register('email')}
                         error={typeof errors.email === 'undefined' ? false : true}
                         helperText={

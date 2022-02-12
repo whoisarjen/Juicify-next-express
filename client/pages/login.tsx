@@ -42,12 +42,6 @@ const Login = () => {
     const dispatch = useAppDispatch();
     const [loading, setLoading] = useState(false)
 
-    const handleKeyPress = (event: any) => {
-        if (event.key === "Enter") {
-            handleSubmit(onSubmit)
-        }
-    };
-
     const { register, formState: { errors }, handleSubmit } = useForm<CreateSessionSchemaProps>({
         resolver: zodResolver(CreateSessionSchema)
     })
@@ -89,7 +83,6 @@ const Login = () => {
                         variant="outlined"
                         label={t("auth:LOGIN")}
                         type="text"
-                        onKeyPress={handleKeyPress}
                         {...register('login')}
                         error={typeof errors.login === 'undefined' ? false : true}
                         helperText={
@@ -102,7 +95,6 @@ const Login = () => {
                         type="password"
                         variant="outlined"
                         label={t("auth:PASSWORD")}
-                        onKeyPress={handleKeyPress}
                         {...register('password')}
                         error={typeof errors.password === 'undefined' ? false : true}
                         helperText={
