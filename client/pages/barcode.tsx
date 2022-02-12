@@ -9,6 +9,28 @@ import AddProductMoreInformation from '../components/nutrition-diary/AddProductM
 import { useDailyMeasurement } from '../hooks/useDailyMeasurement';
 import { getShortDate } from '../utils/date.utils';
 import { useAppSelector } from '../hooks/useRedux';
+import styled from 'styled-components';
+
+const Grid = styled.div`
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto auto;
+    text-align: center;
+    ${this} #scanner-container {
+      position: relative;
+      width: 100% !important;
+    }
+    ${this} #scanner-container video,
+    ${this} #scanner-container canvas {
+      width: 100% !important;
+    }
+    ${this} .drawingBuffer {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+`
 
 const Barcode: FunctionComponent = () => {
     const [loadedBarcode, setLoadedBarcode] = useState(0)
@@ -148,10 +170,10 @@ const Barcode: FunctionComponent = () => {
 
     return (
         <>
-            <div className='barcode'>
+            <Grid>
                 {scanner}
                 <span>Scan barcode code</span>
-            </div>
+            </Grid>
             <AddProductMoreInformation handleClose={() => setLoadedProduct(false)} loadedProduct={loadedProduct} dailyMeasurement={data} />
             {
                 isCreateProduct &&
