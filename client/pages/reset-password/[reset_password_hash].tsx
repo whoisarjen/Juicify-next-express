@@ -10,11 +10,7 @@ const ResetPasswordHash: FunctionComponent = () => {
     useEffect(() => {
         (async () => {
             try {
-                await axios.post(
-                    `${process.env.NEXT_PUBLIC_SERVER}/auth/reset-password-confirmation`,
-                    { reset_password_hash: router.query.reset_password_hash },
-                    { withCredentials: true }
-                );
+                await axios.post(`${process.env.NEXT_PUBLIC_SERVER}/auth/reset-password-confirmation`, { reset_password_hash: router.query.reset_password_hash }, { withCredentials: true });
                 success('CHECK_YOUR_EMAIL')
                 router.push('/login')
             } catch (e: any) {

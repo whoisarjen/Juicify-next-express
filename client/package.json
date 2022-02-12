@@ -42,6 +42,8 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@types/config": "0.0.41",
+    "@types/jest": "^27.4.0",
+    "@types/mocha": "^9.1.0",
     "@types/react-beautiful-dnd": "^13.1.2",
     "@types/styled-components": "^5.1.22",
     "eslint": "8.4.0",

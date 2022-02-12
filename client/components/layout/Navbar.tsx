@@ -1,12 +1,9 @@
 import Link from "next/link";
 import useTranslation from "next-translate/useTranslation";
-import { forwardRef } from "react";
 import LoginIcon from "@mui/icons-material/Login";
 import SchoolIcon from '@mui/icons-material/School';
 import BookIcon from "@mui/icons-material/Book";
 import { getShortDate } from "../../utils/date.utils";
-import Image from 'next/image'
-import logo from '../../public/images/logo.png'
 import SearchBox from '../common/SearchBox'
 import Settings from "@mui/icons-material/Settings";
 import IconButton from '@mui/material/IconButton';
@@ -17,15 +14,7 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useRouter } from "next/router";
 import Button from '@mui/material/Button';
 import styled from 'styled-components'
-
-const MyLogo = forwardRef<any, any>(({ onClick, href }, ref) => {
-    return (
-        <a href={href} onClick={onClick} ref={ref}>
-            <Image width={40} height={40} alt="juicify.app" src={logo} />
-        </a>
-    )
-})
-MyLogo.displayName = "MyLogo Navbar";
+import Logo from "../common/Logo";
 
 const Box = styled.nav`
     width: 100%;
@@ -91,9 +80,7 @@ const Navbar = ({ token }: { token: any }) => {
             <Box>
                 <Ul>
                     <Li>
-                        <Link passHref href="/">
-                            <MyLogo />
-                        </Link>
+                        <Logo size={40} />
                     </Li>
                     <Li_web>
                         <SearchBox />

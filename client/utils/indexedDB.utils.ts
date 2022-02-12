@@ -4,6 +4,7 @@ const namOfIndexedDB = "test";
 const connectIndexedDB = async () => indexedDB.open(namOfIndexedDB);
 
 export const createIndexedDB = async (): Promise<any> => {
+  await deleteDatabaseIndexedDB();
   await window.indexedDB.deleteDatabase(namOfIndexedDB);
   let request = window.indexedDB.open(namOfIndexedDB);
   return new Promise((resolve) => {

@@ -49,6 +49,7 @@ const Content = styled.div`
 `
 
 const requiredAuth = [
+    '',
     '/',
     '/settings',
     '/workout',

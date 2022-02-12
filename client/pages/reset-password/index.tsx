@@ -1,8 +1,6 @@
 import Link from "next/link";
-import Image from 'next/image'
 import { useState } from "react";
 import Stack from "@mui/material/Stack";
-import logo from '../../public/images/logo.png'
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
 import useTranslation from "next-translate/useTranslation";
@@ -12,8 +10,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useNotify } from "../../hooks/useNotify";
 import { RemindPasswordUserSchema, RemindPasswordUserSchemaProps } from '../../schema/user.schema'
 import styled from 'styled-components'
+import Logo from "../../components/common/Logo";
 
-const Box = styled.div`
+const Form = styled.div`
     height: 100%;
     width: 100%;
     display: grid;
@@ -23,7 +22,7 @@ const Box = styled.div`
     }
 `
 
-const Logo = styled.div`
+const LogoWrapper = styled.div`
     margin: auto;
     padding: 10px;
     max-width: 180px;
@@ -55,43 +54,41 @@ const ResetPassword = () => {
     }
 
     return (
-        <form style={{ margin: 'auto 0' }} onSubmit={handleSubmit(onSubmit)}>
-            <Box>
-                <Logo>
-                    <Image alt="Juicify.app" src={logo} />
-                </Logo>
-                <Stack direction="column" spacing={2}>
-                    <TextField
-                        variant="outlined"
-                        label={t("auth:EMAIL")}
-                        type="text"
-                        {...register('email')}
-                        error={typeof errors.email === 'undefined' ? false : true}
-                        helperText={
-                            errors.email?.message &&
-                            errors.email?.message.length &&
-                            errors.email?.message
-                        }
-                    />
-                    <LoadingButton
-                        loading={loading}
-                        variant="contained"
-                        type="submit"
-                    >
-                        {t("auth:CONFIRM")}
-                    </LoadingButton>
-                </Stack>
-                <Link passHref href="/login">
-                    <LoadingButton
-                        color="success"
-                        className="marginAutoVertical"
-                        variant="contained"
-                    >
-                        {t("auth:SIGN_IN")}
-                    </LoadingButton>
-                </Link>
-            </Box>
-        </form>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+            <LogoWrapper>
+                <Logo size={180} />
+            </LogoWrapper>
+            <Stack direction="column" spacing={2}>
+                <TextField
+                    variant="outlined"
+                    label={t("auth:EMAIL")}
+                    type="text"
+                    {...register('email')}
+                    error={typeof errors.email === 'undefined' ? false : true}
+                    helperText={
+                        errors.email?.message &&
+                        errors.email?.message.length &&
+                        errors.email?.message
+                    }
+                />
+                <LoadingButton
+                    loading={loading}
+                    variant="contained"
+                    type="submit"
+                >
+                    {t("auth:CONFIRM")}
+                </LoadingButton>
+            </Stack>
+            <Link passHref href="/login">
+                <LoadingButton
+                    color="success"
+                    className="marginAutoVertical"
+                    variant="contained"
+                >
+                    {t("auth:SIGN_IN")}
+                </LoadingButton>
+            </Link>
+        </Form>
     );
 };
 
