@@ -3,7 +3,6 @@ import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
 import Quagga from 'quagga';
 import axios from 'axios';
 import { getAllIndexedDB } from '../utils/indexedDB.utils';
-import { useNotify } from '../hooks/useNotify';
 import CreateProduct from '../components/nutrition-diary/CreateProduct';
 import AddProductMoreInformation from '../components/nutrition-diary/AddProductMoreInformation';
 import { useDailyMeasurement } from '../hooks/useDailyMeasurement';
@@ -35,7 +34,6 @@ const Grid = styled.div`
 const Barcode: FunctionComponent = () => {
     const [loadedBarcode, setLoadedBarcode] = useState(0)
     const [isCreateProduct, setIsCreateProduct] = useState(false)
-    const [{ error }] = useNotify()
     const [loadedProduct, setLoadedProduct] = useState<any>(false)
     const token: any = useAppSelector(state => state.token.value)
     const [{ data }] = useDailyMeasurement(getShortDate(), token.login)
@@ -50,11 +48,7 @@ const Barcode: FunctionComponent = () => {
                 const value = { ...product[0], code: res.codeResult.code }
                 setLoadedProduct(value)
             } else {
-                const response = await axios.post(
-                    `${process.env.NEXT_PUBLIC_SERVER}/find/product`,
-                    { code: res.codeResult.code },
-                    { withCredentials: true }
-                );
+                const response = await axios.post(`${process.env.NEXT_PUBLIC_SERVER}/find/product`, { code: res.codeResult.code }, { withCredentials: true });
                 if (response.data) {
                     const value = { ...response.data, code: res.codeResult.code }
                     setLoadedProduct(value)
@@ -63,7 +57,6 @@ const Barcode: FunctionComponent = () => {
                 }
             }
         } catch (e: any) {
-            error()
             console.log(e)
         }
     };

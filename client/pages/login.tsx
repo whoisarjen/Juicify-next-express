@@ -15,7 +15,6 @@ import { getShortDate } from "../utils/date.utils";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useNotify } from "../hooks/useNotify";
 import { CreateSessionSchema, CreateSessionSchemaProps } from '../schema/session.schema'
 import styled from 'styled-components'
 
@@ -37,8 +36,7 @@ const Logo = styled.div`
 
 const Login = () => {
     const router = useRouter();
-    const { t } = useTranslation();
-    const [{ error }] = useNotify()
+    const { t } = useTranslation()
     const dispatch = useAppDispatch();
     const [loading, setLoading] = useState(false)
 
@@ -66,7 +64,7 @@ const Login = () => {
                 }/nutrition-diary/${getShortDate()}`
             );
         } catch (e: any) {
-            error(e.message)
+            console.log(e.message)
         } finally {
             setLoading(false);
         }

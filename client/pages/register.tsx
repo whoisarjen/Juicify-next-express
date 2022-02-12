@@ -40,7 +40,7 @@ const Logo = styled.div`
 const Register = () => {
     const router = useRouter();
     const { t } = useTranslation();
-    const [{ error, success }] = useNotify()
+    const [{ success }] = useNotify()
     const [loading, setLoading] = useState(false)
     const [sex, setSex] = useState(1)
     const [value, setValue] = useState(new Date())
@@ -52,15 +52,11 @@ const Register = () => {
     const onSubmit = async (values: CreateUserSchemaProps) => {
         try {
             setLoading(true);
-            await axios.post(
-                `${process.env.NEXT_PUBLIC_SERVER}/auth/register`,
-                values,
-                { withCredentials: true }
-            );
+            await axios.post(`${process.env.NEXT_PUBLIC_SERVER}/auth/register`, values, { withCredentials: true });
             success('CHECK_YOUR_EMAIL')
             router.push(`/login`);
         } catch (e: any) {
-            error(e.message)
+            console.log(e.message)
         } finally {
             setLoading(false);
         }

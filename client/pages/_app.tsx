@@ -8,12 +8,12 @@ import { FunctionComponent } from "react";
 import MUI from "../components/layout/MUI";
 import Notify from "../components/layout/Notify";
 
-interface MyAppProps {
+interface AppProps {
     Component: any,
     pageProps: any
 }
 
-const MyApp: FunctionComponent<MyAppProps> = ({ Component, pageProps }) => {
+const App: FunctionComponent<AppProps> = ({ Component, pageProps }) => {
     return (
         <MUI>
             <Provider store={store}>
@@ -29,4 +29,4 @@ const MyApp: FunctionComponent<MyAppProps> = ({ Component, pageProps }) => {
     );
 }
 
-export default MyApp;
+export default App;

@@ -1,6 +1,6 @@
-import useTranslation from "next-translate/useTranslation";
-import { FunctionComponent } from "react";
 import styled from "styled-components";
+import { FunctionComponent } from "react";
+import useTranslation from "next-translate/useTranslation";
 
 const Grid = styled.div`
     text-align: center;

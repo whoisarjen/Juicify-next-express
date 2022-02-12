@@ -1,5 +1,5 @@
-import { useAppSelector } from '../hooks/useRedux';
 import Box from '../components/workout/Box'
+import { useAppSelector } from '../hooks/useRedux';
 import useTranslation from "next-translate/useTranslation";
 
 const Workout = () => {
