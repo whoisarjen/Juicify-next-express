@@ -57,13 +57,13 @@ const Ul = styled.ul`
     }
 `
 
-const Ul__li = styled.li`
+const Li = styled.li`
     text-align: center;
     margin: auto;
     cursor: pointer;
 `
 
-const Ul__li_mobile = styled.li`
+const Li_mobile = styled.li`
     text-align: center;
     margin: auto;
     cursor: pointer;
@@ -72,7 +72,7 @@ const Ul__li_mobile = styled.li`
     }
 `
 
-const Ul__li_web = styled.li`
+const Li_web = styled.li`
     text-align: center;
     margin: auto;
     cursor: pointer;
@@ -90,15 +90,15 @@ const Navbar = ({ token }: { token: any }) => {
         <header>
             <Box>
                 <Ul>
-                    <Ul__li>
+                    <Li>
                         <Link passHref href="/">
                             <MyLogo />
                         </Link>
-                    </Ul__li>
-                    <Ul__li_web>
+                    </Li>
+                    <Li_web>
                         <SearchBox />
-                    </Ul__li_web>
-                    <Ul__li_web>
+                    </Li_web>
+                    <Li_web>
                         <Link passHref href="/blog">
                             <a>
                                 <Button startIcon={<SchoolIcon />}>
@@ -146,19 +146,12 @@ const Navbar = ({ token }: { token: any }) => {
                         <Link passHref href={`${router.asPath}`}>
                             <a onClick={toggleDarkMode}>
                                 <IconButton color="primary" aria-label="Dark / light mode">
-                                    {
-                                        theme.palette.mode === 'dark'
-                                            ?
-                                            <Brightness7Icon />
-                                            :
-                                            <Brightness4Icon />
-                                    }
+                                    {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
                                 </IconButton>
                             </a>
                         </Link>
-                    </Ul__li_web>
-
-                    <Ul__li_mobile>
+                    </Li_web>
+                    <Li_mobile>
                         <Link passHref href="/search">
                             <a>
                                 <IconButton color="primary" aria-label="search">
@@ -213,17 +206,11 @@ const Navbar = ({ token }: { token: any }) => {
                         <Link passHref href={`${router.asPath}`}>
                             <a onClick={toggleDarkMode}>
                                 <IconButton color="primary" aria-label="Dark / light mode">
-                                    {
-                                        theme.palette.mode === 'dark'
-                                            ?
-                                            <Brightness7Icon />
-                                            :
-                                            <Brightness4Icon />
-                                    }
+                                    {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
                                 </IconButton>
                             </a>
                         </Link>
-                    </Ul__li_mobile>
+                    </Li_mobile>
                 </Ul>
             </Box>
         </header>

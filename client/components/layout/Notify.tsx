@@ -1,13 +1,9 @@
-import { FunctionComponent, useMemo } from "react";
+import { useMemo } from "react";
 import { ToastContainer, toast } from 'react-toastify'
 import { NotifyContext } from '../../hooks/useNotify'
 import useTranslation from 'next-translate/useTranslation'
 
-interface NotifyProps {
-    children: any
-}
-
-const Notify: FunctionComponent<NotifyProps> = ({ children }) => {
+const Notify = ({ children }: { children: any }) => {
     const { t } = useTranslation('error')
 
     const notifyOptions = useMemo(

@@ -1,12 +1,8 @@
 import { createTheme, ThemeProvider as ThemeProviderMUI } from "@mui/material/styles";
-import { FunctionComponent, useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { ColorModeContext } from '../../hooks/useTheme'
 
-interface MUIProps {
-    children: any
-}
-
-const MUI: FunctionComponent<MUIProps> = ({ children }) => {
+const MUI = ({ children }: { children: any }) => {
     const [mode, setMode]: any = useState('dark')
 
     const theme = createTheme({

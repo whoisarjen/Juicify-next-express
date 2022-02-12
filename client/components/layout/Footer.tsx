@@ -12,7 +12,7 @@ interface FooterProps {
     token: any
 }
 
-const Box = styled.div`
+const Box = styled.footer`
     width: 100%;
     min-height: 43px;
     line-height: 43px;
@@ -32,54 +32,53 @@ const Menu = styled.nav`
     background: var(--theme-background);
 `
 
-const Link__a = styled.a`
+const A = styled.a`
     margin: auto;
     display: grid;
     cursor: pointer;
 `
 
+const Copyright = styled.p`
+    margin: 0;
+`
+
 const Footer: FunctionComponent<FooterProps> = ({ token }) => {
     return (
-        <footer>
-            <Box>
-                {
-                    token
-                        ?
-                        <>
-                            <div />
-                            <Menu>
-                                <Link passHref href="/coach/">
-                                    <Link__a>
-                                        <EmojiEventsIcon color="primary" />
-                                    </Link__a>
-                                </Link>
-                                <Link passHref href="/workout">
-                                    <Link__a>
-                                        <FitnessCenterIcon color="primary" />
-                                    </Link__a>
-                                </Link>
-                                <Link passHref href="/barcode">
-                                    <Link__a>
-                                        <PhotoCameraIcon color="primary" />
-                                    </Link__a>
-                                </Link>
-                                <Link passHref href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
-                                    <Link__a>
-                                        <BookIcon color="primary" />
-                                    </Link__a>
-                                </Link>
-                                <Link passHref href={`/${token.login}`}>
-                                    <Link__a>
-                                        <Avatar user={token} size="28px" />
-                                    </Link__a>
-                                </Link>
-                            </Menu>
-                        </>
-                        :
-                        <small>©2022 Juicify.app</small>
-                }
-            </Box>
-        </footer>
+        <Box>
+            {
+                token
+                    ?
+                    <Menu>
+                        <Link passHref href="/coach/">
+                            <A>
+                                <EmojiEventsIcon color="primary" />
+                            </A>
+                        </Link>
+                        <Link passHref href="/workout">
+                            <A>
+                                <FitnessCenterIcon color="primary" />
+                            </A>
+                        </Link>
+                        <Link passHref href="/barcode">
+                            <A>
+                                <PhotoCameraIcon color="primary" />
+                            </A>
+                        </Link>
+                        <Link passHref href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
+                            <A>
+                                <BookIcon color="primary" />
+                            </A>
+                        </Link>
+                        <Link passHref href={`/${token.login}`}>
+                            <A>
+                                <Avatar user={token} size="28px" />
+                            </A>
+                        </Link>
+                    </Menu>
+                    :
+                    <Copyright>©2022 Juicify.app</Copyright>
+            }
+        </Box>
     );
 };
 

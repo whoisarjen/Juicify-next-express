@@ -12,7 +12,6 @@ const Header: FunctionComponent<HeaderProps> = ({ title, description }) => {
             <title>{title}</title>
             <meta name='viewport' content='initial-scale=1.0, width=device-width' />
             <meta name="description" content={description} />
-            {/* Global site tag (gtag.js) - Google Analytics */}
             <script async src="https://www.googletagmanager.com/gtag/js?id=G-RTCFC3JGV2"></script>
             <script
                 dangerouslySetInnerHTML={{

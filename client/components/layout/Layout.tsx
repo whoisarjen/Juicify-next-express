@@ -36,7 +36,7 @@ const Grid = styled.div`
     }
 `
 
-const Grid__content = styled.div`
+const Content = styled.div`
     width: 100%;
     margin: 0 auto;
     max-width: 702px;
@@ -96,33 +96,29 @@ const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
                     {
                         router.pathname.includes('blog') || router.pathname == '/'
                             ?
-                            <>{children}</>
+                            { children }
                             :
                             <Grid>
                                 {
                                     token
                                         ?
-                                        (
-                                            notRequiredAuth.filter(route => route == router.pathname).length || router.pathname == '/'
-                                                ?
-                                                <SidebarLeftLoggouted />
-                                                :
-                                                <SidebarLeft {...{ token }} />
-                                        )
+                                        notRequiredAuth.filter(route => route == router.pathname).length || router.pathname == '/'
+                                            ?
+                                            <SidebarLeftLoggouted />
+                                            :
+                                            <SidebarLeft {...{ token }} />
                                         :
                                         <SidebarLeftLoggouted />
                                 }
-                                <Grid__content>{children}</Grid__content>
+                                <Content>{children}</Content>
                                 {
                                     token
                                         ?
-                                        (
-                                            notRequiredAuth.filter(route => route == router.pathname).length || router.pathname == '/'
-                                                ?
-                                                <SidebarRightLoggouted />
-                                                :
-                                                <SidebarRight {...{ token }} />
-                                        )
+                                        notRequiredAuth.filter(route => route == router.pathname).length || router.pathname == '/'
+                                            ?
+                                            <SidebarRightLoggouted />
+                                            :
+                                            <SidebarRight {...{ token }} />
                                         :
                                         <SidebarRightLoggouted />
                                 }
