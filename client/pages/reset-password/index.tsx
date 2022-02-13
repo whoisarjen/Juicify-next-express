@@ -82,7 +82,7 @@ const ResetPassword = () => {
             <Link passHref href="/login">
                 <LoadingButton
                     color="success"
-                    className="marginAutoVertical"
+                    style={{ marginTop: 'auto !important', marginBottom: 'auto !important' }}
                     variant="contained"
                 >
                     {t("auth:SIGN_IN")}

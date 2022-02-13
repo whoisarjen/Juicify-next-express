@@ -5,6 +5,13 @@ import useTranslation from "next-translate/useTranslation"
 import useWorkoutResults from '../../../../hooks/useWorkoutResults'
 import DialogCreateResult from "../../../../components/workout/results/DialogCreateResult"
 import Navbar from '../../../../components/profile/Navbar'
+import styled from 'styled-components'
+
+const Title = styled.div`
+    font-size: 2rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+`
 
 const WorkoutResults = () => {
     const router = useRouter()
@@ -17,7 +24,7 @@ const WorkoutResults = () => {
             {
                 token?.login == router?.query.login ?
                     <>
-                        <div className="title">{t('Workout results')}</div>
+                        <Title>{t('Workout results')}</Title>
                         <DialogCreateResult />
                     </>
                     :

@@ -40,6 +40,23 @@ const Placeholder = styled.div`
     height: 44px;
 `
 
+const Grid = styled.div`
+    width: 100%;
+    margin: 0 auto;
+    max-width: 702px;
+    padding: 12px;
+    display: grid;
+    min-height: calc(100vh - var(--BothNavHeightAndPadding));
+    ${this} {
+        min-height: auto;
+    }
+    @media (max-width: 726px) {
+        ${this} {
+            width: calc(100% - 24px);
+        }
+    }
+`
+
 const AddProductMoreInformation = ({ loadedProduct, handleClose, dailyMeasurement }: AddProductMoreInformationProps) => {
     const { t } = useTranslation('nutrition-diary');
     const [isAdd, setIsAdd] = useState(false)
@@ -51,7 +68,7 @@ const AddProductMoreInformation = ({ loadedProduct, handleClose, dailyMeasuremen
                 open={loadedProduct ? true : false}
                 TransitionComponent={Transition}
             >
-                <div className="contentWithoutHeight">
+                <Grid>
                     {
                         Object.keys(loadedProduct).length > 0 &&
                         (
@@ -76,7 +93,7 @@ const AddProductMoreInformation = ({ loadedProduct, handleClose, dailyMeasuremen
                             {t('Close')}
                         </Button>
                     </Close>
-                </div>
+                </Grid>
                 <AddProductMoreInformationAdd isAdd={isAdd} dailyMeasurement={dailyMeasurement} setIsAdd={setIsAdd} loadedProduct={loadedProduct} />
             </Dialog>
         </>

@@ -57,6 +57,34 @@ const Placeholder = styled.div`
     height: 44px;
 `
 
+const Grid = styled.div`
+    width: 100%;
+    margin: 0 auto;
+    max-width: 702px;
+    padding: 12px;
+    display: grid;
+    min-height: calc(100vh - var(--BothNavHeightAndPadding));
+    ${this} {
+        min-height: auto;
+    }
+    @media (max-width: 726px) {
+        ${this} {
+            width: calc(100% - 24px);
+        }
+    }
+`
+
+const GridFullWidth = styled.div`
+    display: grid;
+    width: 100%;
+`
+
+const Title = styled.div`
+    font-size: 2rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+`
+
 const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload }: AddproductsProps) => {
     const [loadedProduct, setLoadedProduct] = useState<any>(false)
     const { t } = useTranslation('nutrition-diary');
@@ -115,8 +143,8 @@ const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload
             open={isAddDialog}
             TransitionComponent={Transition}
         >
-            <div className="contentWithoutHeight">
-                <div className="title">{t('Add products')}</div>
+            <Grid>
+                <Title>{t('Add products')}</Title>
                 <Select
                     sx={{ marginBottom: '10px' }}
                     labelId="demo-simple-select-label"
@@ -175,11 +203,11 @@ const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload
                         <AddProductsBox refreshCheckedProducts={() => setRefreshChecked(refreshChecked + 1)} product={product} key={product._id} openMoreInformation={() => setLoadedProduct(product)} />
                     )
                 }
-                <div className='contentGridPureWidth'>
+                <GridFullWidth>
                     <Button variant="outlined" onClick={() => setIsCreateProduct(true)} sx={{ margin: 'auto' }}>
                         {t('Create product')}
                     </Button>
-                </div>
+                </GridFullWidth>
                 <CreateProduct
                     created={created}
                     isCreateProduct={isCreateProduct}
@@ -195,7 +223,7 @@ const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload
                         {t('Close')}
                     </Button>
                 </Close>
-            </div>
+            </Grid>
             <AddProductMoreInformation handleClose={() => setLoadedProduct(false)} loadedProduct={loadedProduct} dailyMeasurement={dailyMeasurement} />
         </Dialog>
     );

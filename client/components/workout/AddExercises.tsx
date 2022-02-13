@@ -50,6 +50,34 @@ const Placeholder = styled.div`
     height: 44px;
 `
 
+const Grid = styled.div`
+    width: 100%;
+    margin: 0 auto;
+    max-width: 702px;
+    padding: 12px;
+    display: grid;
+    min-height: calc(100vh - var(--BothNavHeightAndPadding));
+    ${this} {
+        min-height: auto;
+    }
+    @media (max-width: 726px) {
+        ${this} {
+            width: calc(100% - 24px);
+        }
+    }
+`
+
+const GridFullWidth = styled.div`
+    display: grid;
+    width: 100%;
+`
+
+const Title = styled.div`
+    font-size: 2rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+`
+
 const AddDialog = ({ isAddDialog, closeDialog, skipThoseIDS, addThoseExercises }: AddDialogProps) => {
     const { t } = useTranslation('home');
     const [tab, setTab] = useState(0)
@@ -96,8 +124,8 @@ const AddDialog = ({ isAddDialog, closeDialog, skipThoseIDS, addThoseExercises }
             open={isAddDialog}
             TransitionComponent={Transition}
         >
-            <div className="contentWithoutHeight">
-                <div className="title">{t('Add exercises')}</div>
+            <Grid>
+                <Title>{t('Add exercises')}</Title>
                 <Autocomplete
                     sx={{ marginBottom: '10px' }}
                     open={open}
@@ -143,11 +171,11 @@ const AddDialog = ({ isAddDialog, closeDialog, skipThoseIDS, addThoseExercises }
                         <AddExercisesBox refreshCheckedExercises={() => setRefreshChecked(refreshChecked + 1)} exercise={item} key={item._id} />
                     )
                 }
-                <div className='contentGridPureWidth'>
+                <GridFullWidth>
                     <Button variant="outlined" onClick={() => setIsCreateExercise(true)} sx={{ margin: 'auto' }}>
                         {t('Create exercise')}
                     </Button>
-                </div>
+                </GridFullWidth>
                 <CreateExercise
                     created={created}
                     isCreateExercise={isCreateExercise}
@@ -163,7 +191,7 @@ const AddDialog = ({ isAddDialog, closeDialog, skipThoseIDS, addThoseExercises }
                         {t('Close')}
                     </Button>
                 </Close>
-            </div>
+            </Grid>
         </Dialog>
     );
 }

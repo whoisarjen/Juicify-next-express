@@ -12,12 +12,18 @@ const Box = styled.div`
     }
 `
 
+const Title = styled.div`
+    font-size: 2rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+`
+
 const Navbar = () => {
     const { t } = useTranslation('nutrition-diary')
 
     return (
         <Box>
-            <div className="title">{t('title')}</div>
+            <Title>{t('title')}</Title>
             <Share />
             <DateChanger />
         </Box>

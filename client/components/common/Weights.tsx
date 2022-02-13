@@ -65,6 +65,16 @@ const Placeholder = styled.div`
     width: 100%;
     height: 44px;
 `
+const Title = styled.div`
+    font-size: 2rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+`
+
+const Description = styled.div`
+    font-size: 0.9rem;
+    margin: auto 0;
+`
 
 const Weights = ({ isWeights, closeWeights }: WeightsProps) => {
     const token: any = useAppSelector(state => state.token.value)
@@ -94,15 +104,14 @@ const Weights = ({ isWeights, closeWeights }: WeightsProps) => {
             TransitionComponent={Transition}
         >
             <Content>
-                <div className="title">{t('Add weight')}</div>
-                <div className="description">
+                <Title>{t('Add weight')}</Title>
+                <Description>
                     {t('Add weight description')}
-                </div>
+                </Description>
                 <Fragment>
                     <Timeline position="alternate">
                         {
-                            data &&
-                            data.length > 0 &&
+                            data?.length > 0 &&
                             data.map((x: DailyMeasurementSchemaProps) =>
                                 <TimelineItem key={x._id}>
                                     <TimelineOppositeContent color="text.secondary">

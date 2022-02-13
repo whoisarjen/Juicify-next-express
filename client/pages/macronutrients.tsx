@@ -53,6 +53,12 @@ const Grid__description = styled.div`
     }
 `
 
+const Title = styled.div`
+    font-size: 2rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+`
+
 const Macronutrients = () => {
     const [changeSettings] = useSettings()
     const token: any = useAppSelector(state => state.token.value)
@@ -159,7 +165,7 @@ const Macronutrients = () => {
                 <div>
                     {
                         Object.keys(changeObject).length == 0 &&
-                        <div className="title">{t('TITLE')}</div>
+                        <Title>{t('TITLE')}</Title>
                     }
                     <Grid>
                         <Grid__bar>

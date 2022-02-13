@@ -90,22 +90,22 @@ const Bar = ({ object, click, toggleLock }: BarProps) => {
             </Day>
             <ActiveContent active={object.choosen ? true : false} onClick={click}>
                 <Proteins>
-                    <div className="marginAuto">
+                    <div style={{ margin: 'auto' }}>
                         {object.proteins} {t('P')}
                     </div>
                 </Proteins>
                 <Carbs>
-                    <div className="marginAuto">
+                    <div style={{ margin: 'auto' }}>
                         {object.carbs} {t('C')}
                     </div>
                 </Carbs>
                 <Fats>
-                    <div className="marginAuto">
+                    <div style={{ margin: 'auto' }}>
                         {object.fats} {t('F')}
                     </div>
                 </Fats>
                 <Calories>
-                    <div className="marginAuto">
+                    <div style={{ margin: 'auto' }}>
                         {object.proteins * 4 + object.carbs * 4 + object.fats * 9}
                     </div>
                 </Calories>
@@ -117,7 +117,7 @@ const Bar = ({ object, click, toggleLock }: BarProps) => {
                             <IconButton
                                 onClick={toggleLock}
                                 color="secondary"
-                                className="marginAuto"
+                                style={{ margin: 'auto' }}
                             >
                                 <LockOutlinedIcon />
                             </IconButton>
@@ -125,7 +125,7 @@ const Bar = ({ object, click, toggleLock }: BarProps) => {
                             <IconButton
                                 onClick={toggleLock}
                                 color="primary"
-                                className="marginAuto"
+                                style={{ margin: 'auto' }}
                             >
                                 <LockOpenIcon />
                             </IconButton>

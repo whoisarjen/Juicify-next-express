@@ -164,7 +164,7 @@ const Register = () => {
             <Link passHref href="/login">
                 <LoadingButton
                     color="success"
-                    className="marginAutoVertical"
+                    style={{ marginTop: 'auto !important', marginBottom: 'auto !important' }}
                     variant="contained"
                 >
                     {t("auth:ONE_OF_US_SIGN_IN")}

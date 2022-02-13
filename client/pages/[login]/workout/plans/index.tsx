@@ -7,6 +7,13 @@ import useTranslation from "next-translate/useTranslation";
 import Navbar from '../../../../components/profile/Navbar';
 import { useAppSelector } from '../../../../hooks/useRedux';
 import { WorkoutPlanSchemaProps } from '../../../../schema/workoutPlan.schema';
+import styled from 'styled-components';
+
+const Title = styled.div`
+    font-size: 2rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+`
 
 const WorkoutPlans = () => {
     const router = useRouter()
@@ -26,7 +33,7 @@ const WorkoutPlans = () => {
                 router.query.login == token.login ?
                     (
                         <>
-                            <div className="title">{t('Workout plans')}</div>
+                            <Title>{t('Workout plans')}</Title>
                             <ButtonPlus click={createWorkoutPlan} />
                         </>
                     ) : (

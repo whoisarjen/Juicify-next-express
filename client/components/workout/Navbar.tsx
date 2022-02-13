@@ -25,6 +25,12 @@ const Grid = styled.div`
     margin: auto;
 `
 
+const Title = styled.div`
+    font-size: 2rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+`
+
 const Navbar = ({ title, where, saveLoading, saveWorkout, deleteWorkout }: NavbarProps) => {
     const [isDialog, setIsDialog] = useState(false)
     const router = useRouter()
@@ -33,7 +39,7 @@ const Navbar = ({ title, where, saveLoading, saveWorkout, deleteWorkout }: Navba
 
     return (
         <>
-            <div className="title">{t(`${title}`)}</div>
+            <Title>{t(`${title}`)}</Title>
             <Grid>
                 <IconButton aria-label="route" onClick={() => router.push(`/${router.query.login}/${where}`)} sx={{ margin: 'auto' }}>
                     <KeyboardBackspaceIcon />

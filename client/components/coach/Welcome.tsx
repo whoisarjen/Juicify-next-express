@@ -15,9 +15,14 @@ const Title = styled.div`
     font-weight: bold;
     display: grid;
     padding: 20px 0;
-${this} div {
-    margin: auto;
-}
+    ${this} div {
+        margin: auto;
+    }
+`
+
+const Description = styled.div`
+    font-size: 0.9rem;
+    margin: auto 0;
 `
 
 const Welcome = ({ setStep }: { setStep: (arg0: string) => void }) => {
@@ -26,7 +31,7 @@ const Welcome = ({ setStep }: { setStep: (arg0: string) => void }) => {
     return (
         <Box>
             <Title><div>{t('WELCOME_TITLE')}</div></Title>
-            <div className="description">{t('WELCOME_DESCRIPTION')}</div>
+            <Description>{t('WELCOME_DESCRIPTION')}</Description>
             <Button variant="contained" onClick={() => setStep('CheckingTodayData')}>{t('WELCOME_BUTTON')}</Button>
         </Box>
     )
