@@ -42,7 +42,7 @@ const AddResultValues = ({ result, setNewValues, isOwner, openDeleteExercise }: 
     const changeResult = (object: ValueSchemaProps, index: number) => {
         let array = values
         array[index] = { ...object, open: false }
-        setValues(array)
+        // setValues(array)
         setNewValues(array)
     }
 
@@ -54,14 +54,12 @@ const AddResultValues = ({ result, setNewValues, isOwner, openDeleteExercise }: 
 
     const openNewResult = () => {
         if (values?.length) {
-            const previousValues = values.map(
-                (value: ValueSchemaProps) => {
-                    value.open = false;
-                    return value
-                }
-            )
-            setNewValues(previousValues)
-            setValues(
+            const previousValues = values.map((value: ValueSchemaProps) => {
+                value.open = false;
+                return value
+            })
+            // setNewValues(previousValues)
+            setNewValues(
                 [
                     ...previousValues,
                     {
@@ -72,7 +70,7 @@ const AddResultValues = ({ result, setNewValues, isOwner, openDeleteExercise }: 
                 ]
             )
         } else {
-            setValues(
+            setNewValues(
                 [
                     {
                         reps: 0,

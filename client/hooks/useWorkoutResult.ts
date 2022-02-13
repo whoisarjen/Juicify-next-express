@@ -26,8 +26,11 @@ const useWorkoutResult = (): [any, () => void] => {
                         res = daily.workout_result.filter((workout: any) => workout._id == router.query.id)
                         if (res?.length == 0) router.push(`/${router.query.login}/workout/results`)
                     }
-                    let workout_description = await getIndexedDBbyID('workout_plan', res[0].workout_plan_ID)
-                    res = loadMissingDataForWorkoutResult({ whenAdded: reverseDateDotes(daily.whenAdded), object: res[0], workout_description })
+                    res = loadMissingDataForWorkoutResult({ 
+                        whenAdded: reverseDateDotes(daily.whenAdded),
+                        object: res[0],
+                        workout_description: (await getIndexedDBbyID('workout_plan', res[0]?.workout_plan_ID || ''))?.description
+                    })
                 } else {
                     if (await is_id(router.query.id)) {
                         res = daily.workout_result.filter((workout: any) => workout._id == router.query.id)

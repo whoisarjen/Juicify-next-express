@@ -3,7 +3,7 @@ import { useAppSelector } from '../../../../hooks/useRedux'
 import Box from '../../../../components/workout/Box'
 import useTranslation from "next-translate/useTranslation"
 import useWorkoutResults from '../../../../hooks/useWorkoutResults'
-import DialogCreateResult from "../../../../components/workout/results/CreateDialog"
+import CreateDialog from "../../../../components/workout/results/CreateDialog"
 import Navbar from '../../../../components/profile/Navbar'
 import styled from 'styled-components'
 
@@ -25,7 +25,7 @@ const WorkoutResults = () => {
                 token?.login == router?.query.login ?
                     <>
                         <Title>{t('Workout results')}</Title>
-                        <DialogCreateResult />
+                        <CreateDialog />
                     </>
                     :
                     <Navbar user={user} tab={2} />

@@ -25,7 +25,7 @@ const WorkoutResults = () => {
     const token: any = useAppSelector(state => state.token.value)
     const [saveLoading, setSaveLoading] = useState(false)
     const [deleteExerciseIndex, setDeleteExerciseIndex] = useState<number | boolean>(false)
-    const theOldestSupportedDate = useAppSelector(state => state.config.theOldestSupportedDate())
+    const isDateSupported = useAppSelector(state => state.config.theOldestSupportedDate()) <= router.query.date
 
     const deleteEverything = async () => {
         setSaveLoading(true)
@@ -44,13 +44,13 @@ const WorkoutResults = () => {
     }
 
     const autoSave = async () => {
-        if (theOldestSupportedDate <= router.query.date) {
+        if (isDateSupported) {
             await deleteIndexedDB('workout_result', getValues()._id as string)
             await addIndexedDB('workout_result', [getValues()])
         }
     }
 
-    const addNewExercises = async (array: Array<ExerciseSchemaProps>) => {
+    const addExercises = async (array: Array<ExerciseSchemaProps>) => {
         array.forEach((exercise: ExerciseSchemaProps) => {
             append({
                 ...(exercise._id && { _id: exercise._id }),
@@ -67,6 +67,11 @@ const WorkoutResults = () => {
         await autoSave()
     }
 
+    const updateResults = async ({ values, result, index }: { values: Array<ValueSchemaProps>, result: ResultSchemaProps, index: number }) => {
+        update(index, { ...result, values })
+        await autoSave()
+    }
+
     const { register, formState: { errors }, handleSubmit, control, reset, getValues } = useForm<WorkoutResultSchemaProps>({
         resolver: zodResolver(WorkoutResultSchema)
     })
@@ -76,7 +81,6 @@ const WorkoutResults = () => {
     const onSubmit = async (values: WorkoutResultSchemaProps) => {
         try {
             setSaveLoading(true)
-            console.log('object', prepareWorkoutResultToSend(values))
             let newDaily = daily
             newDaily.workout_result = newDaily.workout_result.filter((result: any) => result._id != router.query.id)
             newDaily.workout_result.push(prepareWorkoutResultToSend(values))
@@ -87,11 +91,9 @@ const WorkoutResults = () => {
                     calories: -1 * parseInt(values.burnt.toString())
                 })
             }
-            console.log('newDaily', newDaily)
             await insertThoseIDStoDBController('daily_measurement', [newDaily])
             await deleteIndexedDB('workout_result', router.query.id)
             router.push(`/${router.query?.login}/workout/results`)
-            // }
         } catch (e: any) {
             console.log(e.message)
         } finally {
@@ -133,21 +135,24 @@ const WorkoutResults = () => {
                 disabled
                 defaultValue={reverseDateDotes(router.query.date)}
             />
-            <TextField
-                disabled
-                variant="outlined"
-                label={t("Description of workout plan")}
-                type="text"
-                sx={{ width: '100%', marginTop: '10px' }}
-                defaultValue={' '}
-                {...register('workout_description')}
-                error={typeof errors.workout_description === 'undefined' ? false : true}
-                helperText={
-                    errors.workout_description?.message &&
-                    errors.workout_description?.message.length &&
-                    errors.workout_description?.message
-                }
-            />
+            {
+                getValues()?.workout_description &&
+                <TextField
+                    disabled
+                    variant="outlined"
+                    label={t("Description of workout plan")}
+                    type="text"
+                    sx={{ width: '100%', marginTop: '10px' }}
+                    defaultValue={' '}
+                    {...register('workout_description')}
+                    error={typeof errors.workout_description === 'undefined' ? false : true}
+                    helperText={
+                        errors.workout_description?.message &&
+                        errors.workout_description?.message.length &&
+                        errors.workout_description?.message
+                    }
+                />
+            }
             {
                 !(async () => await is_id(router.query.id)) &&
                 <TextField
@@ -189,7 +194,7 @@ const WorkoutResults = () => {
                             key={(result._id || '') + index}
                             result={result}
                             isOwner={token?.login == router.query?.login}
-                            setNewValues={(values: Array<ValueSchemaProps>) => update(index, { ...result, values })}
+                            setNewValues={(values: Array<ValueSchemaProps>) => updateResults({ values, result, index })}
                             openDeleteExercise={() => setDeleteExerciseIndex(index)}
                         />
                     </div>
@@ -209,7 +214,7 @@ const WorkoutResults = () => {
                                 x.l = x.name.length
                                 return x
                             })]}
-                            setExercises={addNewExercises}
+                            setExercises={addExercises}
                         />
                     </>
                     :
