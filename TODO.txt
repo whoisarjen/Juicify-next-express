@@ -3,3 +3,5 @@ add cardio exercises + timer i guess
 Schema
     - Settings
     - Workout_result
+
+Reduction web workers to 2?

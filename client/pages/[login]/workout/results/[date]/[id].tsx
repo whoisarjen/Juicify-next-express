@@ -3,14 +3,14 @@ import { useState, useEffect } from 'react'
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import { addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../../../../utils/indexedDB.utils';
-import AddResultValues from '../../../../../components/workout/results/AddResultValues';
+import AddResultValues from '../../../../../components/workout/results/ValuesContainter';
 import { useAppSelector } from '../../../../../hooks/useRedux';
 import { useRouter } from 'next/router';
 import Navbar from '../../../../../components/workout/Navbar'
 import ConfirmDialog from '../../../../../components/common/ConfirmDialog';
 import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../../../../utils/db.utils';
 import useTranslation from "next-translate/useTranslation";
-import AddResultMoreOptions from '../../../../../components/workout/results/AddResultMoreOptions'
+import AddResultMoreOptions from '../../../../../components/workout/results/MoreOptionsButton'
 import BottomFlyingGuestBanner from '../../../../../components/common/BottomFlyingGuestBanner'
 import { useNotify } from '../../../../../hooks/useNotify';
 import { ExerciseSchemaProps } from '../../../../../schema/exercise.schema';
@@ -89,7 +89,7 @@ const WorkoutResultsID = () => {
                 await insertThoseIDStoDB('daily_measurement', [newDaily])
             }
             await deleteIndexedDB('workout_result', router.query.id)
-            router.push(`/${router.query?.login}/workout-results`)
+            router.push(`/${router.query?.login}/workout/results`)
         } else {
             error(t('Add some results'))
         }

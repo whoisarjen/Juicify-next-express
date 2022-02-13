@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react'
 import { overwriteThoseIDSinDB } from "../../../utils/db.utils"
 import { useDailyMeasurement } from '../../../hooks/useDailyMeasurement'
 import Box from "../../../components/nutrition-diary/Box"
-import AddProducts from '../../../components/nutrition-diary/Add'
-import DialogEditProduct from '../../../components/nutrition-diary/Edit'
+import AddProducts from '../../../components/nutrition-diary/AddProduct'
+import DialogEditProduct from '../../../components/nutrition-diary/BoxEdit'
 import Navbar from "../../../components/nutrition-diary/Navbar"
 import FastDateChanger from '../../../components/common/FastDateChanger'
 import Diagrams from '../../../components/nutrition-diary/Diagram'

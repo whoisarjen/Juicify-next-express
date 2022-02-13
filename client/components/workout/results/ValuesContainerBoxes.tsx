@@ -1,7 +1,7 @@
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete'
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect } from 'react'
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import ConfirmDialog from '../../common/ConfirmDialog';
@@ -79,7 +79,7 @@ const AddResultValuesBox = ({ value, index, changeResult, deleteResult, isOwner 
         }
     }, [value, value.open])
 
-    useMemo(() => {
+    useEffect(() => {
         let reps = []
         for (let i = 0; i <= 100; i++) {
             reps.push(i.toString())

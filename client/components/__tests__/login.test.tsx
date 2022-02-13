@@ -1,30 +1,56 @@
 import Login from "../../pages/login"
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import { Provider } from "react-redux"
 import { store } from "../../redux/store"
 import user from '@testing-library/user-event'
 
-describe('Testing login form', () => {
-    describe('Gave correct data', () => {
-        test('Expect correct sign in', async () => {
+describe('Testing login validation', () => {
+    describe('Gave empty login', () => {
+        test('Expect "should be at least 3 characters"', async () => {
             render(
                 <Provider store={store}>
                     <Login />
                 </Provider>
             )
 
-            const login = screen.getByLabelText(/login/i)
-            const password = screen.getByLabelText(/password/i)
+            user.type(screen.getByLabelText(/login/i), '')
+            user.click(screen.getByRole('button'))
 
-            user.type(login, '')
-            user.type(password, '')
+            await waitFor(() => screen.getByText(/should be at least 3 characters/i))
+        });
+    });
 
-            const submit = screen.getByRole('button')
-            user.click(submit)
+    describe('Gave empty password', () => {
+        test('Expect "should be at least 8 characters"', async () => {
+            render(
+                <Provider store={store}>
+                    <Login />
+                </Provider>
+            )
 
-            // login.toHaveErrorMessage('Should be at least 3 characters')
-        })
-    })
-})
+            user.type(screen.getByLabelText(/password/i), '')
+            user.click(screen.getByRole('button'))
+
+            await waitFor(() => screen.getByText(/should be at least 8 characters/i))
+        });
+    });
+
+    describe('Gave correct values', () => {
+        test('Expect 0 errors', async () => {
+            render(
+                <Provider store={store}>
+                    <Login />
+                </Provider>
+            )
+
+            user.type(screen.getByLabelText(/login/i), '123')
+            user.type(screen.getByLabelText(/password/i), '12345678')
+            await waitFor(() => user.click(screen.getByRole('button')))
+
+            expect(screen.queryByText(/should be at least 3 characters/i)).toBeNull();
+            expect(screen.queryByText(/should be at least 8 characters/i)).toBeNull();
+        });
+    });
+});
 
 export default {}
