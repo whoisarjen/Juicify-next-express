@@ -5,6 +5,7 @@ import { getIndexedDBbyID } from '../utils/indexedDB.utils'
 import { useDailyMeasurement } from './useDailyMeasurement'
 import { reverseDateDotes } from '../utils/date.utils'
 import { useAppSelector } from './useRedux'
+import { loadMissingDataForWorkoutResult } from '../utils/workoutResult.utils'
 
 const useWorkoutResult = (): [any, () => void] => {
     const router: any = useRouter()
@@ -16,37 +17,27 @@ const useWorkoutResult = (): [any, () => void] => {
     useEffect(() => {
         (async () => {
             if (daily) {
+                let res: any = {}
                 if (token.login == router.query.login) {
-                    let res: any = {}
                     let cache = await getIndexedDBbyID('workout_result', router.query.id)
                     if (cache) {
-                        res = cache
-                        res.whenAdded = reverseDateDotes(daily.whenAdded)
+                        res = [cache]
                     } else {
                         res = daily.workout_result.filter((workout: any) => workout._id == router.query.id)
-                        if (res && res.length > 0) {
-                            res = res[0]
-                            res.whenAdded = reverseDateDotes(daily.whenAdded)
-                        } else {
-                            router.push(`/${router.query.login}/workout-results`)
-                        }
+                        if (res?.length == 0) router.push(`/${router.query.login}/workout/results`)
                     }
-                    setData(res)
+                    let workout_description = await getIndexedDBbyID('workout_plan', res[0].workout_plan_ID)
+                    res = loadMissingDataForWorkoutResult({ whenAdded: reverseDateDotes(daily.whenAdded), object: res[0], workout_description })
                 } else {
                     if (await is_id(router.query.id)) {
-                        let res: any = {}
                         res = daily.workout_result.filter((workout: any) => workout._id == router.query.id)
-                        if (res && res.length > 0) {
-                            res = res[0]
-                            res.whenAdded = reverseDateDotes(daily.whenAdded)
-                        } else {
-                            router.push(`/${router.query.login}/workout-results`)
-                        }
-                        setData(res)
+                        if (res?.length == 0) router.push(`/${router.query.login}/workout/results`)
+                        res = loadMissingDataForWorkoutResult({ whenAdded: reverseDateDotes(daily.whenAdded), object: res[0] })
                     } else {
-                        router.push(`/${router.query.login}/workout-results`)
+                        router.push(`/${router.query.login}/workout/results`)
                     }
                 }
+                setData(res)
             }
         })()
     }, [daily, reload, router.query])

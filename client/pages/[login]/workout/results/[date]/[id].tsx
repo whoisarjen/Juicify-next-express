@@ -1,38 +1,34 @@
 import useWorkoutResult from '../../../../../hooks/useWorkoutResult'
 import { useState, useEffect } from 'react'
 import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
-import { addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../../../../utils/indexedDB.utils';
-import AddResultValues from '../../../../../components/workout/results/ValuesContainter';
+import { addIndexedDB, deleteIndexedDB } from '../../../../../utils/indexedDB.utils';
+import ResultBox from '../../../../../components/workout/results/ResultBox';
 import { useAppSelector } from '../../../../../hooks/useRedux';
 import { useRouter } from 'next/router';
 import Navbar from '../../../../../components/workout/Navbar'
 import ConfirmDialog from '../../../../../components/common/ConfirmDialog';
-import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../../../../utils/db.utils';
+import { insertThoseIDStoDB, insertThoseIDStoDBController, is_id, overwriteThoseIDSinDB } from '../../../../../utils/db.utils';
 import useTranslation from "next-translate/useTranslation";
 import AddResultMoreOptions from '../../../../../components/workout/results/MoreOptionsButton'
 import BottomFlyingGuestBanner from '../../../../../components/common/BottomFlyingGuestBanner'
 import { ExerciseSchemaProps } from '../../../../../schema/exercise.schema';
-import { ResultSchemaProps, ValueSchemaProps, WorkoutResultSchemaProps } from '../../../../../schema/workoutResult.schema';
+import { ResultSchemaProps, ValueSchemaProps, WorkoutResultSchema, WorkoutResultSchemaProps } from '../../../../../schema/workoutResult.schema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useFieldArray, useForm } from 'react-hook-form';
+import { prepareWorkoutResultToSend } from '../../../../../utils/workoutResult.utils';
+import { reverseDateDotes } from '../../../../../utils/date.utils';
 
 const WorkoutResults = () => {
     const router: any = useRouter()
-    const [trueID, setTrueID] = useState(false)
-    const [date, setDate] = useState(new Date())
-    const [burnt, setBurnt] = useState<any>(0)
-    const [title, setTitle] = useState<any>('')
     const { t } = useTranslation('workout')
-    const [results, setResults] = useState<Array<ResultSchemaProps>>([])
-    const [description, setDescription] = useState<any>('')
     const [{ data, user, daily }] = useWorkoutResult()
     const token: any = useAppSelector(state => state.token.value)
     const [saveLoading, setSaveLoading] = useState(false)
-    const [deleteExercises, setDeleteExercise] = useState<ResultSchemaProps | boolean>(false)
-    const [descriptionWorkout, setDescriptionWorkout] = useState('')
+    const [deleteExerciseIndex, setDeleteExerciseIndex] = useState<number | boolean>(false)
     const theOldestSupportedDate = useAppSelector(state => state.config.theOldestSupportedDate())
-    const basicInputLength = useAppSelector(state => state.config.basicInputLength)
 
-    const deleteWorkoutResult = async () => {
+    const deleteEverything = async () => {
+        setSaveLoading(true)
         if (await is_id(router.query.id)) {
             let newDaily = daily
             newDaily.workout_result = newDaily.workout_result.filter((result: WorkoutResultSchemaProps) => result._id != router.query.id)
@@ -43,224 +39,183 @@ const WorkoutResults = () => {
             }
         }
         await deleteIndexedDB('workout_result', router.query.id)
-        router.push(`/${router.query?.login}/workout-results`)
-    }
-
-    const saveWorkoutResult = async () => {
-        setSaveLoading(true)
-        let count = 0
-        results.forEach((result: ResultSchemaProps) => {
-            if (result.values) {
-                count += result.values.length
-            }
-        })
-        if (count > 0) {
-            let newDaily = daily
-            newDaily.workout_result = newDaily.workout_result.filter((result: any) => result._id != router.query.id)
-            let object: any = {
-                _id: router.query.id,
-                title: data.title,
-                workout_plan_ID: data.workout_plan_ID,
-                results: results
-            }
-            if (description) {
-                object.description = description
-            }
-            if (burnt) {
-                object.burnt = burnt
-            }
-            if (await is_id(router.query.id)) {
-                object._id = router.query.id
-            } else {
-                if (burnt) {
-                    newDaily.nutrition_diary.push({
-                        _id: 'XD' + new Date().getTime(),
-                        activity: data.title,
-                        calories: -1 * parseInt(burnt)
-                    })
-                }
-            }
-            newDaily.workout_result.push(object)
-            if (daily._id && await is_id(daily._id)) {
-                await overwriteThoseIDSinDB('daily_measurement', [newDaily])
-            } else {
-                await insertThoseIDStoDB('daily_measurement', [newDaily])
-            }
-            await deleteIndexedDB('workout_result', router.query.id)
-            router.push(`/${router.query?.login}/workout/results`)
-        }
+        router.push(`/${router.query?.login}/workout/results`)
         setSaveLoading(false)
     }
 
-    const autoSave = async (value: any, where: string = '') => {
+    const autoSave = async () => {
         if (theOldestSupportedDate <= router.query.date) {
-            let object = { ...data }
-            object[where] = value
-            object.whenAdded = object.whenAdded.slice(6, 10) + '-' + object.whenAdded.slice(3, 5) + '-' + object.whenAdded.slice(0, 2)
-            await deleteIndexedDB('workout_result', object._id)
-            await addIndexedDB('workout_result', [object])
+            await deleteIndexedDB('workout_result', getValues()._id as string)
+            await addIndexedDB('workout_result', [getValues()])
         }
     }
 
-    const setNewValues = async (values: Array<ValueSchemaProps>, index: number) => {
-        let newResults: Array<ResultSchemaProps> = results
-        newResults[index].values = values
-        setResults(newResults)
-        await autoSave(newResults, 'results')
-    }
-
-    const handleDeleteExercise = async (array: any) => {
-        const newResults: Array<ResultSchemaProps> = [
-            ...results.filter((x: ResultSchemaProps) => x._id != array[0]._id)
-        ]
-        setResults(newResults)
-        await autoSave(newResults, 'results')
-        setDeleteExercise(false)
-    }
-
-    const handleNewExercises = async (array: Array<ExerciseSchemaProps>) => {
-        const newResults = [
-            ...results,
-            ...array.map((exerciseLocally: ExerciseSchemaProps) => {
-                return {
-                    ...(exerciseLocally._id && { _id: exerciseLocally._id }),
-                    ...(exerciseLocally.name && { name: exerciseLocally.name }),
-                    values: []
-                }
+    const addNewExercises = async (array: Array<ExerciseSchemaProps>) => {
+        array.forEach((exercise: ExerciseSchemaProps) => {
+            append({
+                ...(exercise._id && { _id: exercise._id }),
+                ...(exercise.name && { name: exercise.name }),
+                values: []
             })
-        ]
-        setResults(newResults)
-        await autoSave(newResults, 'results')
+        })
+        await autoSave()
     }
 
-    useEffect(() => {
-        (async () => {
-            if (data) {
-                if (await is_id(router.query.id)) {
-                    setTrueID(true)
-                }
-                setTitle(data.title || '')
-                setBurnt(data.burnt || 0)
-                setDate(data.whenAdded || '')
-                setDescription(data.description || '')
-                setResults(data.results || [])
-                if (token?.login == router?.query.login) {
-                    let newDescription = await getIndexedDBbyID('workout_plan', data.workout_plan_ID)
-                    setDescriptionWorkout(newDescription.description)
-                }
+    const deleteExercise = async (index: number) => {
+        remove(index as number)
+        setDeleteExerciseIndex(false)
+        await autoSave()
+    }
+
+    const { register, formState: { errors }, handleSubmit, control, reset, getValues } = useForm<WorkoutResultSchemaProps>({
+        resolver: zodResolver(WorkoutResultSchema)
+    })
+
+    const { fields, append, remove, update } = useFieldArray({ control, name: "results", })
+
+    const onSubmit = async (values: WorkoutResultSchemaProps) => {
+        try {
+            setSaveLoading(true)
+            console.log('object', prepareWorkoutResultToSend(values))
+            let newDaily = daily
+            newDaily.workout_result = newDaily.workout_result.filter((result: any) => result._id != router.query.id)
+            newDaily.workout_result.push(prepareWorkoutResultToSend(values))
+            if (!await is_id(router.query.id) && values.burnt) {
+                newDaily.nutrition_diary.push({
+                    _id: 'XD' + new Date().getTime(),
+                    activity: values.title,
+                    calories: -1 * parseInt(values.burnt.toString())
+                })
             }
-        })()
-    }, [data, user, daily, token])
+            console.log('newDaily', newDaily)
+            await insertThoseIDStoDBController('daily_measurement', [newDaily])
+            await deleteIndexedDB('workout_result', router.query.id)
+            router.push(`/${router.query?.login}/workout/results`)
+            // }
+        } catch (e: any) {
+            console.log(e.message)
+        } finally {
+            setSaveLoading(false);
+        }
+    }
+
+    useEffect(() => reset(data), [data])
 
     return (
-        <div>
+        <form>
             <Navbar
                 title="Workout result"
                 where="workout/results"
                 saveLoading={saveLoading}
-                saveWorkout={saveWorkoutResult}
-                deleteWorkout={deleteWorkoutResult}
+                saveWorkout={handleSubmit(onSubmit)}
+                deleteWorkout={deleteEverything}
             />
             <TextField
-                id="outlined-basic"
+                variant="outlined"
                 label={t("Title")}
-                variant="outlined"
+                type="text"
                 sx={{ width: '100%', marginTop: '10px' }}
                 disabled
-                value={title}
+                defaultValue={' '}
+                {...register('title')}
+                error={typeof errors.title === 'undefined' ? false : true}
+                helperText={
+                    errors.title?.message &&
+                    errors.title?.message.length &&
+                    errors.title?.message
+                }
             />
             <TextField
-                id="outlined-basic"
+                variant="outlined"
                 label={t("Date")}
-                variant="outlined"
+                type="text"
                 sx={{ width: '100%', marginTop: '10px' }}
                 disabled
-                value={date}
+                defaultValue={reverseDateDotes(router.query.date)}
+            />
+            <TextField
+                disabled
+                variant="outlined"
+                label={t("Description of workout plan")}
+                type="text"
+                sx={{ width: '100%', marginTop: '10px' }}
+                defaultValue={' '}
+                {...register('workout_description')}
+                error={typeof errors.workout_description === 'undefined' ? false : true}
+                helperText={
+                    errors.workout_description?.message &&
+                    errors.workout_description?.message.length &&
+                    errors.workout_description?.message
+                }
             />
             {
-                descriptionWorkout &&
+                !(async () => await is_id(router.query.id)) &&
                 <TextField
-                    id="outlined-basic"
-                    label={t("Description of workout plan")}
                     variant="outlined"
-                    sx={{ width: '100%', marginTop: '10px' }}
-                    disabled
-                    value={descriptionWorkout}
-                />
-            }
-            {
-                !trueID &&
-                <TextField
-                    id="outlined-basic"
                     label={t("Burnt")}
-                    variant="outlined"
+                    type="text"
+                    disabled
                     sx={{ width: '100%', marginTop: '10px' }}
-                    value={burnt}
-                    onChange={async e => {
-                        setBurnt(e.target.value)
-                        await autoSave(e.target.value, 'burnt')
+                    defaultValue={' '}
+                    {...register('burnt')}
+                    error={typeof errors.burnt === 'undefined' ? false : true}
+                    helperText={
+                        errors.burnt?.message &&
+                        errors.burnt?.message.length &&
+                        errors.burnt?.message
                     }
-                    }
-                    disabled={token?.login != router.query?.login}
-                    InputProps={{
-                        endAdornment: <InputAdornment position="end">Kcal</InputAdornment>,
-                    }}
                 />
             }
             <TextField
+                variant="outlined"
+                label={t("Notes")}
+                type="text"
+                sx={{ width: '100%', marginTop: '10px' }}
                 multiline
                 rows={4}
-                id="outlined-basic"
-                label={t("Notes")}
-                variant="outlined"
-                value={description}
-                disabled={token?.login != router.query?.login}
-                onChange={async e => {
-                    setDescription(e.target.value)
-                    await autoSave(e.target.value, 'notes')
-                }
-                }
-                sx={{ width: '100%', marginTop: '10px' }}
-                error={
-                    description.length > 0 && !basicInputLength(description)
-                }
+                defaultValue={' '}
+                {...register('description')}
+                error={typeof errors.description === 'undefined' ? false : true}
                 helperText={
-                    description.length > 0 && !basicInputLength(description)
-                        ? t("home:requiredBasicInputLength")
-                        : ""
+                    errors.description?.message &&
+                    errors.description?.message.length &&
+                    errors.description?.message
                 }
             />
             {
-                results && results.map((result: ResultSchemaProps, index: number) =>
-                    <div style={results.length == (index + 1) ? { marginBottom: '100px' } : {}} key={(result._id || '') + index}>
-                        <AddResultValues
+                fields.map((result: ResultSchemaProps, index: number) =>
+                    <div style={fields.length == (index + 1) ? { marginBottom: '100px' } : {}} key={(result._id || '') + index}>
+                        <ResultBox
                             key={(result._id || '') + index}
                             result={result}
                             isOwner={token?.login == router.query?.login}
-                            setNewValues={(values: Array<ValueSchemaProps>) => setNewValues(values, index)}
-                            openDeleteExercise={() => setDeleteExercise(result)}
+                            setNewValues={(values: Array<ValueSchemaProps>) => update(index, { ...result, values })}
+                            openDeleteExercise={() => setDeleteExerciseIndex(index)}
                         />
                     </div>
                 )
             }
             {
-                token?.login == router.query?.login ?
-                    (
-                        <>
-                            <ConfirmDialog isDialog={deleteExercises ? true : false} closeDialog={() => setDeleteExercise(false)} confirm={() => handleDeleteExercise([deleteExercises])} />
-                            <AddResultMoreOptions
-                                exercises={[...results.map((x: any) => {
-                                    x.l = x.name.length
-                                    return x
-                                })]}
-                                setExercises={handleNewExercises}
-                            />
-                        </>
-                    ) : (
-                        <BottomFlyingGuestBanner user={user} />
-                    )
+                token?.login == router.query?.login
+                    ?
+                    <>
+                        <ConfirmDialog
+                            isDialog={deleteExerciseIndex !== false ? true : false}
+                            closeDialog={() => setDeleteExerciseIndex(false)}
+                            confirm={() => deleteExercise(deleteExerciseIndex as number)}
+                        />
+                        <AddResultMoreOptions
+                            exercises={[...fields.map((x: any) => {
+                                x.l = x.name.length
+                                return x
+                            })]}
+                            setExercises={addNewExercises}
+                        />
+                    </>
+                    :
+                    <BottomFlyingGuestBanner user={user} />
             }
-        </div>
+        </form>
     );
 }
 

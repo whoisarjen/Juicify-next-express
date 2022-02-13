@@ -2,8 +2,8 @@ import { useRouter } from "next/router";
 import { useAppSelector } from "./useRedux";
 import { useState, useEffect } from "react";
 import { getIndexedDBbyID } from "../utils/indexedDB.utils";
-import { loadMissingData } from "../utils/dailyMeasurement.utils";
 import useOtherUser from "./useOtherUser";
+import { loadMissingDataForDailyMeasurement } from "../utils/dailyMeasurement.utils";
 
 const useDailyMeasurement = (when: string, login: string): [any, () => void] => {
     const router: any = useRouter();
@@ -24,7 +24,7 @@ const useDailyMeasurement = (when: string, login: string): [any, () => void] => 
                 ) {
                     setUser(token);
                     setDataObject(
-                        loadMissingData({
+                        loadMissingDataForDailyMeasurement({
                             ...{ _id: "XD" + new Date().getTime(), user_ID: token._id, whenAdded: when },
                             object: await getIndexedDBbyID("daily_measurement", new Date(when).toISOString())
                         })
@@ -37,7 +37,7 @@ const useDailyMeasurement = (when: string, login: string): [any, () => void] => 
                     );
                     setUser(res.user);
                     setDataObject(
-                        loadMissingData({
+                        loadMissingDataForDailyMeasurement({
                             ...{ _id: "XD" + new Date().getTime(), user_ID: res._id, whenAdded: when },
                             object: res.data
                         })

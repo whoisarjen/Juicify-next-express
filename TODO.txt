@@ -5,3 +5,6 @@ Schema
     - Workout_result
 
 Reduction web workers to 2?
+
+
+burned => burnt

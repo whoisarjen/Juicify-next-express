@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react"
 import { ValueSchemaProps } from "../../../schema/workoutResult.schema"
-import ValuesContainerBox from "./ValuesContainerBox"
+import ValuesContainerBox from "./ValueBox"
 import user from '@testing-library/user-event'
 
 interface renderLoggedDataProps {
@@ -12,38 +12,38 @@ const renderLoggedData = ({ isOwner, value }: renderLoggedDataProps) => render(<
 
 describe('Checking ValuesContainerBox functionality', () => {
     describe(`Gave user's data`, () => {
-        test('Expect to have locked data on screen', async () => {
+        test('Expect to have locked data on screen', () => {
             renderLoggedData({ isOwner: true, value: { reps: 15, weight: 100 } })
             shouldSaveBeAvailable(true)
             shouldDeleteBeAvailable(true)
-            await shouldBeOpen(false)
+            shouldBeOpen(false)
         })
     })
 
     describe(`Gave guest's data`, () => {
-        test('Expect to have locked limited data on screen', async () => {
+        test('Expect to have locked limited data on screen', () => {
             renderLoggedData({ isOwner: false, value: { reps: 15, weight: 100 } })
             shouldSaveBeAvailable(false)
             shouldDeleteBeAvailable(false)
-            await shouldBeOpen(false)
+            shouldBeOpen(false)
         })
     })
 
     describe(`Gave user's data with open = true`, () => {
-        test('Expect to have open data on screen', async () => {
+        test('Expect to have open data on screen', () => {
             renderLoggedData({ isOwner: true, value: { open: true, reps: 15, weight: 100 } })
             shouldSaveBeAvailable(true)
             shouldDeleteBeAvailable(false)
-            await shouldBeOpen(true)
+            shouldBeOpen(true)
         })
     })
 
     describe(`Gave guest's data with open = true`, () => {
-        test('Expect to have locked limited data on screen', async () => {
+        test('Expect to have locked limited data on screen', () => {
             renderLoggedData({ isOwner: false, value: { open: true, reps: 15, weight: 100 } })
             shouldSaveBeAvailable(false)
             shouldDeleteBeAvailable(false)
-            await shouldBeOpen(false)
+            shouldBeOpen(false)
         })
     })
 })
@@ -72,7 +72,7 @@ function shouldSaveBeAvailable(isActive: boolean) {
     }
 }
 
-async function shouldBeOpen(isActive: boolean) {
+function shouldBeOpen(isActive: boolean) {
     if (isActive) {
         expect(screen.queryByText(/100kg/i)).toBeNull()
         expect(screen.queryByText(/15r./i)).toBeNull()

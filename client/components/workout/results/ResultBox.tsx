@@ -1,6 +1,6 @@
 import ButtonPlus from '../../common/ButtonPlus'
 import { useState, useEffect } from 'react'
-import AddResultValuesBox from './ValuesContainerBox'
+import ValueBox from './ValueBox'
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ResultSchemaProps, ValueSchemaProps } from '../../../schema/workoutResult.schema'
@@ -102,7 +102,7 @@ const AddResultValues = ({ result, setNewValues, isOwner, openDeleteExercise }: 
             </Name>
             {
                 values?.map((value: ValueSchemaProps, index: number) =>
-                    <AddResultValuesBox
+                    <ValueBox
                         key={index + ' ' + value.open}
                         value={value}
                         index={index}

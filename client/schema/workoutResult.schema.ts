@@ -1,4 +1,4 @@
-import { array, boolean, number, object, preprocess, string, TypeOf } from 'zod'
+import { array, boolean, date, number, object, preprocess, string, TypeOf } from 'zod'
 
 export const ValueSchema = object({
     open: preprocess((val) => Boolean(val), boolean()).optional(),
@@ -21,8 +21,10 @@ export const WorkoutResultSchema = object({
     user_ID: string().optional(),
     workout_plan_ID: string().optional(),
     title: string().optional(),
+    // whenAdded: string().optional(),
     description: string().optional(),
-    burned: preprocess((val) => Number(val), number()).optional(),
+    burnt: preprocess((val) => Number(val), number()).optional(),
+    workout_description: string().optional(),
     results: array(ResultSchema).optional(),
 })
 

@@ -2,14 +2,21 @@ import { DailyMeasurementSchemaProps } from "../schema/dailyMeasurement.schema";
 import { addDaysToDate } from "./date.utils";
 import { is_id } from "./db.utils";
 
-export const loadMissingData = ({ _id, user_ID, whenAdded, object = {} }: { _id: string, user_ID: string, whenAdded: string, object: any }) => {
+interface loadMissingDataForDailyMeasurementProps {
+    _id: string,
+    user_ID: string,
+    whenAdded: string,
+    object: DailyMeasurementSchemaProps
+}
+
+export const loadMissingDataForDailyMeasurement = ({ _id, user_ID, whenAdded, object }: loadMissingDataForDailyMeasurementProps) => {
     return {
-        ...(object._id ? { _id: object._id } : { _id }),
-        ...(object.weight ? { weight: object.weight } : { weight: 0 }),
-        ...(object.user_ID ? { user_ID: object.user_ID } : { user_ID }),
-        ...(object.whenAdded ? { whenAdded: object.whenAdded } : { whenAdded }),
-        ...(object.nutrition_diary ? { nutrition_diary: object.nutrition_diary } : { nutrition_diary: [] }),
-        ...(object.workout_result ? { workout_result: object.workout_result } : { workout_result: [] }),
+        ...(object?._id ? { _id: object._id } : { _id }),
+        ...(object?.weight ? { weight: object.weight } : { weight: 0 }),
+        ...(object?.user_ID ? { user_ID: object.user_ID } : { user_ID }),
+        ...(object?.whenAdded ? { whenAdded: object.whenAdded } : { whenAdded }),
+        ...(object?.nutrition_diary ? { nutrition_diary: object.nutrition_diary } : { nutrition_diary: [] }),
+        ...(object?.workout_result ? { workout_result: object.workout_result } : { workout_result: [] }),
     }
 }
 
@@ -32,7 +39,7 @@ export const loadMissingDays = async (oryginalArray: Array<DailyMeasurementSchem
     }
     for (let i = 0; i < howManyDays; i++) {
         newArray.push(
-            loadMissingData({
+            loadMissingDataForDailyMeasurement({
                 ...{ _id: "XD" + new Date().getTime() + i, user_ID, whenAdded: checkingDate },
                 object: object[checkingDate]
             })
