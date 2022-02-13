@@ -1,6 +1,6 @@
 import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
-import { FunctionComponent, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import useMacro from "../../hooks/useMacro";
@@ -14,7 +14,7 @@ interface CircularWithLabelProps {
     user: any
 }
 
-const CircularWithLabel: FunctionComponent<CircularWithLabelProps> = ({ array, user }) => {
+const CircularWithLabel = ({ array, user }: CircularWithLabelProps) => {
     const [calories, setCalories] = useState(0)
     const [progress, setProgress] = useState(0)
     const router = useRouter()

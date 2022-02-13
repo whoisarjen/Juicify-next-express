@@ -1,4 +1,4 @@
-import { useState, FunctionComponent } from 'react';
+import { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -25,7 +25,7 @@ interface CreateProductProps {
     defaultBarcode?: string | number
 }
 
-const CreateProduct: FunctionComponent<CreateProductProps> = ({ closeCreateProduct, isCreateProduct, created, defaultBarcode }) => {
+const CreateProduct = ({ closeCreateProduct, isCreateProduct, created, defaultBarcode }: CreateProductProps) => {
     const { t } = useTranslation('nutrition-diary')
     const [code, setCode] = useState(defaultBarcode)
     const [loading, setLoading] = useState(false)

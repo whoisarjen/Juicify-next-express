@@ -1,4 +1,4 @@
-import { FunctionComponent, useState, SyntheticEvent, useEffect } from "react";
+import { useState, SyntheticEvent, useEffect } from "react";
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
@@ -28,7 +28,7 @@ const Table = styled.table`
     }
 `
 
-const Diagrams: FunctionComponent<DiagramsProps> = ({ array, user }) => {
+const Diagrams = ({ array, user }: DiagramsProps) => {
     const [value, setValue] = useState<string>('1');
     const [{ getDay }] = useMacro()
     const router = useRouter()

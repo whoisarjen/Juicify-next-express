@@ -1,5 +1,4 @@
 import useTranslation from "next-translate/useTranslation";
-import { FunctionComponent } from "react";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
@@ -29,7 +28,7 @@ const ArrowBack = styled.div`
     grid-template-columns: 40px 1fr;
 `
 
-const Tutorial_3: FunctionComponent<Tutorial_3Props> = ({ setStep }) => {
+const Tutorial_3 = ({ setStep }: Tutorial_3Props) => {
     const { t } = useTranslation('coach')
 
     return (

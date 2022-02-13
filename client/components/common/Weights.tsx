@@ -1,4 +1,4 @@
-import { FunctionComponent, Fragment, useState, Ref, ReactElement, forwardRef } from "react";
+import { Fragment, useState, Ref, ReactElement, forwardRef } from "react";
 import useTranslation from "next-translate/useTranslation";
 import Timeline from '@mui/lab/Timeline';
 import TimelineItem from '@mui/lab/TimelineItem';
@@ -66,7 +66,7 @@ const Placeholder = styled.div`
     height: 44px;
 `
 
-const Weights: FunctionComponent<WeightsProps> = ({ isWeights, closeWeights }) => {
+const Weights = ({ isWeights, closeWeights }: WeightsProps) => {
     const token: any = useAppSelector(state => state.token.value)
     const [{ data }, reload]: any = useDailyMeasurements(
         getShortDate(),

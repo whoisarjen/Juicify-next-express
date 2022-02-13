@@ -1,6 +1,6 @@
 import { setIsOnline } from '../../redux/features/online.slice'
 import io from "socket.io-client";
-import { useEffect, FunctionComponent } from 'react'
+import { useEffect } from 'react'
 import { setToken } from "../../redux/features/token.slice";
 import { deleteIndexedDB, getIndexedDBbyID, addIndexedDB } from '../../utils/indexedDB.utils'
 import { store } from '../../redux/store'
@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import { refreshKey } from '../../redux/features/key.slice';
 import { workersController } from '../../utils/worker.utils';
 
-const Socket: FunctionComponent<{ children: any }> = ({ children }) => {
+const Socket = ({ children }: { children: any }) => {
     const dispatch = useAppDispatch()
     const token: any = useAppSelector(state => state.token.value)
 

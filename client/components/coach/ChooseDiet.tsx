@@ -1,4 +1,3 @@
-import { FunctionComponent } from "react";
 import Button from '@mui/material/Button';
 import useTranslation from "next-translate/useTranslation";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
@@ -36,7 +35,7 @@ const Title = styled.div`
     }
 `
 
-const ChooseDiet: FunctionComponent<ChooseDietProps> = ({ setStep, handlePreviousStep }) => {
+const ChooseDiet = ({ setStep, handlePreviousStep }: ChooseDietProps) => {
     const { t } = useTranslation('coach')
 
     return (

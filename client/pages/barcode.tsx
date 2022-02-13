@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 // @ts-ignore
 import Quagga from 'quagga';
 import axios from 'axios';
@@ -31,7 +31,7 @@ const Grid = styled.div`
     }
 `
 
-const Barcode: FunctionComponent = () => {
+const Barcode = () => {
     const [loadedBarcode, setLoadedBarcode] = useState(0)
     const [isCreateProduct, setIsCreateProduct] = useState(false)
     const [loadedProduct, setLoadedProduct] = useState<any>(false)

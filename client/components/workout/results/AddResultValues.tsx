@@ -1,5 +1,5 @@
 import ButtonPlus from '../../common/ButtonPlus'
-import { useState, useEffect, FunctionComponent } from 'react'
+import { useState, useEffect } from 'react'
 import AddResultValuesBox from './AddResultValuesBox'
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -36,7 +36,7 @@ const Name = styled.div`
     }
 `
 
-const AddResultValues: FunctionComponent<AddResultValuesProps> = ({ result, setNewValues, isOwner, openDeleteExercise }) => {
+const AddResultValues = ({ result, setNewValues, isOwner, openDeleteExercise }: AddResultValuesProps) => {
     const [values, setValues] = useState<Array<ValueSchemaProps>>(result.values)
 
     const changeResult = (object: ValueSchemaProps, index: number) => {

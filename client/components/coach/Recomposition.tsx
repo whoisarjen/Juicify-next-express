@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { useState } from "react";
 import Button from '@mui/material/Button';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -42,7 +42,7 @@ const Title = styled.div`
     }
 `
 
-const Recomposition: FunctionComponent<RecompositionProps> = ({ prepareCreate, handlePreviousStep }) => {
+const Recomposition = ({ prepareCreate, handlePreviousStep }: RecompositionProps) => {
     const { t } = useTranslation('coach')
     const [kind_of_diet, setKind_of_diet] = useState(0)
     const [activity, setActivity] = useState(1.2)

@@ -1,4 +1,4 @@
-import { forwardRef, useState, useEffect, Fragment, FunctionComponent, ReactElement, Ref } from 'react'
+import { forwardRef, useState, useEffect, Fragment, ReactElement, Ref } from 'react'
 import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide'
 import Button from '@mui/material/Button';
@@ -57,7 +57,7 @@ const Placeholder = styled.div`
     height: 44px;
 `
 
-const AddProducts: FunctionComponent<AddproductsProps> = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload }) => {
+const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload }: AddproductsProps) => {
     const [loadedProduct, setLoadedProduct] = useState<any>(false)
     const { t } = useTranslation('nutrition-diary');
     const [tab, setTab] = useState(0)

@@ -1,4 +1,4 @@
-import { forwardRef, useState, useEffect, Fragment, FunctionComponent, ReactElement, Ref } from 'react'
+import { forwardRef, useState, useEffect, Fragment, ReactElement, Ref } from 'react'
 import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide'
 import Button from '@mui/material/Button';
@@ -50,7 +50,7 @@ const Placeholder = styled.div`
     height: 44px;
 `
 
-const AddDialog: FunctionComponent<AddDialogProps> = ({ isAddDialog, closeDialog, skipThoseIDS, addThoseExercises }) => {
+const AddDialog = ({ isAddDialog, closeDialog, skipThoseIDS, addThoseExercises }: AddDialogProps) => {
     const { t } = useTranslation('home');
     const [tab, setTab] = useState(0)
     const [find, setFind] = useState<string | null>(null)

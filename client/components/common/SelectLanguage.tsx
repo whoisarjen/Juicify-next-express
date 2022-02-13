@@ -1,12 +1,11 @@
 import { useRouter } from "next/router";
-import { FunctionComponent } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import useTranslation from "next-translate/useTranslation";
 
-const useLanguage: FunctionComponent = () => {
+const SelectLanguage = () => {
     const router: any = useRouter();
     const { t } = useTranslation("home");
 
@@ -37,4 +36,4 @@ const useLanguage: FunctionComponent = () => {
 }
 
 
-export default useLanguage;
+export default SelectLanguage;

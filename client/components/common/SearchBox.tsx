@@ -2,11 +2,11 @@ import { useRouter } from 'next/router'
 import Paper from "@mui/material/Paper"
 import InputBase from "@mui/material/InputBase"
 import IconButton from "@mui/material/IconButton"
-import { FunctionComponent, useState } from "react"
+import { useState } from "react"
 import SearchIcon from "@mui/icons-material/Search"
 import useTranslation from "next-translate/useTranslation"
 
-const SearchBox: FunctionComponent = () => {
+const SearchBox = () => {
     const router = useRouter()
     const { t } = useTranslation("home");
     const [search, setSearch] = useState<string | null>('')

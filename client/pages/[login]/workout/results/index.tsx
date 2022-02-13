@@ -4,10 +4,9 @@ import Box from '../../../../components/workout/Box'
 import useTranslation from "next-translate/useTranslation"
 import useWorkoutResults from '../../../../hooks/useWorkoutResults'
 import DialogCreateResult from "../../../../components/workout/results/DialogCreateResult"
-import { FunctionComponent } from 'react'
 import Navbar from '../../../../components/profile/Navbar'
 
-const WorkoutResults: FunctionComponent = () => {
+const WorkoutResults = () => {
     const router = useRouter()
     const { t } = useTranslation('workout')
     const { data, user } = useWorkoutResults()

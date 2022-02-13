@@ -1,7 +1,6 @@
 import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
 import Link from "next/link";
-import { FunctionComponent } from "react";
 import styled from 'styled-components'
 
 const Box = styled.div`
@@ -55,7 +54,7 @@ const Grid = styled.div`
     }
 `
 
-const Blog: FunctionComponent = () => {
+const Blog = () => {
     const { t } = useTranslation('blog')
 
     return (

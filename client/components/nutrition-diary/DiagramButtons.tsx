@@ -1,4 +1,4 @@
-import { forwardRef, FunctionComponent, useState } from "react";
+import { forwardRef, useState } from "react";
 import Button from '@mui/material/Button';
 import PieChartIcon from '@mui/icons-material/PieChart';
 import { useRouter } from "next/router";
@@ -40,7 +40,7 @@ const Buttons = styled.div`
     grid-template-columns: 1fr auto 1fr auto 1fr;
 `
 
-const DiagramsOptions: FunctionComponent<DiagramsOptionsProps> = ({ data, reloadDailyMeasurement }) => {
+const DiagramsOptions = ({ data, reloadDailyMeasurement }: DiagramsOptionsProps) => {
     const router: any = useRouter()
     const { t } = useTranslation('nutrition-diary')
     const [activity, setActivity] = useState('')

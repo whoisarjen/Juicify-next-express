@@ -1,4 +1,3 @@
-import { FunctionComponent } from "react";
 import Share from "../common/Share";
 import DateChanger from "../common/DateChanger";
 import useTranslation from "next-translate/useTranslation";
@@ -13,7 +12,7 @@ const Box = styled.div`
     }
 `
 
-const Navbar: FunctionComponent = () => {
+const Navbar = () => {
     const { t } = useTranslation('nutrition-diary')
 
     return (

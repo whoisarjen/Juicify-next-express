@@ -6,11 +6,6 @@ import { getShortDate } from "../../utils/date.utils";
 import Link from "next/link";
 import Avatar from "../common/Avatar";
 import styled from 'styled-components'
-import { FunctionComponent } from "react";
-
-interface FooterProps {
-    token: any
-}
 
 const Box = styled.footer`
     width: 100%;
@@ -42,7 +37,7 @@ const Copyright = styled.p`
     margin: 0;
 `
 
-const Footer: FunctionComponent<FooterProps> = ({ token }) => {
+const Footer = ({ token }: { token: any }) => {
     return (
         <Box>
             {

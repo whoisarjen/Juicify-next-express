@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { FunctionComponent } from "react";
 import useTranslation from "next-translate/useTranslation";
 
 const Grid = styled.div`
@@ -14,7 +13,7 @@ const Box = styled.div`
     margin: auto;
 `
 
-const Error404: FunctionComponent = () => {
+const Error404 = () => {
     const { t } = useTranslation('error')
 
     return (

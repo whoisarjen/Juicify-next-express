@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from 'react';
+import { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -20,7 +20,7 @@ interface CreateExerciseProps {
     created: (arg0: string) => void
 }
 
-const CreateExercise: FunctionComponent<CreateExerciseProps> = ({ closeCreateExercise, isCreateExercise, created }) => {
+const CreateExercise = ({ closeCreateExercise, isCreateExercise, created }: CreateExerciseProps) => {
     const { t } = useTranslation('workout')
     const [loading, setLoading] = useState(false)
     const [{ success }] = useNotify()

@@ -1,4 +1,3 @@
-import { FunctionComponent } from 'react'
 import Dialog from '@mui/material/Dialog'
 import Button from '@mui/material/Button'
 import LoadingButton from '@mui/lab/LoadingButton'
@@ -14,7 +13,7 @@ interface ConfirmDialogProps {
     confirm: () => void
 }
 
-const ConfirmDialog: FunctionComponent<ConfirmDialogProps> = ({ isDialog, closeDialog, confirm }) => {
+const ConfirmDialog = ({ isDialog, closeDialog, confirm }: ConfirmDialogProps) => {
     const { t } = useTranslation('home')
 
     return (

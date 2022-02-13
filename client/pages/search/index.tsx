@@ -1,7 +1,6 @@
-import { FunctionComponent } from "react";
 import SearchBox from "../../components/common/SearchBox";
 
-const Search: FunctionComponent = () => {
+const Search = () => {
     return (
         <div className="search">
             <SearchBox />

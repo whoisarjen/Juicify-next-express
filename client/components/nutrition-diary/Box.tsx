@@ -5,7 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import { useAppSelector } from "../../hooks/useRedux";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import useTranslation from "next-translate/useTranslation";
-import { useState, useEffect, FunctionComponent } from 'react'
+import { useState, useEffect } from 'react'
 import { getCalories } from '../../utils/product.utils';
 import { ProductSchemaProps } from '../../schema/product.schema';
 import { ActivitySchemaProps } from '../../schema/activity.schema';
@@ -75,7 +75,7 @@ const Content = styled.div`
     margin-top: auto;
 `
 
-const MealBox: FunctionComponent<MealBoxProps> = ({ index, products, openDialog, openEditProduct }) => {
+const MealBox = ({ index, products, openDialog, openEditProduct }: MealBoxProps) => {
     const { t } = useTranslation('nutrition-diary');
     const router: any = useRouter();
     const token: any = useAppSelector((state) => state.token.value);

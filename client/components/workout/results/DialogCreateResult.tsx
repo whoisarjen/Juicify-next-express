@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import Select from '@mui/material/Select'
-import { useState, useEffect, FunctionComponent } from 'react'
+import { useState, useEffect } from 'react'
 import ButtonPlus from '../../common/ButtonPlus'
 import MenuItem from '@mui/material/MenuItem'
 import InputLabel from '@mui/material/InputLabel'
@@ -20,7 +20,7 @@ import { ExerciseSchemaProps } from '../../../schema/exercise.schema'
 import { WorkoutPlanSchemaProps } from '../../../schema/workoutPlan.schema'
 import { WorkoutResultSchemaProps } from '../../../schema/workoutResult.schema'
 
-const DialogCreateResult: FunctionComponent = () => {
+const DialogCreateResult = () => {
     const router = useRouter()
     const { data } = useWorkoutPlans()
     const [open, setOpen] = useState(false)

@@ -2,7 +2,7 @@ import Chip from '@mui/material/Chip'
 import Stack from '@mui/material/Stack'
 import { useRouter } from "next/router"
 import { useAppSelector } from '../../../../hooks/useRedux'
-import { useState, FunctionComponent, useEffect } from "react"
+import { useState, useEffect } from "react"
 import TextField from '@mui/material/TextField'
 import DeleteIcon from '@mui/icons-material/Delete'
 import Navbar from '../../../../components/workout/Navbar'
@@ -21,7 +21,7 @@ import { useFieldArray, useForm } from 'react-hook-form'
 import { WorkoutPlanSchemaProps, WorkoutPlanSchema } from '../../../../schema/workoutPlan.schema'
 import { ExerciseSchemaProps } from '../../../../schema/exercise.schema'
 
-const WorkoutPlansID: FunctionComponent = () => {
+const WorkoutPlansID = () => {
     const router: any = useRouter()
     const { t } = useTranslation('workout')
     const [isAddDialog, setIsAddDialog] = useState(false)

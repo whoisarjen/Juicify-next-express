@@ -1,5 +1,4 @@
 import useTranslation from "next-translate/useTranslation";
-import { FunctionComponent } from "react";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
@@ -39,7 +38,7 @@ const Title = styled.div`
     }
 `
 
-const Tutorial_1: FunctionComponent<Tutorial_1Props> = ({ setStep, handlePreviousStep }) => {
+const Tutorial_1 = ({ setStep, handlePreviousStep }: Tutorial_1Props) => {
     const { t } = useTranslation('coach')
 
     return (

@@ -1,6 +1,5 @@
 import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
-import { FunctionComponent } from "react";
 import SimpleLineChart from "../../components/diagrams/SimpleLineChart";
 import StackedBarChart from "../../components/diagrams/StackedBarChart";
 import Navbar from "../../components/profile/Navbar";
@@ -18,7 +17,7 @@ const Box = styled.div`
     padding-bottom: 30px;
 `
 
-const Profile: FunctionComponent = () => {
+const Profile = () => {
     const [getTheme]: any = useTheme()
     const { t } = useTranslation('profile')
     const router: any = useRouter()

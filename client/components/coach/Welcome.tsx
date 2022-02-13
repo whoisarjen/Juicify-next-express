@@ -1,11 +1,6 @@
-import { FunctionComponent } from "react";
 import Button from '@mui/material/Button';
 import useTranslation from "next-translate/useTranslation";
 import styled from "styled-components";
-
-interface WelcomeProps {
-    setStep: (arg0: string) => void
-}
 
 const Box = styled.div`
 width: 100%;
@@ -25,7 +20,7 @@ ${this} div {
 }
 `
 
-const Welcome: FunctionComponent<WelcomeProps> = ({ setStep }) => {
+const Welcome = ({ setStep }: { setStep: (arg0: string) => void }) => {
     const { t } = useTranslation('coach')
 
     return (

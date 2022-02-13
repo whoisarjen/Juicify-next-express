@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { FunctionComponent } from "react";
 
 const Grid = styled.div`
     text-align: center;
@@ -13,7 +12,7 @@ const Box = styled.div`
     margin: auto;
 `
 
-const Offline: FunctionComponent = () => {
+const Offline = () => {
     return (
         <Grid>
             <Box>

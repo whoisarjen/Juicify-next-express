@@ -5,7 +5,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
-import { useState, useEffect, FunctionComponent } from 'react';
+import { useState, useEffect } from 'react';
 import { useAppSelector } from '../../hooks/useRedux';
 import MenuItem from '@mui/material/MenuItem';
 import ConfirmDialog from '../common/ConfirmDialog'
@@ -20,7 +20,7 @@ interface DialogEditProductProps {
 }
 
 
-const DialogEditProduct: FunctionComponent<DialogEditProductProps> = ({ product, isDialog, closeDialog, deleteProduct, changeProduct }) => {
+const DialogEditProduct = ({ product, isDialog, closeDialog, deleteProduct, changeProduct }: DialogEditProductProps) => {
     const { t } = useTranslation('nutrition-diary');
     const [meal, setMeal] = useState<any>(0)
     const [howMany, setHowMany] = useState<any>(1)

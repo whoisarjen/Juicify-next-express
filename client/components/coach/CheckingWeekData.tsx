@@ -1,4 +1,4 @@
-import { FunctionComponent, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Button from '@mui/material/Button';
 import { useDailyMeasurements } from "../../hooks/useDailyMeasurements";
 import { addDaysToDate, getShortDate, reverseDateDotes } from "../../utils/date.utils";
@@ -39,7 +39,7 @@ const Description = styled.div`
     padding: 20px 0;
 `
 
-const CheckingWeekData: FunctionComponent<ChooseDietProps> = ({ setStep }) => {
+const CheckingWeekData = ({ setStep }: ChooseDietProps) => {
     const { t } = useTranslation('coach')
     const token: any = useAppSelector(state => state.token.value)
     const [{ data }, reload]: any = useDailyMeasurements(getShortDate(), 15, token.login)
@@ -50,9 +50,9 @@ const CheckingWeekData: FunctionComponent<ChooseDietProps> = ({ setStep }) => {
         let count = 0;
         if (data) {
             data.forEach((x: DailyMeasurementSchemaProps) => {
-                if (new Date(getShortDate()).toJSON() == new Date(x.whenAdded).toJSON()  && x.weight && x.weight > 0) {
+                if (new Date(getShortDate()).toJSON() == new Date(x.whenAdded).toJSON() && x.weight && x.weight > 0) {
                     count++;
-                } else if (new Date(addDaysToDate(getShortDate(), -7)) > new Date(x.whenAdded)  && x.weight && x.weight > 0) {
+                } else if (new Date(addDaysToDate(getShortDate(), -7)) > new Date(x.whenAdded) && x.weight && x.weight > 0) {
                     count++;
                 }
             })

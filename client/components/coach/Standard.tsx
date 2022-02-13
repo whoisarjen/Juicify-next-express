@@ -1,4 +1,4 @@
-import { FunctionComponent, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import HistoryIcon from '@mui/icons-material/History';
@@ -84,7 +84,7 @@ const SecondBold = styled.div`
     font-weight: bold;
 `
 
-const Standard: FunctionComponent<StandardProps> = ({ setStep }) => {
+const Standard = ({ setStep }: StandardProps) => {
     const { t } = useTranslation('coach')
     const [daysToCoach, setDaysToCoach] = useState(7)
     const token: any = useAppSelector(state => state.token.value)

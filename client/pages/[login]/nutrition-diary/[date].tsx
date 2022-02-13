@@ -1,6 +1,6 @@
 import { useRouter } from "next/router"
 import { useAppSelector } from '../../../hooks/useRedux'
-import { useState, useEffect, FunctionComponent } from 'react'
+import { useState, useEffect } from 'react'
 import { overwriteThoseIDSinDB } from "../../../utils/db.utils"
 import { useDailyMeasurement } from '../../../hooks/useDailyMeasurement'
 import Box from "../../../components/nutrition-diary/Box"
@@ -15,7 +15,7 @@ import Header from "../../../components/layout/Header"
 import useTranslation from "next-translate/useTranslation"
 import { reverseDateDotes } from "../../../utils/date.utils"
 
-const NutritionDiary: FunctionComponent = () => {
+const NutritionDiary = () => {
     const { t } = useTranslation('nutrition-diary')
     const router: any = useRouter()
     const [index, setIndex] = useState(0)

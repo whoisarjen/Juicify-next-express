@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import { FunctionComponent, useEffect } from "react";
+import { useEffect } from "react";
 import { useNotify } from "../../hooks/useNotify";
 
-const ConfirmPassword: FunctionComponent = () => {
+const ConfirmPassword = () => {
     const router: any = useRouter()
     const [{ error, success }] = useNotify()
 

@@ -1,4 +1,3 @@
-import { FunctionComponent } from "react";
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import IconButton from '@mui/material/IconButton';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -80,7 +79,7 @@ const Day = styled.div`
     }
 `
 
-const Bar: FunctionComponent<BarProps> = ({ object, click, toggleLock }) => {
+const Bar = ({ object, click, toggleLock }: BarProps) => {
     const [{ getShortDayName }] = useMacro()
     const { t } = useTranslation('macronutrients')
 

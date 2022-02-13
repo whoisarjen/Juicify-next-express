@@ -1,5 +1,5 @@
 import useWorkoutResult from '../../../../../hooks/useWorkoutResult'
-import { useState, useEffect, FunctionComponent } from 'react'
+import { useState, useEffect } from 'react'
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import { addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../../../../utils/indexedDB.utils';
@@ -16,7 +16,7 @@ import { useNotify } from '../../../../../hooks/useNotify';
 import { ExerciseSchemaProps } from '../../../../../schema/exercise.schema';
 import { ResultSchemaProps, ValueSchemaProps, WorkoutResultSchemaProps } from '../../../../../schema/workoutResult.schema';
 
-const WorkoutResultsID: FunctionComponent = () => {
+const WorkoutResultsID = () => {
     const router: any = useRouter()
     const [trueID, setTrueID] = useState(false)
     const [date, setDate] = useState(new Date())

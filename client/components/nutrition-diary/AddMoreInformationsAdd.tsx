@@ -1,4 +1,4 @@
-import { forwardRef, FunctionComponent, useState } from "react";
+import { forwardRef, useState } from "react";
 import Button from '@mui/material/Button';
 import useTranslation from "next-translate/useTranslation";
 import Dialog from '@mui/material/Dialog';
@@ -32,7 +32,7 @@ interface DiagramsOptionsProps {
     loadedProduct: any
 }
 
-const DiagramsOptions: FunctionComponent<DiagramsOptionsProps> = ({ isAdd, setIsAdd, dailyMeasurement, defaultMeal = 0, loadedProduct }) => {
+const DiagramsOptions = ({ isAdd, setIsAdd, dailyMeasurement, defaultMeal = 0, loadedProduct }: DiagramsOptionsProps) => {
     const { t } = useTranslation('nutrition-diary')
     const [meal, setMeal] = useState(defaultMeal)
     const [howMany, setHowMany] = useState('1')

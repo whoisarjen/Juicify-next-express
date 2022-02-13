@@ -1,7 +1,7 @@
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete'
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
-import { useState, useEffect, useMemo, FunctionComponent } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import ConfirmDialog from '../../common/ConfirmDialog';
@@ -38,7 +38,7 @@ const Connected = styled.div`
     grid-column: 1 / 3;
 `
 
-const AddResultValuesBox: FunctionComponent<AddResultValuesBox> = ({ value, index, changeResult, deleteResult, isOwner }) => {
+const AddResultValuesBox = ({ value, index, changeResult, deleteResult, isOwner }: AddResultValuesBox) => {
     const [reps, setReps] = useState('0')
     const [weight, setWeight] = useState('0')
     const [open, setOpen] = useState(false)

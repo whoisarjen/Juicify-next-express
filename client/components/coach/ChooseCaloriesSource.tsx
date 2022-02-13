@@ -1,4 +1,3 @@
-import { FunctionComponent } from "react";
 import Button from '@mui/material/Button';
 import useTranslation from "next-translate/useTranslation";
 import styled from "styled-components";
@@ -32,7 +31,7 @@ const Title = styled.div`
     }
 `
 
-const ChooseCaloriesSource: FunctionComponent<ChooseCaloriesSourcetProps> = ({ prepareAnalize }) => {
+const ChooseCaloriesSource = ({ prepareAnalize }: ChooseCaloriesSourcetProps) => {
     const { t } = useTranslation('coach')
 
     return (

@@ -1,4 +1,3 @@
-import { FunctionComponent } from "react";
 import styled from 'styled-components'
 
 const Grid = styled.aside`
@@ -12,7 +11,7 @@ const Grid = styled.aside`
     }
 `
 
-const SidebarLeftLoggouted: FunctionComponent = () => {
+const SidebarLeftLoggouted = () => {
     return (
         <Grid>
             

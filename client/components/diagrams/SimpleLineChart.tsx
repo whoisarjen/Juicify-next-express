@@ -1,4 +1,3 @@
-import { FunctionComponent } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 interface SimpleLineChartProps {
@@ -6,7 +5,7 @@ interface SimpleLineChartProps {
     barNamesWithColor: Array<any>
 }
 
-const SimpleLineChart: FunctionComponent<SimpleLineChartProps> = ({ data, barNamesWithColor }) => {
+const SimpleLineChart = ({ data, barNamesWithColor }: SimpleLineChartProps) => {
     return (
         <ResponsiveContainer width="100%" height="100%">
             <LineChart

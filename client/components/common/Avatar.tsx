@@ -1,5 +1,4 @@
 import Avatar from '@mui/material/Avatar';
-import { FunctionComponent } from 'react';
 
 interface AvatarMUIProps {
     user: any,
@@ -7,7 +6,7 @@ interface AvatarMUIProps {
     margin?: string
 }
 
-const AvatarMUI: FunctionComponent<AvatarMUIProps> = ({ user, size = '110px', margin = 'auto' }) => {
+const AvatarMUI = ({ user, size = '110px', margin = 'auto' }: AvatarMUIProps) => {
     return (
         <Avatar
             sx={{ background: 'none !important', width: size, height: size, margin }}

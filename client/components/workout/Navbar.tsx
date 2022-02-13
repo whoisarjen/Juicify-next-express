@@ -6,7 +6,7 @@ import LoadingButton from '@mui/lab/LoadingButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 import useTranslation from "next-translate/useTranslation"
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
-import { FunctionComponent, useState } from "react";
+import { useState } from "react";
 import styled from 'styled-components'
 import ConfirmDialog from "../common/ConfirmDialog";
 
@@ -25,7 +25,7 @@ const Grid = styled.div`
     margin: auto;
 `
 
-const Navbar: FunctionComponent<NavbarProps> = ({ title, where, saveLoading, saveWorkout, deleteWorkout }) => {
+const Navbar = ({ title, where, saveLoading, saveWorkout, deleteWorkout }: NavbarProps) => {
     const [isDialog, setIsDialog] = useState(false)
     const router = useRouter()
     const { t } = useTranslation('workout')

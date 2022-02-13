@@ -1,7 +1,7 @@
 import Checkbox from '@mui/material/Checkbox';
 // import Favorite from '@mui/icons-material/Favorite';
 // import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
-import { FunctionComponent, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../utils/indexedDB.utils';
 import { useTheme } from '../../hooks/useTheme';
 import { ExerciseSchemaProps } from '../../schema/exercise.schema';
@@ -32,7 +32,7 @@ const Name = styled.div`
     font-weight: bold;
 `
 
-const AddProductsBox: FunctionComponent<AddProductsBox> = ({ exercise, refreshCheckedExercises }) => {
+const AddProductsBox = ({ exercise, refreshCheckedExercises }: AddProductsBox) => {
     const [checked, setChecked] = useState(false)
     // const [fav, setFav] = useState(false)
     const [getTheme]: any = useTheme()

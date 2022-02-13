@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import { FunctionComponent } from "react";
 import SearchBox from "../../components/common/SearchBox";
 import useSearch from '../../hooks/useSearch'
 import List from '@mui/material/List';
@@ -8,7 +7,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '../../components/common/Avatar';
 import ListItemButton from '@mui/material/ListItemButton';
 
-const Search: FunctionComponent = () => {
+const Search = () => {
     const router: any = useRouter()
     const [{ data }]: any = useSearch(router.query.find, 'users')
 

@@ -4,12 +4,11 @@ import useWorkoutPlans from '../../../../hooks/useWorkoutPlans'
 import ButtonPlus from '../../../../components/common/ButtonPlus';
 import Box from '../../../../components/workout/Box';
 import useTranslation from "next-translate/useTranslation";
-import { FunctionComponent } from 'react';
 import Navbar from '../../../../components/profile/Navbar';
 import { useAppSelector } from '../../../../hooks/useRedux';
 import { WorkoutPlanSchemaProps } from '../../../../schema/workoutPlan.schema';
 
-const WorkoutPlans: FunctionComponent = () => {
+const WorkoutPlans = () => {
     const router = useRouter()
     const { data, user } = useWorkoutPlans()
     const { t } = useTranslation('workout');

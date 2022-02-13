@@ -1,4 +1,4 @@
-import { FunctionComponent, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Bar from '../components/macronutrients/Bar'
 import { useAppSelector } from "../hooks/useRedux";
 import LockOpenIcon from '@mui/icons-material/LockOpen';
@@ -53,7 +53,7 @@ const Grid__description = styled.div`
     }
 `
 
-const Macronutrients: FunctionComponent = () => {
+const Macronutrients = () => {
     const [changeSettings] = useSettings()
     const token: any = useAppSelector(state => state.token.value)
     const [macro, setMacro] = useState<Array<any>>([])

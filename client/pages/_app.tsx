@@ -4,7 +4,6 @@ import { store } from "../redux/store";
 import { Provider } from "react-redux";
 import Layout from "../components/layout/Layout";
 import Socket from "../components/layout/Socket";
-import { FunctionComponent } from "react";
 import MUI from "../components/layout/MUI";
 import Notify from "../components/layout/Notify";
 
@@ -13,7 +12,7 @@ interface AppProps {
     pageProps: any
 }
 
-const App: FunctionComponent<AppProps> = ({ Component, pageProps }) => {
+const App = ({ Component, pageProps }: AppProps) => {
     return (
         <MUI>
             <Provider store={store}>

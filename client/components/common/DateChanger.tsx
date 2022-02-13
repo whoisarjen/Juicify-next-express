@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import { TransitionProps } from '@mui/material/transitions';
-import { FunctionComponent, useState, forwardRef, Ref, ReactElement } from "react";
+import { useState, forwardRef, Ref, ReactElement } from "react";
 import CalendarPicker from '@mui/lab/CalendarPicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -21,7 +21,7 @@ const Transition = forwardRef(function Transition(
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const DateChanger: FunctionComponent<{ where?: string }> = ({ where = 'nutrition-diary' }) => {
+const DateChanger = ({ where = 'nutrition-diary' }: { where?: string }) => {
     const router = useRouter()
     const [isDialog, setIsDialog] = useState(false)
     const [value, setValue] = useState<Date>(new Date());

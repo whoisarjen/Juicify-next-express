@@ -1,4 +1,4 @@
-import React, { forwardRef, FunctionComponent, ReactElement, Ref, useState } from 'react';
+import React, { forwardRef, ReactElement, Ref, useState } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide';
@@ -40,7 +40,7 @@ const Placeholder = styled.div`
     height: 44px;
 `
 
-const AddProductMoreInformation: FunctionComponent<AddProductMoreInformationProps> = ({ loadedProduct, handleClose, dailyMeasurement }) => {
+const AddProductMoreInformation = ({ loadedProduct, handleClose, dailyMeasurement }: AddProductMoreInformationProps) => {
     const { t } = useTranslation('nutrition-diary');
     const [isAdd, setIsAdd] = useState(false)
 

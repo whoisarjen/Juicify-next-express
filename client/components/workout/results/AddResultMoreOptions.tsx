@@ -2,7 +2,7 @@ import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
-import { FunctionComponent, useState } from 'react'
+import { useState } from 'react'
 import AddExercises from '../AddExercises'
 import { ExerciseSchemaProps } from '../../../schema/exercise.schema';
 
@@ -11,7 +11,7 @@ interface AddResultMoreOptionsProps {
     setExercises: (arg0: Array<ExerciseSchemaProps>) => void
 }
 
-const AddResultMoreOptions: FunctionComponent<AddResultMoreOptionsProps> = ({ exercises, setExercises }) => {
+const AddResultMoreOptions = ({ exercises, setExercises }: AddResultMoreOptionsProps) => {
     const [open, setOpen] = useState(false);
     const [isAddDialog, setIsAddDialog] = useState(false)
     const handleOpen = () => setOpen(true);

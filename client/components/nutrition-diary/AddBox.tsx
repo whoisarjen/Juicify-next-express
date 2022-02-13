@@ -4,7 +4,7 @@ import Favorite from '@mui/icons-material/Favorite';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
-import { FunctionComponent, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { putIndexedDB, addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../utils/indexedDB.utils';
 import useTranslation from "next-translate/useTranslation";
 import { useTheme } from '../../hooks/useTheme';
@@ -65,7 +65,7 @@ const Submit = styled.div`
     margin: auto;
 `
 
-const AddProductsBox: FunctionComponent<AddproductsBoxProps> = ({ product, refreshCheckedProducts, openMoreInformation }) => {
+const AddProductsBox = ({ product, refreshCheckedProducts, openMoreInformation }: AddproductsBoxProps) => {
     const { t } = useTranslation('nutrition-diary');
     const [checked, setChecked] = useState(false);
     const [value, setValue] = useState('1.0')

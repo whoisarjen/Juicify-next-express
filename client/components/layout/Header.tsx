@@ -1,4 +1,3 @@
-import { FunctionComponent } from "react";
 import Head from 'next/head'
 
 interface HeaderProps {
@@ -6,7 +5,7 @@ interface HeaderProps {
     description: string
 }
 
-const Header: FunctionComponent<HeaderProps> = ({ title, description }) => {
+const Header = ({ title, description }: HeaderProps) => {
     return (
         <Head>
             <title>{title}</title>

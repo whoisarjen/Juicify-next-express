@@ -1,5 +1,5 @@
 import Stack from '@mui/material/Stack'
-import { useState, FunctionComponent } from 'react'
+import { useState } from 'react'
 import TextField from '@mui/material/TextField'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import MobileDatePicker from '@mui/lab/MobileDatePicker'
@@ -9,10 +9,10 @@ interface MobileDatePickerExportProps {
     change: (arg0: any) => void,
     defaultDate: Date,
     label?: string,
-    marginBottom?: string
+    marginBottom?: string | number
 }
 
-const MobileDatePickerExport: FunctionComponent<MobileDatePickerExportProps> = ({ change, defaultDate, label = "Pick date", marginBottom = 0 }) => {
+const MobileDatePickerExport = ({ change, defaultDate, label = "Pick date", marginBottom = 0 }: MobileDatePickerExportProps) => {
     const [value, setValue] = useState<Date>(defaultDate)
 
     const handleChange = (newValue: any) => {

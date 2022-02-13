@@ -2,7 +2,6 @@ import Link from 'next/link'
 import NoteAltIcon from '@mui/icons-material/NoteAlt'
 import useTranslation from "next-translate/useTranslation";
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
-import { FunctionComponent } from 'react';
 import { reverseDateDotes } from '../../utils/date.utils';
 import { useTheme } from '../../hooks/useTheme';
 import styled from 'styled-components'
@@ -53,7 +52,7 @@ const NotSavedText = styled.div`
     margin-left: 10px;
 `
 
-const Box: FunctionComponent<BoxProps> = ({ title = '', description = '', route, type, isNotSaved, whenAdded }) => {
+const Box = ({ title = '', description = '', route, type, isNotSaved, whenAdded }: BoxProps) => {
     const { t } = useTranslation('workout');
     const [getTheme]: any = useTheme()
 

@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid';
 import Slider from '@mui/material/Slider';
 import MuiInput from '@mui/material/Input';
 import { styled } from '@mui/material/styles';
-import { FunctionComponent, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import * as React from 'react';
 import useTranslation from 'next-translate/useTranslation';
 
@@ -19,7 +19,7 @@ interface SimpleSliderProps {
     day: number
 }
 
-const SimpleSlider: FunctionComponent<SimpleSliderProps> = ({ title, macro, beginValue, changed, day }) => {
+const SimpleSlider = ({ title, macro, beginValue, changed, day }: SimpleSliderProps) => {
     const [value, setValue] = useState<any>(false);
     const [timer, setTimer] = useState<any>(null)
     const [maxValue, setMaxValue] = useState(0)

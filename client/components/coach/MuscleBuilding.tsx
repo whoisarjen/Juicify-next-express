@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { useState } from "react";
 import Button from '@mui/material/Button';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -42,7 +42,7 @@ const Title = styled.div`
     }
 `
 
-const MuscleBuilding: FunctionComponent<MuscleBuildingProps> = ({ prepareCreate, handlePreviousStep }) => {
+const MuscleBuilding = ({ prepareCreate, handlePreviousStep }: MuscleBuildingProps) => {
     const { t } = useTranslation('coach')
     const [goal, setGoal] = useState(0.5);
     const [kind_of_diet, setKind_of_diet] = useState(0)

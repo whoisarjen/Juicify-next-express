@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { useState } from "react";
 import Button from '@mui/material/Button';
 import { useDailyMeasurement } from "../../hooks/useDailyMeasurement";
 import { getAge, getShortDate } from "../../utils/date.utils";
@@ -34,7 +34,7 @@ const Title = styled.div`
     }
 `
 
-const CheckingTodayData: FunctionComponent<ChooseDietProps> = ({ setStep }) => {
+const CheckingTodayData = ({ setStep }: ChooseDietProps) => {
     const { t } = useTranslation('coach')
     const token: any = useAppSelector(state => state.token.value)
     const [{ data }, reload] = useDailyMeasurement(getShortDate(), token.login)

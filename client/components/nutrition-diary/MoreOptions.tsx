@@ -1,19 +1,13 @@
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import IconButton from "@mui/material/IconButton";
-import { FunctionComponent } from "react";
 import styled from "styled-components";
-
-interface MoreOptionsProps {
-    isDisabled: boolean
-}
 
 const Box = styled.div`
     margin: auto;
     display: grid;
 `
 
-const MoreOptions: FunctionComponent<MoreOptionsProps> = ({ isDisabled }) => {
-
+const MoreOptions = ({ isDisabled }: { isDisabled: boolean }) => {
     return (
         <Box>
             <IconButton aria-label="More" color="primary">

@@ -1,4 +1,4 @@
-import { FunctionComponent, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Standard from "../components/coach/Standard";
 import Result from "../components/coach/Result";
 import Welcome from "../components/coach/Welcome";
@@ -22,7 +22,7 @@ import Tutorial_5 from "../components/coach/Tutorial_5";
 import Tutorial_6 from "../components/coach/Tutorial_6";
 import Tutorial_7 from "../components/coach/Tutorial_7";
 
-const Coach: FunctionComponent = () => {
+const Coach = () => {
     const [createDiet, analyzeDiet] = useCoach()
     const token: any = useAppSelector(state => state.token.value)
     const [step, setStep] = useState(token.coach_analyze ? 'Standard' : 'Welcome')

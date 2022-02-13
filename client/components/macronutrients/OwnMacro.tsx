@@ -1,4 +1,4 @@
-import { FunctionComponent, forwardRef, Ref, ReactElement, useState, useEffect } from "react";
+import { forwardRef, Ref, ReactElement, useState, useEffect } from "react";
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -28,7 +28,7 @@ const Transition = forwardRef(function Transition(
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const OwnMacro: FunctionComponent<OwnMacroProps> = ({ isOwnMacro, close }) => {
+const OwnMacro = ({ isOwnMacro, close }: OwnMacroProps) => {
     const token: any = useAppSelector(state => state.token.value)
     const [isDialog, setIsDialog] = useState(false)
     const [proteins, setProteins] = useState(0)
