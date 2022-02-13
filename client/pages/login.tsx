@@ -109,7 +109,7 @@ const Login = () => {
             <Link passHref href="/register">
                 <LoadingButton
                     color="success"
-                    style={{ marginTop: 'auto !important', marginBottom: 'auto !important' }}
+                    style={{ margin: 'auto 0' }}
                     variant="contained"
                 >
                     {t("auth:FIRST_TIME_CREATE_ACCOUNT")}
