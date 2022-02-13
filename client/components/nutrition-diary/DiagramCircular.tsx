@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import styled from "styled-components";
 import useMacro from "../../hooks/useMacro";
 import { useTheme } from "../../hooks/useTheme";
 import { ActivitySchemaProps } from "../../schema/activity.schema";
@@ -13,6 +14,23 @@ interface CircularWithLabelProps {
     array: Array<Array<ProductSchemaProps & ActivitySchemaProps>>,
     user: any
 }
+
+const Grid = styled.div`
+    width: 100%;
+    height: 100%;
+    display: grid;
+`
+
+const CircularBox = styled.div`
+    max-width: 110px;
+    max-height: 110px;
+    margin: auto;
+    ${this} .CircularProgressbar-text {
+        dominant-baseline: middle !important;
+        text-anchor: middle !important;
+        font-size: 15px !important;
+    }
+`
 
 const CircularWithLabel = ({ array, user }: CircularWithLabelProps) => {
     const [calories, setCalories] = useState(0)
@@ -41,8 +59,8 @@ const CircularWithLabel = ({ array, user }: CircularWithLabelProps) => {
     }, [array, user])
 
     return (
-        <div style={{ width: '100%', height: '100%', display: 'grid' }}>
-            <div style={{ maxWidth: '110px', maxHeight: '110px', margin: 'auto' }}>
+        <Grid>
+            <CircularBox>
                 <CircularProgressbar
                     value={progress}
                     text={`${calories}${t('Kcal')}`}
@@ -54,8 +72,8 @@ const CircularWithLabel = ({ array, user }: CircularWithLabelProps) => {
                         backgroundColor: getTheme('PRIMARY'),
                     })}
                 />
-            </div>
-        </div>
+            </CircularBox>
+        </Grid>
     )
 }
 

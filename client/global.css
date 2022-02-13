@@ -144,10 +144,3 @@ input[type="number"] {
 .css-1a1wxa0-MuiInputBase-root-MuiOutlinedInput-root {
   width: 100%;
 }
-
-/* It has to be like that */
-.CircularProgressbar .CircularProgressbar-text {
-  dominant-baseline: middle !important;
-  text-anchor: middle !important;
-  font-size: 15px !important;
-}

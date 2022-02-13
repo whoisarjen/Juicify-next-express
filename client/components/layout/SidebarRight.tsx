@@ -22,7 +22,7 @@ const Box = styled.aside`
     }
 `
 
-const CircleBox = styled.aside`
+const CircularBox = styled.aside`
     padding: 6px;
     display: grid;
     grid-template-columns: 80px auto;
@@ -30,7 +30,13 @@ const CircleBox = styled.aside`
     ${this} div {
         margin: auto 12px;
     }
+    ${this} .CircularProgressbar-text {
+        dominant-baseline: middle !important;
+        text-anchor: middle !important;
+        font-size: 15px !important;
+    }
 `
+
 
 const SidebarRight = ({ token }: { token: any }) => {
     const router = useRouter()
@@ -95,7 +101,7 @@ const SidebarRight = ({ token }: { token: any }) => {
                         <Link href={`${router.asPath}`}>
                             <a>
                                 <ListItemButton onClick={() => setIsWeights(true)}>
-                                    <CircleBox>
+                                    <CircularBox>
                                         <CircularProgressbar
                                             value={weight ? 100 : 0}
                                             text={`${weight}kg`}
@@ -104,14 +110,14 @@ const SidebarRight = ({ token }: { token: any }) => {
                                         <div>
                                             {t("Weight")}
                                         </div>
-                                    </CircleBox>
+                                    </CircularBox>
                                 </ListItemButton>
                             </a>
                         </Link>
                         <Link href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
                             <a>
                                 <ListItemButton>
-                                    <CircleBox>
+                                    <CircularBox>
                                         <CircularProgressbar
                                             value={calories ? calories / caloriesGoal * 100 : 0}
                                             text={`${calories}Kcal`}
@@ -120,14 +126,14 @@ const SidebarRight = ({ token }: { token: any }) => {
                                         <div>
                                             {t("Calories")}
                                         </div>
-                                    </CircleBox>
+                                    </CircularBox>
                                 </ListItemButton>
                             </a>
                         </Link>
                         <Link href={`/${token.login}/workout-results/`}>
                             <a>
                                 <ListItemButton>
-                                    <CircleBox>
+                                    <CircularBox>
                                         <CircularProgressbar
                                             value={workout * 100}
                                             text={`${workout}`}
@@ -136,14 +142,14 @@ const SidebarRight = ({ token }: { token: any }) => {
                                         <div>
                                             {t("Workout")}
                                         </div>
-                                    </CircleBox>
+                                    </CircularBox>
                                 </ListItemButton>
                             </a>
                         </Link>
                         <Link href={`/coach`}>
                             <a>
                                 <ListItemButton>
-                                    <CircleBox>
+                                    <CircularBox>
                                         <CircularProgressbar
                                             value={(7 - coach) / 7 * 100}
                                             text={`${coach >= 0 ? coach : 0}dni`}
@@ -152,7 +158,7 @@ const SidebarRight = ({ token }: { token: any }) => {
                                         <div>
                                             {t("Coach")}
                                         </div>
-                                    </CircleBox>
+                                    </CircularBox>
                                 </ListItemButton>
                             </a>
                         </Link>
