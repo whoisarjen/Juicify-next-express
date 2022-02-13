@@ -10,7 +10,7 @@ import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined
 import { ValueSchemaProps } from '../../../schema/workoutResult.schema';
 import styled from 'styled-components';
 
-interface AddResultValuesBox {
+interface ValuesContainerBoxProps {
     value: ValueSchemaProps,
     index: number,
     changeResult: (arg0: ValueSchemaProps) => void,
@@ -38,10 +38,10 @@ const Connected = styled.div`
     grid-column: 1 / 3;
 `
 
-const AddResultValuesBox = ({ value, index, changeResult, deleteResult, isOwner }: AddResultValuesBox) => {
-    const [reps, setReps] = useState('0')
-    const [weight, setWeight] = useState('0')
-    const [open, setOpen] = useState(false)
+const ValuesContainerBox = ({ value, index, changeResult, deleteResult, isOwner }: ValuesContainerBoxProps) => {
+    const [reps, setReps] = useState(value.reps.toString())
+    const [weight, setWeight] = useState(value.weight.toString())
+    const [open, setOpen] = useState(value.open || false)
     const [repsOptions, setRepsOptions] = useState(['0'])
     const [weightOptions, setWeightOptions] = useState(['0'])
     const [isDialog, setIsDialog] = useState(false)
@@ -70,14 +70,12 @@ const AddResultValuesBox = ({ value, index, changeResult, deleteResult, isOwner 
         setIsDialog(false)
     }
 
-    useEffect(() => {
-        if (value) {
-            setOpen(value.open || false)
-            setReps(value.reps.toString())
-            setWeight(value.weight.toString())
-            loadWeight(value.weight.toString())
-        }
-    }, [value, value.open])
+    // useEffect(() => {
+    //     setOpen(value.open || false)
+    //     setReps(value.reps.toString())
+    //     setWeight(value.weight.toString())
+    //     loadWeight(value.weight.toString())
+    // }, [value, value.open])
 
     useEffect(() => {
         let reps = []
@@ -85,6 +83,7 @@ const AddResultValuesBox = ({ value, index, changeResult, deleteResult, isOwner 
             reps.push(i.toString())
         }
         setRepsOptions(reps)
+        loadWeight(value.weight.toString())
     }, [])
 
     return (
@@ -169,4 +168,4 @@ const AddResultValuesBox = ({ value, index, changeResult, deleteResult, isOwner 
     );
 }
 
-export default AddResultValuesBox;
+export default ValuesContainerBox;

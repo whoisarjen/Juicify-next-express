@@ -1,6 +1,6 @@
 import ButtonPlus from '../../common/ButtonPlus'
 import { useState, useEffect } from 'react'
-import AddResultValuesBox from './ValuesContainerBoxes'
+import AddResultValuesBox from './ValuesContainerBox'
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ResultSchemaProps, ValueSchemaProps } from '../../../schema/workoutResult.schema'

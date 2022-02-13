@@ -63,20 +63,17 @@ const DialogCreateResult = () => {
     return (
         <div>
             {
-                data &&
-                (
-                    data.length
-                        ?
-                        <ButtonPlus click={() => setOpen(true)} />
-                        :
-                        <Link href={`/${router.query.login}/workout-plans`}>
-                            <a>
-                                <div style={{ color: 'red', textDecoration: 'underline', textAlign: 'center', margin: '15px auto' }}>
-                                    You need to create workout plan first
-                                </div>
-                            </a>
-                        </Link>
-                )
+                data?.length
+                    ?
+                    <ButtonPlus click={() => setOpen(true)} />
+                    :
+                    <Link href={`/${router.query.login}/workout-plans`}>
+                        <a>
+                            <div style={{ color: 'red', textDecoration: 'underline', textAlign: 'center', margin: '15px auto' }}>
+                                You need to create workout plan first
+                            </div>
+                        </a>
+                    </Link>
             }
             <Dialog open={open} onClose={() => setOpen(false)}>
                 <DialogTitle>Create result</DialogTitle>

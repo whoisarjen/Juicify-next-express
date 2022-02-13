@@ -12,11 +12,10 @@ import { insertThoseIDStoDB, is_id, overwriteThoseIDSinDB } from '../../../../..
 import useTranslation from "next-translate/useTranslation";
 import AddResultMoreOptions from '../../../../../components/workout/results/MoreOptionsButton'
 import BottomFlyingGuestBanner from '../../../../../components/common/BottomFlyingGuestBanner'
-import { useNotify } from '../../../../../hooks/useNotify';
 import { ExerciseSchemaProps } from '../../../../../schema/exercise.schema';
 import { ResultSchemaProps, ValueSchemaProps, WorkoutResultSchemaProps } from '../../../../../schema/workoutResult.schema';
 
-const WorkoutResultsID = () => {
+const WorkoutResults = () => {
     const router: any = useRouter()
     const [trueID, setTrueID] = useState(false)
     const [date, setDate] = useState(new Date())
@@ -32,7 +31,6 @@ const WorkoutResultsID = () => {
     const [descriptionWorkout, setDescriptionWorkout] = useState('')
     const theOldestSupportedDate = useAppSelector(state => state.config.theOldestSupportedDate())
     const basicInputLength = useAppSelector(state => state.config.basicInputLength)
-    const [{ error }] = useNotify()
 
     const deleteWorkoutResult = async () => {
         if (await is_id(router.query.id)) {
@@ -90,8 +88,6 @@ const WorkoutResultsID = () => {
             }
             await deleteIndexedDB('workout_result', router.query.id)
             router.push(`/${router.query?.login}/workout/results`)
-        } else {
-            error(t('Add some results'))
         }
         setSaveLoading(false)
     }
@@ -157,7 +153,7 @@ const WorkoutResultsID = () => {
     }, [data, user, daily, token])
 
     return (
-        <div className="workoutResultsID">
+        <div>
             <Navbar
                 title="Workout result"
                 where="workout/results"
@@ -268,4 +264,4 @@ const WorkoutResultsID = () => {
     );
 }
 
-export default WorkoutResultsID;
+export default WorkoutResults;

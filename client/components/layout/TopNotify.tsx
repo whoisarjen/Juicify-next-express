@@ -64,10 +64,10 @@ const TopNotify = () => {
                 allowed &&
                 (
                     notSaved.length > 0 &&
-                        !router.pathname.includes('workout-results')
+                        !router.pathname.includes('workout/results')
                         ?
                         (
-                            <Link href={`/${token.login}/workout-results/${notSaved[0].whenAdded}/${notSaved[0]._id}`}>
+                            <Link href={`/${token.login}/workout/results/${notSaved[0].whenAdded}/${notSaved[0]._id}`}>
                                 <a>
                                     <Box>{t('Comeback to not saved workout')}</Box>
                                 </a>
