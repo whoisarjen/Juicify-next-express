@@ -17,10 +17,7 @@ const useDailyMeasurement = (when: string, login: string): useDailyMeasurementRe
     const [user, setUser] = useState();
     const [reload, setReload] = useState(0);
     const token: any = useAppSelector(state => state.token.value)
-    const [data, setDataObject] = useState<DailyMeasurementSchemaProps>(loadMissingDataForDailyMeasurement({
-        ...{ _id: "XD" + new Date().getTime(), user_ID: token._id, whenAdded: when },
-        object: {} as DailyMeasurementSchemaProps
-    }));
+    const [data, setDataObject] = useState<DailyMeasurementSchemaProps>({ _id: "XD" + new Date().getTime(), user_ID: token._id, whenAdded: when });
     const theOldestSupportedDate = useAppSelector(state => state.config.theOldestSupportedDate());
     const reloadKey = useAppSelector(state => state.key.daily_measurement)
     const { loadValueByLogin } = useOtherUser()
