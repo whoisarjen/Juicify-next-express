@@ -1,4 +1,4 @@
-import { store } from "../redux/store";
+import { getOnline } from "./db.utils";
 const namOfIndexedDB = "test";
 
 const connectIndexedDB = async () => indexedDB.open(namOfIndexedDB);
@@ -123,7 +123,7 @@ export const addIndexedDB = async (where: string, value: Array<any>): Promise<an
 };
 
 export const putInformationAboutNeededUpdate = async (where: string, time?: number): Promise<any> => {
-  if (!store.getState().online.isOnline) {
+  if (!getOnline()) {
     if (!(await getIndexedDBbyID("whatToUpdate", where))) {
       await addIndexedDB("whatToUpdate", [{ _id: where, },]);
     }

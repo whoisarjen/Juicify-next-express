@@ -8,6 +8,7 @@ import { getCookie, refreshToken, setCookie } from '../../utils/auth.utils'
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import { refreshKey } from '../../redux/features/key.slice';
 import { workersController } from '../../utils/worker.utils';
+import { getOnline } from '../../utils/db.utils';
 
 const Socket = ({ children }: { children: any }) => {
     const dispatch = useAppDispatch()
@@ -28,7 +29,7 @@ const Socket = ({ children }: { children: any }) => {
 
                     workersController(lastUpdated)
 
-                    if (store.getState().online.isOnline && lastUpdated.settings > await getCookie('settings') || await getIndexedDBbyID('whatToUpdate', 'settings')) dispatch(setToken(await refreshToken()));
+                    if (getOnline() && lastUpdated.settings > await getCookie('settings') || await getIndexedDBbyID('whatToUpdate', 'settings')) dispatch(setToken(await refreshToken()));
 
                 } catch (error: any) {
                     console.log(error)

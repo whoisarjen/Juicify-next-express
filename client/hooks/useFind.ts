@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { addIndexedDB, getAllIndexedDB, getIndexedDBbyID } from '../utils/indexedDB.utils'
 import axios from 'axios';
 import { useAppSelector } from './useRedux';
+import { getOnline } from '../utils/db.utils';
 
 const prepareItems = async (
     data: Array<any>,
@@ -65,7 +66,7 @@ const useFind = (value: any, where: string, tab: number, skipThoseIDS: Array<any
                     } else {
                         const searchFunction = (find: string) => setTimeout(async () => {
                             setLoading(true);
-                            if (store.getState().online.isOnline) {
+                            if (getOnline()) {
                                 try {
                                     const response: any = await axios.post(
                                         `${process.env.NEXT_PUBLIC_SERVER}/find/${where}s`,

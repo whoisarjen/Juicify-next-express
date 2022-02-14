@@ -7,10 +7,6 @@ import { useAppSelector } from "../../hooks/useRedux";
 import useTranslation from "next-translate/useTranslation";
 import styled from "styled-components";
 
-interface ChooseDietProps {
-    setStep: (arg0: string) => void
-}
-
 const Grid = styled.div`
     width: 100%;
     height: calc(100vh - var(--BothNavHeightAndPadding));
@@ -34,7 +30,7 @@ const Title = styled.div`
     }
 `
 
-const CheckingTodayData = ({ setStep }: ChooseDietProps) => {
+const CheckingTodayData = ({ setStep }: { setStep: (arg0: string) => void }) => {
     const { t } = useTranslation('coach')
     const token: any = useAppSelector(state => state.token.value)
     const { data, reload } = useDailyMeasurement(getShortDate(), token.login)

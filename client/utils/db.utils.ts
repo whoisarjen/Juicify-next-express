@@ -19,7 +19,7 @@ export const insertThoseIDStoDB = async (where: string, sentArray: Array<any>, u
     const arrayIDSbeforeInsert = []
     try {
 
-        if (!store.getState().online.isOnline && !await isWorker()) throw 'User is offline. Skip to catch method';
+        if (!getOnline() && !await isWorker()) throw 'User is offline. Skip to catch method';
 
         for (let i = 0; i < array.length; i++) {
             if (array[i]._id) {
@@ -71,7 +71,7 @@ export const overwriteThoseIDSinDB = async (where: string, sentArray: Array<any>
     let array = JSON.parse(JSON.stringify(sentArray))
     try {
 
-        if (!store.getState().online.isOnline && !await isWorker()) throw 'User is offline. Skip to catch method';
+        if (!getOnline() && !await isWorker()) throw 'User is offline. Skip to catch method';
 
         if (where == 'daily_measurement') {
             for (let i = 0; i < array.length; i++) {
@@ -109,7 +109,7 @@ export const overwriteThoseIDSinDB = async (where: string, sentArray: Array<any>
 export const deleteThoseIDSfromDB = async (where: string, array: Array<any>) => {
     try {
 
-        if (!store.getState().online.isOnline && !await isWorker()) throw 'User is offline. Skip to catch method';
+        if (!getOnline() && !await isWorker()) throw 'User is offline. Skip to catch method';
 
         for (let i = 0; i < array.length; i++) {
             array[i].deleted = true;
@@ -157,3 +157,5 @@ export const isWorker = async () => {
         return true;
     }
 }
+
+export const getOnline = () => store.getState().online.isOnline

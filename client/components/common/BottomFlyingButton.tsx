@@ -38,6 +38,7 @@ const BottomFlyingButton = ({ clicked, isLoading = false, buttonText = 'Submit',
                     onClick={clicked}
                     loading={loading}
                     variant="contained"
+                    type="submit"
                 >
                     {t(buttonText)}{showNumberValue > 0 && ` (${showNumberValue})`}
                 </LoadingButton>

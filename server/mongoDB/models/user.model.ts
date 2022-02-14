@@ -229,6 +229,7 @@ userSchema.pre("save", async function (next) {
 userSchema.pre("findOneAndUpdate", async function (next) {
     let user: any = this.getUpdate()
 
+    console.log(user)
     if (user['$set']['password']) {
         const salt = await bcrypt.genSalt(parseInt(process.env.SALT_WORK_FACTORY as string));
         const hash = await bcrypt.hashSync(user['$set']['password'], salt);

@@ -21,20 +21,20 @@ const useWorkoutResults = (): useWorkoutResultsResponseProps => {
     useEffect(() => {
         (async () => {
             let results = []
-            if (token.login == router.query.login) {
+            if (token?.login == router?.query.login) {
                 let cache = await getAllIndexedDB('workout_result')
                 let daily_measurements = await getAllIndexedDB('daily_measurement')
-                if (daily_measurements.length > 0) {
+                if (daily_measurements.length) {
                     for (let i = 0; i < daily_measurements.length; i++) {
-                        if (daily_measurements[i].workout_result && daily_measurements[i].workout_result.length > 0) {
+                        if (daily_measurements[i].workout_result && daily_measurements[i].workout_result.length) {
                             for (let a = 0; a < daily_measurements[i].workout_result.length; a++) {
                                 results.push({ ...daily_measurements[i].workout_result[a], whenAdded: daily_measurements[i].whenAdded.slice(0, 10) })
                             }
                         }
                     }
                 }
-                if (results.length > 0) {
-                    if (cache.length > 0) {
+                if (results.length) {
+                    if (cache.length) {
                         for (let i = 0; i < results.length; i++) {
                             for (let a = 0; a < cache.length; a++) {
                                 if (cache[a]._id == results[i]._id) {
@@ -56,9 +56,9 @@ const useWorkoutResults = (): useWorkoutResultsResponseProps => {
             } else {
                 let response = await loadValueByLogin('daily_measurements', theOldestSupportedDate(), router.query.login)
                 let results: any = []
-                if (response.data && response.data.length > 0) {
+                if (response?.data?.length) {
                     for (let i = 0; i < response.data.length; i++) {
-                        if (response.data[i].workout_result && response.data[i].workout_result.length > 0) {
+                        if (response.data[i].workout_result && response.data[i].workout_result.length) {
                             for (let a = response.data[i].workout_result.length - 1; a >= 0; a--) {
                                 results.push({ ...response.data[i].workout_result[a], whenAdded: response.data[i].whenAdded.slice(0, 10) })
                             }

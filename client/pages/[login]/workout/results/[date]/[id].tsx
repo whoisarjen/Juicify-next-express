@@ -46,7 +46,7 @@ const WorkoutResults = () => {
     const autoSave = async () => {
         if (isDateSupported) {
             await deleteIndexedDB('workout_result', getValues()._id as string)
-            await addIndexedDB('workout_result', [getValues()])
+            await addIndexedDB('workout_result', [{ ...getValues(), whenAdded: router.query.date }])
         }
     }
 
@@ -58,21 +58,18 @@ const WorkoutResults = () => {
                 values: []
             })
         })
-        await autoSave()
     }
 
     const deleteExercise = async (index: number) => {
         remove(index as number)
         setDeleteExerciseIndex(false)
-        await autoSave()
     }
 
     const updateResults = async ({ values, result, index }: { values: Array<ValueSchemaProps>, result: ResultSchemaProps, index: number }) => {
         update(index, { ...result, values })
-        await autoSave()
     }
 
-    const { register, formState: { errors }, handleSubmit, control, reset, getValues } = useForm<WorkoutResultSchemaProps>({
+    const { register, formState: { errors, isDirty }, handleSubmit, control, reset, getValues } = useForm<WorkoutResultSchemaProps>({
         resolver: zodResolver(WorkoutResultSchema)
     })
 
@@ -100,6 +97,14 @@ const WorkoutResults = () => {
             setSaveLoading(false);
         }
     }
+
+    useEffect(() => {
+        (async () => {
+            if (isDirty) {
+                await autoSave()
+            }
+        })()
+    }, [isDirty])
 
     useEffect(() => reset(data), [data])
 

@@ -1,29 +1,34 @@
 import { boolean, number, object, preprocess, string, TypeOf } from 'zod'
 import errorBook from '../utils/error.utils'
 
+export const SettingsSchema = object({
+    meal_number: preprocess((val) => Number(val), number().min(1).max(10)).optional(),
+    fiber: preprocess((val) => Number(val), number().min(0).max(100)).optional(),
+    sugar_percent: preprocess((val) => Number(val), number().min(0).max(100)).optional(),
+    name: string().max(50).optional(),
+    surname: string().max(50).optional(),
+    birth: string(),
+    height: preprocess((val) => Number(val), number().min(120).max(250)).optional(),
+    description: string().max(255).optional(),
+    website: string().max(150).optional(),
+    facebook: string().max(150).optional(),
+    instagram: string().max(150).optional(),
+    twitter: string().max(150).optional(),
+    // password: string().optional(),
+    // repeat: string().optional(),
+    // current: string().optional(),
+})
+
+export type SettingsSchemaProps = TypeOf<typeof SettingsSchema>
+
 export const CreateUserSchema = object({
-    login: string({
-        required_error: errorBook['LOGIN IS REQUIRED']['VALUE']
-    }).min(3),
-    password: string({
-        required_error: errorBook['PASSWORD IS REQUIRED']['VALUE']
-    }).min(8),
-    passwordConfirmation: string({
-        required_error: errorBook['PASSWORD CONFIRMATION IS REQUIRED']['VALUE']
-    }).min(8),
-    email: string({
-        required_error: errorBook['EMAIL IS REQUIRED']['VALUE']
-    })
-        .email(errorBook['EMAIL IS NOT VALID']['VALUE']),
-    height: preprocess((val) => Number(val), number({
-        required_error: errorBook['HEIGHT IS REQUIRED']['VALUE']
-    })),
-    birth: string({
-        required_error: errorBook['BIRTHDAY IS REQUIRED']['VALUE']
-    }),
-    sex: preprocess((val) => Boolean(val), boolean({
-        required_error: errorBook['SEX IS REQUIRED']['VALUE']
-    })),
+    login: string().min(3).max(50),
+    password: string().min(8).max(150),
+    passwordConfirmation: string().min(8).max(150),
+    email: string().email().max(150),
+    height: preprocess((val) => Number(val), number()),
+    birth: string(),
+    sex: preprocess((val) => Boolean(val), boolean()),
 }).refine(data => data.password === data.passwordConfirmation, {
     message: errorBook['PASSWORDS DO NOT MATCH']['VALUE'],
     path: ['passwordConfirmation']
@@ -36,3 +41,5 @@ export const RemindPasswordUserSchema = object({
 })
 
 export type RemindPasswordUserSchemaProps = Omit<TypeOf<typeof RemindPasswordUserSchema>, "body.passwordConfirmation">
+
+export type tokenValueProps = CreateUserSchemaProps & SettingsSchemaProps
