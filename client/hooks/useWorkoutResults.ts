@@ -3,10 +3,16 @@ import { useAppSelector } from "./useRedux";
 import { useState, useEffect } from "react";
 import { getAllIndexedDB } from "../utils/indexedDB.utils";
 import useOtherUser from "./useOtherUser";
+import { WorkoutPlanSchemaProps } from "../schema/workoutPlan.schema";
 
-const useWorkoutResults = (): any => {
+interface useWorkoutResultsResponseProps {
+    data: WorkoutPlanSchemaProps[]
+    user: any
+}
+
+const useWorkoutResults = (): useWorkoutResultsResponseProps => {
     const router: any = useRouter()
-    const [data, setData] = useState([])
+    const [data, setData] = useState<WorkoutPlanSchemaProps[]>([])
     const [user, setUser] = useState({})
     const theOldestSupportedDate = useAppSelector(state => state.config.theOldestSupportedDate)
     const token: any = useAppSelector(state => state.token.value)
@@ -45,8 +51,8 @@ const useWorkoutResults = (): any => {
                         return x
                     })
                 }
-                setData(token)
-                setData(results)
+                setUser(token)
+                setData(results || [])
             } else {
                 let response = await loadValueByLogin('daily_measurements', theOldestSupportedDate(), router.query.login)
                 let results: any = []
@@ -59,7 +65,7 @@ const useWorkoutResults = (): any => {
                         }
                     }
                 }
-                setData(results || {})
+                setData(results || [])
                 setUser(response.user || [])
             }
         })()

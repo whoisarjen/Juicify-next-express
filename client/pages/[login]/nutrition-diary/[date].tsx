@@ -24,7 +24,7 @@ const NutritionDiary = () => {
     const [isAddDialog, setIsAddDialog] = useState(false)
     const [isEditDialog, setIsEditDialog] = useState(false)
     const [nutritionDiary, setNutritionDiary] = useState(Array(5).fill([]))
-    const [{ data, user }, reloadDailyMeasurement] = useDailyMeasurement(router.query.date, router.query.login)
+    const { data, user, reload } = useDailyMeasurement(router.query.date, router.query.login)
 
     const deleteProduct = async (_id: string) => {
         let copy = JSON.parse(JSON.stringify(data))
@@ -32,7 +32,7 @@ const NutritionDiary = () => {
             obj._id == _id ? { ...obj, deleted: true } : obj
         );
         await overwriteThoseIDSinDB('daily_measurement', [copy])
-        reloadDailyMeasurement()
+        reload()
     }
 
     const changeProduct = async (newProduct: any) => {
@@ -41,13 +41,13 @@ const NutritionDiary = () => {
             obj._id == newProduct._id ? { ...obj, ...{ changed: true }, ...newProduct } : obj
         );
         await overwriteThoseIDSinDB('daily_measurement', [copy])
-        reloadDailyMeasurement()
+        reload()
     }
 
     useEffect(() => {
         if (data?.nutrition_diary) {
             const arr: any = []
-            const l = user.meal_number || 5
+            const l = user?.meal_number || 5
             for (let i = 0; i < l; i++) {
                 arr.push([])
             }
@@ -80,7 +80,7 @@ const NutritionDiary = () => {
             <Diagrams array={nutritionDiary} user={user} />
             {
                 token?.login == router?.query.login &&
-                <DiagramsOptions data={data} reloadDailyMeasurement={reloadDailyMeasurement} />
+                <DiagramsOptions data={data} reloadDailyMeasurement={reload} />
             }
             {
                 nutritionDiary.map((x, i) => (
@@ -108,7 +108,7 @@ const NutritionDiary = () => {
                             isAddDialog={isAddDialog}
                             dailyMeasurement={data}
                             closeDialog={() => setIsAddDialog(false)}
-                            reload={reloadDailyMeasurement}
+                            reload={reload}
                         />
                         <DialogEditProduct
                             product={product}

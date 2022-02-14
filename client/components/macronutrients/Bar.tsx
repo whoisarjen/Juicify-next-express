@@ -1,9 +1,9 @@
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import IconButton from '@mui/material/IconButton';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import useMacro from "../../hooks/useMacro";
 import useTranslation from "next-translate/useTranslation";
 import styled from 'styled-components'
+import { getShortDayName } from '../../utils/date.utils';
 
 interface BarProps {
     object: {
@@ -80,7 +80,6 @@ const Day = styled.div`
 `
 
 const Bar = ({ object, click, toggleLock }: BarProps) => {
-    const [{ getShortDayName }] = useMacro()
     const { t } = useTranslation('macronutrients')
 
     return (

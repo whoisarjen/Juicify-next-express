@@ -27,7 +27,7 @@ const Settings = () => {
     const { t } = useTranslation('settings')
     const [isLoading, setIsLoading] = useState(false)
     const [changedObject, setChangedObject] = useState<any>({})
-    const [changeSettings] = useSettings()
+    const { changeSettings } = useSettings()
     const token: any = useAppSelector(state => state.token.value)
     const [fiber, setFiber] = useState<number>(10)
     const [meal_number, setMeal_number] = useState<number>(5)

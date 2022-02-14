@@ -34,7 +34,7 @@ const OwnMacro = ({ isOwnMacro, close }: OwnMacroProps) => {
     const [proteins, setProteins] = useState(0)
     const [carbs, setCarbs] = useState(0)
     const [fats, setFats] = useState(0)
-    const [changeSettings] = useSettings()
+    const { changeSettings } = useSettings()
     const { t } = useTranslation('macronutrients')
 
     const handleConfirm = async () => {

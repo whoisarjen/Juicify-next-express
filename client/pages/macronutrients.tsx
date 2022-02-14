@@ -60,7 +60,7 @@ const Title = styled.div`
 `
 
 const Macronutrients = () => {
-    const [changeSettings] = useSettings()
+    const { changeSettings } = useSettings()
     const token: any = useAppSelector(state => state.token.value)
     const [macro, setMacro] = useState<Array<any>>([])
     const [changeObject, setChangeObject] = useState<any>({})

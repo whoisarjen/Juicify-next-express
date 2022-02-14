@@ -88,7 +88,7 @@ const Standard = ({ setStep }: StandardProps) => {
     const { t } = useTranslation('coach')
     const [daysToCoach, setDaysToCoach] = useState(7)
     const token: any = useAppSelector(state => state.token.value)
-    const [{ data }, reload] = useDailyMeasurement(getShortDate(), token.login)
+    const { data, reload } = useDailyMeasurement(getShortDate(), token.login)
     const [isWeights, setIsWeights] = useState(false)
 
     useEffect(() => {
@@ -151,7 +151,7 @@ const Standard = ({ setStep }: StandardProps) => {
                     {
                         data ?
                             (
-                                data.weight > 0
+                                data?.weight
                                     ?
                                     <Button variant="contained" onClick={() => setIsWeights(true)}>{t('CHANGE_WEIGHT')}</Button>
                                     :

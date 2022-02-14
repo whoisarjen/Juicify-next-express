@@ -18,10 +18,10 @@ const Box = styled.div`
 `
 
 const Profile = () => {
-    const [getTheme]: any = useTheme()
+    const { getTheme } = useTheme()
     const { t } = useTranslation('profile')
     const router: any = useRouter()
-    const [{ data, user }]: any = useDailyMeasurements(addDaysToDate(getShortDate(), -1), 7, router.query.login)
+    const { data, user } = useDailyMeasurements(addDaysToDate(getShortDate(), -1), 7, router.query.login)
     const barNamesWithColor = [
         { dataKey: t('p'), fill: '#ff8b42' },
         { dataKey: t('c'), fill: '#ffbb33' },

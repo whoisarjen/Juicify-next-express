@@ -4,14 +4,24 @@ import { useState, useEffect } from "react";
 import { getIndexedDBbyID } from "../utils/indexedDB.utils";
 import useOtherUser from "./useOtherUser";
 import { loadMissingDataForDailyMeasurement } from "../utils/dailyMeasurement.utils";
+import { DailyMeasurementSchemaProps } from "../schema/dailyMeasurement.schema";
 
-const useDailyMeasurement = (when: string, login: string): [any, () => void] => {
+interface useDailyMeasurementResponseProps {
+    data: DailyMeasurementSchemaProps
+    user: any
+    reload: () => void
+}
+
+const useDailyMeasurement = (when: string, login: string): useDailyMeasurementResponseProps => {
     const router: any = useRouter();
     const [user, setUser] = useState();
     const [reload, setReload] = useState(0);
-    const [data, setDataObject] = useState<Object>();
-    const theOldestSupportedDate = useAppSelector(state => state.config.theOldestSupportedDate());
     const token: any = useAppSelector(state => state.token.value)
+    const [data, setDataObject] = useState<DailyMeasurementSchemaProps>(loadMissingDataForDailyMeasurement({
+        ...{ _id: "XD" + new Date().getTime(), user_ID: token._id, whenAdded: when },
+        object: {} as DailyMeasurementSchemaProps
+    }));
+    const theOldestSupportedDate = useAppSelector(state => state.config.theOldestSupportedDate());
     const reloadKey = useAppSelector(state => state.key.daily_measurement)
     const { loadValueByLogin } = useOtherUser()
 
@@ -47,7 +57,7 @@ const useDailyMeasurement = (when: string, login: string): [any, () => void] => 
         }
     }, [when, login, reload, router.query, reloadKey]);
 
-    return [{ data, user }, () => setReload(reload + 1)];
+    return { data, user, reload: () => setReload(reload + 1) };
 };
 
 export { useDailyMeasurement };

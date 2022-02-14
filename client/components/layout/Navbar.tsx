@@ -73,7 +73,7 @@ const Li_web = styled.li`
 const Navbar = ({ token }: { token: any }) => {
     const { t } = useTranslation("home");
     const router = useRouter()
-    const [, toggleDarkMode, theme]: any = useTheme()
+    const { toggleDarkMode, theme } = useTheme()
 
     return (
         <header>

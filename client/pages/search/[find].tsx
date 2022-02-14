@@ -9,7 +9,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 
 const Search = () => {
     const router: any = useRouter()
-    const [{ data }]: any = useSearch(router.query.find, 'users')
+    const { data } = useSearch(router.query.find, 'users')
 
     return (
         <div className="search">

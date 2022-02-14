@@ -7,11 +7,11 @@ import { loadMissingData } from '../utils/workoutPlan.utils'
 import { WorkoutPlanSchemaProps } from '../schema/workoutPlan.schema'
 import useOtherUser from './useOtherUser'
 
-const useWorkoutPlan = (workoutPlanID: string): [any, () => void] => {
+const useWorkoutPlan = (workoutPlanID: string) => {
     const router: any = useRouter()
     const [user, setUser] = useState({})
     const [reload, setReload] = useState(0)
-    const [data, setData] = useState<boolean | WorkoutPlanSchemaProps>(false)
+    const [data, setData] = useState<WorkoutPlanSchemaProps>(loadMissingData({ _id: 'XD' + new Date().getTime(), user_ID: '', object: {} }))
     const token: any = useAppSelector(state => state.token.value)
     const reloadKey = useAppSelector(state => state.key.workout_plan)
     const { loadValueByLogin } = useOtherUser()
@@ -56,7 +56,7 @@ const useWorkoutPlan = (workoutPlanID: string): [any, () => void] => {
         })()
     }, [workoutPlanID, reload, router.query, reloadKey])
 
-    return [{ data, user }, () => setReload(reload + 1)]
+    return { data, user, reload: () => setReload(reload + 1) }
 }
 
 export default useWorkoutPlan;

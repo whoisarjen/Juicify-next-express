@@ -25,7 +25,7 @@ const useSettings = () => {
         }
     }
 
-    return [changeSettings]
+    return { changeSettings }
 }
 
 

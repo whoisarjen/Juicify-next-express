@@ -38,7 +38,7 @@ const useDailyMeasurements = (today: Date | string, howManyDays: number = 7, log
         })()
     }, [reload, router.query, reloadKey])
 
-    return [{ data, user }, () => setReload(reload + 1)];
+    return { data, user, reload: () => setReload(reload + 1) }
 }
 
 export { useDailyMeasurements, loadMissingDays };

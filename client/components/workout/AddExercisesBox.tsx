@@ -35,7 +35,7 @@ const Name = styled.div`
 const AddProductsBox = ({ exercise, refreshCheckedExercises }: AddProductsBox) => {
     const [checked, setChecked] = useState(false)
     // const [fav, setFav] = useState(false)
-    const [getTheme]: any = useTheme()
+    const { getTheme } = useTheme()
 
     {/* Need new way to handle synchronization with favourite exercise so for now OFF */ }
     // const handleLike = async () => {

@@ -37,16 +37,15 @@ const Title = styled.div`
 const CheckingTodayData = ({ setStep }: ChooseDietProps) => {
     const { t } = useTranslation('coach')
     const token: any = useAppSelector(state => state.token.value)
-    const [{ data }, reload] = useDailyMeasurement(getShortDate(), token.login)
+    const { data, reload } = useDailyMeasurement(getShortDate(), token.login)
     const [isWeights, setIsWeights] = useState(false)
 
     return (
         <Grid>
             <Title><div>{t('CHECKING_TODAY_TITLE')}</div></Title>
             {
-                data &&
                 (
-                    data.weight > 0
+                    data?.weight
                         ?
                         <>
                             <table>
@@ -59,7 +58,7 @@ const CheckingTodayData = ({ setStep }: ChooseDietProps) => {
                                 <tbody>
                                     <tr>
                                         <th>{t('WEIGHT')}:</th>
-                                        <td>{data.weight}kg</td>
+                                        <td>{data?.weight}kg</td>
                                     </tr>
                                 </tbody>
                                 <tbody>

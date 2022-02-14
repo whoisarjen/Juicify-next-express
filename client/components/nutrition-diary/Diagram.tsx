@@ -6,11 +6,11 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import CircularWithLabel from "./DiagramCircular";
 import CircularWithLabelReverse from "./DiagramCircularReversed";
-import useMacro from "../../hooks/useMacro";
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import { ProductSchemaProps } from "../../schema/product.schema";
 import styled from "styled-components";
+import { getMacroByDay } from "../../utils/user.utils";
 
 interface DiagramsProps {
     array: Array<Array<ProductSchemaProps>>,
@@ -30,14 +30,13 @@ const Table = styled.table`
 
 const Diagrams = ({ array, user }: DiagramsProps) => {
     const [value, setValue] = useState<string>('1');
-    const [{ getDay }] = useMacro()
     const router = useRouter()
     const [object, setObject] = useState<any>({})
     const { t } = useTranslation('nutrition-diary')
 
     useEffect(() => {
         if (user) {
-            const macro = getDay(router.query.date, user)
+            const macro = getMacroByDay(router.query.date, user)
             let o = {
                 'Proteins': { 'value': 0, 'macro': macro.proteins },
                 'Carbs': { 'value': 0, 'macro': macro.carbs },

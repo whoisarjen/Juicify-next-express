@@ -36,7 +36,7 @@ const Barcode = () => {
     const [isCreateProduct, setIsCreateProduct] = useState(false)
     const [loadedProduct, setLoadedProduct] = useState<any>(false)
     const token: any = useAppSelector(state => state.token.value)
-    const [{ data }] = useDailyMeasurement(getShortDate(), token.login)
+    const { data } = useDailyMeasurement(getShortDate(), token.login)
 
     const _onDetected = async (res: any) => {
         try {

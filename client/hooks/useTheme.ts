@@ -27,7 +27,7 @@ const useTheme = () => {
 
     const getTheme = (what: string) => THEME_VALUE[theme.palette.mode.toUpperCase() || 'DARK'][what]
 
-    return [getTheme, toggleDarkMode, theme]
+    return { getTheme, toggleDarkMode, theme }
 }
 
 export {

@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 
 const useSearch = (find: string | number, where: string) => {
-    const [data, setData] = useState([])
+    const [data, setData] = useState({ items: [] })
     const [isLoading, setIsLoading] = useState(true)
     const router = useRouter()
 
@@ -19,10 +19,10 @@ const useSearch = (find: string | number, where: string) => {
                         },
                         { withCredentials: true }
                     );
-                    setData(res.data || []);
+                    setData(res.data || { items: [] });
                 } catch (error: any) {
                     console.log(error)
-                    setData([])
+                    setData({ items: [] })
                 } finally {
                     setIsLoading(false)
                 }
@@ -30,7 +30,7 @@ const useSearch = (find: string | number, where: string) => {
         })()
     }, [find, router.query])
 
-    return [{ data, isLoading }]
+    return { data, isLoading }
 }
 
 export default useSearch;

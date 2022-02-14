@@ -70,7 +70,7 @@ const AddProductsBox = ({ product, refreshCheckedProducts, openMoreInformation }
     const [checked, setChecked] = useState(false);
     const [value, setValue] = useState('1.0')
     const [fav, setFav] = useState(false)
-    const [getTheme]: any = useTheme()
+    const { getTheme } = useTheme()
 
     const handleLike = async () => {
         if (fav) {

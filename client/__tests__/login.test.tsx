@@ -1,8 +1,8 @@
-import Login from "../../pages/login"
 import { render, screen, waitFor } from '@testing-library/react'
-import { Provider } from "react-redux"
-import { store } from "../../redux/store"
+import { store } from "../redux/store"
 import user from '@testing-library/user-event'
+import Login from '../pages/login';
+import { Provider } from "react-redux";
 
 describe('Testing login validation', () => {
     describe('Gave empty login', () => {

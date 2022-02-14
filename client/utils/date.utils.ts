@@ -27,3 +27,15 @@ export const getDailyDate = (date: Date | string = getShortDate()) => new Date(d
 
 // @ts-ignore
 export const getDiffrentBetweenDays = (a, b) => (new Date(a) - new Date(b)) / 864e5 | 0;
+
+export const getShortDayName = (day: number) => {
+    return {
+        1: 'short_sunday',
+        2: 'short_monday',
+        3: 'short_tuesday',
+        4: 'short_wednesday',
+        5: 'short_thursday',
+        6: 'short_friday',
+        7: 'short_saturday'
+    }[day] || 'short_sunday'
+}

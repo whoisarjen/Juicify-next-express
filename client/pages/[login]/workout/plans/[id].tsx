@@ -27,7 +27,7 @@ const WorkoutPlansID = () => {
     const [isAddDialog, setIsAddDialog] = useState(false)
     const [saveLoading, setSaveLoading] = useState(false)
     const token: any = useAppSelector(state => state.token.value)
-    const [{ data, user }] = useWorkoutPlan(router.query.id)
+    const { data, user } = useWorkoutPlan(router.query.id)
     const [{ error }] = useNotify()
 
     const deleteWorkoutPlan = async () => {
@@ -38,7 +38,7 @@ const WorkoutPlansID = () => {
             } else {
                 await deleteThoseIDSfromDB('workout_plan', [{ _id: router.query.id }])
             }
-            router.push(`/${token.login}/workout-plans`)
+            router.push(`/${token.login}/workout/plans`)
         } finally {
             setSaveLoading(false)
         }
@@ -60,12 +60,12 @@ const WorkoutPlansID = () => {
             setSaveLoading(true)
             await insertThoseIDStoDBController('workout_plan', [{
                 _id: router.query.id,
-                ...(values.title && { title: values.title }),
-                ...(values.description && { description: values.description }),
+                ...(values.title && values.title.trim() && { title: values.title.trim() }),
+                ...(values.description && values.description.trim() && { description: values.description.trim() }),
                 ...(values.burnt && { burnt: values.burnt }),
-                ...(fields && fields.length && { exercises: fields }),
+                ...(values.exercises && { exercises: values.exercises }),
             }])
-            router.push(`/${token.login}/workout-plans/`)
+            router.push(`/${token.login}/workout/plans/`)
         } catch (e: any) {
             console.log(e)
             error(e.message)

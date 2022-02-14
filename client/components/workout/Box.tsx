@@ -54,7 +54,7 @@ const NotSavedText = styled.div`
 
 const Box = ({ title = '', description = '', route, type, isNotSaved, whenAdded }: BoxProps) => {
     const { t } = useTranslation('workout');
-    const [getTheme]: any = useTheme()
+    const { getTheme } = useTheme()
 
     return (
         <Link href={route}>

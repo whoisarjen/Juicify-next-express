@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import { useDailyMeasurement } from "../../hooks/useDailyMeasurement";
-import useMacro from "../../hooks/useMacro";
 import { useAppSelector } from "../../hooks/useRedux";
 import { getDiffrentBetweenDays, getShortDate, reverseDateDotes } from "../../utils/date.utils";
 import List from '@mui/material/List';
@@ -14,6 +13,7 @@ import Weights from "../common/Weights";
 import { useTheme } from "../../hooks/useTheme";
 import { getCalories } from "../../utils/product.utils";
 import styled from 'styled-components'
+import { getMacroByDay } from "../../utils/user.utils";
 
 const Box = styled.aside`
     padding: 12px;
@@ -43,29 +43,28 @@ const SidebarRight = ({ token }: { token: any }) => {
     const { t } = useTranslation('home')
     const [isWeights, setIsWeights] = useState(false)
     const keyDaily = useAppSelector(state => state.key.daily_measurement)
-    const [{ data }, reload] = useDailyMeasurement(getShortDate(), token.login)
-    const [{ getDay }] = useMacro()
+    const { data, reload } = useDailyMeasurement(getShortDate(), token.login)
     const [weight, setWeight] = useState(0)
     const [calories, setCalories] = useState(0)
     const [caloriesGoal, setCaloriesGoal] = useState(0)
     const [workout, setWorkout] = useState(0)
     const [coach, setCoach] = useState(0)
     const [styles, setStyles]: any = useState()
-    const [getTheme]: any = useTheme()
+    const { getTheme } = useTheme()
 
     useEffect(() => {
         if (data && token) {
             setWeight(data.weight || 0)
 
             let calories = 0
-            if (data.nutrition_diary && data.nutrition_diary.length) {
+            if (data?.nutrition_diary?.length) {
                 for (let i = 0; i < data.nutrition_diary.length; i++) {
-                    calories += getCalories(data.nutrition_diary[i])
+                    calories += getCalories(data.nutrition_diary[i] as any)
                 }
             }
             setCalories(calories)
 
-            const macro = getDay(new Date(getShortDate()), token)
+            const macro = getMacroByDay(new Date(getShortDate()), token)
             setCaloriesGoal(macro.proteins * 4 + macro.carbs * 4 + macro.fats * 9)
 
             setWorkout(data.workout_result ? data.workout_result.length : 0)

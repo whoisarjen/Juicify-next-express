@@ -11,12 +11,12 @@ const useWorkoutResult = (): [any, () => void] => {
     const router: any = useRouter()
     const [reload, setReload] = useState(0)
     const [data, setData] = useState(false)
-    const [{ data: daily, user }] = useDailyMeasurement(router.query.date, router.query.login)
+    const { data: daily, user } = useDailyMeasurement(router.query.date, router.query.login)
     const token: any = useAppSelector(state => state.token.value)
 
     useEffect(() => {
         (async () => {
-            if (daily) {
+            if (daily?.workout_result) {
                 let res: any = {}
                 if (token.login == router.query.login) {
                     let cache = await getIndexedDBbyID('workout_result', router.query.id)
@@ -26,7 +26,7 @@ const useWorkoutResult = (): [any, () => void] => {
                         res = daily.workout_result.filter((workout: any) => workout._id == router.query.id)
                         if (res?.length == 0) router.push(`/${router.query.login}/workout/results`)
                     }
-                    res = loadMissingDataForWorkoutResult({ 
+                    res = loadMissingDataForWorkoutResult({
                         whenAdded: reverseDateDotes(daily.whenAdded),
                         object: res[0],
                         workout_description: (await getIndexedDBbyID('workout_plan', res[0]?.workout_plan_ID || ''))?.description

@@ -78,7 +78,7 @@ const Description = styled.div`
 
 const Weights = ({ isWeights, closeWeights }: WeightsProps) => {
     const token: any = useAppSelector(state => state.token.value)
-    const [{ data }, reload]: any = useDailyMeasurements(
+    const { data, reload } = useDailyMeasurements(
         getShortDate(),
         useAppSelector(state => state.config.numberSupportedDays),
         token.login

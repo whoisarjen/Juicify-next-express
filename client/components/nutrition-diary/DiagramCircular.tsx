@@ -4,11 +4,11 @@ import { useState, useEffect } from "react";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import styled from "styled-components";
-import useMacro from "../../hooks/useMacro";
 import { useTheme } from "../../hooks/useTheme";
 import { ActivitySchemaProps } from "../../schema/activity.schema";
 import { ProductSchemaProps } from "../../schema/product.schema";
 import { getCalories } from "../../utils/product.utils";
+import { getMacroByDay } from "../../utils/user.utils";
 
 interface CircularWithLabelProps {
     array: Array<Array<ProductSchemaProps & ActivitySchemaProps>>,
@@ -36,13 +36,12 @@ const CircularWithLabel = ({ array, user }: CircularWithLabelProps) => {
     const [calories, setCalories] = useState(0)
     const [progress, setProgress] = useState(0)
     const router = useRouter()
-    const [{ getDay }] = useMacro()
-    const [getTheme]: any = useTheme()
+    const { getTheme } = useTheme()
     const { t } = useTranslation('nutrition-diary')
 
     useEffect(() => {
         if (array) {
-            const macro = getDay(router.query.date, user)
+            const macro = getMacroByDay(router.query.date, user)
             let count: any = 0;
             if (array.length) {
                 for (let i = 0; i < array.length; i++) {
