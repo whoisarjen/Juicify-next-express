@@ -1,4 +1,4 @@
-import { boolean, number, object, preprocess, string, TypeOf } from 'zod'
+import { boolean, date, number, object, preprocess, string, TypeOf } from 'zod'
 import errorBook from '../utils/error.utils'
 
 export const SettingsSchema = object({
@@ -14,9 +14,6 @@ export const SettingsSchema = object({
     facebook: string().max(150).optional(),
     instagram: string().max(150).optional(),
     twitter: string().max(150).optional(),
-    // password: string().optional(),
-    // repeat: string().optional(),
-    // current: string().optional(),
 })
 
 export type SettingsSchemaProps = TypeOf<typeof SettingsSchema>
@@ -26,8 +23,8 @@ export const CreateUserSchema = object({
     password: string().min(8).max(150),
     passwordConfirmation: string().min(8).max(150),
     email: string().email().max(150),
-    height: preprocess((val) => Number(val), number()),
-    birth: string(),
+    height: preprocess((val) => Number(val), number().min(120).max(250)),
+    birth: string().or(date()),
     sex: preprocess((val) => Boolean(val), boolean()),
 }).refine(data => data.password === data.passwordConfirmation, {
     message: errorBook['PASSWORDS DO NOT MATCH']['VALUE'],

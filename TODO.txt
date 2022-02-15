@@ -1,4 +1,4 @@
 add cardio exercises + timer i guess
 
 
-grid loggout
+server doesnt send back error messages

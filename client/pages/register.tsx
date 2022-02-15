@@ -1,24 +1,17 @@
 import Link from "next/link";
-import { useState } from "react";
-import { useRouter } from "next/router";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import useTranslation from "next-translate/useTranslation";
-import axios from "axios";
-import { useForm } from "react-hook-form";
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useNotify } from "../hooks/useNotify";
-import { CreateUserSchema, CreateUserSchemaProps } from '../schema/user.schema'
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import styled from 'styled-components'
 import Logo from "../components/common/Logo";
+import useRegister from "../hooks/useRegister";
 
 const Form = styled.div`
     height: 100%;
@@ -37,29 +30,7 @@ const LogoWrapper = styled.div`
 `
 
 const Register = () => {
-    const router = useRouter();
-    const { t } = useTranslation();
-    const { success } = useNotify()
-    const [loading, setLoading] = useState(false)
-    const [sex, setSex] = useState(1)
-    const [value, setValue] = useState(new Date())
-
-    const { register, formState: { errors }, handleSubmit } = useForm<CreateUserSchemaProps>({
-        resolver: zodResolver(CreateUserSchema)
-    })
-
-    const onSubmit = async (values: CreateUserSchemaProps) => {
-        try {
-            setLoading(true);
-            await axios.post(`${process.env.NEXT_PUBLIC_SERVER}/auth/register`, values, { withCredentials: true });
-            success('CHECK_YOUR_EMAIL')
-            router.push(`/login`);
-        } catch (e: any) {
-            console.log(e.message)
-        } finally {
-            setLoading(false);
-        }
-    }
+    const { onSubmit, t, loading, register, errors, handleSubmit, date, setDate, setValue } = useRegister()
 
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
@@ -119,9 +90,10 @@ const Register = () => {
                     <DesktopDatePicker
                         {...register('birth')}
                         label={t("auth:BIRTH")}
-                        value={value}
+                        value={date}
                         onChange={(newValue: any) => {
-                            setValue(newValue);
+                            setDate(newValue);
+                            setValue('birth', newValue)
                         }}
                         renderInput={(params: any) => <TextField {...params} />}
                     />
@@ -142,21 +114,19 @@ const Register = () => {
                 <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">{t("auth:SEX")}</InputLabel>
                     <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={sex}
                         {...register('sex')}
                         label={t("auth:SEX")}
-                        onChange={(e) => setSex(parseInt(e.target.value.toString()))}
+                        defaultValue="true"
                     >
-                        <MenuItem value={0}>{t("auth:WOMAN")}</MenuItem>
-                        <MenuItem value={1}>{t("auth:MAN")}</MenuItem>
+                        <MenuItem value="true">{t("auth:MAN")}</MenuItem>
+                        <MenuItem value="false">{t("auth:WOMAN")}</MenuItem>
                     </Select>
                 </FormControl>
                 <LoadingButton
                     loading={loading}
                     variant="contained"
                     type="submit"
+                    onClick={handleSubmit(onSubmit)}
                 >
                     {t("auth:REGISTER")}
                 </LoadingButton>
