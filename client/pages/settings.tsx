@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { logout } from '../utils/auth.utils'
 import Button from '@mui/material/Button';
 import BottomFlyingButton from "../components/common/BottomFlyingButton";
@@ -28,30 +28,17 @@ const Box = styled.form`
 
 const Settings = () => {
     const { t } = useTranslation('settings')
-    const [isLoading, setIsLoading] = useState(false)
-    const { changeSettings } = useSettings()
+    const { changeSettings, isLoading } = useSettings()
     const token: any = useAppSelector(state => state.token.value)
 
     const { register, formState: { errors, isDirty }, handleSubmit, reset, setValue } = useForm<SettingsSchemaProps>({
         resolver: zodResolver(SettingsSchema)
     })
 
-    const onSubmit = async (values: SettingsSchemaProps) => {
-        console.log(values)
-        try {
-            setIsLoading(true)
-            // await changeSettings(values)
-        } catch (e: any) {
-            console.log(e.message)
-        } finally {
-            setIsLoading(false);
-        }
-    }
-
     useEffect(() => reset(token), [token])
 
     return (
-        <Box onSubmit={handleSubmit(onSubmit)}>
+        <Box onSubmit={handleSubmit(changeSettings)}>
             <div className="tabTitle">{t('Preferences')}</div>
             <SelectLanguage />
             <div className="tabTitle">{t('Diary')}</div>
@@ -255,7 +242,7 @@ const Settings = () => {
             </Button>
             {
                 isDirty &&
-                <BottomFlyingButton clicked={() => handleSubmit(onSubmit)} isLoading={isLoading} />
+                <BottomFlyingButton clicked={() => handleSubmit(changeSettings)} isLoading={isLoading} />
             }
         </Box>
     );

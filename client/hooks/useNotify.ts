@@ -1,11 +1,11 @@
 import { createContext, useContext } from "react";
 
-const NotifyContext = createContext({
+export const NotifyContext = createContext({
     error: (text: string = 'Error') => { },
     success: (text: string = 'Success') => { }
 });
 
-const useNotify = () => {
+export const useNotify = () => {
     const notify = useContext(NotifyContext);
 
     const success = (text?: string) => {
@@ -16,10 +16,5 @@ const useNotify = () => {
         notify.error(text)
     }
 
-    return [{ error, success }]
-}
-
-export {
-    useNotify,
-    NotifyContext
+    return { error, success }
 }

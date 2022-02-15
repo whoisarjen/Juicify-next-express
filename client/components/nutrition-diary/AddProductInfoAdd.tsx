@@ -37,7 +37,7 @@ const DiagramsOptions = ({ isAdd, setIsAdd, dailyMeasurement, defaultMeal = 0, l
     const [meal, setMeal] = useState(defaultMeal)
     const [howMany, setHowMany] = useState('1')
     const token: any = useAppSelector(state => state.token.value)
-    const [{ success }] = useNotify()
+    const { success } = useNotify()
 
     const addNewProduct = async () => {
         if (parseFloat(howMany) > 0) {

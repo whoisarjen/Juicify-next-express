@@ -205,6 +205,8 @@ export async function updateToken(req: Request, res: Response, user: DocumentDef
         { expiresIn: process.env.TOKEN_LIFE_TIME_IN_S + 's' }
     )
 
+    await socketHandleUserSynchronization({ req, res, data: [], whatToDo: 'change', where: 'settings' }) // We won't send token, client site will asked for refreshing token. It has to be before cookies.
+
     res.cookie('token', token, {
         maxAge: parseInt(process.env.COOKIE_TOKEN_LIFE_TIME_IN_S as string),
         httpOnly: parseBoolean(process.env.COOKIE_HTTPONLY as string),
@@ -222,8 +224,6 @@ export async function updateToken(req: Request, res: Response, user: DocumentDef
         sameSite: 'strict',
         secure: false
     })
-
-    await socketHandleUserSynchronization({ req, res, data: [], whatToDo: 'change', where: 'settings' }) // We won't send token, client site will asked for refreshing token
 
     return token
 }

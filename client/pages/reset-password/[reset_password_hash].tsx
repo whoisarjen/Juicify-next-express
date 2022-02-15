@@ -5,7 +5,7 @@ import { useNotify } from "../../hooks/useNotify";
 
 const ResetPasswordHash = () => {
     const router: any = useRouter()
-    const [{ error, success }] = useNotify()
+    const { error, success } = useNotify()
 
     useEffect(() => {
         (async () => {

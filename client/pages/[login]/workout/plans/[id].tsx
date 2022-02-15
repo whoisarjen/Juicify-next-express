@@ -28,7 +28,7 @@ const WorkoutPlansID = () => {
     const [saveLoading, setSaveLoading] = useState(false)
     const token: any = useAppSelector(state => state.token.value)
     const { data, user } = useWorkoutPlan(router.query.id)
-    const [{ error }] = useNotify()
+    const { error } = useNotify()
 
     const deleteWorkoutPlan = async () => {
         try {

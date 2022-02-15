@@ -3,7 +3,6 @@ import io from "socket.io-client";
 import { useEffect } from 'react'
 import { setToken } from "../../redux/features/token.slice";
 import { deleteIndexedDB, getIndexedDBbyID, addIndexedDB } from '../../utils/indexedDB.utils'
-import { store } from '../../redux/store'
 import { getCookie, refreshToken, setCookie } from '../../utils/auth.utils'
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import { refreshKey } from '../../redux/features/key.slice';
@@ -29,7 +28,9 @@ const Socket = ({ children }: { children: any }) => {
 
                     workersController(lastUpdated)
 
-                    if (getOnline() && lastUpdated.settings > await getCookie('settings') || await getIndexedDBbyID('whatToUpdate', 'settings')) dispatch(setToken(await refreshToken()));
+                    if (getOnline() && lastUpdated.settings > await getCookie('settings') || await getIndexedDBbyID('whatToUpdate', 'settings')) {
+                        dispatch(setToken(await refreshToken()));
+                    }
 
                 } catch (error: any) {
                     console.log(error)
@@ -39,7 +40,6 @@ const Socket = ({ children }: { children: any }) => {
 
             socket.on('synchronizationMessege', async (message) => {
                 if (message.socket_ID != await getCookie('socket_ID')) {
-                    console.log('synchronizationMessege passed')
                     if (message.where == 'settings') {
                         dispatch(setToken(await refreshToken()));
                     } else {

@@ -30,7 +30,7 @@ const CreateProduct = ({ closeCreateProduct, isCreateProduct, created, defaultBa
     const [code, setCode] = useState(defaultBarcode)
     const [loading, setLoading] = useState(false)
     const token: any = useAppSelector(state => state.token.value)
-    const [{ success, error }] = useNotify()
+    const { success, error } = useNotify()
 
     const { register, formState: { errors }, handleSubmit } = useForm<ProductSchemaProps>({
         resolver: zodResolver(ProductSchema)

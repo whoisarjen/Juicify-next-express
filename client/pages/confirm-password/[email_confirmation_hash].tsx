@@ -5,7 +5,7 @@ import { useNotify } from "../../hooks/useNotify";
 
 const ConfirmPassword = () => {
     const router: any = useRouter()
-    const [{ error, success }] = useNotify()
+    const { error, success } = useNotify()
 
     useEffect(() => {
         (async () => {

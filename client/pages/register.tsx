@@ -39,7 +39,7 @@ const LogoWrapper = styled.div`
 const Register = () => {
     const router = useRouter();
     const { t } = useTranslation();
-    const [{ success }] = useNotify()
+    const { success } = useNotify()
     const [loading, setLoading] = useState(false)
     const [sex, setSex] = useState(1)
     const [value, setValue] = useState(new Date())

@@ -23,7 +23,7 @@ interface CreateExerciseProps {
 const CreateExercise = ({ closeCreateExercise, isCreateExercise, created }: CreateExerciseProps) => {
     const { t } = useTranslation('workout')
     const [loading, setLoading] = useState(false)
-    const [{ success }] = useNotify()
+    const { success } = useNotify()
 
     const { register, formState: { errors }, handleSubmit } = useForm<ExerciseSchemaProps>({
         resolver: zodResolver(ExerciseSchema)
