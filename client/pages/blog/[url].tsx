@@ -1,5 +1,5 @@
-import Post from "../../components/pages/blog/usePost";
 import usePost from "../../components/pages/blog/usePost";
+import Post from '../../components/pages/blog/post'
 
 const PostPage = () => {
     const props = usePost()

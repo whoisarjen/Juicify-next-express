@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import AddProductMoreInformation from "../../nutrition-diary/AddProductInfo";
-import CreateProduct from "../../nutrition-diary/CreateProduct";
+import AddProductMoreInformation from "../nutrition-diary/AddProductInfo";
+import CreateProduct from "../nutrition-diary/CreateProduct";
 
 const Grid = styled.div`
     width: 100%;

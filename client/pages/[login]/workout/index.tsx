@@ -1,4 +1,4 @@
-import Box from "../../../components/workout/Box";
+import Box from "../../../components/pages/workout/Box";
 import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
 

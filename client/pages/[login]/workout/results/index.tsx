@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router'
 import { useAppSelector } from '../../../../hooks/useRedux'
-import Box from '../../../../components/workout/Box'
+import Box from '../../../../components/pages/workout/Box'
 import useTranslation from "next-translate/useTranslation"
 import useWorkoutResults from '../../../../hooks/useWorkoutResults'
-import CreateDialog from "../../../../components/workout/results/CreateDialog"
-import Navbar from '../../../../components/profile/Navbar'
+import CreateDialog from "../../../../components/pages/workout/results/CreateDialog"
+import Navbar from '../../../../components/pages/profile/Navbar'
 import styled from 'styled-components'
 
 const Title = styled.div`

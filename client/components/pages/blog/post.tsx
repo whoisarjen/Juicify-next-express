@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styled from 'styled-components'
-import { PostProps } from "./usePost";
+import { usePostProps } from "./usePost";
 
 const Box = styled.div`
     position: relative;
@@ -51,7 +51,7 @@ const Content = styled.div`
     line-height: 1.5;
 `
 
-const Blog = ({ title, content, img_url }: PostProps) => {
+const Blog = ({ post: { title, content, img_url } }: usePostProps) => {
     return (
         <Box>
             <PostGrid>
