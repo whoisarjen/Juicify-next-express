@@ -30,10 +30,10 @@ const LogoWrapper = styled.div`
 `
 
 const Register = () => {
-    const { onSubmit, t, loading, register, errors, handleSubmit, date, setDate, setValue } = useRegister()
+    const { registerUser, t, loading, register, errors, handleSubmit, date, setDate, setValue } = useRegister()
 
     return (
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(registerUser)}>
             <LogoWrapper>
                 <Logo size={180} />
             </LogoWrapper>
@@ -126,7 +126,7 @@ const Register = () => {
                     loading={loading}
                     variant="contained"
                     type="submit"
-                    onClick={handleSubmit(onSubmit)}
+                    onClick={handleSubmit(registerUser)}
                 >
                     {t("auth:REGISTER")}
                 </LoadingButton>

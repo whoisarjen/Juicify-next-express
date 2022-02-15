@@ -19,10 +19,10 @@ const useRegister = () => {
         resolver: zodResolver(CreateUserSchema)
     })
 
-    const onSubmit = async (values: CreateUserSchemaProps) => {
+    const registerUser = async (object: CreateUserSchemaProps) => {
         try {
             setLoading(true);
-            await post({ url: '/auth/register', object: values })
+            await post({ url: '/auth/register', object })
             success('CHECK_YOUR_EMAIL')
             router.push(`/login`);
         } catch (e: any) {
@@ -33,7 +33,7 @@ const useRegister = () => {
         }
     }
 
-    return { onSubmit, t, loading, register, errors, handleSubmit, date, setDate, setValue }
+    return { registerUser, t, loading, register, errors, handleSubmit, date, setDate, setValue }
 }
 
 export default useRegister;
