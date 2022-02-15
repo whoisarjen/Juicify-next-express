@@ -1,83 +1,131 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { RouterContext } from "next/dist/shared/lib/router-context";
 import { Provider } from "react-redux";
-import Settings from "../../pages/settings";
 import { store } from "../../redux/store";
 import { createMockRouter } from "../../test-utils/createMockRouter.test.utils";
 import user from '@testing-library/user-event'
+import useSettings from "./useSettings";
+import Settings from ".";
 
-// const MockSettings = () => {
-//     return (
-//         <Provider store={store}>
-//             <RouterContext.Provider value={createMockRouter({
-//                 locale: 'en',
-//                 locales: ['en', 'pl']
-//             })}>
-//                 <Settings />
-//             </RouterContext.Provider>
-//         </Provider>
-//     )
-// }
+let handleSubmit: any = null
 
-// const testInputs = ({ where, input, tryBadValue, getError, tryCorrectValue, getErrorNull }: any) => {
-//     describe(`Gave not valid value to ${where}`, () => {
-//         it('Should return error message', async () => {
-//             render(<MockSettings />)
-//             user.type(input(), tryBadValue)
-//             await waitFor(() => user.click(screen.getByRole('button', {
-//                 name: /submit/i
-//             })))
-//             await waitFor(() => getError())
-//         })
-//     })
-//     describe(`Gave valid value to ${where}`, () => {
-//         it('Should correctly fire submit function', async () => {
-//             render(<MockSettings />)
-//             user.type(input(), tryCorrectValue)
-//             await waitFor(() => user.click(screen.getByRole('button', {
-//                 name: /submit/i
-//             })))
-//             expect(getErrorNull()).toBeNull()
-//         })
-//     })
-// }
+const LoadSettings = () => {
+    const props = useSettings()
+    handleSubmit = jest.spyOn(props, 'handleSubmit')
+    return (
+        <Settings {...props} />
+    )
+}
 
-// describe(`Testing properly working of settings's inputes`, () => {
-//     testInputs({
-//         where: 'meal number',
-//         input: () => screen.getByLabelText(/number of meals/i),
-//         tryBadValue: '1234',
-//         getError: () => screen.getByText(/Value should be less than or equal to 10/i),
-//         tryCorrectValue: '5',
-//         getErrorNull: () => screen.queryByText(/Value should be less than or equal to 10/i),
-//     })
+const setup = () => {
+    return render(
+        <Provider store={store}>
+            <RouterContext.Provider value={createMockRouter({
+                locale: 'en',
+                locales: ['en', 'pl']
+            })}>
+                <LoadSettings />
+            </RouterContext.Provider>
+        </Provider>
+    )
+}
 
-//     testInputs({
-//         where: 'Fiber',
-//         input: () => screen.getByLabelText(/fiber/i),
-//         tryBadValue: '1234',
-//         getError: () => screen.getByText(/Value should be less than or equal to 100/i),
-//         tryCorrectValue: '10',
-//         getErrorNull: () => screen.queryByText(/Value should be less than or equal to 100/i),
-//     })
+beforeEach(() => {
+    setup()
+    jest.clearAllMocks();
+})
 
-//     testInputs({
-//         where: 'Sugar',
-//         input: () => screen.getByLabelText(/sugar/i),
-//         tryBadValue: '1234',
-//         getError: () => screen.getByText(/Value should be less than or equal to 100/i),
-//         tryCorrectValue: '10',
-//         getErrorNull: () => screen.queryByText(/Value should be less than or equal to 100/i),
-//     })
+describe(`Checking settings page`, () => {
+    describe('Lettings default behave', () => {
 
-//     testInputs({
-//         where: 'Height',
-//         input: () => screen.getByLabelText(/height/i),
-//         tryBadValue: '1234',
-//         getError: () => screen.getByText(/Value should be less than or equal to 250/i),
-//         tryCorrectValue: '150',
-//         getErrorNull: () => screen.queryByText(/Value should be less than or equal to 250/i),
-//     })
-// })
+        it('Expecting to load properly component', () => { })
+
+        describe(`Expect to change component's value and fire submit`, () => {
+            it('Language', () => {
+                screen.getByLabelText(/language/i)
+            })
+            it('Number of meals', () => {
+                const input = screen.getByLabelText(/number of meals/i)
+                user.type(input, '10')
+                user.click(screen.getByRole('button', {
+                    name: /submit/i
+                }))
+                expect(handleSubmit).toBeCalled()
+            })
+            it('Fiber', () => {
+                const input = screen.getByLabelText(/Fiber/i)
+                user.type(input, '10')
+                user.click(screen.getByRole('button', {
+                    name: /submit/i
+                }))
+                expect(handleSubmit).toBeCalled()
+            })
+            it('Sugar', () => {
+                const input = screen.getByLabelText(/Sugar/i)
+                user.type(input, '10')
+                user.click(screen.getByRole('button', {
+                    name: /submit/i
+                }))
+                expect(handleSubmit).toBeCalled()
+            })
+            it('Name', () => {
+                const input = screen.getByLabelText(/Name/)
+                user.type(input, '10')
+                user.click(screen.getByRole('button', {
+                    name: /submit/i
+                }))
+                expect(handleSubmit).toBeCalled()
+            })
+            it('Surname', () => {
+                const input = screen.getByLabelText(/Surname/i)
+                user.type(input, '10')
+                user.click(screen.getByRole('button', {
+                    name: /submit/i
+                }))
+                expect(handleSubmit).toBeCalled()
+            })
+            it('Height', () => {
+                const input = screen.getByLabelText(/Height/i)
+                user.type(input, '10')
+                user.click(screen.getByRole('button', {
+                    name: /submit/i
+                }))
+                expect(handleSubmit).toBeCalled()
+            })
+            it('Description', () => {
+                const input = screen.getByLabelText(/Description/i)
+                user.type(input, '10')
+                user.click(screen.getByRole('button', {
+                    name: /submit/i
+                }))
+                expect(handleSubmit).toBeCalled()
+            })
+            it('Website', () => {
+                const input = screen.getByLabelText(/Website/i)
+                user.type(input, '10')
+                user.click(screen.getByRole('button', {
+                    name: /submit/i
+                }))
+                expect(handleSubmit).toBeCalled()
+            })
+            it('Facebook', () => {
+                const input = screen.getByLabelText(/Facebook/i)
+                user.type(input, '10')
+                user.click(screen.getByRole('button', {
+                    name: /submit/i
+                }))
+                expect(handleSubmit).toBeCalled()
+            })
+            it('Instagram', () => {
+                const input = screen.getByLabelText(/Instagram/i)
+                user.type(input, '10')
+            })
+            it('Twitter', () => {
+                const input = screen.getByLabelText(/Twitter/i)
+                user.type(input, '10')
+            })
+        })
+    })
+})
 
 export default {};

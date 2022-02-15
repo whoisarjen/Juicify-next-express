@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react'
-import { store } from "../redux/store"
+import { store } from "../../redux/store"
 import user from '@testing-library/user-event'
-import Login from '../pages/login';
+import Login from '../../pages/login';
 import { Provider } from "react-redux";
 
 describe('Testing login validation', () => {

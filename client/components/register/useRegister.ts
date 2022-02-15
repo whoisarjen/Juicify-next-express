@@ -3,9 +3,9 @@ import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { CreateUserSchema, CreateUserSchemaProps } from "../schema/user.schema";
-import useAxios from "./useAxios";
-import { useNotify } from "./useNotify";
+import { CreateUserSchema, CreateUserSchemaProps } from "../../schema/user.schema";
+import useAxios from "../../hooks/useAxios";
+import { useNotify } from "../../hooks/useNotify";
 
 const useRegister = () => {
     const { post } = useAxios()
@@ -35,5 +35,7 @@ const useRegister = () => {
 
     return { registerUser, t, loading, register, errors, handleSubmit, date, setDate, setValue }
 }
+
+export type useRegisterProps = ReturnType<typeof useRegister>
 
 export default useRegister;

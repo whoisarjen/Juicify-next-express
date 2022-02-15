@@ -3,12 +3,12 @@ import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { CreateSessionSchemaProps, CreateSessionSchema } from "../schema/session.schema";
-import { readToken } from "../utils/auth.utils";
-import { getShortDate } from "../utils/date.utils";
-import { createIndexedDB, addIndexedDB } from "../utils/indexedDB.utils";
-import useAxios from "./useAxios";
-import useToken from "./useToken";
+import { CreateSessionSchemaProps, CreateSessionSchema } from "../../schema/session.schema";
+import { readToken } from "../../utils/auth.utils";
+import { getShortDate } from "../../utils/date.utils";
+import { createIndexedDB, addIndexedDB } from "../../utils/indexedDB.utils";
+import useAxios from "../../hooks/useAxios";
+import useToken from "../../hooks/useToken";
 
 const useLogin = () => {
     const { dispatchToken } = useToken()
@@ -43,5 +43,7 @@ const useLogin = () => {
 
     return { login, register, errors, handleSubmit, loading, t }
 }
+
+export type useLoginProps = ReturnType<typeof useLogin>
 
 export default useLogin;
