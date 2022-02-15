@@ -1,21 +1,3 @@
-import { deleteDatabaseIndexedDB } from "./indexedDB.utils";
-import axios from "axios";
-
-export const logout = async () => {
-    try {
-        await axios.post(`${process.env.NEXT_PUBLIC_SERVER}/auth/logout`, {}, { withCredentials: true });
-        await deleteDatabaseIndexedDB();
-        const isDarkMode = localStorage.getItem('isDarkMode');
-        localStorage.clear();
-        if (isDarkMode) {
-            localStorage.setItem('isDarkMode', isDarkMode)
-        }
-        window.location.replace(`${window.location.origin}/login`)
-    } catch (e: any) {
-        console.log(e.message)
-    }
-}
-
 export const readToken = async (token: string) => {
     if (!token) return ''
     return JSON.parse(Buffer.from(token.split(".")[1], "base64").toString());

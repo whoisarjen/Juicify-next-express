@@ -9,6 +9,10 @@ interface postProps {
     url: string
 }
 
+interface deleteProps {
+    url: string
+}
+
 const useAxios = () => {
 
     const get = async ({ url }: getProps) => {
@@ -19,7 +23,11 @@ const useAxios = () => {
         return await axios.post(`${process.env.NEXT_PUBLIC_SERVER}${url}`, object, { withCredentials: true });
     }
 
-    return { get, post }
+    const axiosDelete = async ({ url }: deleteProps) => {
+        return await axios.delete(`${process.env.NEXT_PUBLIC_SERVER}${url}`, { withCredentials: true });
+    }
+
+    return { get, post, axiosDelete }
 }
 
 export default useAxios;

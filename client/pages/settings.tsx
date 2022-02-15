@@ -1,4 +1,3 @@
-import { logout } from '../utils/auth.utils'
 import Button from '@mui/material/Button';
 import BottomFlyingButton from "../components/common/BottomFlyingButton";
 import useSettings from "../hooks/useSettings";
@@ -20,7 +19,7 @@ const Box = styled.form`
 `
 
 const Settings = () => {
-    const { changeSettings, isLoading, isDirty, errors, register, handleSubmit, t } = useSettings()
+    const { changeSettings, isLoading, isDirty, errors, register, handleSubmit, t, logout } = useSettings()
 
     return (
         <Box onSubmit={handleSubmit(changeSettings)}>

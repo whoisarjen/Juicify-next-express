@@ -7,9 +7,11 @@ import { useAppSelector } from "./useRedux";
 import { SettingsSchema, SettingsSchemaProps } from "../schema/user.schema";
 import useAxios from "./useAxios";
 import useToken from "./useToken";
+import useAuth from "./useAuth";
 
 const useSettings = () => {
     const { post } = useAxios();
+    const { logout } = useAuth();
     const { dispatchToken } = useToken()
     const { success, error } = useNotify()
     const { t } = useTranslation('settings')
@@ -36,7 +38,7 @@ const useSettings = () => {
 
     useEffect(() => reset(token), [token])
 
-    return { changeSettings, isLoading, isDirty, errors, register, handleSubmit, t }
+    return { changeSettings, isLoading, isDirty, errors, register, handleSubmit, t, logout }
 }
 
 

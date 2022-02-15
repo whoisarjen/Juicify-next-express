@@ -35,7 +35,9 @@ export const createIndexedDB = async (): Promise<any> => {
   });
 };
 
-export const deleteDatabaseIndexedDB = async () => window.indexedDB.deleteDatabase(namOfIndexedDB)
+export const deleteDatabaseIndexedDB = async () => {
+  return window.indexedDB.deleteDatabase(namOfIndexedDB)
+}
 
 export const getAllIndexedDB = async (value: string): Promise<any> => {
   let request = await connectIndexedDB();

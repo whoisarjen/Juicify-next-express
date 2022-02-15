@@ -6,7 +6,7 @@ const Grid = styled.aside`
     margin-right: 0;
     width: 100%;
     max-width: 200px;
-    @media(max-width: 1252px) {
+    @media(max-width: 1468px) {
         display: none;
     }
 `
