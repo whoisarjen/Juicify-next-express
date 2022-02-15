@@ -4,10 +4,10 @@ import TextField from '@mui/material/TextField'
 import DeleteIcon from '@mui/icons-material/Delete'
 import Navbar from '../Navbar'
 import SwapVertIcon from '@mui/icons-material/SwapVert'
-import ButtonPlus from '../../../../components/common/ButtonPlus'
+import ButtonPlus from '../../../common/ButtonPlus'
 import AddExercises from '../AddExercises'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
-import BottomFlyingGuestBanner from '../../../../components/common/BottomFlyingGuestBanner'
+import BottomFlyingGuestBanner from '../../../common/BottomFlyingGuestBanner'
 import { ExerciseSchemaProps } from '../../../../schema/exercise.schema'
 import { useWorkoutPlanProps } from './useWorkoutPlan'
 

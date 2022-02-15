@@ -3,7 +3,7 @@ import { useAppSelector } from '../../../../hooks/useRedux'
 import Box from '../../../../components/pages/workout/Box'
 import useTranslation from "next-translate/useTranslation"
 import useWorkoutResults from '../../../../hooks/useWorkoutResults'
-import CreateDialog from "../../../../components/pages/workout/workout-result/CreateDialog"
+import CreateDialog from "../../../../components/pages/workout/result/CreateDialog"
 import Navbar from '../../../../components/pages/profile/Navbar'
 import styled from 'styled-components'
 

@@ -1,6 +1,6 @@
 
-import useWorkoutResult from '../../../../../components/pages/workout/workout-result/useWorkoutResult';
-import WorkoutResult from '../../../../../components/pages/workout/workout-result';
+import useWorkoutResult from '../../../../../components/pages/workout/result/useWorkoutResult';
+import WorkoutResult from '../../../../../components/pages/workout/result';
 
 const WorkoutResultspage = () => {
     const props = useWorkoutResult()

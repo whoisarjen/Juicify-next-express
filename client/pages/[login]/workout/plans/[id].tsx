@@ -1,5 +1,5 @@
-import useWorkoutPlan from '../../../../components/pages/workout/workout-plan/useWorkoutPlan'
-import WorkoutPlan from '../../../../components/pages/workout/workout-plan'
+import useWorkoutPlan from '../../../../components/pages/workout/plan/useWorkoutPlan'
+import WorkoutPlan from '../../../../components/pages/workout/plan'
 
 const WorkoutPlanPage = () => {
     const props = useWorkoutPlan()
