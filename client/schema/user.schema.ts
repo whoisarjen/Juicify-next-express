@@ -1,4 +1,4 @@
-import { boolean, date, number, object, preprocess, string, TypeOf } from 'zod'
+import { array, boolean, date, number, object, preprocess, string, TypeOf } from 'zod'
 import errorBook from '../utils/error.utils'
 
 export const SettingsSchema = object({
@@ -7,13 +7,14 @@ export const SettingsSchema = object({
     sugar_percent: preprocess((val) => Number(val), number().min(0).max(100)).optional(),
     name: string().max(50).optional(),
     surname: string().max(50).optional(),
-    birth: string(),
+    birth: string().optional(),
     height: preprocess((val) => Number(val), number().min(120).max(250)).optional(),
     description: string().max(255).optional(),
     website: string().max(150).optional(),
     facebook: string().max(150).optional(),
     instagram: string().max(150).optional(),
     twitter: string().max(150).optional(),
+    macronutrients: array(object({ proteins: number(), carbs: number(), fats: number() })).optional(),
 })
 
 export type SettingsSchemaProps = TypeOf<typeof SettingsSchema>

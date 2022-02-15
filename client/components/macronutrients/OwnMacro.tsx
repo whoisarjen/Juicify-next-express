@@ -10,7 +10,7 @@ import { TransitionProps } from '@mui/material/transitions';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import ConfirmDialog from "../common/ConfirmDialog";
-import useSettings from '../../hooks/useSettings'
+import useSettings from '../settings/useSettings'
 import { useAppSelector } from "../../hooks/useRedux";
 import useTranslation from "next-translate/useTranslation";
 

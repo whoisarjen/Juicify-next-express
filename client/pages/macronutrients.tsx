@@ -4,7 +4,7 @@ import { useAppSelector } from "../hooks/useRedux";
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import SimpleSlider from "../components/macronutrients/SimpleSlider";
 import BottomFlyingButton from '../components/common/BottomFlyingButton'
-import useSettings from '../hooks/useSettings'
+import useSettings from '../components/settings/useSettings'
 import Button from '@mui/material/Button';
 import OwnMacro from "../components/macronutrients/OwnMacro";
 import useTranslation from "next-translate/useTranslation";

@@ -1,13 +1,13 @@
-import { useNotify } from "./useNotify";
+import { useNotify } from "../../hooks/useNotify";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useTranslation from "next-translate/useTranslation";
-import { useAppSelector } from "./useRedux";
-import { SettingsSchema, SettingsSchemaProps } from "../schema/user.schema";
-import useAxios from "./useAxios";
-import useToken from "./useToken";
-import useAuth from "./useLogout";
+import { useAppSelector } from "../../hooks/useRedux";
+import { SettingsSchema, SettingsSchemaProps } from "../../schema/user.schema";
+import useAxios from "../../hooks/useAxios";
+import useToken from "../../hooks/useToken";
+import useAuth from "../../hooks/useLogout";
 
 const useSettings = () => {
     const { post } = useAxios();
@@ -41,5 +41,6 @@ const useSettings = () => {
     return { changeSettings, isLoading, isDirty, errors, register, handleSubmit, t, logout }
 }
 
+export type useSettingsProps = ReturnType<typeof useSettings>
 
 export default useSettings;
