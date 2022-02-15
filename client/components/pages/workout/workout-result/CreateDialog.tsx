@@ -15,7 +15,6 @@ import useWorkoutPlans from '../../../../hooks/useWorkoutPlans'
 import DialogContentText from '@mui/material/DialogContentText'
 import DatePicker from '../../../common/MobileDatePicker'
 import { getShortDate } from '../../../../utils/date.utils'
-import { ExerciseSchemaProps } from '../../../../schema/exercise.schema'
 import { WorkoutPlanSchemaProps } from '../../../../schema/workoutPlan.schema'
 
 const DialogCreateResult = () => {
