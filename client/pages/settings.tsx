@@ -1,5 +1,5 @@
-import Settings from "../components/settings";
-import useSettings from "../components/settings/useSettings";
+import Settings from "../components/pages/settings";
+import useSettings from "../components/pages/settings/useSettings";
 
 const SettingsPage = () => {
     const props = useSettings()

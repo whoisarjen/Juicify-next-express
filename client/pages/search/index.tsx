@@ -1,11 +1,7 @@
 import SearchBox from "../../components/common/SearchBox";
 
 const Search = () => {
-    return (
-        <div className="search">
-            <SearchBox />
-        </div>
-    );
+    return <div><SearchBox /></div>
 };
 
 export default Search;

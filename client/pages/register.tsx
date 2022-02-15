@@ -1,5 +1,5 @@
-import useRegister from "../components/register/useRegister";
-import Register from "../components/register";
+import useRegister from "../components/pages/register/useRegister";
+import Register from "../components/pages/register";
 
 const RegisterPage = () => {
     const props = useRegister()

@@ -1,33 +1,10 @@
-import { useRouter } from "next/router";
-import SearchBox from "../../components/common/SearchBox";
-import useSearch from '../../hooks/useSearch'
-import List from '@mui/material/List';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '../../components/common/Avatar';
-import ListItemButton from '@mui/material/ListItemButton';
+import Search from "../../components/pages/search";
+import useSearch from "../../components/pages/search/useSearch";
 
-const Search = () => {
-    const router: any = useRouter()
-    const { data } = useSearch(router.query.find, 'users')
-
-    return (
-        <div className="search">
-            <SearchBox />
-            <List sx={{ width: '100%', bgcolor: 'background.paper', marginTop: '12px' }}>
-                {
-                    data?.items?.map((user: any) =>
-                        <ListItemButton onClick={() => router.push(`/${user.login}`)} key={user._id}>
-                            <ListItemAvatar>
-                                <Avatar user={user} size="40px" />
-                            </ListItemAvatar>
-                            <ListItemText primary={user.login} secondary={`${user.name} ${user.surname}`} />
-                        </ListItemButton>
-                    )
-                }
-            </List>
-        </div>
-    );
+const SearchPage = () => {
+    const props = useSearch()
+    
+    return <Search {...props} />
 };
 
-export default Search;
+export default SearchPage;

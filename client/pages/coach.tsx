@@ -1,5 +1,5 @@
-import Coach from "../components/coach";
-import useCoach from "../components/coach/useCoach";
+import Coach from "../components/pages/coach";
+import useCoach from "../components/pages/coach/useCoach";
 
 const CoachPage = () => {
     const props = useCoach()

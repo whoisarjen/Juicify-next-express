@@ -1,5 +1,5 @@
-import Macronutrients from "../components/macronutrients";
-import useMacronutrients from "../components/macronutrients/useMacronutrients";
+import Macronutrients from "../components/pages/macronutrients";
+import useMacronutrients from "../components/pages/macronutrients/useMacronutrients";
 
 const MacronutrientsPage = () => {
     const props = useMacronutrients()
