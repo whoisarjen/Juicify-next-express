@@ -1,25 +1,26 @@
-import axios from "axios"
-import { useState } from "react";
-import { setToken } from "../redux/features/token.slice";
-import { readToken } from "../utils/auth.utils";
 import { useNotify } from "./useNotify";
-import { useAppDispatch } from "./useRedux";
+import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import useTranslation from "next-translate/useTranslation";
+import { useAppSelector } from "./useRedux";
+import { SettingsSchema, SettingsSchemaProps } from "../schema/user.schema";
+import useAxios from "./useAxios";
+import useToken from "./useToken";
 
 const useSettings = () => {
-    const dispatch = useAppDispatch();
+    const { post } = useAxios();
+    const { dispatchToken } = useToken()
     const { success, error } = useNotify()
+    const { t } = useTranslation('settings')
     const [isLoading, setIsLoading] = useState(false)
+    const token: any = useAppSelector(state => state.token.value)
 
-    const changeSettings = async (object: any) => {
+    const changeSettings = async (object: SettingsSchemaProps) => {
         try {
             setIsLoading(true)
-            const response = await axios.post(
-                `${process.env.NEXT_PUBLIC_SERVER}/auth/change`,
-                object,
-                { withCredentials: true }
-            );
-            localStorage.setItem('token', JSON.stringify(await readToken(response.data.token)))
-            dispatch(setToken(await readToken(response.data.token)));
+            const response = await post({ object, url: '/auth/change' });
+            await dispatchToken(response.data.token)
             success()
         } catch (e: any) {
             error()
@@ -29,7 +30,13 @@ const useSettings = () => {
         }
     }
 
-    return { changeSettings, isLoading }
+    const { register, formState: { errors, isDirty }, handleSubmit, reset } = useForm<SettingsSchemaProps>({
+        resolver: zodResolver(SettingsSchema)
+    })
+
+    useEffect(() => reset(token), [token])
+
+    return { changeSettings, isLoading, isDirty, errors, register, handleSubmit, t }
 }
 
 

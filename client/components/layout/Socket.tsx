@@ -3,14 +3,16 @@ import io from "socket.io-client";
 import { useEffect } from 'react'
 import { setToken } from "../../redux/features/token.slice";
 import { deleteIndexedDB, getIndexedDBbyID, addIndexedDB } from '../../utils/indexedDB.utils'
-import { getCookie, refreshToken, setCookie } from '../../utils/auth.utils'
+import { getCookie, setCookie } from '../../utils/auth.utils'
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import { refreshKey } from '../../redux/features/key.slice';
 import { workersController } from '../../utils/worker.utils';
 import { getOnline } from '../../utils/db.utils';
+import useToken from '../../hooks/useToken';
 
 const Socket = ({ children }: { children: any }) => {
     const dispatch = useAppDispatch()
+    const { refreshToken } = useToken()
     const token: any = useAppSelector(state => state.token.value)
 
     useEffect(() => {
@@ -29,7 +31,7 @@ const Socket = ({ children }: { children: any }) => {
                     workersController(lastUpdated)
 
                     if (getOnline() && lastUpdated.settings > await getCookie('settings') || await getIndexedDBbyID('whatToUpdate', 'settings')) {
-                        dispatch(setToken(await refreshToken()));
+                        await refreshToken()
                     }
 
                 } catch (error: any) {
@@ -41,7 +43,7 @@ const Socket = ({ children }: { children: any }) => {
             socket.on('synchronizationMessege', async (message) => {
                 if (message.socket_ID != await getCookie('socket_ID')) {
                     if (message.where == 'settings') {
-                        dispatch(setToken(await refreshToken()));
+                        await refreshToken()
                     } else {
                         for (let i = 0; i < message.array.length; i++) {
                             await deleteIndexedDB(message.where, message.array[i][message.where == 'daily_measurement' ? 'whenAdded' : '_id'])

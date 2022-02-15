@@ -1,18 +1,11 @@
-import { useEffect } from "react";
 import { logout } from '../utils/auth.utils'
 import Button from '@mui/material/Button';
 import BottomFlyingButton from "../components/common/BottomFlyingButton";
 import useSettings from "../hooks/useSettings";
-import useTranslation from "next-translate/useTranslation";
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
-import { useAppSelector } from "../hooks/useRedux";
-import MobileDatePicker from "../components/common/MobileDatePicker";
 import SelectLanguage from "../components/common/SelectLanguage";
 import styled from 'styled-components'
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { SettingsSchema, SettingsSchemaProps } from '../schema/user.schema'
 
 const Box = styled.form`
     ${this} .MuiTextField-root {
@@ -27,15 +20,7 @@ const Box = styled.form`
 `
 
 const Settings = () => {
-    const { t } = useTranslation('settings')
-    const { changeSettings, isLoading } = useSettings()
-    const token: any = useAppSelector(state => state.token.value)
-
-    const { register, formState: { errors, isDirty }, handleSubmit, reset, setValue } = useForm<SettingsSchemaProps>({
-        resolver: zodResolver(SettingsSchema)
-    })
-
-    useEffect(() => reset(token), [token])
+    const { changeSettings, isLoading, isDirty, errors, register, handleSubmit, t } = useSettings()
 
     return (
         <Box onSubmit={handleSubmit(changeSettings)}>
@@ -106,11 +91,6 @@ const Settings = () => {
                     errors.surname?.message.length &&
                     errors.surname?.message
                 }
-            />
-            <MobileDatePicker
-                change={(newDate) => setValue('birth', newDate, { shouldDirty: true })}
-                defaultDate={token.birth}
-                label={t("Birth")}
             />
             <TextField
                 id="outlined-number"
@@ -199,43 +179,6 @@ const Settings = () => {
                     errors.twitter?.message
                 }
             />
-            {/* <div className="tabTitle">{t('Password')}</div>
-            <TextField
-                label={t("New password")}
-                variant="outlined"
-                type="text"
-                {...register('password')}
-                error={typeof errors.password === 'undefined' ? false : true}
-                helperText={
-                    errors.password?.message &&
-                    errors.password?.message.length &&
-                    errors.password?.message
-                }
-            />
-            <TextField
-                label={t("Repeat new password")}
-                variant="outlined"
-                type="text"
-                {...register('repeat')}
-                error={typeof errors.repeat === 'undefined' ? false : true}
-                helperText={
-                    errors.repeat?.message &&
-                    errors.repeat?.message.length &&
-                    errors.repeat?.message
-                }
-            />
-            <TextField
-                label={t("Current password")}
-                variant="outlined"
-                type="text"
-                {...register('current')}
-                error={typeof errors.current === 'undefined' ? false : true}
-                helperText={
-                    errors.current?.message &&
-                    errors.current?.message.length &&
-                    errors.current?.message
-                }
-            /> */}
             <div className="tabTitle">{t('Logout')}</div>
             <Button color="error" onClick={async () => await logout()}>
                 Logout

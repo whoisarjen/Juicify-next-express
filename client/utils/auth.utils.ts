@@ -21,11 +21,6 @@ export const readToken = async (token: string) => {
     return JSON.parse(Buffer.from(token.split(".")[1], "base64").toString());
 };
 
-export const refreshToken = async () => {
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_SERVER}/auth/refresh`, {}, { withCredentials: true });
-    return await readToken(response.data.token)
-}
-
 export const getCookie = async (cookieName: string) => {
     let cookie: any = {};
     document.cookie.split(';').forEach(function (el) {

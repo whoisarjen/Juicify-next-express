@@ -25,7 +25,7 @@ const routes = (app: Express) => {
 
     app.post('/find/users', getUsersByLoginController)
     app.post('/auth/login', validateResource(createSessionSchema), createUserSessionController)
-    app.post('/auth/refresh', requireUser, refreshUserSessionController)
+    app.get('/auth/refresh', requireUser, refreshUserSessionController)
     app.post('/auth/change', requireUser, changeUserController)
     app.post('/auth/register', validateResource(createUserSchema as any), createUserController)
     app.post('/auth/logout', deleteUserSessionController)
