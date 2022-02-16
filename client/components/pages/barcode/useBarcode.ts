@@ -139,4 +139,6 @@ const useBarcode = () => {
     return { loadedProduct, setLoadedProduct, data, isCreateProduct, setIsCreateProduct, loadedBarcode, _onDetected }
 }
 
+export type useBarcodeProps = ReturnType<typeof useBarcode>
+
 export default useBarcode;

@@ -15,7 +15,7 @@ import { deleteIndexedDB, getAllIndexedDB } from '../../../utils/indexedDB.utils
 import { TransitionProps } from '@material-ui/core/transitions';
 import { ExerciseSchemaProps } from '../../../schema/exercise.schema';
 import styled from 'styled-components'
-import CreateExercise from './CreateExercise';
+import CreateExercise from './CreateExerciseDialog';
 
 const Transition = forwardRef(function Transition(
     props: TransitionProps & {

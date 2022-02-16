@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import AddProductMoreInformation from "../nutrition-diary/AddProductInfo";
 import CreateProduct from "../nutrition-diary/CreateProduct";
+import { useBarcodeProps } from "./useBarcode";
 
 const Grid = styled.div`
     width: 100%;
@@ -23,7 +24,7 @@ const Grid = styled.div`
     }
 `
 
-const Barcode = ({ loadedProduct, setLoadedProduct, data, isCreateProduct, setIsCreateProduct, loadedBarcode, _onDetected }: any) => {
+const Barcode = ({ loadedProduct, setLoadedProduct, data, isCreateProduct, setIsCreateProduct, loadedBarcode, _onDetected }: useBarcodeProps) => {
     return (
         <>
             <Grid>
