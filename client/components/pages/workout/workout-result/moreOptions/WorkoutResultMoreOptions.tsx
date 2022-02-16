@@ -3,8 +3,18 @@ import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import AddExercises from '../../addExercise'
 import { useWorkoutResultMoreOptionsProps } from './useWorkoutResultMoreOptions';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 
-const BaseWorkoutResultMoreOptions = ({ exercises, setExercises, isAddDialog, setIsAddDialog, handleClose, handleOpen, actions, open }: useWorkoutResultMoreOptionsProps) => {
+const BaseWorkoutResultMoreOptions = ({ exercises, setExercises, isAddDialog, setIsAddDialog, handleClose, handleOpen, open }: useWorkoutResultMoreOptionsProps) => {
+
+    const actions = [
+        {
+            icon: <FitnessCenterIcon />,
+            name: 'Exercise',
+            click: () => setIsAddDialog(true)
+        },
+    ];
+
     return (
         <SpeedDial
             ariaLabel="Manage result"

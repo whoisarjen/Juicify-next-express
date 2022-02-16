@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { WorkoutResultMoreOptionsProps } from ".";
-import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 
 const useWorkoutResultMoreOptions = ({ exercises, setExercises }: WorkoutResultMoreOptionsProps) => {
     const [open, setOpen] = useState(false);
@@ -8,15 +7,7 @@ const useWorkoutResultMoreOptions = ({ exercises, setExercises }: WorkoutResultM
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const actions = [
-        {
-            icon: <FitnessCenterIcon />,
-            name: 'Exercise',
-            click: () => setIsAddDialog(true)
-        },
-    ];
-
-    return { exercises, setExercises, isAddDialog, setIsAddDialog, handleClose, handleOpen, actions, open }
+    return { exercises, setExercises, isAddDialog, setIsAddDialog, handleClose, handleOpen, open }
 }
 
 export type useWorkoutResultMoreOptionsProps = ReturnType<typeof useWorkoutResultMoreOptions>
