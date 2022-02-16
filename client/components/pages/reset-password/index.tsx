@@ -1,10 +1,10 @@
-import ResetPassword from "./resetPassword";
+import BaseResetPassword from "./ResetPassword";
 import useResetPassword from "./useResetPassword";
 
-const ResetPasswordComponent = () => {
+const ResetPassword = () => {
     const props = useResetPassword()
 
-    return <ResetPassword {...props} />
+    return <BaseResetPassword {...props} />
 };
 
-export default ResetPasswordComponent;
+export default ResetPassword;

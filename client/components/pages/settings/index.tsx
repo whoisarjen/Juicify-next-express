@@ -1,10 +1,10 @@
-import Settings from "./settings";
+import BaseSettings from "./Settings";
 import useSettings from "./useSettings";
 
-const SettingsComponent = () => {
+const Settings = () => {
     const props = useSettings()
 
-    return <Settings {...props} />
+    return <BaseSettings {...props} />
 };
 
-export default SettingsComponent;
+export default Settings;

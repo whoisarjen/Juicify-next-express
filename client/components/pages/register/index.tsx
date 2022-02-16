@@ -1,11 +1,10 @@
-import Register from "./register";
+import BaseRegister from "./Register";
 import useRegister from "./useRegister";
 
-
-const RegisterComponent = () => {
+const Register = () => {
     const props = useRegister()
 
-    return <Register {...props} />
+    return <BaseRegister {...props} />
 };
 
-export default RegisterComponent;
+export default Register;

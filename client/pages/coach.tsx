@@ -1,7 +1,7 @@
-import CoachComponent from "../components/pages/coach";
+import Coach from "../components/pages/coach";
 
 const CoachPage = () => {
-    return <CoachComponent />
+    return <Coach />
 };
 
 export default CoachPage;

@@ -1,10 +1,10 @@
-import Coach from "./coach";
+import BaseCoach from "./Coach";
 import useCoach from "./useCoach";
 
-const CoachComponent = () => {
+const Coach = () => {
     const props = useCoach()
 
-    return <Coach {...props} />
+    return <BaseCoach {...props} />
 };
 
-export default CoachComponent;
+export default Coach;

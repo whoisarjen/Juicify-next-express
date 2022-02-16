@@ -17,7 +17,7 @@ import Tutorial_7 from "./Tutorial_7";
 import { useCoachProps } from "./useCoach";
 import Welcome from "./Welcome";
 
-const Coach = ({ step, setStep, prepareCreate, prepareAnalize, handlePreviousStep }: useCoachProps) => {
+const BaseCoach = ({ step, setStep, prepareCreate, prepareAnalize, handlePreviousStep }: useCoachProps) => {
     return (
         <div className="coach">
             {
@@ -101,4 +101,4 @@ const Coach = ({ step, setStep, prepareCreate, prepareAnalize, handlePreviousSte
     );
 };
 
-export default Coach;
+export default BaseCoach;

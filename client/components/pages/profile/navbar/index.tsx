@@ -1,4 +1,4 @@
-import Navbar from "./navbar";
+import BaseNavbar from "./Navbar";
 import useNavbar from "./useNavbar";
 
 export interface NavbarProps {
@@ -6,10 +6,10 @@ export interface NavbarProps {
     tab: number
 }
 
-const NavbarComponent = ({ user, tab }: NavbarProps) => {
+const Navbar = ({ user, tab }: NavbarProps) => {
     const props = useNavbar({ user, tab })
 
-    return <Navbar {...props} />
+    return <BaseNavbar {...props} />
 }
 
-export default NavbarComponent;
+export default Navbar;

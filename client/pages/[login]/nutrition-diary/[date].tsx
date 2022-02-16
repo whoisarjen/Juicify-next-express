@@ -1,8 +1,8 @@
-import NutritionDiaryComponent from "../../../components/pages/nutrition-diary";
+import NutritionDiary from "../../../components/pages/nutrition-diary";
 
 const NutritionDiaryPage = () => {
 
-    return <NutritionDiaryComponent />
+    return <NutritionDiary />
 };
 
 export default NutritionDiaryPage;

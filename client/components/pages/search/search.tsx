@@ -7,7 +7,7 @@ import SearchBox from "../../common/SearchBox";
 import Avatar from "../../common/Avatar";
 import { useSearchProps } from "./useSearch";
 
-const Search = ({ data, router }: useSearchProps) => {
+const BaseSearch = ({ data, router }: useSearchProps) => {
     return (
         <div>
             <SearchBox />
@@ -27,4 +27,4 @@ const Search = ({ data, router }: useSearchProps) => {
     );
 };
 
-export default Search;
+export default BaseSearch;

@@ -19,7 +19,7 @@ const Separator = styled.div`
     margin-bottom: 12px;
 `
 
-const Settings = ({ changeSettings, isLoading, isDirty, errors, register, handleSubmit, t, logout }: useSettingsProps) => {
+const BaseSettings = ({ changeSettings, isLoading, isDirty, errors, register, handleSubmit, t, logout }: useSettingsProps) => {
     return (
         <Form onSubmit={handleSubmit(changeSettings)}>
             <Separator>{t('Preferences')}</Separator>
@@ -185,4 +185,4 @@ const Settings = ({ changeSettings, isLoading, isDirty, errors, register, handle
     );
 };
 
-export default Settings;
+export default BaseSettings;

@@ -56,7 +56,7 @@ const Title = styled.div`
     font-weight: bold;
 `
 
-const Macronutrients = ({ changeObject, openChange, toggleLock, changed, isOwnMacro, setIsOwnMacro, macro, save, t }: useMacronutrientsProps) => {
+const BaseMacronutrients = ({ changeObject, openChange, toggleLock, changed, isOwnMacro, setIsOwnMacro, macro, save, t }: useMacronutrientsProps) => {
     return (
         <>
             <Box>
@@ -121,4 +121,4 @@ const Macronutrients = ({ changeObject, openChange, toggleLock, changed, isOwnMa
     )
 }
 
-export default Macronutrients;
+export default BaseMacronutrients;

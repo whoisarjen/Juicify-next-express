@@ -41,7 +41,7 @@ const Content = styled.div`
     }
 `
 
-const Navbar = ({ user, tab, token, router }: useNavbarProps) => {
+const BaseNavbar = ({ user, tab, token, router }: useNavbarProps) => {
     return (
         <>
             {
@@ -108,4 +108,4 @@ const Navbar = ({ user, tab, token, router }: useNavbarProps) => {
     )
 }
 
-export default Navbar;
+export default BaseNavbar;

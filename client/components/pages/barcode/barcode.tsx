@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Informations from "../nutrition-diary/addProducts/informations";
-import CreateProduct from "../nutrition-diary/addProducts/create";
+import Informations from "../nutrition-diary/box/addProducts/informations";
+import CreateProduct from "../nutrition-diary/box/addProducts/create";
 import { useBarcodeProps } from "./useBarcode";
 
 const Grid = styled.div`
@@ -24,7 +24,7 @@ const Grid = styled.div`
     }
 `
 
-const Barcode = ({ loadedProduct, setLoadedProduct, data, isCreateProduct, setIsCreateProduct, loadedBarcode, _onDetected }: useBarcodeProps) => {
+const BaseBarcode = ({ loadedProduct, setLoadedProduct, data, isCreateProduct, setIsCreateProduct, loadedBarcode, _onDetected }: useBarcodeProps) => {
     return (
         <>
             <Grid>
@@ -40,4 +40,4 @@ const Barcode = ({ loadedProduct, setLoadedProduct, data, isCreateProduct, setIs
     )
 }
 
-export default Barcode;
+export default BaseBarcode;

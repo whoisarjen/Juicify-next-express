@@ -1,7 +1,7 @@
-import ResetPasswordHashComponent from "../../components/pages/reset-password-hash"
+import ResetPasswordHash from "../../components/pages/reset-password-hash"
 
 const ResetPasswordHashPage = () => {
-    return <ResetPasswordHashComponent />
+    return <ResetPasswordHash />
 };
 
 export default ResetPasswordHashPage;

@@ -1,10 +1,10 @@
-import Post from "./post";
+import BasePost from "./Post";
 import usePost from "./usePost";
 
-const PostComponent = () => {
+const Post = () => {
     const props = usePost()
 
-    return <Post {...props} />
+    return <BasePost {...props} />
 };
 
-export default PostComponent;
+export default Post;

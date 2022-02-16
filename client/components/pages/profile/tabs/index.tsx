@@ -1,14 +1,14 @@
 import useTabs from './useTabs';
-import TabsMenu from './tabs';
+import BaseTabs from './Tabs';
 
 export interface TabsProps {
     tab: number
 }
 
-const TabsComponent = ({ tab }: TabsProps) => {
+const Tabs = ({ tab }: TabsProps) => {
     const props = useTabs({ tab })
 
-    return <TabsMenu {...props} />
+    return <BaseTabs {...props} />
 }
 
-export default TabsComponent;
+export default Tabs;

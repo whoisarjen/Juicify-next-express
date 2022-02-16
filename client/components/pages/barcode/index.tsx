@@ -1,9 +1,9 @@
-import Barcode from "./barcode";
+import BaseBarcode from "./Barcode";
 import useBarcode from "./useBarcode";
 
-const BarcodeComponent = () => {
+const Barcode = () => {
     const props = useBarcode()
-    return <Barcode {...props} />
+    return <BaseBarcode {...props} />
 }
 
-export default BarcodeComponent;
+export default Barcode;

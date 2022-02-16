@@ -22,7 +22,7 @@ const LogoWrapper = styled.div`
     max-width: 180px;
 `
 
-const ResetPassword = ({ t, handleSubmit, onSubmit, errors, loading, register }: useResetPasswordProps) => {
+const BaseResetPassword = ({ t, handleSubmit, onSubmit, errors, loading, register }: useResetPasswordProps) => {
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             <LogoWrapper>
@@ -62,4 +62,4 @@ const ResetPassword = ({ t, handleSubmit, onSubmit, errors, loading, register }:
     );
 };
 
-export default ResetPassword;
+export default BaseResetPassword;

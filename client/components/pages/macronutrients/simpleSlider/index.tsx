@@ -1,4 +1,4 @@
-import SimpleSlider from "./simpleSlider";
+import BaseSimpleSlider from "./SimpleSlider";
 import useSimpleSlider from "./useSimpleSlider";
 
 export interface SimpleSliderProps {
@@ -9,10 +9,10 @@ export interface SimpleSliderProps {
     day: number
 }
 
-const SimpleSliderComponents = ({ title, macro, beginValue, changed, day }: SimpleSliderProps) => {
+const SimpleSlider = ({ title, macro, beginValue, changed, day }: SimpleSliderProps) => {
     const props = useSimpleSlider({ title, macro, beginValue, changed, day })
 
-    return <SimpleSlider {...props} />
+    return <BaseSimpleSlider {...props} />
 }
 
-export default SimpleSliderComponents;
+export default SimpleSlider;

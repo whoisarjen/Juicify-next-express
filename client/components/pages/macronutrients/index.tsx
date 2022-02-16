@@ -1,10 +1,10 @@
-import Macronutrients from "./macronutrients";
+import BaseMacronutrients from "./Macronutrients";
 import useMacronutrients from "./useMacronutrients";
 
-const MacronutrientsComponent = () => {
+const Macronutrients = () => {
     const props = useMacronutrients()
 
-    return <Macronutrients {...props} />
+    return <BaseMacronutrients {...props} />
 }
 
-export default MacronutrientsComponent;
+export default Macronutrients;

@@ -51,7 +51,7 @@ const Content = styled.div`
     line-height: 1.5;
 `
 
-const Post = ({ post: { title, content, img_url } }: usePostProps) => {
+const BasePost = ({ post: { title, content, img_url } }: usePostProps) => {
     return (
         <Box>
             <PostGrid>
@@ -63,4 +63,4 @@ const Post = ({ post: { title, content, img_url } }: usePostProps) => {
     )
 };
 
-export default Post;
+export default BasePost;

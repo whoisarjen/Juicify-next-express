@@ -1,19 +1,19 @@
 import { ActivitySchemaProps } from "../../../../schema/activity.schema";
 import { ProductSchemaProps } from "../../../../schema/product.schema";
-import MealBox from "./mealBox";
-import useMealBox from "./useMealBox";
+import BaseNutritionDiaryBox from "./NutritionDiaryBox";
+import useMealBox from "./useNutritionDiaryBox";
 
-export interface MealBoxProps {
+export interface NutritionDiaryBoxProps {
     index: number,
     products: Array<ProductSchemaProps & ActivitySchemaProps>,
     openDialog: () => void,
     openEditProduct: (arg0: ProductSchemaProps & ActivitySchemaProps) => void
 }
 
-const MealBoxComponent = ({ index, products, openDialog, openEditProduct }: MealBoxProps) => {
+const NutritionDiaryBox = ({ index, products, openDialog, openEditProduct }: NutritionDiaryBoxProps) => {
     const props = useMealBox({ index, products, openDialog, openEditProduct });
 
-    return <MealBox {...props} />
+    return <BaseNutritionDiaryBox {...props} />
 };
 
-export default MealBoxComponent;
+export default NutritionDiaryBox;

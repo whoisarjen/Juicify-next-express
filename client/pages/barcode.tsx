@@ -1,7 +1,7 @@
-import BarcodeComponent from "../components/pages/barcode";
+import Barcode from "../components/pages/barcode";
 
 const BarcodePage = () => {
-    return <BarcodeComponent />
+    return <Barcode />
 }
 
 export default BarcodePage;

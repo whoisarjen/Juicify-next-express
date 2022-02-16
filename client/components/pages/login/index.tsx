@@ -1,10 +1,10 @@
-import Login from "./login";
+import BaseLogin from "./Login";
 import useLogin from "./useLogin";
 
-const LoginComponents = () => {
+const Login = () => {
     const props = useLogin()
 
-    return <Login {...props} />
+    return <BaseLogin {...props} />
 };
 
-export default LoginComponents;
+export default Login;

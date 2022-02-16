@@ -1,10 +1,10 @@
-import Profile from "./profile";
+import BaseProfile from "./Profile";
 import useProfile from "./useProfile";
 
-const ProfileComponent = () => {
+const Profile = () => {
     const props = useProfile()
 
-    return <Profile {...props} />
+    return <BaseProfile {...props} />
 };
 
-export default ProfileComponent;
+export default Profile;

@@ -9,7 +9,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import ConfirmDialog from "../../../common/ConfirmDialog";
 import SlideUp from '../../../transition/SlideUp';
 
-const OwnMacro = ({ isOwnMacro, close, t, proteins, setProteins, carbs, setCarbs, fats, setFats, isDialog, setIsDialog, handleConfirm }: any) => {
+const BaseOwnMacro = ({ isOwnMacro, close, t, proteins, setProteins, carbs, setCarbs, fats, setFats, isDialog, setIsDialog, handleConfirm }: any) => {
     return (
         <div>
             <Dialog
@@ -82,4 +82,4 @@ const OwnMacro = ({ isOwnMacro, close, t, proteins, setProteins, carbs, setCarbs
     )
 }
 
-export default OwnMacro;
+export default BaseOwnMacro;

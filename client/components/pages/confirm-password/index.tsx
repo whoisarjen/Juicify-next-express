@@ -1,9 +1,9 @@
 import useConfirmPassword from "./useConfirmPassword";
 
-const ConfirmPasswordComponent = () => {
+const ConfirmPassword = () => {
     useConfirmPassword()
 
     return <></>
 };
 
-export default ConfirmPasswordComponent;
+export default ConfirmPassword;

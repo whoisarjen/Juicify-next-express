@@ -22,7 +22,7 @@ const LogoWrapper = styled.div`
     max-width: 180px;
 `
 
-const Login = ({ login, register, errors, handleSubmit, loading, t }: useLoginProps) => {
+const BaseLogin = ({ login, register, errors, handleSubmit, loading, t }: useLoginProps) => {
     return (
         <Form onSubmit={handleSubmit(login)}>
             <LogoWrapper>
@@ -77,4 +77,4 @@ const Login = ({ login, register, errors, handleSubmit, loading, t }: useLoginPr
     );
 };
 
-export default Login;
+export default BaseLogin;

@@ -1,10 +1,10 @@
-import NutritionDiary from "./nutritionDiary";
+import BaseNutritionDiary from "./NutritionDiary";
 import useNutritionDiary from "./useNutritionDiary";
 
-const NutritionDiaryComponent = () => {
+const NutritionDiary = () => {
     const props = useNutritionDiary()
 
-    return <NutritionDiary {...props} />
+    return <BaseNutritionDiary {...props} />
 };
 
-export default NutritionDiaryComponent;
+export default NutritionDiary;

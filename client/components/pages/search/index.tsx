@@ -1,10 +1,10 @@
-import Search from "./search";
+import BaseSearch from "./Search";
 import useSearch from "./useSearch";
 
-const SearchComponent = () => {
+const Search = () => {
     const props = useSearch()
 
-    return <Search {...props} />
+    return <BaseSearch {...props} />
 };
 
-export default SearchComponent;
+export default Search;

@@ -29,7 +29,7 @@ const LogoWrapper = styled.div`
     display: grid;
 `
 
-const Register = ({ registerUser, t, loading, register, errors, handleSubmit, date, setDate, setValue }: useRegisterProps) => {
+const BaseRegister = ({ registerUser, t, loading, register, errors, handleSubmit, date, setDate, setValue }: useRegisterProps) => {
     return (
         <Form onSubmit={handleSubmit(registerUser)}>
             <LogoWrapper>
@@ -142,4 +142,4 @@ const Register = ({ registerUser, t, loading, register, errors, handleSubmit, da
     );
 };
 
-export default Register;
+export default BaseRegister;

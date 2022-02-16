@@ -1,7 +1,7 @@
-import PostComponent from "../../components/pages/blog/post";
+import Post from "../../components/pages/blog/post";
 
 const PostPage = () => {
-    return <PostComponent />
+    return <Post />
 };
 
 export default PostPage;

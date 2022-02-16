@@ -54,7 +54,7 @@ const Grid = styled.div`
     }
 `
 
-const Blog = ({ t, posts }: useBlogProps) => {
+const BaseBlog = ({ t, posts }: useBlogProps) => {
     return (
         <Box>
             <h1>{t('LATEST_NEWS')}</h1>
@@ -78,4 +78,4 @@ const Blog = ({ t, posts }: useBlogProps) => {
     );
 }
 
-export default Blog;
+export default BaseBlog;

@@ -10,7 +10,7 @@ const Input = styled(MuiInput)`
     width: 42px;
 `;
 
-const SimpleSlider = ({ title, value, maxValue, handleChange, handleInputChange, handleBlur, t }: useSimpleSliderProps) => {
+const BaseSimpleSlider = ({ title, value, maxValue, handleChange, handleInputChange, handleBlur, t }: useSimpleSliderProps) => {
     return (
         <Box sx={{ margin: 'auto 0' }}>
             <Grid container spacing={2} alignItems="center">
@@ -45,4 +45,4 @@ const SimpleSlider = ({ title, value, maxValue, handleChange, handleInputChange,
     );
 }
 
-export default SimpleSlider;
+export default BaseSimpleSlider;

@@ -1,16 +1,16 @@
 import MealBox from "./box"
-import AddProducts from './addProducts'
-import DialogEditProduct from './editProduct'
+import AddProducts from './box/addProducts'
+import DialogEditProduct from './box/editProduct'
 import Navbar from "./navbar"
-import FastDateChanger from '../../../components/common/FastDateChanger'
-import Diagrams from './diagramsSection'
-import DiagramsOptions from './diagramsSection/buttons'
-import BottomFlyingGuestBanner from '../../../components/common/BottomFlyingGuestBanner'
-import Header from "../../../components/layout/Header"
+import FastDateChanger from '../../common/FastDateChanger'
+import Diagrams from './diagrams'
+import DiagramsOptions from './diagrams/buttons'
+import BottomFlyingGuestBanner from '../../common/BottomFlyingGuestBanner'
+import Header from "../../layout/Header"
 import { reverseDateDotes } from "../../../utils/date.utils"
 import { useNutritionDiaryProps } from "./useNutritionDiary"
 
-const NutritionDiary = ({ t, router, token, nutritionDiary, user, reload, index, setIndex, product, setProduct, isEditDialog, setIsEditDialog, isAddDialog, setIsAddDialog, deleteProduct, changeProduct, data }: useNutritionDiaryProps) => {
+const BaseNutritionDiary = ({ t, router, token, nutritionDiary, user, reload, index, setIndex, product, setProduct, isEditDialog, setIsEditDialog, isAddDialog, setIsAddDialog, deleteProduct, changeProduct, data }: useNutritionDiaryProps) => {
     return (
         <>
             <Header
@@ -67,4 +67,4 @@ const NutritionDiary = ({ t, router, token, nutritionDiary, user, reload, index,
     );
 };
 
-export default NutritionDiary;
+export default BaseNutritionDiary;

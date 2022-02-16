@@ -1,10 +1,10 @@
-import Blog from "./blog";
+import BaseBlog from "./Blog";
 import useBlog from "./useBlog";
 
-const BlogComponent = () => {
+const Blog = () => {
     const props = useBlog()
 
-    return <Blog {...props} />
+    return <BaseBlog {...props} />
 }
 
-export default BlogComponent;
+export default Blog;

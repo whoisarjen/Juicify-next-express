@@ -1,7 +1,7 @@
-import RegisterComponent from "../components/pages/register";
+import Register from "../components/pages/register";
 
 const RegisterPage = () => {
-    return <RegisterComponent />
+    return <Register />
 };
 
 export default RegisterPage;

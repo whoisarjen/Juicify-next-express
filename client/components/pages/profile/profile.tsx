@@ -11,7 +11,7 @@ const Box = styled.div`
     padding-bottom: 30px;
 `
 
-const Profile = ({ getTheme, barNamesWithColor, barNamesWithColorCalories, user, calories, nutrition_diary, t }: useProfileProps) => {
+const BaseProfile = ({ getTheme, barNamesWithColor, barNamesWithColorCalories, user, calories, nutrition_diary, t }: useProfileProps) => {
     return (
         <>
             <NavbarComponent user={user} tab={0} />
@@ -27,4 +27,4 @@ const Profile = ({ getTheme, barNamesWithColor, barNamesWithColorCalories, user,
     );
 };
 
-export default Profile;
+export default BaseProfile;

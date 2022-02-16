@@ -7,7 +7,7 @@ import NoteAltIcon from '@mui/icons-material/NoteAlt'
 import { getShortDate } from "../../../../utils/date.utils";
 import { useTabsProps } from './useTabs';
 
-const TabsMenu = ({ tab, router }: useTabsProps) => {
+const BaseTabs = ({ tab, router }: useTabsProps) => {
     return (
         <Tabs
             value={tab}
@@ -24,4 +24,4 @@ const TabsMenu = ({ tab, router }: useTabsProps) => {
     )
 }
 
-export default TabsMenu;
+export default BaseTabs;

@@ -1,10 +1,10 @@
-import OwnMacro from "./ownMacro";
+import BaseOwnMacro from "./OwnMacro";
 import useOwnMacro from "./useOwnMacro";
 
-const OwnMacroComponent = ({ isOwnMacro, close }: { isOwnMacro: boolean, close: () => void }) => {
+const OwnMacro = ({ isOwnMacro, close }: { isOwnMacro: boolean, close: () => void }) => {
     const props = useOwnMacro({ isOwnMacro, close })
 
-    return <OwnMacro {...props} />
+    return <BaseOwnMacro {...props} />
 }
 
-export default OwnMacroComponent;
+export default OwnMacro;

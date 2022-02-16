@@ -8,3 +8,6 @@ workouts
 
 
 schema for activity
+
+
+change names of component to UP and more direct
