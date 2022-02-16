@@ -1,10 +1,7 @@
-import Login from "../components/pages/login";
-import useLogin from "../components/pages/login/useLogin";
+import LoginComponents from "../components/pages/login";
 
 const LoginPage = () => {
-    const props = useLogin()
-
-    return <Login {...props} />
+    return <LoginComponents />
 };
 
 export default LoginPage;

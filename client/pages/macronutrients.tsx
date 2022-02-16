@@ -1,10 +1,7 @@
-import Macronutrients from "../components/pages/macronutrients";
-import useMacronutrients from "../components/pages/macronutrients/useMacronutrients";
+import MacronutrientsComponent from "../components/pages/macronutrients";
 
 const MacronutrientsPage = () => {
-    const props = useMacronutrients()
-
-    return <Macronutrients {...props} />
+    return <MacronutrientsComponent />
 }
 
 export default MacronutrientsPage;

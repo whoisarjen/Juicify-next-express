@@ -1,9 +1,8 @@
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import IconButton from '@mui/material/IconButton';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import useTranslation from "next-translate/useTranslation";
 import styled from 'styled-components'
-import { getShortDayName } from '../../../utils/date.utils';
+import { getShortDayName } from '../../../../utils/date.utils';
 
 interface BarProps {
     object: {
@@ -15,7 +14,8 @@ interface BarProps {
         choosen?: boolean
     },
     click?: (arg0: object) => void,
-    toggleLock?: (arg0: object) => void
+    toggleLock?: (arg0: object) => void,
+    t: (arg0: string) => string
 }
 
 const Box = styled.div`
@@ -79,9 +79,11 @@ const Day = styled.div`
     }
 `
 
-const Bar = ({ object, click, toggleLock }: BarProps) => {
-    const { t } = useTranslation('macronutrients')
+const MarginAuto = styled.div`
+    margin: auto
+`
 
+const Bar = ({ object, click, toggleLock, t }: BarProps) => {
     return (
         <Box>
             <Day>
@@ -89,24 +91,24 @@ const Bar = ({ object, click, toggleLock }: BarProps) => {
             </Day>
             <ActiveContent active={object.choosen ? true : false} onClick={click}>
                 <Proteins>
-                    <div style={{ margin: 'auto' }}>
+                    <MarginAuto>
                         {object.proteins} {t('P')}
-                    </div>
+                    </MarginAuto>
                 </Proteins>
                 <Carbs>
-                    <div style={{ margin: 'auto' }}>
+                    <MarginAuto>
                         {object.carbs} {t('C')}
-                    </div>
+                    </MarginAuto>
                 </Carbs>
                 <Fats>
-                    <div style={{ margin: 'auto' }}>
+                    <MarginAuto>
                         {object.fats} {t('F')}
-                    </div>
+                    </MarginAuto>
                 </Fats>
                 <Calories>
-                    <div style={{ margin: 'auto' }}>
+                    <MarginAuto>
                         {object.proteins * 4 + object.carbs * 4 + object.fats * 9}
-                    </div>
+                    </MarginAuto>
                 </Calories>
             </ActiveContent>
             <Day>

@@ -1,10 +1,7 @@
-import Profile from "../../components/pages/profile";
-import useProfile from "../../components/pages/profile/useProfile";
+import ProfileComponent from "../../components/pages/profile";
 
 const ProfilePage = () => {
-    const props = useProfile();
-
-    return <Profile {...props} />
+    return <ProfileComponent />
 };
 
 export default ProfilePage;

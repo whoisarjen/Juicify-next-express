@@ -4,16 +4,10 @@ import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import BookIcon from "@mui/icons-material/Book";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import NoteAltIcon from '@mui/icons-material/NoteAlt'
-import { useRouter } from "next/router";
-import { getShortDate } from "../../../utils/date.utils";
+import { getShortDate } from "../../../../utils/date.utils";
+import { useTabsProps } from './useTabs';
 
-interface TabsProps {
-    tab: number
-}
-
-const TabsMenu = ({ tab }: TabsProps) => {
-    const router = useRouter()
-
+const TabsMenu = ({ tab, router }: useTabsProps) => {
     return (
         <Tabs
             value={tab}

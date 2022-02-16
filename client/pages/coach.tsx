@@ -1,10 +1,7 @@
-import Coach from "../components/pages/coach";
-import useCoach from "../components/pages/coach/useCoach";
+import CoachComponent from "../components/pages/coach";
 
 const CoachPage = () => {
-    const props = useCoach()
-
-    return <Coach {...props} />
+    return <CoachComponent />
 };
 
 export default CoachPage;

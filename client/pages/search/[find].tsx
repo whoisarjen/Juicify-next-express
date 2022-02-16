@@ -1,10 +1,7 @@
-import Search from "../../components/pages/search";
-import useSearch from "../../components/pages/search/useSearch";
+import SearchComponent from "../../components/pages/search";
 
 const SearchPage = () => {
-    const props = useSearch()
-    
-    return <Search {...props} />
+    return <SearchComponent />
 };
 
 export default SearchPage;

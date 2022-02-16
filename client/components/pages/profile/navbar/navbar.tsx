@@ -1,20 +1,14 @@
-import { useAppSelector } from "../../../hooks/useRedux";
 import SettingsIcon from '@mui/icons-material/Settings';
 import IconButton from '@mui/material/IconButton';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkIcon from '@mui/icons-material/Link';
-import { useRouter } from "next/router";
-import TabsMenu from './Tabs'
-import Avatar from '../../common/Avatar';
-import Share from "../../common/Share";
+import TabsMenu from '../tabs'
+import Avatar from '../../../common/Avatar';
+import Share from "../../../common/Share";
 import styled from 'styled-components'
-
-interface NavbarProps {
-    user: any,
-    tab: number
-}
+import { useNavbarProps } from './useNavbar';
 
 const Box = styled.div`
     width: 100%;
@@ -47,10 +41,7 @@ const Content = styled.div`
     }
 `
 
-const Navbar = ({ user, tab }: NavbarProps) => {
-    const router = useRouter()
-    const token: any = useAppSelector(state => state.token.value)
-
+const Navbar = ({ user, tab, token, router }: useNavbarProps) => {
     return (
         <>
             {

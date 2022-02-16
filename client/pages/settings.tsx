@@ -1,10 +1,7 @@
-import Settings from "../components/pages/settings";
-import useSettings from "../components/pages/settings/useSettings";
+import SettingsComponent from "../components/pages/settings";
 
 const SettingsPage = () => {
-    const props = useSettings()
-
-    return <Settings {...props} />
+    return <SettingsComponent />
 };
 
 export default SettingsPage;

@@ -1,9 +1,7 @@
-import useConfirmPassword from "../../components/pages/confirm-password/useConfirmPassword";
+import ConfirmPasswordComponent from "../../components/pages/confirm-password";
 
 const ConfirmPasswordPage = () => {
-    useConfirmPassword()
-
-    return <></>
+    return <ConfirmPasswordComponent />
 };
 
 export default ConfirmPasswordPage;

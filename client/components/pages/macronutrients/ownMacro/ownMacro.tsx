@@ -1,70 +1,20 @@
-import { forwardRef, Ref, ReactElement, useState, useEffect } from "react";
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
-import { TransitionProps } from '@mui/material/transitions';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
-import ConfirmDialog from "../../common/ConfirmDialog";
-import useSettings from '../settings/useSettings'
-import { useAppSelector } from "../../../hooks/useRedux";
-import useTranslation from "next-translate/useTranslation";
+import ConfirmDialog from "../../../common/ConfirmDialog";
+import SlideUp from '../../../transition/SlideUp';
 
-interface OwnMacroProps {
-    isOwnMacro: boolean,
-    close: () => void
-}
-
-const Transition = forwardRef(function Transition(
-    props: TransitionProps & {
-        children: ReactElement<any, any>;
-    },
-    ref: Ref<unknown>,
-) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
-
-const OwnMacro = ({ isOwnMacro, close }: OwnMacroProps) => {
-    const token: any = useAppSelector(state => state.token.value)
-    const [isDialog, setIsDialog] = useState(false)
-    const [proteins, setProteins] = useState(0)
-    const [carbs, setCarbs] = useState(0)
-    const [fats, setFats] = useState(0)
-    const { changeSettings } = useSettings()
-    const { t } = useTranslation('macronutrients')
-
-    const handleConfirm = async () => {
-        setIsDialog(false)
-        let macronutrients = []
-        for (let i = 1; i < 8; i++) {
-            macronutrients.push({
-                proteins,
-                carbs,
-                fats,
-                day: i
-            })
-        }
-        await changeSettings({ macronutrients })
-        close()
-    }
-
-    useEffect(() => {
-        if (token && Object.keys(token).length) {
-            setProteins(token.macronutrients[0].proteins)
-            setCarbs(token.macronutrients[0].carbs)
-            setFats(token.macronutrients[0].fats)
-        }
-    }, [token])
-
+const OwnMacro = ({ isOwnMacro, close, t, proteins, setProteins, carbs, setCarbs, fats, setFats, isDialog, setIsDialog, handleConfirm }: any) => {
     return (
         <div>
             <Dialog
                 open={isOwnMacro}
-                TransitionComponent={Transition}
+                TransitionComponent={SlideUp}
                 keepMounted
                 onClose={close}
             >

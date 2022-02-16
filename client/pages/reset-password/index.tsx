@@ -1,10 +1,7 @@
-import ResetPassword from "../../components/pages/reset-password";
-import useResetPassword from "../../components/pages/reset-password/useResetPassword";
+import ResetPasswordComponent from "../../components/pages/reset-password";
 
 const ResetPasswordPage = () => {
-    const props = useResetPassword()
-
-    return <ResetPassword {...props} />
+    return <ResetPasswordComponent />
 };
 
 export default ResetPasswordPage;

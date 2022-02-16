@@ -1,10 +1,7 @@
-import usePost from "../../components/pages/blog/usePost";
-import Post from '../../components/pages/blog/post'
+import PostComponent from "../../components/pages/blog/post";
 
 const PostPage = () => {
-    const props = usePost()
-
-    return <Post {...props} />
+    return <PostComponent />
 };
 
 export default PostPage;

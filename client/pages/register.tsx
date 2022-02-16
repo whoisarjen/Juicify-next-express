@@ -1,10 +1,7 @@
-import useRegister from "../components/pages/register/useRegister";
-import Register from "../components/pages/register";
+import RegisterComponent from "../components/pages/register";
 
 const RegisterPage = () => {
-    const props = useRegister()
-
-    return <Register {...props} />
+    return <RegisterComponent />
 };
 
 export default RegisterPage;

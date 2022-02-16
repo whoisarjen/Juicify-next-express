@@ -2,3 +2,9 @@ add cardio exercises + timer i guess
 
 
 server doesnt send back error messages
+
+
+nutrition
+
+
+workouts

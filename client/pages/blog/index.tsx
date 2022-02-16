@@ -1,10 +1,7 @@
-import Blog from "../../components/pages/blog";
-import useBlog from "../../components/pages/blog/useBlog";
+import BlogComponent from "../../components/pages/blog";
 
 const BlogPage = () => {
-    const props = useBlog()
-
-    return <Blog {...props} />
+    return <BlogComponent />
 }
 
 export default BlogPage;

@@ -1,10 +1,7 @@
-import Barcode from "../components/pages/barcode";
-import useBarcode from "../components/pages/barcode/useBarcode";
+import BarcodeComponent from "../components/pages/barcode";
 
 const BarcodePage = () => {
-    const props = useBarcode()
-
-    return <Barcode {...props} />
+    return <BarcodeComponent />
 }
 
 export default BarcodePage;
