@@ -33,13 +33,6 @@ const useValueBox = ({ value, index, changeResult, deleteResult, isOwner }: Valu
         setIsDialog(false)
     }
 
-    // useEffect(() => {
-    //     setOpen(value.open || false)
-    //     setReps(value.reps.toString())
-    //     setWeight(value.weight.toString())
-    //     loadWeight(value.weight.toString())
-    // }, [value, value.open])
-
     useEffect(() => {
         let reps = []
         for (let i = 0; i <= 100; i++) {

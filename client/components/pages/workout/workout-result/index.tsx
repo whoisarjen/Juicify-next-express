@@ -1,10 +1,10 @@
 import useWorkoutResult from "./useWorkoutResult";
-import BaseWorkoutResults from "./WorkoutResult";
+import BaseWorkoutResult from "./WorkoutResult";
 
-const WorkoutResults = () => {
+const WorkoutResult = () => {
     const props = useWorkoutResult()
 
-    return <BaseWorkoutResults {...props} />
+    return <BaseWorkoutResult {...props} />
 }
 
-export default WorkoutResults;
+export default WorkoutResult;

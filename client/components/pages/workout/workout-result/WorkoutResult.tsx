@@ -9,7 +9,7 @@ import AddResultMoreOptions from './moreOptions';
 import ResultBox from './resultBox';
 import { useWorkoutResultProps } from './useWorkoutResult';
 
-const BaseWorkoutResults = ({ t, isLoading, handleSubmit, onSubmit, deleteEverything, errors, router, getValues, register, fields, addExercises, deleteExerciseIndex, setDeleteExerciseIndex, deleteExercise, token, user, updateResults }: useWorkoutResultProps) => {
+const BaseWorkoutResult = ({ t, isLoading, handleSubmit, onSubmit, deleteEverything, errors, router, getValues, register, fields, addExercises, deleteExerciseIndex, setDeleteExerciseIndex, deleteExercise, token, user, updateResults }: useWorkoutResultProps) => {
     return (
         <form>
             <Navbar
@@ -131,4 +131,4 @@ const BaseWorkoutResults = ({ t, isLoading, handleSubmit, onSubmit, deleteEveryt
     );
 }
 
-export default BaseWorkoutResults;
+export default BaseWorkoutResult;
