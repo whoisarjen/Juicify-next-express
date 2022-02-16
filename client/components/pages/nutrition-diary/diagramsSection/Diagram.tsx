@@ -1,21 +1,12 @@
-import { useState, SyntheticEvent, useEffect } from "react";
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import CircularWithLabel from "./DiagramCircular";
-import CircularWithLabelReverse from "./DiagramCircularReversed";
-import { useRouter } from "next/router";
-import useTranslation from "next-translate/useTranslation";
-import { ProductSchemaProps } from "../../../schema/product.schema";
+import CircularWithLabel from "./circular";
+import CircularWithLabelReverse from "./circularReversed";
 import styled from "styled-components";
-import { getMacroByDay } from "../../../utils/user.utils";
-
-interface DiagramsProps {
-    array: Array<Array<ProductSchemaProps>>,
-    user: any
-}
+import { useDiagramProps } from './useDiagram';
 
 const Table = styled.table`
     font-size: 0.875rem;
@@ -28,43 +19,7 @@ const Table = styled.table`
     }
 `
 
-const Diagrams = ({ array, user }: DiagramsProps) => {
-    const [value, setValue] = useState<string>('1');
-    const router = useRouter()
-    const [object, setObject] = useState<any>({})
-    const { t } = useTranslation('nutrition-diary')
-
-    useEffect(() => {
-        if (user) {
-            const macro = getMacroByDay(router.query.date, user)
-            let o = {
-                'Proteins': { 'value': 0, 'macro': macro.proteins },
-                'Carbs': { 'value': 0, 'macro': macro.carbs },
-                'Sugar': { 'value': 0, 'macro': (user.sugar_percent || 0) * macro.carbs / 100 },
-                'Fats': { 'value': 0, 'macro': macro.fats },
-                'Fiber': { 'value': 0, 'macro': (user.fiber || 0) * (macro.proteins * 4 + macro.carbs * 4 + macro.fats * 9) / 1000 }
-            }
-
-            array.forEach(meal => {
-                if (meal.length) {
-                    meal.forEach((product: ProductSchemaProps) => {
-                        if (product && product.how_many) {
-                            if (product.p) o['Proteins']['value'] += product.p * product.how_many
-                            if (product.c) o['Carbs']['value'] += product.c * product.how_many
-                            if (product.s) o['Sugar']['value'] += product.s * product.how_many
-                            if (product.f) o['Fats']['value'] += product.f * product.how_many
-                            if (product.fi) o['Fiber']['value'] += product.fi * product.how_many
-                        }
-                    })
-                }
-            })
-
-            setObject(o)
-        }
-    }, [user, array])
-
-    const handleChange = (event: SyntheticEvent, newValue: string) => setValue(newValue);
-
+const Diagrams = ({ array, user, value, handleChange, object, t }: useDiagramProps) => {
     return (
         <div style={{ width: '100%' }}>
             <Box sx={{ width: '100%', display: 'grid', marginBottom: '24px' }}>

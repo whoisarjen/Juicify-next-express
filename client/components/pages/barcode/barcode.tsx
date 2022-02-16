@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import AddProductMoreInformation from "../nutrition-diary/AddProductInfo";
-import CreateProduct from "../nutrition-diary/CreateProduct";
+import Informations from "../nutrition-diary/addProducts/informations";
+import CreateProduct from "../nutrition-diary/addProducts/create";
 import { useBarcodeProps } from "./useBarcode";
 
 const Grid = styled.div`
@@ -31,7 +31,7 @@ const Barcode = ({ loadedProduct, setLoadedProduct, data, isCreateProduct, setIs
                 <div id="scanner-container" />,
                 <span>Scan barcode code</span>
             </Grid>
-            <AddProductMoreInformation handleClose={() => setLoadedProduct(false)} loadedProduct={loadedProduct} dailyMeasurement={data} />
+            <Informations handleClose={() => setLoadedProduct(false)} loadedProduct={loadedProduct} dailyMeasurement={data} />
             {
                 isCreateProduct &&
                 <CreateProduct closeCreateProduct={() => setIsCreateProduct(false)} isCreateProduct={isCreateProduct} created={() => _onDetected(loadedBarcode)} defaultBarcode={loadedBarcode} />

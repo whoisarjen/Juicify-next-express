@@ -1,64 +1,20 @@
-import { forwardRef, useState } from "react";
 import Button from '@mui/material/Button';
-import useTranslation from "next-translate/useTranslation";
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
-import { TransitionProps } from '@mui/material/transitions';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
-import { useAppSelector } from "../../../hooks/useRedux";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { useNotify } from "../../../hooks/useNotify";
-import { insertThoseIDStoDBController } from "../../../utils/db.utils";
+import { useInformationsAddProps } from "./useInformationsAdd";
+import SlideUp from "../../../../../transition/SlideUp";
 
-const Transition = forwardRef(function Transition(
-    props: TransitionProps & {
-        children: React.ReactElement<any, any>;
-    },
-    ref: React.Ref<unknown>,
-) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
-
-interface DiagramsOptionsProps {
-    isAdd: boolean,
-    setIsAdd: (arg0: boolean) => void,
-    dailyMeasurement: any,
-    defaultMeal?: number,
-    loadedProduct: any
-}
-
-const DiagramsOptions = ({ isAdd, setIsAdd, dailyMeasurement, defaultMeal = 0, loadedProduct }: DiagramsOptionsProps) => {
-    const { t } = useTranslation('nutrition-diary')
-    const [meal, setMeal] = useState(defaultMeal)
-    const [howMany, setHowMany] = useState('1')
-    const token: any = useAppSelector(state => state.token.value)
-    const { success } = useNotify()
-
-    const addNewProduct = async () => {
-        if (parseFloat(howMany) > 0) {
-            let object: any = { ...dailyMeasurement }
-            object.nutrition_diary.push({
-                ...loadedProduct,
-                "_id": 'XD' + new Date().getTime(),
-                "meal": meal,
-                "how_many": howMany,
-                "product_ID": loadedProduct._id
-            })
-            await insertThoseIDStoDBController('daily_measurement', [object])
-        }
-        setIsAdd(false)
-        success()
-    }
-
+const InformationsAdd = ({ isAdd, setIsAdd, meal, setMeal, token, howMany, setHowMany, addNewProduct, t }: useInformationsAddProps) => {
     return (
         <Dialog
             open={isAdd}
-            TransitionComponent={Transition}
+            TransitionComponent={SlideUp}
             keepMounted
             onClose={() => setIsAdd(false)}
             aria-describedby="alert-dialog-slide-description"
@@ -100,4 +56,4 @@ const DiagramsOptions = ({ isAdd, setIsAdd, dailyMeasurement, defaultMeal = 0, l
     )
 }
 
-export default DiagramsOptions;
+export default InformationsAdd;

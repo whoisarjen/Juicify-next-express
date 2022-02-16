@@ -1,5 +1,5 @@
-import Share from "../../common/Share";
-import DateChanger from "../../common/DateChanger";
+import Share from "../../../common/Share";
+import DateChanger from "../../../common/DateChanger";
 import useTranslation from "next-translate/useTranslation";
 import styled from 'styled-components'
 

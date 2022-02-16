@@ -1,5 +1,3 @@
-it.todo('', () => {
-    
-})
+it.todo('')
 
 export default {};

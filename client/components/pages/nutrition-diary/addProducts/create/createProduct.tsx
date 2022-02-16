@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -8,52 +7,11 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import useTranslation from 'next-translate/useTranslation';
-import { useAppSelector } from "../../../hooks/useRedux";
-import { insertThoseIDStoDB } from '../../../utils/db.utils';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { useNotify } from '../../../hooks/useNotify';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { ProductSchema, ProductSchemaProps } from '../../../schema/product.schema';
 import InputAdornment from '@mui/material/InputAdornment';
+import { useCreateProductProps } from './useCreateProduct';
 
-interface CreateProductProps {
-    closeCreateProduct: () => void,
-    isCreateProduct: boolean,
-    created: (arg0: string) => void
-    defaultBarcode?: string | number
-}
-
-const CreateProduct = ({ closeCreateProduct, isCreateProduct, created, defaultBarcode }: CreateProductProps) => {
-    const { t } = useTranslation('nutrition-diary')
-    const [code, setCode] = useState(defaultBarcode)
-    const [loading, setLoading] = useState(false)
-    const token: any = useAppSelector(state => state.token.value)
-    const { success, error } = useNotify()
-
-    const { register, formState: { errors }, handleSubmit } = useForm<ProductSchemaProps>({
-        resolver: zodResolver(ProductSchema)
-    })
-
-    const onSubmit = async (values: ProductSchemaProps) => {
-        try {
-            const copyValues = { ...values }
-            for (const key in copyValues) {
-                if (copyValues[key as keyof typeof copyValues] == false) {
-                    delete copyValues[key as keyof typeof copyValues];
-                }
-            }
-            await insertThoseIDStoDB('product', [{ ...copyValues, ...(code && { code }), user_ID: token._id }])
-            created(copyValues.name)
-            success()
-        } catch (e: any) {
-            error(e.message)
-        } finally {
-            setLoading(false);
-        }
-    }
-
+const CreateProduct = ({ closeCreateProduct, isCreateProduct, defaultBarcode, handleSubmit, register, onSubmit, errors, code, setCode, loading, t }: useCreateProductProps) => {
     return (
         <Dialog open={isCreateProduct}>
             <form onSubmit={handleSubmit(onSubmit)}>

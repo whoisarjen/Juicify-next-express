@@ -4,21 +4,10 @@ import Favorite from '@mui/icons-material/Favorite';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
-import { useEffect, useState } from 'react'
-import { putIndexedDB, addIndexedDB, deleteIndexedDB, getIndexedDBbyID } from '../../../utils/indexedDB.utils';
-import useTranslation from "next-translate/useTranslation";
-import { useTheme } from '../../../hooks/useTheme';
-import { getCalories } from '../../../utils/product.utils';
-import { ProductSchemaProps } from '../../../schema/product.schema';
+import { getCalories } from '../../../../../utils/product.utils';
 import styled from 'styled-components';
 
-interface AddproductsBoxProps {
-    product: ProductSchemaProps,
-    refreshCheckedProducts: () => void,
-    openMoreInformation: () => void
-}
-
-const Box = styled.div`
+const Grid = styled.div`
     display: grid;
     grid-template-columns: 1fr 30px 40px 50px 40px;
     margin-bottom: 10px;
@@ -65,51 +54,9 @@ const Submit = styled.div`
     margin: auto;
 `
 
-const AddProductsBox = ({ product, refreshCheckedProducts, openMoreInformation }: AddproductsBoxProps) => {
-    const { t } = useTranslation('nutrition-diary');
-    const [checked, setChecked] = useState(false);
-    const [value, setValue] = useState('1.0')
-    const [fav, setFav] = useState(false)
-    const { getTheme } = useTheme()
-
-    const handleLike = async () => {
-        if (fav) {
-            setFav(false)
-            await deleteIndexedDB('favourite_product', product._id)
-        } else {
-            setFav(true)
-            await addIndexedDB('favourite_product', [product])
-        }
-    }
-
-    const handleCheck = async () => {
-        if (checked) {
-            setChecked(false)
-            await deleteIndexedDB('checked_product', product._id)
-        } else {
-            setChecked(true)
-            await addIndexedDB('checked_product', [{ ...product, how_many: value }])
-        }
-        refreshCheckedProducts()
-    }
-
-    const handleValueChange = async (value: any) => {
-        setValue(value)
-        if (await getIndexedDBbyID('checked_product', product._id)) {
-            await putIndexedDB('checked_product', product._id, 'how_many', value)
-        }
-        refreshCheckedProducts()
-    }
-
-    useEffect(() => {
-        (async () => {
-            await getIndexedDBbyID('favourite_product', product._id) ? setFav(true) : setFav(false)
-            await getIndexedDBbyID('checked_product', product._id) ? setChecked(true) : setChecked(false)
-        })
-    }, [])
-
+const AddProductsBox = ({ product, openMoreInformation, getTheme, value, handleValueChange, checked, handleCheck, handleLike, fav, t }: any) => {
     return (
-        <Box style={{ borderLeft: product.v ? `5px solid ${getTheme('PRIMARY')}` : '' }}>
+        <Grid style={{ borderLeft: product.v ? `5px solid ${getTheme('PRIMARY')}` : '' }}>
             <Name style={{ color: getTheme('PRIMARY') }}>
                 {product.name}
             </Name>
@@ -133,7 +80,7 @@ const AddProductsBox = ({ product, refreshCheckedProducts, openMoreInformation }
                     inputProps={{ 'aria-label': 'controlled' }}
                 />
             </Submit>
-        </Box>
+        </Grid>
     );
 }
 

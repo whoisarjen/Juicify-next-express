@@ -1,22 +1,12 @@
-import { useRouter } from "next/router";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
-import { useAppSelector } from "../../../hooks/useRedux";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
-import useTranslation from "next-translate/useTranslation";
-import { useState, useEffect } from 'react'
-import { getCalories } from '../../../utils/product.utils';
-import { ProductSchemaProps } from '../../../schema/product.schema';
-import { ActivitySchemaProps } from '../../../schema/activity.schema';
+import { getCalories } from '../../../../utils/product.utils';
+import { ProductSchemaProps } from '../../../../schema/product.schema';
+import { ActivitySchemaProps } from '../../../../schema/activity.schema';
 import styled from "styled-components";
-
-interface MealBoxProps {
-    index: number,
-    products: Array<ProductSchemaProps & ActivitySchemaProps>,
-    openDialog: () => void,
-    openEditProduct: (arg0: ProductSchemaProps & ActivitySchemaProps) => void
-}
+import { useMealBoxProps } from "./useMealBox";
 
 const Grid = styled.div`
     width: calc(100% - 24px);
@@ -75,31 +65,7 @@ const Content = styled.div`
     margin-top: auto;
 `
 
-const MealBox = ({ index, products, openDialog, openEditProduct }: MealBoxProps) => {
-    const { t } = useTranslation('nutrition-diary');
-    const router: any = useRouter();
-    const token: any = useAppSelector((state) => state.token.value);
-    const isOnline = useAppSelector(state => state.online.isOnline)
-    const theOldestSupportedDate = useAppSelector(state => state.config.theOldestSupportedDate)
-    const [isDisabled, setIsDisabled] = useState(false)
-    const [{ p, c, f }, setMacro] = useState({ p: 0, c: 0, f: 0 })
-
-    const prepareNumber = (number: number) => parseFloat((Math.round(number * 100) / 100).toFixed(1))
-    const count = (product: any, key: string) => parseFloat((Math.round((product[key] * product.how_many) * 100) / 100).toFixed(1)) || 0
-
-    useEffect(() => {
-        let macro = { p: 0, c: 0, f: 0 }
-        products.forEach(product => {
-            macro = {
-                p: (macro.p + count(product, 'p')),
-                c: (macro.c + count(product, 'c')),
-                f: (macro.f + count(product, 'f'))
-            }
-        })
-        setMacro(macro)
-        setIsDisabled(!isOnline && router.query.date < theOldestSupportedDate())
-    }, [products, index, router.query.date, theOldestSupportedDate, isOnline])
-
+const MealBox = ({ t, index, products, openDialog, openEditProduct, token, router, prepareNumber, count, isDisabled, p, c, f }: useMealBoxProps) => {
     return (
         <Grid>
             <Bolded>{t('Meal')} {index + 1}</Bolded>
