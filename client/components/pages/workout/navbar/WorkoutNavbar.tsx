@@ -1,22 +1,11 @@
-import { useRouter } from "next/router";
 import SaveIcon from '@mui/icons-material/Save'
 import IconButton from '@mui/material/IconButton'
 import LoadingButton from '@mui/lab/LoadingButton'
 import DeleteIcon from '@mui/icons-material/Delete'
-import useTranslation from "next-translate/useTranslation"
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
-import { useState } from "react";
 import styled from 'styled-components'
-import { useAppSelector } from "../../../hooks/useRedux";
-import ConfirmDialog from "../../common/ConfirmDialog";
-
-interface NavbarProps {
-    title: string,
-    where: string,
-    isLoading: boolean,
-    saveWorkout: () => void,
-    deleteWorkout: () => void
-}
+import ConfirmDialog from "../../../common/ConfirmDialog";
+import { useWorkoutNavbarProps } from "./useWorkoutNavbar";
 
 const Grid = styled.div`
     width: 100%;
@@ -31,12 +20,7 @@ const Title = styled.div`
     font-weight: bold;
 `
 
-const Navbar = ({ title, where, isLoading, saveWorkout, deleteWorkout }: NavbarProps) => {
-    const [isDialog, setIsDialog] = useState(false)
-    const router = useRouter()
-    const { t } = useTranslation('workout')
-    const token: any = useAppSelector(state => state.token.value)
-
+const BaseWorkoutNavbar = ({ title, where, isLoading, saveWorkout, deleteWorkout, router, token, isDialog, setIsDialog, t }: useWorkoutNavbarProps) => {
     return (
         <>
             <Title>{t(`${title}`)}</Title>
@@ -78,4 +62,4 @@ const Navbar = ({ title, where, isLoading, saveWorkout, deleteWorkout }: NavbarP
     );
 }
 
-export default Navbar;
+export default BaseWorkoutNavbar;

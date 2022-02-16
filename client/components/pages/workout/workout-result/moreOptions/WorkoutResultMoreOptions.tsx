@@ -1,30 +1,10 @@
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
-import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
-import { useState } from 'react'
-import AddExercises from '../AddExercises'
-import { ExerciseSchemaProps } from '../../../../schema/exercise.schema';
+import AddExercises from '../../addExercise'
+import { useWorkoutResultMoreOptionsProps } from './useWorkoutResultMoreOptions';
 
-interface AddResultMoreOptionsProps {
-    exercises: Array<ExerciseSchemaProps>,
-    setExercises: (arg0: Array<ExerciseSchemaProps>) => void
-}
-
-const AddResultMoreOptions = ({ exercises, setExercises }: AddResultMoreOptionsProps) => {
-    const [open, setOpen] = useState(false);
-    const [isAddDialog, setIsAddDialog] = useState(false)
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-
-    const actions = [
-        {
-            icon: <FitnessCenterIcon />,
-            name: 'Exercise',
-            click: () => setIsAddDialog(true)
-        },
-    ];
-
+const BaseWorkoutResultMoreOptions = ({ exercises, setExercises, isAddDialog, setIsAddDialog, handleClose, handleOpen, actions, open }: useWorkoutResultMoreOptionsProps) => {
     return (
         <SpeedDial
             ariaLabel="Manage result"
@@ -54,4 +34,4 @@ const AddResultMoreOptions = ({ exercises, setExercises }: AddResultMoreOptionsP
     );
 }
 
-export default AddResultMoreOptions;
+export default BaseWorkoutResultMoreOptions;

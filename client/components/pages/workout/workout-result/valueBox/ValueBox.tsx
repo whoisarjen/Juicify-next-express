@@ -1,22 +1,13 @@
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete'
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
-import { useState, useEffect } from 'react'
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import ConfirmDialog from '../../../common/ConfirmDialog';
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
-import { ValueSchemaProps } from '../../../../schema/workoutResult.schema';
 import styled from 'styled-components';
-
-interface ValuesContainerBoxProps {
-    value: ValueSchemaProps,
-    index: number,
-    changeResult: (arg0: ValueSchemaProps) => void,
-    deleteResult: () => void,
-    isOwner: boolean,
-}
+import ConfirmDialog from '../../../../common/ConfirmDialog';
+import { useValueBoxProps } from './useValueBox';
 
 const Box = styled.div`
     min-height: 36px;
@@ -38,54 +29,7 @@ const Connected = styled.div`
     grid-column: 1 / 3;
 `
 
-const ValuesContainerBox = ({ value, index, changeResult, deleteResult, isOwner }: ValuesContainerBoxProps) => {
-    const [reps, setReps] = useState(value.reps.toString())
-    const [weight, setWeight] = useState(value.weight.toString())
-    const [open, setOpen] = useState(value.open || false)
-    const [repsOptions, setRepsOptions] = useState(['0'])
-    const [weightOptions, setWeightOptions] = useState(['0'])
-    const [isDialog, setIsDialog] = useState(false)
-
-    const loadWeight = (choosenWeight: string) => {
-        const choosenWeightLocally = parseFloat(choosenWeight)
-        let weight = ['0']
-        if (choosenWeightLocally) {
-            if (choosenWeight != '0') {
-                weight.push(choosenWeight)
-            }
-            for (let i = 1; i <= 4; i++) {
-                weight.push((choosenWeightLocally + (i / 4)).toString())
-            }
-        } else {
-            for (let i = 1; i <= 40; i++) {
-                weight.push((i / 4).toString())
-            }
-        }
-        setWeight(choosenWeight.toString())
-        setWeightOptions(weight)
-    }
-
-    const handleDelete = () => {
-        deleteResult()
-        setIsDialog(false)
-    }
-
-    // useEffect(() => {
-    //     setOpen(value.open || false)
-    //     setReps(value.reps.toString())
-    //     setWeight(value.weight.toString())
-    //     loadWeight(value.weight.toString())
-    // }, [value, value.open])
-
-    useEffect(() => {
-        let reps = []
-        for (let i = 0; i <= 100; i++) {
-            reps.push(i.toString())
-        }
-        setRepsOptions(reps)
-        loadWeight(value.weight.toString())
-    }, [])
-
+const BaseValueBox = ({ index, changeResult, isOwner, open, setOpen, weight, setWeight, reps, setReps, isDialog, setIsDialog, handleDelete, weightOptions, loadWeight, repsOptions }: useValueBoxProps) => {
     return (
         <>
             {
@@ -168,4 +112,4 @@ const ValuesContainerBox = ({ value, index, changeResult, deleteResult, isOwner 
     );
 }
 
-export default ValuesContainerBox;
+export default BaseValueBox;

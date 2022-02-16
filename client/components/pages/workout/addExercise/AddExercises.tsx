@@ -1,37 +1,18 @@
-import { forwardRef, useState, useEffect, Fragment, ReactElement, Ref } from 'react'
+import { Fragment } from 'react'
 import Dialog from '@mui/material/Dialog';
-import Slide from '@mui/material/Slide'
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
-import AddExercisesBox from './AddExercisesBox';
-import useFind from '../../../hooks/useFind';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import BottomFlyingButton from '../../common/BottomFlyingButton'
-import useTranslation from "next-translate/useTranslation";
-import { deleteIndexedDB, getAllIndexedDB } from '../../../utils/indexedDB.utils';
-import { TransitionProps } from '@material-ui/core/transitions';
-import { ExerciseSchemaProps } from '../../../schema/exercise.schema';
+import BottomFlyingButton from '../../../common/BottomFlyingButton'
+import { ExerciseSchemaProps } from '../../../../schema/exercise.schema';
 import styled from 'styled-components'
-import CreateExercise from './CreateExerciseDialog';
-
-const Transition = forwardRef(function Transition(
-    props: TransitionProps & {
-        children: ReactElement;
-    },
-    ref: Ref<unknown>,
-) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
-
-interface AddDialogProps {
-    isAddDialog: boolean,
-    closeDialog: () => void,
-    skipThoseIDS: Array<ExerciseSchemaProps>,
-    addThoseExercises: (Arg0: Array<ExerciseSchemaProps>) => void
-}
+import CreateExercise from '../createExercise';
+import SlideUp from '../../../transition/SlideUp';
+import { useAddExercisesProps } from './useAddExercises';
+import AddExercisesBox from './box';
 
 const Close = styled.div`
     display: grid;
@@ -78,51 +59,13 @@ const Title = styled.div`
     font-weight: bold;
 `
 
-const AddDialog = ({ isAddDialog, closeDialog, skipThoseIDS, addThoseExercises }: AddDialogProps) => {
-    const { t } = useTranslation('home');
-    const [tab, setTab] = useState(0)
-    const [find, setFind] = useState<string | null>(null)
-    const [open, setOpen] = useState(false)
-    const [checked, setChecked] = useState([])
-    const [refreshChecked, setRefreshChecked] = useState(0)
-    const [loadingButton, setLoadingButton] = useState(false)
-    const [isCreateExercise, setIsCreateExercise] = useState(false)
-    const { items, loading, searchCache } = useFind(find, 'exercise', tab, skipThoseIDS)
-
-    const addExercisesToWorkoutPlan = async () => {
-        setLoadingButton(true)
-        checked.forEach(async (x: ExerciseSchemaProps) => {
-            if (x._id) await deleteIndexedDB('checked_exercise', x._id)
-        })
-        addThoseExercises(checked)
-        setLoadingButton(false)
-        closeDialog()
-        setFind(null)
-        setChecked([])
-    }
-
-    const created = async (exerciseName: string) => {
-        if (exerciseName == find) {
-            setFind(null)
-        } else {
-            setFind(exerciseName)
-        }
-        setIsCreateExercise(false)
-    }
-
-    useEffect(() => setOpen(false), [searchCache])
-    useEffect(() => {
-        (async () => {
-            setChecked(await getAllIndexedDB('checked_exercise') || [])
-        })()
-    }, [refreshChecked])
-
+const BaseAddExercises = ({ isAddDialog, closeDialog, open, setOpen, find, setFind, loading, searchCache, items, checked, t, created, isCreateExercise, tab, setTab, setRefreshChecked, setIsCreateExercise, refreshChecked, loadingButton, addExercisesToWorkoutPlan }: useAddExercisesProps) => {
     return (
         <Dialog
             fullScreen
             scroll='body'
             open={isAddDialog}
-            TransitionComponent={Transition}
+            TransitionComponent={SlideUp}
         >
             <Grid>
                 <Title>{t('Add exercises')}</Title>
@@ -166,7 +109,7 @@ const AddDialog = ({ isAddDialog, closeDialog, skipThoseIDS, addThoseExercises }
                     <Tab wrapped label={`${t('Selected')} (${checked.length})`} />
                 </Tabs>
                 {
-                    items &&
+                    items?.length > 0 &&
                     items.map((item: ExerciseSchemaProps) =>
                         <AddExercisesBox refreshCheckedExercises={() => setRefreshChecked(refreshChecked + 1)} exercise={item} key={item._id} />
                     )
@@ -182,7 +125,7 @@ const AddDialog = ({ isAddDialog, closeDialog, skipThoseIDS, addThoseExercises }
                     closeCreateExercise={() => setIsCreateExercise(false)}
                 />
                 {
-                    checked && checked.length > 0 &&
+                    checked?.length > 0 &&
                     <BottomFlyingButton clicked={addExercisesToWorkoutPlan} isLoading={loadingButton} showNumberValue={checked.length} />
                 }
                 <Placeholder />
@@ -196,4 +139,4 @@ const AddDialog = ({ isAddDialog, closeDialog, skipThoseIDS, addThoseExercises }
     );
 }
 
-export default AddDialog;
+export default BaseAddExercises;

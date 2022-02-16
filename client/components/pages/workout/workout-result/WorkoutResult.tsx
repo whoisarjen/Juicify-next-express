@@ -4,12 +4,12 @@ import { reverseDateDotes } from '../../../../utils/date.utils';
 import { is_id } from '../../../../utils/db.utils';
 import BottomFlyingGuestBanner from '../../../common/BottomFlyingGuestBanner';
 import ConfirmDialog from '../../../common/ConfirmDialog';
-import Navbar from '../Navbar'
-import AddResultMoreOptions from './MoreOptionsButton';
-import ResultBox from './ResultBox';
+import Navbar from '../navbar'
+import AddResultMoreOptions from './moreOptions';
+import ResultBox from './resultBox';
 import { useWorkoutResultProps } from './useWorkoutResult';
 
-const WorkoutResults = ({ t, isLoading, handleSubmit, onSubmit, deleteEverything, errors, router, getValues, register, fields, addExercises, deleteExerciseIndex, setDeleteExerciseIndex, deleteExercise, token, user, updateResults }: useWorkoutResultProps) => {
+const BaseWorkoutResults = ({ t, isLoading, handleSubmit, onSubmit, deleteEverything, errors, router, getValues, register, fields, addExercises, deleteExerciseIndex, setDeleteExerciseIndex, deleteExercise, token, user, updateResults }: useWorkoutResultProps) => {
     return (
         <form>
             <Navbar
@@ -131,4 +131,4 @@ const WorkoutResults = ({ t, isLoading, handleSubmit, onSubmit, deleteEverything
     );
 }
 
-export default WorkoutResults;
+export default BaseWorkoutResults;

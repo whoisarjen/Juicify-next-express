@@ -1,19 +1,9 @@
 import Link from 'next/link'
 import NoteAltIcon from '@mui/icons-material/NoteAlt'
-import useTranslation from "next-translate/useTranslation";
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
-import { reverseDateDotes } from '../../../utils/date.utils';
-import { useTheme } from '../../../hooks/useTheme';
+import { reverseDateDotes } from '../../../../utils/date.utils';
 import styled from 'styled-components'
-
-interface BoxProps {
-    title?: string,
-    description?: string,
-    route: string,
-    type: number,
-    isNotSaved?: boolean,
-    whenAdded?: string
-}
+import { useWorkoutBoxProps } from './useWorkoutBox';
 
 const Grid = styled.div`
     min-height: 140px;
@@ -52,10 +42,7 @@ const NotSavedText = styled.div`
     margin-left: 10px;
 `
 
-const Box = ({ title = '', description = '', route, type, isNotSaved, whenAdded }: BoxProps) => {
-    const { t } = useTranslation('workout');
-    const { getTheme } = useTheme()
-
+const BaseWorkoutBox = ({ title = '', description = '', route, type, isNotSaved, whenAdded, getTheme, t }: useWorkoutBoxProps) => {
     return (
         <Link href={route}>
             <a>
@@ -91,4 +78,4 @@ const Box = ({ title = '', description = '', route, type, isNotSaved, whenAdded 
     )
 }
 
-export default Box
+export default BaseWorkoutBox;

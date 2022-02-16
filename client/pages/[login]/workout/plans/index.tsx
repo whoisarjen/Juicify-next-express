@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { addIndexedDB } from '../../../../utils/indexedDB.utils'
 import useWorkoutPlans from '../../../../hooks/useWorkoutPlans'
 import ButtonPlus from '../../../../components/common/ButtonPlus';
-import Box from '../../../../components/pages/workout/Box';
+import Box from '../../../../components/pages/workout/box';
 import useTranslation from "next-translate/useTranslation";
 import Navbar from '../../../../components/pages/profile/navbar';
 import { useAppSelector } from '../../../../hooks/useRedux';

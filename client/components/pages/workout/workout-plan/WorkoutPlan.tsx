@@ -2,16 +2,16 @@ import Chip from '@mui/material/Chip'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
 import DeleteIcon from '@mui/icons-material/Delete'
-import Navbar from '../Navbar'
+import Navbar from '../navbar'
 import SwapVertIcon from '@mui/icons-material/SwapVert'
 import ButtonPlus from '../../../common/ButtonPlus'
-import AddExercises from '../AddExercises'
+import AddExercises from '../addExercise'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import BottomFlyingGuestBanner from '../../../common/BottomFlyingGuestBanner'
 import { ExerciseSchemaProps } from '../../../../schema/exercise.schema'
 import { useWorkoutPlanProps } from './useWorkoutPlan'
 
-const WorkoutPlanPage = ({ t, user, token, router, setIsAddDialog, errors, fields, append, remove, handleOnDragEnd, register, deleteWorkoutPlan, saveWorkoutPlan, isLoading, isAddDialog }: useWorkoutPlanProps) => {
+const BaseWorkoutPlan = ({ t, user, token, router, setIsAddDialog, errors, fields, append, remove, handleOnDragEnd, register, deleteWorkoutPlan, saveWorkoutPlan, isLoading, isAddDialog }: useWorkoutPlanProps) => {
     return (
         <form>
             <Navbar
@@ -125,4 +125,4 @@ const WorkoutPlanPage = ({ t, user, token, router, setIsAddDialog, errors, field
     )
 }
 
-export default WorkoutPlanPage;
+export default BaseWorkoutPlan;
