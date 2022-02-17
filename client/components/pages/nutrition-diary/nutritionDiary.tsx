@@ -5,10 +5,10 @@ import Navbar from "./navbar"
 import FastDateChanger from '../../common/FastDateChanger'
 import Diagrams from './diagrams'
 import DiagramsOptions from './diagrams/buttons'
-import BottomFlyingGuestBanner from '../../common/BottomFlyingGuestBanner'
 import Header from "../../layout/Header"
 import { reverseDateDotes } from "../../../utils/date.utils"
 import { useNutritionDiaryProps } from "./useNutritionDiary"
+import BottomFlyingGuestBanner from "../../common/bottomFlyingGuestBanner"
 
 const BaseNutritionDiary = ({ t, router, token, nutritionDiary, user, reload, index, setIndex, product, setProduct, isEditDialog, setIsEditDialog, isAddDialog, setIsAddDialog, deleteProduct, changeProduct, data }: useNutritionDiaryProps) => {
     return (
@@ -42,27 +42,25 @@ const BaseNutritionDiary = ({ t, router, token, nutritionDiary, user, reload, in
                 ))
             }
             {
-                token?.login == router?.query.login
-                    ?
-                    <>
-                        <AddProducts
-                            index={index}
-                            isAddDialog={isAddDialog}
-                            dailyMeasurement={data}
-                            closeDialog={() => setIsAddDialog(false)}
-                            reload={reload}
-                        />
-                        <DialogEditProduct
-                            product={product}
-                            isDialog={isEditDialog}
-                            closeDialog={() => setIsEditDialog(false)}
-                            deleteProduct={(_id) => deleteProduct(_id)}
-                            changeProduct={(newProduct) => changeProduct(newProduct)}
-                        />
-                    </>
-                    :
-                    <BottomFlyingGuestBanner user={user} />
+                token?.login == router?.query.login &&
+                <>
+                    <AddProducts
+                        index={index}
+                        isAddDialog={isAddDialog}
+                        dailyMeasurement={data}
+                        closeDialog={() => setIsAddDialog(false)}
+                        reload={reload}
+                    />
+                    <DialogEditProduct
+                        product={product}
+                        isDialog={isEditDialog}
+                        closeDialog={() => setIsEditDialog(false)}
+                        deleteProduct={(_id) => deleteProduct(_id)}
+                        changeProduct={(newProduct) => changeProduct(newProduct)}
+                    />
+                </>
             }
+            <BottomFlyingGuestBanner user={user} />
         </>
     );
 };

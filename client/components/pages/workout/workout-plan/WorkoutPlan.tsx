@@ -7,9 +7,9 @@ import SwapVertIcon from '@mui/icons-material/SwapVert'
 import ButtonPlus from '../../../common/ButtonPlus'
 import AddExercises from '../addExercise'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
-import BottomFlyingGuestBanner from '../../../common/BottomFlyingGuestBanner'
 import { ExerciseSchemaProps } from '../../../../schema/exercise.schema'
 import { useWorkoutPlanProps } from './useWorkoutPlan'
+import BottomFlyingGuestBanner from '../../../common/bottomFlyingGuestBanner'
 
 const BaseWorkoutPlan = ({ t, user, token, router, setIsAddDialog, errors, fields, append, remove, handleOnDragEnd, register, deleteWorkoutPlan, saveWorkoutPlan, isLoading, isAddDialog }: useWorkoutPlanProps) => {
     return (
@@ -107,20 +107,18 @@ const BaseWorkoutPlan = ({ t, user, token, router, setIsAddDialog, errors, field
                 </Droppable>
             </DragDropContext>
             {
-                token.login == router.query.login
-                    ?
-                    <>
-                        <ButtonPlus click={() => setIsAddDialog(true)} />
-                        <AddExercises
-                            isAddDialog={isAddDialog}
-                            skipThoseIDS={fields}
-                            closeDialog={() => setIsAddDialog(false)}
-                            addThoseExercises={(array: Array<ExerciseSchemaProps>) => append(array)}
-                        />
-                    </>
-                    :
-                    <BottomFlyingGuestBanner user={user} />
+                token.login == router.query.login &&
+                <>
+                    <ButtonPlus click={() => setIsAddDialog(true)} />
+                    <AddExercises
+                        isAddDialog={isAddDialog}
+                        skipThoseIDS={fields}
+                        closeDialog={() => setIsAddDialog(false)}
+                        addThoseExercises={(array: Array<ExerciseSchemaProps>) => append(array)}
+                    />
+                </>
             }
+            <BottomFlyingGuestBanner user={user} />
         </form>
     )
 }

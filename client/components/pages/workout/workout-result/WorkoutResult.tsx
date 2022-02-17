@@ -2,7 +2,7 @@ import TextField from '@mui/material/TextField';
 import { ValueSchemaProps } from '../../../../schema/workoutResult.schema';
 import { reverseDateDotes } from '../../../../utils/date.utils';
 import { is_id } from '../../../../utils/db.utils';
-import BottomFlyingGuestBanner from '../../../common/BottomFlyingGuestBanner';
+import BottomFlyingGuestBanner from '../../../common/bottomFlyingGuestBanner';
 import ConfirmDialog from '../../../common/ConfirmDialog';
 import Navbar from '../navbar'
 import AddResultMoreOptions from './moreOptions';
@@ -108,25 +108,23 @@ const BaseWorkoutResult = ({ t, isLoading, handleSubmit, onSubmit, deleteEveryth
                 )
             }
             {
-                token?.login == router.query?.login
-                    ?
-                    <>
-                        <ConfirmDialog
-                            isDialog={deleteExerciseIndex !== false ? true : false}
-                            closeDialog={() => setDeleteExerciseIndex(false)}
-                            confirm={() => deleteExercise(deleteExerciseIndex as number)}
-                        />
-                        <AddResultMoreOptions
-                            exercises={[...fields.map((x: any) => {
-                                x.l = x.name.length
-                                return x
-                            })]}
-                            setExercises={addExercises}
-                        />
-                    </>
-                    :
-                    <BottomFlyingGuestBanner user={user} />
+                token?.login == router.query?.login &&
+                <>
+                    <ConfirmDialog
+                        isDialog={deleteExerciseIndex !== false ? true : false}
+                        closeDialog={() => setDeleteExerciseIndex(false)}
+                        confirm={() => deleteExercise(deleteExerciseIndex as number)}
+                    />
+                    <AddResultMoreOptions
+                        exercises={[...fields.map((x: any) => {
+                            x.l = x.name.length
+                            return x
+                        })]}
+                        setExercises={addExercises}
+                    />
+                </>
             }
+            <BottomFlyingGuestBanner user={user} />
         </form>
     );
 }
