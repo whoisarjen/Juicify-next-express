@@ -3,14 +3,14 @@ import { RouterContext } from "next/dist/shared/lib/router-context"
 import { Provider } from "react-redux"
 import { store } from "../../../redux/store"
 import { createMockRouter } from "../../../test-utils/createMockRouter.test.utils"
-import Barcode from './index'
+import BaseBarcode from "./Barcode"
 import useBarcode from "./useBarcode"
 
 const LoadBarcode = () => {
     const props = useBarcode()
     // handleSubmit = jest.spyOn(props, 'handleSubmit')
     return (
-        <Barcode {...props} />
+        <BaseBarcode {...props} />
     )
 }
 
@@ -26,8 +26,6 @@ const setup = () => {
         </Provider>
     )
 }
-describe('Testing barcode correct loading', () => {
-    setup()
-})
+it.todo('Testing barcode correct loading')
 
 export default {};

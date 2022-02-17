@@ -5,7 +5,7 @@ import { store } from "../../../redux/store";
 import { createMockRouter } from "../../../test-utils/createMockRouter.test.utils";
 import user from '@testing-library/user-event'
 import useSettings from "./useSettings";
-import Settings from ".";
+import BaseSettings from "./Settings";
 
 let handleSubmit: any = null
 
@@ -13,7 +13,7 @@ const LoadSettings = () => {
     const props = useSettings()
     handleSubmit = jest.spyOn(props, 'handleSubmit')
     return (
-        <Settings {...props} />
+        <BaseSettings {...props} />
     )
 }
 
