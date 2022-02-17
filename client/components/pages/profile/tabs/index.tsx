@@ -1,14 +1,14 @@
-import useTabs from './useTabs';
-import BaseTabs from './Tabs';
+import useTabs from './useProfileTabs';
+import BaseProfileTabs from './ProfileTabs';
 
-export interface TabsProps {
+export interface ProfileTabsProps {
     tab: number
 }
 
-const Tabs = ({ tab }: TabsProps) => {
+const ProfileTabs = ({ tab }: ProfileTabsProps) => {
     const props = useTabs({ tab })
 
-    return <BaseTabs {...props} />
+    return <BaseProfileTabs {...props} />
 }
 
-export default Tabs;
+export default ProfileTabs;

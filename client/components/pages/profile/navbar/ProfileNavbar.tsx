@@ -8,7 +8,7 @@ import TabsMenu from '../tabs'
 import Avatar from '../../../common/Avatar';
 import Share from "../../../common/Share";
 import styled from 'styled-components'
-import { useNavbarProps } from './useNavbar';
+import { useProfileNavbarProps } from './useProfileNavbar';
 
 const Box = styled.div`
     width: 100%;
@@ -41,7 +41,7 @@ const Content = styled.div`
     }
 `
 
-const BaseNavbar = ({ user, tab, token, router }: useNavbarProps) => {
+const BaseProfileNavbar = ({ user, tab, token, router }: useProfileNavbarProps) => {
     return (
         <>
             {
@@ -56,19 +56,17 @@ const BaseNavbar = ({ user, tab, token, router }: useNavbarProps) => {
                                 <h2>{user.login}</h2>
                                 {
                                     user.login == token.login ?
-                                        (
-                                            <>
-                                                <Share />
-                                                <IconButton onClick={() => router.push('/settings')} sx={{ margin: 'auto' }} aria-label="settings" color="primary">
-                                                    <SettingsIcon />
-                                                </IconButton>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <div />
-                                                <Share />
-                                            </>
-                                        )
+                                        <>
+                                            <Share />
+                                            <IconButton onClick={() => router.push('/settings')} sx={{ margin: 'auto' }} aria-label="settings" color="primary">
+                                                <SettingsIcon />
+                                            </IconButton>
+                                        </>
+                                        :
+                                        <>
+                                            <div />
+                                            <Share />
+                                        </>
                                 }
                             </div>
                             <div>{user.name} {user.surname}</div>
@@ -76,25 +74,25 @@ const BaseNavbar = ({ user, tab, token, router }: useNavbarProps) => {
                             <div>
                                 {
                                     user.facebook &&
-                                    <IconButton onClick={() => window.open(`https://facebook.com/${user.facebook}`, '_blank')} aria-label="Facebook" color="primary">
+                                    <IconButton onClick={() => window.open(`https://facebook.com/${user.facebook}`, '_blank')} data-testid="facebook" color="primary">
                                         <FacebookIcon />
                                     </IconButton>
                                 }
                                 {
                                     user.instagram &&
-                                    <IconButton onClick={() => window.open(`https://instagram.com/${user.instagram}`, '_blank')} aria-label="Facebook" color="primary">
+                                    <IconButton onClick={() => window.open(`https://instagram.com/${user.instagram}`, '_blank')} data-testid="instagram" color="primary">
                                         <InstagramIcon />
                                     </IconButton>
                                 }
                                 {
                                     user.twitter &&
-                                    <IconButton onClick={() => window.open(`https://twitter.com/${user.twitter}`, '_blank')} aria-label="Facebook" color="primary">
+                                    <IconButton onClick={() => window.open(`https://twitter.com/${user.twitter}`, '_blank')} data-testid="twitter" color="primary">
                                         <TwitterIcon />
                                     </IconButton>
                                 }
                                 {
                                     user.website &&
-                                    <IconButton onClick={() => window.open(`${user.website}`, '_blank')} aria-label="Facebook" color="primary">
+                                    <IconButton onClick={() => window.open(`${user.website}`, '_blank')} data-testid="website" color="primary">
                                         <LinkIcon />
                                     </IconButton>
                                 }
@@ -108,4 +106,4 @@ const BaseNavbar = ({ user, tab, token, router }: useNavbarProps) => {
     )
 }
 
-export default BaseNavbar;
+export default BaseProfileNavbar;

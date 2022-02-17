@@ -65,6 +65,7 @@ const BaseRegister = ({ registerUser, t, loading, register, errors, handleSubmit
                     variant="outlined"
                     label={t("auth:PASSWORD")}
                     {...register('password')}
+                    data-testid="password"
                     error={typeof errors.password === 'undefined' ? false : true}
                     helperText={
                         errors.password?.message &&
@@ -77,6 +78,7 @@ const BaseRegister = ({ registerUser, t, loading, register, errors, handleSubmit
                     variant="outlined"
                     label={t("auth:PASSWORD_CONFIRMATION")}
                     {...register('passwordConfirmation')}
+                    data-testid="confirmation"
                     error={typeof errors.passwordConfirmation === 'undefined' ? false : true}
                     helperText={
                         errors.passwordConfirmation?.message &&
@@ -115,6 +117,7 @@ const BaseRegister = ({ registerUser, t, loading, register, errors, handleSubmit
                         {...register('sex')}
                         label={t("auth:SEX")}
                         defaultValue="true"
+                        data-testid="sex"
                     >
                         <MenuItem value="true">{t("auth:MAN")}</MenuItem>
                         <MenuItem value="false">{t("auth:WOMAN")}</MenuItem>

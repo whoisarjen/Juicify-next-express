@@ -9,7 +9,7 @@ import Tab from '@mui/material/Tab';
 import BottomFlyingButton from '../../../common/BottomFlyingButton'
 import { ExerciseSchemaProps } from '../../../../schema/exercise.schema';
 import styled from 'styled-components'
-import CreateExercise from '../createExercise';
+import CreateExercise from './createExercise';
 import SlideUp from '../../../transition/SlideUp';
 import { useAddExercisesProps } from './useAddExercises';
 import AddExercisesBox from './box';

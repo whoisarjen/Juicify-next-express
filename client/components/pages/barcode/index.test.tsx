@@ -6,12 +6,10 @@ import { createMockRouter } from "../../../test-utils/createMockRouter.test.util
 import BaseBarcode from "./Barcode"
 import useBarcode from "./useBarcode"
 
-const LoadBarcode = () => {
+const component = () => {
     const props = useBarcode()
     // handleSubmit = jest.spyOn(props, 'handleSubmit')
-    return (
-        <BaseBarcode {...props} />
-    )
+    return <BaseBarcode {...props} />
 }
 
 const setup = () => {
@@ -21,11 +19,12 @@ const setup = () => {
                 locale: 'en',
                 locales: ['en', 'pl']
             })}>
-                <LoadBarcode />
+                {/* <component /> */}
             </RouterContext.Provider>
         </Provider>
     )
 }
+
 it.todo('Testing barcode correct loading')
 
 export default {};

@@ -1,15 +1,15 @@
-import BaseNavbar from "./Navbar";
-import useNavbar from "./useNavbar";
+import BaseProfileNavbar from "./ProfileNavbar";
+import useNavbar from "./useProfileNavbar";
 
-export interface NavbarProps {
+export interface ProfileNavbarProps {
     user: any,
     tab: number
 }
 
-const Navbar = ({ user, tab }: NavbarProps) => {
+const ProfileNavbar = ({ user, tab }: ProfileNavbarProps) => {
     const props = useNavbar({ user, tab })
 
-    return <BaseNavbar {...props} />
+    return <BaseProfileNavbar {...props} />
 }
 
-export default Navbar;
+export default ProfileNavbar;

@@ -57,15 +57,20 @@ const BaseLogin = ({ login, register, errors, handleSubmit, loading, t }: useLog
                     loading={loading}
                     variant="contained"
                     type="submit"
+                    data-testid="login_button"
                 >
                     {t("auth:SIGN_IN")}
                 </LoadingButton>
-                <Link passHref href="/reset-password">
+                <Link
+                    passHref
+                    href="/reset-password"
+                >
                     {t("auth:FORGOT_PASSWORD_RESET_IT")}
                 </Link>
             </Stack>
             <Link passHref href="/register">
                 <LoadingButton
+                    data-testid="register_button"
                     color="success"
                     style={{ margin: 'auto 0' }}
                     variant="contained"

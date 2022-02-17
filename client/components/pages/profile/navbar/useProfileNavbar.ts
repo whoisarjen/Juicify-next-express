@@ -1,14 +1,14 @@
 import { useRouter } from "next/router";
-import { NavbarProps } from ".";
+import { ProfileNavbarProps } from ".";
 import { useAppSelector } from "../../../../hooks/useRedux";
 
-const useNavbar = ({ user, tab }: NavbarProps) => {
+const useProfileNavbar = ({ user, tab }: ProfileNavbarProps) => {
     const router = useRouter()
     const token: any = useAppSelector(state => state.token.value)
 
     return { router, token, user, tab }
 }
 
-export type useNavbarProps = ReturnType<typeof useNavbar>
+export type useProfileNavbarProps = ReturnType<typeof useProfileNavbar>
 
-export default useNavbar;
+export default useProfileNavbar;
