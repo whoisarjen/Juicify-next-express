@@ -5,7 +5,7 @@ export function createMockRouter(router: Partial<NextRouter>): NextRouter {
         basePath: '',
         pathname: '/',
         route: '/',
-        query: {},
+        query: { login: 'Test' },
         asPath: '/',
         back: jest.fn(),
         beforePopState: jest.fn(),

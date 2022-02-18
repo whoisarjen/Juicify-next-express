@@ -1,7 +1,5 @@
 import BaseAddExercisesBox from "./AddExercisesBox";
-import useAddExercisesBox from "./useAddExerciseBox";
-import { render, screen, waitFor } from '@testing-library/react'
-import { setupComponent } from "../../../../../test-utils/setupComponent.test.utils";
+import { render, screen } from '@testing-library/react'
 import userEvent from "@testing-library/user-event";
 require("fake-indexeddb/auto");
 
@@ -11,30 +9,15 @@ const exercise = {
     l: 13
 }
 
-const refreshCheckedExercises = jest.fn()
+let handleCheckSpy: any = null;
 
 const Component = () => {
-    const props = useAddExercisesBox({ exercise, refreshCheckedExercises })
+    const props = { exercise, handleCheck: jest.fn(), checked: false, getTheme: jest.fn() }
+    
     handleCheckSpy = jest.spyOn(props, 'handleCheck')
 
     return <BaseAddExercisesBox {...props} />
 }
-
-let handleCheckSpy: any = null;
-
-beforeEach(async () => {
-    // const props = useAddExercisesBox({ exercise, refreshCheckedExercises })
-    // const props = {
-    //     exercise,
-    //     refreshCheckedExercises,
-    //     handleCheck: jest.fn(),
-    //     getTheme: jest.fn()
-    // }
-
-    // handleCheckSpy = jest.spyOn(props, 'handleCheck')
-
-    // render(<BaseAddExercisesBox {...props} />)
-})
 
 describe('Checking Workout AddExercisesBox', () => {
     it('Expect to load exercise and show expected data', () => {
@@ -42,7 +25,7 @@ describe('Checking Workout AddExercisesBox', () => {
         screen.getByText(exercise.name)
     })
 
-    it('Expect checkbox to be unchecked', () => {
+    it('Expect checkbox to fire handleCheck', () => {
         render(<Component />)
         const checkBox = screen.getByRole('checkbox', {
             name: /controlled/i

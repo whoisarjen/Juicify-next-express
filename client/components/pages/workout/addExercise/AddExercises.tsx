@@ -1,4 +1,4 @@
-import { Fragment, useMemo, useState } from 'react'
+import { Fragment, useState } from 'react'
 import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -6,13 +6,13 @@ import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
 import { ExerciseSchemaProps } from '../../../../schema/exercise.schema';
 import styled from 'styled-components'
-import CreateExercise from './createExercise';
 import SlideUp from '../../../transition/SlideUp';
 import { useAddExercisesProps } from './useAddExercises';
 import AddExercisesBox from './box';
 import ButtonPlus from '../../../common/ButtonPlus';
 import BottomFlyingButton from '../../../common/BottomFlyingButton';
 import AddItemsTabs from '../../../common/tabs';
+import CreateExercise from './createExercise';
 
 const Close = styled.div`
     display: grid;
@@ -48,25 +48,19 @@ const Grid = styled.div`
     }
 `
 
-const GridFullWidth = styled.div`
-    display: grid;
-    width: 100%;
-`
-
 const Title = styled.div`
     font-size: 2rem;
     margin-bottom: 10px;
     font-weight: bold;
 `
 
-const BaseAddExercises = ({ open, setOpen, find, setFind, loading, searchCache, items, checked, t, created, isCreateExercise, setTab, setRefreshChecked, setIsCreateExercise, refreshChecked, addExercisesToWorkoutPlan, router, token }: useAddExercisesProps) => {
-    const [isAddDialog, setIsAddDialog] = useState(false)
+const ButtonHolder = styled.div`
+    margin: auto;
+    display: grid;
+`
 
-    const ChoosenButton = useMemo(() => {
-        if (true) {
-            return <ButtonPlus click={() => setIsAddDialog(true)} />
-        }
-    }, [])
+const BaseAddExercises = ({ children = <ButtonPlus />, open, setOpen, find, setFind, loading, searchCache, items, checked, t, changeFindToCreatedExerciseName, setTab, setRefreshChecked, refreshChecked, addExercisesToWorkoutPlan, router, token }: useAddExercisesProps) => {
+    const [isAddDialog, setIsAddDialog] = useState(false)
 
     if (router.query.login != token.login) {
         return <></>
@@ -74,7 +68,7 @@ const BaseAddExercises = ({ open, setOpen, find, setFind, loading, searchCache, 
 
     return (
         <>
-            {ChoosenButton}
+            <ButtonHolder onClick={() => setIsAddDialog(true)}>{children}</ButtonHolder>
             <Dialog
                 fullScreen
                 scroll='body'
@@ -117,16 +111,7 @@ const BaseAddExercises = ({ open, setOpen, find, setFind, loading, searchCache, 
                             <AddExercisesBox refreshCheckedExercises={() => setRefreshChecked(refreshChecked + 1)} exercise={item} key={item._id} />
                         )
                     }
-                    <GridFullWidth>
-                        <Button variant="outlined" onClick={() => setIsCreateExercise(true)} sx={{ margin: 'auto' }}>
-                            {t('Create exercise')}
-                        </Button>
-                    </GridFullWidth>
-                    <CreateExercise
-                        created={created}
-                        isCreateExercise={isCreateExercise}
-                        closeCreateExercise={() => setIsCreateExercise(false)}
-                    />
+                    <CreateExercise nameOfCreatedExercise={changeFindToCreatedExerciseName} />
                     <BottomFlyingButton
                         showNumberValue={checked.length}
                         clicked={() => {

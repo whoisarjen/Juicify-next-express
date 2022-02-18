@@ -7,10 +7,11 @@ import { useNotify } from "../../../../../hooks/useNotify"
 import { ExerciseSchemaProps, ExerciseSchema } from "../../../../../schema/exercise.schema"
 import { insertThoseIDStoDB } from "../../../../../utils/db.utils"
 
-const useCreateExercise = ({ closeCreateExercise, isCreateExercise, created }: CreateExerciseProps) => {
+const useCreateExercise = ({ nameOfCreatedExercise }: CreateExerciseProps) => {
     const { t } = useTranslation('workout')
     const [loading, setLoading] = useState(false)
     const { success } = useNotify()
+    const [isOpen, setIsOpen] = useState(false)
 
     const { register, formState: { errors }, handleSubmit } = useForm<ExerciseSchemaProps>({
         resolver: zodResolver(ExerciseSchema)
@@ -19,12 +20,12 @@ const useCreateExercise = ({ closeCreateExercise, isCreateExercise, created }: C
     const onSubmit = async (values: ExerciseSchemaProps) => {
         setLoading(true);
         await insertThoseIDStoDB('exercise', [values])
-            .then(() => created(values.name))
+            .then(() => nameOfCreatedExercise(values.name))
             .then(() => success())
             .finally(() => setLoading(false))
     }
 
-    return { closeCreateExercise, isCreateExercise, handleSubmit, onSubmit, errors, t, register, loading }
+    return { isOpen, setIsOpen, handleSubmit, onSubmit, errors, t, register, loading }
 }
 
 export type useCreateExerciseProps = ReturnType<typeof useCreateExercise>

@@ -3,7 +3,7 @@ import AddIcon from '@mui/icons-material/Add';
 import styled from 'styled-components'
 
 interface ButtonPlusProps {
-    click: () => void,
+    click?: () => void,
     size?: any
 }
 

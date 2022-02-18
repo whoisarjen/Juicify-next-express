@@ -18,6 +18,7 @@ const BaseBottomFlyingGuestBanner = ({ user, t, router, token }: useBottomFlying
         <>
             <Placeholder />
             <Button
+                data-testid="BottomFlyingGuestBanner"
                 onClick={() => router.push(`/${router.query.login}`)}
                 sx={{
                     maxWidth: 700,

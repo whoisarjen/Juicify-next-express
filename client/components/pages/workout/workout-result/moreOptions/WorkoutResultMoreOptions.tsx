@@ -5,13 +5,13 @@ import AddExercises from '../../addExercise'
 import { useWorkoutResultMoreOptionsProps } from './useWorkoutResultMoreOptions';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 
-const BaseWorkoutResultMoreOptions = ({ exercises, setExercises, isAddDialog, setIsAddDialog, handleClose, handleOpen, open }: useWorkoutResultMoreOptionsProps) => {
+const BaseWorkoutResultMoreOptions = ({ exercises, setExercises, handleClose, handleOpen, open }: useWorkoutResultMoreOptionsProps) => {
 
     const actions = [
         {
-            icon: <FitnessCenterIcon />,
+            icon: <AddExercises skipThoseIDS={exercises} addThoseExercises={setExercises}><FitnessCenterIcon /></AddExercises>,
             name: 'Exercise',
-            click: () => setIsAddDialog(true)
+            click: () => console.log()
         },
     ];
 
@@ -34,12 +34,6 @@ const BaseWorkoutResultMoreOptions = ({ exercises, setExercises, isAddDialog, se
                     onClick={action.click}
                 />
             ))}
-            <AddExercises
-                isAddDialog={isAddDialog}
-                skipThoseIDS={exercises}
-                closeDialog={() => setIsAddDialog(false)}
-                addThoseExercises={setExercises}
-            />
         </SpeedDial>
     );
 }
