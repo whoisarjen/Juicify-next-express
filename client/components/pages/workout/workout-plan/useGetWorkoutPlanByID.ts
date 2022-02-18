@@ -23,20 +23,20 @@ const useGetWorkoutPlanByID = (_id: string) => {
                     const workoutPlan: WorkoutPlanSchemaProps = await getIndexedDBbyID('workout_plan', _id)
 
                     if (!workoutPlan) {
-                        router.push(`/${router.query.login}/workout-plans`)
+                        router.push(`/${router.query.login}/workout/plans`)
                     }
 
                     setUser(token)
                     setData(loadMissingData({ _id: 'XD' + new Date().getTime(), user_ID: token._id, object: workoutPlan }))
                 } else {
                     if (!await is_id(router.query.id)) {
-                        router.push(`/${router.query.login}/workout-plans`)
+                        router.push(`/${router.query.login}/workout/plans`)
                     }
 
                     let res = await loadValueByLogin('workout_plan', _id, router.query.login)
 
                     if (!res.data) {
-                        router.push(`/${router.query.login}/workout-plans`)
+                        router.push(`/${router.query.login}/workout/plans`)
                     }
 
                     setUser(res.user)

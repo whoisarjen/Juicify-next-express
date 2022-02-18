@@ -26,7 +26,7 @@ const Close = styled.div`
     z-index: 2;
 `
 
-const Placeholder = styled.div`
+const CloseButtonPlaceholder = styled.div`
     width: 100%;
     height: 44px;
 `
@@ -115,7 +115,7 @@ const BaseAddExercises = ({ children, open, setOpen, find, setFind, loading, sea
                             setIsAddDialog(false)
                         }}
                     />
-                    <Placeholder />
+                    <CloseButtonPlaceholder />
                     <Close onClick={() => setIsAddDialog(false)}>
                         <Button variant="contained">
                             {t('Close')}

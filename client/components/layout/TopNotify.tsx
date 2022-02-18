@@ -34,7 +34,7 @@ const TopNotify = () => {
             if (token && token.login) {
                 document.documentElement.style.setProperty('--BothNavHeightAndPaddingDefault', '141px')
                 const workoutResults = await getAllIndexedDB('workout_result')
-                if (!router.pathname.includes('workout-results') && workoutResults.length) {
+                if (!router.pathname.includes('workout/results') && workoutResults.length) {
                     document.documentElement.style.setProperty('--BothNavHeightAndPaddingDefault', '183px')
                 } else {
                     document.documentElement.style.setProperty('--BothNavHeightAndPaddingDefault', '141px')

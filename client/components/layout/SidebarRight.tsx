@@ -129,7 +129,7 @@ const SidebarRight = ({ token }: { token: any }) => {
                                 </ListItemButton>
                             </a>
                         </Link>
-                        <Link href={`/${token.login}/workout-results/`}>
+                        <Link href={`/${token.login}/workout/results/`}>
                             <a>
                                 <ListItemButton>
                                     <CircularBox>
