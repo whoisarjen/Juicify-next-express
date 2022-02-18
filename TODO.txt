@@ -5,3 +5,6 @@ server doesnt send back error messages
 
 
 schema for activity
+
+
+remove listeners on unmounted

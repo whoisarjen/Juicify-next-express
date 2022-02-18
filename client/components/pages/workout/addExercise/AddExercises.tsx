@@ -59,16 +59,12 @@ const ButtonHolder = styled.div`
     display: grid;
 `
 
-const BaseAddExercises = ({ children = <ButtonPlus />, open, setOpen, find, setFind, loading, searchCache, items, checked, t, changeFindToCreatedExerciseName, setTab, setRefreshChecked, refreshChecked, addExercisesToWorkoutPlan, router, token }: useAddExercisesProps) => {
+const BaseAddExercises = ({ children, open, setOpen, find, setFind, loading, searchCache, items, checked, t, changeFindToCreatedExerciseName, setTab, setRefreshChecked, refreshChecked, addExercisesToWorkoutPlan }: useAddExercisesProps) => {
     const [isAddDialog, setIsAddDialog] = useState(false)
-
-    if (router.query.login != token.login) {
-        return <></>
-    }
 
     return (
         <>
-            <ButtonHolder onClick={() => setIsAddDialog(true)}>{children}</ButtonHolder>
+            <ButtonHolder onClick={() => setIsAddDialog(true)}>{children || <ButtonPlus />}</ButtonHolder>
             <Dialog
                 fullScreen
                 scroll='body'

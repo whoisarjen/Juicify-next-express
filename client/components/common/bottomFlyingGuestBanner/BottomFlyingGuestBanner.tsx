@@ -8,12 +8,7 @@ const Placeholder = styled.div`
     width: 100%;
 `
 
-const BaseBottomFlyingGuestBanner = ({ user, t, router, token }: useBottomFlyingGuestBannerProps) => {
-
-    if (!user || user.login == token.login) {
-        return <></>
-    }
-
+const BaseBottomFlyingGuestBanner = ({ user, t, router }: useBottomFlyingGuestBannerProps) => {
     return (
         <>
             <Placeholder />

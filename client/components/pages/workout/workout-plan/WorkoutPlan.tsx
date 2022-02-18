@@ -108,11 +108,8 @@ const BaseWorkoutPlan = ({ t, user, token, errors, fields, append, remove, handl
                     }
                 </Droppable>
             </DragDropContext>
-            {
-                token.login == user.login &&
-                <AddExercises skipThoseIDS={fields} addThoseExercises={(array: Array<ExerciseSchemaProps>) => append(array)} />
-            }
-            <BottomFlyingGuestBanner user={user} />
+            {user.login && token.login == user.login && <AddExercises skipThoseIDS={fields} addThoseExercises={(array: Array<ExerciseSchemaProps>) => append(array)} />}
+            {user.login && token.login != user.login && <BottomFlyingGuestBanner user={user} />}
         </form>
     )
 }

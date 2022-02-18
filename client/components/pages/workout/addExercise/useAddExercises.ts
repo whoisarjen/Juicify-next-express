@@ -1,9 +1,7 @@
 import useTranslation from "next-translate/useTranslation";
-import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { AddExercisesProps } from ".";
 import useFind from "../../../../hooks/useFind";
-import { useAppSelector } from "../../../../hooks/useRedux";
 import { ExerciseSchemaProps } from "../../../../schema/exercise.schema";
 import { deleteIndexedDB, getAllIndexedDB } from "../../../../utils/indexedDB.utils";
 
@@ -15,8 +13,6 @@ const useAddExercises = ({ children, skipThoseIDS, addThoseExercises }: AddExerc
     const [checked, setChecked] = useState([])
     const [refreshChecked, setRefreshChecked] = useState(0)
     const { items, loading, searchCache } = useFind(find, 'exercise', tab, skipThoseIDS)
-    const token: any = useAppSelector(state => state.token.value)
-    const router: any = useRouter()
 
     const addExercisesToWorkoutPlan = async () => {
         checked.forEach(async (x: ExerciseSchemaProps) => {
@@ -43,7 +39,7 @@ const useAddExercises = ({ children, skipThoseIDS, addThoseExercises }: AddExerc
         })()
     }, [refreshChecked])
 
-    return { children, open, setOpen, find, setFind, loading, searchCache, items, checked, t, changeFindToCreatedExerciseName, setTab, setRefreshChecked, refreshChecked, addExercisesToWorkoutPlan, router, token }
+    return { children, open, setOpen, find, setFind, loading, searchCache, items, checked, t, changeFindToCreatedExerciseName, setTab, setRefreshChecked, refreshChecked, addExercisesToWorkoutPlan }
 }
 
 export type useAddExercisesProps = ReturnType<typeof useAddExercises>

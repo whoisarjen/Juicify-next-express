@@ -124,7 +124,7 @@ const BaseWorkoutResult = ({ t, isLoading, handleSubmit, onSubmit, deleteEveryth
                     />
                 </>
             }
-            <BottomFlyingGuestBanner user={user} />
+            {token.login != user.login && user.login && <BottomFlyingGuestBanner user={user} />}
         </form>
     );
 }
