@@ -42,7 +42,7 @@ const useValueBox = ({ value, index, changeResult, deleteResult, isOwner }: Valu
         loadWeight(value.weight.toString())
     }, [])
 
-    return { index, changeResult, isOwner, open, setOpen, weight, setWeight, reps, setReps, isDialog, setIsDialog, handleDelete, weightOptions, loadWeight, repsOptions }
+    return { index, changeResult, isOwner, open, setOpen, weight, reps, setReps, isDialog, setIsDialog, handleDelete, weightOptions, loadWeight, repsOptions }
 }
 
 export type useValueBoxProps = ReturnType<typeof useValueBox>

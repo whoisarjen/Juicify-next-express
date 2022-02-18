@@ -29,7 +29,7 @@ const Connected = styled.div`
     grid-column: 1 / 3;
 `
 
-const BaseValueBox = ({ index, changeResult, isOwner, open, setOpen, weight, setWeight, reps, setReps, isDialog, setIsDialog, handleDelete, weightOptions, loadWeight, repsOptions }: useValueBoxProps) => {
+const BaseValueBox = ({ index, changeResult, isOwner, open, setOpen, weight, reps, setReps, isDialog, setIsDialog, handleDelete, weightOptions, loadWeight, repsOptions }: useValueBoxProps) => {
     return (
         <>
             {
