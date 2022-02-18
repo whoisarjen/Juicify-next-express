@@ -7,7 +7,7 @@ import { useAppSelector } from "../../../hooks/useRedux";
 import { SettingsSchema, SettingsSchemaProps } from "../../../schema/user.schema";
 import useAxios from "../../../hooks/useAxios";
 import useToken from "../../../hooks/useToken";
-import useAuth from "../../../hooks/useLogout";
+import useAuth from "../../../hooks/useAuth";
 
 const useSettings = () => {
     const { post } = useAxios();

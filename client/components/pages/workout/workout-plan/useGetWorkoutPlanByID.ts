@@ -9,7 +9,7 @@ import { loadMissingData } from "../../../../utils/workoutPlan.utils"
 
 const useGetWorkoutPlanByID = (_id: string) => {
     const router: any = useRouter()
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState<any>({})
     const [reload, setReload] = useState(0)
     const [data, setData] = useState<WorkoutPlanSchemaProps>(loadMissingData({ _id: 'XD' + new Date().getTime(), user_ID: '', object: {} }))
     const token: any = useAppSelector(state => state.token.value)

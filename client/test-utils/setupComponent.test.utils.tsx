@@ -4,7 +4,7 @@ import { Provider } from "react-redux"
 import { store } from "../redux/store"
 import { createMockRouter } from "./createMockRouter.test.utils"
 
-export const setupComponent = (Component: any, routerValuesAsObject: any) => {
+export const setupComponent = (Component: any, routerValuesAsObject: any = {}) => {
     return render(
         <Provider store={store}>
             <RouterContext.Provider value={createMockRouter({

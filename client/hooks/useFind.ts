@@ -1,16 +1,10 @@
-import { store } from '../redux/store'
 import { useState, useEffect } from "react";
 import { addIndexedDB, getAllIndexedDB, getIndexedDBbyID } from '../utils/indexedDB.utils'
 import axios from 'axios';
 import { useAppSelector } from './useRedux';
 import { getOnline } from '../utils/db.utils';
 
-const prepareItems = async (
-    data: Array<any>,
-    skipThoseIDS: Array<any>,
-    where: string,
-    value: string
-): Promise<Array<any>> => {
+const prepareItems = async (data: Array<any>, skipThoseIDS: Array<any>, where: string, value: string): Promise<Array<any>> => {
     return new Promise(async resolve => {
         let my: Array<any> = await getAllIndexedDB(where) || []
         let newData: Array<any> = data.concat(my)

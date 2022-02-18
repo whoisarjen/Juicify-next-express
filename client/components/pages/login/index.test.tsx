@@ -4,17 +4,16 @@ import { setupComponent } from '../../../test-utils/setupComponent.test.utils';
 import BaseLogin from './Login';
 import useLogin from './useLogin';
 
+let login: any = null;
 let handleSubmit: any = null;
 
 const component = () => {
     const props = useLogin()
 
+    login = jest.spyOn(props, 'login')
     handleSubmit = jest.spyOn(props, 'handleSubmit')
 
-    return <BaseLogin {...{
-        ...props,
-        login: jest.fn()
-    }} />
+    return <BaseLogin {...{ ...props, login }} />
 }
 
 beforeEach(() => {

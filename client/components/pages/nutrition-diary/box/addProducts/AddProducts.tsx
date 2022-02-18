@@ -7,8 +7,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import AddProductsBox from './box';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import CreateProduct from './create';
 import BottomFlyingButton from '../../../../common/BottomFlyingButton';
 import AddProductMoreInformation from './informations';
@@ -16,6 +14,7 @@ import { ProductSchemaProps } from '../../../../../schema/product.schema';
 import styled from 'styled-components'
 import SlideUp from '../../../../transition/SlideUp';
 import { useAddProductsProps } from './useAddProducts';
+import AddItemsTabs from '../../../../common/tabs';
 
 const Close = styled.div`
     display: grid;
@@ -62,7 +61,7 @@ const Title = styled.div`
     font-weight: bold;
 `
 
-const BaseAddProducts = ({ t, isAddDialog, closeDialog, dailyMeasurement, meal, setMeal, open, setOpen, find, setFind, tab, setTab, loading, searchCache, token, loadingButton, items, addProductsToDiary, isCreateProduct, setIsCreateProduct, setRefreshChecked, loadedProduct, setLoadedProduct, checked, created, refreshChecked }: useAddProductsProps) => {
+const BaseAddProducts = ({ t, isAddDialog, closeDialog, dailyMeasurement, meal, setMeal, open, setOpen, find, setFind, tab, setTab, loading, searchCache, token, items, addProductsToDiary, isCreateProduct, setIsCreateProduct, setRefreshChecked, loadedProduct, setLoadedProduct, checked, created, refreshChecked }: useAddProductsProps) => {
     return (
         <Dialog
             fullScreen
@@ -113,18 +112,7 @@ const BaseAddProducts = ({ t, isAddDialog, closeDialog, dailyMeasurement, meal, 
                         />
                     )}
                 />
-                <Tabs
-                    value={tab}
-                    onChange={(e, value) => setTab(value)}
-                    indicatorColor="primary"
-                    textColor="inherit"
-                    variant="fullWidth"
-                    sx={{ marginBottom: '10px' }}
-                >
-                    <Tab wrapped label={t('All')} />
-                    <Tab wrapped label={t('Favourite')} />
-                    <Tab wrapped label={`${t('Selected')} (${checked.length})`} />
-                </Tabs>
+                <AddItemsTabs changeTab={(value) => setTab(value)} checkedLength={checked.length} />
                 {
                     items?.length > 0 && items.map((product: ProductSchemaProps) =>
                         <AddProductsBox refreshCheckedProducts={() => setRefreshChecked(refreshChecked + 1)} product={product} key={product._id} openMoreInformation={() => setLoadedProduct(product)} />
@@ -142,7 +130,7 @@ const BaseAddProducts = ({ t, isAddDialog, closeDialog, dailyMeasurement, meal, 
                 />
                 {
                     checked?.length > 0 &&
-                    <BottomFlyingButton clicked={addProductsToDiary} isLoading={loadingButton} showNumberValue={checked.length} />
+                    <BottomFlyingButton clicked={addProductsToDiary} showNumberValue={checked.length} />
                 }
                 <Placeholder />
                 <Close onClick={() => closeDialog()}>

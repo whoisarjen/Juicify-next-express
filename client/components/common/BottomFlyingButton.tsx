@@ -1,11 +1,9 @@
 import LoadingButton from '@mui/lab/LoadingButton';
 import useTranslation from "next-translate/useTranslation";
-import { useEffect, useState } from "react";
 import styled from 'styled-components'
 
 interface BottomFlyingButtonProps {
     clicked: () => void,
-    isLoading: boolean,
     buttonText?: string,
     showNumberValue?: number
 }
@@ -25,25 +23,25 @@ const Placeholder = styled.div`
     height: 44px;
 `
 
-const BottomFlyingButton = ({ clicked, isLoading = false, buttonText = 'Submit', showNumberValue = 0 }: BottomFlyingButtonProps) => {
+const BottomFlyingButton = ({ clicked, buttonText = 'Submit', showNumberValue = 0 }: BottomFlyingButtonProps) => {
     const { t } = useTranslation('home')
-    const [loading, setLoading] = useState<boolean>(false)
 
-    useEffect(() => setLoading(isLoading), [isLoading])
+    if (!showNumberValue) {
+        return <></>
+    }
 
     return (
         <>
+            <Placeholder />
             <Button>
                 <LoadingButton
                     onClick={clicked}
-                    loading={loading}
                     variant="contained"
                     type="submit"
                 >
                     {t(buttonText)}{showNumberValue > 0 && ` (${showNumberValue})`}
                 </LoadingButton>
             </Button>
-            <Placeholder />
         </>
     )
 }

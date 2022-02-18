@@ -1,4 +1,4 @@
-import { number, object, string, TypeOf } from 'zod'
+import { boolean, number, object, string, TypeOf } from 'zod'
 
 export const ExerciseSchema = object({
     _id: string().optional(),

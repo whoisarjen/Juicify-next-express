@@ -1,18 +1,18 @@
-import { Fragment } from 'react'
+import { Fragment, useMemo, useState } from 'react'
 import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import BottomFlyingButton from '../../../common/BottomFlyingButton'
 import { ExerciseSchemaProps } from '../../../../schema/exercise.schema';
 import styled from 'styled-components'
 import CreateExercise from './createExercise';
 import SlideUp from '../../../transition/SlideUp';
 import { useAddExercisesProps } from './useAddExercises';
 import AddExercisesBox from './box';
+import ButtonPlus from '../../../common/ButtonPlus';
+import BottomFlyingButton from '../../../common/BottomFlyingButton';
+import AddItemsTabs from '../../../common/tabs';
 
 const Close = styled.div`
     display: grid;
@@ -59,83 +59,90 @@ const Title = styled.div`
     font-weight: bold;
 `
 
-const BaseAddExercises = ({ isAddDialog, closeDialog, open, setOpen, find, setFind, loading, searchCache, items, checked, t, created, isCreateExercise, tab, setTab, setRefreshChecked, setIsCreateExercise, refreshChecked, loadingButton, addExercisesToWorkoutPlan }: useAddExercisesProps) => {
+const BaseAddExercises = ({ open, setOpen, find, setFind, loading, searchCache, items, checked, t, created, isCreateExercise, setTab, setRefreshChecked, setIsCreateExercise, refreshChecked, addExercisesToWorkoutPlan, router, token }: useAddExercisesProps) => {
+    const [isAddDialog, setIsAddDialog] = useState(false)
+
+    const ChoosenButton = useMemo(() => {
+        if (true) {
+            return <ButtonPlus click={() => setIsAddDialog(true)} />
+        }
+    }, [])
+
+    if (router.query.login != token.login) {
+        return <></>
+    }
+
     return (
-        <Dialog
-            fullScreen
-            scroll='body'
-            open={isAddDialog}
-            TransitionComponent={SlideUp}
-        >
-            <Grid>
-                <Title>{t('Add exercises')}</Title>
-                <Autocomplete
-                    sx={{ marginBottom: '10px' }}
-                    open={open}
-                    value={find}
-                    onOpen={() => setOpen(true)}
-                    onClose={() => setOpen(false)}
-                    isOptionEqualToValue={(option, value) => option === value}
-                    getOptionLabel={option => option ? option : ''}
-                    options={searchCache}
-                    loading={loading}
-                    onInputChange={(e, value) => setFind(value.trim().toLowerCase())}
-                    renderInput={(params) => (
-                        <TextField
-                            {...params}
-                            label={t('Search')}
-                            InputProps={{
-                                ...params.InputProps,
-                                endAdornment: (
-                                    <Fragment>
-                                        {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                                        {params.InputProps.endAdornment}
-                                    </Fragment>
-                                ),
-                            }}
-                        />
-                    )}
-                />
-                <Tabs
-                    value={tab}
-                    onChange={(e, value) => setTab(value)}
-                    indicatorColor="primary"
-                    textColor="inherit"
-                    variant="fullWidth"
-                    sx={{ marginBottom: '10px' }}
-                >
-                    <Tab wrapped label={t('All')} />
-                    <Tab wrapped label={t('Favourite')} />
-                    <Tab wrapped label={`${t('Selected')} (${checked.length})`} />
-                </Tabs>
-                {
-                    items?.length > 0 &&
-                    items.map((item: ExerciseSchemaProps) =>
-                        <AddExercisesBox refreshCheckedExercises={() => setRefreshChecked(refreshChecked + 1)} exercise={item} key={item._id} />
-                    )
-                }
-                <GridFullWidth>
-                    <Button variant="outlined" onClick={() => setIsCreateExercise(true)} sx={{ margin: 'auto' }}>
-                        {t('Create exercise')}
-                    </Button>
-                </GridFullWidth>
-                <CreateExercise
-                    created={created}
-                    isCreateExercise={isCreateExercise}
-                    closeCreateExercise={() => setIsCreateExercise(false)}
-                />
-                {
-                    checked?.length > 0 &&
-                    <BottomFlyingButton clicked={addExercisesToWorkoutPlan} isLoading={loadingButton} showNumberValue={checked.length} />
-                }
-                <Placeholder />
-                <Close onClick={() => closeDialog()}>
-                    <Button variant="contained">
-                        {t('Close')}
-                    </Button>
-                </Close>
-            </Grid>
-        </Dialog>
+        <>
+            {ChoosenButton}
+            <Dialog
+                fullScreen
+                scroll='body'
+                open={isAddDialog}
+                TransitionComponent={SlideUp}
+            >
+                <Grid>
+                    <Title>{t('Add exercises')}</Title>
+                    <Autocomplete
+                        sx={{ marginBottom: '10px' }}
+                        open={open}
+                        value={find}
+                        onOpen={() => setOpen(true)}
+                        onClose={() => setOpen(false)}
+                        isOptionEqualToValue={(option, value) => option === value}
+                        getOptionLabel={option => option ? option : ''}
+                        options={searchCache}
+                        loading={loading}
+                        onInputChange={(e, value) => setFind(value.trim().toLowerCase())}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                label={t('Search')}
+                                InputProps={{
+                                    ...params.InputProps,
+                                    endAdornment: (
+                                        <Fragment>
+                                            {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                                            {params.InputProps.endAdornment}
+                                        </Fragment>
+                                    ),
+                                }}
+                            />
+                        )}
+                    />
+                    <AddItemsTabs changeTab={(value) => setTab(value)} checkedLength={checked.length} />
+                    {
+                        items?.length > 0 &&
+                        items.map((item: ExerciseSchemaProps) =>
+                            <AddExercisesBox refreshCheckedExercises={() => setRefreshChecked(refreshChecked + 1)} exercise={item} key={item._id} />
+                        )
+                    }
+                    <GridFullWidth>
+                        <Button variant="outlined" onClick={() => setIsCreateExercise(true)} sx={{ margin: 'auto' }}>
+                            {t('Create exercise')}
+                        </Button>
+                    </GridFullWidth>
+                    <CreateExercise
+                        created={created}
+                        isCreateExercise={isCreateExercise}
+                        closeCreateExercise={() => setIsCreateExercise(false)}
+                    />
+                    <BottomFlyingButton
+                        showNumberValue={checked.length}
+                        clicked={() => {
+                            addExercisesToWorkoutPlan()
+                            setIsAddDialog(false)
+                        }}
+                    />
+                    <Placeholder />
+                    <Close onClick={() => setIsAddDialog(false)}>
+                        <Button variant="contained">
+                            {t('Close')}
+                        </Button>
+                    </Close>
+                </Grid>
+            </Dialog>
+        </>
     );
 }
 

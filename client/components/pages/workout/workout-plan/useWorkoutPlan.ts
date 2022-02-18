@@ -13,7 +13,6 @@ import useGetWorkoutPlanByID from "./useGetWorkoutPlanByID"
 const useWorkoutPlan = () => {
     const router: any = useRouter()
     const { t } = useTranslation('workout')
-    const [isAddDialog, setIsAddDialog] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const token: any = useAppSelector(state => state.token.value)
     const { data, user } = useGetWorkoutPlanByID(router.query.id)
@@ -65,7 +64,7 @@ const useWorkoutPlan = () => {
 
     useEffect(() => reset(data), [data])
 
-    return { t, user, token, router, setIsAddDialog, errors, fields, append, remove, handleOnDragEnd, register, deleteWorkoutPlan, saveWorkoutPlan: () => handleSubmit(saveWorkoutPlan), isLoading, isAddDialog }
+    return { t, user, token, errors, fields, append, remove, handleOnDragEnd, register, deleteWorkoutPlan, handleSubmit, saveWorkoutPlan, isLoading }
 }
 
 export type useWorkoutPlanProps = ReturnType<typeof useWorkoutPlan>

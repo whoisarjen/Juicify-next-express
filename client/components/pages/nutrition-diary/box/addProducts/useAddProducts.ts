@@ -16,7 +16,6 @@ const useAddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, rel
     const [checked, setChecked] = useState([])
     const token: any = useAppSelector(state => state.token.value)
     const [refreshChecked, setRefreshChecked] = useState(0)
-    const [loadingButton, setLoadingButton] = useState(false)
     const [isCreateProduct, setIsCreateProduct] = useState(false)
     const [find, setFind] = useState<any>(null)
     const { items, loading, searchCache } = useFind(find, 'product', tab)
@@ -31,7 +30,6 @@ const useAddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, rel
     }
 
     const addProductsToDiary = async () => {
-        setLoadingButton(true)
         const array: Array<ProductSchemaProps> = JSON.parse(JSON.stringify(checked))
         const time = new Date().getTime()
         array.map(async (x: ProductSchemaProps, i: number) => {
@@ -46,7 +44,6 @@ const useAddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, rel
         dailyMeasurement.nutrition_diary = dailyMeasurement.nutrition_diary.concat(array)
         await insertThoseIDStoDBController('daily_measurement', [dailyMeasurement])
         reload()
-        setLoadingButton(false)
         closeDialog()
     }
 
@@ -58,7 +55,7 @@ const useAddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, rel
         })()
     }, [refreshChecked])
 
-    return { t, index, isAddDialog, closeDialog, dailyMeasurement, reload, meal, setMeal, open, setOpen, find, setFind, tab, setTab, loading, searchCache, token, loadingButton, items, addProductsToDiary, isCreateProduct, setIsCreateProduct, setRefreshChecked, loadedProduct, setLoadedProduct, checked, created, refreshChecked }
+    return { t, index, isAddDialog, closeDialog, dailyMeasurement, reload, meal, setMeal, open, setOpen, find, setFind, tab, setTab, loading, searchCache, token, items, addProductsToDiary, isCreateProduct, setIsCreateProduct, setRefreshChecked, loadedProduct, setLoadedProduct, checked, created, refreshChecked }
 }
 
 export type useAddProductsProps = ReturnType<typeof useAddProducts>

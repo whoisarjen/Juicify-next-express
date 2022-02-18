@@ -1,8 +1,12 @@
+import { useRouter } from "next/router";
 import { deleteDatabaseIndexedDB } from "../utils/indexedDB.utils";
 import useAxios from "./useAxios";
+import { useAppSelector } from "./useRedux";
 
 const useAuth = () => {
     const { axiosDelete } = useAxios()
+    const router: any = useRouter()
+    const token: any = useAppSelector(state => state.token.value)
 
     const logout = async () => {
         try {
@@ -19,7 +23,15 @@ const useAuth = () => {
         }
     }
 
-    return { logout }
+    const isOwner = (() => {
+        if (router.query.login && token.login && router.query.login == token.login) {
+            return true;
+        }
+
+        return false;
+    })()
+
+    return { logout, isOwner }
 }
 
 export default useAuth;

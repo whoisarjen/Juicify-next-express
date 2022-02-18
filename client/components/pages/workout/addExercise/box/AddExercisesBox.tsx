@@ -1,6 +1,4 @@
 import Checkbox from '@mui/material/Checkbox';
-// import Favorite from '@mui/icons-material/Favorite';
-// import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import styled from 'styled-components';
 import { useAddExercisesBoxProps } from './useAddExerciseBox';
 
@@ -31,12 +29,9 @@ const BaseAddExercisesBox = ({ exercise, checked, handleCheck, getTheme }: useAd
                 {exercise.name}
             </Name>
             <div />
-            {/* Need new way to handle synchronization with favourite exercise so for now OFF */}
-            {/* <div className={styles.addExercisesBoxFavourite} onClick={handleLike}>
-                <Checkbox checked={fav} icon={<FavoriteBorder fontSize="small" />} checkedIcon={<Favorite fontSize="small" />} />
-            </div> */}
             <div onChange={handleCheck}>
                 <Checkbox
+                    data-testid="checkBox"
                     checked={checked}
                     inputProps={{ 'aria-label': 'controlled' }}
                 />

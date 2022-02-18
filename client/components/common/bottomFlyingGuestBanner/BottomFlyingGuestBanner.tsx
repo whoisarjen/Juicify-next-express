@@ -10,7 +10,7 @@ const Placeholder = styled.div`
 
 const BaseBottomFlyingGuestBanner = ({ user, t, router, token }: useBottomFlyingGuestBannerProps) => {
 
-    if (!user || token.login == user.login) {
+    if (!user || user.login == token.login) {
         return <></>
     }
 

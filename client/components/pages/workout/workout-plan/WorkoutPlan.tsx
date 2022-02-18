@@ -4,25 +4,24 @@ import TextField from '@mui/material/TextField'
 import DeleteIcon from '@mui/icons-material/Delete'
 import Navbar from '../navbar'
 import SwapVertIcon from '@mui/icons-material/SwapVert'
-import ButtonPlus from '../../../common/ButtonPlus'
 import AddExercises from '../addExercise'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { ExerciseSchemaProps } from '../../../../schema/exercise.schema'
 import { useWorkoutPlanProps } from './useWorkoutPlan'
 import BottomFlyingGuestBanner from '../../../common/bottomFlyingGuestBanner'
 
-const BaseWorkoutPlan = ({ t, user, token, router, setIsAddDialog, errors, fields, append, remove, handleOnDragEnd, register, deleteWorkoutPlan, saveWorkoutPlan, isLoading, isAddDialog }: useWorkoutPlanProps) => {
+const BaseWorkoutPlan = ({ t, user, token, errors, fields, append, remove, handleOnDragEnd, register, deleteWorkoutPlan, handleSubmit, saveWorkoutPlan, isLoading }: useWorkoutPlanProps) => {
     return (
         <form>
             <Navbar
                 title="Workout plan"
                 where="workout/plans"
                 isLoading={isLoading}
-                saveWorkout={saveWorkoutPlan}
+                saveWorkout={handleSubmit(saveWorkoutPlan)}
                 deleteWorkout={deleteWorkoutPlan}
             />
             <TextField
-                disabled={token.login != router.query.login}
+                disabled={token.login != user.login}
                 variant="outlined"
                 label={t('NAME_OF_WORKOUT')}
                 type="text"
@@ -36,7 +35,7 @@ const BaseWorkoutPlan = ({ t, user, token, router, setIsAddDialog, errors, field
                 }
             />
             <TextField
-                disabled={token.login != router.query.login}
+                disabled={token.login != user.login}
                 variant="outlined"
                 label={t('DESCRIPTION')}
                 type="text"
@@ -50,7 +49,7 @@ const BaseWorkoutPlan = ({ t, user, token, router, setIsAddDialog, errors, field
                 }
             />
             <TextField
-                disabled={token.login != router.query.login}
+                disabled={token.login != user.login}
                 variant="outlined"
                 label={t('BURNT_CALORIES')}
                 type="number"
@@ -79,7 +78,7 @@ const BaseWorkoutPlan = ({ t, user, token, router, setIsAddDialog, errors, field
                                                         {...provided.draggableProps}
                                                         {...provided.dragHandleProps}
                                                         ref={provided.innerRef}
-                                                        disabled={token.login != router.query.login}
+                                                        disabled={token.login != user.login}
                                                         label={`${i + 1}. ${exercise.name}`}
                                                         onDelete={() => remove(i)}
                                                         avatar={<SwapVertIcon />}
@@ -106,18 +105,7 @@ const BaseWorkoutPlan = ({ t, user, token, router, setIsAddDialog, errors, field
                     }
                 </Droppable>
             </DragDropContext>
-            {
-                token.login == router.query.login &&
-                <>
-                    <ButtonPlus click={() => setIsAddDialog(true)} />
-                    <AddExercises
-                        isAddDialog={isAddDialog}
-                        skipThoseIDS={fields}
-                        closeDialog={() => setIsAddDialog(false)}
-                        addThoseExercises={(array: Array<ExerciseSchemaProps>) => append(array)}
-                    />
-                </>
-            }
+            <AddExercises skipThoseIDS={fields} addThoseExercises={(array: Array<ExerciseSchemaProps>) => append(array)} />
             <BottomFlyingGuestBanner user={user} />
         </form>
     )
