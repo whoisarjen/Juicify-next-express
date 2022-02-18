@@ -12,7 +12,7 @@ import { getShortDate } from "../../utils/date.utils";
 import SchoolIcon from '@mui/icons-material/School';
 import Settings from "@mui/icons-material/Settings";
 import useTranslation from "next-translate/useTranslation";
-import Avatar from "../common/Avatar";
+import Avatar from "../common/avatar";
 import styled from 'styled-components'
 
 const Grid = styled.aside`

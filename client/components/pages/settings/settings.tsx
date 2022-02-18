@@ -19,7 +19,7 @@ const Separator = styled.div`
     margin-bottom: 12px;
 `
 
-const BaseSettings = ({ changeSettings, isLoading, isDirty, errors, register, handleSubmit, t, logout }: useSettingsProps) => {
+const BaseSettings = ({ changeSettings, isDirty, errors, register, handleSubmit, t, logout }: useSettingsProps) => {
     return (
         <Form onSubmit={handleSubmit(changeSettings)}>
             <Separator>{t('Preferences')}</Separator>
@@ -179,7 +179,7 @@ const BaseSettings = ({ changeSettings, isLoading, isDirty, errors, register, ha
             </Button>
             {
                 isDirty &&
-                <BottomFlyingButton clicked={() => handleSubmit(changeSettings)} isLoading={isLoading} />
+                <BottomFlyingButton clicked={() => handleSubmit(changeSettings)} />
             }
         </Form>
     );

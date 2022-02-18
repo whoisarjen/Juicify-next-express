@@ -22,11 +22,12 @@ const BaseWorkoutPlan = ({ t, user, token, errors, fields, append, remove, handl
             />
             <TextField
                 disabled={token.login != user.login}
-                variant="outlined"
                 label={t('NAME_OF_WORKOUT')}
-                type="text"
                 {...register('title')}
+                variant="outlined"
                 sx={{ width: '100%', marginTop: '10px' }}
+                type="text"
+                focused
                 error={typeof errors.title === 'undefined' ? false : true}
                 helperText={
                     errors.title?.message &&
@@ -39,6 +40,7 @@ const BaseWorkoutPlan = ({ t, user, token, errors, fields, append, remove, handl
                 variant="outlined"
                 label={t('DESCRIPTION')}
                 type="text"
+                focused
                 {...register('description')}
                 sx={{ width: '100%', marginTop: '10px' }}
                 error={typeof errors.description === 'undefined' ? false : true}
@@ -54,6 +56,7 @@ const BaseWorkoutPlan = ({ t, user, token, errors, fields, append, remove, handl
                 label={t('BURNT_CALORIES')}
                 type="number"
                 {...register('burnt')}
+                focused
                 sx={{ width: '100%', marginTop: '10px' }}
                 inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                 error={typeof errors.burnt === 'undefined' ? false : true}
@@ -105,7 +108,10 @@ const BaseWorkoutPlan = ({ t, user, token, errors, fields, append, remove, handl
                     }
                 </Droppable>
             </DragDropContext>
-            <AddExercises skipThoseIDS={fields} addThoseExercises={(array: Array<ExerciseSchemaProps>) => append(array)} />
+            {
+                token.login == user.login &&
+                <AddExercises skipThoseIDS={fields} addThoseExercises={(array: Array<ExerciseSchemaProps>) => append(array)} />
+            }
             <BottomFlyingGuestBanner user={user} />
         </form>
     )

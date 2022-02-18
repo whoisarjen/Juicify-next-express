@@ -1,6 +1,6 @@
 import { useBottomFlyingGuestBannerProps } from "./useBottomFlyingGuestBanner";
 import Button from '@mui/material/Button';
-import Avatar from "../Avatar";
+import Avatar from "../avatar";
 import styled from 'styled-components'
 
 const Placeholder = styled.div`

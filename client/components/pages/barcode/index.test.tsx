@@ -6,7 +6,7 @@ import { createMockRouter } from "../../../test-utils/createMockRouter.test.util
 import BaseBarcode from "./Barcode"
 import useBarcode from "./useBarcode"
 
-const component = () => {
+const Component = () => {
     const props = useBarcode()
     // handleSubmit = jest.spyOn(props, 'handleSubmit')
     return <BaseBarcode {...props} />
@@ -19,7 +19,7 @@ const setup = () => {
                 locale: 'en',
                 locales: ['en', 'pl']
             })}>
-                {/* <component /> */}
+                {/* <Component /> */}
             </RouterContext.Provider>
         </Provider>
     )

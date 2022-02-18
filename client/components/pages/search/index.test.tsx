@@ -6,7 +6,7 @@ import userEvent from "@testing-library/user-event"
 
 let push: any = null;
 
-const component = () => {
+const Component = () => {
     const router = useRouter()
     push = jest.spyOn(router, 'push')
     const props = {
@@ -35,7 +35,7 @@ const component = () => {
 }
 
 beforeEach(() => {
-    setupComponent(component, { query: { find: 'Arjen' } })
+    setupComponent(Component, { query: { find: 'Arjen' } })
 })
 
 describe(`Checking search page`, () => {

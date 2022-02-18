@@ -6,7 +6,7 @@ import { screen } from '@testing-library/react'
 
 let fakeUser: any = null;
 
-const component = () => {
+const Component = () => {
     const props = useProfileNavbar({
         tab: 0,
         user: fakeUser
@@ -17,7 +17,7 @@ const component = () => {
 
 beforeEach(async () => {
     fakeUser = await getUser()
-    setupComponent(component, {})
+    setupComponent(Component, {})
 })
 
 describe(`Testing Profile's navbar`, () => {

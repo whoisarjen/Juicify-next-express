@@ -7,7 +7,7 @@ import useLogin from './useLogin';
 let login: any = null;
 let handleSubmit: any = null;
 
-const component = () => {
+const Component = () => {
     const props = useLogin()
 
     login = jest.spyOn(props, 'login')
@@ -17,7 +17,7 @@ const component = () => {
 }
 
 beforeEach(() => {
-    setupComponent(component, {})
+    setupComponent(Component, {})
 })
 
 describe('Testing login validation', () => {

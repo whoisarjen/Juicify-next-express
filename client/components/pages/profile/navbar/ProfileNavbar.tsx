@@ -5,7 +5,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkIcon from '@mui/icons-material/Link';
 import TabsMenu from '../tabs'
-import Avatar from '../../../common/Avatar';
+import Avatar from '../../../common/avatar';
 import Share from "../../../common/Share";
 import styled from 'styled-components'
 import { useProfileNavbarProps } from './useProfileNavbar';

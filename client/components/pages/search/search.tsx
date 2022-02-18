@@ -4,7 +4,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemButton from '@mui/material/ListItemButton';
 import SearchBox from "../../common/SearchBox";
-import Avatar from "../../common/Avatar";
+import Avatar from "../../common/avatar";
 import { useSearchProps } from "./useSearch";
 
 const BaseSearch = ({ data, router }: useSearchProps) => {

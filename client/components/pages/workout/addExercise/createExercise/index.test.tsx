@@ -4,14 +4,6 @@ import useCreateExercise from "./useCreateExercise"
 import { screen, waitFor } from '@testing-library/react'
 import userEvent from "@testing-library/user-event"
 
-it.todo('')
-
-// const mockSetState = jest.fn();
-
-// jest.mock('react', () => ({
-//     useState: (initial: any) => [initial, mockSetState]
-// }));
-
 let setIsOpen: any = null;
 
 const Component = () => {
@@ -85,14 +77,21 @@ describe('Testing createExercise', () => {
     it('Expect to close dialog', async () => {
         openDialog()
 
-        const cancel = screen.getByRole('button', {
+        userEvent.click(screen.getByRole('button', {
             name: /cancel/i
-        })
+        }))
 
-        userEvent.click(cancel)
+        await new Promise(resolve => setTimeout(() => resolve(true), 2000))
 
-        // await waitFor(() => expect(setIsOpen).toHaveBeenCalledWith(1));
+        expect(screen.queryByRole('button', {
+            name: /cancel/i
+        })).toBeNull()
     })
+
+    it('Expect to send data', () => {
+        
+    })
+
 })
 
 export default {};

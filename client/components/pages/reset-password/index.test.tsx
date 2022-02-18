@@ -6,7 +6,7 @@ import userEvent from "@testing-library/user-event";
 
 let handleSubmit: any = null;
 
-const component = () => {
+const Component = () => {
     const props = useResetPassword()
 
     handleSubmit = jest.spyOn(props, 'handleSubmit')
@@ -15,7 +15,7 @@ const component = () => {
 }
 
 beforeEach(() => {
-    setupComponent(component, {})
+    setupComponent(Component, {})
 })
 
 describe('', () => {

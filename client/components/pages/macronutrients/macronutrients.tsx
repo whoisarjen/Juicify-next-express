@@ -112,7 +112,7 @@ const BaseMacronutrients = ({ changeObject, openChange, toggleLock, changed, isO
                     </Grid>
                     {
                         Object.keys(changeObject).length > 0 &&
-                        <BottomFlyingButton clicked={save} isLoading={false} />
+                        <BottomFlyingButton clicked={save} />
                     }
                 </div>
             </Box>

@@ -6,7 +6,7 @@ import useProfileTabs from './useProfileTabs'
 
 let push: any = null;
 
-const component = () => {
+const Component = () => {
     const props = useProfileTabs({ tab: 1 })
 
     push = jest.spyOn(props.router, 'push')
@@ -15,7 +15,7 @@ const component = () => {
 }
 
 beforeEach(() => {
-    setupComponent(component, {})
+    setupComponent(Component, {})
 
     jest.clearAllMocks()
 })

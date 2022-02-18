@@ -3,7 +3,7 @@ import useWorkoutBox from './useWorkoutBox'
 import BaseWorkoutBox from './WorkoutBox'
 import { screen } from '@testing-library/react'
 
-const component = () => {
+const Component = () => {
     const props = useWorkoutBox({
         title: '123',
         description: '345',
@@ -17,7 +17,7 @@ const component = () => {
 }
 
 beforeEach(() => {
-    setupComponent(component, {})
+    setupComponent(Component, {})
 })
 
 describe('Testing WorkoutBox', () => {

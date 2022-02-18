@@ -4,7 +4,7 @@ import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import BookIcon from "@mui/icons-material/Book";
 import { getShortDate } from "../../utils/date.utils";
 import Link from "next/link";
-import Avatar from "../common/Avatar";
+import Avatar from "../common/avatar";
 import styled from 'styled-components'
 
 const Box = styled.footer`

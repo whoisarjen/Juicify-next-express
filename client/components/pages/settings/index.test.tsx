@@ -6,7 +6,7 @@ import { setupComponent } from "../../../test-utils/setupComponent.test.utils";
 
 let handleSubmit: any = null;
 
-const component = () => {
+const Component = () => {
     const props = useSettings()
     handleSubmit = jest.spyOn(props, 'handleSubmit')
     return (
@@ -15,12 +15,12 @@ const component = () => {
 }
 
 beforeEach(() => {
-    setupComponent(component, {})
+    setupComponent(Component, {})
     jest.clearAllMocks();
 })
 
 describe(`Checking settings page`, () => {
-    describe(`Expect to change component's value and successfully fire submit`, () => {
+    describe(`Expect to change Component's value and successfully fire submit`, () => {
 
         it('Language', () => {
             screen.getByLabelText(/language/i)

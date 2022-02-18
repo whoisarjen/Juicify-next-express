@@ -128,10 +128,7 @@ const BaseAddProducts = ({ t, isAddDialog, closeDialog, dailyMeasurement, meal, 
                     isCreateProduct={isCreateProduct}
                     closeCreateProduct={() => setIsCreateProduct(false)}
                 />
-                {
-                    checked?.length > 0 &&
-                    <BottomFlyingButton clicked={addProductsToDiary} showNumberValue={checked.length} />
-                }
+                <BottomFlyingButton clicked={addProductsToDiary} showNumberValue={checked.length} />
                 <Placeholder />
                 <Close onClick={() => closeDialog()}>
                     <Button variant="contained">

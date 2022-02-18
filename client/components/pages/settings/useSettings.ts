@@ -15,20 +15,16 @@ const useSettings = () => {
     const { dispatchToken } = useToken()
     const { success, error } = useNotify()
     const { t } = useTranslation('settings')
-    const [isLoading, setIsLoading] = useState(false)
     const token: any = useAppSelector(state => state.token.value)
 
     const changeSettings = async (object: SettingsSchemaProps) => {
         try {
-            setIsLoading(true)
             const response = await post({ object, url: '/auth/change' });
             await dispatchToken(response.data.token)
             success()
         } catch (e: any) {
             error()
             console.log(e)
-        } finally {
-            setIsLoading(false)
         }
     }
 
@@ -38,7 +34,7 @@ const useSettings = () => {
 
     useEffect(() => reset(token), [token])
 
-    return { changeSettings, isLoading, isDirty, errors, register, handleSubmit, t, logout }
+    return { changeSettings, isDirty, errors, register, handleSubmit, t, logout }
 }
 
 export type useSettingsProps = ReturnType<typeof useSettings>

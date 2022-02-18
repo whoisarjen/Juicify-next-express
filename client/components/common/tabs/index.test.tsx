@@ -6,14 +6,14 @@ import userEvent from "@testing-library/user-event";
 
 const changeTab: any = jest.fn();
 
-const component = (useAddExercisesTabsObject: object) => {
+const Component = (useAddExercisesTabsObject: object) => {
     const props = useAddExercisesTabs({ ...{ changeTab, checkedLength: 1 }, ...useAddExercisesTabsObject })
 
     return <BaseAddExercisesTabs {...props} />
 }
 
 beforeEach(() => {
-    setupComponent(component)
+    setupComponent(Component)
 })
 
 describe('Testing AddExerciseTabs', () => {

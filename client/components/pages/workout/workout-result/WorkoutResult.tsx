@@ -5,7 +5,7 @@ import { is_id } from '../../../../utils/db.utils';
 import BottomFlyingGuestBanner from '../../../common/bottomFlyingGuestBanner';
 import ConfirmDialog from '../../../common/ConfirmDialog';
 import Navbar from '../navbar'
-import AddResultMoreOptions from './moreOptions';
+import WorkoutResultMoreOptions from './moreOptions';
 import ResultBox from './resultBox';
 import { useWorkoutResultProps } from './useWorkoutResult';
 
@@ -50,7 +50,7 @@ const BaseWorkoutResult = ({ t, isLoading, handleSubmit, onSubmit, deleteEveryth
                     label={t("Description of workout plan")}
                     type="text"
                     sx={{ width: '100%', marginTop: '10px' }}
-                    defaultValue={' '}
+                    focused
                     {...register('workout_description')}
                     error={typeof errors.workout_description === 'undefined' ? false : true}
                     helperText={
@@ -68,7 +68,7 @@ const BaseWorkoutResult = ({ t, isLoading, handleSubmit, onSubmit, deleteEveryth
                     type="text"
                     disabled
                     sx={{ width: '100%', marginTop: '10px' }}
-                    defaultValue={' '}
+                    focused
                     {...register('burnt')}
                     error={typeof errors.burnt === 'undefined' ? false : true}
                     helperText={
@@ -85,7 +85,7 @@ const BaseWorkoutResult = ({ t, isLoading, handleSubmit, onSubmit, deleteEveryth
                 sx={{ width: '100%', marginTop: '10px' }}
                 multiline
                 rows={4}
-                defaultValue={' '}
+                focused
                 {...register('description')}
                 error={typeof errors.description === 'undefined' ? false : true}
                 helperText={
@@ -115,7 +115,7 @@ const BaseWorkoutResult = ({ t, isLoading, handleSubmit, onSubmit, deleteEveryth
                         closeDialog={() => setDeleteExerciseIndex(false)}
                         confirm={() => deleteExercise(deleteExerciseIndex as number)}
                     />
-                    <AddResultMoreOptions
+                    <WorkoutResultMoreOptions
                         exercises={[...fields.map((x: any) => {
                             x.l = x.name.length
                             return x
