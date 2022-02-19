@@ -1,10 +1,9 @@
 import ShareIcon from '@mui/icons-material/Share';
 import IconButton from '@mui/material/IconButton';
-import { useShareProps } from './useShare';
 
-const BaseShare = ({ handleShare }: useShareProps) => {
+const BaseShare = ({ shareLocation }: { shareLocation: () => void }) => {
     return (
-        <div style={{ margin: 'auto' }} data-testid="shareButton" onClick={handleShare}>
+        <div style={{ margin: 'auto' }} data-testid="shareButton" onClick={shareLocation}>
             <IconButton>
                 <ShareIcon color="primary" />
             </IconButton>

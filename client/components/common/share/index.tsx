@@ -1,10 +1,10 @@
+import useNavigator from '../../../hooks/useNavigator';
 import BaseShare from './Share';
-import useShare from './useShare';
 
 const Share = () => {
-    const props = useShare()
+    const { shareLocation } = useNavigator()
 
-    return <BaseShare {...props} />
+    return <BaseShare {...{ shareLocation }} />
 }
 
 export default Share;
