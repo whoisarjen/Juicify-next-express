@@ -6,7 +6,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkIcon from '@mui/icons-material/Link';
 import TabsMenu from '../tabs'
 import Avatar from '../../../common/avatar';
-import Share from "../../../common/Share";
+import Share from "../../../common/share";
 import styled from 'styled-components'
 import { useProfileNavbarProps } from './useProfileNavbar';
 

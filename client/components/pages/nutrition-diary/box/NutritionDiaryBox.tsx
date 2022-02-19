@@ -70,24 +70,17 @@ const BaseNutritionDiaryBox = ({ t, index, products, openDialog, openEditProduct
         <Grid>
             <Bolded>{t('Meal')} {index + 1}</Bolded>
             <ExtraOptions>
-                {
-                    token.login == router.query.login ? (
-                        // <MoreOptions isDisabled={isDisabled}/>
-                        <div />
-                    ) : (
-                        <div />
-                    )
-                }
+                <div /> {/* Defaultly should be div or <MoreOptions isDisabled={isDisabled}/> basic on isOwner */}
             </ExtraOptions>
             <Add>
                 {
-                    token.login == router.query.login ? (
+                    token.login == router.query.login
+                        ?
                         <IconButton disabled={isDisabled} sx={{ margin: 'auto' }} aria-label="Add" color="primary" onClick={() => openDialog()}>
                             <AddIcon fontSize="small" />
                         </IconButton>
-                    ) : (
+                        :
                         <div />
-                    )
                 }
             </Add>
             <div>{prepareNumber(p)}{t('P')} {prepareNumber(c)}{t('C')} {prepareNumber(f)}{t('F')} {parseInt((p * 4 + c * 4 + f * 9).toString())}{t('Kcal')}</div>
@@ -96,15 +89,15 @@ const BaseNutritionDiaryBox = ({ t, index, products, openDialog, openEditProduct
                     <Product key={product._id}>
                         <Edit>
                             {
-                                token.login == router.query.login ? (
+                                token.login == router.query.login
+                                    ?
                                     <IconButton onClick={() => openEditProduct(product)} aria-label="edit">
                                         <EditIcon fontSize="small" />
                                     </IconButton>
-                                ) : (
+                                    :
                                     <IconButton aria-label="edit">
                                         <FastfoodIcon fontSize="small" />
                                     </IconButton>
-                                )
                             }
                         </Edit>
                         <Content>

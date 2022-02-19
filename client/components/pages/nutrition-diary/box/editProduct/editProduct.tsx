@@ -25,100 +25,92 @@ const BaseEditProduct = ({ product, isDialog, closeDialog, deleteProduct, meal, 
                         product.meal &&
                             parseInt(product.meal.toString()) >= 0
                             ?
-                            (
-                                <Select
-                                    sx={{ width: '100%' }}
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    value={meal}
-                                    onChange={(e) => setMeal(e.target.value)}
-                                >
-                                    {
-                                        [...Array(token.meal_number)].map((x, i) =>
-                                            <MenuItem key={i} value={i}>{t('Meal')} {i + 1}</MenuItem>
-                                        )
-                                    }
-                                </Select>
-                            )
+                            <Select
+                                sx={{ width: '100%' }}
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={meal}
+                                onChange={(e) => setMeal(e.target.value)}
+                            >
+                                {
+                                    [...Array(token.meal_number)].map((x, i) =>
+                                        <MenuItem key={i} value={i}>{t('Meal')} {i + 1}</MenuItem>
+                                    )
+                                }
+                            </Select>
                             :
                             <></>
                     }
                     {
                         product.activity
                             ?
-                            (
-                                <TextField
-                                    type="text"
-                                    label={t('Activity')}
-                                    sx={{ marginTop: '10px', width: '100%' }}
-                                    value={activity}
-                                    onChange={(e) => setActivity(e.target.value)}
-                                    error={
-                                        activity &&
+                            <TextField
+                                type="text"
+                                label={t('Activity')}
+                                sx={{ marginTop: '10px', width: '100%' }}
+                                value={activity}
+                                onChange={(e) => setActivity(e.target.value)}
+                                error={
+                                    activity &&
+                                    activity.length > 0 &&
+                                    !requiredBasicInputLength(activity)
+                                }
+                                helperText={
+                                    activity &&
                                         activity.length > 0 &&
                                         !requiredBasicInputLength(activity)
-                                    }
-                                    helperText={
-                                        activity &&
-                                            activity.length > 0 &&
-                                            !requiredBasicInputLength(activity)
-                                            ? t("home:requiredBasicInputLength")
-                                            : ""
-                                    }
-                                />
-                            )
+                                        ? t("home:requiredBasicInputLength")
+                                        : ""
+                                }
+                            />
                             :
                             <></>
                     }
                     {
                         product.calories
                             ?
-                            (
-                                <TextField
-                                    type="number"
-                                    label={t('How many calories')}
-                                    sx={{ marginTop: '10px', width: '100%' }}
-                                    value={calories}
-                                    onChange={(e) => setCalories(e.target.value)}
-                                    inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                                    error={
-                                        calories &&
+                            <TextField
+                                type="number"
+                                label={t('How many calories')}
+                                sx={{ marginTop: '10px', width: '100%' }}
+                                value={calories}
+                                onChange={(e) => setCalories(e.target.value)}
+                                inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                                error={
+                                    calories &&
+                                    !requireNumberDiffrentThanZero(calories)
+                                }
+                                helperText={
+                                    calories &&
                                         !requireNumberDiffrentThanZero(calories)
-                                    }
-                                    helperText={
-                                        calories &&
-                                            !requireNumberDiffrentThanZero(calories)
-                                            ? t("home:requireNumberDiffrentThanZero")
-                                            : ""
-                                    }
-                                />
-                            )
+                                        ? t("home:requireNumberDiffrentThanZero")
+                                        : ""
+                                }
+                            />
                             :
                             <></>
                     }
                     {
                         product.how_many
                             ?
-                            (
-                                <TextField
-                                    type="number"
-                                    label={t('How many times 100g/ml')}
-                                    sx={{ marginTop: '10px', width: '100%' }}
-                                    value={howMany}
-                                    onChange={(e) => setHowMany(e.target.value)}
-                                    inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                                    error={
-                                        howMany &&
+                            <TextField
+                                type="number"
+                                label={t('How many times 100g/ml')}
+                                sx={{ marginTop: '10px', width: '100%' }}
+                                value={howMany}
+                                onChange={(e) => setHowMany(e.target.value)}
+                                inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                                error={
+                                    howMany &&
+                                    !requiredBasicInputNumber(howMany)
+                                }
+                                helperText={
+                                    howMany &&
                                         !requiredBasicInputNumber(howMany)
-                                    }
-                                    helperText={
-                                        howMany &&
-                                            !requiredBasicInputNumber(howMany)
-                                            ? t("home:requiredBasicInputNumber")
-                                            : ""
-                                    }
-                                />
-                            )
+                                        ? t("home:requiredBasicInputNumber")
+                                        : ""
+                                }
+                            />
                             :
                             <></>
                     }

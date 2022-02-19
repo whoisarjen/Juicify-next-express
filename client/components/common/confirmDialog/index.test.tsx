@@ -10,10 +10,10 @@ const props = {
 
 const confirmed = jest.spyOn(props, 'confirmed')
 
-const setup = () => <ConfirmDialog {...props}><button data-testid="button">buttonToClick</button></ConfirmDialog>
+const Setup = () => <ConfirmDialog {...props}><button data-testid="button">buttonToClick</button></ConfirmDialog>
 
 beforeEach(() => {
-    setupComponent(setup)
+    setupComponent(Setup)
 })
 
 describe('Testing confirmDialog', () => {
