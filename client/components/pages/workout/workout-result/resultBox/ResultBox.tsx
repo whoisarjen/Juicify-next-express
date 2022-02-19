@@ -5,6 +5,7 @@ import { ValueSchemaProps } from '../../../../../schema/workoutResult.schema'
 import styled from 'styled-components';
 import { useResultBoxProps } from './useResultBox';
 import ValueBox from '../valueBox';
+import ConfirmDialog from '../../../../common/confirmDialog';
 
 const Name = styled.div`
     min-height: 36px;
@@ -29,16 +30,18 @@ const Name = styled.div`
     }
 `
 
-const BaseResultBox = ({ result, isOwner, openDeleteExercise, deleteResult, changeResult, openNewResult, values }: useResultBoxProps) => {
+const BaseResultBox = ({ result, isOwner, deleteExerciseWithIndex, deleteResult, changeResult, openNewResult, values }: useResultBoxProps) => {
     return (
         <div>
             <Name>
                 <div>
                     {
                         isOwner &&
-                        <IconButton color="primary" component="span" onClick={openDeleteExercise}>
-                            <DeleteIcon sx={{ fontSize: 20 }} />
-                        </IconButton>
+                        <ConfirmDialog confirmed={deleteExerciseWithIndex}>
+                            <IconButton color="primary" component="span">
+                                <DeleteIcon sx={{ fontSize: 20 }} />
+                            </IconButton>
+                        </ConfirmDialog>
                     }
                 </div>
                 <div>{result.name}</div>

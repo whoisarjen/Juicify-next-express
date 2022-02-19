@@ -6,10 +6,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import ConfirmDialog from '../../../../common/ConfirmDialog'
 import { useEditProductProps } from './useEditProduct';
+import ConfirmDialog from '../../../../common/confirmDialog';
 
-const BaseEditProduct = ({ product, isDialog, closeDialog, deleteProduct, meal, setMeal, token, t, activity, setActivity, requiredBasicInputLength, calories, setCalories, isDialogConfirm, setIsDialogConfirm, beforeChangeProduct, requiredBasicInputNumber, howMany, setHowMany, requireNumberDiffrentThanZero }: useEditProductProps) => {
+const BaseEditProduct = ({ product, isDialog, closeDialog, deleteProduct, meal, setMeal, token, t, activity, setActivity, requiredBasicInputLength, calories, setCalories, beforeChangeProduct, requiredBasicInputNumber, howMany, setHowMany, requireNumberDiffrentThanZero }: useEditProductProps) => {
     return (
         <div className="dialogEditProduct">
             <Dialog
@@ -125,20 +125,16 @@ const BaseEditProduct = ({ product, isDialog, closeDialog, deleteProduct, meal, 
 
                 </DialogContent>
                 <DialogActions>
-                    <Button sx={{ color: 'red' }} onClick={() => setIsDialogConfirm(true)}>{t('Delete')}</Button>
+                    <ConfirmDialog confirmed={() => {
+                        deleteProduct(product._id)
+                        closeDialog()
+                    }}>
+                        <Button sx={{ color: 'red' }}>{t('Delete')}</Button>
+                    </ConfirmDialog>
                     <Button onClick={closeDialog}>{t('Deny')}</Button>
                     <Button onClick={beforeChangeProduct}>{t('Confirm')}</Button>
                 </DialogActions>
             </Dialog>
-            <ConfirmDialog
-                isDialog={isDialogConfirm}
-                closeDialog={() => setIsDialogConfirm(false)}
-                confirm={() => {
-                    deleteProduct(product._id)
-                    closeDialog()
-                    setIsDialogConfirm(false)
-                }}
-            />
         </div>
     );
 }

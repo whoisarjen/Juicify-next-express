@@ -3,7 +3,6 @@ import { ValueSchemaProps } from '../../../../schema/workoutResult.schema';
 import { reverseDateDotes } from '../../../../utils/date.utils';
 import { is_id } from '../../../../utils/db.utils';
 import BottomFlyingGuestBanner from '../../../common/bottomFlyingGuestBanner';
-import ConfirmDialog from '../../../common/ConfirmDialog';
 import Navbar from '../navbar'
 import WorkoutResultMoreOptions from './moreOptions';
 import ResultBox from './resultBox';
@@ -102,27 +101,20 @@ const BaseWorkoutResult = ({ t, isLoading, handleSubmit, onSubmit, deleteEveryth
                             result={result}
                             isOwner={token?.login == router.query?.login}
                             setNewValues={(values: Array<ValueSchemaProps>) => updateResults({ values, result, index })}
-                            openDeleteExercise={() => setDeleteExerciseIndex(index)}
+                            deleteExerciseWithIndex={() => deleteExercise(index)}
                         />
                     </div>
                 )
             }
             {
                 token?.login == router.query?.login &&
-                <>
-                    <ConfirmDialog
-                        isDialog={deleteExerciseIndex !== false ? true : false}
-                        closeDialog={() => setDeleteExerciseIndex(false)}
-                        confirm={() => deleteExercise(deleteExerciseIndex as number)}
-                    />
-                    <WorkoutResultMoreOptions
-                        exercises={[...fields.map((x: any) => {
-                            x.l = x.name.length
-                            return x
-                        })]}
-                        setExercises={addExercises}
-                    />
-                </>
+                <WorkoutResultMoreOptions
+                    exercises={[...fields.map((x: any) => {
+                        x.l = x.name.length
+                        return x
+                    })]}
+                    setExercises={addExercises}
+                />
             }
             {token?.login != user?.login && user?.login && <BottomFlyingGuestBanner user={user} />}
         </form>

@@ -6,8 +6,8 @@ import Autocomplete from '@mui/material/Autocomplete';
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
 import styled from 'styled-components';
-import ConfirmDialog from '../../../../common/ConfirmDialog';
 import { useValueBoxProps } from './useValueBox';
+import ConfirmDialog from '../../../../common/confirmDialog';
 
 const Box = styled.div`
     min-height: 36px;
@@ -29,7 +29,7 @@ const Connected = styled.div`
     grid-column: 1 / 3;
 `
 
-const BaseValueBox = ({ index, changeResult, isOwner, open, setOpen, weight, reps, setReps, isDialog, setIsDialog, handleDelete, weightOptions, loadWeight, repsOptions }: useValueBoxProps) => {
+const BaseValueBox = ({ index, changeResult, isOwner, open, setOpen, weight, reps, setReps, deleteResult, weightOptions, loadWeight, repsOptions }: useValueBoxProps) => {
     return (
         <>
             {
@@ -81,12 +81,14 @@ const BaseValueBox = ({ index, changeResult, isOwner, open, setOpen, weight, rep
                     :
                     <>
                         <Box>
-                            <div onClick={() => setIsDialog(true)} >
+                            <div>
                                 {
                                     isOwner &&
-                                    <IconButton aria-label="delete">
-                                        <DeleteIcon sx={{ fontSize: 20 }} />
-                                    </IconButton>
+                                    <ConfirmDialog confirmed={deleteResult}>
+                                        <IconButton aria-label="delete">
+                                            <DeleteIcon sx={{ fontSize: 20 }} />
+                                        </IconButton>
+                                    </ConfirmDialog>
                                 }
                             </div>
                             <div onClick={() => setOpen(true)}><div>{weight}kg</div></div>
@@ -101,11 +103,6 @@ const BaseValueBox = ({ index, changeResult, isOwner, open, setOpen, weight, rep
                                 }
                             </div>
                         </Box>
-                        <ConfirmDialog
-                            isDialog={isDialog}
-                            confirm={handleDelete}
-                            closeDialog={() => setIsDialog(false)}
-                        />
                     </>
             }
         </>

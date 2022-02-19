@@ -10,7 +10,6 @@ const useEditProduct = ({ product, isDialog, closeDialog, deleteProduct, changeP
     const [calories, setCalories] = useState<any>(0)
     const [activity, setActivity] = useState<any>('')
     const token: any = useAppSelector(state => state.token.value)
-    const [isDialogConfirm, setIsDialogConfirm] = useState(false)
     const requiredBasicInputNumber = useAppSelector(state => state.config.requiredBasicInputNumber)
     const requiredBasicInputLength = useAppSelector(state => state.config.requiredBasicInputLength)
     const requireNumberDiffrentThanZero = useAppSelector(state => state.config.requireNumberDiffrentThanZero)
@@ -47,7 +46,7 @@ const useEditProduct = ({ product, isDialog, closeDialog, deleteProduct, changeP
         setActivity(product.activity)
     }, [product])
 
-    return { product, isDialog, closeDialog, deleteProduct, meal, setMeal, token, t, activity, setActivity, requiredBasicInputLength, calories, setCalories, isDialogConfirm, setIsDialogConfirm, beforeChangeProduct, requiredBasicInputNumber, howMany, setHowMany, requireNumberDiffrentThanZero }
+    return { product, isDialog, closeDialog, deleteProduct, meal, setMeal, token, t, activity, setActivity, requiredBasicInputLength, calories, setCalories, beforeChangeProduct, requiredBasicInputNumber, howMany, setHowMany, requireNumberDiffrentThanZero }
 }
 
 export type useEditProductProps = ReturnType<typeof useEditProduct>

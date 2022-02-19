@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { ResultBoxProps } from "."
 import { ValueSchemaProps } from "../../../../../schema/workoutResult.schema"
 
-const useResultBox = ({ result, setNewValues, isOwner, openDeleteExercise }: ResultBoxProps) => {
+const useResultBox = ({ result, setNewValues, isOwner, deleteExerciseWithIndex }: ResultBoxProps) => {
     const [values, setValues] = useState<Array<ValueSchemaProps>>(result.values)
 
     const changeResult = (object: ValueSchemaProps, index: number) => {
@@ -48,7 +48,7 @@ const useResultBox = ({ result, setNewValues, isOwner, openDeleteExercise }: Res
 
     useEffect(() => setValues(result.values), [result])
 
-    return { result, isOwner, openDeleteExercise, deleteResult, changeResult, openNewResult, values }
+    return { result, isOwner, deleteExerciseWithIndex, deleteResult, changeResult, openNewResult, values }
 }
 
 export type useResultBoxProps = ReturnType<typeof useResultBox>

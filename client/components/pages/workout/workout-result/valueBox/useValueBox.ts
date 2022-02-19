@@ -7,7 +7,6 @@ const useValueBox = ({ value, index, changeResult, deleteResult, isOwner }: Valu
     const [open, setOpen] = useState(value.open || false)
     const [repsOptions, setRepsOptions] = useState(['0'])
     const [weightOptions, setWeightOptions] = useState(['0'])
-    const [isDialog, setIsDialog] = useState(false)
 
     const loadWeight = (choosenWeight: string) => {
         const choosenWeightLocally = parseFloat(choosenWeight)
@@ -28,11 +27,6 @@ const useValueBox = ({ value, index, changeResult, deleteResult, isOwner }: Valu
         setWeightOptions(weight)
     }
 
-    const handleDelete = () => {
-        deleteResult()
-        setIsDialog(false)
-    }
-
     useEffect(() => {
         let reps = []
         for (let i = 0; i <= 100; i++) {
@@ -42,7 +36,7 @@ const useValueBox = ({ value, index, changeResult, deleteResult, isOwner }: Valu
         loadWeight(value.weight.toString())
     }, [])
 
-    return { index, changeResult, isOwner, open, setOpen, weight, reps, setReps, isDialog, setIsDialog, handleDelete, weightOptions, loadWeight, repsOptions }
+    return { index, changeResult, isOwner, open, setOpen, weight, reps, setReps, deleteResult, weightOptions, loadWeight, repsOptions }
 }
 
 export type useValueBoxProps = ReturnType<typeof useValueBox>

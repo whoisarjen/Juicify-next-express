@@ -4,8 +4,8 @@ import LoadingButton from '@mui/lab/LoadingButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 import styled from 'styled-components'
-import ConfirmDialog from "../../../common/ConfirmDialog";
 import { useWorkoutNavbarProps } from "./useWorkoutNavbar";
+import ConfirmDialog from '../../../common/confirmDialog'
 
 const Grid = styled.div`
     width: 100%;
@@ -20,7 +20,7 @@ const Title = styled.div`
     font-weight: bold;
 `
 
-const BaseWorkoutNavbar = ({ title, where, isLoading, saveWorkout, deleteWorkout, router, token, isDialog, setIsDialog, t }: useWorkoutNavbarProps) => {
+const BaseWorkoutNavbar = ({ title, where, isLoading, saveWorkout, deleteWorkout, router, token, t }: useWorkoutNavbarProps) => {
     return (
         <>
             <Title>{t(`${title}`)}</Title>
@@ -33,9 +33,11 @@ const BaseWorkoutNavbar = ({ title, where, isLoading, saveWorkout, deleteWorkout
                     token.login == router.query.login
                         ?
                         <>
-                            <IconButton aria-label="delete" onClick={() => setIsDialog(true)} sx={{ margin: 'auto' }}>
-                                <DeleteIcon />
-                            </IconButton>
+                            <ConfirmDialog confirmed={deleteWorkout}>
+                                <IconButton aria-label="delete" sx={{ margin: 'auto' }}>
+                                    <DeleteIcon />
+                                </IconButton>
+                            </ConfirmDialog>
                             <LoadingButton
                                 loading={isLoading}
                                 loadingPosition="start"
@@ -45,11 +47,6 @@ const BaseWorkoutNavbar = ({ title, where, isLoading, saveWorkout, deleteWorkout
                             >
                                 {t('Save')}
                             </LoadingButton>
-                            <ConfirmDialog
-                                isDialog={isDialog}
-                                confirm={deleteWorkout}
-                                closeDialog={() => setIsDialog(false)}
-                            />
                         </>
                         :
                         <>

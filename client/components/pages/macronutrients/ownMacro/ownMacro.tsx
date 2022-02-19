@@ -6,8 +6,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
-import ConfirmDialog from "../../../common/ConfirmDialog";
 import SlideUp from '../../../transition/SlideUp';
+import ConfirmDialog from '../../../common/confirmDialog';
 
 const BaseOwnMacro = ({ isOwnMacro, close, t, proteins, setProteins, carbs, setCarbs, fats, setFats, isDialog, setIsDialog, handleConfirm }: any) => {
     return (
@@ -74,10 +74,11 @@ const BaseOwnMacro = ({ isOwnMacro, close, t, proteins, setProteins, carbs, setC
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={close}>{t('CLOSE')}</Button>
-                    <Button onClick={() => setIsDialog(true)}>{t('CHANGE_ALL_DAYS')}</Button>
+                    <ConfirmDialog confirmed={handleConfirm}>
+                        <Button onClick={() => setIsDialog(true)}>{t('CHANGE_ALL_DAYS')}</Button>
+                    </ConfirmDialog>
                 </DialogActions>
             </Dialog>
-            <ConfirmDialog isDialog={isDialog} closeDialog={() => setIsDialog(false)} confirm={handleConfirm} />
         </div>
     )
 }

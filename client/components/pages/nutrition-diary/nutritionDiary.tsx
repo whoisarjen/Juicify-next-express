@@ -81,7 +81,7 @@ const BaseNutritionDiary = ({ t, router, token, nutritionDiary, user, reload, in
                     />
                 </>
             }
-            <BottomFlyingGuestBanner user={user} />
+            {token?.login != user?.login && user?.login && <BottomFlyingGuestBanner user={user} />}
         </>
     );
 };
