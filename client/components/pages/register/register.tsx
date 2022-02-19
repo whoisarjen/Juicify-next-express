@@ -10,7 +10,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import styled from 'styled-components'
-import Logo from "../../common/Logo";
+import Logo from "../../common/logo";
 import { useRegisterProps } from "./useRegister";
 
 const Form = styled.div`

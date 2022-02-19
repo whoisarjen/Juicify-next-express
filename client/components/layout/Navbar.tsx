@@ -3,7 +3,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import SchoolIcon from '@mui/icons-material/School';
 import BookIcon from "@mui/icons-material/Book";
 import { getShortDate } from "../../utils/date.utils";
-import SearchBox from '../common/SearchBox'
+import SearchBox from '../common/searchBox'
 import Settings from "@mui/icons-material/Settings";
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
@@ -13,7 +13,7 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useRouter } from "next/router";
 import Button from '@mui/material/Button';
 import styled from 'styled-components'
-import Logo from "../common/Logo";
+import Logo from "../common/logo";
 import BetterLink from "../common/betterLink";
 
 const Box = styled.nav`

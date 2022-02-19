@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { addIndexedDB } from '../../../../utils/indexedDB.utils'
 import useWorkoutPlans from '../../../../hooks/useWorkoutPlans'
-import ButtonPlus from '../../../../components/common/ButtonPlus';
+import ButtonPlus from '../../../../components/common/buttons/buttonPlus';
 import Box from '../../../../components/pages/workout/box';
 import useTranslation from "next-translate/useTranslation";
 import Navbar from '../../../../components/pages/profile/navbar';

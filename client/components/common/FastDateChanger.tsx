@@ -30,7 +30,7 @@ const Box = styled.div`
     }
 `
 
-const FastDateChanger = () => {
+const FastDateChanger = ({ where = 'nutrition-diary' }: { where?: string }) => {
     const router: any = useRouter()
     const [today, setToday] = useState(new Date())
 
@@ -38,11 +38,11 @@ const FastDateChanger = () => {
 
     return (
         <Box>
-            <BetterLink href={`/${router.query.login}/nutrition-diary/${addDaysToDate(today, -2)}`}><div>{addDaysToDate(today, -2).slice(8, 10)}</div></BetterLink>
-            <BetterLink href={`/${router.query.login}/nutrition-diary/${addDaysToDate(today, -1)}`}><div>{addDaysToDate(today, -1).slice(8, 10)}</div></BetterLink>
+            <BetterLink href={`/${router.query.login}/${where}/${addDaysToDate(today, -2)}`}><div>{addDaysToDate(today, -2).slice(8, 10)}</div></BetterLink>
+            <BetterLink href={`/${router.query.login}/${where}/${addDaysToDate(today, -1)}`}><div>{addDaysToDate(today, -1).slice(8, 10)}</div></BetterLink>
             <div>{reverseDateDotes(today)}</div>
-            <BetterLink href={`/${router.query.login}/nutrition-diary/${addDaysToDate(today, 1)}`}><div>{addDaysToDate(today, 1).slice(8, 10)}</div></BetterLink>
-            <BetterLink href={`/${router.query.login}/nutrition-diary/${addDaysToDate(today, 2)}`}><div>{addDaysToDate(today, 2).slice(8, 10)}</div></BetterLink>
+            <BetterLink href={`/${router.query.login}/${where}/${addDaysToDate(today, 1)}`}><div>{addDaysToDate(today, 1).slice(8, 10)}</div></BetterLink>
+            <BetterLink href={`/${router.query.login}/${where}/${addDaysToDate(today, 2)}`}><div>{addDaysToDate(today, 2).slice(8, 10)}</div></BetterLink>
         </Box>
     )
 }

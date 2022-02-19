@@ -3,7 +3,7 @@ import List from '@mui/material/List';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemButton from '@mui/material/ListItemButton';
-import SearchBox from "../../common/SearchBox";
+import SearchBox from "../../common/searchBox";
 import Avatar from "../../common/avatar";
 import { useSearchProps } from "./useSearch";
 

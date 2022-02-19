@@ -3,7 +3,7 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
 import styled from 'styled-components'
-import Logo from "../../common/Logo";
+import Logo from "../../common/logo";
 import { useLoginProps } from "./useLogin";
 
 const Form = styled.form`

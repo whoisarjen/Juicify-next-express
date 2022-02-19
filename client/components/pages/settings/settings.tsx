@@ -3,7 +3,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import styled from 'styled-components'
 import BottomFlyingButton from '../../common/buttons/submitItems';
-import SelectLanguage from '../../common/SelectLanguage';
+import SelectLanguage from '../../common/selectLanguage';
 import { useSettingsProps } from './useSettings'
 
 const Form = styled.form`

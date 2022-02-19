@@ -6,12 +6,12 @@ import Header from "../../layout/Header"
 import { reverseDateDotes } from "../../../utils/date.utils"
 import { useNutritionDiaryProps } from "./useNutritionDiary"
 import BottomFlyingGuestBanner from "../../common/bottomFlyingGuestBanner"
-import { Share } from "@mui/icons-material"
 import styled from "styled-components"
 import DateChanger from "../../common/DateChanger"
 import NutritionDiaryBoxProduct from "./box/product"
 import { ProductSchemaProps } from "../../../schema/product.schema"
 import { ActivitySchemaProps } from "../../../schema/activity.schema"
+import Share from "../../common/share"
 
 const Box = styled.div`
     width: 100%;

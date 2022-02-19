@@ -1,4 +1,4 @@
-import SearchBox from "../../components/common/SearchBox";
+import SearchBox from "../../components/common/searchBox";
 
 const Search = () => {
     return <div><SearchBox /></div>

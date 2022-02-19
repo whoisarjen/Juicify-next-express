@@ -1,25 +1,15 @@
 import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
-import Slide from '@mui/material/Slide';
 import { useRouter } from "next/router";
 import EventIcon from '@mui/icons-material/Event';
 import IconButton from '@mui/material/IconButton';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import { TransitionProps } from '@mui/material/transitions';
-import { useState, forwardRef, Ref, ReactElement } from "react";
+import { useState } from "react";
 import CalendarPicker from '@mui/lab/CalendarPicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-
-const Transition = forwardRef(function Transition(
-    props: TransitionProps & {
-        children: ReactElement<any, any>;
-    },
-    ref: Ref<unknown>,
-) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
+import SlideUp from '../transition/SlideUp';
 
 const DateChanger = ({ where = 'nutrition-diary' }: { where?: string }) => {
     const router = useRouter()
@@ -38,7 +28,7 @@ const DateChanger = ({ where = 'nutrition-diary' }: { where?: string }) => {
             </IconButton>
             <Dialog
                 open={isDialog}
-                TransitionComponent={Transition}
+                TransitionComponent={SlideUp}
                 keepMounted
                 aria-describedby="alert-dialog-slide-description"
             >
