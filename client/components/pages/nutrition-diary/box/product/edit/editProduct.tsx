@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { useEditProductProps } from './useEditProduct';
-import ConfirmDialog from '../../../../common/confirmDialog';
+import ConfirmDialog from '../../../../../common/confirmDialog';
 
 const BaseEditProduct = ({ product, children, isDialog, setIsDialog, token, register, errors, handleSubmit, changeNutritionDiary, deleteProduct, t }: useEditProductProps) => {
     return (

@@ -3,33 +3,27 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { NutritionDiaryBoxProps } from ".";
 import { useAppSelector } from "../../../../hooks/useRedux";
+import { getMacronutrient } from '../../../../utils/product.utils'
 
-const useNutritionDiaryBox = ({ index, products, data }: NutritionDiaryBoxProps) => {
+const useNutritionDiaryBox = ({ children, index, products, data }: NutritionDiaryBoxProps) => {
     const { t } = useTranslation('nutrition-diary');
     const router: any = useRouter();
     const token: any = useAppSelector((state) => state.token.value);
-    const isOnline = useAppSelector(state => state.online.isOnline)
-    const theOldestSupportedDate = useAppSelector(state => state.config.theOldestSupportedDate)
-    const [isDisabled, setIsDisabled] = useState(false)
-    const [{ p, c, f }, setMacro] = useState({ p: 0, c: 0, f: 0 })
-
-    const prepareNumber = (number: number) => parseFloat((Math.round(number * 100) / 100).toFixed(1))
-    const count = (product: any, key: string) => parseFloat((Math.round((product[key] * product.how_many) * 100) / 100).toFixed(1)) || 0
+    const [macro, setMacro] = useState({ p: 0, c: 0, f: 0 })
 
     useEffect(() => {
-        let macro = { p: 0, c: 0, f: 0 }
+        let countmacro = { p: 0, c: 0, f: 0 }
         products.forEach(product => {
-            macro = {
-                p: (macro.p + count(product, 'p')),
-                c: (macro.c + count(product, 'c')),
-                f: (macro.f + count(product, 'f'))
+            countmacro = {
+                p: (countmacro.p + getMacronutrient(product, 'p')),
+                c: (countmacro.c + getMacronutrient(product, 'c')),
+                f: (countmacro.f + getMacronutrient(product, 'f'))
             }
         })
-        setMacro(macro)
-        setIsDisabled(!isOnline && router.query.date < theOldestSupportedDate())
-    }, [products, index, router.query.date, theOldestSupportedDate, isOnline])
+        setMacro(countmacro)
+    }, [products, index, router.query.date])
 
-    return { t, index, products, data, token, router, prepareNumber, count, isDisabled, p, c, f }
+    return { children, t, index, data, token, router, macro }
 }
 
 export type useNutritionDiaryBoxProps = ReturnType<typeof useNutritionDiaryBox>

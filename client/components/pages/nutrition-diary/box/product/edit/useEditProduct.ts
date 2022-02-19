@@ -3,9 +3,9 @@ import useTranslation from "next-translate/useTranslation";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { EditProductProps } from ".";
-import { useAppSelector } from "../../../../../hooks/useRedux";
-import { ActivitySchemaProps, ActivitySchema } from "../../../../../schema/activity.schema";
-import { insertThoseIDStoDBController, overwriteThoseIDSinDB } from "../../../../../utils/db.utils";
+import { useAppSelector } from "../../../../../../hooks/useRedux";
+import { ActivitySchemaProps, ActivitySchema } from "../../../../../../schema/activity.schema";
+import { insertThoseIDStoDBController, overwriteThoseIDSinDB } from "../../../../../../utils/db.utils";
 
 const useEditProduct = ({ product, dailyMeasurement, children }: EditProductProps) => {
     const [isDialog, setIsDialog] = useState(false)

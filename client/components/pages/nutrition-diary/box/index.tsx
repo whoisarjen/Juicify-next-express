@@ -4,13 +4,14 @@ import BaseNutritionDiaryBox from "./NutritionDiaryBox";
 import useMealBox from "./useNutritionDiaryBox";
 
 export interface NutritionDiaryBoxProps {
+    children: any,
     index: number,
     products: Array<ProductSchemaProps & ActivitySchemaProps>,
     data: any,
 }
 
-const NutritionDiaryBox = ({ index, products, data }: NutritionDiaryBoxProps) => {
-    const props = useMealBox({ index, products, data });
+const NutritionDiaryBox = ({ children, index, products, data }: NutritionDiaryBoxProps) => {
+    const props = useMealBox({ children, index, products, data });
 
     return <BaseNutritionDiaryBox {...props} />
 };
