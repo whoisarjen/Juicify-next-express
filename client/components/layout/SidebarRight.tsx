@@ -8,12 +8,12 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListSubheader from '@mui/material/ListSubheader';
 import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
-import Weights from "../common/addWeight";
 import { useTheme } from "../../hooks/useTheme";
 import { getCalories } from "../../utils/product.utils";
 import styled from 'styled-components'
 import { getMacroByDay } from "../../utils/user.utils";
 import BetterLink from "../common/betterLink";
+import AddWeight from "../common/addWeight";
 
 const Box = styled.aside`
     padding: 12px;
@@ -41,7 +41,6 @@ const CircularBox = styled.aside`
 const SidebarRight = ({ token }: { token: any }) => {
     const router = useRouter()
     const { t } = useTranslation('home')
-    const [isWeights, setIsWeights] = useState(false)
     const keyDaily = useAppSelector(state => state.key.daily_measurement)
     const { data, reload } = useDailyMeasurement(getShortDate(), token.login)
     const [weight, setWeight] = useState(0)
@@ -88,17 +87,17 @@ const SidebarRight = ({ token }: { token: any }) => {
         <Box>
             {
                 styles &&
-                <>
-                    <List
-                        sx={{ width: '100%', bgcolor: 'background.paper' }}
-                        subheader={
-                            <ListSubheader component="div" id="nested-list-subheader">
-                                {t('Data for')} {reverseDateDotes()}:
-                            </ListSubheader>
-                        }
-                    >
-                        <BetterLink href={`${router.asPath}`}>
-                            <ListItemButton onClick={() => setIsWeights(true)}>
+                <List
+                    sx={{ width: '100%', bgcolor: 'background.paper' }}
+                    subheader={
+                        <ListSubheader component="div" id="nested-list-subheader">
+                            {t('Data for')} {reverseDateDotes()}:
+                        </ListSubheader>
+                    }
+                >
+                    <BetterLink href={`${router.asPath}`}>
+                        <AddWeight>
+                            <ListItemButton>
                                 <CircularBox>
                                     <CircularProgressbar
                                         value={weight ? 100 : 0}
@@ -110,58 +109,51 @@ const SidebarRight = ({ token }: { token: any }) => {
                                     </div>
                                 </CircularBox>
                             </ListItemButton>
-                        </BetterLink>
-                        <BetterLink href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
-                            <ListItemButton>
-                                <CircularBox>
-                                    <CircularProgressbar
-                                        value={calories ? calories / caloriesGoal * 100 : 0}
-                                        text={`${calories}Kcal`}
-                                        styles={styles}
-                                    />
-                                    <div>
-                                        {t("Calories")}
-                                    </div>
-                                </CircularBox>
-                            </ListItemButton>
-                        </BetterLink>
-                        <BetterLink href={`/${token.login}/workout/results/`}>
-                            <ListItemButton>
-                                <CircularBox>
-                                    <CircularProgressbar
-                                        value={workout * 100}
-                                        text={`${workout}`}
-                                        styles={styles}
-                                    />
-                                    <div>
-                                        {t("Workout")}
-                                    </div>
-                                </CircularBox>
-                            </ListItemButton>
-                        </BetterLink>
-                        <BetterLink href={`/coach`}>
-                            <ListItemButton>
-                                <CircularBox>
-                                    <CircularProgressbar
-                                        value={(7 - coach) / 7 * 100}
-                                        text={`${coach >= 0 ? coach : 0}dni`}
-                                        styles={styles}
-                                    />
-                                    <div>
-                                        {t("Coach")}
-                                    </div>
-                                </CircularBox>
-                            </ListItemButton>
-                        </BetterLink>
-                    </List>
-                    <Weights
-                        isWeights={isWeights}
-                        closeWeights={() => {
-                            reload()
-                            setIsWeights(false)
-                        }}
-                    />
-                </>
+                        </AddWeight>
+                    </BetterLink>
+                    <BetterLink href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
+                        <ListItemButton>
+                            <CircularBox>
+                                <CircularProgressbar
+                                    value={calories ? calories / caloriesGoal * 100 : 0}
+                                    text={`${calories}Kcal`}
+                                    styles={styles}
+                                />
+                                <div>
+                                    {t("Calories")}
+                                </div>
+                            </CircularBox>
+                        </ListItemButton>
+                    </BetterLink>
+                    <BetterLink href={`/${token.login}/workout/results/`}>
+                        <ListItemButton>
+                            <CircularBox>
+                                <CircularProgressbar
+                                    value={workout * 100}
+                                    text={`${workout}`}
+                                    styles={styles}
+                                />
+                                <div>
+                                    {t("Workout")}
+                                </div>
+                            </CircularBox>
+                        </ListItemButton>
+                    </BetterLink>
+                    <BetterLink href={`/coach`}>
+                        <ListItemButton>
+                            <CircularBox>
+                                <CircularProgressbar
+                                    value={(7 - coach) / 7 * 100}
+                                    text={`${coach >= 0 ? coach : 0}dni`}
+                                    styles={styles}
+                                />
+                                <div>
+                                    {t("Coach")}
+                                </div>
+                            </CircularBox>
+                        </ListItemButton>
+                    </BetterLink>
+                </List>
             }
         </Box>
     )

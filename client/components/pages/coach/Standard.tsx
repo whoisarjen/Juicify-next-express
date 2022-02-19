@@ -6,10 +6,10 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { useDailyMeasurement } from "../../../hooks/useDailyMeasurement";
 import { getShortDate, getDiffrentBetweenDays, addDaysToDate, reverseDateDotes } from "../../../utils/date.utils";
 import { useAppSelector } from "../../../hooks/useRedux";
-import Weights from "../../common/addWeight";
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import useTranslation from "next-translate/useTranslation";
 import styled from "styled-components";
+import AddWeight from "../../common/addWeight";
 
 interface StandardProps {
     setStep: (arg0: string) => void
@@ -149,16 +149,21 @@ const Standard = ({ setStep }: StandardProps) => {
                 </div>
                 <div>
                     {
-                        data ?
-                            (
-                                data?.weight
-                                    ?
-                                    <Button variant="contained" onClick={() => setIsWeights(true)}>{t('CHANGE_WEIGHT')}</Button>
-                                    :
-                                    <Button variant="contained" color="error" onClick={() => setIsWeights(true)}>{t('ADD_WEIGHT')}</Button>
-                            ) : (
-                                <Button variant="contained" onClick={() => setIsWeights(true)}>{t('CHANGE_WEIGHT')}</Button>
-                            )
+                        data
+                            ?
+                            data?.weight
+                                ?
+                                <AddWeight>
+                                    <Button variant="contained">{t('CHANGE_WEIGHT')}</Button>
+                                </AddWeight>
+                                :
+                                <AddWeight>
+                                    <Button variant="contained" color="error">{t('ADD_WEIGHT')}</Button>
+                                </AddWeight>
+                            :
+                            <AddWeight>
+                                <Button variant="contained">{t('CHANGE_WEIGHT')}</Button>
+                            </AddWeight>
                     }
                 </div>
             </Main>
@@ -192,13 +197,6 @@ const Standard = ({ setStep }: StandardProps) => {
                         </>
                 }
             </Second>
-            <Weights
-                isWeights={isWeights}
-                closeWeights={() => {
-                    reload()
-                    setIsWeights(false)
-                }}
-            />
         </Grid>
     )
 }

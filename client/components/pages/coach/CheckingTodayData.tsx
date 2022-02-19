@@ -2,10 +2,10 @@ import { useState } from "react";
 import Button from '@mui/material/Button';
 import { useDailyMeasurement } from "../../../hooks/useDailyMeasurement";
 import { getAge, getShortDate } from "../../../utils/date.utils";
-import Weights from '../../common/addWeight'
 import { useAppSelector } from "../../../hooks/useRedux";
 import useTranslation from "next-translate/useTranslation";
 import styled from "styled-components";
+import AddWeight from "../../common/addWeight";
 
 const Grid = styled.div`
     width: 100%;
@@ -33,8 +33,7 @@ const Title = styled.div`
 const CheckingTodayData = ({ setStep }: { setStep: (arg0: string) => void }) => {
     const { t } = useTranslation('coach')
     const token: any = useAppSelector(state => state.token.value)
-    const { data, reload } = useDailyMeasurement(getShortDate(), token.login)
-    const [isWeights, setIsWeights] = useState(false)
+    const { data } = useDailyMeasurement(getShortDate(), token.login)
 
     return (
         <Grid>
@@ -66,24 +65,21 @@ const CheckingTodayData = ({ setStep }: { setStep: (arg0: string) => void }) => 
                             </table>
                             <div>{t('CHECKING_TODAY_DESCRIPTION')}</div>
 
-                            <Button variant="contained" onClick={() => setIsWeights(true)}>{t('CHANGE_WEIGHT')}</Button>
+                            <AddWeight>
+                                <Button variant="contained">{t('CHANGE_WEIGHT')}</Button>
+                            </AddWeight>
                         </>
                         :
                         <>
                             <div />
                             <div>{t('CHECKING_TODAY_DESCRIPTION_ALTERNATIVE')}</div>
-                            <Button variant="contained" color="error" onClick={() => setIsWeights(true)}>{t('ADD_WEIGHT')}</Button>
+                            <AddWeight>
+                                <Button variant="contained" color="error">{t('ADD_WEIGHT')}</Button>
+                            </AddWeight>
                         </>
                 )
             }
             <Button variant="contained" onClick={() => setStep('ChooseDiet')} disabled={!data || data.weight == 0}>{t('CHECKING_TODAY_BUTTON')}</Button>
-            <Weights
-                isWeights={isWeights}
-                closeWeights={() => {
-                    reload()
-                    setIsWeights(false)
-                }}
-            />
         </Grid>
     )
 }

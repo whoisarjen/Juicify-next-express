@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import Button from '@mui/material/Button';
 import { useDailyMeasurements } from "../../../hooks/useDailyMeasurements";
 import { addDaysToDate, getShortDate, reverseDateDotes } from "../../../utils/date.utils";
-import Weights from '../../common/addWeight'
 import useTranslation from "next-translate/useTranslation";
 import { useAppSelector } from "../../../hooks/useRedux";
 import { DailyMeasurementSchemaProps } from "../../../schema/dailyMeasurement.schema";
 import styled from "styled-components";
+import AddWeight from "../../common/addWeight";
 
 interface ChooseDietProps {
     setStep: (arg0: string) => void
@@ -43,7 +43,6 @@ const CheckingWeekData = ({ setStep }: ChooseDietProps) => {
     const { t } = useTranslation('coach')
     const token: any = useAppSelector(state => state.token.value)
     const { data, reload } = useDailyMeasurements(getShortDate(), 15, token.login)
-    const [isWeights, setIsWeights] = useState(false)
     const [allowNextStep, setAllowNextStep] = useState(false)
 
     useEffect(() => {
@@ -92,7 +91,9 @@ const CheckingWeekData = ({ setStep }: ChooseDietProps) => {
                             :
                             <Description>{t('CHECKING_WEEK_DESCRIPTION')}</Description>
                     }
-                    <Button variant="contained" onClick={() => setIsWeights(true)}>{t('CHANGE_WEIGHT')}</Button>
+                    <AddWeight>
+                        <Button variant="contained">{t('CHANGE_WEIGHT')}</Button>
+                    </AddWeight>
                 </>
             }
             <Button
@@ -101,13 +102,6 @@ const CheckingWeekData = ({ setStep }: ChooseDietProps) => {
                 disabled={!allowNextStep}>
                 {t('CHECKING_TODAY_BUTTON')}
             </Button>
-            <Weights
-                isWeights={isWeights}
-                closeWeights={() => {
-                    reload()
-                    setIsWeights(false)
-                }}
-            />
         </Grid>
     )
 }
