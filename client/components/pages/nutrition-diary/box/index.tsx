@@ -6,12 +6,11 @@ import useMealBox from "./useNutritionDiaryBox";
 export interface NutritionDiaryBoxProps {
     index: number,
     products: Array<ProductSchemaProps & ActivitySchemaProps>,
-    openDialog: () => void,
     data: any,
 }
 
-const NutritionDiaryBox = ({ index, products, openDialog, data }: NutritionDiaryBoxProps) => {
-    const props = useMealBox({ index, products, openDialog, data });
+const NutritionDiaryBox = ({ index, products, data }: NutritionDiaryBoxProps) => {
+    const props = useMealBox({ index, products, data });
 
     return <BaseNutritionDiaryBox {...props} />
 };

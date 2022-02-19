@@ -8,7 +8,8 @@ import { ProductSchemaProps } from "../../../../../schema/product.schema";
 import { insertThoseIDStoDBController } from "../../../../../utils/db.utils";
 import { deleteIndexedDB, getAllIndexedDB } from "../../../../../utils/indexedDB.utils";
 
-const useAddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement }: AddproductsProps) => {
+const useAddProducts = ({ children, index, dailyMeasurement }: AddproductsProps) => {
+    const [isDialog, setIsDialog] = useState(false)
     const [loadedProduct, setLoadedProduct] = useState<any>(false)
     const { t } = useTranslation('nutrition-diary');
     const [tab, setTab] = useState(0)
@@ -46,7 +47,7 @@ const useAddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement }: A
         dailyMeasurement.nutrition_diary = dailyMeasurement.nutrition_diary.concat(array)
         await insertThoseIDStoDBController('daily_measurement', [dailyMeasurement])
         dispatch(refreshKey('daily_measurement'))
-        closeDialog()
+        setIsDialog(false)
     }
 
     useEffect(() => setMeal(index), [index])
@@ -57,7 +58,7 @@ const useAddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement }: A
         })()
     }, [refreshChecked])
 
-    return { t, index, isAddDialog, closeDialog, dailyMeasurement, meal, setMeal, open, setOpen, find, setFind, setTab, loading, searchCache, token, items, addProductsToDiary, isCreateProduct, setIsCreateProduct, setRefreshChecked, loadedProduct, setLoadedProduct, checked, created, refreshChecked }
+    return { children, isDialog, setIsDialog, t, index, dailyMeasurement, meal, setMeal, open, setOpen, find, setFind, setTab, loading, searchCache, token, items, addProductsToDiary, isCreateProduct, setIsCreateProduct, setRefreshChecked, loadedProduct, setLoadedProduct, checked, created, refreshChecked }
 }
 
 export type useAddProductsProps = ReturnType<typeof useAddProducts>

@@ -8,6 +8,7 @@ import { ActivitySchemaProps } from '../../../../schema/activity.schema';
 import styled from "styled-components";
 import { useNutritionDiaryBoxProps } from "./useNutritionDiaryBox";
 import EditProduct from "./editProduct";
+import AddProducts from "./addProducts";
 
 const Grid = styled.div`
     width: calc(100% - 24px);
@@ -39,6 +40,10 @@ const Add = styled.div`
     width: 100%;
     height: 100%;
     display: grid;
+    margin: auto;
+    ${this} div{
+        margin: auto;
+    }
 `
 
 const Product = styled.div`
@@ -66,7 +71,7 @@ const Content = styled.div`
     margin-top: auto;
 `
 
-const BaseNutritionDiaryBox = ({ t, index, products, openDialog, token, router, prepareNumber, count, isDisabled, p, c, f, data}: useNutritionDiaryBoxProps) => {
+const BaseNutritionDiaryBox = ({ t, index, products, token, router, prepareNumber, count, isDisabled, p, c, f, data }: useNutritionDiaryBoxProps) => {
     return (
         <Grid>
             <Bolded>{t('Meal')} {index + 1}</Bolded>
@@ -77,9 +82,11 @@ const BaseNutritionDiaryBox = ({ t, index, products, openDialog, token, router, 
                 {
                     token.login == router.query.login
                         ?
-                        <IconButton disabled={isDisabled} sx={{ margin: 'auto' }} aria-label="Add" color="primary" onClick={() => openDialog()}>
-                            <AddIcon fontSize="small" />
-                        </IconButton>
+                        <AddProducts index={index} dailyMeasurement={data}>
+                            <IconButton disabled={isDisabled} sx={{ margin: 'auto' }} aria-label="Add" color="primary">
+                                <AddIcon fontSize="small" />
+                            </IconButton>
+                        </AddProducts>
                         :
                         <div />
                 }

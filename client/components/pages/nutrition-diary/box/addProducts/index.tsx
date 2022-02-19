@@ -3,14 +3,13 @@ import BaseAddProducts from "./AddProducts";
 import useAddProducts from "./useAddProducts";
 
 export interface AddproductsProps {
+    children: any,
     index: number,
-    isAddDialog: boolean,
-    closeDialog: () => void,
     dailyMeasurement: DailyMeasurementSchemaProps,
 }
 
-const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement }: AddproductsProps) => {
-    const props = useAddProducts({ index, isAddDialog, closeDialog, dailyMeasurement })
+const AddProducts = ({ children, index, dailyMeasurement }: AddproductsProps) => {
+    const props = useAddProducts({ children, index, dailyMeasurement })
     
     return <BaseAddProducts {...props} />
 }
