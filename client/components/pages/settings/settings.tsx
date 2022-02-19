@@ -2,7 +2,7 @@ import Button from '@mui/material/Button';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import styled from 'styled-components'
-import BottomFlyingButton from '../../common/BottomFlyingButton';
+import BottomFlyingButton from '../../common/buttons/submitItems';
 import SelectLanguage from '../../common/SelectLanguage';
 import { useSettingsProps } from './useSettings'
 

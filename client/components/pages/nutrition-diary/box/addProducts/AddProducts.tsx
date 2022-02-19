@@ -8,7 +8,7 @@ import AddProductsBox from './box';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import CreateProduct from './create';
-import BottomFlyingButton from '../../../../common/BottomFlyingButton';
+import BottomFlyingButton from '../../../../common/buttons/submitItems';
 import AddProductMoreInformation from './informations';
 import { ProductSchemaProps } from '../../../../../schema/product.schema';
 import styled from 'styled-components'

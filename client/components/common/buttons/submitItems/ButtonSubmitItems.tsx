@@ -1,12 +1,6 @@
+import { useButtonSubmitItemsProps } from "./useButtonSubmitItems";
 import LoadingButton from '@mui/lab/LoadingButton';
-import useTranslation from "next-translate/useTranslation";
 import styled from 'styled-components'
-
-interface BottomFlyingButtonProps {
-    clicked: () => void,
-    buttonText?: string,
-    showNumberValue?: number
-}
 
 const Button = styled.div`
     width: 100%;
@@ -23,8 +17,7 @@ const Placeholder = styled.div`
     height: 44px;
 `
 
-const BottomFlyingButton = ({ clicked, buttonText = 'Submit', showNumberValue = 0 }: BottomFlyingButtonProps) => {
-    const { t } = useTranslation('home')
+const BaseButtonSubmitItems = ({ clicked, showNumberValue, t }: useButtonSubmitItemsProps) => {
 
     if (!showNumberValue) {
         return <></>
@@ -39,11 +32,11 @@ const BottomFlyingButton = ({ clicked, buttonText = 'Submit', showNumberValue = 
                     variant="contained"
                     type="submit"
                 >
-                    {t(buttonText)}{showNumberValue > 0 && ` (${showNumberValue})`}
+                    {t('Submit')}{showNumberValue > 0 && ` (${showNumberValue})`}
                 </LoadingButton>
             </Button>
         </>
     )
 }
 
-export default BottomFlyingButton;
+export default BaseButtonSubmitItems;
