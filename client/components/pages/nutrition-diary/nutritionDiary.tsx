@@ -1,5 +1,5 @@
 import NutritionDiaryBox from "./box"
-import FastDateChanger from '../../common/FastDateChanger'
+import FastDateChanger from '../../common/dateChangers/fast'
 import Diagrams from './diagrams'
 import DiagramsSectionButtons from './diagrams/buttons'
 import Header from "../../layout/Header"
@@ -7,7 +7,7 @@ import { reverseDateDotes } from "../../../utils/date.utils"
 import { useNutritionDiaryProps } from "./useNutritionDiary"
 import BottomFlyingGuestBanner from "../../common/bottomFlyingGuestBanner"
 import styled from "styled-components"
-import DateChanger from "../../common/DateChanger"
+import DateChanger from "../../common/dateChangers/classic"
 import NutritionDiaryBoxProduct from "./box/product"
 import { ProductSchemaProps } from "../../../schema/product.schema"
 import { ActivitySchemaProps } from "../../../schema/activity.schema"

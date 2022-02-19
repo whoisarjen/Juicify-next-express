@@ -8,7 +8,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListSubheader from '@mui/material/ListSubheader';
 import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
-import Weights from "../common/AddWeights";
+import Weights from "../common/addWeight";
 import { useTheme } from "../../hooks/useTheme";
 import { getCalories } from "../../utils/product.utils";
 import styled from 'styled-components'

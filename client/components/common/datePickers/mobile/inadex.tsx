@@ -5,14 +5,14 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import MobileDatePicker from '@mui/lab/MobileDatePicker'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 
-interface MobileDatePickerExportProps {
+interface DatePickerMobileProps {
     change: (arg0: any) => void,
     defaultDate: Date,
     label?: string,
     marginBottom?: string | number
 }
 
-const MobileDatePickerExport = ({ change, defaultDate, label = "Pick date", marginBottom = 0 }: MobileDatePickerExportProps) => {
+const DatePickerMobile = ({ change, defaultDate, label = "Pick date", marginBottom = 0 }: DatePickerMobileProps) => {
     const [value, setValue] = useState<Date>(defaultDate)
 
     const handleChange = (newValue: any) => {
@@ -34,4 +34,4 @@ const MobileDatePickerExport = ({ change, defaultDate, label = "Pick date", marg
     )
 }
 
-export default MobileDatePickerExport
+export default DatePickerMobile

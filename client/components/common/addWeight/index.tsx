@@ -7,9 +7,9 @@ import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
-import { useDailyMeasurements } from "../../hooks/useDailyMeasurements";
-import { getShortDate, reverseDateDotes } from "../../utils/date.utils";
-import { useAppSelector } from "../../hooks/useRedux";
+import { useDailyMeasurements } from "../../../hooks/useDailyMeasurements";
+import { getShortDate, reverseDateDotes } from "../../../utils/date.utils";
+import { useAppSelector } from "../../../hooks/useRedux";
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -17,10 +17,10 @@ import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
-import { insertThoseIDStoDBController } from "../../utils/db.utils";
+import { insertThoseIDStoDBController } from "../../../utils/db.utils";
 import styled from 'styled-components'
-import { DailyMeasurementSchemaProps } from "../../schema/dailyMeasurement.schema";
-import SlideUp from "../transition/SlideUp";
+import { DailyMeasurementSchemaProps } from "../../../schema/dailyMeasurement.schema";
+import SlideUp from "../../transition/SlideUp";
 
 interface WeightsProps {
     isWeights: boolean,
@@ -68,11 +68,7 @@ const Description = styled.div`
 
 const Weights = ({ isWeights, closeWeights }: WeightsProps) => {
     const token: any = useAppSelector(state => state.token.value)
-    const { data, reload } = useDailyMeasurements(
-        getShortDate(),
-        useAppSelector(state => state.config.numberSupportedDays),
-        token.login
-    )
+    const { data, reload } = useDailyMeasurements(getShortDate(), useAppSelector(state => state.config.numberSupportedDays), token.login)
     const [isDialog, setIsDialog] = useState(false)
     const [change, setChange]: any = useState({})
     const [weight, setWeight]: any = useState(0)

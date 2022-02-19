@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styled from 'styled-components'
-import { addDaysToDate, reverseDateDotes } from "../../utils/date.utils";
-import BetterLink from "./betterLink";
+import { addDaysToDate, reverseDateDotes } from "../../../../utils/date.utils";
+import BetterLink from "../../betterLink";
 
 const Box = styled.div`
     width: 100%;
