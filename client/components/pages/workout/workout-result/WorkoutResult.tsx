@@ -8,7 +8,7 @@ import WorkoutResultMoreOptions from './moreOptions';
 import ResultBox from './resultBox';
 import { useWorkoutResultProps } from './useWorkoutResult';
 
-const BaseWorkoutResult = ({ t, isLoading, handleSubmit, onSubmit, deleteEverything, errors, router, getValues, register, fields, addExercises, deleteExerciseIndex, setDeleteExerciseIndex, deleteExercise, token, user, updateResults }: useWorkoutResultProps) => {
+const BaseWorkoutResult = ({ t, isLoading, handleSubmit, onSubmit, deleteEverything, errors, router, getValues, register, fields, addExercises, remove, token, user, updateResults }: useWorkoutResultProps) => {
     return (
         <form>
             <Navbar
@@ -99,15 +99,15 @@ const BaseWorkoutResult = ({ t, isLoading, handleSubmit, onSubmit, deleteEveryth
                         <ResultBox
                             key={(result._id || '') + index}
                             result={result}
-                            isOwner={token?.login == router.query?.login}
+                            isOwner={token?.login == router?.query?.login}
                             setNewValues={(values: Array<ValueSchemaProps>) => updateResults({ values, result, index })}
-                            deleteExerciseWithIndex={() => deleteExercise(index)}
+                            deleteExerciseWithIndex={() => remove(index)}
                         />
                     </div>
                 )
             }
             {
-                token?.login == router.query?.login &&
+                token?.login == router?.query?.login &&
                 <WorkoutResultMoreOptions
                     exercises={[...fields.map((x: any) => {
                         x.l = x.name.length

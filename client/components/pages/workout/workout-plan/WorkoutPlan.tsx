@@ -21,7 +21,7 @@ const BaseWorkoutPlan = ({ t, user, token, errors, fields, append, remove, handl
                 deleteWorkout={deleteWorkoutPlan}
             />
             <TextField
-                disabled={token.login != user.login}
+                disabled={token?.login != user?.login}
                 label={t('NAME_OF_WORKOUT')}
                 {...register('title')}
                 variant="outlined"
@@ -36,7 +36,7 @@ const BaseWorkoutPlan = ({ t, user, token, errors, fields, append, remove, handl
                 }
             />
             <TextField
-                disabled={token.login != user.login}
+                disabled={token?.login != user?.login}
                 variant="outlined"
                 label={t('DESCRIPTION')}
                 type="text"
@@ -51,7 +51,7 @@ const BaseWorkoutPlan = ({ t, user, token, errors, fields, append, remove, handl
                 }
             />
             <TextField
-                disabled={token.login != user.login}
+                disabled={token?.login != user?.login}
                 variant="outlined"
                 label={t('BURNT_CALORIES')}
                 type="number"
@@ -81,7 +81,7 @@ const BaseWorkoutPlan = ({ t, user, token, errors, fields, append, remove, handl
                                                         {...provided.draggableProps}
                                                         {...provided.dragHandleProps}
                                                         ref={provided.innerRef}
-                                                        disabled={token.login != user.login}
+                                                        disabled={token?.login != user?.login}
                                                         label={`${i + 1}. ${exercise.name}`}
                                                         onDelete={() => remove(i)}
                                                         avatar={<SwapVertIcon />}

@@ -17,7 +17,6 @@ const useWorkoutResult = () => {
     const { data, user, daily } = useGetWorkoutResult()
     const token: any = useAppSelector(state => state.token.value)
     const [isLoading, setIsLoading] = useState(false)
-    const [deleteExerciseIndex, setDeleteExerciseIndex] = useState<number | boolean>(false)
     const isDateSupported = useAppSelector(state => state.config.theOldestSupportedDate()) <= router.query.date
 
     const deleteEverything = async () => {
@@ -51,11 +50,6 @@ const useWorkoutResult = () => {
                 values: []
             })
         })
-    }
-
-    const deleteExercise = async (index: number) => {
-        remove(index as number)
-        setDeleteExerciseIndex(false)
     }
 
     const updateResults = async ({ values, result, index }: { values: Array<ValueSchemaProps>, result: ResultSchemaProps, index: number }) => {
@@ -101,7 +95,7 @@ const useWorkoutResult = () => {
 
     useEffect(() => reset(data), [data])
 
-    return { t, isLoading, handleSubmit, onSubmit, deleteEverything, errors, router, getValues, register, fields, addExercises, deleteExerciseIndex, setDeleteExerciseIndex, deleteExercise, token, user, updateResults }
+    return { t, isLoading, handleSubmit, onSubmit, deleteEverything, errors, router, getValues, register, fields, addExercises, remove, token, user, updateResults }
 }
 
 export type useWorkoutResultProps = ReturnType<typeof useWorkoutResult>
