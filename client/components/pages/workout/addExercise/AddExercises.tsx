@@ -8,7 +8,7 @@ import ButtonPlus from '../../../common/buttons/buttonPlus';
 import ButtonSubmitItems from '../../../common/buttons/submitItems';
 import AddItemsTabs from '../../../common/tabs';
 import CreateExercise from './createExercise';
-import Autocomplete from '../../../common/Autocomplete';
+import Autocomplete from '../../../common/autocomplete';
 import ButtonCloseDialog from '../../../common/buttons/closeDialog';
 
 const DialogContent = styled.div`

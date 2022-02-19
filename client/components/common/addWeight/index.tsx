@@ -53,7 +53,7 @@ const Description = styled.div`
 const AddWeight = ({ children }: AddWeightProps) => {
     const [isWeights, setIsWeight] = useState(false)
     const token: any = useAppSelector(state => state.token.value)
-    const { data, reload } = useDailyMeasurements(getShortDate(), useAppSelector(state => state.config.numberSupportedDays), token.login)
+    const { data } = useDailyMeasurements(getShortDate(), useAppSelector(state => state.config.numberSupportedDays), token.login)
     const [isDialog, setIsDialog] = useState(false)
     const [change, setChange]: any = useState({})
     const [weight, setWeight]: any = useState(0)
@@ -62,7 +62,6 @@ const AddWeight = ({ children }: AddWeightProps) => {
     const submit = async () => {
         if (change.weight != weight) {
             await insertThoseIDStoDBController('daily_measurement', [{ ...change, ...{ weight } }])
-            reload()
         }
         setIsDialog(false)
     }
