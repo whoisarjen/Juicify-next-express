@@ -18,19 +18,9 @@ import Button from '@mui/material/Button';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import { insertThoseIDStoDBController } from "../../utils/db.utils";
-import { TransitionProps } from '@mui/material/transitions';
-import Slide from '@mui/material/Slide';
 import styled from 'styled-components'
 import { DailyMeasurementSchemaProps } from "../../schema/dailyMeasurement.schema";
-
-const Transition = forwardRef(function Transition(
-    props: TransitionProps & {
-        children: ReactElement;
-    },
-    ref: Ref<unknown>,
-) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
+import SlideUp from "../transition/SlideUp";
 
 interface WeightsProps {
     isWeights: boolean,
@@ -101,7 +91,7 @@ const Weights = ({ isWeights, closeWeights }: WeightsProps) => {
             fullScreen
             scroll='body'
             open={isWeights}
-            TransitionComponent={Transition}
+            TransitionComponent={SlideUp}
         >
             <Content>
                 <Title>{t('Add weight')}</Title>
@@ -156,7 +146,7 @@ const Weights = ({ isWeights, closeWeights }: WeightsProps) => {
             <Dialog
                 open={isDialog}
                 onClose={() => setIsDialog(false)}
-                TransitionComponent={Transition}
+                TransitionComponent={SlideUp}
             >
                 <DialogTitle>{t('Add weight')}</DialogTitle>
                 <DialogContent>
