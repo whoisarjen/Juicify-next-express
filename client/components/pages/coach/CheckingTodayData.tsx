@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from '@mui/material/Button';
 import { useDailyMeasurement } from "../../../hooks/useDailyMeasurement";
 import { getAge, getShortDate } from "../../../utils/date.utils";
-import Weights from '../../common/Weights'
+import Weights from '../../common/AddWeights'
 import { useAppSelector } from "../../../hooks/useRedux";
 import useTranslation from "next-translate/useTranslation";
 import styled from "styled-components";

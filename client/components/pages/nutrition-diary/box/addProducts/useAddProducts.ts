@@ -2,12 +2,13 @@ import useTranslation from "next-translate/useTranslation";
 import { useState, useEffect } from "react";
 import { AddproductsProps } from ".";
 import useFind from "../../../../../hooks/useFind";
-import { useAppSelector } from "../../../../../hooks/useRedux";
+import { useAppDispatch, useAppSelector } from "../../../../../hooks/useRedux";
+import { refreshKey } from "../../../../../redux/features/key.slice";
 import { ProductSchemaProps } from "../../../../../schema/product.schema";
 import { insertThoseIDStoDBController } from "../../../../../utils/db.utils";
 import { deleteIndexedDB, getAllIndexedDB } from "../../../../../utils/indexedDB.utils";
 
-const useAddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload }: AddproductsProps) => {
+const useAddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement }: AddproductsProps) => {
     const [loadedProduct, setLoadedProduct] = useState<any>(false)
     const { t } = useTranslation('nutrition-diary');
     const [tab, setTab] = useState(0)
@@ -19,6 +20,7 @@ const useAddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, rel
     const [isCreateProduct, setIsCreateProduct] = useState(false)
     const [find, setFind] = useState<any>(null)
     const { items, loading, searchCache } = useFind(find, 'product', tab)
+    const dispatch = useAppDispatch()
 
     const created = async (productName: string) => {
         if (productName == find) {
@@ -43,7 +45,7 @@ const useAddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, rel
         if (!dailyMeasurement.nutrition_diary) dailyMeasurement.nutrition_diary = []
         dailyMeasurement.nutrition_diary = dailyMeasurement.nutrition_diary.concat(array)
         await insertThoseIDStoDBController('daily_measurement', [dailyMeasurement])
-        reload()
+        dispatch(refreshKey('daily_measurement'))
         closeDialog()
     }
 
@@ -55,7 +57,7 @@ const useAddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, rel
         })()
     }, [refreshChecked])
 
-    return { t, index, isAddDialog, closeDialog, dailyMeasurement, reload, meal, setMeal, open, setOpen, find, setFind, tab, setTab, loading, searchCache, token, items, addProductsToDiary, isCreateProduct, setIsCreateProduct, setRefreshChecked, loadedProduct, setLoadedProduct, checked, created, refreshChecked }
+    return { t, index, isAddDialog, closeDialog, dailyMeasurement, meal, setMeal, open, setOpen, find, setFind, setTab, loading, searchCache, token, items, addProductsToDiary, isCreateProduct, setIsCreateProduct, setRefreshChecked, loadedProduct, setLoadedProduct, checked, created, refreshChecked }
 }
 
 export type useAddProductsProps = ReturnType<typeof useAddProducts>

@@ -3,12 +3,11 @@ import useDiagramsSectionButtons from "./useDiagramsSectionButtons";
 
 
 export interface DiagramsOptionsProps {
-    data: any,
-    reloadDailyMeasurement: () => void
+    data: any
 }
 
-const DiagramsSectionButtonsComponent = ({ data, reloadDailyMeasurement }: DiagramsOptionsProps) => {
-    const props = useDiagramsSectionButtons({ data, reloadDailyMeasurement })
+const DiagramsSectionButtonsComponent = ({ data }: DiagramsOptionsProps) => {
+    const props = useDiagramsSectionButtons({ data })
 
     return <BaseDiagramsSectionButtons {...props} />
 }

@@ -61,7 +61,7 @@ const Title = styled.div`
     font-weight: bold;
 `
 
-const BaseAddProducts = ({ t, isAddDialog, closeDialog, dailyMeasurement, meal, setMeal, open, setOpen, find, setFind, tab, setTab, loading, searchCache, token, items, addProductsToDiary, isCreateProduct, setIsCreateProduct, setRefreshChecked, loadedProduct, setLoadedProduct, checked, created, refreshChecked }: useAddProductsProps) => {
+const BaseAddProducts = ({ t, isAddDialog, closeDialog, dailyMeasurement, meal, setMeal, open, setOpen, find, setFind, setTab, loading, searchCache, token, items, addProductsToDiary, isCreateProduct, setIsCreateProduct, setRefreshChecked, loadedProduct, setLoadedProduct, checked, created, refreshChecked }: useAddProductsProps) => {
     return (
         <Dialog
             fullScreen

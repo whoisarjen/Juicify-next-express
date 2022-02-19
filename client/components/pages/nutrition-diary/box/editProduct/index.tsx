@@ -3,17 +3,14 @@ import BaseEditProduct from './editProduct';
 
 export interface EditProductProps {
     product: any,
-    isDialog: boolean,
-    closeDialog: () => void,
-    deleteProduct: (arg0: string) => void
-    changeProduct: (arg0: any) => void
+    dailyMeasurement: any,
+    children: any,
 }
 
+const EditProduct = ({ product, dailyMeasurement, children }: EditProductProps) => {
+    const props = useEdit({ product, dailyMeasurement, children })
 
-const EditProduct = ({ product, isDialog, closeDialog, deleteProduct, changeProduct }: EditProductProps) => {
-    const props = useEdit({ product, isDialog, closeDialog, deleteProduct, changeProduct })
-
-    return <BaseEditProduct {...props}/>
+    return <BaseEditProduct {...props} />
 }
 
 export default EditProduct;

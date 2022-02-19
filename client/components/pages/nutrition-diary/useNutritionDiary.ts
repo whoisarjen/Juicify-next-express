@@ -3,36 +3,15 @@ import { useRouter } from "next/router"
 import { useState, useEffect } from "react"
 import { useDailyMeasurement } from "../../../hooks/useDailyMeasurement"
 import { useAppSelector } from "../../../hooks/useRedux"
-import { overwriteThoseIDSinDB } from "../../../utils/db.utils"
 
 const useNutritionDiary = () => {
     const { t } = useTranslation('nutrition-diary')
     const router: any = useRouter()
     const [index, setIndex] = useState(0)
-    const [product, setProduct] = useState({ _id: '' }) // Placeholder is necessary
     const token: any = useAppSelector(state => state.token.value)
     const [isAddDialog, setIsAddDialog] = useState(false)
-    const [isEditDialog, setIsEditDialog] = useState(false)
     const [nutritionDiary, setNutritionDiary] = useState(Array(5).fill([]))
-    const { data, user, reload } = useDailyMeasurement(router.query.date, router.query.login)
-
-    const deleteProduct = async (_id: string) => {
-        let copy = JSON.parse(JSON.stringify(data))
-        copy.nutrition_diary = copy.nutrition_diary.map((obj: any) =>
-            obj._id == _id ? { ...obj, deleted: true } : obj
-        );
-        await overwriteThoseIDSinDB('daily_measurement', [copy])
-        reload()
-    }
-
-    const changeProduct = async (newProduct: any) => {
-        let copy = JSON.parse(JSON.stringify(data))
-        copy.nutrition_diary = copy.nutrition_diary.map((obj: any) =>
-            obj._id == newProduct._id ? { ...obj, ...{ changed: true }, ...newProduct } : obj
-        );
-        await overwriteThoseIDSinDB('daily_measurement', [copy])
-        reload()
-    }
+    const { data, user } = useDailyMeasurement(router.query.date, router.query.login)
 
     useEffect(() => {
         if (data?.nutrition_diary) {
@@ -59,7 +38,7 @@ const useNutritionDiary = () => {
         }
     }, [data])
 
-    return { t, router, token, nutritionDiary, user, reload, index, setIndex, product, setProduct, isEditDialog, setIsEditDialog, isAddDialog, setIsAddDialog, deleteProduct, changeProduct, data }
+    return { t, router, token, nutritionDiary, user, index, setIndex, isAddDialog, setIsAddDialog, data }
 }
 
 export type useNutritionDiaryProps = ReturnType<typeof useNutritionDiary>

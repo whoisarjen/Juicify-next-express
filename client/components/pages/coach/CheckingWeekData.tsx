@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Button from '@mui/material/Button';
 import { useDailyMeasurements } from "../../../hooks/useDailyMeasurements";
 import { addDaysToDate, getShortDate, reverseDateDotes } from "../../../utils/date.utils";
-import Weights from '../../common/Weights'
+import Weights from '../../common/AddWeights'
 import useTranslation from "next-translate/useTranslation";
 import { useAppSelector } from "../../../hooks/useRedux";
 import { DailyMeasurementSchemaProps } from "../../../schema/dailyMeasurement.schema";

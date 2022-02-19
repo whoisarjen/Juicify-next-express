@@ -7,11 +7,11 @@ export interface NutritionDiaryBoxProps {
     index: number,
     products: Array<ProductSchemaProps & ActivitySchemaProps>,
     openDialog: () => void,
-    openEditProduct: (arg0: ProductSchemaProps & ActivitySchemaProps) => void
+    data: any,
 }
 
-const NutritionDiaryBox = ({ index, products, openDialog, openEditProduct }: NutritionDiaryBoxProps) => {
-    const props = useMealBox({ index, products, openDialog, openEditProduct });
+const NutritionDiaryBox = ({ index, products, openDialog, data }: NutritionDiaryBoxProps) => {
+    const props = useMealBox({ index, products, openDialog, data });
 
     return <BaseNutritionDiaryBox {...props} />
 };

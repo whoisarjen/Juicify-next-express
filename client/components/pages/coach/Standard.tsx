@@ -6,7 +6,7 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { useDailyMeasurement } from "../../../hooks/useDailyMeasurement";
 import { getShortDate, getDiffrentBetweenDays, addDaysToDate, reverseDateDotes } from "../../../utils/date.utils";
 import { useAppSelector } from "../../../hooks/useRedux";
-import Weights from "../../common/Weights";
+import Weights from "../../common/AddWeights";
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import useTranslation from "next-translate/useTranslation";
 import styled from "styled-components";

@@ -7,11 +7,10 @@ export interface AddproductsProps {
     isAddDialog: boolean,
     closeDialog: () => void,
     dailyMeasurement: DailyMeasurementSchemaProps,
-    reload: () => void
 }
 
-const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement, reload }: AddproductsProps) => {
-    const props = useAddProducts({ index, isAddDialog, closeDialog, dailyMeasurement, reload })
+const AddProducts = ({ index, isAddDialog, closeDialog, dailyMeasurement }: AddproductsProps) => {
+    const props = useAddProducts({ index, isAddDialog, closeDialog, dailyMeasurement })
     
     return <BaseAddProducts {...props} />
 }

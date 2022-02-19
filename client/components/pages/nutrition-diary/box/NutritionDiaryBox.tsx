@@ -7,6 +7,7 @@ import { ProductSchemaProps } from '../../../../schema/product.schema';
 import { ActivitySchemaProps } from '../../../../schema/activity.schema';
 import styled from "styled-components";
 import { useNutritionDiaryBoxProps } from "./useNutritionDiaryBox";
+import EditProduct from "./editProduct";
 
 const Grid = styled.div`
     width: calc(100% - 24px);
@@ -65,7 +66,7 @@ const Content = styled.div`
     margin-top: auto;
 `
 
-const BaseNutritionDiaryBox = ({ t, index, products, openDialog, openEditProduct, token, router, prepareNumber, count, isDisabled, p, c, f }: useNutritionDiaryBoxProps) => {
+const BaseNutritionDiaryBox = ({ t, index, products, openDialog, token, router, prepareNumber, count, isDisabled, p, c, f, data}: useNutritionDiaryBoxProps) => {
     return (
         <Grid>
             <Bolded>{t('Meal')} {index + 1}</Bolded>
@@ -91,9 +92,14 @@ const BaseNutritionDiaryBox = ({ t, index, products, openDialog, openEditProduct
                             {
                                 token.login == router.query.login
                                     ?
-                                    <IconButton onClick={() => openEditProduct(product)} aria-label="edit">
-                                        <EditIcon fontSize="small" />
-                                    </IconButton>
+                                    <EditProduct
+                                        dailyMeasurement={data}
+                                        product={product}
+                                    >
+                                        <IconButton aria-label="edit">
+                                            <EditIcon fontSize="small" />
+                                        </IconButton>
+                                    </EditProduct>
                                     :
                                     <IconButton aria-label="edit">
                                         <FastfoodIcon fontSize="small" />
@@ -106,14 +112,11 @@ const BaseNutritionDiaryBox = ({ t, index, products, openDialog, openEditProduct
                         </Content>
                         <Content>
                             {
-                                product.how_many
-                                    ?
-                                    <>
-                                        <div>{count(product, 'p')}{t('P')} {count(product, 'c')}{t('C')} {count(product, 'f')}{t('F')}</div>
-                                        <div>{parseFloat(product.how_many.toString()) * 100}g/ml</div>
-                                    </>
-                                    :
-                                    <></>
+                                product.how_many &&
+                                <>
+                                    <div>{count(product, 'p')}{t('P')} {count(product, 'c')}{t('C')} {count(product, 'f')}{t('F')}</div>
+                                    <div>{parseFloat(product.how_many.toString()) * 100}g/ml</div>
+                                </>
                             }
                         </Content>
                     </Product>

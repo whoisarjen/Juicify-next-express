@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { NutritionDiaryBoxProps } from ".";
 import { useAppSelector } from "../../../../hooks/useRedux";
 
-const useNutritionDiaryBox = ({ index, products, openDialog, openEditProduct }: NutritionDiaryBoxProps) => {
+const useNutritionDiaryBox = ({ index, products, openDialog, data }: NutritionDiaryBoxProps) => {
     const { t } = useTranslation('nutrition-diary');
     const router: any = useRouter();
     const token: any = useAppSelector((state) => state.token.value);
@@ -29,7 +29,7 @@ const useNutritionDiaryBox = ({ index, products, openDialog, openEditProduct }: 
         setIsDisabled(!isOnline && router.query.date < theOldestSupportedDate())
     }, [products, index, router.query.date, theOldestSupportedDate, isOnline])
 
-    return { t, index, products, openDialog, openEditProduct, token, router, prepareNumber, count, isDisabled, p, c, f }
+    return { t, index, products, openDialog, data, token, router, prepareNumber, count, isDisabled, p, c, f }
 }
 
 export type useNutritionDiaryBoxProps = ReturnType<typeof useNutritionDiaryBox>

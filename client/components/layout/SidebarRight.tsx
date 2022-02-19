@@ -9,7 +9,7 @@ import Link from "next/link";
 import ListSubheader from '@mui/material/ListSubheader';
 import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
-import Weights from "../common/Weights";
+import Weights from "../common/AddWeights";
 import { useTheme } from "../../hooks/useTheme";
 import { getCalories } from "../../utils/product.utils";
 import styled from 'styled-components'
