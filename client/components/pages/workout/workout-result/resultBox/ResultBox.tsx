@@ -59,10 +59,7 @@ const BaseResultBox = ({ result, isOwner, deleteExerciseWithIndex, deleteResult,
                     />
                 )
             }
-            {
-                isOwner &&
-                <ButtonPlus size="small" click={() => openNewResult()} />
-            }
+            {isOwner && <ButtonPlus size="small" click={() => openNewResult()} />}
         </div>
     );
 }
