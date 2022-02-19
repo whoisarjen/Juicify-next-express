@@ -93,6 +93,7 @@ const BaseWorkoutResult = ({ t, isLoading, handleSubmit, onSubmit, deleteEveryth
                     errors.description?.message
                 }
             />
+            
             {
                 fields.map((result: any, index: number) =>
                     <div style={fields.length == (index + 1) ? { marginBottom: '100px' } : {}} key={(result._id || '') + index}>
@@ -106,16 +107,15 @@ const BaseWorkoutResult = ({ t, isLoading, handleSubmit, onSubmit, deleteEveryth
                     </div>
                 )
             }
+
             {
                 token?.login == router?.query?.login &&
                 <WorkoutResultMoreOptions
-                    exercises={[...fields.map((x: any) => {
-                        x.l = x.name.length
-                        return x
-                    })]}
+                    exercises={fields as any}
                     setExercises={addExercises}
                 />
             }
+
             {token?.login != user?.login && user?.login && <BottomFlyingGuestBanner user={user} />}
         </form>
     );
