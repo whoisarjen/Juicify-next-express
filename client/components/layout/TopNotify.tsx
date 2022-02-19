@@ -1,10 +1,10 @@
 import useTranslation from "next-translate/useTranslation";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../hooks/useRedux";
 import { getAllIndexedDB } from "../../utils/indexedDB.utils";
 import styled from 'styled-components'
+import BetterLink from "../common/betterLink";
 
 const Box = styled.div`
     color: #fff;
@@ -67,11 +67,9 @@ const TopNotify = () => {
                         !router.pathname.includes('workout/results')
                         ?
                         (
-                            <Link href={`/${token.login}/workout/results/${notSaved[0].whenAdded}/${notSaved[0]._id}`}>
-                                <a>
-                                    <Box>{t('Comeback to not saved workout')}</Box>
-                                </a>
-                            </Link>
+                            <BetterLink href={`/${token.login}/workout/results/${notSaved[0].whenAdded}/${notSaved[0]._id}`}>
+                                <Box>{t('Comeback to not saved workout')}</Box>
+                            </BetterLink>
                         )
                         :
                         offlineBar

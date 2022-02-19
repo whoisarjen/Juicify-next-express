@@ -1,7 +1,7 @@
-import Link from 'next/link';
 import styled from 'styled-components'
 import { useBlogProps } from './useBlog';
 import Image from "next/image";
+import BetterLink from '../../common/betterLink';
 
 const Box = styled.div`
     position: relative;
@@ -63,14 +63,12 @@ const BaseBlog = ({ t, posts }: useBlogProps) => {
                 {
                     posts?.length > 0 &&
                     posts.map((post: any) =>
-                        <Link href={`/blog/${post.url}`} key={post.url}>
-                            <a>
-                                <article>
-                                    <Image src="/images/logo_big.png" width="515" height="290" alt={post.title} />
-                                    <h3>{post.title}</h3>
-                                </article>
-                            </a>
-                        </Link>
+                        <BetterLink href={`/blog/${post.url}`} key={post.url}>
+                            <article>
+                                <Image src="/images/logo_big.png" width="515" height="290" alt={post.title} />
+                                <h3>{post.title}</h3>
+                            </article>
+                        </BetterLink>
                     )
                 }
             </Grid>

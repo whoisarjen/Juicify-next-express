@@ -7,21 +7,13 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useCreateExerciseProps } from './useCreateExercise';
-import styled from 'styled-components';
-
-const GridFullWidth = styled.div`
-    display: grid;
-    width: 100%;
-`
 
 const BaseCreateExercise = ({ isOpen, setIsOpen, handleSubmit, onSubmit, errors, t, register, loading }: useCreateExerciseProps) => {
     return (
         <>
-            <GridFullWidth>
-                <Button variant="outlined" onClick={() => setIsOpen(true)} sx={{ margin: 'auto' }}>
-                    {t('Create exercise')}
-                </Button>
-            </GridFullWidth>
+            <Button variant="outlined" onClick={() => setIsOpen(true)} sx={{ margin: 'auto' }}>
+                {t('Create exercise')}
+            </Button>
             <Dialog open={isOpen}>
                 <form style={{ margin: 'auto 0' }} onSubmit={handleSubmit(onSubmit)}>
                     <DialogTitle>{t('Create exercise')}</DialogTitle>

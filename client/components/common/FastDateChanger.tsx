@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styled from 'styled-components'
 import { addDaysToDate, reverseDateDotes } from "../../utils/date.utils";
+import BetterLink from "./betterLink";
 
 const Box = styled.div`
     width: 100%;
@@ -38,11 +38,11 @@ const FastDateChanger = () => {
 
     return (
         <Box>
-            <Link href={`/${router.query.login}/nutrition-diary/${addDaysToDate(today, -2)}`}><a><div>{addDaysToDate(today, -2).slice(8, 10)}</div></a></Link>
-            <Link href={`/${router.query.login}/nutrition-diary/${addDaysToDate(today, -1)}`}><a><div>{addDaysToDate(today, -1).slice(8, 10)}</div></a></Link>
+            <BetterLink href={`/${router.query.login}/nutrition-diary/${addDaysToDate(today, -2)}`}><div>{addDaysToDate(today, -2).slice(8, 10)}</div></BetterLink>
+            <BetterLink href={`/${router.query.login}/nutrition-diary/${addDaysToDate(today, -1)}`}><div>{addDaysToDate(today, -1).slice(8, 10)}</div></BetterLink>
             <div>{reverseDateDotes(today)}</div>
-            <Link href={`/${router.query.login}/nutrition-diary/${addDaysToDate(today, 1)}`}><a><div>{addDaysToDate(today, 1).slice(8, 10)}</div></a></Link>
-            <Link href={`/${router.query.login}/nutrition-diary/${addDaysToDate(today, 2)}`}><a><div>{addDaysToDate(today, 2).slice(8, 10)}</div></a></Link>
+            <BetterLink href={`/${router.query.login}/nutrition-diary/${addDaysToDate(today, 1)}`}><div>{addDaysToDate(today, 1).slice(8, 10)}</div></BetterLink>
+            <BetterLink href={`/${router.query.login}/nutrition-diary/${addDaysToDate(today, 2)}`}><div>{addDaysToDate(today, 2).slice(8, 10)}</div></BetterLink>
         </Box>
     )
 }

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import useTranslation from "next-translate/useTranslation";
 import LoginIcon from "@mui/icons-material/Login";
 import SchoolIcon from '@mui/icons-material/School';
@@ -15,6 +14,7 @@ import { useRouter } from "next/router";
 import Button from '@mui/material/Button';
 import styled from 'styled-components'
 import Logo from "../common/Logo";
+import BetterLink from "../common/betterLink";
 
 const Box = styled.nav`
     width: 100%;
@@ -86,117 +86,91 @@ const Navbar = ({ token }: { token: any }) => {
                         <SearchBox />
                     </Li_web>
                     <Li_web>
-                        <Link passHref href="/blog">
-                            <a>
-                                <Button startIcon={<SchoolIcon />}>
-                                    {t('Blog')}
-                                </Button>
-                            </a>
-                        </Link>
+                        <BetterLink href="/blog">
+                            <Button startIcon={<SchoolIcon />}>
+                                {t('Blog')}
+                            </Button>
+                        </BetterLink>
                         {
                             token
                                 ?
                                 <>
-                                    <Link passHref href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
-                                        <a>
-                                            <Button startIcon={<BookIcon />}>
-                                                {t('Diary')}
-                                            </Button>
-                                        </a>
-                                    </Link>
-                                    <Link passHref href="/settings">
-                                        <a>
-                                            <Button startIcon={<Settings />}>
-                                                {t('Settings')}
-                                            </Button>
-                                        </a>
-                                    </Link>
+                                    <BetterLink href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
+                                        <Button startIcon={<BookIcon />}>
+                                            {t('Diary')}
+                                        </Button>
+                                    </BetterLink>
+                                    <BetterLink href="/settings">
+                                        <Button startIcon={<Settings />}>
+                                            {t('Settings')}
+                                        </Button>
+                                    </BetterLink>
                                 </>
                                 :
                                 <>
-                                    <Link passHref href="/login">
-                                        <a>
-                                            <Button startIcon={<BookIcon />}>
-                                                {t('Diary')}
-                                            </Button>
-                                        </a>
-                                    </Link>
-                                    <Link passHref href="/login">
-                                        <a>
-                                            <Button startIcon={<LoginIcon />}>
-                                                {t('Login')}
-                                            </Button>
-                                        </a>
-                                    </Link>
+                                    <BetterLink href="/login">
+                                        <Button startIcon={<BookIcon />}>
+                                            {t('Diary')}
+                                        </Button>
+                                    </BetterLink>
+                                    <BetterLink href="/login">
+                                        <Button startIcon={<LoginIcon />}>
+                                            {t('Login')}
+                                        </Button>
+                                    </BetterLink>
                                 </>
                         }
-                        <Link passHref href={`${router.asPath}`}>
-                            <a onClick={toggleDarkMode}>
-                                <IconButton color="primary" aria-label="Dark / light mode">
-                                    {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-                                </IconButton>
-                            </a>
-                        </Link>
+                        <BetterLink href={`${router.asPath}`}>
+                            <IconButton color="primary" aria-label="Dark / light mode" onClick={toggleDarkMode}>
+                                {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+                            </IconButton>
+                        </BetterLink>
                     </Li_web>
                     <Li_mobile>
-                        <Link passHref href="/search">
-                            <a>
-                                <IconButton color="primary" aria-label="search">
-                                    <SearchIcon />
-                                </IconButton>
-                            </a>
-                        </Link>
-                        <Link passHref href="/blog">
-                            <a>
-                                <IconButton color="primary" aria-label={t('Blog')}>
-                                    <SchoolIcon />
-                                </IconButton>
-                            </a>
-                        </Link>
+                        <BetterLink href="/search">
+                            <IconButton color="primary" aria-label="search">
+                                <SearchIcon />
+                            </IconButton>
+                        </BetterLink>
+                        <BetterLink href="/blog">
+                            <IconButton color="primary" aria-label={t('Blog')}>
+                                <SchoolIcon />
+                            </IconButton>
+                        </BetterLink>
                         {
                             token
                                 ?
                                 <>
-                                    <Link passHref href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
-                                        <a>
-                                            <IconButton color="primary" aria-label={t('Diary')}>
-                                                <BookIcon />
-                                            </IconButton>
-                                        </a>
-                                    </Link>
-                                    <Link passHref href="/settings">
-                                        <a>
-                                            <IconButton color="primary" aria-label={t('Settings')}>
-                                                <Settings />
-                                            </IconButton>
-                                        </a>
-                                    </Link>
+                                    <BetterLink href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
+                                        <IconButton color="primary" aria-label={t('Diary')}>
+                                            <BookIcon />
+                                        </IconButton>
+                                    </BetterLink>
+                                    <BetterLink href="/settings">
+                                        <IconButton color="primary" aria-label={t('Settings')}>
+                                            <Settings />
+                                        </IconButton>
+                                    </BetterLink>
                                 </>
                                 :
                                 <>
-                                    <Link passHref href="/login">
-                                        <a>
-                                            <IconButton color="primary" aria-label={t('Diary')}>
-                                                <BookIcon />
-                                            </IconButton>
-                                        </a>
-                                    </Link>
-                                    <Link passHref href="/login">
-                                        <a>
-                                            <IconButton color="primary" aria-label={t('Login')}>
-                                                <LoginIcon />
-                                            </IconButton>
-                                        </a>
-                                    </Link>
+                                    <BetterLink href="/login">
+                                        <IconButton color="primary" aria-label={t('Diary')}>
+                                            <BookIcon />
+                                        </IconButton>
+                                    </BetterLink>
+                                    <BetterLink href="/login">
+                                        <IconButton color="primary" aria-label={t('Login')}>
+                                            <LoginIcon />
+                                        </IconButton>
+                                    </BetterLink>
                                 </>
                         }
-                        <Link passHref href={`${router.asPath}`}>
-                            <a onClick={toggleDarkMode}>
-                                <IconButton color="primary" aria-label="Dark / light mode">
-                                    {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-                                </IconButton>
-                            </a>
-                        </Link>
+                        <BetterLink href={`${router.asPath}`}>
+                            <IconButton color="primary" aria-label="Dark / light mode" onClick={toggleDarkMode}>
+                                {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+                            </IconButton>
+                        </BetterLink>
                     </Li_mobile>
                 </Ul>
             </Box>

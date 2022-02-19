@@ -3,9 +3,9 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import BookIcon from "@mui/icons-material/Book";
 import { getShortDate } from "../../utils/date.utils";
-import Link from "next/link";
 import Avatar from "../common/avatar";
 import styled from 'styled-components'
+import BetterLink from "../common/betterLink";
 
 const Box = styled.footer`
     width: 100%;
@@ -27,12 +27,6 @@ const Menu = styled.nav`
     background: var(--theme-background);
 `
 
-const A = styled.a`
-    margin: auto;
-    display: grid;
-    cursor: pointer;
-`
-
 const Copyright = styled.p`
     margin: 0;
 `
@@ -44,31 +38,21 @@ const Footer = ({ token }: { token: any }) => {
                 token
                     ?
                     <Menu>
-                        <Link passHref href="/coach/">
-                            <A>
-                                <EmojiEventsIcon color="primary" />
-                            </A>
-                        </Link>
-                        <Link passHref href={`/${token.login}/workout`}>
-                            <A>
-                                <FitnessCenterIcon color="primary" />
-                            </A>
-                        </Link>
-                        <Link passHref href="/barcode">
-                            <A>
-                                <PhotoCameraIcon color="primary" />
-                            </A>
-                        </Link>
-                        <Link passHref href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
-                            <A>
-                                <BookIcon color="primary" />
-                            </A>
-                        </Link>
-                        <Link passHref href={`/${token.login}`}>
-                            <A>
-                                <Avatar user={token} size="28px" />
-                            </A>
-                        </Link>
+                        <BetterLink style={{ margin: 'auto', display: 'grid' }} href="/coach/">
+                            <EmojiEventsIcon color="primary" />
+                        </BetterLink>
+                        <BetterLink style={{ margin: 'auto', display: 'grid' }} href={`/${token.login}/workout`}>
+                            <FitnessCenterIcon color="primary" />
+                        </BetterLink>
+                        <BetterLink style={{ margin: 'auto', display: 'grid' }} href="/barcode">
+                            <PhotoCameraIcon color="primary" />
+                        </BetterLink>
+                        <BetterLink style={{ margin: 'auto', display: 'grid' }} href={`/${token.login}/nutrition-diary/${getShortDate()}`}>
+                            <BookIcon color="primary" />
+                        </BetterLink>
+                        <BetterLink style={{ margin: 'auto', display: 'grid' }} href={`/${token.login}`}>
+                            <Avatar user={token} size="28px" />
+                        </BetterLink>
                     </Menu>
                     :
                     <Copyright>©2022 Juicify.app</Copyright>

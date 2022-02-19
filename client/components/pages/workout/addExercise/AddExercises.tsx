@@ -5,7 +5,7 @@ import SlideUp from '../../../transition/SlideUp';
 import { useAddExercisesProps } from './useAddExercises';
 import AddExercisesBox from './box';
 import ButtonPlus from '../../../common/ButtonPlus';
-import BottomFlyingButton from '../../../common/buttons/submitItems';
+import ButtonSubmitItems from '../../../common/buttons/submitItems';
 import AddItemsTabs from '../../../common/tabs';
 import CreateExercise from './createExercise';
 import Autocomplete from '../../../common/Autocomplete';
@@ -60,7 +60,7 @@ const BaseAddExercises = ({ children, isDialog, setIsDialog, find, setFind, load
 
                     <CreateExercise nameOfCreatedExercise={(name: string) => name == find ? setFind(null) : setFind(name)} />
 
-                    <BottomFlyingButton showNumberValue={checked.length} clicked={addExercisesToWorkoutPlan} />
+                    <ButtonSubmitItems showNumberValue={checked.length} clicked={addExercisesToWorkoutPlan} />
 
                     <ButtonCloseDialog clicked={() => setIsDialog(false)} />
                 </DialogContent>

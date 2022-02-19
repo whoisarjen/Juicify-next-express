@@ -1,9 +1,9 @@
-import Link from 'next/link'
 import NoteAltIcon from '@mui/icons-material/NoteAlt'
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
 import { reverseDateDotes } from '../../../../utils/date.utils';
 import styled from 'styled-components'
 import { useWorkoutBoxProps } from './useWorkoutBox';
+import BetterLink from '../../../common/betterLink';
 
 const Grid = styled.div`
     min-height: 140px;
@@ -44,37 +44,27 @@ const NotSavedText = styled.div`
 
 const BaseWorkoutBox = ({ title = '', description = '', route, type, isNotSaved, whenAdded, getTheme, t }: useWorkoutBoxProps) => {
     return (
-        <Link href={route}>
-            <a>
-                <Grid style={{ background: isNotSaved ? 'red' : getTheme('PRIMARY') }}>
-                    <Text>
-                        <h2>{title}</h2>
-                        <div>{description}</div>
-                    </Text>
-                    <Icon>
-                        {
-                            type === 0
-                                ?
-                                <FitnessCenterIcon />
-                                :
-                                <NoteAltIcon />
-                        }
-                    </Icon>
+        <BetterLink href={route}>
+            <Grid style={{ background: isNotSaved ? 'red' : getTheme('PRIMARY') }}>
+                <Text>
+                    <h2>{title}</h2>
+                    <div>{description}</div>
+                </Text>
+                <Icon>
                     {
-                        whenAdded &&
-                        <NotSavedText>
-                            {reverseDateDotes(whenAdded)}
-                        </NotSavedText>
+                        type === 0
+                            ?
+                            <FitnessCenterIcon />
+                            :
+                            <NoteAltIcon />
                     }
-                    {
-                        isNotSaved &&
-                        <NotSavedText>
-                            {t('Not saved')}
-                        </NotSavedText>
-                    }
-                </Grid>
-            </a>
-        </Link>
+                </Icon>
+
+                {whenAdded && <NotSavedText>{reverseDateDotes(whenAdded)}</NotSavedText>}
+                
+                {isNotSaved && <NotSavedText>{t('Notsaved')}</NotSavedText>}
+            </Grid>
+        </BetterLink>
     )
 }
 
