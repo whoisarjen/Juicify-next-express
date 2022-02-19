@@ -1,3 +1,4 @@
+import useTranslation from "next-translate/useTranslation"
 import { useRouter } from "next/router"
 import { useState, useEffect } from "react"
 import useWorkoutPlans from "../../../../../hooks/useWorkoutPlans"
@@ -6,6 +7,7 @@ import { getShortDate } from "../../../../../utils/date.utils"
 import { addIndexedDB } from "../../../../../utils/indexedDB.utils"
 
 const useCreateWorkoutResult = () => {
+    const { t } = useTranslation('workout')
     const router = useRouter()
     const { data } = useWorkoutPlans()
     const [open, setOpen] = useState(false)
@@ -47,7 +49,7 @@ const useCreateWorkoutResult = () => {
         }
     }, [data])
 
-    return { open, setOpen, data, setWhenAdded, workoutPlanID, setWorkoutPlanID, createWorkoutResult }
+    return { open, setOpen, data, setWhenAdded, workoutPlanID, setWorkoutPlanID, createWorkoutResult, t }
 }
 
 export type useCreateWorkoutResultprops = ReturnType<typeof useCreateWorkoutResult>

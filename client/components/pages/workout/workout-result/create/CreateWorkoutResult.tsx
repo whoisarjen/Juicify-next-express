@@ -16,7 +16,7 @@ import { getShortDate } from '../../../../../utils/date.utils'
 import { WorkoutPlanSchemaProps } from '../../../../../schema/workoutPlan.schema'
 import { useCreateWorkoutResultprops } from './useCreateWorkoutResult'
 
-const BaseCreateWorkoutResult = ({ open, setOpen, data, setWhenAdded, workoutPlanID, setWorkoutPlanID, createWorkoutResult }: useCreateWorkoutResultprops) => {
+const BaseCreateWorkoutResult = ({ open, setOpen, data, setWhenAdded, workoutPlanID, setWorkoutPlanID, createWorkoutResult, t }: useCreateWorkoutResultprops) => {
 
     if (!data || data.length == 0) {
         return <></>
@@ -26,14 +26,12 @@ const BaseCreateWorkoutResult = ({ open, setOpen, data, setWhenAdded, workoutPla
         <div>
             <ButtonPlus click={() => setOpen(true)} />
             <Dialog open={open} onClose={() => setOpen(false)}>
-                <DialogTitle>Create result</DialogTitle>
+                <DialogTitle>{t('CREATE_RESULT')}</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
-                        Choose workout plan for which you want to create result.
-                    </DialogContentText>
+                    <DialogContentText sx={{ marginBottom: '12px' }}>{t('CREATE_RESULT_DESCRIPTION')}</DialogContentText>
                     <DatePicker change={(value) => setWhenAdded(value)} defaultDate={new Date(getShortDate())} />
                     <FormControl fullWidth sx={{ marginTop: '12px' }}>
-                        <InputLabel id="demo-simple-select-label">Workout plan</InputLabel>
+                        <InputLabel id="demo-simple-select-label">{t('Workout plan')}</InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
@@ -42,7 +40,7 @@ const BaseCreateWorkoutResult = ({ open, setOpen, data, setWhenAdded, workoutPla
                             onChange={(event) => setWorkoutPlanID(event.target.value)}
                         >
                             {
-                                data?.length > 0 && data.map((plan: WorkoutPlanSchemaProps) =>
+                                data?.map((plan: WorkoutPlanSchemaProps) =>
                                     <MenuItem value={plan._id} key={plan._id}>{plan.title}</MenuItem>
                                 )
                             }
@@ -50,8 +48,8 @@ const BaseCreateWorkoutResult = ({ open, setOpen, data, setWhenAdded, workoutPla
                     </FormControl>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => setOpen(false)}>Deny</Button>
-                    <Button onClick={createWorkoutResult}>Confirm</Button>
+                    <Button onClick={() => setOpen(false)}>{t('Cancel')}</Button>
+                    <Button onClick={createWorkoutResult}>{t('Submit')}</Button>
                 </DialogActions>
             </Dialog>
         </div>

@@ -46,10 +46,12 @@ const BaseWorkoutBox = ({ title = '', description = '', route, type, isNotSaved,
     return (
         <BetterLink href={route}>
             <Grid style={{ background: isNotSaved ? 'red' : getTheme('PRIMARY') }}>
+                
                 <Text>
                     <h2>{title}</h2>
                     <div>{description}</div>
                 </Text>
+
                 <Icon>
                     {
                         type === 0

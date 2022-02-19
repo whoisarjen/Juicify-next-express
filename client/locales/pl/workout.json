@@ -24,5 +24,7 @@
     "Name of exercise": "Nazwa ćwiczenia",
     "NAME_OF_WORKOUT": "Nazwa treningu",
     "DESCRIPTION": "Opis",
-    "BURNT_CALORIES": "Spalone kalorie"
+    "BURNT_CALORIES": "Spalone kalorie",
+    "CREATE_RESULT": "Stwórz rezultat",
+    "CREATE_RESULT_DESCRIPTION": "Wybierz plan treningowy, dla którego chcesz stworzyć rezultat"
 }
