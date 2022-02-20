@@ -21,7 +21,7 @@ import { insertThoseIDStoDBController } from "../../../utils/db.utils";
 import styled from 'styled-components'
 import { DailyMeasurementSchemaProps } from "../../../schema/dailyMeasurement.schema";
 import SlideUp from "../../transition/SlideUp";
-import ButtonCloseDialog from "../buttons/closeDialog";
+import ButtonCloseDialog from "../button-close-dialog";
 
 interface AddWeightProps {
     children: any,

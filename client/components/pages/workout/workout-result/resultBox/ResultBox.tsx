@@ -1,4 +1,3 @@
-import ButtonPlus from '../../../../common/buttons/plus'
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ValueSchemaProps } from '../../../../../schema/workoutResult.schema'
@@ -6,6 +5,7 @@ import styled from 'styled-components';
 import { useResultBoxProps } from './useResultBox';
 import ValueBox from '../valueBox';
 import ConfirmDialog from '../../../../common/confirmDialog';
+import ButtonPlus from '../../../../common/button-plus';
 
 const Name = styled.div`
     min-height: 36px;

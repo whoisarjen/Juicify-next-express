@@ -1,4 +1,4 @@
-import { setupComponent } from "../../../../test-utils/setupComponent.test.utils";
+import { setupComponent } from "../../../test-utils/setupComponent.test.utils";
 import { screen } from '@testing-library/react'
 import userEvent from "@testing-library/user-event";
 import BaseShare from "./ShareButton";

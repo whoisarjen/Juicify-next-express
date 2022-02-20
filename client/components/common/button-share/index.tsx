@@ -1,4 +1,4 @@
-import useNavigator from '../../../../hooks/useNavigator';
+import useNavigator from '../../../hooks/useNavigator';
 import BaseShare from './ShareButton';
 
 const ShareButton = () => {

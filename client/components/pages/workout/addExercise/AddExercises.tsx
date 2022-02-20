@@ -4,12 +4,12 @@ import styled from 'styled-components'
 import SlideUp from '../../../transition/SlideUp';
 import { useAddExercisesProps } from './useAddExercises';
 import AddExercisesBox from './box';
-import ButtonPlus from '../../../common/buttons/plus';
-import ButtonSubmitItems from '../../../common/buttons/submitItems';
+import ButtonSubmitItems from '../../../common/button-only-with-number';
 import AddItemsTabs from '../../../common/tabs';
 import CreateExercise from './createExercise';
 import Autocomplete from '../../../common/autocomplete';
-import ButtonCloseDialog from '../../../common/buttons/closeDialog';
+import ButtonCloseDialog from '../../../common/button-close-dialog';
+import ButtonPlus from '../../../common/button-plus';
 
 const DialogContent = styled.div`
     width: 100%;
@@ -60,7 +60,7 @@ const BaseAddExercises = ({ children, isDialog, setIsDialog, find, setFind, load
 
                     <CreateExercise nameOfCreatedExercise={(name: string) => name == find ? setFind(null) : setFind(name)} />
 
-                    <ButtonSubmitItems showNumberValue={checked.length} clicked={addExercisesToWorkoutPlan} />
+                    <ButtonSubmitItems showNumber={checked.length} clicked={addExercisesToWorkoutPlan} />
 
                     <ButtonCloseDialog clicked={() => setIsDialog(false)} />
                 </DialogContent>

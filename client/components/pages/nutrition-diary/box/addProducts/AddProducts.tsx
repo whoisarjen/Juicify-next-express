@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -8,7 +8,7 @@ import AddProductsBox from './box';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import CreateProduct from './create';
-import BottomFlyingButton from '../../../../common/buttons/submitItems';
+import BottomFlyingButton from '../../../../common/button-only-with-number';
 import AddProductMoreInformation from './informations';
 import { ProductSchemaProps } from '../../../../../schema/product.schema';
 import styled from 'styled-components'
@@ -130,7 +130,7 @@ const BaseAddProducts = ({ children, isDialog, setIsDialog, t, dailyMeasurement,
                         isCreateProduct={isCreateProduct}
                         closeCreateProduct={() => setIsCreateProduct(false)}
                     />
-                    <BottomFlyingButton clicked={addProductsToDiary} showNumberValue={checked.length} />
+                    <BottomFlyingButton clicked={addProductsToDiary} showNumber={checked.length} />
                     <Placeholder />
                     <Close onClick={() => setIsDialog(false)}>
                         <Button variant="contained">

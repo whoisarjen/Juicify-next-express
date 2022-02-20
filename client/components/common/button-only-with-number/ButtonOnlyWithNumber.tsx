@@ -1,4 +1,4 @@
-import { useButtonSubmitItemsProps } from "./useButtonSubmitItems";
+import { useButtonOnlyWithNumberProps } from "./useButtonOnlyWithNumber";
 import LoadingButton from '@mui/lab/LoadingButton';
 import styled from 'styled-components'
 
@@ -17,9 +17,9 @@ const Placeholder = styled.div`
     height: 44px;
 `
 
-const BaseButtonSubmitItems = ({ clicked, showNumberValue, t }: useButtonSubmitItemsProps) => {
+const BaseButtonOnlyWithNumber = ({ clicked, text = 'Submit', showNumber, t }: useButtonOnlyWithNumberProps) => {
 
-    if (!showNumberValue) {
+    if (!showNumber) {
         return <></>
     }
 
@@ -32,11 +32,11 @@ const BaseButtonSubmitItems = ({ clicked, showNumberValue, t }: useButtonSubmitI
                     variant="contained"
                     type="submit"
                 >
-                    {t('Submit')}{showNumberValue > 0 && ` (${showNumberValue})`}
+                    {t(text)}{showNumber > 0 && ` (${showNumber})`}
                 </LoadingButton>
             </Button>
         </>
     )
 }
 
-export default BaseButtonSubmitItems;
+export default BaseButtonOnlyWithNumber;
