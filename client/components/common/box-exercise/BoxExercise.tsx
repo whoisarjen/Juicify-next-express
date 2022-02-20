@@ -1,6 +1,6 @@
 import Checkbox from '@mui/material/Checkbox';
 import styled from 'styled-components';
-import { useAddExercisesBoxProps } from './useAddExerciseBox';
+import { useBoxExerciseProps } from './useBoxExercise';
 
 const Box = styled.div`
     display: grid;
@@ -22,7 +22,7 @@ const Name = styled.div`
     font-weight: bold;
 `
 
-const BaseAddExercisesBox = ({ exercise, checked, handleCheck, getTheme }: useAddExercisesBoxProps) => {
+const BaseBoxExercise = ({ exercise, checked, handleCheck, getTheme }: useBoxExerciseProps) => {
     return (
         <Box>
             <Name style={{ color: getTheme('PRIMARY') }}>
@@ -40,4 +40,4 @@ const BaseAddExercisesBox = ({ exercise, checked, handleCheck, getTheme }: useAd
     );
 }
 
-export default BaseAddExercisesBox;
+export default BaseBoxExercise;

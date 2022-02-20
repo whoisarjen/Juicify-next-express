@@ -1,4 +1,4 @@
-import { setupComponent } from "../../../../test-utils/setupComponent.test.utils"
+import { setupComponent } from "../../../test-utils/setupComponent.test.utils"
 import BaseCreateExercise from "./CreateExercise"
 import useCreateExercise from "./useCreateExercise"
 import { screen, waitFor } from '@testing-library/react'

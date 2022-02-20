@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react"
-import { AddExercisesBoxProps } from "."
-import { useTheme } from "../../../../hooks/useTheme"
-import { deleteIndexedDB, addIndexedDB, getIndexedDBbyID } from "../../../../utils/indexedDB.utils"
+import { BoxExerciseProps } from "."
+import { useTheme } from "../../../hooks/useTheme"
+import { deleteIndexedDB, addIndexedDB, getIndexedDBbyID } from "../../../utils/indexedDB.utils"
 
-const useAddExercisesBox = ({ exercise, refreshCheckedExercises }: AddExercisesBoxProps) => {
+const useBoxExercise = ({ exercise, refreshCheckedExercises }: BoxExerciseProps) => {
     const [checked, setChecked] = useState(false)
     const { getTheme } = useTheme()
 
@@ -30,6 +30,6 @@ const useAddExercisesBox = ({ exercise, refreshCheckedExercises }: AddExercisesB
     return { exercise, checked, handleCheck, getTheme }
 }
 
-export type useAddExercisesBoxProps = ReturnType<typeof useAddExercisesBox>
+export type useBoxExerciseProps = ReturnType<typeof useBoxExercise>
 
-export default useAddExercisesBox;
+export default useBoxExercise;

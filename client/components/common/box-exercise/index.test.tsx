@@ -1,4 +1,4 @@
-import BaseAddExercisesBox from "./AddExercisesBox";
+import BaseBoxExercise from "./BoxExercise";
 import { render, screen } from '@testing-library/react'
 import userEvent from "@testing-library/user-event";
 require("fake-indexeddb/auto");
@@ -16,7 +16,7 @@ const Component = () => {
     
     handleCheckSpy = jest.spyOn(props, 'handleCheck')
 
-    return <BaseAddExercisesBox {...props} />
+    return <BaseBoxExercise {...props} />
 }
 
 describe('Checking Workout AddExercisesBox', () => {

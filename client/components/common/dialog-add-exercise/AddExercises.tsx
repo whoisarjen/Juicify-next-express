@@ -3,10 +3,10 @@ import { ExerciseSchemaProps } from '../../../schema/exercise.schema';
 import styled from 'styled-components'
 import SlideUp from '../../transition/SlideUp';
 import { useAddExercisesProps } from './useAddExercises';
-import AddExercisesBox from './box';
+import BoxExercise from '../box-exercise';
 import ButtonSubmitItems from '../button-submit-items';
 import AddItemsTabs from '../tabs-items';
-import CreateExercise from './createExercise';
+import CreateExercise from '../dialog-create-exercise';
 import Autocomplete from '../input-autocomplete';
 import ButtonCloseDialog from '../button-close-dialog';
 import ButtonPlusIcon from '../button-plus-icon';
@@ -49,7 +49,7 @@ const BaseAddExercises = ({ children, isDialog, setIsDialog, find, setFind, load
 
                     {
                         items?.map((item: ExerciseSchemaProps) =>
-                            <AddExercisesBox refreshCheckedExercises={() => setRefreshChecked(refreshChecked + 1)} exercise={item} key={item._id} />
+                            <BoxExercise refreshCheckedExercises={() => setRefreshChecked(refreshChecked + 1)} exercise={item} key={item._id} />
                         )
                     }
 

@@ -3,9 +3,9 @@ import useTranslation from "next-translate/useTranslation"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { CreateExerciseProps } from "."
-import { useNotify } from "../../../../hooks/useNotify"
-import { ExerciseSchemaProps, ExerciseSchema } from "../../../../schema/exercise.schema"
-import { insertThoseIDStoDB } from "../../../../utils/db.utils"
+import { useNotify } from "../../../hooks/useNotify"
+import { ExerciseSchemaProps, ExerciseSchema } from "../../../schema/exercise.schema"
+import { insertThoseIDStoDB } from "../../../utils/db.utils"
 
 const useCreateExercise = ({ nameOfCreatedExercise }: CreateExerciseProps) => {
     const { t } = useTranslation('workout')
