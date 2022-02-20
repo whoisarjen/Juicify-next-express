@@ -4,16 +4,17 @@ import TextField from '@mui/material/TextField'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import MobileDatePicker from '@mui/lab/MobileDatePicker'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import useTranslation from 'next-translate/useTranslation'
 
 interface DatePickerMobileProps {
     change: (arg0: any) => void,
     defaultDate: Date,
-    label?: string,
     marginBottom?: string | number,
     minDate?: Date
 }
 
-const DatePickerMobile = ({ change, defaultDate, label = "Pick date", marginBottom = 0, minDate }: DatePickerMobileProps) => {
+const DatePickerMobile = ({ change, defaultDate, marginBottom = 0, minDate }: DatePickerMobileProps) => {
+    const { t } = useTranslation('home')
     const [value, setValue] = useState<Date>(defaultDate)
 
     const handleChange = (newValue: any) => {
@@ -25,7 +26,7 @@ const DatePickerMobile = ({ change, defaultDate, label = "Pick date", marginBott
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Stack spacing={3} sx={{ marginBottom: marginBottom }}>
                 <MobileDatePicker
-                    label={label}
+                    label={t('PICK_DATE')}
                     value={value}
                     onChange={handleChange}
                     renderInput={(params) => <TextField {...params} />}

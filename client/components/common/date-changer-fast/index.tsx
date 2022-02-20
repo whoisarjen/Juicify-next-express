@@ -30,7 +30,7 @@ const Box = styled.div`
     }
 `
 
-const FastDateChanger = ({ where = 'nutrition-diary' }: { where?: string }) => {
+const DateChangerFast = ({ where = 'nutrition-diary' }: { where?: string }) => {
     const router: any = useRouter()
     const [today, setToday] = useState(new Date())
 
@@ -47,4 +47,4 @@ const FastDateChanger = ({ where = 'nutrition-diary' }: { where?: string }) => {
     )
 }
 
-export default FastDateChanger;
+export default DateChangerFast;
