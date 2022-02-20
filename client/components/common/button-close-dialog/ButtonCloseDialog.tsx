@@ -23,7 +23,7 @@ const BaseButtonCloseDialog = ({ clicked, t }: useButtonCloseDialogProps) => {
     return (
         <>
             <CloseButtonPlaceholder />
-            <Close onClick={clicked}>
+            <Close onClick={clicked} data-testid="BaseButtonCloseDialog">
                 <Button variant="contained">
                     {t('Close')}
                 </Button>

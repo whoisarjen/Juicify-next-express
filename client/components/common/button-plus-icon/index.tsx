@@ -1,29 +1,15 @@
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
-import styled from 'styled-components'
+import BaseButtonPlusIcon from "./ButtonPlusIcon";
+import useButtonPlusIcon from "./useButtonPlusIcon";
 
-interface ButtonPlusIconProps {
+export interface ButtonPlusIconProps {
     click?: () => void,
     size?: any
 }
 
-const Button = styled.div`
-    width: 100%;
-    display: grid;
-    margin-top: 10px;
-    ${this} button {
-        margin: auto;
-    }
-`
+const ButtonPlusIcon = ({ click, size }: ButtonPlusIconProps) => {
+    const props = useButtonPlusIcon({ click, size })
 
-const ButtonPlusIcon = ({ click, size = 'normal' }: ButtonPlusIconProps) => {
-    return (
-        <Button onClick={click}>
-            <Fab size={size} color="primary" aria-label="add">
-                <AddIcon />
-            </Fab>
-        </Button>
-    );
+    return <BaseButtonPlusIcon {...props} />
 }
 
 export default ButtonPlusIcon;

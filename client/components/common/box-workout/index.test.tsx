@@ -38,8 +38,6 @@ describe('Testing WorkoutBox', () => {
             name: /asdasdasas/i
         })
     })
-
-    it.todo('useWorkoutBox')
 })
 
 export default {};

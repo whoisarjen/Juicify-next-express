@@ -28,6 +28,7 @@ const BaseButtonSubmitItems = ({ clicked, text = 'Submit', showNumber, t }: useB
             <Placeholder />
             <Button>
                 <LoadingButton
+                    data-testid="BaseButtonSubmitItems"
                     onClick={clicked}
                     variant="contained"
                     type="submit"

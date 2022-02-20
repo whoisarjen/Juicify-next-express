@@ -5,7 +5,7 @@ import AddExercises from '../dialog-add-exercise'
 import { useButtonMoreOptionsWorkoutResultProps } from './useButtonMoreOptionsWorkoutResult';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 
-const BaseButtonMoreOptionsWorkoutResult = ({ exercises, setExercises, handleClose, handleOpen, open }: useButtonMoreOptionsWorkoutResultProps) => {
+const BaseButtonMoreOptionsWorkoutResult = ({ exercises, setExercises, open, setOpen }: useButtonMoreOptionsWorkoutResultProps) => {
 
     const actions = [
         {
@@ -17,11 +17,12 @@ const BaseButtonMoreOptionsWorkoutResult = ({ exercises, setExercises, handleClo
 
     return (
         <SpeedDial
+            data-testid="BaseButtonMoreOptionsWorkoutResult"
             ariaLabel="Manage result"
             sx={{ position: 'fixed', bottom: 60, left: 16, }}
             icon={<SpeedDialIcon />}
-            onClose={handleClose}
-            onOpen={handleOpen}
+            onClose={() => setOpen(false)}
+            onOpen={() => setOpen(true)}
             open={open}
         >
             {actions.map((action) => (
