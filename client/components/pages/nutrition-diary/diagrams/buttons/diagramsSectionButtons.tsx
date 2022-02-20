@@ -2,7 +2,7 @@ import Button from '@mui/material/Button';
 import PieChartIcon from '@mui/icons-material/PieChart';
 import styled from "styled-components";
 import { useDiagramsSectionButtonsProps } from "./useDiagramsSectionButtons";
-import AddActivity from '../../../../common/addActivity';
+import AddActivity from './addActivity';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 
 const Box = styled.div`

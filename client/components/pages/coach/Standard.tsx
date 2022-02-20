@@ -88,8 +88,7 @@ const Standard = ({ setStep }: StandardProps) => {
     const { t } = useTranslation('coach')
     const [daysToCoach, setDaysToCoach] = useState(7)
     const token: any = useAppSelector(state => state.token.value)
-    const { data, reload } = useDailyMeasurement(getShortDate(), token.login)
-    const [isWeights, setIsWeights] = useState(false)
+    const { data } = useDailyMeasurement(getShortDate(), token.login)
 
     useEffect(() => {
         if (token) {
@@ -113,10 +112,12 @@ const Standard = ({ setStep }: StandardProps) => {
                         </IconButton>
                         <div>{t('HELP')}</div>
                     </div>
-                    <div onClick={() => setIsWeights(true)}>
-                        <IconButton aria-label="history">
-                            <HistoryIcon color="primary" />
-                        </IconButton>
+                    <div>
+                        <AddWeight>
+                            <IconButton aria-label="history">
+                                <HistoryIcon color="primary" />
+                            </IconButton>
+                        </AddWeight>
                         <div>{t('HISTORY')}</div>
                     </div>
                 </TopButtons>

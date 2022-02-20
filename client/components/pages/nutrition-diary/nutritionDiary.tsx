@@ -11,7 +11,7 @@ import DateChanger from "../../common/dateChangers/classic"
 import NutritionDiaryBoxProduct from "./box/product"
 import { ProductSchemaProps } from "../../../schema/product.schema"
 import { ActivitySchemaProps } from "../../../schema/activity.schema"
-import Share from "../../common/share"
+import Share from "../../common/buttons/share"
 
 const Box = styled.div`
     width: 100%;

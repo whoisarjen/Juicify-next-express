@@ -1,14 +1,14 @@
-import { setupComponent } from "../../../test-utils/setupComponent.test.utils";
+import { setupComponent } from "../../../../test-utils/setupComponent.test.utils";
 import { screen } from '@testing-library/react'
 import userEvent from "@testing-library/user-event";
-import BaseShare from "./Share";
+import BaseShare from "./ShareButton";
 
-let handleShare: any = null;
+let shareLocation: any = null;
 
 const Component = () => {
-    handleShare = jest.fn()
+    shareLocation = jest.fn()
 
-    return <BaseShare handleShare={handleShare} />
+    return <BaseShare shareLocation={shareLocation} />
 }
 
 beforeEach(() => {
@@ -16,12 +16,12 @@ beforeEach(() => {
 })
 
 describe('Testing share', () => {
-    it('expect to fire handleShare', () => {
+    it('expect to fire shareLocation', () => {
         const button = screen.getByTestId('shareButton')
 
         userEvent.click(button)
 
-        expect(handleShare).toBeCalledTimes(1)
+        expect(shareLocation).toBeCalledTimes(1)
     })
 })
 

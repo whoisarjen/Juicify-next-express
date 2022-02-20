@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import SlideUp from '../../../transition/SlideUp';
 import { useAddExercisesProps } from './useAddExercises';
 import AddExercisesBox from './box';
-import ButtonPlus from '../../../common/buttons/buttonPlus';
+import ButtonPlus from '../../../common/buttons/plus';
 import ButtonSubmitItems from '../../../common/buttons/submitItems';
 import AddItemsTabs from '../../../common/tabs';
 import CreateExercise from './createExercise';

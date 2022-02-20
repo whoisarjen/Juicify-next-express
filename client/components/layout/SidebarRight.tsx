@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import { useDailyMeasurement } from "../../hooks/useDailyMeasurement";
-import { useAppSelector } from "../../hooks/useRedux";
 import { getDiffrentBetweenDays, getShortDate, reverseDateDotes } from "../../utils/date.utils";
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -41,8 +40,7 @@ const CircularBox = styled.aside`
 const SidebarRight = ({ token }: { token: any }) => {
     const router = useRouter()
     const { t } = useTranslation('home')
-    const keyDaily = useAppSelector(state => state.key.daily_measurement)
-    const { data, reload } = useDailyMeasurement(getShortDate(), token.login)
+    const { data } = useDailyMeasurement(getShortDate(), token.login)
     const [weight, setWeight] = useState(0)
     const [calories, setCalories] = useState(0)
     const [caloriesGoal, setCaloriesGoal] = useState(0)
@@ -80,8 +78,6 @@ const SidebarRight = ({ token }: { token: any }) => {
             }))
         }
     }, [data, token])
-
-    useEffect(() => reload(), [keyDaily])
 
     return (
         <Box>

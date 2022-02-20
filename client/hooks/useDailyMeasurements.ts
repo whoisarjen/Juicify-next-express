@@ -41,4 +41,4 @@ const useDailyMeasurements = (today: Date | string, howManyDays: number = 7, log
     return { data, user, reload: () => setReload(reload + 1) }
 }
 
-export { useDailyMeasurements, loadMissingDays };
+export { useDailyMeasurements };

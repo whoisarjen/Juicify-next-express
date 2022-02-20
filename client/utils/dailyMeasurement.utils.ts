@@ -6,10 +6,10 @@ interface loadMissingDataForDailyMeasurementProps {
     _id: string,
     user_ID: string,
     whenAdded: string,
-    object: DailyMeasurementSchemaProps
+    object?: any
 }
 
-export const loadMissingDataForDailyMeasurement = ({ _id, user_ID, whenAdded, object }: loadMissingDataForDailyMeasurementProps) => {
+export const loadMissingDataForDailyMeasurement = ({ _id, user_ID, whenAdded, object = {} }: loadMissingDataForDailyMeasurementProps) => {
     return {
         ...(object?._id ? { _id: object._id } : { _id }),
         ...(object?.weight ? { weight: object.weight } : { weight: 0 }),

@@ -7,37 +7,29 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
-import SlideUp from "../../transition/SlideUp";
+import SlideUp from "../../../../../transition/SlideUp";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useTranslation from "next-translate/useTranslation";
 import { useForm } from "react-hook-form";
-import { ActivitySchemaProps, ActivitySchema } from "../../../schema/activity.schema";
-import { insertThoseIDStoDBController } from "../../../utils/db.utils";
-import { useAppDispatch } from "../../../hooks/useRedux";
-import { refreshKey } from "../../../redux/features/key.slice";
+import { ActivitySchemaProps, ActivitySchema } from "../../../../../../schema/activity.schema";
+import { insertThoseIDStoDBController } from "../../../../../../utils/db.utils";
+import { DailyMeasurementSchemaProps } from "../../../../../../schema/dailyMeasurement.schema";
 
-const AddActivity = ({ children, data }: any) => {
+const AddActivity = ({ children, data }: { children: any, data: DailyMeasurementSchemaProps }) => {
     const { t } = useTranslation('nutrition-diary')
-    const [activity, setActivity] = useState('')
-    const [burnt, setBurnt] = useState(0)
-    const [isAddActivity, setIsAddActivity] = useState(false)
-    const dispatch = useAppDispatch()
+    const [isDialog, setIsDialog] = useState(false)
 
-    const addNewActivity = async () => {
-        if (activity || burnt) {
-            let calories = -burnt
-            let object: any = { ...data }
+    const addNewActivity = async (values: ActivitySchemaProps) => {
+        if (values.activity || values.calories) {
+            let object: DailyMeasurementSchemaProps = { ...data }
             object.nutrition_diary.push({
                 _id: 'XD' + new Date().getTime(),
-                ...(activity && { activity }),
-                ...(calories && { calories })
+                ...(values.activity && { activity: values.activity }),
+                ...(values.calories && { calories: -values.calories })
             })
             await insertThoseIDStoDBController('daily_measurement', [object])
-            dispatch(refreshKey('daily_measurement'))
         }
-        setBurnt(0)
-        setActivity('')
-        setIsAddActivity(false)
+        setIsDialog(false)
     }
 
     const { register, formState: { errors }, handleSubmit } = useForm<ActivitySchemaProps>({
@@ -46,12 +38,12 @@ const AddActivity = ({ children, data }: any) => {
 
     return (
         <>
-            <div onClick={() => setIsAddActivity(true)}>{children}</div>
+            <div onClick={() => setIsDialog(true)}>{children}</div>
             <Dialog
-                open={isAddActivity}
+                open={isDialog}
                 TransitionComponent={SlideUp}
                 keepMounted
-                onClose={() => setIsAddActivity(false)}
+                onClose={() => setIsDialog(false)}
                 aria-describedby="alert-dialog-slide-description"
             >
                 <DialogTitle>{t('ADD_BURNT_CALORIES')}</DialogTitle>
@@ -60,17 +52,20 @@ const AddActivity = ({ children, data }: any) => {
                         {t('ADD_BURNT_CALORIES_DESCRIPTION')}
                     </DialogContentText>
                     <TextField
-                        value={activity}
-                        onChange={(e) => setActivity(e.target.value ? e.target.value : '')}
                         id="outlined-basic"
                         label={t('NAME_OF_ACTIVITY')}
                         variant="outlined"
                         fullWidth
                         sx={{ marginTop: '12px' }}
+                        {...register('activity')}
+                        error={typeof errors.activity === 'undefined' ? false : true}
+                        helperText={
+                            errors.activity?.message &&
+                            errors.activity?.message.length &&
+                            errors.activity?.message
+                        }
                     />
                     <TextField
-                        value={burnt}
-                        onChange={(e) => setBurnt(e.target.value ? parseInt(e.target.value) : 0)}
                         id="outlined-basic"
                         label={t('BURNT_CALORIES')}
                         variant="outlined"
@@ -80,11 +75,18 @@ const AddActivity = ({ children, data }: any) => {
                             startAdornment: <InputAdornment position="start">-</InputAdornment>,
                             endAdornment: <InputAdornment position="end">kcal</InputAdornment>,
                         }}
+                        {...register('calories')}
+                        error={typeof errors.calories === 'undefined' ? false : true}
+                        helperText={
+                            errors.calories?.message &&
+                            errors.calories?.message.length &&
+                            errors.calories?.message
+                        }
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => setIsAddActivity(false)}>{t('Deny')}</Button>
-                    <Button onClick={addNewActivity}>{t('Confirm')}</Button>
+                    <Button onClick={() => setIsDialog(false)}>{t('Deny')}</Button>
+                    <Button onClick={handleSubmit(addNewActivity)}>{t('Confirm')}</Button>
                 </DialogActions>
             </Dialog>
         </>

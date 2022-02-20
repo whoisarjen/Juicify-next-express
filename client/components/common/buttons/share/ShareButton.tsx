@@ -1,7 +1,7 @@
 import ShareIcon from '@mui/icons-material/Share';
 import IconButton from '@mui/material/IconButton';
 
-const BaseShare = ({ shareLocation }: { shareLocation: () => void }) => {
+const BaseShareButton = ({ shareLocation }: { shareLocation: () => void }) => {
     return (
         <div style={{ margin: 'auto' }} data-testid="shareButton" onClick={shareLocation}>
             <IconButton>
@@ -11,4 +11,4 @@ const BaseShare = ({ shareLocation }: { shareLocation: () => void }) => {
     )
 }
 
-export default BaseShare;
+export default BaseShareButton;

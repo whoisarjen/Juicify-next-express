@@ -5,11 +5,11 @@ import { ActivitySchema } from './activity.schema'
 
 export const DailyMeasurementSchema = object({
     _id: string(),
-    user_ID: string().optional(),
+    user_ID: string(),
     whenAdded: string(),
-    weight: preprocess((val) => Number(val), number()).optional(),
-    nutrition_diary: array(ProductSchema.or(ActivitySchema)).optional(),
-    workout_result: array(WorkoutResultSchema).optional(),
+    weight: preprocess((val) => Number(val), number()),
+    nutrition_diary: array(ProductSchema.or(ActivitySchema)),
+    workout_result: array(WorkoutResultSchema),
 })
 
 export type DailyMeasurementSchemaProps = TypeOf<typeof DailyMeasurementSchema>

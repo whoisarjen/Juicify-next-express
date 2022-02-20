@@ -42,7 +42,7 @@ const Description = styled.div`
 const CheckingWeekData = ({ setStep }: ChooseDietProps) => {
     const { t } = useTranslation('coach')
     const token: any = useAppSelector(state => state.token.value)
-    const { data, reload } = useDailyMeasurements(getShortDate(), 15, token.login)
+    const { data } = useDailyMeasurements(getShortDate(), 15, token.login)
     const [allowNextStep, setAllowNextStep] = useState(false)
 
     useEffect(() => {
