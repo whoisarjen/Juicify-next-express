@@ -1,8 +1,8 @@
 import useTranslation from "next-translate/useTranslation";
 import { useState } from "react";
-import { AddItemsTabsProps } from ".";
+import { TabsItemsProps } from ".";
 
-const useAddItemsTabs = ({ changeTab, checkedLength = 0 }: AddItemsTabsProps) => {
+const useTabsItems = ({ changeTab, checkedLength = 0 }: TabsItemsProps) => {
     const [tab, setTab] = useState(0)
     const { t } = useTranslation('home');
 
@@ -15,6 +15,6 @@ const useAddItemsTabs = ({ changeTab, checkedLength = 0 }: AddItemsTabsProps) =>
     return { changedTab, checkedLength, t, tab }
 }
 
-export type useAddItemsTabsProps = ReturnType<typeof useAddItemsTabs>
+export type useTabsItemsProps = ReturnType<typeof useTabsItems>
 
-export default useAddItemsTabs;
+export default useTabsItems;

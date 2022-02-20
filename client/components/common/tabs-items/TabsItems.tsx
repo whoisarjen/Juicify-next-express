@@ -1,8 +1,8 @@
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import { useAddItemsTabsProps } from './useAddItemsTabs';
+import { useTabsItemsProps } from './useTabsItems';
 
-const BaseAddItemsTabs = ({ changedTab, checkedLength, t, tab }: useAddItemsTabsProps) => {
+const BaseTabsItems = ({ changedTab, checkedLength, t, tab }: useTabsItemsProps) => {
     return (
         <Tabs
             data-testid="tabs"
@@ -20,4 +20,4 @@ const BaseAddItemsTabs = ({ changedTab, checkedLength, t, tab }: useAddItemsTabs
     )
 }
 
-export default BaseAddItemsTabs;
+export default BaseTabsItems;

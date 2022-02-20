@@ -1,6 +1,6 @@
 import { setupComponent } from "../../../test-utils/setupComponent.test.utils";
-import BaseAddExercisesTabs from "./AddItemsTabs";
-import useAddExercisesTabs from "./useAddItemsTabs";
+import BaseAddExercisesTabs from "./TabsItems";
+import useAddExercisesTabs from "./useTabsItems";
 import { screen } from '@testing-library/react'
 import userEvent from "@testing-library/user-event";
 
