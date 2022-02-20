@@ -1,7 +1,7 @@
-import { getUser } from "../../../../test-utils/fakeDate.test.utils";
-import { setupComponent } from "../../../../test-utils/setupComponent.test.utils";
-import BaseProfileNavbar from "./ProfileNavbar";
-import useProfileNavbar from "./useProfileNavbar";
+import { getUser } from "../../../test-utils/fakeDate.test.utils";
+import { setupComponent } from "../../../test-utils/setupComponent.test.utils";
+import BaseProfileNavbar from "./NavbarProfile";
+import useProfileNavbar from "./useNavbarProfile";
 import { screen } from '@testing-library/react'
 
 let fakeUser: any = null;

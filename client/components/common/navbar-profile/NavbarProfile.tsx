@@ -4,11 +4,11 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkIcon from '@mui/icons-material/Link';
-import TabsMenu from '../tabs'
-import Avatar from '../../../common/avatar';
-import Share from "../../../common/button-share";
+import TabsMenu from '../tabs-profile'
+import Avatar from '../avatar';
+import Share from "../button-share";
 import styled from 'styled-components'
-import { useProfileNavbarProps } from './useProfileNavbar';
+import { useNavbarProfileProps } from './useNavbarProfile';
 
 const Box = styled.div`
     width: 100%;
@@ -41,7 +41,7 @@ const Content = styled.div`
     }
 `
 
-const BaseProfileNavbar = ({ user, tab, token, router }: useProfileNavbarProps) => {
+const BaseNavbarProfile = ({ user, tab, token, router }: useNavbarProfileProps) => {
     return (
         <>
             {
@@ -106,4 +106,4 @@ const BaseProfileNavbar = ({ user, tab, token, router }: useProfileNavbarProps) 
     )
 }
 
-export default BaseProfileNavbar;
+export default BaseNavbarProfile;

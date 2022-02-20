@@ -4,7 +4,7 @@ import LoadingButton from '@mui/lab/LoadingButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 import styled from 'styled-components'
-import { useWorkoutNavbarProps } from "./useWorkoutNavbar";
+import { useNavbarWorkoutProps } from "./useNavbarWorkout";
 import ConfirmDialog from '../dialog-confirm'
 
 const Grid = styled.div`
@@ -20,7 +20,7 @@ const Title = styled.div`
     font-weight: bold;
 `
 
-const BaseWorkoutNavbar = ({ title, where, isLoading, saveWorkout, deleteWorkout, router, token, t }: useWorkoutNavbarProps) => {
+const BaseNavbarWorkout = ({ title, where, isLoading, saveWorkout, deleteWorkout, router, token, t }: useNavbarWorkoutProps) => {
     return (
         <>
             <Title>{t(`${title}`)}</Title>
@@ -59,4 +59,4 @@ const BaseWorkoutNavbar = ({ title, where, isLoading, saveWorkout, deleteWorkout
     );
 }
 
-export default BaseWorkoutNavbar;
+export default BaseNavbarWorkout;

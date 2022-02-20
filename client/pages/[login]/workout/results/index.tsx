@@ -1,51 +1,7 @@
-import { useRouter } from 'next/router'
-import { useAppSelector } from '../../../../hooks/useRedux'
-import Box from '../../../../components/common/box-workout'
-import useTranslation from "next-translate/useTranslation"
-import useWorkoutResults from '../../../../hooks/useWorkoutResults'
-import CreateDialog from "../../../../components/pages/workout-result/create"
-import Navbar from '../../../../components/pages/profile/navbar'
-import styled from 'styled-components'
+import WorkoutResults from "../../../../components/pages/workout-results";
 
-const Title = styled.div`
-    font-size: 2rem;
-    margin-bottom: 10px;
-    font-weight: bold;
-`
-
-const WorkoutResults = () => {
-    const router = useRouter()
-    const { t } = useTranslation('workout')
-    const { data, user } = useWorkoutResults()
-    const token: any = useAppSelector(state => state.token.value)
-
-    return (
-        <div className="workoutResults">
-            {
-                token?.login == router?.query.login ?
-                    <>
-                        <Title>{t('Workout results')}</Title>
-                        <CreateDialog />
-                    </>
-                    :
-                    <Navbar user={user} tab={2} />
-            }
-            {
-                data?.length > 0 &&
-                data.map((result: any) =>
-                    <Box
-                        whenAdded={result.whenAdded}
-                        isNotSaved={result.notSaved}
-                        title={result.title}
-                        description={result.description}
-                        route={`/${router.query.login}/workout/results/${result.whenAdded}/${result._id}`}
-                        type={0}
-                        key={result._id}
-                    />
-                )
-            }
-        </div>
-    )
+const WorkoutResultsPage = () => {
+    return <WorkoutResults />
 }
 
-export default WorkoutResults
+export default WorkoutResultsPage;

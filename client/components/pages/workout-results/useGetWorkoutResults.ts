@@ -1,16 +1,16 @@
 import { useRouter } from "next/router";
-import { useAppSelector } from "./useRedux";
+import { useAppSelector } from "../../../hooks/useRedux";
 import { useState, useEffect } from "react";
-import { getAllIndexedDB } from "../utils/indexedDB.utils";
-import useOtherUser from "./useOtherUser";
-import { WorkoutPlanSchemaProps } from "../schema/workoutPlan.schema";
+import { getAllIndexedDB } from "../../../utils/indexedDB.utils";
+import useOtherUser from "../../../hooks/useOtherUser";
+import { WorkoutPlanSchemaProps } from "../../../schema/workoutPlan.schema";
 
-interface useWorkoutResultsResponseProps {
+interface useGetWorkoutResultsResponseProps {
     data: WorkoutPlanSchemaProps[]
     user: any
 }
 
-const useWorkoutResults = (): useWorkoutResultsResponseProps => {
+const useGetWorkoutResults = (): useGetWorkoutResultsResponseProps => {
     const router: any = useRouter()
     const [data, setData] = useState<WorkoutPlanSchemaProps[]>([])
     const [user, setUser] = useState({})
@@ -74,4 +74,4 @@ const useWorkoutResults = (): useWorkoutResultsResponseProps => {
     return { data, user };
 }
 
-export default useWorkoutResults;
+export default useGetWorkoutResults;

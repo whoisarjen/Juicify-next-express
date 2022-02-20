@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import SimpleLineChart from "../../common/diagram-simple-line-chart";
 import StackedBarChart from "../../common/diagram-stacked-bar-chart";
-import NavbarComponent from "./navbar";
+import NavbarComponent from "../../common/navbar-profile";
 import { useProfileProps } from "./useProfile";
 
 const Box = styled.div`

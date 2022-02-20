@@ -4,10 +4,10 @@ import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import BookIcon from "@mui/icons-material/Book";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import NoteAltIcon from '@mui/icons-material/NoteAlt'
-import { getShortDate } from "../../../../utils/date.utils";
-import { useProfileTabsProps } from './useProfileTabs';
+import { getShortDate } from "../../../utils/date.utils";
+import { useTabsProfileProps } from './useTabsProfile';
 
-const BaseProfileTabs = ({ tab, router }: useProfileTabsProps) => {
+const BaseTabsProfile = ({ tab, router }: useTabsProfileProps) => {
     return (
         <Tabs
             value={tab}
@@ -24,4 +24,4 @@ const BaseProfileTabs = ({ tab, router }: useProfileTabsProps) => {
     )
 }
 
-export default BaseProfileTabs;
+export default BaseTabsProfile;

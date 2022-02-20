@@ -1,8 +1,8 @@
 import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event';
-import { setupComponent } from '../../../../test-utils/setupComponent.test.utils'
-import BaseProfileTabs from './ProfileTabs'
-import useProfileTabs from './useProfileTabs'
+import { setupComponent } from '../../../test-utils/setupComponent.test.utils'
+import BaseProfileTabs from './TabsProfile'
+import useProfileTabs from './useTabsProfile'
 
 let push: any = null;
 

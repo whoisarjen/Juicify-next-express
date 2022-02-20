@@ -1,9 +1,9 @@
 import useTranslation from "next-translate/useTranslation"
 import { useRouter } from "next/router"
-import { WorkoutNavbarProp } from "."
+import { NavbarWorkoutProp } from "."
 import { useAppSelector } from "../../../hooks/useRedux"
 
-const useWorkoutNavbar = ({ title, where, isLoading, saveWorkout, deleteWorkout }: WorkoutNavbarProp) => {
+const useNavbarWorkout = ({ title, where, isLoading, saveWorkout, deleteWorkout }: NavbarWorkoutProp) => {
     const router = useRouter()
     const { t } = useTranslation('workout')
     const token: any = useAppSelector(state => state.token.value)
@@ -11,6 +11,6 @@ const useWorkoutNavbar = ({ title, where, isLoading, saveWorkout, deleteWorkout 
     return { title, where, isLoading, saveWorkout, deleteWorkout, router, token, t }
 }
 
-export type useWorkoutNavbarProps = ReturnType<typeof useWorkoutNavbar>
+export type useNavbarWorkoutProps = ReturnType<typeof useNavbarWorkout>
 
-export default useWorkoutNavbar;
+export default useNavbarWorkout;

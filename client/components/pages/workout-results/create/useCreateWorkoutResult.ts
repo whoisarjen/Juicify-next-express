@@ -1,7 +1,7 @@
 import useTranslation from "next-translate/useTranslation"
 import { useRouter } from "next/router"
 import { useState, useEffect } from "react"
-import useWorkoutPlans from "../../../../hooks/useWorkoutPlans"
+import useWorkoutPlans from "../../workout-plans/useGetWorkoutPlans"
 import { WorkoutPlanSchemaProps } from "../../../../schema/workoutPlan.schema"
 import { getShortDate } from "../../../../utils/date.utils"
 import { addIndexedDB } from "../../../../utils/indexedDB.utils"

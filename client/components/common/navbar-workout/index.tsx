@@ -1,7 +1,7 @@
-import useWorkoutNavbar from "./useWorkoutNavbar";
-import BaseWorkoutNavbar from "./WorkoutNavbar";
+import useNavbarWorkout from "./useNavbarWorkout";
+import BaseNavbarWorkout from "./NavbarWorkout";
 
-export interface WorkoutNavbarProp {
+export interface NavbarWorkoutProp {
     title: string,
     where: string,
     isLoading: boolean,
@@ -9,10 +9,10 @@ export interface WorkoutNavbarProp {
     deleteWorkout: () => void
 }
 
-const Navbar = ({ title, where, isLoading, saveWorkout, deleteWorkout }: WorkoutNavbarProp) => {
-    const props = useWorkoutNavbar({ title, where, isLoading, saveWorkout, deleteWorkout })
+const NavbarWorkout = ({ title, where, isLoading, saveWorkout, deleteWorkout }: NavbarWorkoutProp) => {
+    const props = useNavbarWorkout({ title, where, isLoading, saveWorkout, deleteWorkout })
 
-    return <BaseWorkoutNavbar {...props} />
+    return <BaseNavbarWorkout {...props} />
 }
 
-export default Navbar;
+export default NavbarWorkout;
