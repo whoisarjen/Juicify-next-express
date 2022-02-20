@@ -3,6 +3,7 @@ import useTranslation from "next-translate/useTranslation";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import IconButton from '@mui/material/IconButton';
 import styled from "styled-components";
+import NavbarOnlyTitle from '../../common/navbar-only-title';
 
 interface ChooseDietProps {
     setStep: (arg0: string) => void,
@@ -25,16 +26,6 @@ const ArrowBack = styled.div`
     grid-template-columns: 40px 1fr;
 `
 
-const Title = styled.div`
-    font-size: 1.75rem;
-    font-weight: bold;
-    display: grid;
-    padding: 20px 0;
-    ${this} div {
-        margin: auto;
-    }
-`
-
 const ChooseDiet = ({ setStep, handlePreviousStep }: ChooseDietProps) => {
     const { t } = useTranslation('coach')
 
@@ -46,7 +37,7 @@ const ChooseDiet = ({ setStep, handlePreviousStep }: ChooseDietProps) => {
                     <div />
                 </IconButton>
             </ArrowBack>
-            <Title><div>{t('CHOOSE_DIET_TITLE')}</div></Title>
+            <NavbarOnlyTitle title="coach:CHOOSE_DIET_TITLE" />
             <div>{t('CHOOSE_DIET_DESCRIPTION')}</div>
             <Button variant="contained" onClick={() => setStep('MuscleBuilding')}>{t('MUSCLE_BUILDING')}</Button>
             <Button variant="contained" onClick={() => setStep('Recomposition')}>{t('RECOMPOSITION')}</Button>

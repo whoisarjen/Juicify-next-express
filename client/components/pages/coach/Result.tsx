@@ -2,6 +2,7 @@ import Button from '@mui/material/Button';
 import { useAppSelector } from "../../../hooks/useRedux";
 import useTranslation from "next-translate/useTranslation";
 import styled from 'styled-components';
+import NavbarOnlyTitle from '../../common/navbar-only-title';
 
 const Box = styled.div`
     width: 100%;
@@ -28,16 +29,6 @@ const Box = styled.div`
     }
 `
 
-const Title = styled.div`
-    font-size: 1.75rem;
-    font-weight: bold;
-    display: grid;
-    padding: 20px 0;
-    ${this} div {
-        margin: auto;
-    }
-`
-
 const Result = ({ setStep }: { setStep: (arg0: string) => void }) => {
     const { t } = useTranslation('coach')
     const token: any = useAppSelector(state => state.token.value)
@@ -45,7 +36,7 @@ const Result = ({ setStep }: { setStep: (arg0: string) => void }) => {
 
     return (
         <Box>
-            <Title><div>{t('RESULT_TITLE')}</div></Title>
+            <NavbarOnlyTitle title="coach:RESULT_TITLE" />
             <table>
                 {
                     token &&

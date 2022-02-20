@@ -14,7 +14,7 @@ const BaseWorkoutPlan = ({ t, user, token, errors, fields, append, remove, handl
     return (
         <form>
             <Navbar
-                title="Workout plan"
+                title="workout:WORKOUT_PLAN"
                 where="workout/plans"
                 isLoading={isLoading}
                 saveWorkout={handleSubmit(saveWorkoutPlan)}

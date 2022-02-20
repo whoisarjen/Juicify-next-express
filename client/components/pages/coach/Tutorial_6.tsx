@@ -3,6 +3,7 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import styled from "styled-components";
+import NavbarOnlyTitle from "../../common/navbar-only-title";
 
 const Box = styled.div`
     width: 100%;
@@ -23,16 +24,6 @@ const ArrowBack = styled.div`
     grid-template-columns: 40px 1fr;
 `
 
-const Title = styled.div`
-    font-size: 1.75rem;
-    font-weight: bold;
-    display: grid;
-    padding: 20px 0;
-    ${this} div {
-        margin: auto;
-    }
-`
-
 const Tutorial_6 = ({ setStep }: { setStep: (arg0: string) => void }) => {
     const { t } = useTranslation('coach')
 
@@ -44,7 +35,7 @@ const Tutorial_6 = ({ setStep }: { setStep: (arg0: string) => void }) => {
                     <div />
                 </IconButton>
             </ArrowBack>
-            <Title><div>{t('EXTRA_ACTIVITY')}</div></Title>
+            <NavbarOnlyTitle title="coach:EXTRA_ACTIVITY" />
             <div>{t('TUTORIAL_6')}</div>
             <Button variant="contained" onClick={() => setStep('Tutorial_7')}>{t('NEXT_STEP')}</Button>
         </Box>

@@ -2,14 +2,8 @@ import BoxWorkout from '../../common/box-workout';
 import { WorkoutPlanSchemaProps } from '../../../schema/workoutPlan.schema';
 import ButtonPlusIcon from '../../common/button-plus-icon';
 import NavbarProfile from '../../common/navbar-profile';
-import styled from 'styled-components';
 import { useWorkoutPlansProps } from './useWorkoutPlans';
-
-const Title = styled.div`
-    font-size: 2rem;
-    margin-bottom: 10px;
-    font-weight: bold;
-`
+import NavbarOnlyTitle from '../../common/navbar-only-title';
 
 const BaseWorkoutPlans = ({ data, router, token, createWorkoutPlan, user, t }: useWorkoutPlansProps) => {
     return (
@@ -17,7 +11,7 @@ const BaseWorkoutPlans = ({ data, router, token, createWorkoutPlan, user, t }: u
             {
                 router.query.login == token.login ?
                     <>
-                        <Title>{t('Workout plans')}</Title>
+                        <NavbarOnlyTitle title="workout:WORKOUT_PLANS" />
                         <ButtonPlusIcon click={createWorkoutPlan} />
                     </>
                     :

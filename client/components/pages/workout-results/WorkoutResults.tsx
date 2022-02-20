@@ -1,30 +1,26 @@
-import styled from 'styled-components'
 import BoxWorkout from '../../common/box-workout'
 import NavbarProfile from '../../common/navbar-profile'
 import DialogAddWorkoutResult from "../../common/dialog-add-workout-result"
 import { useWorkoutResultsProps } from './useWorkoutResults'
+import ButtonPlusIcon from '../../common/button-plus-icon'
+import NavbarOnlyTitle from '../../common/navbar-only-title'
 
-const Title = styled.div`
-    font-size: 2rem;
-    margin-bottom: 10px;
-    font-weight: bold;
-`
-
-const BaseWorkoutResults = ({ token, router, t, data, user }: useWorkoutResultsProps) => {
+const BaseWorkoutResults = ({ token, router, data, user }: useWorkoutResultsProps) => {
     return (
         <div>
             {
-                token?.login == router?.query.login ?
+                token.login == router.query.login ?
                     <>
-                        <Title>{t('Workout results')}</Title>
-                        <DialogAddWorkoutResult />
+                        <NavbarOnlyTitle title="workout:WORKOUT_RESULTS" />
+                        <DialogAddWorkoutResult>
+                            <ButtonPlusIcon />
+                        </DialogAddWorkoutResult>
                     </>
                     :
                     <NavbarProfile user={user} tab={2} />
             }
             {
-                data?.length > 0 &&
-                data.map((result: any) =>
+                data?.map((result: any) =>
                     <BoxWorkout
                         whenAdded={result.whenAdded}
                         isNotSaved={result.notSaved}

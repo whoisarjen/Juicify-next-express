@@ -15,6 +15,7 @@ import styled from 'styled-components'
 import SlideUp from '../../../../transition/SlideUp';
 import { useAddProductsProps } from './useAddProducts';
 import AddItemsTabs from '../../../../common/tabs-items';
+import NavbarOnlyTitle from '../../../../common/navbar-only-title';
 
 const Close = styled.div`
     display: grid;
@@ -55,12 +56,6 @@ const GridFullWidth = styled.div`
     width: 100%;
 `
 
-const Title = styled.div`
-    font-size: 2rem;
-    margin-bottom: 10px;
-    font-weight: bold;
-`
-
 const BaseAddProducts = ({ children, isDialog, setIsDialog, t, dailyMeasurement, meal, setMeal, open, setOpen, find, setFind, setTab, loading, searchCache, token, items, addProductsToDiary, isCreateProduct, setIsCreateProduct, setRefreshChecked, loadedProduct, setLoadedProduct, checked, created, refreshChecked }: useAddProductsProps) => {
     return (
         <>
@@ -72,7 +67,7 @@ const BaseAddProducts = ({ children, isDialog, setIsDialog, t, dailyMeasurement,
                 TransitionComponent={SlideUp}
             >
                 <Grid>
-                    <Title>{t('Add products')}</Title>
+                    <NavbarOnlyTitle title="home:ADD_PRODUCTS" />
                     <Select
                         sx={{ marginBottom: '10px' }}
                         labelId="demo-simple-select-label"

@@ -15,7 +15,6 @@ const useWorkoutResult = () => {
     const router: any = useRouter()
     const { t } = useTranslation('workout')
     const { data, user, daily } = useGetWorkoutResult()
-    console.log(data)
     const token: any = useAppSelector(state => state.token.value)
     const [isLoading, setIsLoading] = useState(false)
     const isDateSupported = useAppSelector(state => state.config.theOldestSupportedDate()) <= router.query.date

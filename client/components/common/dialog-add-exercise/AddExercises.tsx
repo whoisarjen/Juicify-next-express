@@ -10,6 +10,7 @@ import CreateExercise from './createExercise';
 import Autocomplete from '../input-autocomplete';
 import ButtonCloseDialog from '../button-close-dialog';
 import ButtonPlusIcon from '../button-plus-icon';
+import NavbarOnlyTitle from '../navbar-only-title';
 
 const DialogContent = styled.div`
     width: 100%;
@@ -28,12 +29,6 @@ const DialogContent = styled.div`
     }
 `
 
-const Title = styled.div`
-    font-size: 2rem;
-    margin-bottom: 10px;
-    font-weight: bold;
-`
-
 const ButtonHolder = styled.div`
     margin: auto;
     display: grid;
@@ -46,7 +41,7 @@ const BaseAddExercises = ({ children, isDialog, setIsDialog, find, setFind, load
 
             <Dialog fullScreen scroll='body' open={isDialog} TransitionComponent={SlideUp}>
                 <DialogContent>
-                    <Title>{t('Add exercises')}</Title>
+                    <NavbarOnlyTitle title="workout:ADD_EXERCISES" />
 
                     <Autocomplete {...{ find, setFind, loading, searchCache }} />
 

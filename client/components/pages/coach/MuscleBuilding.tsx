@@ -10,6 +10,7 @@ import useTranslation from "next-translate/useTranslation";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import IconButton from '@mui/material/IconButton';
 import styled from "styled-components";
+import NavbarOnlyTitle from "../../common/navbar-only-title";
 
 interface MuscleBuildingProps {
     prepareCreate: (arg0: Object) => void,
@@ -30,16 +31,6 @@ const ArrowBack = styled.div`
     width: 100%;
     display: grid;
     grid-template-columns: 40px 1fr;
-`
-
-const Title = styled.div`
-    font-size: 1.75rem;
-    font-weight: bold;
-    display: grid;
-    padding: 20px 0;
-    ${this} div {
-        margin: auto;
-    }
 `
 
 const MuscleBuilding = ({ prepareCreate, handlePreviousStep }: MuscleBuildingProps) => {
@@ -67,7 +58,7 @@ const MuscleBuilding = ({ prepareCreate, handlePreviousStep }: MuscleBuildingPro
                     <div />
                 </IconButton>
             </ArrowBack>
-            <Title><div>{t('MUSCLE_BUILDING')}</div></Title>
+            <NavbarOnlyTitle title="coach:MUSCLE_BUILDING" />
             <div>{t('MUSCLE_BUILDING_DESCRIPTION')}</div>
             <Box>
                 <FormControl fullWidth>

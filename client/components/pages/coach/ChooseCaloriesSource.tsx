@@ -1,6 +1,7 @@
 import Button from '@mui/material/Button';
 import useTranslation from "next-translate/useTranslation";
 import styled from "styled-components";
+import NavbarOnlyTitle from '../../common/navbar-only-title';
 
 interface ChooseCaloriesSourcetProps {
     prepareAnalize: (arg0: boolean) => void
@@ -21,22 +22,12 @@ const Bold = styled.div`
     font-size: 0.9rem;
 `
 
-const Title = styled.div`
-    font-size: 1.75rem;
-    font-weight: bold;
-    display: grid;
-    padding: 20px 0;
-    ${this} div {
-        margin: auto;
-    }
-`
-
 const ChooseCaloriesSource = ({ prepareAnalize }: ChooseCaloriesSourcetProps) => {
     const { t } = useTranslation('coach')
 
     return (
         <Grid>
-            <Title><div>{t('CHOOSE_CALORIES_SOURCE_TITLE')}</div></Title>
+            <NavbarOnlyTitle title="coach:CHOOSE_CALORIES_SOURCE_TITLE" />
             <div>
                 <Bold>{t('CHOOSE_CALORIES_SOURCE_BUTTON')}</Bold>
                 <div>{t('CHOOSE_CALORIES_SOURCE_DESCRIPTION')}</div>

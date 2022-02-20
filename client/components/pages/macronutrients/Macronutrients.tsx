@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import OwnMacro from "./ownMacro";
 import styled from 'styled-components'
 import { useMacronutrientsProps } from './useMacronutrients';
+import NavbarOnlyTitle from '../../common/navbar-only-title';
 
 const Box = styled.div`
     display: grid;
@@ -50,21 +51,12 @@ const Grid__description = styled.div`
     }
 `
 
-const Title = styled.div`
-    font-size: 2rem;
-    margin-bottom: 10px;
-    font-weight: bold;
-`
-
 const BaseMacronutrients = ({ changeObject, openChange, toggleLock, changed, isOwnMacro, setIsOwnMacro, macro, save, t }: useMacronutrientsProps) => {
     return (
         <>
             <Box>
                 <div>
-                    {
-                        Object.keys(changeObject).length == 0 &&
-                        <Title>{t('TITLE')}</Title>
-                    }
+                    {Object.keys(changeObject).length == 0 && <NavbarOnlyTitle title="macronutrients:TITLE" />}
                     <Grid>
                         <Grid__bar>
                             {

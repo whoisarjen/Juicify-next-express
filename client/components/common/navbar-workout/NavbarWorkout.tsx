@@ -6,6 +6,7 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 import styled from 'styled-components'
 import { useNavbarWorkoutProps } from "./useNavbarWorkout";
 import ConfirmDialog from '../dialog-confirm'
+import NavbarOnlyTitle from '../navbar-only-title'
 
 const Grid = styled.div`
     width: 100%;
@@ -14,16 +15,10 @@ const Grid = styled.div`
     margin: auto;
 `
 
-const Title = styled.div`
-    font-size: 2rem;
-    margin-bottom: 10px;
-    font-weight: bold;
-`
-
 const BaseNavbarWorkout = ({ title, where, isLoading, saveWorkout, deleteWorkout, router, token, t }: useNavbarWorkoutProps) => {
     return (
         <>
-            <Title>{t(`${title}`)}</Title>
+            <NavbarOnlyTitle title={t(title)} />
             <Grid>
                 <IconButton aria-label="route" onClick={() => router.push(`/${router.query.login}/${where}`)} sx={{ margin: 'auto' }}>
                     <KeyboardBackspaceIcon />

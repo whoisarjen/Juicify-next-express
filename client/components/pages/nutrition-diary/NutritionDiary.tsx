@@ -2,8 +2,6 @@ import NutritionDiaryBox from "./box"
 import FastDateChanger from '../../common/date-changer-fast'
 import Diagrams from './diagrams'
 import DiagramsSectionButtons from './diagrams/buttons'
-import Header from "../../layout/Header"
-import { reverseDateDotes } from "../../../utils/date.utils"
 import { useNutritionDiaryProps } from "./useNutritionDiary"
 import BottomFlyingGuestBanner from "../../common/banner-guest-bottom"
 import styled from "styled-components"
@@ -12,6 +10,7 @@ import NutritionDiaryBoxProduct from "./box/product"
 import { ProductSchemaProps } from "../../../schema/product.schema"
 import { ActivitySchemaProps } from "../../../schema/activity.schema"
 import Share from "../../common/button-share"
+import NavbarOnlyTitle from "../../common/navbar-only-title"
 
 const Box = styled.div`
     width: 100%;
@@ -22,22 +21,11 @@ const Box = styled.div`
     }
 `
 
-const Title = styled.div`
-    font-size: 2rem;
-    margin-bottom: 10px;
-    font-weight: bold;
-`
-
-const BaseNutritionDiary = ({ t, router, token, nutritionDiary, user, data }: useNutritionDiaryProps) => {
+const BaseNutritionDiary = ({ router, token, nutritionDiary, user, data }: useNutritionDiaryProps) => {
     return (
         <>
-            <Header
-                title={`${t('title')} ${router.query.login} ${reverseDateDotes(router.query.date)}`}
-                description={`${t('title')} ${router.query.login} ${reverseDateDotes(router.query.date)}`}
-            />
-
             <Box>
-                <Title>{t('title')}</Title>
+                <NavbarOnlyTitle title="nutrition-diary:title" />
                 <Share />
                 <DateChanger />
             </Box>

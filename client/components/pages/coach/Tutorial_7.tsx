@@ -3,6 +3,7 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import styled from "styled-components";
+import NavbarOnlyTitle from "../../common/navbar-only-title";
 
 interface Tutorial_7Props {
     setStep: (arg0: string) => void,
@@ -28,16 +29,6 @@ const ArrowBack = styled.div`
     grid-template-columns: 40px 1fr;
 `
 
-const Title = styled.div`
-    font-size: 1.75rem;
-    font-weight: bold;
-    display: grid;
-    padding: 20px 0;
-    ${this} div {
-        margin: auto;
-    }
-`
-
 const Tutorial_7 = ({ setStep, handlePreviousStep }: Tutorial_7Props) => {
     const { t } = useTranslation('coach')
 
@@ -49,7 +40,7 @@ const Tutorial_7 = ({ setStep, handlePreviousStep }: Tutorial_7Props) => {
                     <div />
                 </IconButton>
             </ArrowBack>
-            <Title><div>{t('THATS_ALL')}</div></Title>
+            <NavbarOnlyTitle title="coach:THATS_ALL" />
             <div>{t('TUTORIAL_7')}</div>
             <Button variant="contained" onClick={handlePreviousStep}>{t('I_AM_READY')}</Button>
         </Box>

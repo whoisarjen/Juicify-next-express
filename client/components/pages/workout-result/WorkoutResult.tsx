@@ -12,7 +12,7 @@ const BaseWorkoutResult = ({ t, isLoading, handleSubmit, onSubmit, deleteEveryth
     return (
         <form>
             <Navbar
-                title="Workout result"
+                title="workout:WORKOUT_RESULT"
                 where="workout/results"
                 isLoading={isLoading}
                 saveWorkout={handleSubmit(onSubmit)}

@@ -9,14 +9,14 @@ const Workout = () => {
     return (
         <div>
             <Box
-                title={t('Workout results')}
-                description={t('Workout results descirption')}
+                title={t('WORKOUT_RESULTS')}
+                description={t('WORKOUT_RESULTS_DESCRIPTION')}
                 route={`/${router.query.login}/workout/results`}
                 type={0}
             />
             <Box
-                title={t('Workout plans')}
-                description={t('Workout plans descirption')}
+                title={t('WORKOUT_PLANS')}
+                description={t('WORKOUT_PLANS_DESCRIPTION')}
                 route={`/${router.query.login}/workout/plans`}
                 type={1}
             />

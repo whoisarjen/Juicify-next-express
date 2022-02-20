@@ -7,6 +7,7 @@ import { useAppSelector } from "../../../hooks/useRedux";
 import { DailyMeasurementSchemaProps } from "../../../schema/dailyMeasurement.schema";
 import styled from "styled-components";
 import AddWeight from "../../common/dialog-add-weight";
+import NavbarOnlyTitle from "../../common/navbar-only-title";
 
 interface ChooseDietProps {
     setStep: (arg0: string) => void
@@ -21,16 +22,6 @@ const Grid = styled.div`
     text-align: center;
     ${this} table {
         width: 100%;
-    }
-`
-
-const Title = styled.div`
-    font-size: 1.75rem;
-    font-weight: bold;
-    display: grid;
-    padding: 20px 0;
-    ${this} div {
-        margin: auto;
     }
 `
 
@@ -65,7 +56,7 @@ const CheckingWeekData = ({ setStep }: ChooseDietProps) => {
 
     return (
         <Grid>
-            <Title><div>{t('CHECKING_TODAY_TITLE')}</div></Title>
+            <NavbarOnlyTitle title="coach:CHECKING_TODAY_TITLE" />
             {
                 <>
                     <table>

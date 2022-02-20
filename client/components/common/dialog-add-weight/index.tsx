@@ -22,6 +22,7 @@ import styled from 'styled-components'
 import { DailyMeasurementSchemaProps } from "../../../schema/dailyMeasurement.schema";
 import SlideUp from "../../transition/SlideUp";
 import ButtonCloseDialog from "../button-close-dialog";
+import NavbarOnlyTitle from "../navbar-only-title";
 
 interface AddWeightProps {
     children: any,
@@ -37,12 +38,6 @@ const Content = styled.div`
     @media (max-width: 726px) {
         width: calc(100% - 24px);
     }
-`
-
-const Title = styled.div`
-    font-size: 2rem;
-    margin-bottom: 10px;
-    font-weight: bold;
 `
 
 const Description = styled.div`
@@ -76,7 +71,7 @@ const AddWeight = ({ children }: AddWeightProps) => {
                 TransitionComponent={SlideUp}
             >
                 <Content>
-                    <Title>{t('Add weight')}</Title>
+                    <NavbarOnlyTitle title="home:ADD_WEIGHT" />
                     <Description>
                         {t('Add weight description')}
                     </Description>
@@ -125,7 +120,6 @@ const AddWeight = ({ children }: AddWeightProps) => {
                     onClose={() => setIsDialog(false)}
                     TransitionComponent={SlideUp}
                 >
-                    <DialogTitle>{t('Add weight')}</DialogTitle>
                     <DialogContent>
                         <OutlinedInput
                             id="outlined-adornment-weight"

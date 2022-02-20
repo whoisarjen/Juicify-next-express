@@ -12,9 +12,8 @@ import DatePickerMobile from '../date-picker-mobile'
 import { getShortDate } from '../../../utils/date.utils'
 import { WorkoutPlanSchemaProps } from '../../../schema/workoutPlan.schema'
 import { useDialogAddWorkoutResultprops } from './useDialogAddWorkoutResult'
-import ButtonPlusIcon from '../button-plus-icon'
 
-const BaseDialogAddWorkoutResult = ({ open, setOpen, data, setWhenAdded, workoutPlanID, setWorkoutPlanID, DialogAddWorkoutResult, t, theOldestSupportedDate }: useDialogAddWorkoutResultprops) => {
+const BaseDialogAddWorkoutResult = ({ children, open, setOpen, data, setWhenAdded, workoutPlanID, setWorkoutPlanID, DialogAddWorkoutResult, t, theOldestSupportedDate }: useDialogAddWorkoutResultprops) => {
 
     if (!data || data.length == 0) {
         return <></>
@@ -22,7 +21,7 @@ const BaseDialogAddWorkoutResult = ({ open, setOpen, data, setWhenAdded, workout
 
     return (
         <div>
-            <ButtonPlusIcon click={() => setOpen(true)} />
+            <div onClick={() => setOpen(true)}>{children}</div>
             <Dialog open={open} onClose={() => setOpen(false)}>
                 <DialogTitle>{t('CREATE_RESULT')}</DialogTitle>
                 <DialogContent>
@@ -34,7 +33,7 @@ const BaseDialogAddWorkoutResult = ({ open, setOpen, data, setWhenAdded, workout
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             value={workoutPlanID}
-                            label="Workout plan"
+                            label={t('WORKOUT_PLAN')}
                             onChange={(event) => setWorkoutPlanID(event.target.value)}
                         >
                             {

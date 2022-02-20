@@ -5,7 +5,6 @@ import { useDailyMeasurement } from "../../../hooks/useDailyMeasurement"
 import { useAppSelector } from "../../../hooks/useRedux"
 
 const useNutritionDiary = () => {
-    const { t } = useTranslation('nutrition-diary')
     const router: any = useRouter()
     const token: any = useAppSelector(state => state.token.value)
     const [nutritionDiary, setNutritionDiary] = useState(Array(5).fill([]))
@@ -36,7 +35,7 @@ const useNutritionDiary = () => {
         }
     }, [data])
 
-    return { t, router, token, nutritionDiary, user, data }
+    return { router, token, nutritionDiary, user, data }
 }
 
 export type useNutritionDiaryProps = ReturnType<typeof useNutritionDiary>

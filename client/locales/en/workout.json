@@ -2,10 +2,9 @@
     "Workout plan": "Workout plan",
     "Workout result": "Workout result",
     "Save": "Save",
-    "Workout results": "Results",
-    "Workout plans": "Plans",
-    "Workout results descirption": "Add workout results to your plans.",
-    "Workout plans descirption": "Create your own workout plans.",
+    "WORKOUT_PLANS": "Plans",
+    "WORKOUT_RESULTS_DESCRIPTION": "Add workout results to your plans.",
+    "WORKOUT_PLANS_DESCRIPTION": "Create your own workout plans.",
     "Burnt": "Burnt",
     "Notes": "Notes",
     "r.": "r.",
@@ -25,5 +24,7 @@
     "DESCRIPTION": "Description",
     "BURNT_CALORIES": "Burnt calories",
     "CREATE_RESULT": "Create result",
+    "WORKOUT_RESULTS": "Results",
+    "ADD_EXERCISES": "Add exercises",
     "CREATE_RESULT_DESCRIPTION": "Choose workout plan for which you want to create result"
 }

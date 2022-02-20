@@ -6,6 +6,7 @@ import { useAppSelector } from "../../../hooks/useRedux";
 import useTranslation from "next-translate/useTranslation";
 import styled from "styled-components";
 import AddWeight from "../../common/dialog-add-weight";
+import NavbarOnlyTitle from "../../common/navbar-only-title";
 
 const Grid = styled.div`
     width: 100%;
@@ -20,16 +21,6 @@ const Grid = styled.div`
     }
 `
 
-const Title = styled.div`
-    font-size: 1.75rem;
-    font-weight: bold;
-    display: grid;
-    padding: 20px 0;
-    ${this} div {
-        margin: auto;
-    }
-`
-
 const CheckingTodayData = ({ setStep }: { setStep: (arg0: string) => void }) => {
     const { t } = useTranslation('coach')
     const token: any = useAppSelector(state => state.token.value)
@@ -37,7 +28,7 @@ const CheckingTodayData = ({ setStep }: { setStep: (arg0: string) => void }) => 
 
     return (
         <Grid>
-            <Title><div>{t('CHECKING_TODAY_TITLE')}</div></Title>
+            <NavbarOnlyTitle title="coach:CHECKING_TODAY_TITLE" />
             {
                 (
                     data?.weight
@@ -66,7 +57,7 @@ const CheckingTodayData = ({ setStep }: { setStep: (arg0: string) => void }) => 
                             <div>{t('CHECKING_TODAY_DESCRIPTION')}</div>
 
                             <AddWeight>
-                                <Button variant="contained">{t('CHANGE_WEIGHT')}</Button>
+                                <Button sx={{ margin: 'auto 0', width: '100%' }} variant="contained">{t('CHANGE_WEIGHT')}</Button>
                             </AddWeight>
                         </>
                         :

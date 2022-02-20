@@ -7,7 +7,7 @@ import { getShortDate } from "../../../utils/date.utils"
 import { addIndexedDB } from "../../../utils/indexedDB.utils"
 import { useAppSelector } from "../../../hooks/useRedux"
 
-const useDialogAddWorkoutResult = () => {
+const useDialogAddWorkoutResult = ({ children }: { children: any }) => {
     const { t } = useTranslation('workout')
     const router = useRouter()
     const { data } = useWorkoutPlans()
@@ -51,7 +51,7 @@ const useDialogAddWorkoutResult = () => {
         }
     }, [data])
 
-    return { open, setOpen, data, setWhenAdded, workoutPlanID, setWorkoutPlanID, DialogAddWorkoutResult, t, theOldestSupportedDate }
+    return { children, open, setOpen, data, setWhenAdded, workoutPlanID, setWorkoutPlanID, DialogAddWorkoutResult, t, theOldestSupportedDate }
 }
 
 export type useDialogAddWorkoutResultprops = ReturnType<typeof useDialogAddWorkoutResult>

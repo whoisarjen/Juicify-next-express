@@ -10,6 +10,7 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import useTranslation from "next-translate/useTranslation";
 import styled from "styled-components";
 import AddWeight from "../../common/dialog-add-weight";
+import NavbarOnlyTitle from "../../common/navbar-only-title";
 
 interface StandardProps {
     setStep: (arg0: string) => void
@@ -21,16 +22,6 @@ const Grid = styled.div`
     display: grid;
     grid-template-rows: 3fr auto 2fr;
     font-size: 0.9rem;
-`
-
-const Title = styled.div`
-    font-size: 1.75rem;
-    font-weight: bold;
-    display: grid;
-    padding: 20px 0;
-    ${this} div {
-        margin: auto;
-    }
 `
 
 const Main = styled.div`
@@ -121,29 +112,17 @@ const Standard = ({ setStep }: StandardProps) => {
                         <div>{t('HISTORY')}</div>
                     </div>
                 </TopButtons>
-                <Title>
-                    {
-                        token.goal === 0
+                {
+                    token.goal === 0
+                        ?
+                        <NavbarOnlyTitle title="coach:RECOMPOSITION" />
+                        :
+                        token.goal > 0
                             ?
-                            (
-                                <div>
-                                    {t('RECOMPOSITION')}
-                                </div>
-                            )
-                            : token.goal > 0 ?
-                                (
-                                    <div>
-                                        {t('MUSCLE_BUILDING')}
-                                    </div>
-                                )
-                                :
-                                (
-                                    <div>
-                                        {t('LOSING_WEIGHT')}
-                                    </div>
-                                )
-                    }
-                </Title>
+                            <NavbarOnlyTitle title="coach:MUSCLE_BUILDING" />
+                            :
+                            <NavbarOnlyTitle title="coach:LOSING_WEIGHT" />
+                }
                 <div>{token.goal}% / {t('WEEK')}</div>
                 <div>
                     {t('STANDARD_DESCRIPTION')}
