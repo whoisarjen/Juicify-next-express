@@ -2,7 +2,7 @@ import Dialog from '@mui/material/Dialog';
 import { ExerciseSchemaProps } from '../../../schema/exercise.schema';
 import styled from 'styled-components'
 import SlideUp from '../../transition/SlideUp';
-import { useAddExercisesProps } from './useAddExercises';
+import { useDialogAddExerciseProps } from './useDialogAddExercise';
 import BoxExercise from '../box-exercise';
 import ButtonSubmitItems from '../button-submit-items';
 import AddItemsTabs from '../tabs-items';
@@ -34,7 +34,7 @@ const ButtonHolder = styled.div`
     display: grid;
 `
 
-const BaseAddExercises = ({ children, isDialog, setIsDialog, find, setFind, loading, searchCache, items, checked, t, setTab, setRefreshChecked, refreshChecked, addExercisesToWorkoutPlan }: useAddExercisesProps) => {
+const BaseDialogAddExercise = ({ children, isDialog, setIsDialog, find, setFind, loading, searchCache, items, checked, setTab, setRefreshChecked, refreshChecked, addExercisesToWorkoutPlan }: useDialogAddExerciseProps) => {
     return (
         <>
             <ButtonHolder onClick={() => setIsDialog(true)}>{children || <ButtonPlusIcon />}</ButtonHolder>
@@ -64,4 +64,4 @@ const BaseAddExercises = ({ children, isDialog, setIsDialog, find, setFind, load
     );
 }
 
-export default BaseAddExercises;
+export default BaseDialogAddExercise;

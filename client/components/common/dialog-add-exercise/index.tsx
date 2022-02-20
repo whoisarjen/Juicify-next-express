@@ -1,17 +1,17 @@
 import { ExerciseSchemaProps } from "../../../schema/exercise.schema";
-import BaseAddExercises from "./AddExercises";
-import useAddExercises from "./useAddExercises";
+import BaseDialogAddExercise from "./DialogAddExercise";
+import useDialogAddExercise from "./useDialogAddExercise";
 
-export interface AddExercisesProps {
+export interface DialogAddExerciseProps {
     children?: any,
     skipThoseIDS: Array<ExerciseSchemaProps>,
     addThoseExercises: (Arg0: Array<ExerciseSchemaProps>) => void,
 }
 
-const AddExercises = ({ children, skipThoseIDS, addThoseExercises }: AddExercisesProps) => {
-    const props = useAddExercises({ children, skipThoseIDS, addThoseExercises })
+const DialogAddExercise = ({ children, skipThoseIDS, addThoseExercises }: DialogAddExerciseProps) => {
+    const props = useDialogAddExercise({ children, skipThoseIDS, addThoseExercises })
 
-    return <BaseAddExercises {...props} />
+    return <BaseDialogAddExercise {...props} />
 }
 
-export default AddExercises;
+export default DialogAddExercise;

@@ -1,12 +1,11 @@
 import useTranslation from "next-translate/useTranslation";
 import { useState, useEffect } from "react";
-import { AddExercisesProps } from ".";
+import { DialogAddExerciseProps } from ".";
 import useFind from "../../../hooks/useFind";
 import { ExerciseSchemaProps } from "../../../schema/exercise.schema";
 import { deleteIndexedDB, getAllIndexedDB } from "../../../utils/indexedDB.utils";
 
-const useAddExercises = ({ children, skipThoseIDS, addThoseExercises }: AddExercisesProps) => {
-    const { t } = useTranslation('home');
+const useDialogAddExercise = ({ children, skipThoseIDS, addThoseExercises }: DialogAddExerciseProps) => {
     const [tab, setTab] = useState(0)
     const [checked, setChecked] = useState([])
     const [isDialog, setIsDialog] = useState(false)
@@ -30,9 +29,9 @@ const useAddExercises = ({ children, skipThoseIDS, addThoseExercises }: AddExerc
         })()
     }, [refreshChecked])
 
-    return { children, isDialog, setIsDialog, find, setFind, loading, searchCache, items, checked, t, setTab, setRefreshChecked, refreshChecked, addExercisesToWorkoutPlan }
+    return { children, isDialog, setIsDialog, find, setFind, loading, searchCache, items, checked, setTab, setRefreshChecked, refreshChecked, addExercisesToWorkoutPlan }
 }
 
-export type useAddExercisesProps = ReturnType<typeof useAddExercises>
+export type useDialogAddExerciseProps = ReturnType<typeof useDialogAddExercise>
 
-export default useAddExercises;
+export default useDialogAddExercise;
