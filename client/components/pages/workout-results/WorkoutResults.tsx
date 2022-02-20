@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import BoxWorkout from '../../common/box-workout'
 import NavbarProfile from '../../common/navbar-profile'
-import CreateDialog from "./create"
+import DialogAddWorkoutResult from "../../common/dialog-add-workout-result"
 import { useWorkoutResultsProps } from './useWorkoutResults'
 
 const Title = styled.div`
@@ -12,12 +12,12 @@ const Title = styled.div`
 
 const BaseWorkoutResults = ({ token, router, t, data, user }: useWorkoutResultsProps) => {
     return (
-        <div className="workoutResults">
+        <div>
             {
                 token?.login == router?.query.login ?
                     <>
                         <Title>{t('Workout results')}</Title>
-                        <CreateDialog />
+                        <DialogAddWorkoutResult />
                     </>
                     :
                     <NavbarProfile user={user} tab={2} />

@@ -1,13 +1,13 @@
 import useTranslation from "next-translate/useTranslation"
 import { useRouter } from "next/router"
 import { useState, useEffect } from "react"
-import useWorkoutPlans from "../../workout-plans/useGetWorkoutPlans"
-import { WorkoutPlanSchemaProps } from "../../../../schema/workoutPlan.schema"
-import { getShortDate } from "../../../../utils/date.utils"
-import { addIndexedDB } from "../../../../utils/indexedDB.utils"
-import { useAppSelector } from "../../../../hooks/useRedux"
+import useWorkoutPlans from "../../pages/workout-plans/useGetWorkoutPlans"
+import { WorkoutPlanSchemaProps } from "../../../schema/workoutPlan.schema"
+import { getShortDate } from "../../../utils/date.utils"
+import { addIndexedDB } from "../../../utils/indexedDB.utils"
+import { useAppSelector } from "../../../hooks/useRedux"
 
-const useCreateWorkoutResult = () => {
+const useDialogAddWorkoutResult = () => {
     const { t } = useTranslation('workout')
     const router = useRouter()
     const { data } = useWorkoutPlans()
@@ -16,7 +16,7 @@ const useCreateWorkoutResult = () => {
     const [workoutPlanID, setWorkoutPlanID] = useState('')
     const theOldestSupportedDate = useAppSelector(state => state.config.theOldestSupportedDate)
 
-    const createWorkoutResult = async () => {
+    const DialogAddWorkoutResult = async () => {
         if (data && data.length) {
             const workoutPlan: WorkoutPlanSchemaProps[] = data.filter((workout: WorkoutPlanSchemaProps) => workout._id === workoutPlanID)
             const createdID = 'XD' + new Date().getTime()
@@ -51,9 +51,9 @@ const useCreateWorkoutResult = () => {
         }
     }, [data])
 
-    return { open, setOpen, data, setWhenAdded, workoutPlanID, setWorkoutPlanID, createWorkoutResult, t, theOldestSupportedDate }
+    return { open, setOpen, data, setWhenAdded, workoutPlanID, setWorkoutPlanID, DialogAddWorkoutResult, t, theOldestSupportedDate }
 }
 
-export type useCreateWorkoutResultprops = ReturnType<typeof useCreateWorkoutResult>
+export type useDialogAddWorkoutResultprops = ReturnType<typeof useDialogAddWorkoutResult>
 
-export default useCreateWorkoutResult;
+export default useDialogAddWorkoutResult;

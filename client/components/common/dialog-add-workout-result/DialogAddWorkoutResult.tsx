@@ -8,13 +8,13 @@ import DialogTitle from '@mui/material/DialogTitle'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
-import DatePickerMobile from '../../../common/date-picker-mobile'
-import { getShortDate } from '../../../../utils/date.utils'
-import { WorkoutPlanSchemaProps } from '../../../../schema/workoutPlan.schema'
-import { useCreateWorkoutResultprops } from './useCreateWorkoutResult'
-import ButtonPlusIcon from '../../../common/button-plus-icon'
+import DatePickerMobile from '../date-picker-mobile'
+import { getShortDate } from '../../../utils/date.utils'
+import { WorkoutPlanSchemaProps } from '../../../schema/workoutPlan.schema'
+import { useDialogAddWorkoutResultprops } from './useDialogAddWorkoutResult'
+import ButtonPlusIcon from '../button-plus-icon'
 
-const BaseCreateWorkoutResult = ({ open, setOpen, data, setWhenAdded, workoutPlanID, setWorkoutPlanID, createWorkoutResult, t, theOldestSupportedDate }: useCreateWorkoutResultprops) => {
+const BaseDialogAddWorkoutResult = ({ open, setOpen, data, setWhenAdded, workoutPlanID, setWorkoutPlanID, DialogAddWorkoutResult, t, theOldestSupportedDate }: useDialogAddWorkoutResultprops) => {
 
     if (!data || data.length == 0) {
         return <></>
@@ -47,11 +47,11 @@ const BaseCreateWorkoutResult = ({ open, setOpen, data, setWhenAdded, workoutPla
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => setOpen(false)}>{t('Cancel')}</Button>
-                    <Button onClick={createWorkoutResult}>{t('Submit')}</Button>
+                    <Button onClick={DialogAddWorkoutResult}>{t('Submit')}</Button>
                 </DialogActions>
             </Dialog>
         </div>
     )
 }
 
-export default BaseCreateWorkoutResult;
+export default BaseDialogAddWorkoutResult;
