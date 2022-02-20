@@ -4,8 +4,8 @@ import { ValueSchemaProps } from '../../../../../schema/workoutResult.schema'
 import styled from 'styled-components';
 import { useResultBoxProps } from './useResultBox';
 import ValueBox from '../valueBox';
-import ConfirmDialog from '../../../../common/confirmDialog';
-import ButtonPlus from '../../../../common/button-plus';
+import ConfirmDialog from '../../../../common/dialog-confirm';
+import ButtonPlusIcon from '../../../../common/button-plus-icon';
 
 const Name = styled.div`
     min-height: 36px;
@@ -59,7 +59,7 @@ const BaseResultBox = ({ result, isOwner, deleteExerciseWithIndex, deleteResult,
                     />
                 )
             }
-            {isOwner && <ButtonPlus size="small" click={() => openNewResult()} />}
+            {isOwner && <ButtonPlusIcon size="small" click={() => openNewResult()} />}
         </div>
     );
 }

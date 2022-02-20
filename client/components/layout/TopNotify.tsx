@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useAppSelector } from "../../hooks/useRedux";
 import { getAllIndexedDB } from "../../utils/indexedDB.utils";
 import styled from 'styled-components'
-import BetterLink from "../common/betterLink";
+import BetterLink from "../common/better-link";
 
 const Box = styled.div`
     color: #fff;

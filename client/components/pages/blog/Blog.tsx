@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { useBlogProps } from './useBlog';
 import Image from "next/image";
-import BetterLink from '../../common/betterLink';
+import BetterLink from '../../common/better-link';
 
 const Box = styled.div`
     position: relative;

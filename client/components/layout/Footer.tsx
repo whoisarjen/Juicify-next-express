@@ -5,7 +5,7 @@ import BookIcon from "@mui/icons-material/Book";
 import { getShortDate } from "../../utils/date.utils";
 import Avatar from "../common/avatar";
 import styled from 'styled-components'
-import BetterLink from "../common/betterLink";
+import BetterLink from "../common/better-link";
 
 const Box = styled.footer`
     width: 100%;

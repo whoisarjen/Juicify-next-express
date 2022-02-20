@@ -9,7 +9,7 @@ import { useAppSelector } from "../../../hooks/useRedux";
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import useTranslation from "next-translate/useTranslation";
 import styled from "styled-components";
-import AddWeight from "../../common/addWeight";
+import AddWeight from "../../common/dialog-add-weight";
 
 interface StandardProps {
     setStep: (arg0: string) => void

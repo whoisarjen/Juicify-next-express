@@ -7,7 +7,7 @@ import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
 import styled from 'styled-components';
 import { useValueBoxProps } from './useValueBox';
-import ConfirmDialog from '../../../../common/confirmDialog';
+import ConfirmDialog from '../../../../common/dialog-confirm';
 
 const Box = styled.div`
     min-height: 36px;

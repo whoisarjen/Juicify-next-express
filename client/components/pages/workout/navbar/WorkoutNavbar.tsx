@@ -5,7 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace'
 import styled from 'styled-components'
 import { useWorkoutNavbarProps } from "./useWorkoutNavbar";
-import ConfirmDialog from '../../../common/confirmDialog'
+import ConfirmDialog from '../../../common/dialog-confirm'
 
 const Grid = styled.div`
     width: 100%;

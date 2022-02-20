@@ -3,7 +3,7 @@ import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
 import { reverseDateDotes } from '../../../../utils/date.utils';
 import styled from 'styled-components'
 import { useWorkoutBoxProps } from './useWorkoutBox';
-import BetterLink from '../../../common/betterLink';
+import BetterLink from '../../../common/better-link';
 
 const Grid = styled.div`
     min-height: 140px;

@@ -7,7 +7,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import SlideUp from '../../../transition/SlideUp';
-import ConfirmDialog from '../../../common/confirmDialog';
+import ConfirmDialog from '../../../common/dialog-confirm';
 
 const BaseOwnMacro = ({ isOwnMacro, close, t, proteins, setProteins, carbs, setCarbs, fats, setFats, isDialog, setIsDialog, handleConfirm }: any) => {
     return (

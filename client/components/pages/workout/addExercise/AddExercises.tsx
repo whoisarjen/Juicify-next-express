@@ -4,12 +4,12 @@ import styled from 'styled-components'
 import SlideUp from '../../../transition/SlideUp';
 import { useAddExercisesProps } from './useAddExercises';
 import AddExercisesBox from './box';
-import ButtonSubmitItems from '../../../common/button-only-with-number';
-import AddItemsTabs from '../../../common/tabs';
+import ButtonSubmitItems from '../../../common/button-submit-items';
+import AddItemsTabs from '../../../common/tabs-items';
 import CreateExercise from './createExercise';
-import Autocomplete from '../../../common/autocomplete';
+import Autocomplete from '../../../common/input-autocomplete';
 import ButtonCloseDialog from '../../../common/button-close-dialog';
-import ButtonPlus from '../../../common/button-plus';
+import ButtonPlusIcon from '../../../common/button-plus-icon';
 
 const DialogContent = styled.div`
     width: 100%;
@@ -42,7 +42,7 @@ const ButtonHolder = styled.div`
 const BaseAddExercises = ({ children, isDialog, setIsDialog, find, setFind, loading, searchCache, items, checked, t, setTab, setRefreshChecked, refreshChecked, addExercisesToWorkoutPlan }: useAddExercisesProps) => {
     return (
         <>
-            <ButtonHolder onClick={() => setIsDialog(true)}>{children || <ButtonPlus />}</ButtonHolder>
+            <ButtonHolder onClick={() => setIsDialog(true)}>{children || <ButtonPlusIcon />}</ButtonHolder>
 
             <Dialog fullScreen scroll='body' open={isDialog} TransitionComponent={SlideUp}>
                 <DialogContent>

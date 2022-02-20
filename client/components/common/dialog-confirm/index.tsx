@@ -8,12 +8,12 @@ import useTranslation from "next-translate/useTranslation"
 import DialogContentText from '@mui/material/DialogContentText'
 import { useState } from 'react'
 
-interface ConfirmDialogProps {
+interface DialogConfirmProps {
     children: any
     confirmed: () => void
 }
 
-const ConfirmDialog = ({ children, confirmed }: ConfirmDialogProps) => {
+const DialogConfirm = ({ children, confirmed }: DialogConfirmProps) => {
     const [isDialog, setIsDialog] = useState(false)
     const { t } = useTranslation('home')
 
@@ -50,4 +50,4 @@ const ConfirmDialog = ({ children, confirmed }: ConfirmDialogProps) => {
     )
 }
 
-export default ConfirmDialog;
+export default DialogConfirm;

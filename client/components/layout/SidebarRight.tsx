@@ -11,8 +11,8 @@ import { useTheme } from "../../hooks/useTheme";
 import { getCalories } from "../../utils/product.utils";
 import styled from 'styled-components'
 import { getMacroByDay } from "../../utils/user.utils";
-import BetterLink from "../common/betterLink";
-import AddWeight from "../common/addWeight";
+import BetterLink from "../common/better-link";
+import AddWeight from "../common/dialog-add-weight";
 
 const Box = styled.aside`
     padding: 12px;

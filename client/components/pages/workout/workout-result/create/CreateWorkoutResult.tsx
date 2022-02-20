@@ -8,11 +8,11 @@ import DialogTitle from '@mui/material/DialogTitle'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
-import DatePicker from '../../../../common/datePickers/mobile/inadex'
+import DatePicker from '../../../../common/date-picker-mobile'
 import { getShortDate } from '../../../../../utils/date.utils'
 import { WorkoutPlanSchemaProps } from '../../../../../schema/workoutPlan.schema'
 import { useCreateWorkoutResultprops } from './useCreateWorkoutResult'
-import ButtonPlus from '../../../../common/button-plus'
+import ButtonPlusIcon from '../../../../common/button-plus-icon'
 
 const BaseCreateWorkoutResult = ({ open, setOpen, data, setWhenAdded, workoutPlanID, setWorkoutPlanID, createWorkoutResult, t }: useCreateWorkoutResultprops) => {
 
@@ -22,7 +22,7 @@ const BaseCreateWorkoutResult = ({ open, setOpen, data, setWhenAdded, workoutPla
 
     return (
         <div>
-            <ButtonPlus click={() => setOpen(true)} />
+            <ButtonPlusIcon click={() => setOpen(true)} />
             <Dialog open={open} onClose={() => setOpen(false)}>
                 <DialogTitle>{t('CREATE_RESULT')}</DialogTitle>
                 <DialogContent>

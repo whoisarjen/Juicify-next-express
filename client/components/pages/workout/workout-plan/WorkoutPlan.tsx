@@ -8,7 +8,7 @@ import AddExercises from '../addExercise'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { ExerciseSchemaProps } from '../../../../schema/exercise.schema'
 import { useWorkoutPlanProps } from './useWorkoutPlan'
-import BottomFlyingGuestBanner from '../../../common/bottomFlyingGuestBanner'
+import BottomFlyingGuestBanner from '../../../common/banner-guest-bottom'
 
 const BaseWorkoutPlan = ({ t, user, token, errors, fields, append, remove, handleOnDragEnd, register, deleteWorkoutPlan, handleSubmit, saveWorkoutPlan, isLoading }: useWorkoutPlanProps) => {
     return (

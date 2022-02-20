@@ -2,7 +2,7 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import styled from 'styled-components'
 
-interface ButtonPlusProps {
+interface ButtonPlusIconProps {
     click?: () => void,
     size?: any
 }
@@ -16,7 +16,7 @@ const Button = styled.div`
     }
 `
 
-const ButtonPlus = ({ click, size = 'normal' }: ButtonPlusProps) => {
+const ButtonPlusIcon = ({ click, size = 'normal' }: ButtonPlusIconProps) => {
     return (
         <Button onClick={click}>
             <Fab size={size} color="primary" aria-label="add">
@@ -26,4 +26,4 @@ const ButtonPlus = ({ click, size = 'normal' }: ButtonPlusProps) => {
     );
 }
 
-export default ButtonPlus;
+export default ButtonPlusIcon;

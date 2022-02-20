@@ -2,7 +2,7 @@ import TextField from '@mui/material/TextField';
 import { ValueSchemaProps } from '../../../../schema/workoutResult.schema';
 import { reverseDateDotes } from '../../../../utils/date.utils';
 import { is_id } from '../../../../utils/db.utils';
-import BottomFlyingGuestBanner from '../../../common/bottomFlyingGuestBanner';
+import BottomFlyingGuestBanner from '../../../common/banner-guest-bottom';
 import Navbar from '../navbar'
 import WorkoutResultMoreOptions from './moreOptions';
 import ResultBox from './resultBox';

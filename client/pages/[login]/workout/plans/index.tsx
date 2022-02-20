@@ -7,7 +7,7 @@ import Navbar from '../../../../components/pages/profile/navbar';
 import { useAppSelector } from '../../../../hooks/useRedux';
 import { WorkoutPlanSchemaProps } from '../../../../schema/workoutPlan.schema';
 import styled from 'styled-components';
-import ButtonPlus from '../../../../components/common/button-plus';
+import ButtonPlusIcon from '../../../../components/common/button-plus-icon';
 
 const Title = styled.div`
     font-size: 2rem;
@@ -34,7 +34,7 @@ const WorkoutPlans = () => {
                     (
                         <>
                             <Title>{t('Workout plans')}</Title>
-                            <ButtonPlus click={createWorkoutPlan} />
+                            <ButtonPlusIcon click={createWorkoutPlan} />
                         </>
                     ) : (
                         <Navbar user={user} tab={3} />

@@ -5,7 +5,7 @@ import { getAge, getShortDate } from "../../../utils/date.utils";
 import { useAppSelector } from "../../../hooks/useRedux";
 import useTranslation from "next-translate/useTranslation";
 import styled from "styled-components";
-import AddWeight from "../../common/addWeight";
+import AddWeight from "../../common/dialog-add-weight";
 
 const Grid = styled.div`
     width: 100%;

@@ -8,13 +8,13 @@ import AddProductsBox from './box';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import CreateProduct from './create';
-import BottomFlyingButton from '../../../../common/button-only-with-number';
+import BottomFlyingButton from '../../../../common/button-submit-items';
 import AddProductMoreInformation from './informations';
 import { ProductSchemaProps } from '../../../../../schema/product.schema';
 import styled from 'styled-components'
 import SlideUp from '../../../../transition/SlideUp';
 import { useAddProductsProps } from './useAddProducts';
-import AddItemsTabs from '../../../../common/tabs';
+import AddItemsTabs from '../../../../common/tabs-items';
 
 const Close = styled.div`
     display: grid;

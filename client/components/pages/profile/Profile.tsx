@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import SimpleLineChart from "../../diagrams/SimpleLineChart";
-import StackedBarChart from "../../diagrams/StackedBarChart";
+import SimpleLineChart from "../../common/diagram-simple-line-chart";
+import StackedBarChart from "../../common/diagram-stacked-bar-chart";
 import NavbarComponent from "./navbar";
 import { useProfileProps } from "./useProfile";
 
