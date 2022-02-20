@@ -1,4 +1,4 @@
-import { ExerciseSchemaProps } from '../../../../schema/exercise.schema';
+import { ExerciseSchemaProps } from '../../../schema/exercise.schema';
 import useWorkoutResultMoreOptions from './useWorkoutResultMoreOptions';
 import BaseWorkoutResultMoreOptions from './WorkoutResultMoreOptions';
 

@@ -9,7 +9,7 @@ export const DailyMeasurementSchema = object({
     whenAdded: string(),
     weight: preprocess((val) => Number(val), number()),
     nutrition_diary: array(ProductSchema.or(ActivitySchema)),
-    workout_result: array(WorkoutResultSchema),
+    workout_result: array(WorkoutResultSchema).optional(), // it has to be optional, because useWorkoutResult base on this
 })
 
 export type DailyMeasurementSchemaProps = TypeOf<typeof DailyMeasurementSchema>

@@ -9,12 +9,13 @@ import { WorkoutResultSchemaProps, ValueSchemaProps, ResultSchemaProps, WorkoutR
 import { is_id, overwriteThoseIDSinDB, insertThoseIDStoDB, insertThoseIDStoDBController } from "../../../utils/db.utils"
 import { deleteIndexedDB, addIndexedDB } from "../../../utils/indexedDB.utils"
 import {  prepareWorkoutResultToSend } from "../../../utils/workoutResult.utils"
-import useGetWorkoutResult from "./useGetWorkoutPlan"
+import useGetWorkoutResult from "./useGetWorkoutResult"
 
 const useWorkoutResult = () => {
     const router: any = useRouter()
     const { t } = useTranslation('workout')
     const { data, user, daily } = useGetWorkoutResult()
+    console.log(data)
     const token: any = useAppSelector(state => state.token.value)
     const [isLoading, setIsLoading] = useState(false)
     const isDateSupported = useAppSelector(state => state.config.theOldestSupportedDate()) <= router.query.date

@@ -4,7 +4,7 @@ import { reverseDateDotes } from '../../../utils/date.utils';
 import { is_id } from '../../../utils/db.utils';
 import BottomFlyingGuestBanner from '../../common/banner-guest-bottom';
 import Navbar from '../../common/navbar-workout'
-import WorkoutResultMoreOptions from './moreOptions';
+import WorkoutResultMoreOptions from '../../common/moreOptions';
 import ResultBox from './resultBox';
 import { useWorkoutResultProps } from './useWorkoutResult';
 

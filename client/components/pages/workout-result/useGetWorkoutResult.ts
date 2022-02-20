@@ -17,13 +17,14 @@ const useGetWorkoutResult = (): any => {
     useEffect(() => {
         (async () => {
             if (daily?.workout_result) {
-                let res: any = {}
+                let res: any = []
                 if (token.login == router.query.login) {
                     let cache = await getIndexedDBbyID('workout_result', router.query.id)
                     if (cache) {
                         res = [cache]
                     } else {
                         res = daily.workout_result.filter((workout: any) => workout._id == router.query.id)
+                        console.log(res.length)
                         if (res?.length == 0) router.push(`/${router.query.login}/workout/results`)
                     }
                     res = loadMissingDataForWorkoutResult({

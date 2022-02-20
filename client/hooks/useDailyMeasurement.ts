@@ -17,7 +17,7 @@ const useDailyMeasurement = (when: string, login: string): useDailyMeasurementRe
     const [user, setUser] = useState();
     const [reload, setReload] = useState(0);
     const token: any = useAppSelector(state => state.token.value)
-    const [data, setDataObject] = useState(loadMissingDataForDailyMeasurement({ _id: "XD" + new Date().getTime(), user_ID: token._id, whenAdded: when }));
+    const [data, setDataObject] = useState({ _id: "XD" + new Date().getTime(), user_ID: token._id, weight: 0, whenAdded: when, nutrition_diary: [] }); // preload value
     const theOldestSupportedDate = useAppSelector(state => state.config.theOldestSupportedDate());
     const reloadKey = useAppSelector(state => state.key.daily_measurement)
     const { loadValueByLogin } = useOtherUser()
