@@ -1,4 +1,4 @@
-import WorkoutPlan from "../../../../components/pages/workout/workout-plan"
+import WorkoutPlan from "../../../../components/pages/workout-plan"
 
 const WorkoutPlanPage = () => {
     return <WorkoutPlan />

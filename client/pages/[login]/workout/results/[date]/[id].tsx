@@ -1,5 +1,5 @@
 
-import WorkoutResult from '../../../../../components/pages/workout/workout-result';
+import WorkoutResult from '../../../../../components/pages/workout-result';
 
 const WorkoutResultspage = () => {
     return <WorkoutResult />

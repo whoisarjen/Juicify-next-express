@@ -1,4 +1,4 @@
-import Box from "../../../components/pages/workout/box";
+import Box from "../../../components/common/box-workout";
 import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
 
@@ -7,7 +7,7 @@ const Workout = () => {
     const router: any = useRouter()
 
     return (
-        <div className="workout">
+        <div>
             <Box
                 title={t('Workout results')}
                 description={t('Workout results descirption')}
