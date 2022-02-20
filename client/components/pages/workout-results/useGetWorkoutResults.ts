@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { getAllIndexedDB } from "../../../utils/indexedDB.utils";
 import useOtherUser from "../../../hooks/useOtherUser";
 import { WorkoutPlanSchemaProps } from "../../../schema/workoutPlan.schema";
+import { sortWorkoutResults } from "../../../utils/workoutResult.utils";
 
 interface useGetWorkoutResultsResponseProps {
     data: WorkoutPlanSchemaProps[]
@@ -35,13 +36,17 @@ const useGetWorkoutResults = (): useGetWorkoutResultsResponseProps => {
                 }
                 if (results.length) {
                     if (cache.length) {
-                        for (let i = 0; i < results.length; i++) {
-                            for (let a = 0; a < cache.length; a++) {
+                        for (let a = 0; a < cache.length; a++) {
+                            let checker = false;
+                            for (let i = 0; i < results.length; i++) {
                                 if (cache[a]._id == results[i]._id) {
-                                    results[i] = cache[a]
-                                    results[i].notSaved = new Date().getTime()
+                                    results[i] = { ...cache[a], notSaved: new Date().getTime() }
+                                    checker = true;
                                     break;
                                 }
+                            }
+                            if (!checker) {
+                                results.push({ ...cache[a], notSaved: new Date().getTime() })
                             }
                         }
                     }
@@ -52,7 +57,7 @@ const useGetWorkoutResults = (): useGetWorkoutResultsResponseProps => {
                     })
                 }
                 setUser(token)
-                setData(results || [])
+                setData(results.sort(sortWorkoutResults) || [])
             } else {
                 let response = await loadValueByLogin('daily_measurements', theOldestSupportedDate(), router.query.login)
                 let results: any = []
@@ -65,7 +70,7 @@ const useGetWorkoutResults = (): useGetWorkoutResultsResponseProps => {
                         }
                     }
                 }
-                setData(results || [])
+                setData(results.sort(sortWorkoutResults) || [])
                 setUser(response.user || [])
             }
         })()

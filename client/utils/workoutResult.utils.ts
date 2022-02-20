@@ -31,3 +31,18 @@ export const prepareWorkoutResultToSend = (object: WorkoutResultSchemaProps) => 
         ...(object?.results && { results: object?.results }),
     }
 }
+
+export const sortWorkoutResults = (a: any, b: any) => {
+    if (a.notSaved && !b.notSaved) {
+        return -1;
+    }
+    else if (!a.notSaved && b.notSaved) {
+        return 1;
+    }
+    else if (b.whenAdded > a.whenAdded) {
+        return 1;
+    }
+    else {
+        return -1;
+    }
+}
