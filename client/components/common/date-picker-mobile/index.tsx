@@ -9,10 +9,11 @@ interface DatePickerMobileProps {
     change: (arg0: any) => void,
     defaultDate: Date,
     label?: string,
-    marginBottom?: string | number
+    marginBottom?: string | number,
+    minDate?: Date
 }
 
-const DatePickerMobile = ({ change, defaultDate, label = "Pick date", marginBottom = 0 }: DatePickerMobileProps) => {
+const DatePickerMobile = ({ change, defaultDate, label = "Pick date", marginBottom = 0, minDate }: DatePickerMobileProps) => {
     const [value, setValue] = useState<Date>(defaultDate)
 
     const handleChange = (newValue: any) => {
@@ -28,6 +29,7 @@ const DatePickerMobile = ({ change, defaultDate, label = "Pick date", marginBott
                     value={value}
                     onChange={handleChange}
                     renderInput={(params) => <TextField {...params} />}
+                    minDate={minDate}
                 />
             </Stack>
         </LocalizationProvider>

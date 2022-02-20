@@ -8,13 +8,13 @@ import DialogTitle from '@mui/material/DialogTitle'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
-import DatePicker from '../../../common/date-picker-mobile'
+import DatePickerMobile from '../../../common/date-picker-mobile'
 import { getShortDate } from '../../../../utils/date.utils'
 import { WorkoutPlanSchemaProps } from '../../../../schema/workoutPlan.schema'
 import { useCreateWorkoutResultprops } from './useCreateWorkoutResult'
 import ButtonPlusIcon from '../../../common/button-plus-icon'
 
-const BaseCreateWorkoutResult = ({ open, setOpen, data, setWhenAdded, workoutPlanID, setWorkoutPlanID, createWorkoutResult, t }: useCreateWorkoutResultprops) => {
+const BaseCreateWorkoutResult = ({ open, setOpen, data, setWhenAdded, workoutPlanID, setWorkoutPlanID, createWorkoutResult, t, theOldestSupportedDate }: useCreateWorkoutResultprops) => {
 
     if (!data || data.length == 0) {
         return <></>
@@ -27,7 +27,7 @@ const BaseCreateWorkoutResult = ({ open, setOpen, data, setWhenAdded, workoutPla
                 <DialogTitle>{t('CREATE_RESULT')}</DialogTitle>
                 <DialogContent>
                     <DialogContentText sx={{ marginBottom: '12px' }}>{t('CREATE_RESULT_DESCRIPTION')}</DialogContentText>
-                    <DatePicker change={(value) => setWhenAdded(value)} defaultDate={new Date(getShortDate())} />
+                    <DatePickerMobile change={(value) => setWhenAdded(value)} defaultDate={new Date(getShortDate())} minDate={new Date(theOldestSupportedDate())} />
                     <FormControl fullWidth sx={{ marginTop: '12px' }}>
                         <InputLabel id="demo-simple-select-label">{t('Workout plan')}</InputLabel>
                         <Select

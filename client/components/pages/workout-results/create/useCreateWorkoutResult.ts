@@ -5,6 +5,7 @@ import useWorkoutPlans from "../../workout-plans/useGetWorkoutPlans"
 import { WorkoutPlanSchemaProps } from "../../../../schema/workoutPlan.schema"
 import { getShortDate } from "../../../../utils/date.utils"
 import { addIndexedDB } from "../../../../utils/indexedDB.utils"
+import { useAppSelector } from "../../../../hooks/useRedux"
 
 const useCreateWorkoutResult = () => {
     const { t } = useTranslation('workout')
@@ -13,6 +14,7 @@ const useCreateWorkoutResult = () => {
     const [open, setOpen] = useState(false)
     const [whenAdded, setWhenAdded] = useState(new Date(getShortDate()))
     const [workoutPlanID, setWorkoutPlanID] = useState('')
+    const theOldestSupportedDate = useAppSelector(state => state.config.theOldestSupportedDate)
 
     const createWorkoutResult = async () => {
         if (data && data.length) {
@@ -49,7 +51,7 @@ const useCreateWorkoutResult = () => {
         }
     }, [data])
 
-    return { open, setOpen, data, setWhenAdded, workoutPlanID, setWorkoutPlanID, createWorkoutResult, t }
+    return { open, setOpen, data, setWhenAdded, workoutPlanID, setWorkoutPlanID, createWorkoutResult, t, theOldestSupportedDate }
 }
 
 export type useCreateWorkoutResultprops = ReturnType<typeof useCreateWorkoutResult>
