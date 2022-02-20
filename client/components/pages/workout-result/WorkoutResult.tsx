@@ -4,7 +4,7 @@ import { reverseDateDotes } from '../../../utils/date.utils';
 import { is_id } from '../../../utils/db.utils';
 import BottomFlyingGuestBanner from '../../common/banner-guest-bottom';
 import Navbar from '../../common/navbar-workout'
-import WorkoutResultMoreOptions from '../../common/moreOptions';
+import ButtonMoreOptionsWorkoutResult from '../../common/button-more-options-workout-result';
 import ResultBox from './resultBox';
 import { useWorkoutResultProps } from './useWorkoutResult';
 
@@ -93,7 +93,7 @@ const BaseWorkoutResult = ({ t, isLoading, handleSubmit, onSubmit, deleteEveryth
                     errors.description?.message
                 }
             />
-            
+
             {
                 fields.map((result: any, index: number) =>
                     <div style={fields.length == (index + 1) ? { marginBottom: '100px' } : {}} key={(result._id || '') + index}>
@@ -108,13 +108,8 @@ const BaseWorkoutResult = ({ t, isLoading, handleSubmit, onSubmit, deleteEveryth
                 )
             }
 
-            {
-                token?.login == router?.query?.login &&
-                <WorkoutResultMoreOptions
-                    exercises={fields as any}
-                    setExercises={addExercises}
-                />
-            }
+            {token?.login == router?.query?.login &&
+                <ButtonMoreOptionsWorkoutResult exercises={fields as any} setExercises={addExercises} />}
 
             {token?.login != user?.login && user?.login && <BottomFlyingGuestBanner user={user} />}
         </form>

@@ -2,10 +2,10 @@ import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import AddExercises from '../dialog-add-exercise'
-import { useWorkoutResultMoreOptionsProps } from './useWorkoutResultMoreOptions';
+import { useButtonMoreOptionsWorkoutResultProps } from './useButtonMoreOptionsWorkoutResult';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 
-const BaseWorkoutResultMoreOptions = ({ exercises, setExercises, handleClose, handleOpen, open }: useWorkoutResultMoreOptionsProps) => {
+const BaseButtonMoreOptionsWorkoutResult = ({ exercises, setExercises, handleClose, handleOpen, open }: useButtonMoreOptionsWorkoutResultProps) => {
 
     const actions = [
         {
@@ -38,4 +38,4 @@ const BaseWorkoutResultMoreOptions = ({ exercises, setExercises, handleClose, ha
     );
 }
 
-export default BaseWorkoutResultMoreOptions;
+export default BaseButtonMoreOptionsWorkoutResult;
