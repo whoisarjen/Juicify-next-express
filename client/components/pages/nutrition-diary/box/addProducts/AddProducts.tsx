@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
-import AddProductsBox from './box';
+import AddProductsBox from '../../../../common/box-product';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import CreateProduct from './create';

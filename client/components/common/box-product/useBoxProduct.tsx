@@ -1,10 +1,10 @@
 import useTranslation from "next-translate/useTranslation";
 import { useState, useEffect } from "react";
-import { AddproductsBoxProps } from ".";
-import { useTheme } from "../../../../../../hooks/useTheme";
-import { deleteIndexedDB, addIndexedDB, getIndexedDBbyID, putIndexedDB } from "../../../../../../utils/indexedDB.utils";
+import { BoxProductProps } from ".";
+import { useTheme } from "../../../hooks/useTheme";
+import { deleteIndexedDB, addIndexedDB, getIndexedDBbyID, putIndexedDB } from "../../../utils/indexedDB.utils";
 
-const useAddProductBox = ({ product, refreshCheckedProducts, openMoreInformation }: AddproductsBoxProps) => {
+const useBoxProduct = ({ product, refreshCheckedProducts, openMoreInformation }: BoxProductProps) => {
     const { t } = useTranslation('nutrition-diary');
     const [checked, setChecked] = useState(false);
     const [value, setValue] = useState('1.0')
@@ -50,6 +50,6 @@ const useAddProductBox = ({ product, refreshCheckedProducts, openMoreInformation
     return { product, openMoreInformation, getTheme, value, handleValueChange, checked, handleCheck, handleLike, fav, t }
 }
 
-export type AddProductBoxProps = ReturnType<typeof useAddProductBox>
+export type useBoxProductProps = ReturnType<typeof useBoxProduct>
 
-export default useAddProductBox;
+export default useBoxProduct;

@@ -4,7 +4,7 @@ import Favorite from '@mui/icons-material/Favorite';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
-import { getCalories } from '../../../../../../utils/product.utils';
+import { getCalories } from '../../../utils/product.utils';
 import styled from 'styled-components';
 
 const Grid = styled.div`
@@ -54,7 +54,7 @@ const Submit = styled.div`
     margin: auto;
 `
 
-const BaseAddProductsBox = ({ product, openMoreInformation, getTheme, value, handleValueChange, checked, handleCheck, handleLike, fav, t }: any) => {
+const BaseBoxProduct = ({ product, openMoreInformation, getTheme, value, handleValueChange, checked, handleCheck, handleLike, fav, t }: any) => {
     return (
         <Grid style={{ borderLeft: product.v ? `5px solid ${getTheme('PRIMARY')}` : '' }}>
             <Name style={{ color: getTheme('PRIMARY') }}>
@@ -63,10 +63,10 @@ const BaseAddProductsBox = ({ product, openMoreInformation, getTheme, value, han
             <Description>
                 {(product.p || 0)}{t('P')} {(product.c || 0)}{t('C')} {(product.f || 0)}{t('F')} {getCalories(product)}kcal
             </Description>
-            <Favourite onClick={handleLike}>
+            <Favourite onClick={handleLike} data-testid="handleLike">
                 <Checkbox checked={fav} icon={<FavoriteBorder fontSize="small" />} checkedIcon={<Favorite fontSize="small" />} />
             </Favourite>
-            <MoreInfo onClick={openMoreInformation}>
+            <MoreInfo onClick={openMoreInformation} data-testid="openMoreInformation">
                 <IconButton color="primary">
                     <InfoIcon fontSize="small" />
                 </IconButton>
@@ -76,6 +76,7 @@ const BaseAddProductsBox = ({ product, openMoreInformation, getTheme, value, han
             </Value>
             <Submit onChange={handleCheck}>
                 <Checkbox
+                    data-testid="checked"
                     checked={checked}
                     inputProps={{ 'aria-label': 'controlled' }}
                 />
@@ -84,4 +85,4 @@ const BaseAddProductsBox = ({ product, openMoreInformation, getTheme, value, han
     );
 }
 
-export default BaseAddProductsBox;
+export default BaseBoxProduct;
