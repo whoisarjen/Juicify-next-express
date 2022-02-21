@@ -1,6 +1,6 @@
 import { useRouter } from "next/router"
 import { useAppSelector } from "../../../hooks/useRedux"
-import useGetWorkoutResults from "./useGetWorkoutResults"
+import useGetWorkoutResults from "../../../hooks/useGetWorkoutResults"
 
 const useWorkoutResults = () => {
     const router = useRouter()

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import useTranslation from "next-translate/useTranslation";
 import { useAppSelector } from '../../../hooks/useRedux';
-import useGetWorkoutPlans from './useGetWorkoutPlans';
+import useGetWorkoutPlans from '../../../hooks/useGetWorkoutPlans';
 import { addIndexedDB } from '../../../utils/indexedDB.utils';
 
 const useWorkoutPlans = () => {

@@ -8,14 +8,14 @@ import { useAppSelector } from "../../../hooks/useRedux"
 import { WorkoutPlanSchemaProps, WorkoutPlanSchema } from "../../../schema/workoutPlan.schema"
 import { is_id, deleteThoseIDSfromDB, insertThoseIDStoDBController } from "../../../utils/db.utils"
 import { deleteIndexedDB } from "../../../utils/indexedDB.utils"
-import useGetWorkoutPlanByID from "./useGetWorkoutPlanByID"
+import useGetWorkoutPlan from "../../../hooks/useGetWorkoutPlan"
 
 const useWorkoutPlan = () => {
     const router: any = useRouter()
     const { t } = useTranslation('workout')
     const [isLoading, setIsLoading] = useState(false)
     const token: any = useAppSelector(state => state.token.value)
-    const { data, user } = useGetWorkoutPlanByID(router.query.id)
+    const { data, user } = useGetWorkoutPlan(router.query.id)
     const { error } = useNotify()
 
     const deleteWorkoutPlan = async () => {

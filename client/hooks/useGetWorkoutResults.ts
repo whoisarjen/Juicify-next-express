@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
-import { useAppSelector } from "../../../hooks/useRedux";
+import { useAppSelector } from "./useRedux";
 import { useState, useEffect } from "react";
-import { getAllIndexedDB } from "../../../utils/indexedDB.utils";
-import useOtherUser from "../../../hooks/useOtherUser";
-import { WorkoutPlanSchemaProps } from "../../../schema/workoutPlan.schema";
-import { sortWorkoutResults } from "../../../utils/workoutResult.utils";
+import { getAllIndexedDB } from "../utils/indexedDB.utils";
+import useOtherUser from "./useOtherUser";
+import { WorkoutPlanSchemaProps } from "../schema/workoutPlan.schema";
+import { sortWorkoutResults } from "../utils/workoutResult.utils";
 
 interface useGetWorkoutResultsResponseProps {
     data: WorkoutPlanSchemaProps[]

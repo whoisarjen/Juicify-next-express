@@ -9,7 +9,7 @@ import { WorkoutResultSchemaProps, ValueSchemaProps, ResultSchemaProps, WorkoutR
 import { is_id, overwriteThoseIDSinDB, insertThoseIDStoDB, insertThoseIDStoDBController } from "../../../utils/db.utils"
 import { deleteIndexedDB, addIndexedDB } from "../../../utils/indexedDB.utils"
 import {  prepareWorkoutResultToSend } from "../../../utils/workoutResult.utils"
-import useGetWorkoutResult from "./useGetWorkoutResult"
+import useGetWorkoutResult from "../../../hooks/useGetWorkoutResult"
 
 const useWorkoutResult = () => {
     const router: any = useRouter()

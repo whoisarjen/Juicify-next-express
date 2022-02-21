@@ -1,11 +1,11 @@
 import { useRouter } from "next/router"
 import { useState, useEffect } from "react"
-import { useDailyMeasurement } from "../../../hooks/useDailyMeasurement"
-import { useAppSelector } from "../../../hooks/useRedux"
-import { reverseDateDotes } from "../../../utils/date.utils"
-import { is_id } from "../../../utils/db.utils"
-import { getIndexedDBbyID } from "../../../utils/indexedDB.utils"
-import { loadMissingDataForWorkoutResult } from "../../../utils/workoutResult.utils"
+import { useDailyMeasurement } from "./useDailyMeasurement"
+import { useAppSelector } from "./useRedux"
+import { reverseDateDotes } from "../utils/date.utils"
+import { is_id } from "../utils/db.utils"
+import { getIndexedDBbyID } from "../utils/indexedDB.utils"
+import { loadMissingDataForWorkoutResult } from "../utils/workoutResult.utils"
 
 const useGetWorkoutResult = (): any => {
     const router: any = useRouter()

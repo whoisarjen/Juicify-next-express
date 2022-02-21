@@ -1,13 +1,13 @@
 import { useRouter } from "next/router"
 import { useState, useEffect } from "react"
-import useOtherUser from "../../../hooks/useOtherUser"
-import { useAppSelector } from "../../../hooks/useRedux"
-import { WorkoutPlanSchemaProps } from "../../../schema/workoutPlan.schema"
-import { is_id } from "../../../utils/db.utils"
-import { getIndexedDBbyID } from "../../../utils/indexedDB.utils"
-import { loadMissingData } from "../../../utils/workoutPlan.utils"
+import useOtherUser from "./useOtherUser"
+import { useAppSelector } from "./useRedux"
+import { WorkoutPlanSchemaProps } from "../schema/workoutPlan.schema"
+import { is_id } from "../utils/db.utils"
+import { getIndexedDBbyID } from "../utils/indexedDB.utils"
+import { loadMissingData } from "../utils/workoutPlan.utils"
 
-const useGetWorkoutPlanByID = (_id: string) => {
+const useGetWorkoutPlan = (_id: string) => {
     const router: any = useRouter()
     const [user, setUser] = useState<any>({})
     const [reload, setReload] = useState(0)
@@ -49,6 +49,6 @@ const useGetWorkoutPlanByID = (_id: string) => {
     return { data, user, reload: () => setReload(reload + 1) }
 }
 
-export type useGetWorkoutPlanByIDProps = ReturnType<typeof useGetWorkoutPlanByID>
+export type useGetWorkoutPlanProps = ReturnType<typeof useGetWorkoutPlan>
 
-export default useGetWorkoutPlanByID;
+export default useGetWorkoutPlan;
