@@ -7,7 +7,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import AddProductsBox from '../../../../common/box-product';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import CreateProduct from './create';
+import DialogCreateProduct from '../../../../common/dialog-create-product';
 import BottomFlyingButton from '../../../../common/button-submit-items';
 import AddProductMoreInformation from './informations';
 import { ProductSchemaProps } from '../../../../../schema/product.schema';
@@ -16,23 +16,7 @@ import SlideUp from '../../../../transition/SlideUp';
 import { useAddProductsProps } from './useAddProducts';
 import AddItemsTabs from '../../../../common/tabs-items';
 import NavbarOnlyTitle from '../../../../common/navbar-only-title';
-
-const Close = styled.div`
-    display: grid;
-    width: calc(100% - 10px);
-    padding: 3.75px 5px;
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--theme-background);
-    z-index: 2;
-`
-
-const Placeholder = styled.div`
-    width: 100%;
-    height: 44px;
-`
+import ButtonCloseDialog from '../../../../common/button-close-dialog';
 
 const Grid = styled.div`
     width: 100%;
@@ -51,12 +35,7 @@ const Grid = styled.div`
     }
 `
 
-const GridFullWidth = styled.div`
-    display: grid;
-    width: 100%;
-`
-
-const BaseAddProducts = ({ children, isDialog, setIsDialog, t, dailyMeasurement, meal, setMeal, open, setOpen, find, setFind, setTab, loading, searchCache, token, items, addProductsToDiary, isCreateProduct, setIsCreateProduct, setRefreshChecked, loadedProduct, setLoadedProduct, checked, created, refreshChecked }: useAddProductsProps) => {
+const BaseAddProducts = ({ children, isDialog, setIsDialog, t, dailyMeasurement, meal, setMeal, open, setOpen, find, setFind, setTab, loading, searchCache, token, items, addProductsToDiary, setRefreshChecked, loadedProduct, setLoadedProduct, checked, created, refreshChecked }: useAddProductsProps) => {
     return (
         <>
             <div onClick={() => setIsDialog(true)}>{children}</div>
@@ -115,23 +94,17 @@ const BaseAddProducts = ({ children, isDialog, setIsDialog, t, dailyMeasurement,
                             <AddProductsBox refreshCheckedProducts={() => setRefreshChecked(refreshChecked + 1)} product={product} key={product._id} openMoreInformation={() => setLoadedProduct(product)} />
                         )
                     }
-                    <GridFullWidth>
-                        <Button variant="outlined" onClick={() => setIsCreateProduct(true)} sx={{ margin: 'auto' }}>
+
+                    <DialogCreateProduct created={created}>
+                        <Button variant="outlined" sx={{ margin: 'auto' }}>
                             {t('Create product')}
                         </Button>
-                    </GridFullWidth>
-                    <CreateProduct
-                        created={created}
-                        isCreateProduct={isCreateProduct}
-                        closeCreateProduct={() => setIsCreateProduct(false)}
-                    />
+                    </DialogCreateProduct>
+
                     <BottomFlyingButton clicked={addProductsToDiary} showNumber={checked.length} />
-                    <Placeholder />
-                    <Close onClick={() => setIsDialog(false)}>
-                        <Button variant="contained">
-                            {t('Close')}
-                        </Button>
-                    </Close>
+
+                    <ButtonCloseDialog clicked={() => setIsDialog(false)} />
+
                 </Grid>
                 <AddProductMoreInformation handleClose={() => setLoadedProduct(false)} loadedProduct={loadedProduct} dailyMeasurement={dailyMeasurement} />
             </Dialog>

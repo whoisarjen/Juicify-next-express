@@ -1,19 +1,20 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import useTranslation from "next-translate/useTranslation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
-import { AddProductsCreateProps } from "."
-import { useNotify } from "../../../../../../hooks/useNotify"
-import { useAppSelector } from "../../../../../../hooks/useRedux"
-import { ProductSchemaProps, ProductSchema } from "../../../../../../schema/product.schema"
-import { insertThoseIDStoDB } from "../../../../../../utils/db.utils"
+import { DialogCreateProductProps } from "."
+import { useNotify } from "../../../hooks/useNotify"
+import { useAppSelector } from "../../../hooks/useRedux"
+import { ProductSchemaProps, ProductSchema } from "../../../schema/product.schema"
+import { insertThoseIDStoDB } from "../../../utils/db.utils"
 
-const useAddProductsCreate = ({ closeCreateProduct, isCreateProduct, created, defaultBarcode }: AddProductsCreateProps) => {
+const useDialogCreateProduct = ({ children, created, defaultBarcode = 0 }: DialogCreateProductProps) => {
     const { t } = useTranslation('nutrition-diary')
     const [code, setCode] = useState(defaultBarcode)
     const [loading, setLoading] = useState(false)
     const token: any = useAppSelector(state => state.token.value)
     const { success, error } = useNotify()
+    const [isDialog, setIsDialog] = useState(false)
 
     const { register, formState: { errors }, handleSubmit } = useForm<ProductSchemaProps>({
         resolver: zodResolver(ProductSchema)
@@ -37,9 +38,15 @@ const useAddProductsCreate = ({ closeCreateProduct, isCreateProduct, created, de
         }
     }
 
-    return { closeCreateProduct, isCreateProduct, defaultBarcode, handleSubmit, register, onSubmit, errors, code, setCode, loading, t }
+    useEffect(() => {
+        if (defaultBarcode > 0) {
+            setIsDialog(true)
+        }
+    }, [defaultBarcode])
+
+    return { children, isDialog, setIsDialog, defaultBarcode, handleSubmit, register, onSubmit, errors, code, setCode, loading, t }
 }
 
-export type useAddProductsCreateProps = ReturnType<typeof useAddProductsCreate>
+export type useDialogCreateProductProps = ReturnType<typeof useDialogCreateProduct>
 
-export default useAddProductsCreate;
+export default useDialogCreateProduct;

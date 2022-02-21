@@ -5,3 +5,6 @@ server doesnt send back error messages
 
 
 remove listeners on unmounted
+
+
+check barcode

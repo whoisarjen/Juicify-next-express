@@ -10,15 +10,13 @@ import Quagga from 'quagga';
 const useBarcode = () => {
 
     const [loadedBarcode, setLoadedBarcode] = useState(0)
-    const [isCreateProduct, setIsCreateProduct] = useState(false)
     const [loadedProduct, setLoadedProduct] = useState<any>(false)
     const token: any = useAppSelector(state => state.token.value)
     const { data } = useDailyMeasurement(getShortDate(), token.login)
 
     const _onDetected = async (res: any) => {
         try {
-            setLoadedBarcode(res.codeResult.code)
-            setIsCreateProduct(false)
+            setLoadedBarcode(0)
             const products = await getAllIndexedDB('product')
             const product = products.filter((x: any) => x.code == res.codeResult.code)
             if (product.length) {
@@ -30,7 +28,7 @@ const useBarcode = () => {
                     const value = { ...response.data, code: res.codeResult.code }
                     setLoadedProduct(value)
                 } else {
-                    setIsCreateProduct(true)
+                    setLoadedBarcode(res.codeResult.code)
                 }
             }
         } catch (e: any) {
@@ -136,7 +134,7 @@ const useBarcode = () => {
         }
     }, [])
 
-    return { loadedProduct, setLoadedProduct, data, isCreateProduct, setIsCreateProduct, loadedBarcode, _onDetected }
+    return { loadedProduct, setLoadedProduct, data, loadedBarcode, _onDetected }
 }
 
 export type useBarcodeProps = ReturnType<typeof useBarcode>

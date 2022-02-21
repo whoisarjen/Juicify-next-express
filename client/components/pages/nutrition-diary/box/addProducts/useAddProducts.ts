@@ -18,7 +18,6 @@ const useAddProducts = ({ children, index, dailyMeasurement }: AddproductsProps)
     const [checked, setChecked] = useState([])
     const token: any = useAppSelector(state => state.token.value)
     const [refreshChecked, setRefreshChecked] = useState(0)
-    const [isCreateProduct, setIsCreateProduct] = useState(false)
     const [find, setFind] = useState<any>(null)
     const { items, loading, searchCache } = useFind(find, 'product', tab)
     const dispatch = useAppDispatch()
@@ -29,7 +28,6 @@ const useAddProducts = ({ children, index, dailyMeasurement }: AddproductsProps)
         } else {
             setFind(productName)
         }
-        setIsCreateProduct(false)
     }
 
     const addProductsToDiary = async () => {
@@ -58,7 +56,7 @@ const useAddProducts = ({ children, index, dailyMeasurement }: AddproductsProps)
         })()
     }, [refreshChecked])
 
-    return { children, isDialog, setIsDialog, t, index, dailyMeasurement, meal, setMeal, open, setOpen, find, setFind, setTab, loading, searchCache, token, items, addProductsToDiary, isCreateProduct, setIsCreateProduct, setRefreshChecked, loadedProduct, setLoadedProduct, checked, created, refreshChecked }
+    return { children, isDialog, setIsDialog, t, index, dailyMeasurement, meal, setMeal, open, setOpen, find, setFind, setTab, loading, searchCache, token, items, addProductsToDiary, setRefreshChecked, loadedProduct, setLoadedProduct, checked, created, refreshChecked }
 }
 
 export type useAddProductsProps = ReturnType<typeof useAddProducts>

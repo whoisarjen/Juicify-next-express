@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Informations from "../nutrition-diary/box/addProducts/informations";
-import CreateProduct from "../nutrition-diary/box/addProducts/create";
+import DialogCreateProduct from "../../common/dialog-create-product";
 import { useBarcodeProps } from "./useBarcode";
 
 const Grid = styled.div`
@@ -24,20 +24,17 @@ const Grid = styled.div`
     }
 `
 
-const BaseBarcode = ({ loadedProduct, setLoadedProduct, data, isCreateProduct, setIsCreateProduct, loadedBarcode, _onDetected }: useBarcodeProps) => {
-    return (
-        <>
-            <Grid>
-                <div id="scanner-container" />,
-                <span>Scan barcode code</span>
-            </Grid>
-            <Informations handleClose={() => setLoadedProduct(false)} loadedProduct={loadedProduct} dailyMeasurement={data} />
-            {
-                isCreateProduct &&
-                <CreateProduct closeCreateProduct={() => setIsCreateProduct(false)} isCreateProduct={isCreateProduct} created={() => _onDetected(loadedBarcode)} defaultBarcode={loadedBarcode} />
-            }
-        </>
-    )
+const BaseBarcode = ({ loadedProduct, setLoadedProduct, data, loadedBarcode, _onDetected }: useBarcodeProps) => {
+  return (
+    <>
+      <Grid>
+        <div id="scanner-container" />,
+        <span>Scan barcode code</span>
+      </Grid>
+      <Informations handleClose={() => setLoadedProduct(false)} loadedProduct={loadedProduct} dailyMeasurement={data} />
+      {loadedBarcode > 0 && <DialogCreateProduct created={() => _onDetected(loadedBarcode)} defaultBarcode={loadedBarcode}><div /></DialogCreateProduct>}
+    </>
+  )
 }
 
 export default BaseBarcode;
