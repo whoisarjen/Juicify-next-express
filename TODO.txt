@@ -8,3 +8,6 @@ remove listeners on unmounted
 
 
 check barcode
+
+
+cleaning indexedDB cache on find (over 1 week of hold?)
