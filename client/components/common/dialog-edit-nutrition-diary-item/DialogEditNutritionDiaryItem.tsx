@@ -6,10 +6,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { useEditProductProps } from './useEditProduct';
-import ConfirmDialog from '../../../../../common/dialog-confirm';
+import { useDialogEditNutritionDiaryItemProps } from './useDialogEditNutritionDiaryItem';
+import ConfirmDialog from '../dialog-confirm';
 
-const BaseEditProduct = ({ product, children, isDialog, setIsDialog, token, register, errors, handleSubmit, changeNutritionDiary, deleteProduct, t }: useEditProductProps) => {
+const BaseDialogEditNutritionDiaryItem = ({ product, children, isDialog, setIsDialog, token, register, errors, handleSubmit, changeNutritionDiary, deleteProduct, t }: useDialogEditNutritionDiaryItemProps) => {
     return (
         <form onSubmit={handleSubmit(changeNutritionDiary)}>
             <div onClick={() => setIsDialog(true)}>{children}</div>
@@ -99,4 +99,4 @@ const BaseEditProduct = ({ product, children, isDialog, setIsDialog, token, regi
     );
 }
 
-export default BaseEditProduct;
+export default BaseDialogEditNutritionDiaryItem;

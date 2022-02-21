@@ -4,19 +4,19 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
-import AddProductsBox from '../../../../common/box-product';
+import AddProductsBox from '../box-product';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import DialogCreateProduct from '../../../../common/dialog-create-product';
-import BottomFlyingButton from '../../../../common/button-submit-items';
-import AddProductMoreInformation from './informations';
-import { ProductSchemaProps } from '../../../../../schema/product.schema';
+import DialogCreateProduct from '../dialog-create-product';
+import BottomFlyingButton from '../button-submit-items';
+import DialogShowProductInformations from '../dialog-show-product-informations';
+import { ProductSchemaProps } from '../../../schema/product.schema';
 import styled from 'styled-components'
-import SlideUp from '../../../../transition/SlideUp';
-import { useAddProductsProps } from './useAddProducts';
-import AddItemsTabs from '../../../../common/tabs-items';
-import NavbarOnlyTitle from '../../../../common/navbar-only-title';
-import ButtonCloseDialog from '../../../../common/button-close-dialog';
+import SlideUp from '../../transition/SlideUp';
+import { useDialogAddProductsProps } from './useDialogAddProducts';
+import AddItemsTabs from '../tabs-items';
+import NavbarOnlyTitle from '../navbar-only-title';
+import ButtonCloseDialog from '../button-close-dialog';
 
 const Grid = styled.div`
     width: 100%;
@@ -35,7 +35,7 @@ const Grid = styled.div`
     }
 `
 
-const BaseAddProducts = ({ children, isDialog, setIsDialog, t, dailyMeasurement, meal, setMeal, open, setOpen, find, setFind, setTab, loading, searchCache, token, items, addProductsToDiary, setRefreshChecked, loadedProduct, setLoadedProduct, checked, created, refreshChecked }: useAddProductsProps) => {
+const BaseDialogAddProducts = ({ children, isDialog, setIsDialog, t, dailyMeasurement, meal, setMeal, open, setOpen, find, setFind, setTab, loading, searchCache, token, items, addProductsToDiary, setRefreshChecked, loadedProduct, setLoadedProduct, checked, created, refreshChecked }: useDialogAddProductsProps) => {
     return (
         <>
             <div onClick={() => setIsDialog(true)}>{children}</div>
@@ -106,10 +106,10 @@ const BaseAddProducts = ({ children, isDialog, setIsDialog, t, dailyMeasurement,
                     <ButtonCloseDialog clicked={() => setIsDialog(false)} />
 
                 </Grid>
-                <AddProductMoreInformation handleClose={() => setLoadedProduct(false)} loadedProduct={loadedProduct} dailyMeasurement={dailyMeasurement} />
+                <DialogShowProductInformations handleClose={() => setLoadedProduct(false)} loadedProduct={loadedProduct} dailyMeasurement={dailyMeasurement} />
             </Dialog>
         </>
     );
 }
 
-export default BaseAddProducts;
+export default BaseDialogAddProducts;

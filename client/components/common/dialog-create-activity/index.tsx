@@ -7,15 +7,15 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
-import SlideUp from "../../../../../transition/SlideUp";
+import SlideUp from "../../transition/SlideUp";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useTranslation from "next-translate/useTranslation";
 import { useForm } from "react-hook-form";
-import { ActivitySchemaProps, ActivitySchema } from "../../../../../../schema/activity.schema";
-import { insertThoseIDStoDBController } from "../../../../../../utils/db.utils";
-import { DailyMeasurementSchemaProps } from "../../../../../../schema/dailyMeasurement.schema";
+import { ActivitySchemaProps, ActivitySchema } from "../../../schema/activity.schema";
+import { insertThoseIDStoDBController } from "../../../utils/db.utils";
+import { DailyMeasurementSchemaProps } from "../../../schema/dailyMeasurement.schema";
 
-const AddActivity = ({ children, data }: { children: any, data: DailyMeasurementSchemaProps }) => {
+const DialogCreateActivity = ({ children, data }: { children: any, data: DailyMeasurementSchemaProps }) => {
     const { t } = useTranslation('nutrition-diary')
     const [isDialog, setIsDialog] = useState(false)
 
@@ -93,4 +93,4 @@ const AddActivity = ({ children, data }: { children: any, data: DailyMeasurement
     )
 }
 
-export default AddActivity;
+export default DialogCreateActivity;

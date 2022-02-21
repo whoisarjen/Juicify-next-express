@@ -1,11 +1,11 @@
 import useTranslation from "next-translate/useTranslation"
 import { useState } from "react"
-import { AddProductsInformationsAddProps } from "."
-import { useNotify } from "../../../../../../../hooks/useNotify"
-import { useAppSelector } from "../../../../../../../hooks/useRedux"
-import { insertThoseIDStoDBController } from "../../../../../../../utils/db.utils"
+import { DialogAddProductProps } from "."
+import { useNotify } from "../../../hooks/useNotify"
+import { useAppSelector } from "../../../hooks/useRedux"
+import { insertThoseIDStoDBController } from "../../../utils/db.utils"
 
-const useAddProductsInformationsAdd = ({ isAdd, setIsAdd, dailyMeasurement, defaultMeal = 0, loadedProduct }: AddProductsInformationsAddProps) => {
+const useDialogAddProduct = ({ isAdd, setIsAdd, dailyMeasurement, defaultMeal = 0, loadedProduct }: DialogAddProductProps) => {
     const { t } = useTranslation('nutrition-diary')
     const [meal, setMeal] = useState(defaultMeal)
     const [howMany, setHowMany] = useState('1')
@@ -31,6 +31,6 @@ const useAddProductsInformationsAdd = ({ isAdd, setIsAdd, dailyMeasurement, defa
     return { isAdd, setIsAdd, meal, setMeal, token, howMany, setHowMany, addNewProduct, t }
 }
 
-export type useAddProductsInformationsAddProps = ReturnType<typeof useAddProductsInformationsAdd>
+export type useDialogAddProductProps = ReturnType<typeof useDialogAddProduct>
 
-export default useAddProductsInformationsAdd;
+export default useDialogAddProduct;

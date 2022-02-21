@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Informations from "../nutrition-diary/box/addProducts/informations";
+import DialogShowProductInformations from "../../common/dialog-show-product-informations";
 import DialogCreateProduct from "../../common/dialog-create-product";
 import { useBarcodeProps } from "./useBarcode";
 
@@ -31,7 +31,7 @@ const BaseBarcode = ({ loadedProduct, setLoadedProduct, data, loadedBarcode, _on
         <div id="scanner-container" />,
         <span>Scan barcode code</span>
       </Grid>
-      <Informations handleClose={() => setLoadedProduct(false)} loadedProduct={loadedProduct} dailyMeasurement={data} />
+      <DialogShowProductInformations handleClose={() => setLoadedProduct(false)} loadedProduct={loadedProduct} dailyMeasurement={data} />
       {loadedBarcode > 0 && <DialogCreateProduct created={() => _onDetected(loadedBarcode)} defaultBarcode={loadedBarcode}><div /></DialogCreateProduct>}
     </>
   )

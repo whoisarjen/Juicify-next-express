@@ -7,10 +7,10 @@ import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import SlideUp from "../../../../../../transition/SlideUp";
-import { useAddProductsInformationsAddProps } from './useAddProductsInformationsAdd';
+import SlideUp from "../../transition/SlideUp";
+import { useDialogAddProductProps } from './useDialogAddProduct';
 
-const BaseAddProductsInformationsAdd = ({ isAdd, setIsAdd, meal, setMeal, token, howMany, setHowMany, addNewProduct, t }: useAddProductsInformationsAddProps) => {
+const BaseDialogAddProduct = ({ isAdd, setIsAdd, meal, setMeal, token, howMany, setHowMany, addNewProduct, t }: useDialogAddProductProps) => {
     return (
         <Dialog
             open={isAdd}
@@ -56,4 +56,4 @@ const BaseAddProductsInformationsAdd = ({ isAdd, setIsAdd, meal, setMeal, token,
     )
 }
 
-export default BaseAddProductsInformationsAdd;
+export default BaseDialogAddProduct;

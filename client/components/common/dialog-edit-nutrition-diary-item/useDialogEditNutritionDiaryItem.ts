@@ -2,12 +2,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import useTranslation from "next-translate/useTranslation";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { EditProductProps } from ".";
-import { useAppSelector } from "../../../../../../hooks/useRedux";
-import { ActivitySchemaProps, ActivitySchema } from "../../../../../../schema/activity.schema";
-import { insertThoseIDStoDBController, overwriteThoseIDSinDB } from "../../../../../../utils/db.utils";
+import { DialogEditNutritionDiaryItemProps } from ".";
+import { useAppSelector } from "../../../hooks/useRedux";
+import { ActivitySchemaProps, ActivitySchema } from "../../../schema/activity.schema";
+import { insertThoseIDStoDBController, overwriteThoseIDSinDB } from "../../../utils/db.utils";
 
-const useEditProduct = ({ product, dailyMeasurement, children }: EditProductProps) => {
+const useDialogEditNutritionDiaryItem = ({ product, dailyMeasurement, children }: DialogEditNutritionDiaryItemProps) => {
     const [isDialog, setIsDialog] = useState(false)
     const { t } = useTranslation('nutrition-diary');
     const token: any = useAppSelector(state => state.token.value)
@@ -42,6 +42,6 @@ const useEditProduct = ({ product, dailyMeasurement, children }: EditProductProp
     return { product, children, isDialog, setIsDialog, token, register, errors, handleSubmit, changeNutritionDiary, deleteProduct, t }
 }
 
-export type useEditProductProps = ReturnType<typeof useEditProduct>
+export type useDialogEditNutritionDiaryItemProps = ReturnType<typeof useDialogEditNutritionDiaryItem>
 
-export default useEditProduct;
+export default useDialogEditNutritionDiaryItem;

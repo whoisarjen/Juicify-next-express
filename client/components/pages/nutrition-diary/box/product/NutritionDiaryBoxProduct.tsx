@@ -3,7 +3,7 @@ import FastfoodIcon from "@mui/icons-material/Fastfood";
 import IconButton from '@mui/material/IconButton';
 import styled from "styled-components";
 import { getCalories, getMacronutrient } from "../../../../../utils/product.utils";
-import EditProduct from "./edit";
+import DialogEditNutritionDiaryItem from "../../../../common/dialog-edit-nutrition-diary-item";
 import { useNutritionDiaryBoxProductProps } from "./useNutritionDiaryBoxProduct";
 
 const Product = styled.div`
@@ -39,11 +39,11 @@ const BaseNutritionDiaryBoxProduct = ({ product, dailyMeasurement, token, router
                 {
                     token.login == router.query.login
                         ?
-                        <EditProduct dailyMeasurement={dailyMeasurement} product={product}>
+                        <DialogEditNutritionDiaryItem dailyMeasurement={dailyMeasurement} product={product}>
                             <IconButton aria-label="edit">
                                 <EditIcon fontSize="small" />
                             </IconButton>
-                        </EditProduct>
+                        </DialogEditNutritionDiaryItem>
                         :
                         <IconButton aria-label="edit">
                             <FastfoodIcon fontSize="small" />

@@ -1,14 +1,14 @@
 import useTranslation from "next-translate/useTranslation";
 import { useState, useEffect } from "react";
-import { AddproductsProps } from ".";
-import useFind from "../../../../../hooks/useFind";
-import { useAppDispatch, useAppSelector } from "../../../../../hooks/useRedux";
-import { refreshKey } from "../../../../../redux/features/key.slice";
-import { ProductSchemaProps } from "../../../../../schema/product.schema";
-import { insertThoseIDStoDBController } from "../../../../../utils/db.utils";
-import { deleteIndexedDB, getAllIndexedDB } from "../../../../../utils/indexedDB.utils";
+import { DialogAddProductsProps } from ".";
+import useFind from "../../../hooks/useFind";
+import { useAppDispatch, useAppSelector } from "../../../hooks/useRedux";
+import { refreshKey } from "../../../redux/features/key.slice";
+import { ProductSchemaProps } from "../../../schema/product.schema";
+import { insertThoseIDStoDBController } from "../../../utils/db.utils";
+import { deleteIndexedDB, getAllIndexedDB } from "../../../utils/indexedDB.utils";
 
-const useAddProducts = ({ children, index, dailyMeasurement }: AddproductsProps) => {
+const useDialogAddProducts = ({ children, index, dailyMeasurement }: DialogAddProductsProps) => {
     const [isDialog, setIsDialog] = useState(false)
     const [loadedProduct, setLoadedProduct] = useState<any>(false)
     const { t } = useTranslation('nutrition-diary');
@@ -59,6 +59,6 @@ const useAddProducts = ({ children, index, dailyMeasurement }: AddproductsProps)
     return { children, isDialog, setIsDialog, t, index, dailyMeasurement, meal, setMeal, open, setOpen, find, setFind, setTab, loading, searchCache, token, items, addProductsToDiary, setRefreshChecked, loadedProduct, setLoadedProduct, checked, created, refreshChecked }
 }
 
-export type useAddProductsProps = ReturnType<typeof useAddProducts>
+export type useDialogAddProductsProps = ReturnType<typeof useDialogAddProducts>
 
-export default useAddProducts;
+export default useDialogAddProducts;

@@ -1,10 +1,10 @@
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import AddProductsInformationsAdd from './add';
-import { getProductInformations } from '../../../../../../utils/product.utils';
+import DialogAddProduct from '../dialog-add-product';
+import { getProductInformations } from '../../../utils/product.utils';
 import styled from 'styled-components'
-import SlideUp from '../../../../../transition/SlideUp';
-import { useAddProductsinformationsProps } from './useAddProductsinformations';
+import SlideUp from '../../transition/SlideUp';
+import { useDialogShowProductInformationsProps } from './useDialogShowProductInformations';
 
 const Close = styled.div`
     display: grid;
@@ -40,7 +40,7 @@ const Grid = styled.div`
     }
 `
 
-const BaseAddProductsInformations = ({ loadedProduct, handleClose, dailyMeasurement, t, isAdd, setIsAdd }: useAddProductsinformationsProps) => {
+const BaseDialogShowProductInformations = ({ loadedProduct, handleClose, dailyMeasurement, t, isAdd, setIsAdd }: useDialogShowProductInformationsProps) => {
     return (
         <Dialog
             fullScreen
@@ -73,9 +73,9 @@ const BaseAddProductsInformations = ({ loadedProduct, handleClose, dailyMeasurem
                     </Button>
                 </Close>
             </Grid>
-            <AddProductsInformationsAdd isAdd={isAdd} dailyMeasurement={dailyMeasurement} setIsAdd={setIsAdd} loadedProduct={loadedProduct} />
+            <DialogAddProduct isAdd={isAdd} dailyMeasurement={dailyMeasurement} setIsAdd={setIsAdd} loadedProduct={loadedProduct} />
         </Dialog>
     )
 }
 
-export default BaseAddProductsInformations;
+export default BaseDialogShowProductInformations;

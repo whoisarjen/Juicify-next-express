@@ -1,12 +1,9 @@
 import AddIcon from "@mui/icons-material/Add";
 import IconButton from "@mui/material/IconButton";
 import { getCalories, getMacronutrient } from '../../../../utils/product.utils';
-import { ProductSchemaProps } from '../../../../schema/product.schema';
-import { ActivitySchemaProps } from '../../../../schema/activity.schema';
 import styled from "styled-components";
 import { useNutritionDiaryBoxProps } from "./useNutritionDiaryBox";
-import AddProducts from "./addProducts";
-import NutritionDiaryBoxProduct from "./product";
+import AddProducts from "../../../common/dialog-add-products";
 
 const Grid = styled.div`
     width: calc(100% - 24px);
