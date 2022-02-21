@@ -7,7 +7,6 @@ const useTabsItems = ({ changeTab, checkedLength = 0 }: TabsItemsProps) => {
     const { t } = useTranslation('home');
 
     const changedTab = (value: number) => {
-        console.log(value)
         setTab(value)
         changeTab(value)
     }

@@ -37,7 +37,7 @@ const ButtonHolder = styled.div`
 const BaseDialogAddExercise = ({ children, isDialog, setIsDialog, find, setFind, loading, searchCache, items, checked, setTab, setRefreshChecked, refreshChecked, addExercisesToWorkoutPlan }: useDialogAddExerciseProps) => {
     return (
         <>
-            <ButtonHolder onClick={() => setIsDialog(true)}>{children || <ButtonPlusIcon />}</ButtonHolder>
+            <ButtonHolder data-testid="button" onClick={() => setIsDialog(true)}>{children || <ButtonPlusIcon />}</ButtonHolder>
 
             <Dialog fullScreen scroll='body' open={isDialog} TransitionComponent={SlideUp}>
                 <DialogContent>
