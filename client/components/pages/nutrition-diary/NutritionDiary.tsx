@@ -1,7 +1,7 @@
 import BoxMeal from "../../common/box-meal"
 import FastDateChanger from '../../common/date-changer-fast'
-import Diagrams from './diagrams'
-import DiagramsSectionButtons from './diagrams/buttons'
+import Diagrams from '../../common/diagram-consumed-remaining'
+import SectionDiaryManaging from '../../common/section-diary-managing'
 import { useNutritionDiaryProps } from "./useNutritionDiary"
 import BottomFlyingGuestBanner from "../../common/banner-guest-bottom"
 import styled from "styled-components"
@@ -34,7 +34,7 @@ const BaseNutritionDiary = ({ router, token, nutritionDiary, user, data }: useNu
 
             <Diagrams array={nutritionDiary} user={user} />
 
-            {token?.login == router?.query.login && <DiagramsSectionButtons data={data} />}
+            {token?.login == router?.query.login && <SectionDiaryManaging data={data} />}
 
             {
                 nutritionDiary.map((products: Array<ProductSchemaProps & ActivitySchemaProps>, i: number) => (

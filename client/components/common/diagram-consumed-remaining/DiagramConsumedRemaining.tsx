@@ -3,10 +3,10 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import DiagramCircularCaloriesProgress from "../../../common/diagram-circular-calories-progress";
-import DiagramCircularCaloriesProgressReverse from "../../../common/diagram-circular-calories-progress-reverse";
+import DiagramCircularCaloriesProgress from "../diagram-circular-calories-progress";
+import DiagramCircularCaloriesProgressReverse from "../diagram-circular-calories-progress-reverse";
 import styled from "styled-components";
-import { useDiagramProps } from './useDiagram';
+import { useDiagramConsumedRemainingProps } from './useDiagramConsumedRemaining';
 
 const Table = styled.table`
     font-size: 0.875rem;
@@ -19,7 +19,7 @@ const Table = styled.table`
     }
 `
 
-const BaseDiagrams = ({ array, user, value, handleChange, object, t }: useDiagramProps) => {
+const BaseDiagramConsumedRemaining = ({ array, user, value, handleChange, object, t }: useDiagramConsumedRemainingProps) => {
     return (
         <Box sx={{ width: '100%', display: 'grid', marginBottom: '24px' }}>
             <TabContext value={value}>
@@ -79,4 +79,4 @@ const BaseDiagrams = ({ array, user, value, handleChange, object, t }: useDiagra
     )
 }
 
-export default BaseDiagrams;
+export default BaseDiagramConsumedRemaining;

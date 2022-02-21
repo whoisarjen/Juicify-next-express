@@ -19,52 +19,52 @@ import useDialogAddExercise from "./useDialogAddExercise";
 // )
 
 // const setIsDialog = jest.spyOn({ setIsDialog: jest.fn() }, 'setIsDialog')
-const setIsDialog = jest.fn()
+// const setIsDialog = jest.fn()
 
-const Component = () => {
-    const props: any = {
-        isDialog: false,
-        // setIsDialog: jest.fn(),
-        setIsDialog,
-        find: '',
-        setFind: jest.fn(),
-        loading: false,
-        searchCache: [],
-        items: [],
-        checked: [],
-        setTab: jest.fn(),
-        setRefreshChecked: jest.fn(),
-        refreshChecked: 0,
-        addExercisesToWorkoutPlan: []
-    }
-    // const props = useDialogAddExercise({ skipThoseIDS: [],addThoseExercises: jest.fn() })
-    // console.log(props)
-    return <BaseDialogAddExercise children={undefined} {...props} />
-}
+// const Component = () => {
+//     const props: any = {
+//         isDialog: false,
+//         // setIsDialog: jest.fn(),
+//         setIsDialog,
+//         find: '',
+//         setFind: jest.fn(),
+//         loading: false,
+//         searchCache: [],
+//         items: [],
+//         checked: [],
+//         setTab: jest.fn(),
+//         setRefreshChecked: jest.fn(),
+//         refreshChecked: 0,
+//         addExercisesToWorkoutPlan: []
+//     }
+//     // const props = useDialogAddExercise({ skipThoseIDS: [],addThoseExercises: jest.fn() })
+//     // console.log(props)
+//     return <BaseDialogAddExercise children={undefined} {...props} />
+// }
 
-beforeEach(() => {
-    setupComponent(Component)
-})
+// beforeEach(() => {
+//     setupComponent(Component)
+// })
 
-describe('Testing DialogAddExercise', () => {
-    // it('', () => {
-    //     const { result } = renderHook(() => useDialogAddExercise({ skipThoseIDS: [], addThoseExercises: jest.fn() }), {
-    //         wrapper: Wrapper,
-    //     })
-    //     // console.log(result.current)
-    //     // render(Component(props))
+// describe('Testing DialogAddExercise', () => {
+//     // it('', () => {
+//     //     const { result } = renderHook(() => useDialogAddExercise({ skipThoseIDS: [], addThoseExercises: jest.fn() }), {
+//     //         wrapper: Wrapper,
+//     //     })
+//     //     // console.log(result.current)
+//     //     // render(Component(props))
 
-    //     // screen.getByTestId('Button')
-    // })
+//     //     // screen.getByTestId('Button')
+//     // })
 
-    it('Expect to open dialog on button click', () => {
-        const button = screen.getByTestId('button')
+//     it('Expect to open dialog on button click', () => {
+//         const button = screen.getByTestId('button')
 
-        userEvent.click(button)
+//         userEvent.click(button)
 
-        expect(setIsDialog).toBeCalledTimes(1)
-    })
-})
+//         expect(setIsDialog).toBeCalledTimes(1)
+//     })
+// })
 
 it.todo('')
 

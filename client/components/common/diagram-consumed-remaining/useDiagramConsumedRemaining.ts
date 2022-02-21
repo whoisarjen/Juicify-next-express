@@ -1,11 +1,11 @@
 import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
 import { useState, useEffect, SyntheticEvent } from "react";
-import { DiagramsProps } from ".";
-import { ProductSchemaProps } from "../../../../schema/product.schema";
-import { getMacroByDay } from "../../../../utils/user.utils";
+import { DiagramConsumedRemainingProps } from ".";
+import { ProductSchemaProps } from "../../../schema/product.schema";
+import { getMacroByDay } from "../../../utils/user.utils";
 
-const useDiagram = ({ array, user }: DiagramsProps) => {
+const useDiagramConsumedRemaining = ({ array, user }: DiagramConsumedRemainingProps) => {
     const [value, setValue] = useState<string>('1');
     const router = useRouter()
     const [object, setObject] = useState<any>({})
@@ -45,6 +45,6 @@ const useDiagram = ({ array, user }: DiagramsProps) => {
     return { array, user, value, handleChange, object, t }
 }
 
-export type useDiagramProps = ReturnType<typeof useDiagram>
+export type useDiagramConsumedRemainingProps = ReturnType<typeof useDiagramConsumedRemaining>
 
-export default useDiagram;
+export default useDiagramConsumedRemaining;

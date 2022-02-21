@@ -1,8 +1,8 @@
 import Button from '@mui/material/Button';
 import PieChartIcon from '@mui/icons-material/PieChart';
 import styled from "styled-components";
-import { useDiagramsSectionButtonsProps } from "./useDiagramsSectionButtons";
-import AddActivity from '../../../../common/dialog-create-activity';
+import { useSectionDiaryManagingProps } from "./useSectionDiaryManaging";
+import AddActivity from '../dialog-create-activity';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 
 const Box = styled.div`
@@ -15,7 +15,7 @@ const Buttons = styled.div`
     grid-template-columns: 1fr auto 1fr auto 1fr;
 `
 
-const BaseDiagramsSectionButtons = ({ router, t, data }: useDiagramsSectionButtonsProps) => {
+const BaseSectionDiaryManaging = ({ router, t, data }: useSectionDiaryManagingProps) => {
     return (
         <Box>
             <Buttons>
@@ -50,4 +50,4 @@ const BaseDiagramsSectionButtons = ({ router, t, data }: useDiagramsSectionButto
     )
 }
 
-export default BaseDiagramsSectionButtons;
+export default BaseSectionDiaryManaging;
