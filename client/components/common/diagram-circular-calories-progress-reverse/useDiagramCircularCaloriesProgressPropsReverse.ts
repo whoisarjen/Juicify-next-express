@@ -1,12 +1,12 @@
 import useTranslation from "next-translate/useTranslation"
 import { useRouter } from "next/router"
 import { useState, useEffect } from "react"
-import { CircularReversedProps } from "."
-import { useTheme } from "../../../../../hooks/useTheme"
-import { getCalories } from "../../../../../utils/product.utils"
-import { getMacroByDay } from "../../../../../utils/user.utils"
+import { DiagramCircularCaloriesProgressPropsReverseProps } from "."
+import { useTheme } from "../../../hooks/useTheme"
+import { getCalories } from "../../../utils/product.utils"
+import { getMacroByDay } from "../../../utils/user.utils"
 
-const useCircularReversed = ({ array, user }: CircularReversedProps) => {
+const useDiagramCircularCaloriesProgressPropsReverse = ({ array, user }: DiagramCircularCaloriesProgressPropsReverseProps) => {
     const [calories, setCalories] = useState(0)
     const [progress, setProgress] = useState(0)
     const router = useRouter()
@@ -34,6 +34,6 @@ const useCircularReversed = ({ array, user }: CircularReversedProps) => {
     return { progress, calories, getTheme, t }
 }
 
-export type useCircularReversedProps = ReturnType<typeof useCircularReversed>
+export type useDiagramCircularCaloriesProgressPropsReverseProps = ReturnType<typeof useDiagramCircularCaloriesProgressPropsReverse>
 
-export default useCircularReversed;
+export default useDiagramCircularCaloriesProgressPropsReverse;

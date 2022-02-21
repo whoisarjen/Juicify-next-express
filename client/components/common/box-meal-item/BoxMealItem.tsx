@@ -2,9 +2,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import IconButton from '@mui/material/IconButton';
 import styled from "styled-components";
-import { getCalories, getMacronutrient } from "../../../../../utils/product.utils";
-import DialogEditNutritionDiaryItem from "../../../../common/dialog-edit-nutrition-diary-item";
-import { useNutritionDiaryBoxProductProps } from "./useNutritionDiaryBoxProduct";
+import { getCalories, getMacronutrient } from "../../../utils/product.utils";
+import DialogEditNutritionDiaryItem from "../dialog-edit-nutrition-diary-item";
+import { useBoxMealItemProps } from "./useBoxMealItem";
 
 const Product = styled.div`
     width: 100%;
@@ -31,7 +31,7 @@ const ProductContent = styled.div`
     margin-top: auto;
 `
 
-const BaseNutritionDiaryBoxProduct = ({ product, dailyMeasurement, token, router, t }: useNutritionDiaryBoxProductProps) => {
+const BaseBoxMealItem = ({ product, dailyMeasurement, token, router, t }: useBoxMealItemProps) => {
     return (
         <Product>
 
@@ -69,4 +69,4 @@ const BaseNutritionDiaryBoxProduct = ({ product, dailyMeasurement, token, router
     )
 }
 
-export default BaseNutritionDiaryBoxProduct;
+export default BaseBoxMealItem;

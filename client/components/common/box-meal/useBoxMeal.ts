@@ -1,11 +1,11 @@
 import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { NutritionDiaryBoxProps } from ".";
-import { useAppSelector } from "../../../../hooks/useRedux";
-import { getMacronutrient } from '../../../../utils/product.utils'
+import { BoxMealProps } from ".";
+import { useAppSelector } from "../../../hooks/useRedux";
+import { getMacronutrient } from '../../../utils/product.utils'
 
-const useNutritionDiaryBox = ({ children, index, products, data }: NutritionDiaryBoxProps) => {
+const useBoxMeal = ({ children, index, products, data }: BoxMealProps) => {
     const { t } = useTranslation('nutrition-diary');
     const router: any = useRouter();
     const token: any = useAppSelector((state) => state.token.value);
@@ -26,6 +26,6 @@ const useNutritionDiaryBox = ({ children, index, products, data }: NutritionDiar
     return { children, t, index, data, token, router, macro }
 }
 
-export type useNutritionDiaryBoxProps = ReturnType<typeof useNutritionDiaryBox>
+export type useBoxMealProps = ReturnType<typeof useBoxMeal>
 
-export default useNutritionDiaryBox;
+export default useBoxMeal;

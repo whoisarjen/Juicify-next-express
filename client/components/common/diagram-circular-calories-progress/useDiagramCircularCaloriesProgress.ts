@@ -1,12 +1,12 @@
 import useTranslation from "next-translate/useTranslation"
 import { useRouter } from "next/router"
 import { useState, useEffect } from "react"
-import { CircularComponentProps } from "."
-import { useTheme } from "../../../../../hooks/useTheme"
-import { getCalories } from "../../../../../utils/product.utils"
-import { getMacroByDay } from "../../../../../utils/user.utils"
+import { DiagramCircularCaloriesProgressProps } from "."
+import { useTheme } from "../../../hooks/useTheme"
+import { getCalories } from "../../../utils/product.utils"
+import { getMacroByDay } from "../../../utils/user.utils"
 
-const useCircular = ({ array, user }: CircularComponentProps) => {
+const useDiagramCircularCaloriesProgress = ({ array, user }: DiagramCircularCaloriesProgressProps) => {
     const [calories, setCalories] = useState(0)
     const [progress, setProgress] = useState(0)
     const router = useRouter()
@@ -34,6 +34,6 @@ const useCircular = ({ array, user }: CircularComponentProps) => {
     return { progress, calories, getTheme, t }
 }
 
-export type useCircularProps = ReturnType<typeof useCircular>
+export type useDiagramCircularCaloriesProgressProps = ReturnType<typeof useDiagramCircularCaloriesProgress>
 
-export default useCircular;
+export default useDiagramCircularCaloriesProgress;

@@ -1,7 +1,7 @@
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import styled from "styled-components";
-import { useCircularReversedProps } from "./useCircularReversed";
+import { useDiagramCircularCaloriesProgressPropsReverseProps } from "./useDiagramCircularCaloriesProgressPropsReverse";
 
 const Grid = styled.div`
     width: 100%;
@@ -20,7 +20,7 @@ const CircularBox = styled.div`
     }
 `
 
-const BaseCircularReversed = ({ progress, calories, getTheme, t }: useCircularReversedProps) => {
+const BaseDiagramCircularCaloriesProgressPropsReverse = ({ progress, calories, getTheme, t }: useDiagramCircularCaloriesProgressPropsReverseProps) => {
     return (
         <Grid>
             <CircularBox>
@@ -40,4 +40,4 @@ const BaseCircularReversed = ({ progress, calories, getTheme, t }: useCircularRe
     )
 }
 
-export default BaseCircularReversed;
+export default BaseDiagramCircularCaloriesProgressPropsReverse;

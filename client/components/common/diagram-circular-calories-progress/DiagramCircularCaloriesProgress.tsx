@@ -1,7 +1,7 @@
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import styled from "styled-components";
-import { useCircularProps } from './useCircular';
+import { useDiagramCircularCaloriesProgressProps } from './useDiagramCircularCaloriesProgress';
 
 const Grid = styled.div`
     width: 100%;
@@ -20,7 +20,7 @@ const CircularBox = styled.div`
     }
 `
 
-const BaseCircular = ({ progress, calories, getTheme, t }: useCircularProps) => {
+const BaseDiagramCircularCaloriesProgress = ({ progress, calories, getTheme, t }: useDiagramCircularCaloriesProgressProps) => {
     return (
         <Grid>
             <CircularBox>
@@ -40,4 +40,4 @@ const BaseCircular = ({ progress, calories, getTheme, t }: useCircularProps) => 
     )
 }
 
-export default BaseCircular;
+export default BaseDiagramCircularCaloriesProgress;

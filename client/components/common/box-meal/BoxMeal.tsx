@@ -1,9 +1,9 @@
 import AddIcon from "@mui/icons-material/Add";
 import IconButton from "@mui/material/IconButton";
-import { getCalories, getMacronutrient } from '../../../../utils/product.utils';
+import { getCalories, getMacronutrient } from '../../../utils/product.utils';
 import styled from "styled-components";
-import { useNutritionDiaryBoxProps } from "./useNutritionDiaryBox";
-import AddProducts from "../../../common/dialog-add-products";
+import { useBoxMealProps } from "./useBoxMeal";
+import AddProducts from "../dialog-add-products";
 
 const Grid = styled.div`
     width: calc(100% - 24px);
@@ -34,7 +34,7 @@ const AddButtonContainer = styled.div`
     }
 `
 
-const BaseNutritionDiaryBox = ({ children, t, index, token, router, macro, data }: useNutritionDiaryBoxProps) => {
+const BaseBoxMeal = ({ children, t, index, token, router, macro, data }: useBoxMealProps) => {
     return (
         <Grid>
             <Bolded>{t('Meal')} {index + 1}</Bolded>
@@ -57,4 +57,4 @@ const BaseNutritionDiaryBox = ({ children, t, index, token, router, macro, data 
     );
 };
 
-export default BaseNutritionDiaryBox;
+export default BaseBoxMeal;
