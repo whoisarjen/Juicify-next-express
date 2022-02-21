@@ -1,9 +1,9 @@
-import Bar from './bar'
+import Bar from '../../common/bar-macronutrients'
 import LockOpenIcon from '@mui/icons-material/LockOpen';
-import SimpleSlider from "./simpleSlider";
+import SimpleSlider from "../../common/slider";
 import BottomFlyingButton from '../../common/button-submit-items'
 import Button from '@mui/material/Button';
-import OwnMacro from "./ownMacro";
+import DialogEditMacronutrients from "../../common/dialog-edit-macronutrients";
 import styled from 'styled-components'
 import { useMacronutrientsProps } from './useMacronutrients';
 import NavbarOnlyTitle from '../../common/navbar-only-title';
@@ -108,7 +108,7 @@ const BaseMacronutrients = ({ changeObject, openChange, toggleLock, changed, isO
                     }
                 </div>
             </Box>
-            <OwnMacro isOwnMacro={isOwnMacro} close={() => setIsOwnMacro(false)} />
+            <DialogEditMacronutrients isOwnMacro={isOwnMacro} close={() => setIsOwnMacro(false)} />
         </>
     )
 }

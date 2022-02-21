@@ -5,7 +5,7 @@ import { is_id } from '../../../utils/db.utils';
 import BottomFlyingGuestBanner from '../../common/banner-guest-bottom';
 import Navbar from '../../common/navbar-workout'
 import ButtonMoreOptionsWorkoutResult from '../../common/button-more-options-workout-result';
-import ResultBox from './resultBox';
+import ResultBox from '../../common/box-result';
 import { useWorkoutResultProps } from './useWorkoutResult';
 
 const BaseWorkoutResult = ({ t, isLoading, handleSubmit, onSubmit, deleteEverything, errors, router, getValues, register, fields, addExercises, remove, token, user, updateResults }: useWorkoutResultProps) => {

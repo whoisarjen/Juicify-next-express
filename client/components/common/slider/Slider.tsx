@@ -4,13 +4,13 @@ import Slider from '@mui/material/Slider';
 import MuiInput from '@mui/material/Input';
 import { styled } from '@mui/material/styles';
 import * as React from 'react';
-import { useSimpleSliderProps } from './useSimpleSlider';
+import { useSliderProps } from './useSlider';
 
 const Input = styled(MuiInput)`
     width: 42px;
 `;
 
-const BaseSimpleSlider = ({ title, value, maxValue, handleChange, handleInputChange, handleBlur, t }: useSimpleSliderProps) => {
+const BaseSlider = ({ title, value, maxValue, handleChange, handleInputChange, handleBlur, t }: useSliderProps) => {
     return (
         <Box sx={{ margin: 'auto 0' }}>
             <Grid container spacing={2} alignItems="center">
@@ -45,4 +45,4 @@ const BaseSimpleSlider = ({ title, value, maxValue, handleChange, handleInputCha
     );
 }
 
-export default BaseSimpleSlider;
+export default BaseSlider;

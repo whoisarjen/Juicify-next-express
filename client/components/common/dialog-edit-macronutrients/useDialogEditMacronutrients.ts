@@ -1,9 +1,10 @@
 import useTranslation from "next-translate/useTranslation"
 import { useState, useEffect } from "react"
-import { useAppSelector } from "../../../../hooks/useRedux"
-import useSettings from '../../settings/useSettings'
+import { DialogEditMacronutrientsProps } from "."
+import { useAppSelector } from "../../../hooks/useRedux"
+import useSettings from '../../pages/settings/useSettings'
 
-const useOwnMacro = ({ isOwnMacro, close }: { isOwnMacro: boolean, close: () => void }) => {
+const useDialogEditMacronutrients = ({ isOwnMacro, close }: DialogEditMacronutrientsProps) => {
     const token: any = useAppSelector(state => state.token.value)
     const [isDialog, setIsDialog] = useState(false)
     const [proteins, setProteins] = useState(0)
@@ -38,4 +39,6 @@ const useOwnMacro = ({ isOwnMacro, close }: { isOwnMacro: boolean, close: () => 
     return { isOwnMacro, close, t, proteins, setProteins, carbs, setCarbs, fats, setFats, isDialog, setIsDialog, handleConfirm }
 }
 
-export default useOwnMacro;
+export type useDialogEditMacronutrientsProps = ReturnType<typeof useDialogEditMacronutrients>
+
+export default useDialogEditMacronutrients;

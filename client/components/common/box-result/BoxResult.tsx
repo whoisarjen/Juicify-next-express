@@ -1,11 +1,11 @@
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { ValueSchemaProps } from '../../../../schema/workoutResult.schema'
+import { ValueSchemaProps } from '../../../schema/workoutResult.schema'
 import styled from 'styled-components';
-import { useResultBoxProps } from './useResultBox';
-import ValueBox from '../valueBox';
-import ConfirmDialog from '../../../common/dialog-confirm';
-import ButtonPlusIcon from '../../../common/button-plus-icon';
+import { useBoxResultProps } from './useBoxResult';
+import ValueBox from '../box-value';
+import ConfirmDialog from '../dialog-confirm';
+import ButtonPlusIcon from '../button-plus-icon';
 
 const Name = styled.div`
     min-height: 36px;
@@ -30,7 +30,7 @@ const Name = styled.div`
     }
 `
 
-const BaseResultBox = ({ result, isOwner, deleteExerciseWithIndex, deleteResult, changeResult, openNewResult, values }: useResultBoxProps) => {
+const BaseBoxResult = ({ result, isOwner, deleteExerciseWithIndex, deleteResult, changeResult, openNewResult, values }: useBoxResultProps) => {
     return (
         <div>
             <Name>
@@ -64,4 +64,4 @@ const BaseResultBox = ({ result, isOwner, deleteExerciseWithIndex, deleteResult,
     );
 }
 
-export default BaseResultBox;
+export default BaseBoxResult;

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
-import { ValueBoxProps } from "."
+import { BoxValueProps } from "."
 
-const useValueBox = ({ value, index, changeResult, deleteResult, isOwner }: ValueBoxProps) => {
+const useBoxValue = ({ value, index, changeResult, deleteResult, isOwner }: BoxValueProps) => {
     const [reps, setReps] = useState(value.reps.toString())
     const [weight, setWeight] = useState(value.weight.toString())
     const [open, setOpen] = useState(value.open || false)
@@ -39,6 +39,6 @@ const useValueBox = ({ value, index, changeResult, deleteResult, isOwner }: Valu
     return { index, changeResult, isOwner, open, setOpen, weight, reps, setReps, deleteResult, weightOptions, loadWeight, repsOptions }
 }
 
-export type useValueBoxProps = ReturnType<typeof useValueBox>
+export type useBoxValueProps = ReturnType<typeof useBoxValue>
 
-export default useValueBox;
+export default useBoxValue;

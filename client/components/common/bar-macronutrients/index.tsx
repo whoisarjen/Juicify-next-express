@@ -2,9 +2,9 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import IconButton from '@mui/material/IconButton';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import styled from 'styled-components'
-import { getShortDayName } from '../../../../utils/date.utils';
+import { getShortDayName } from '../../../utils/date.utils';
 
-interface BarProps {
+interface BarMacronutrientsProps {
     object: {
         proteins: number,
         carbs: number,
@@ -26,6 +26,7 @@ const Box = styled.div`
     text-align: center;
     font-size: 0.875rem;
 `
+
 interface ContentProps {
     active: boolean;
 }
@@ -83,7 +84,7 @@ const MarginAuto = styled.div`
     margin: auto
 `
 
-const Bar = ({ object, click, toggleLock, t }: BarProps) => {
+const BarMacronutrients = ({ object, click, toggleLock, t }: BarMacronutrientsProps) => {
     return (
         <Box>
             <Day>
@@ -137,4 +138,4 @@ const Bar = ({ object, click, toggleLock, t }: BarProps) => {
     )
 }
 
-export default Bar;
+export default BarMacronutrients;

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react"
-import { ResultBoxProps } from "."
-import { ValueSchemaProps } from "../../../../schema/workoutResult.schema"
+import { BoxResultProps } from "."
+import { ValueSchemaProps } from "../../../schema/workoutResult.schema"
 
-const useResultBox = ({ result, setNewValues, isOwner, deleteExerciseWithIndex }: ResultBoxProps) => {
+const useBoxResult = ({ result, setNewValues, isOwner, deleteExerciseWithIndex }: BoxResultProps) => {
     const [values, setValues] = useState<Array<ValueSchemaProps>>(result.values)
 
     const changeResult = (object: ValueSchemaProps, index: number) => {
@@ -51,6 +51,6 @@ const useResultBox = ({ result, setNewValues, isOwner, deleteExerciseWithIndex }
     return { result, isOwner, deleteExerciseWithIndex, deleteResult, changeResult, openNewResult, values }
 }
 
-export type useResultBoxProps = ReturnType<typeof useResultBox>
+export type useBoxResultProps = ReturnType<typeof useBoxResult>
 
-export default useResultBox;
+export default useBoxResult;

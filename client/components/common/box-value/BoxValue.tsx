@@ -6,8 +6,8 @@ import Autocomplete from '@mui/material/Autocomplete';
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
 import styled from 'styled-components';
-import { useValueBoxProps } from './useValueBox';
-import ConfirmDialog from '../../../common/dialog-confirm';
+import { useBoxValueProps } from './useBoxValue';
+import ConfirmDialog from '../dialog-confirm';
 
 const Box = styled.div`
     min-height: 36px;
@@ -29,7 +29,7 @@ const Connected = styled.div`
     grid-column: 1 / 3;
 `
 
-const BaseValueBox = ({ index, changeResult, isOwner, open, setOpen, weight, reps, setReps, deleteResult, weightOptions, loadWeight, repsOptions }: useValueBoxProps) => {
+const BaseBoxValue = ({ index, changeResult, isOwner, open, setOpen, weight, reps, setReps, deleteResult, weightOptions, loadWeight, repsOptions }: useBoxValueProps) => {
     return (
         <>
             {
@@ -109,4 +109,4 @@ const BaseValueBox = ({ index, changeResult, isOwner, open, setOpen, weight, rep
     );
 }
 
-export default BaseValueBox;
+export default BaseBoxValue;

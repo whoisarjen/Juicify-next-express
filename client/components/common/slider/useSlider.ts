@@ -1,8 +1,8 @@
 import useTranslation from "next-translate/useTranslation";
 import { useState, useEffect } from "react";
-import { SimpleSliderProps } from ".";
+import { SliderProps } from ".";
 
-const useSimpleSlider = ({ title, macro, beginValue, changed, day }: SimpleSliderProps) => {
+const useSlider = ({ title, macro, beginValue, changed, day }: SliderProps) => {
     const [value, setValue] = useState<any>(false);
     const [timer, setTimer] = useState<any>(null)
     const [maxValue, setMaxValue] = useState(0)
@@ -55,6 +55,6 @@ const useSimpleSlider = ({ title, macro, beginValue, changed, day }: SimpleSlide
     return { title, macro, beginValue, changed, day, value, maxValue, handleChange, handleInputChange, handleBlur, t }
 }
 
-export type useSimpleSliderProps = ReturnType<typeof useSimpleSlider>
+export type useSliderProps = ReturnType<typeof useSlider>
 
-export default useSimpleSlider;
+export default useSlider;
