@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useNotify } from "./useNotify";
 
 interface getProps {
     url: string
@@ -14,13 +15,21 @@ interface deleteProps {
 }
 
 const useAxios = () => {
+    const { error } = useNotify()
 
     const get = async ({ url }: getProps) => {
         return await axios.get(`${process.env.NEXT_PUBLIC_SERVER}${url}`, { withCredentials: true });
     }
 
     const post = async ({ object, url }: postProps) => {
-        return await axios.post(`${process.env.NEXT_PUBLIC_SERVER}${url}`, object, { withCredentials: true });
+        try {
+            return await axios.post(`${process.env.NEXT_PUBLIC_SERVER}${url}`, object, { withCredentials: true });
+        } catch (err: any) {
+            if (err.response.data) {
+                error(err.response.data)
+            }
+            throw err;
+        }
     }
 
     const axiosDelete = async ({ url }: deleteProps) => {
