@@ -4,7 +4,7 @@ import { NotifyContext } from '../../hooks/useNotify'
 import useTranslation from 'next-translate/useTranslation'
 
 const Notify = ({ children }: { children: any }) => {
-    const { t } = useTranslation('error')
+    const { t } = useTranslation('notify')
 
     const notifyOptions = useMemo(
         () => ({

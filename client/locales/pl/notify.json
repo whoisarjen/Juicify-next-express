@@ -9,5 +9,6 @@
     "PASSWORDS_DO_NOT_MATCH": "Hasła nie są takie same",
     "BIRTHDAY_IS_REQUIRED": "Data urodzin jest wymagana",
     "PASSWORD_IS_REQUIRED": "Hasła jest wymagane",
-    "INVALID_LOGIN_OR_PASSWORD": "Niepoprawny login lub hasło"
+    "INVALID_LOGIN_OR_PASSWORD": "Niepoprawny login lub hasło",
+    "success": "Sukces"
 }

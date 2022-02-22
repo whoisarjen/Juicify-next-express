@@ -2,7 +2,7 @@
     "locales": ["en", "pl"],
     "defaultLocale": "en",
     "pages": {
-        "*": ["home", "error"],
+        "*": ["home", "notify"],
         "/login": ["auth"],
         "/register": ["auth"],
         "/reset-password": ["auth"],

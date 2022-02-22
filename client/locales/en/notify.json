@@ -9,5 +9,6 @@
   "PASSWORDS_DO_NOT_MATCH": "Passwords do NOT match",
   "BIRTHDAY_IS_REQUIRED": "Birthday is required",
   "PASSWORD_IS_REQUIRED": "Password is required",
-  "INVALID_LOGIN_OR_PASSWORD": "Invalid logid or password"
+  "INVALID_LOGIN_OR_PASSWORD": "Invalid logid or password",
+  "success": "Success"
 }
