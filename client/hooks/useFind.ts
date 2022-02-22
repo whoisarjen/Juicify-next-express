@@ -56,13 +56,14 @@ const useFind = (value: any, where: string, tab: number, skipThoseIDS: Array<any
                     setLoading(false)
                 } else {
                     const cache = await getIndexedDBbyID(`cache_${where}`, value)
-                    if (cache && cache.items.length > 0 && cache.whenAdded > addDaysToDate(getShortDate(), -parseInt(process.env.NEXT_PUBLIC_DAYS_IN_CACHE as string))) {
+                    if (cache && cache.items.length > 0 && cache.whenAdded > new Date(addDaysToDate(getShortDate(), -parseInt(process.env.NEXT_PUBLIC_DAYS_IN_CACHE as string)))) {
                         setItems(await prepareItems(cache.items || [], skipThoseIDS, where, value))
                         setLoading(false)
                     } else {
-                        if (cache && cache.whenAdded < addDaysToDate(getShortDate(), -parseInt(process.env.NEXT_PUBLIC_DAYS_IN_CACHE as string))) {
-                            await deleteIndexedDB(`cache_${where}`, value)
+                        if (cache) {
+                            await deleteIndexedDB(`cache_${where}`, cache._id)
                         }
+                        console.log('from db')
                         const searchFunction = (find: string) => setTimeout(async () => {
                             setLoading(true);
                             if (getOnline()) {

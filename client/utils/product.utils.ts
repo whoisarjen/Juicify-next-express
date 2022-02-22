@@ -16,16 +16,19 @@ const getProductInformationsObject: any = {
 export const getProductInformations = (object: ProductSchemaProps & ActivitySchemaProps) => {
     let newObject: any = {}
     Object.keys(getProductInformationsObject).forEach(x => {
-        if (object[x as keyof ProductSchemaProps]) {
-            newObject[getProductInformationsObject[x]] = object[x as keyof ProductSchemaProps]
-        } else {
-            newObject[getProductInformationsObject[x]] = 0
+        if (x != 'v') {
+            if (object[x as keyof ProductSchemaProps]) {
+                newObject[getProductInformationsObject[x]] = object[x as keyof ProductSchemaProps] + 'g'
+            } else {
+                newObject[getProductInformationsObject[x]] = '0g'
+            }
         }
     })
     return {
         Name: object.name,
         ...(object.code && { Code: object.code }),
         ...newObject,
+        Calories: Math.round((object.p || 0) * 4 + (object.c || 0) * 4 + (object.f || 0) * 9) + 'kcal'
     }
 }
 
@@ -50,13 +53,13 @@ export const getCalories = (object: getCaloriesProps) => {
 }
 
 export const getMacronutrient = (object: getCaloriesProps, macronutrient: string) => {
-    if(macronutrient == 'p'){
+    if (macronutrient == 'p') {
         return (object.p || 0) * (object.how_many || 1)
     }
-    if(macronutrient == 'c'){
+    if (macronutrient == 'c') {
         return (object.c || 0) * (object.how_many || 1)
     }
-    if(macronutrient == 'f'){
+    if (macronutrient == 'f') {
         return (object.f || 0) * (object.how_many || 1)
     }
 

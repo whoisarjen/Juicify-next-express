@@ -51,15 +51,18 @@ const BaseDialogShowProductInformations = ({ loadedProduct, handleClose, dailyMe
             <Grid>
                 {
                     Object.keys(loadedProduct).length > 0 &&
-                    (
-                        <ul>
+                    <table style={{ textAlign: 'center' }}>
+                        <tbody>
                             {
                                 Object.keys(getProductInformations(loadedProduct)).map(x =>
-                                    <li key={x}>{t(x)}: {getProductInformations(loadedProduct)[x]}</li>
+                                    <tr key={x}>
+                                        <td key={x}>{t(x)}</td>
+                                        <td>{getProductInformations(loadedProduct)[x]}</td>
+                                    </tr>
                                 )
                             }
-                        </ul>
-                    )
+                        </tbody>
+                    </table>
                 }
                 <DialogAddProduct dailyMeasurement={dailyMeasurement} loadedProduct={loadedProduct}>
                     <Placeholder />

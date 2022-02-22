@@ -8,14 +8,14 @@ const Notify = ({ children }: { children: any }) => {
 
     const notifyOptions = useMemo(
         () => ({
-            success: (text: string = 'Success') => {
+            success: (text: string = 'SUCCESS') => {
                 toast.success(t(text), {
                     position: "bottom-right",
                     autoClose: 2000,
                     closeOnClick: true,
                 })
             },
-            error: (text: string = 'Error') => {
+            error: (text: string = 'ERROR') => {
                 toast.error(t(text), {
                     position: "bottom-right",
                     autoClose: 2000,
