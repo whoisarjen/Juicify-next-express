@@ -5,3 +5,6 @@ server doesnt send back error messages
 
 
 check barcode
+
+
+start service worker on sign in and? destroy on logout
