@@ -4,10 +4,4 @@ add cardio exercises + timer i guess
 server doesnt send back error messages
 
 
-remove listeners on unmounted
-
-
 check barcode
-
-
-cleaning indexedDB cache on find (over 1 week of hold?)
