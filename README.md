@@ -1,42 +1,20 @@
-The future version of Juicify (https://github.com/whoisarjen/Juicify), hopyle better and cleaner wrote.
+<h2>Status:</h2>
 
-Technology: 
-    Client: React, Next.js, Redux toolkit, MUI
-    Server: Express, node, socket.io, mongodb, redis
+Live tests.
 
------
+<h2>Technology:</h2>
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Next.js, React, Redux toolkit, Typescript, Javascript, Web workers, Styled-components, Jest, MongoDB, Express, JWT, Redis, Socket.io, PWA, IndexedDB, MUI, i18n, Cookies, Ubuntu (VPS), etc.
 
-## Getting Started
+<h2>Description:</h2>
 
-First, run the development server:
+Juicify is a Progressive Web Application, which is a coach in your pocket. It allows all functions like popular fitness application (for example MyFitnessPal), but also provides an opportunity of tracking workouts, watching other's people progress and the way they train. The main point of the app is analyzing user's way of eatting and help him achieving body goals in the fastest and the most sience way. Not enough? It almost fully works in offline mode.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+<h2>Nerd informations:</h2>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+All the technology probably are not new for you, but what is the biggest flex of the app is the way it handles offline synchronization. iOS does not support PWA background synchronization, but thanks to socket, we can kind of avoid the issue. MongoDB as main database allow fast writting to DB, which is the most important part of "native experience". When user is forced to search in DB, Juicify supports it with cache methods like indexedDB and Redis, reusing previous queries's results from all users.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+<h2>Live version password:</h2>
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+-
+-
