@@ -1,5 +1,6 @@
 import dotenv from 'dotenv'
 dotenv.config({ path: `.env` })
+dotenv.config({ path: `.env.local` })
 dotenv.config({ path: `.env.${process.env.NODE_ENV}`, override: true })
 import { Server } from "socket.io";
 import logger from './utils/logger'
