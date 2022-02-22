@@ -117,19 +117,21 @@ const BarMacronutrients = ({ object, click, toggleLock, t }: BarMacronutrientsPr
                     object.locked ?
                         (
                             <IconButton
+                                data-testid="button"
                                 onClick={toggleLock}
                                 color="secondary"
                                 style={{ margin: 'auto' }}
                             >
-                                <LockOutlinedIcon />
+                                <LockOutlinedIcon data-testid="LockOutlinedIcon" />
                             </IconButton>
                         ) : (
                             <IconButton
+                                data-testid="button"
                                 onClick={toggleLock}
                                 color="primary"
                                 style={{ margin: 'auto' }}
                             >
-                                <LockOpenIcon />
+                                <LockOpenIcon data-testid="LockOpenIcon" />
                             </IconButton>
                         )
                 }
