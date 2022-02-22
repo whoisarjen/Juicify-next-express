@@ -1,12 +1,13 @@
-import axios from "axios";
 import { useRouter } from "next/router";
+import useAxios from "./useAxios";
 
 const useOtherUser = () => {
+    const { post } = useAxios()
     const router: any = useRouter()
 
     const loadValueByLogin = async (where: string, find: any, login: string = find) => {
         try {
-            const res = await axios.post(`${process.env.NEXT_PUBLIC_SERVER}/guest/${where}`, { find, login }, { withCredentials: true });
+            const res = await post({ object: { find, login }, url: `/guest/${where}` })
             return res.data;
         } catch (error: any) {
             const errorCode = error.toJSON().status;

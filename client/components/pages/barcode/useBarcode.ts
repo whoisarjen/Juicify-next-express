@@ -1,4 +1,3 @@
-import axios from "axios"
 import { useState, useEffect } from "react"
 import { useDailyMeasurement } from "../../../hooks/useDailyMeasurement"
 import { useAppSelector } from "../../../hooks/useRedux"
@@ -6,9 +5,10 @@ import { getShortDate } from "../../../utils/date.utils"
 import { getAllIndexedDB } from "../../../utils/indexedDB.utils"
 // @ts-ignore
 import Quagga from 'quagga';
+import useAxios from "../../../hooks/useAxios"
 
 const useBarcode = () => {
-
+    const { post } = useAxios()
     const [loadedBarcode, setLoadedBarcode] = useState(0)
     const [loadedProduct, setLoadedProduct] = useState<any>(false)
     const token: any = useAppSelector(state => state.token.value)
@@ -23,7 +23,7 @@ const useBarcode = () => {
                 const value = { ...product[0], code: res.codeResult.code }
                 setLoadedProduct(value)
             } else {
-                const response = await axios.post(`${process.env.NEXT_PUBLIC_SERVER}/find/product`, { code: res.codeResult.code }, { withCredentials: true });
+                const response = await post({ object: { code: res.codeResult.code }, url: '/find/product' })
                 if (response.data) {
                     const value = { ...response.data, code: res.codeResult.code }
                     setLoadedProduct(value)

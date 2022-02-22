@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { addIndexedDB, getAllIndexedDB, getIndexedDBbyID } from '../utils/indexedDB.utils'
-import axios from 'axios';
+import { addIndexedDB, deleteIndexedDB, getAllIndexedDB, getIndexedDBbyID } from '../utils/indexedDB.utils'
 import { useAppSelector } from './useRedux';
 import { getOnline } from '../utils/db.utils';
+import useAxios from "./useAxios";
+import { addDaysToDate, getShortDate } from "../utils/date.utils";
 
 const prepareItems = async (data: Array<any>, skipThoseIDS: Array<any>, where: string, value: string): Promise<Array<any>> => {
     return new Promise(async resolve => {
@@ -33,6 +34,7 @@ const prepareItems = async (data: Array<any>, skipThoseIDS: Array<any>, where: s
 }
 
 const useFind = (value: any, where: string, tab: number, skipThoseIDS: Array<any> = [], reload: number = 0) => {
+    const { post } = useAxios()
     const [items, setItems] = useState<Array<any>>([])
     const [loading, setLoading] = useState(false)
     const [searchCache, setSearchCache] = useState<Array<any>>([])
@@ -54,19 +56,18 @@ const useFind = (value: any, where: string, tab: number, skipThoseIDS: Array<any
                     setLoading(false)
                 } else {
                     const cache = await getIndexedDBbyID(`cache_${where}`, value)
-                    if (cache && cache.items.length > 0) {
+                    if (cache && cache.items.length > 0 && cache.whenAdded > addDaysToDate(getShortDate(), -parseInt(process.env.NEXT_PUBLIC_DAYS_IN_CACHE as string))) {
                         setItems(await prepareItems(cache.items || [], skipThoseIDS, where, value))
                         setLoading(false)
                     } else {
+                        if (cache && cache.whenAdded < addDaysToDate(getShortDate(), -parseInt(process.env.NEXT_PUBLIC_DAYS_IN_CACHE as string))) {
+                            await deleteIndexedDB(`cache_${where}`, value)
+                        }
                         const searchFunction = (find: string) => setTimeout(async () => {
                             setLoading(true);
                             if (getOnline()) {
                                 try {
-                                    const response: any = await axios.post(
-                                        `${process.env.NEXT_PUBLIC_SERVER}/find/${where}s`,
-                                        { find: find },
-                                        { withCredentials: true }
-                                    );
+                                    const response: any = await post({ object: { find }, url: `/find/${where}s` })
                                     const receivedProducts = response.data.items.sort((a: any, b: any) => a.name.length - b.name.length)
                                     setItems(await prepareItems(receivedProducts || [], skipThoseIDS, where, value))
                                     await addIndexedDB(`cache_${where}`, [{ _id: find, whenAdded: new Date(), items: receivedProducts }])
