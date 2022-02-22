@@ -1,33 +1,18 @@
 import { boolean, number, object, preprocess, string, TypeOf } from 'zod'
-import errorBook from '../../utils/errorBook'
 
 export const createUserSchema = object({
     body: object({
-        login: string({
-            required_error: errorBook['LOGIN IS REQUIRED']['VALUE']
-        }).min(3),
-        password: string({
-            required_error: errorBook['PASSWORD IS REQUIRED']['VALUE']
-        }).min(8),
-        passwordConfirmation: string({
-            required_error: errorBook['PASSWORD CONFIRMATION IS REQUIRED']['VALUE']
-        }).min(8),
-        email: string({
-            required_error: errorBook['EMAIL IS REQUIRED']['VALUE']
-        })
-            .email(errorBook['EMAIL IS NOT VALID']['VALUE']),
-        height: preprocess((val) => Number(val), number({
-            required_error: errorBook['HEIGHT IS REQUIRED']['VALUE']
-        })),
-        birth: string({
-            required_error: errorBook['BIRTHDAY IS REQUIRED']['VALUE']
-        }),
-        sex: preprocess((val) => Boolean(val), boolean({
-            required_error: errorBook['SEX IS REQUIRED']['VALUE']
-        }))
+        login: string().min(3),
+        password: string().min(8),
+        passwordConfirmation: string().min(8),
+        email: string()
+            .email(),
+        height: preprocess((val) => Number(val), number()),
+        birth: string(),
+        sex: preprocess((val) => Boolean(val), boolean())
     })
 }).refine((data: any) => data.password === data.passwordConfirmation, {
-    message: errorBook['PASSWORDS DO NOT MATCH']['VALUE'],
+    message: process.env.PASSWORDS_DO_NOT_MATCH,
     path: ['passwordConfirmation']
 })
 
@@ -43,10 +28,8 @@ export type confirmEmailInput = Omit<TypeOf<typeof confirmEmailSchema>, "body.pa
 
 export const resetPasswordSchema = object({
     body: object({
-        email: string({
-            required_error: errorBook['EMAIL IS REQUIRED']['VALUE']
-        })
-            .email(errorBook['EMAIL IS NOT VALID']['VALUE']),
+        email: string()
+            .email(),
     })
 })
 

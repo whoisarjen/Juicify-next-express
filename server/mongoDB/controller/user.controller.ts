@@ -4,13 +4,12 @@ import { CreateUserInput } from "../schema/user.schema"
 import { changeUser, createUser, getUsersByLogin, confirmUser, resetPassword, resetPasswordConfirmation } from "../service/user.service"
 import { omit } from 'lodash'
 import { removeUsersSensitiveData } from '../../utils/guest.utils'
-import errorBook from "../../utils/errorBook"
 import { updateToken } from "./session.controller"
 
 export const createUserController = async (req: Request<{}, {}, CreateUserInput['body']>, res: Response) => {
     try {
         if ((new Date(req.body.birth)).toString() === 'Invalid Date') {
-            throw errorBook['BIRTHDAY IS REQUIRED']['VALUE']
+            throw process.env.BIRTHDAY_IS_REQUIRED
         }
         const user = await createUser({ ...req.body, birth: new Date(req.body.birth) })
         return res.send(omit(user, 'password'));

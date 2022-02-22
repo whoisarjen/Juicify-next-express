@@ -3,7 +3,6 @@ import { Request, Response } from "express"
 import { CreateDailyMeasurementInput } from "../schema/dailyMeasurement.schema"
 import { changeDailyMeasurement, createDailyMeasurement, getDailyMeasurement, getDryDailyMeasurement } from "../service/dailyMeasurement.service"
 import { socketHandleUserSynchronization } from '../../utils/socket'
-import errorBook from '../../utils/errorBook'
 import { connectTwoDailyMeasurements } from '../../utils/dailyMeasurement.utils'
 
 export const createDailyMeasurementController = async (req: Request<{}, {}, CreateDailyMeasurementInput['body']>, res: Response) => {
@@ -65,7 +64,7 @@ export const getGuestDailyMeasurementController = async (req: Request, res: Resp
     try {
         if ((new Date(req.body.find).toString() === 'Invalid Date')) {
             logger.error(`getDailyMeasurementController blocked ${req.body.find}. Invalid Date`)
-            return res.status(errorBook['DATE IS REQUIRED']['CODE']).send(errorBook['DATE IS REQUIRED']['VALUE'])
+            return res.status(401).send(process.env.DATE_IS_REQUIRED)
         }
         const dailyMeasurement = await getDailyMeasurement({
             user_ID: res.locals.user._id,

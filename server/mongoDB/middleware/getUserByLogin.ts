@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express'
-import errorBook from '../../utils/errorBook';
 import { removeUsersSensitiveData } from '../../utils/guest.utils';
 import logger from '../../utils/logger';
 import { getUser } from '../service/user.service';
@@ -7,7 +6,7 @@ import { getUser } from '../service/user.service';
 export default async function getUserByLogin(req: Request, res: Response, next: NextFunction) {
     if (!req.body.login) {
         logger.error('getUserByLogin kicked out cheater', req.body)
-        return res.status(errorBook['LOGIN IS REQUIRED']['CODE']).send(errorBook['LOGIN IS REQUIRED']['VALUE'])
+        return res.status(401).send(process.env.LOGIN_IS_REQUIRED)
     }
 
     const user = await getUser({ login: req.body.login })
@@ -19,8 +18,7 @@ export default async function getUserByLogin(req: Request, res: Response, next: 
             })
         } else {
             logger.error(`Someone try to see not existing user ${req.body.login}.`)
-            console.log(errorBook['USER NOT AVAILABLE']['CODE'])
-            return res.status(errorBook['USER NOT AVAILABLE']['CODE']).send(errorBook['USER NOT AVAILABLE']['VALUE'])
+            return res.status(404).send(process.env.USER_NOT_AVAILABLE)
         }
     }
 

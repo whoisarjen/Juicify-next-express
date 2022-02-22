@@ -26,6 +26,7 @@ const useAxios = () => {
             return await axios.post(`${process.env.NEXT_PUBLIC_SERVER}${url}`, object, { withCredentials: true });
         } catch (err: any) {
             if (err.response.data) {
+                console.log(err.response.data)
                 error(err.response.data)
             }
             throw err;

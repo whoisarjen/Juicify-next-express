@@ -1,6 +1,5 @@
 import { Request, Response } from "express"
 import { validatePassword } from "../service/user.service"
-import errorBook from "../../utils/errorBook"
 import { createSession, reIssueAccessToken, updateSession } from "../service/session.service"
 import { get } from 'lodash'
 import { parseBoolean, signJWT } from '../../utils/jwt.utils'
@@ -16,11 +15,11 @@ export async function createUserSessionController(req: Request, res: Response) {
     const user = await validatePassword(req.body)
 
     if (!user) {
-        return res.status(errorBook['INVALID LOGIN OR PASSWORD']['CODE']).send(errorBook['INVALID LOGIN OR PASSWORD']['VALUE'])
+        return res.status(403).send(process.env.INVALID_LOGIN_OR_PASSWORD)
     }
 
     if (!user.email_confirmation) {
-        return res.status(errorBook['ACCOUNT_NOT_ACTIVATED']['CODE']).send(errorBook['ACCOUNT_NOT_ACTIVATED']['VALUE'])
+        return res.status(403).send(process.env.ACCOUNT_NOT_ACTIVATED)
     }
 
     const session = await createSession(user._id, req.get('user-agent') || '')

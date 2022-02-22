@@ -1,5 +1,4 @@
 import { array, boolean, date, number, object, preprocess, string, TypeOf } from 'zod'
-import errorBook from '../utils/error.utils'
 
 export const SettingsSchema = object({
     meal_number: preprocess((val) => Number(val), number().min(1).max(10)).optional(),
@@ -28,7 +27,7 @@ export const CreateUserSchema = object({
     birth: string().or(date()),
     sex: preprocess((val) => Boolean(val), boolean()),
 }).refine(data => data.password === data.passwordConfirmation, {
-    message: errorBook['PASSWORDS DO NOT MATCH']['VALUE'],
+    message: process.env.PASSWORDS_DO_NOT_MATCH,
     path: ['passwordConfirmation']
 })
 
