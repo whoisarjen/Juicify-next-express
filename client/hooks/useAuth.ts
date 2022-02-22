@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { getCookie } from "../utils/auth.utils";
 import { deleteDatabaseIndexedDB } from "../utils/indexedDB.utils";
 import useAxios from "./useAxios";
 import { useAppSelector } from "./useRedux";
@@ -17,7 +18,7 @@ const useAuth = () => {
             if (isDarkMode) {
                 localStorage.setItem('isDarkMode', isDarkMode)
             }
-            window.location.replace(`${window.location.origin}/login`) // Need to hard reset indexedDB
+            window.location.replace(`${window.location.origin}${await getCookie('NEXT_LOCALE') == 'en' ? '' : '/' + await getCookie('NEXT_LOCALE')}/login`) // Need to hard reset indexedDB
         } catch (e: any) {
             console.log(e.message)
         }
