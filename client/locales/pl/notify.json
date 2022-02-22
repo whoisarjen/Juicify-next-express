@@ -11,5 +11,15 @@
     "PASSWORD_IS_REQUIRED": "Hasła jest wymagane",
     "INVALID_LOGIN_OR_PASSWORD": "Niepoprawny login lub hasło",
     "SUCCESS": "Sukces",
-    "ERROR": "Błąd"
+    "ERROR": "Błąd",
+    "Should be at least 3 characters": "Musi zawierać co najmniej 3 znaków",
+    "Should be at least 8 characters": "Musi zawierać co najmniej 8 znaków",
+    "Should be at most 50 characters long": "Nie może być dłuższy niż 50 znaków",
+    "Should be at most 150 characters long": "Nie może być dłuższy niż 150 znaków",
+    "Should be at most 255 characters long": "Nie może być dłuższy niż 255 znaków",
+    "Value should be greater than or equal to 1": "Wartość nie może być mniejsza niż 1",
+    "Value should be less than or equal to 10": "Wartość nie może być większa niż 10",
+    "Value should be greater than or equal to 120": "Wartość nie może być mniejsza niż 120",
+    "Value should be less than or equal to 250": "Wartość nie może być większa niż 250",
+    "Invalid email": "Niepoprawny email"
 }

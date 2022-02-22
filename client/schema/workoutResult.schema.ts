@@ -1,4 +1,4 @@
-import { array, boolean, date, number, object, preprocess, string, TypeOf } from 'zod'
+import { array, boolean, number, object, preprocess, string, TypeOf } from 'zod'
 
 export const ValueSchema = object({
     open: preprocess((val) => Boolean(val), boolean()).optional(),

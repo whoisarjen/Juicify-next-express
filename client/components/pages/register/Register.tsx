@@ -42,11 +42,7 @@ const BaseRegister = ({ registerUser, t, loading, register, errors, handleSubmit
                     type="text"
                     {...register('login')}
                     error={typeof errors.login === 'undefined' ? false : true}
-                    helperText={
-                        errors.login?.message &&
-                        errors.login?.message.length &&
-                        errors.login?.message
-                    }
+                    helperText={errors.login?.message && t(`notify:${errors.login.message || ''}`)}
                 />
                 <TextField
                     type="email"
@@ -54,11 +50,7 @@ const BaseRegister = ({ registerUser, t, loading, register, errors, handleSubmit
                     label={t("auth:EMAIL")}
                     {...register('email')}
                     error={typeof errors.email === 'undefined' ? false : true}
-                    helperText={
-                        errors.email?.message &&
-                        errors.email?.message.length &&
-                        errors.email?.message
-                    }
+                    helperText={errors.email?.message && t(`notify:${errors.email.message || ''}`)}
                 />
                 <TextField
                     type="password"
@@ -67,11 +59,7 @@ const BaseRegister = ({ registerUser, t, loading, register, errors, handleSubmit
                     {...register('password')}
                     data-testid="password"
                     error={typeof errors.password === 'undefined' ? false : true}
-                    helperText={
-                        errors.password?.message &&
-                        errors.password?.message.length &&
-                        errors.password?.message
-                    }
+                    helperText={errors.password?.message && t(`notify:${errors.password.message || ''}`)}
                 />
                 <TextField
                     type="password"
@@ -80,11 +68,7 @@ const BaseRegister = ({ registerUser, t, loading, register, errors, handleSubmit
                     {...register('passwordConfirmation')}
                     data-testid="confirmation"
                     error={typeof errors.passwordConfirmation === 'undefined' ? false : true}
-                    helperText={
-                        errors.passwordConfirmation?.message &&
-                        errors.passwordConfirmation?.message.length &&
-                        errors.passwordConfirmation?.message
-                    }
+                    helperText={errors.passwordConfirmation?.message && t(`notify:${errors.passwordConfirmation.message || ''}`)}
                 />
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DesktopDatePicker
@@ -105,11 +89,7 @@ const BaseRegister = ({ registerUser, t, loading, register, errors, handleSubmit
                     label={t("auth:HEIGHT")}
                     {...register('height')}
                     error={typeof errors.height === 'undefined' ? false : true}
-                    helperText={
-                        errors.height?.message &&
-                        errors.height?.message.length &&
-                        errors.height?.message
-                    }
+                    helperText={errors.height?.message && t(`notify:${errors.height.message || ''}`)}
                 />
                 <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">{t("auth:SEX")}</InputLabel>

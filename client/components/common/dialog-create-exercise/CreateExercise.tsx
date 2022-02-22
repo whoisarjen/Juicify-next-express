@@ -24,11 +24,7 @@ const BaseCreateExercise = ({ isOpen, setIsOpen, handleSubmit, onSubmit, errors,
                         <TextField
                             {...register('name')}
                             error={typeof errors.name === 'undefined' ? false : true}
-                            helperText={
-                                errors.name?.message &&
-                                errors.name?.message.length &&
-                                errors.name?.message
-                            }
+                            helperText={errors.name?.message && t(`notify:${errors.name.message || ''}`)}
                             required
                             autoFocus
                             margin="dense"

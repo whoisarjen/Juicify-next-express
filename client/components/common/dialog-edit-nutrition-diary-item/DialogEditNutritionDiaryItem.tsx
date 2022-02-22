@@ -46,11 +46,7 @@ const BaseDialogEditNutritionDiaryItem = ({ product, children, isDialog, setIsDi
                             sx={{ marginTop: '10px', width: '100%' }}
                             {...register('activity')}
                             error={typeof errors.activity === 'undefined' ? false : true}
-                            helperText={
-                                errors.activity?.message &&
-                                errors.activity?.message.length &&
-                                errors.activity?.message
-                            }
+                            helperText={errors.activity?.message && t(`notify:${errors.activity.message || ''}`)}
                         />
                     }
                     {
@@ -62,11 +58,7 @@ const BaseDialogEditNutritionDiaryItem = ({ product, children, isDialog, setIsDi
                             {...register('calories')}
                             inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                             error={typeof errors.calories === 'undefined' ? false : true}
-                            helperText={
-                                errors.calories?.message &&
-                                errors.calories?.message.length &&
-                                errors.calories?.message
-                            }
+                            helperText={errors.calories?.message && t(`notify:${errors.calories.message || ''}`)}
                         />
                     }
                     {
@@ -78,11 +70,7 @@ const BaseDialogEditNutritionDiaryItem = ({ product, children, isDialog, setIsDi
                             {...register('how_many')}
                             inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                             error={typeof errors.how_many === 'undefined' ? false : true}
-                            helperText={
-                                errors.how_many?.message &&
-                                errors.how_many?.message.length &&
-                                errors.how_many?.message
-                            }
+                            helperText={errors.how_many?.message && t(`notify:${errors.how_many.message || ''}`)}
                         />
                     }
 

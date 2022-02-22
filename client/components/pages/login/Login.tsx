@@ -35,11 +35,7 @@ const BaseLogin = ({ login, register, errors, handleSubmit, loading, t }: useLog
                     type="text"
                     {...register('login')}
                     error={typeof errors.login === 'undefined' ? false : true}
-                    helperText={
-                        errors.login?.message &&
-                        errors.login?.message.length &&
-                        errors.login?.message
-                    }
+                    helperText={errors.login?.message && t(`notify:${errors.login.message || ''}`)}
                 />
                 <TextField
                     type="password"
@@ -47,11 +43,7 @@ const BaseLogin = ({ login, register, errors, handleSubmit, loading, t }: useLog
                     label={t("auth:PASSWORD")}
                     {...register('password')}
                     error={typeof errors.password === 'undefined' ? false : true}
-                    helperText={
-                        errors.password?.message &&
-                        errors.password?.message.length &&
-                        errors.password?.message
-                    }
+                    helperText={errors.password?.message && t(`notify:${errors.password.message || ''}`)}
                 />
                 <LoadingButton
                     loading={loading}

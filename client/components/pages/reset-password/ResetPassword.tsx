@@ -35,11 +35,7 @@ const BaseResetPassword = ({ t, handleSubmit, onSubmit, errors, loading, registe
                     type="text"
                     {...register('email')}
                     error={typeof errors.email === 'undefined' ? false : true}
-                    helperText={
-                        errors.email?.message &&
-                        errors.email?.message.length &&
-                        errors.email?.message
-                    }
+                    helperText={errors.email?.message && t(`notify:${errors.email.message || ''}`)}
                 />
                 <LoadingButton
                     loading={loading}

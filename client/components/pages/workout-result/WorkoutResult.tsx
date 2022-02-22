@@ -27,11 +27,7 @@ const BaseWorkoutResult = ({ t, isLoading, handleSubmit, onSubmit, deleteEveryth
                 defaultValue={' '}
                 {...register('title')}
                 error={typeof errors.title === 'undefined' ? false : true}
-                helperText={
-                    errors.title?.message &&
-                    errors.title?.message.length &&
-                    errors.title?.message
-                }
+                helperText={errors.title?.message && t(`notify:${errors.title.message || ''}`)}
             />
             <TextField
                 variant="outlined"
@@ -52,11 +48,7 @@ const BaseWorkoutResult = ({ t, isLoading, handleSubmit, onSubmit, deleteEveryth
                     focused
                     {...register('workout_description')}
                     error={typeof errors.workout_description === 'undefined' ? false : true}
-                    helperText={
-                        errors.workout_description?.message &&
-                        errors.workout_description?.message.length &&
-                        errors.workout_description?.message
-                    }
+                    helperText={errors.workout_description?.message && t(`notify:${errors.workout_description.message || ''}`)}
                 />
             }
             {
@@ -70,11 +62,7 @@ const BaseWorkoutResult = ({ t, isLoading, handleSubmit, onSubmit, deleteEveryth
                     focused
                     {...register('burnt')}
                     error={typeof errors.burnt === 'undefined' ? false : true}
-                    helperText={
-                        errors.burnt?.message &&
-                        errors.burnt?.message.length &&
-                        errors.burnt?.message
-                    }
+                    helperText={errors.burnt?.message && t(`notify:${errors.burnt.message || ''}`)}
                 />
             }
             <TextField
@@ -87,11 +75,7 @@ const BaseWorkoutResult = ({ t, isLoading, handleSubmit, onSubmit, deleteEveryth
                 focused
                 {...register('description')}
                 error={typeof errors.description === 'undefined' ? false : true}
-                helperText={
-                    errors.description?.message &&
-                    errors.description?.message.length &&
-                    errors.description?.message
-                }
+                helperText={errors.description?.message && t(`notify:${errors.description.message || ''}`)}
             />
 
             {

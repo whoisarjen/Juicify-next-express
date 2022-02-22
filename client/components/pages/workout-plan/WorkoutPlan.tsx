@@ -29,11 +29,7 @@ const BaseWorkoutPlan = ({ t, user, token, errors, fields, append, remove, handl
                 type="text"
                 focused
                 error={typeof errors.title === 'undefined' ? false : true}
-                helperText={
-                    errors.title?.message &&
-                    errors.title?.message.length &&
-                    errors.title?.message
-                }
+                helperText={errors.title?.message && t(`notify:${errors.title.message || ''}`)}
             />
             <TextField
                 disabled={token?.login != user?.login}
@@ -44,11 +40,7 @@ const BaseWorkoutPlan = ({ t, user, token, errors, fields, append, remove, handl
                 {...register('description')}
                 sx={{ width: '100%', marginTop: '10px' }}
                 error={typeof errors.description === 'undefined' ? false : true}
-                helperText={
-                    errors.description?.message &&
-                    errors.description?.message.length &&
-                    errors.description?.message
-                }
+                helperText={errors.description?.message && t(`notify:${errors.description.message || ''}`)}
             />
             <TextField
                 disabled={token?.login != user?.login}
@@ -60,11 +52,7 @@ const BaseWorkoutPlan = ({ t, user, token, errors, fields, append, remove, handl
                 sx={{ width: '100%', marginTop: '10px' }}
                 inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                 error={typeof errors.burnt === 'undefined' ? false : true}
-                helperText={
-                    errors.burnt?.message &&
-                    errors.burnt?.message.length &&
-                    errors.burnt?.message
-                }
+                helperText={errors.burnt?.message && t(`notify:${errors.burnt.message || ''}`)}
             />
             <DragDropContext onDragEnd={handleOnDragEnd}>
                 <Droppable droppableId="exercises">

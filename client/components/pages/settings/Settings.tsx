@@ -31,11 +31,7 @@ const BaseSettings = ({ changeSettings, isDirty, errors, register, handleSubmit,
                 type="number"
                 {...register('meal_number')}
                 error={typeof errors.meal_number === 'undefined' ? false : true}
-                helperText={
-                    errors.meal_number?.message &&
-                    errors.meal_number?.message.length &&
-                    errors.meal_number?.message
-                }
+                helperText={errors.meal_number?.message && t(`notify:${errors.meal_number.message || ''}`)}
             />
             <TextField
                 label={t("Fiber")}
@@ -45,11 +41,7 @@ const BaseSettings = ({ changeSettings, isDirty, errors, register, handleSubmit,
                 }}
                 {...register('fiber')}
                 error={typeof errors.fiber === 'undefined' ? false : true}
-                helperText={
-                    errors.fiber?.message &&
-                    errors.fiber?.message.length &&
-                    errors.fiber?.message
-                }
+                helperText={errors.fiber?.message && t(`notify:${errors.fiber.message || ''}`)}
             />
             <TextField
                 label={t("Sugar")}
@@ -59,33 +51,21 @@ const BaseSettings = ({ changeSettings, isDirty, errors, register, handleSubmit,
                 }}
                 {...register('sugar_percent')}
                 error={typeof errors.sugar_percent === 'undefined' ? false : true}
-                helperText={
-                    errors.sugar_percent?.message &&
-                    errors.sugar_percent?.message.length &&
-                    errors.sugar_percent?.message
-                }
+                helperText={errors.sugar_percent?.message && t(`notify:${errors.sugar_percent.message || ''}`)}
             />
             <Separator>{t('Profile')}</Separator>
             <TextField
                 label={t("Name")}
                 {...register('name')}
                 error={typeof errors.name === 'undefined' ? false : true}
-                helperText={
-                    errors.name?.message &&
-                    errors.name?.message.length &&
-                    errors.name?.message
-                }
+                helperText={errors.name?.message && t(`notify:${errors.name.message || ''}`)}
             />
             <TextField
                 label={t("Surname")}
                 variant="outlined"
                 {...register('surname')}
                 error={typeof errors.surname === 'undefined' ? false : true}
-                helperText={
-                    errors.surname?.message &&
-                    errors.surname?.message.length &&
-                    errors.surname?.message
-                }
+                helperText={errors.surname?.message && t(`notify:${errors.surname.message || ''}`)}
             />
             <TextField
                 label={t("Height")}
@@ -95,11 +75,7 @@ const BaseSettings = ({ changeSettings, isDirty, errors, register, handleSubmit,
                 }}
                 {...register('height')}
                 error={typeof errors.height === 'undefined' ? false : true}
-                helperText={
-                    errors.height?.message &&
-                    errors.height?.message.length &&
-                    errors.height?.message
-                }
+                helperText={errors.height?.message && t(`notify:${errors.height.message || ''}`)}
             />
             <TextField
                 label={t("Description")}
@@ -107,11 +83,7 @@ const BaseSettings = ({ changeSettings, isDirty, errors, register, handleSubmit,
                 type="text"
                 {...register('description')}
                 error={typeof errors.description === 'undefined' ? false : true}
-                helperText={
-                    errors.description?.message &&
-                    errors.description?.message.length &&
-                    errors.description?.message
-                }
+                helperText={errors.description?.message && t(`notify:${errors.description.message || ''}`)}
             />
             <TextField
                 label={t("Website")}
@@ -122,11 +94,7 @@ const BaseSettings = ({ changeSettings, isDirty, errors, register, handleSubmit,
                 type="text"
                 {...register('website')}
                 error={typeof errors.website === 'undefined' ? false : true}
-                helperText={
-                    errors.website?.message &&
-                    errors.website?.message.length &&
-                    errors.website?.message
-                }
+                helperText={errors.website?.message && t(`notify:${errors.website.message || ''}`)}
             />
             <TextField
                 label="Facebook"
@@ -137,11 +105,7 @@ const BaseSettings = ({ changeSettings, isDirty, errors, register, handleSubmit,
                 type="text"
                 {...register('facebook')}
                 error={typeof errors.facebook === 'undefined' ? false : true}
-                helperText={
-                    errors.facebook?.message &&
-                    errors.facebook?.message.length &&
-                    errors.facebook?.message
-                }
+                helperText={errors.facebook?.message && t(`notify:${errors.facebook.message || ''}`)}
             />
             <TextField
                 label="Instagram"
@@ -152,11 +116,7 @@ const BaseSettings = ({ changeSettings, isDirty, errors, register, handleSubmit,
                 type="text"
                 {...register('instagram')}
                 error={typeof errors.instagram === 'undefined' ? false : true}
-                helperText={
-                    errors.instagram?.message &&
-                    errors.instagram?.message.length &&
-                    errors.instagram?.message
-                }
+                helperText={errors.instagram?.message && t(`notify:${errors.instagram.message || ''}`)}
             />
             <TextField
                 label="Twitter"
@@ -167,11 +127,7 @@ const BaseSettings = ({ changeSettings, isDirty, errors, register, handleSubmit,
                 type="text"
                 {...register('twitter')}
                 error={typeof errors.twitter === 'undefined' ? false : true}
-                helperText={
-                    errors.twitter?.message &&
-                    errors.twitter?.message.length &&
-                    errors.twitter?.message
-                }
+                helperText={errors.twitter?.message && t(`notify:${errors.twitter.message || ''}`)}
             />
             <Separator>{t('Logout')}</Separator>
             <Button color="error" onClick={async () => await logout()}>

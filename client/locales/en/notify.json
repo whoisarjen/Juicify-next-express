@@ -11,5 +11,15 @@
     "PASSWORD_IS_REQUIRED": "Password is required",
     "INVALID_LOGIN_OR_PASSWORD": "Invalid logid or password",
     "SUCCESS": "Success",
-    "ERROR": "Error"
+    "ERROR": "Error",
+    "Should be at least 3 characters": "Should be at least 3 characters",
+    "Should be at least 8 characters": "Should be at least 8 characters",
+    "Should be at most 50 characters long": "Should be at most 50 characters long",
+    "Should be at most 150 characters long": "Should be at most 150 characters long",
+    "Should be at most 255 characters long": "Should be at most 255 characters long",
+    "Value should be greater than or equal to 1": "Value should be greater than or equal to 1",
+    "Value should be less than or equal to 10": "Value should be less than or equal to 10",
+    "Value should be greater than or equal to 120": "Value should be greater than or equal to 120",
+    "Value should be less than or equal to 250": "Value should be less than or equal to 250",
+    "Invalid email": "Invalid email"
   }

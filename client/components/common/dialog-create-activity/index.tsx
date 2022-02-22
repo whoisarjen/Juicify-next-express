@@ -59,11 +59,7 @@ const DialogCreateActivity = ({ children, data }: { children: any, data: DailyMe
                         sx={{ marginTop: '12px' }}
                         {...register('activity')}
                         error={typeof errors.activity === 'undefined' ? false : true}
-                        helperText={
-                            errors.activity?.message &&
-                            errors.activity?.message.length &&
-                            errors.activity?.message
-                        }
+                        helperText={errors.activity?.message && t(`notify:${errors.activity.message || ''}`)}
                     />
                     <TextField
                         id="outlined-basic"
@@ -77,11 +73,7 @@ const DialogCreateActivity = ({ children, data }: { children: any, data: DailyMe
                         }}
                         {...register('calories')}
                         error={typeof errors.calories === 'undefined' ? false : true}
-                        helperText={
-                            errors.calories?.message &&
-                            errors.calories?.message.length &&
-                            errors.calories?.message
-                        }
+                        helperText={errors.calories?.message && t(`notify:${errors.calories.message || ''}`)}
                     />
                 </DialogContent>
                 <DialogActions>

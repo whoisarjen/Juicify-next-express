@@ -35,11 +35,7 @@ const BaseDialogCreateProduct = ({ children, isDialog, setIsDialog, defaultBarco
                             label={t('Name of product')}
                             {...register('name')}
                             error={typeof errors.name === 'undefined' ? false : true}
-                            helperText={
-                                errors.name?.message &&
-                                errors.name?.message.length &&
-                                errors.name?.message
-                            }
+                            helperText={errors.name?.message && t(`notify:${errors.name.message || ''}`)}
                         />
                         {
                             defaultBarcode > 0 &&
@@ -64,11 +60,7 @@ const BaseDialogCreateProduct = ({ children, isDialog, setIsDialog, defaultBarco
                             label={t('Proteins')}
                             {...register('p')}
                             error={typeof errors.p === 'undefined' ? false : true}
-                            helperText={
-                                errors.p?.message &&
-                                errors.p?.message.length &&
-                                errors.p?.message
-                            }
+                            helperText={errors.p?.message && t(`notify:${errors.p.message || ''}`)}
                             InputProps={{
                                 endAdornment: <InputAdornment position="end">{t('g in 100g/ml')}</InputAdornment>,
                             }}
@@ -82,11 +74,7 @@ const BaseDialogCreateProduct = ({ children, isDialog, setIsDialog, defaultBarco
                             label={t('Carbs')}
                             {...register('c')}
                             error={typeof errors.c === 'undefined' ? false : true}
-                            helperText={
-                                errors.c?.message &&
-                                errors.c?.message.length &&
-                                errors.c?.message
-                            }
+                            helperText={errors.c?.message && t(`notify:${errors.c.message || ''}`)}
                             InputProps={{
                                 endAdornment: <InputAdornment position="end">{t('g in 100g/ml')}</InputAdornment>,
                             }}
@@ -100,11 +88,7 @@ const BaseDialogCreateProduct = ({ children, isDialog, setIsDialog, defaultBarco
                             label={t('Sugar')}
                             {...register('s')}
                             error={typeof errors.s === 'undefined' ? false : true}
-                            helperText={
-                                errors.s?.message &&
-                                errors.s?.message.length &&
-                                errors.s?.message
-                            }
+                            helperText={errors.s?.message && t(`notify:${errors.s.message || ''}`)}
                             InputProps={{
                                 endAdornment: <InputAdornment position="end">{t('g in 100g/ml')}</InputAdornment>,
                             }}
@@ -118,11 +102,7 @@ const BaseDialogCreateProduct = ({ children, isDialog, setIsDialog, defaultBarco
                             label={t('Fats')}
                             {...register('f')}
                             error={typeof errors.f === 'undefined' ? false : true}
-                            helperText={
-                                errors.f?.message &&
-                                errors.f?.message.length &&
-                                errors.f?.message
-                            }
+                            helperText={errors.f?.message && t(`notify:${errors.f.message || ''}`)}
                             InputProps={{
                                 endAdornment: <InputAdornment position="end">{t('g in 100g/ml')}</InputAdornment>,
                             }}
@@ -136,11 +116,7 @@ const BaseDialogCreateProduct = ({ children, isDialog, setIsDialog, defaultBarco
                             label={t('Fiber')}
                             {...register('fi')}
                             error={typeof errors.fi === 'undefined' ? false : true}
-                            helperText={
-                                errors.fi?.message &&
-                                errors.fi?.message.length &&
-                                errors.fi?.message
-                            }
+                            helperText={errors.fi?.message && t(`notify:${errors.fi.message || ''}`)}
                             InputProps={{
                                 endAdornment: <InputAdornment position="end">{t('g in 100g/ml')}</InputAdornment>,
                             }}
@@ -154,11 +130,7 @@ const BaseDialogCreateProduct = ({ children, isDialog, setIsDialog, defaultBarco
                             label={t('Salt')}
                             {...register('na')}
                             error={typeof errors.na === 'undefined' ? false : true}
-                            helperText={
-                                errors.na?.message &&
-                                errors.na?.message.length &&
-                                errors.na?.message
-                            }
+                            helperText={errors.na?.message && t(`notify:${errors.na.message || ''}`)}
                             InputProps={{
                                 endAdornment: <InputAdornment position="end">{t('g in 100g/ml')}</InputAdornment>,
                             }}
@@ -172,11 +144,7 @@ const BaseDialogCreateProduct = ({ children, isDialog, setIsDialog, defaultBarco
                             label={t('Ethanol')}
                             {...register('ethanol')}
                             error={typeof errors.ethanol === 'undefined' ? false : true}
-                            helperText={
-                                errors.ethanol?.message &&
-                                errors.ethanol?.message.length &&
-                                errors.ethanol?.message
-                            }
+                            helperText={errors.ethanol?.message && t(`notify:${errors.ethanol.message || ''}`)}
                             InputProps={{
                                 endAdornment: <InputAdornment position="end">{t('g in 100g/ml')}</InputAdornment>,
                             }}
