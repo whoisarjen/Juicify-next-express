@@ -1,16 +1,1 @@
 add cardio exercises + timer i guess
-
-
-server doesnt send back error messages
-
-
-check barcode
-
-
-start service worker on sign in and? destroy on logout
-
-
-descripton for Juicify and Juicify 2.0 on github
-
-
-add to diary from barcode

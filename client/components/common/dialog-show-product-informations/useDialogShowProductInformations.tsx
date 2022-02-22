@@ -4,9 +4,8 @@ import { DialogShowProductInformationsProps } from ".";
 
 const useDialogShowProductInformations = ({ loadedProduct, handleClose, dailyMeasurement }: DialogShowProductInformationsProps) => {
     const { t } = useTranslation('nutrition-diary');
-    const [isAdd, setIsAdd] = useState(false)
 
-    return { loadedProduct, handleClose, dailyMeasurement, t, isAdd, setIsAdd }
+    return { loadedProduct, handleClose, dailyMeasurement, t }
 }
 
 export type useDialogShowProductInformationsProps = ReturnType<typeof useDialogShowProductInformations>

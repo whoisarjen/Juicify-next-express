@@ -5,13 +5,14 @@ import { getProductInformations } from '../../../utils/product.utils';
 import styled from 'styled-components'
 import SlideUp from '../../transition/SlideUp';
 import { useDialogShowProductInformationsProps } from './useDialogShowProductInformations';
+import ButtonCloseDialog from '../button-close-dialog';
 
 const Close = styled.div`
     display: grid;
     width: calc(100% - 10px);
     padding: 3.75px 5px;
     position: fixed;
-    bottom: 0;
+    bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
     background: var(--theme-background);
@@ -40,7 +41,7 @@ const Grid = styled.div`
     }
 `
 
-const BaseDialogShowProductInformations = ({ loadedProduct, handleClose, dailyMeasurement, t, isAdd, setIsAdd }: useDialogShowProductInformationsProps) => {
+const BaseDialogShowProductInformations = ({ loadedProduct, handleClose, dailyMeasurement, t }: useDialogShowProductInformationsProps) => {
     return (
         <Dialog
             fullScreen
@@ -60,20 +61,16 @@ const BaseDialogShowProductInformations = ({ loadedProduct, handleClose, dailyMe
                         </ul>
                     )
                 }
-                <Placeholder />
-                <Close onClick={() => setIsAdd(true)}>
-                    <Button variant="contained">
-                        {t('ADD_TO_DIARY')}
-                    </Button>
-                </Close>
-                <Placeholder />
-                <Close onClick={handleClose}>
-                    <Button variant="contained">
-                        {t('Close')}
-                    </Button>
-                </Close>
+                <DialogAddProduct dailyMeasurement={dailyMeasurement} loadedProduct={loadedProduct}>
+                    <Placeholder />
+                    <Close>
+                        <Button variant="contained">
+                            {t('ADD_TO_DIARY')}
+                        </Button>
+                    </Close>
+                </DialogAddProduct>
+                <ButtonCloseDialog clicked={handleClose} />
             </Grid>
-            <DialogAddProduct isAdd={isAdd} dailyMeasurement={dailyMeasurement} setIsAdd={setIsAdd} loadedProduct={loadedProduct} />
         </Dialog>
     )
 }

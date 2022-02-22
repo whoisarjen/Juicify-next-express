@@ -5,11 +5,12 @@ import { useNotify } from "../../../hooks/useNotify"
 import { useAppSelector } from "../../../hooks/useRedux"
 import { insertThoseIDStoDBController } from "../../../utils/db.utils"
 
-const useDialogAddProduct = ({ isAdd, setIsAdd, dailyMeasurement, defaultMeal = 0, loadedProduct }: DialogAddProductProps) => {
+const useDialogAddProduct = ({ children, dailyMeasurement, defaultMeal = 0, loadedProduct }: DialogAddProductProps) => {
     const { t } = useTranslation('nutrition-diary')
     const [meal, setMeal] = useState(defaultMeal)
     const [howMany, setHowMany] = useState('1')
     const token: any = useAppSelector(state => state.token.value)
+    const [isDialog, setIsDialog] = useState(false)
     const { success } = useNotify()
 
     const addNewProduct = async () => {
@@ -24,11 +25,11 @@ const useDialogAddProduct = ({ isAdd, setIsAdd, dailyMeasurement, defaultMeal = 
             })
             await insertThoseIDStoDBController('daily_measurement', [object])
         }
-        setIsAdd(false)
+        setIsDialog(false)
         success()
     }
 
-    return { isAdd, setIsAdd, meal, setMeal, token, howMany, setHowMany, addNewProduct, t }
+    return { children, meal, setMeal, token, howMany, setHowMany, addNewProduct, t, isDialog, setIsDialog }
 }
 
 export type useDialogAddProductProps = ReturnType<typeof useDialogAddProduct>
