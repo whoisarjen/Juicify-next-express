@@ -72,11 +72,9 @@ const Layout = ({ children }: { children: any }) => {
             if (!await isBrowserValid() && router.pathname != '/not-supported') {
                 return router.push('/not-supported')
             }
-            const locale = await getCookie('NEXT_LOCALE')
-            console.log(router.locale, locale)
-            if (router.pathname == '/' && locale && locale != 'en' && router.locale != locale) {
-                console.log('redirect')
-                return router.push(`/${locale}`)
+            const locale = await getCookie('NEXT_LOCALE') // Redirect for PWA's scope
+            if (router.locale != locale) {
+                return router.push(router.asPath, router.asPath, { locale });
             }
             const tokenValue = JSON.parse(localStorage.getItem('token') as any) // it allow us to dodge the first push, when token is not settled yet
             if (tokenValue && notRequiredAuth.includes(router.pathname)) {
