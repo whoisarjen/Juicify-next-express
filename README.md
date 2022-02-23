@@ -16,5 +16,5 @@ The biggest flex of the app is the way of handling offline synchronization. iOS 
 
 <h2>Live version password:</h2>
 
--
--
+- Marek
+- Marek123
