@@ -20,6 +20,8 @@ import { findSchema } from '../mongoDB/schema/find.schema';
 import { getAvatarController } from '../mongoDB/controller/images.controller';
 
 const routes = (app: Express) => {
+    app.get('/heartbeat', (req, res) => res.send({ status: 'OK' }))
+
     app.post('/synchronization', requireUser, synchronizationUserSessionController)
     app.get('/avatar/:id', getAvatarController)
 

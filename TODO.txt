@@ -8,8 +8,6 @@ delete empty products
 
 report products
 
-develop Juicify + beta version on subdomain for now + links correctly in Github description
-
 statistics
 
 main site
