@@ -16,8 +16,6 @@ module.exports = withPWA({
         dest: "public",
         register: true,
         skipWaiting: true,
-        scope: '/',
-        scope: getCookie('NEXT_LOCALE') == 'en' ? '/' : `/${getCookie('NEXT_LOCALE')}`,
         disable: process.env.NODE_ENV === 'development',
     },
     ...nextTranslate(),
