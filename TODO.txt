@@ -3,3 +3,9 @@ add cardio exercises + timer i guess
 diet generator
 
 new user => coach?
+
+delete empty products
+
+report products
+
+develop Juicify and links correctly in Github description
