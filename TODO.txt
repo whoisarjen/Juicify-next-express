@@ -8,4 +8,16 @@ delete empty products
 
 report products
 
-develop Juicify and links correctly in Github description
+develop Juicify + beta version on subdomain for now + links correctly in Github description
+
+fix profile
+
+statistics
+
+main site
+
+headless CMS for blog
+
+Limit on indexedDB?
+
+Test św update in build mode

@@ -1,6 +1,8 @@
+import { store } from "../redux/store";
 import { DailyMeasurementSchemaProps } from "../schema/dailyMeasurement.schema";
 import { addDaysToDate } from "./date.utils";
 import { is_id } from "./db.utils";
+import { deleteIndexedDB } from "./indexedDB.utils";
 
 interface loadMissingDataForDailyMeasurementProps {
     _id: string,
@@ -35,7 +37,11 @@ export const loadMissingDays = async (oryginalArray: Array<DailyMeasurementSchem
     }
     let object: any = {}
     for (let i = 0; i < array.length; i++) {
-        object[array[i].whenAdded as keyof object] = array[i]
+        if (array[i].whenAdded > store.getState().config.theOldestSupportedDate()) {
+            object[array[i].whenAdded as keyof object] = array[i]
+        } else {
+            await deleteIndexedDB('daily_measurement', array[i].whenAdded) // Kick from cache
+        }
     }
     for (let i = 0; i < howManyDays; i++) {
         newArray.push(
