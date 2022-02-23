@@ -18,6 +18,7 @@ import getUserByLogin from '../mongoDB/middleware/getUserByLogin';
 import { analyzeCoachController, createCoachController } from '../mongoDB/controller/coach.controller';
 import { findSchema } from '../mongoDB/schema/find.schema';
 import { getAvatarController } from '../mongoDB/controller/images.controller';
+import { getProductsFromCache, getExercisesFromCache } from '../mongoDB/controller/cache.controller'
 
 const routes = (app: Express) => {
     app.get('/heartbeat', (req, res) => res.send({ status: 'OK' }))
@@ -36,11 +37,11 @@ const routes = (app: Express) => {
     app.post('/auth/reset-password-confirmation', validateResource(resetPasswordConfirmationSchema), resetPasswordConfirmationController)
 
     app.post('/find/product', getProductByCodeController)
-    app.post('/find/products', validateResource(findSchema), getProductByNameController)
+    app.post('/find/products', validateResource(findSchema), getProductsFromCache, getProductByNameController)
     app.post('/insert/product', requireUser, validateResource(createProductSchema), createProductController)
     app.post('/delete/product', requireUser, deleteManyProductController)
 
-    app.post('/find/exercises', validateResource(findSchema), getExerciseByNameController)
+    app.post('/find/exercises', validateResource(findSchema), getExercisesFromCache, getExerciseByNameController)
     app.post('/insert/exercise', requireUser, validateResource(CreateExerciseSchema), createExerciseController)
     app.post('/delete/exercise', requireUser, deleteManyExerciseController)
 

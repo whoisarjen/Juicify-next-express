@@ -3,7 +3,7 @@ import { Request, Response } from "express"
 import { ProductProps } from "../models/product.model"
 import { CreateProductInput } from "../schema/product.schema"
 import { createProduct, deleteManyProduct, getProductByCode, getProductByName, getUserProducts } from "../service/product.service"
-import { socketHandleUserSynchronization } from '../../utils/socket'
+import { redis, setRedisTimeout, socketHandleUserSynchronization } from '../../utils/socket'
 
 export const createProductController = async (req: Request<{}, {}, CreateProductInput['body']>, res: Response) => {
     try {
@@ -45,6 +45,8 @@ export const getUserProductsController = async (req: Request<{}, {}, CreateProdu
 export const getProductByNameController = async (req: Request, res: Response) => {
     try {
         const items = await getProductByName(req.body.find)
+        redis.set(`products_${req.body.find.toString()}`, JSON.stringify(items || []))
+        await setRedisTimeout(`products_${req.body.find.toString()}`, parseInt(process.env.REDIS_TIMEOUT_CACHE_IN_S as string))
         return res.send({ items });
     } catch (error: any) {
         logger.error(error)

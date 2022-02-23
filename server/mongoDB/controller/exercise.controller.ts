@@ -3,7 +3,7 @@ import { Request, Response } from "express"
 import { ExerciseProps } from "../models/exercise.model"
 import { CreateExerciseSchemaProps } from "../schema/exercise.schema"
 import { createExercise, deleteManyExercise, getExerciseByName, getUserExercises } from "../service/exercise.service"
-import { socketHandleUserSynchronization } from '../../utils/socket'
+import { redis, setRedisTimeout, socketHandleUserSynchronization } from '../../utils/socket'
 
 export const createExerciseController = async (req: Request<{}, {}, CreateExerciseSchemaProps['body']>, res: Response) => {
     try {
@@ -45,6 +45,8 @@ export const getUserExercisesController = async (req: Request<{}, {}, CreateExer
 export const getExerciseByNameController = async (req: Request, res: Response) => {
     try {
         const items = await getExerciseByName(req.body.find)
+        redis.set(`exercises_${req.body.find.toString()}`, JSON.stringify(items || []))
+        await setRedisTimeout(`exercises_${req.body.find.toString()}`, parseInt(process.env.REDIS_TIMEOUT_CACHE_IN_S as string))
         return res.send({ items });
     } catch (error: any) {
         logger.error(error)

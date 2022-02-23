@@ -4,7 +4,7 @@ import { getCookie, verifyJWT } from "./jwt.utils";
 import { createClient } from 'redis';
 import { Request, Response } from 'express'
 
-const redis: any = createClient({
+export const redis: any = createClient({
     url: `redis://:@${process.env.REDIS}`
 });
 
@@ -75,4 +75,8 @@ export async function socketHandleUserSynchronization({ res, data, where, whatTo
         array: data,
         socket_ID: res.locals.socket_ID
     })
+}
+
+export const setRedisTimeout = async (key: string, time: number) => {
+    return await redis.expire(key, time)
 }
