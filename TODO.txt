@@ -1,3 +1,5 @@
 add cardio exercises + timer i guess
 
 diet generator
+
+new user => coach?

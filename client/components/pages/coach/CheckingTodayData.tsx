@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Button from '@mui/material/Button';
 import { useDailyMeasurement } from "../../../hooks/useDailyMeasurement";
 import { getAge, getShortDate } from "../../../utils/date.utils";
@@ -65,7 +64,7 @@ const CheckingTodayData = ({ setStep }: { setStep: (arg0: string) => void }) => 
                             <div />
                             <div>{t('CHECKING_TODAY_DESCRIPTION_ALTERNATIVE')}</div>
                             <AddWeight>
-                                <Button variant="contained" color="error">{t('ADD_WEIGHT')}</Button>
+                                <Button sx={{ width: '100%' }} variant="contained" color="error">{t('ADD_WEIGHT')}</Button>
                             </AddWeight>
                         </>
                 )
