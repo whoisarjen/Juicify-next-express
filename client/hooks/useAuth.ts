@@ -18,7 +18,8 @@ const useAuth = () => {
             if (isDarkMode) {
                 localStorage.setItem('isDarkMode', isDarkMode)
             }
-            window.location.replace(`${window.location.origin}${await getCookie('NEXT_LOCALE') == 'en' ? '' : '/' + await getCookie('NEXT_LOCALE')}/login`) // Need to hard reset indexedDB
+            const locale = await getCookie('NEXT_LOCALE');
+            window.location.replace(`${window.location.origin}${!locale || locale == 'en' ? '' : '/' + locale}/login`) // Need to hard reset indexedDB
         } catch (e: any) {
             console.log(e.message)
         }
