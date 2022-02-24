@@ -17,3 +17,7 @@ headless CMS for blog
 user create error on duplicated
 
 on accept rules open dialog with cookie + rules + RODO etc
+
+profile await with graphs until navbar laoded
+
+offline better text
