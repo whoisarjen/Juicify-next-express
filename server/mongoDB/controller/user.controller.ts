@@ -67,7 +67,7 @@ export const resetPasswordController = async (req: Request, res: Response) => {
 
 export const resetPasswordConfirmationController = async (req: Request, res: Response) => {
     try {
-        const user = await resetPasswordConfirmation(req.body.reset_password_hash)
+        const user = await resetPasswordConfirmation(req.body.password_remind_hash)
         return res.send(user);
     } catch (error: any) {
         logger.error(error)

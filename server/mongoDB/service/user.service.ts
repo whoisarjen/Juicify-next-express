@@ -108,7 +108,7 @@ export async function resetPassword(email: string) {
                 new: true
             }
         )
-        if(user){
+        if (user) {
             await sendEmail({
                 clientEmail: user.email,
                 subject: `Confirmation Password Reset ${process.env.ORIGIN}`,
@@ -121,23 +121,23 @@ export async function resetPassword(email: string) {
     }
 }
 
-export async function resetPasswordConfirmation(reset_password_hash: string) {
+export async function resetPasswordConfirmation(password_remind_hash: string) {
     try {
         const password = new mongoose.Types.ObjectId().toJSON()
         const user = await UserModel.findOneAndUpdate(
             {
-                reset_password_hash: reset_password_hash
+                password_remind_hash
             },
             {
                 $set: {
-                    password: password
+                    password
                 }
             },
             {
                 new: true
             }
         )
-        if(user){
+        if (user) {
             await sendEmail({
                 clientEmail: user.email,
                 subject: `Confirmation Password Reset ${process.env.ORIGIN}`,

@@ -6,7 +6,7 @@
         "/login": ["auth"],
         "/register": ["auth"],
         "/reset-password": ["auth"],
-        "/reset-password/[reset_password_hash]": ["auth"],
+        "/reset-password/[password_remind_hash]": ["auth"],
         "/barcode": ["nutrition-diary"],
         "/[login]/nutrition-diary/[date]": ["nutrition-diary"],
         "/[login]/workout": ["workout"],

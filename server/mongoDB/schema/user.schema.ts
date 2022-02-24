@@ -37,7 +37,7 @@ export type resetPasswordInput = Omit<TypeOf<typeof resetPasswordSchema>, "body.
 
 export const resetPasswordConfirmationSchema = object({
     body: object({
-        reset_password_hash: string().min(3)
+        password_remind_hash: string().min(3)
     })
 })
 

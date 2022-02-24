@@ -11,7 +11,7 @@ const useResetPasswordHash = () => {
     useEffect(() => {
         (async () => {
             try {
-                await post({ url: '/auth/reset-password-confirmation', object: { reset_password_hash: router.query.reset_password_hash } })
+                await post({ url: '/auth/reset-password-confirmation', object: { password_remind_hash: router.query.password_remind_hash } })
                 success('CHECK_YOUR_EMAIL')
                 router.push('/login')
             } catch (e: any) {
