@@ -59,7 +59,7 @@ const Socket = ({ children }: { children: any }) => {
 
             socket.on('disconnect', () => dispatch(setIsOnline(false))) // Closed socket => user has to be offline
         }
-    }, [token])
+    }, [token._id])
 
     return children
 }

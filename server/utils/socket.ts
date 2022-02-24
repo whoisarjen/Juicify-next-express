@@ -10,6 +10,8 @@ export const redis: any = createClient({
 
 let socketClosure: any;
 
+let activeusers = 0;
+
 export async function socket({ io }: { io: Server }) {
     socketClosure = io;
     await redis.connect().then(() => logger.info("Connection with Redis has been made!"))
@@ -17,6 +19,8 @@ export async function socket({ io }: { io: Server }) {
 
     io.on('connection', async (socket: Socket) => {
         try {
+            activeusers++;
+            logger.info(`Active users: ${activeusers}`)
             const { decoded, expired }: any = await verifyJWT(await getCookie('refresh_token', socket.handshake.headers.cookie) as string)
             if (decoded) {
                 if (expired || !decoded || !decoded._id) {
@@ -36,6 +40,10 @@ export async function socket({ io }: { io: Server }) {
                     })
                 }
             }
+            socket.on("disconnect", () => {
+                activeusers--;
+                logger.info(`Active users: ${activeusers}`)
+            });
         } catch (error: any) {
             logger.error(error)
         }

@@ -34,7 +34,7 @@ const useDialogEditMacronutrients = ({ isOwnMacro, close }: DialogEditMacronutri
             setCarbs(token.macronutrients[0].carbs)
             setFats(token.macronutrients[0].fats)
         }
-    }, [token])
+    }, [token._id])
 
     return { isOwnMacro, close, t, proteins, setProteins, carbs, setCarbs, fats, setFats, isDialog, setIsDialog, handleConfirm }
 }

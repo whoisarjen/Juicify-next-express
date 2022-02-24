@@ -43,7 +43,7 @@ const TopNotify = () => {
             }
             setTimer(setTimeout(() => setAllowed(true), 1500))
         })()
-    }, [router.pathname, token])
+    }, [router.pathname, token._id])
 
     useEffect(() => {
         document.addEventListener("visibilitychange", () => {

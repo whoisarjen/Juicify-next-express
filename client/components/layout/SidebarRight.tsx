@@ -77,7 +77,7 @@ const SidebarRight = ({ token }: { token: any }) => {
                 backgroundColor: getTheme('PRIMARY')
             }))
         }
-    }, [data, token])
+    }, [data, token._id])
 
     return (
         <Box>
