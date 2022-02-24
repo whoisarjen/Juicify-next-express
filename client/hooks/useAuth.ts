@@ -11,6 +11,7 @@ const useAuth = () => {
 
     const logout = async () => {
         try {
+            const locale = await getCookie('NEXT_LOCALE');
             await axiosDelete({ url: '/auth/logout' })
             await deleteDatabaseIndexedDB();
             const isDarkMode = localStorage.getItem('isDarkMode');
@@ -18,7 +19,6 @@ const useAuth = () => {
             if (isDarkMode) {
                 localStorage.setItem('isDarkMode', isDarkMode)
             }
-            const locale = await getCookie('NEXT_LOCALE');
             window.location.replace(`${window.location.origin}${!locale || locale == 'en' ? '' : '/' + locale}/login`) // Need to hard reset indexedDB
         } catch (e: any) {
             console.log(e.message)

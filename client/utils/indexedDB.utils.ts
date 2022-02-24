@@ -1,12 +1,11 @@
 import { getOnline } from "./db.utils";
-const namOfIndexedDB = "test";
 
-const connectIndexedDB = async () => indexedDB.open(namOfIndexedDB);
+const connectIndexedDB = async () => indexedDB.open(process.env.NEXT_PUBLIC_INDEXEDDB as string);
 
 export const createIndexedDB = async (): Promise<any> => {
   await deleteDatabaseIndexedDB();
-  await window.indexedDB.deleteDatabase(namOfIndexedDB);
-  let request = window.indexedDB.open(namOfIndexedDB);
+  await window.indexedDB.deleteDatabase(process.env.NEXT_PUBLIC_INDEXEDDB as string);
+  let request = window.indexedDB.open(process.env.NEXT_PUBLIC_INDEXEDDB as string);
   return new Promise((resolve) => {
     request.onupgradeneeded = function (event: any) {
       const db = event.target.result;
@@ -36,7 +35,7 @@ export const createIndexedDB = async (): Promise<any> => {
 };
 
 export const deleteDatabaseIndexedDB = async () => {
-  return window.indexedDB.deleteDatabase(namOfIndexedDB)
+  return window.indexedDB.deleteDatabase(process.env.NEXT_PUBLIC_INDEXEDDB as string)
 }
 
 export const getAllIndexedDB = async (value: string): Promise<any> => {
