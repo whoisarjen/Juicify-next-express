@@ -32,7 +32,6 @@ const Box = styled.div`
 const Result = ({ setStep }: { setStep: (arg0: string) => void }) => {
     const { t } = useTranslation('coach')
     const token: any = useAppSelector(state => state.token.value)
-    console.log(token)
 
     return (
         <Box>

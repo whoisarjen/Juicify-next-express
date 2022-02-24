@@ -24,7 +24,6 @@ const useGetWorkoutResult = (): any => {
                         res = [cache]
                     } else {
                         res = daily.workout_result.filter((workout: any) => workout._id == router.query.id)
-                        console.log(res.length)
                         if (res?.length == 0) router.push(`/${router.query.login}/workout/results`)
                     }
                     res = loadMissingDataForWorkoutResult({

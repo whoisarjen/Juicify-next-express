@@ -63,7 +63,6 @@ const useFind = (value: any, where: string, tab: number, skipThoseIDS: Array<any
                         if (cache) {
                             await deleteIndexedDB(`cache_${where}`, cache._id)
                         }
-                        console.log('from db')
                         const searchFunction = (find: string) => setTimeout(async () => {
                             setLoading(true);
                             if (getOnline()) {

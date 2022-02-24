@@ -3,7 +3,7 @@ import logger from './logger'
 
 const connect = async () => {
     try {
-        await mongoose.connect(`${process.env.MONGODB_STRING}`)
+        await mongoose.connect(`${process.env.MONGODB_STRING}${process.env.MONGODB_STRING_CONF}`)
             .then(() => logger.info("Connection with mongoDB has been made!"))
     } catch (err) {
         logger.error(`Connection with mongoDB ended with error: ${err}`)
