@@ -21,6 +21,9 @@ const useRegister = () => {
 
     const registerUser = async (object: CreateUserSchemaProps) => {
         try {
+            if (!object.rules) {
+                return error('ACCEPT_RULES');
+            }
             setLoading(true);
             await post({ url: '/auth/register', object })
             success('CHECK_YOUR_EMAIL')

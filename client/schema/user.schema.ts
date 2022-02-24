@@ -26,6 +26,7 @@ export const CreateUserSchema = object({
     height: preprocess((val) => Number(val), number().min(120).max(250)),
     birth: string().or(date()),
     sex: preprocess((val) => Boolean(val), boolean()),
+    rules: preprocess((val) => Boolean(val), boolean()),
 }).refine(data => data.password === data.passwordConfirmation, {
     message: process.env.PASSWORDS_DO_NOT_MATCH,
     path: ['passwordConfirmation']

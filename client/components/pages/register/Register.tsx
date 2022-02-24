@@ -9,6 +9,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import styled from 'styled-components'
 import Logo from "../../common/logo";
 import { useRegisterProps } from "./useRegister";
@@ -103,6 +105,14 @@ const BaseRegister = ({ registerUser, t, loading, register, errors, handleSubmit
                         <MenuItem value="false">{t("auth:WOMAN")}</MenuItem>
                     </Select>
                 </FormControl>
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            {...register('rules')}
+                        />
+                    }
+                    label={t('auth:I_AM_ACCEPTING_RULES')}
+                />
                 <LoadingButton
                     loading={loading}
                     variant="contained"
