@@ -21,5 +21,6 @@
     "Value should be less than or equal to 10": "Wartość nie może być większa niż 10",
     "Value should be greater than or equal to 120": "Wartość nie może być mniejsza niż 120",
     "Value should be less than or equal to 250": "Wartość nie może być większa niż 250",
-    "Invalid email": "Niepoprawny email"
+    "Invalid email": "Niepoprawny email",
+    "CHECK_YOUR_EMAIL": "Sprawdź swój email"
 }
