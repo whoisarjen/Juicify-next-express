@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import logger from '../../utils/logger'
 import { CreateUserInput } from "../schema/user.schema"
-import { changeUser, createUser, getUsersByLogin, confirmUser, resetPassword, resetPasswordConfirmation } from "../service/user.service"
+import { changeUser, createUser, getUsersByLogin, confirmUser, resetPassword, resetPasswordConfirmation, getUser } from "../service/user.service"
 import { omit } from 'lodash'
 import { removeUsersSensitiveData } from '../../utils/guest.utils'
 import { updateToken } from "./session.controller"
@@ -11,6 +11,12 @@ export const createUserController = async (req: Request<{}, {}, CreateUserInput[
         if ((new Date(req.body.birth)).toString() === 'Invalid Date') {
             throw process.env.BIRTHDAY_IS_REQUIRED
         }
+
+        const check = await getUser({ $or: [{ login: { $regex: req.body.login, $options: 'im' }, email: { $regex: req.body.email, $options: 'im' } }] })
+        if (check) {
+            throw { message: 'USER_ALREADY_EXISTS' }
+        }
+
         const user = await createUser({ ...req.body, birth: new Date(req.body.birth) })
         return res.send(omit(user, 'password'));
     } catch (error: any) {

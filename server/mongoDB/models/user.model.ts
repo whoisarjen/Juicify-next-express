@@ -58,7 +58,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         unique: true,
         collation: {
-            strength: 3
+            strength: 2
         },
         required: true,
         immutable: true
@@ -77,7 +77,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         unique: true,
         collation: {
-            strength: 3
+            strength: 2
         },
         required: true,
         immutable: true

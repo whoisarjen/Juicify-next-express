@@ -3,7 +3,6 @@ import useTranslation from "next-translate/useTranslation"
 import { useRouter } from "next/router"
 import { useState, useEffect } from "react"
 import { useForm, useFieldArray } from "react-hook-form"
-import { useNotify } from "../../../hooks/useNotify"
 import { useAppSelector } from "../../../hooks/useRedux"
 import { WorkoutPlanSchemaProps, WorkoutPlanSchema } from "../../../schema/workoutPlan.schema"
 import { is_id, deleteThoseIDSfromDB, insertThoseIDStoDBController } from "../../../utils/db.utils"
@@ -16,7 +15,6 @@ const useWorkoutPlan = () => {
     const [isLoading, setIsLoading] = useState(false)
     const token: any = useAppSelector(state => state.token.value)
     const { data, user } = useGetWorkoutPlan(router.query.id)
-    const { error } = useNotify()
 
     const deleteWorkoutPlan = async () => {
         try {
@@ -51,7 +49,6 @@ const useWorkoutPlan = () => {
             router.push(`/${token.login}/workout/plans/`)
         } catch (e: any) {
             console.log(e)
-            error(e.message)
         } finally {
             setIsLoading(false);
         }

@@ -14,8 +14,4 @@ main site
 
 headless CMS for blog
 
-user create error on duplicated
-
-profile await with graphs until navbar laoded
-
 offline better text

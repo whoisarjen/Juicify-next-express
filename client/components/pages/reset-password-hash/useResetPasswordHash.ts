@@ -6,7 +6,7 @@ import { useNotify } from "../../../hooks/useNotify"
 const useResetPasswordHash = () => {
     const { post } = useAxios()
     const router: any = useRouter()
-    const { error, success } = useNotify()
+    const { success } = useNotify()
 
     useEffect(() => {
         (async () => {
@@ -15,7 +15,7 @@ const useResetPasswordHash = () => {
                 success('CHECK_YOUR_EMAIL')
                 router.push('/login')
             } catch (e: any) {
-                error(e.message)
+                console.log(e.message)
             }
         })()
     }, [])

@@ -23,7 +23,6 @@ const useSettings = () => {
             await dispatchToken(response.data.token)
             success()
         } catch (e: any) {
-            error()
             console.log(e)
         }
     }

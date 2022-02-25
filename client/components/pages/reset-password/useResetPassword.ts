@@ -9,7 +9,7 @@ import { RemindPasswordUserSchemaProps, RemindPasswordUserSchema } from "../../.
 const useResetPassword = () => {
     const { post } = useAxios()
     const { t } = useTranslation('auth');
-    const { error, success } = useNotify()
+    const { success } = useNotify()
     const [loading, setLoading] = useState(false)
 
     const { register, formState: { errors }, handleSubmit } = useForm<RemindPasswordUserSchemaProps>({
@@ -22,7 +22,7 @@ const useResetPassword = () => {
             await post({ url: '/auth/reset-password', object })
             success('CHECK_YOUR_EMAIL')
         } catch (e: any) {
-            error(e.message)
+            console.log(e.message)
         } finally {
             setLoading(false);
         }
