@@ -9,6 +9,7 @@ const Box = styled.div`
     margin-left: auto;
     margin-right: auto;
     padding: 0px 20px;
+    min-height: calc(100vh - var(--BothNavHeightAndPadding));
     ${this} img{
         margin: auto;
         display: block;
