@@ -13,5 +13,3 @@ statistics
 main site
 
 headless CMS for blog
-
-offline better text
