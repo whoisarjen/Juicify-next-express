@@ -25,12 +25,15 @@ const useRegister = () => {
                 return error('ACCEPT_RULES');
             }
             setLoading(true);
-            await post({ url: '/auth/register', object })
+            await post({ url: '/auth/register', object, skipErrorNotify: true })
             success('CHECK_YOUR_EMAIL')
             router.push(`/login`);
         } catch (e: any) {
-            console.log(e.message)
-            error(e.message)
+            if (e.response.status == 409) {
+                error('USER_ALREADY_EXISTS');
+            } else {
+                error(e.message)
+            }
         } finally {
             setLoading(false);
         }

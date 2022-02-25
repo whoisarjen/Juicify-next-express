@@ -23,5 +23,6 @@
     "Value should be less than or equal to 250": "Wartość nie może być większa niż 250",
     "Invalid email": "Niepoprawny email",
     "CHECK_YOUR_EMAIL": "Sprawdź swój email",
-    "ACCEPT_RULES": "Musisz zaakceptować zasady"
+    "ACCEPT_RULES": "Musisz zaakceptować zasady",
+    "USER_ALREADY_EXISTS": "Użytkownik już istnieje"
 }

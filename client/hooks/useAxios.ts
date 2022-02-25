@@ -7,7 +7,8 @@ interface getProps {
 
 interface postProps {
     object: any
-    url: string
+    url: string,
+    skipErrorNotify?: boolean
 }
 
 interface deleteProps {
@@ -21,11 +22,11 @@ const useAxios = () => {
         return await axios.get(`${process.env.NEXT_PUBLIC_SERVER}${url}`, { withCredentials: true });
     }
 
-    const post = async ({ object, url }: postProps) => {
+    const post = async ({ object, url, skipErrorNotify }: postProps) => {
         try {
             return await axios.post(`${process.env.NEXT_PUBLIC_SERVER}${url}`, object, { withCredentials: true });
         } catch (err: any) {
-            if (err.response.data) {
+            if (err.response.data && !skipErrorNotify) {
                 error(err.response.data)
             }
             throw err;
