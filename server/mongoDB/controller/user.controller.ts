@@ -12,7 +12,18 @@ export const createUserController = async (req: Request<{}, {}, CreateUserInput[
             throw process.env.BIRTHDAY_IS_REQUIRED
         }
 
-        const check = await getUser({ $or: [{ login: { $regex: req.body.login, $options: 'im' }, email: { $regex: req.body.email, $options: 'im' } }] })
+        const check = await getUser({
+            $or:
+                [
+                    {
+                        login: { $regex: req.body.login, $options: 'im' }
+                    },
+                    {
+                        email: { $regex: req.body.email, $options: 'im' }
+                    }
+                ]
+        })
+        
         if (check) {
             throw { message: 'USER_ALREADY_EXISTS' }
         }
