@@ -22,7 +22,7 @@
     "Value should be greater than or equal to 120": "Value should be greater than or equal to 120",
     "Value should be less than or equal to 250": "Value should be less than or equal to 250",
     "Invalid email": "Invalid email",
-    "CHECK_YOUR_EMAIL": "Check your email",
+    "CHECK_YOUR_EMAIL": "Check your email and spam folder",
     "ACCEPT_RULES": "You have to accept rules",
     "USER_ALREADY_EXISTS": "User already exists"
   }

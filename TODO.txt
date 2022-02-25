@@ -13,3 +13,5 @@ statistics
 main site
 
 headless CMS for blog
+
+Authority for sending emails
