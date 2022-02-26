@@ -33,7 +33,7 @@ const useLogin = () => {
                 }
             }
             await dispatchToken(response.data.token)
-            router.push(`/${(await readToken(response.data.token)).login}/nutrition-diary/${getShortDate()}`);
+            router.push(`/coach`);
         } catch (e: any) {
             console.log(e.message)
         } finally {
