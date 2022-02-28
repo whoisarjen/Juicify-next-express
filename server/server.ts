@@ -10,8 +10,10 @@ import { socket } from './utils/socket';
 import createServer from "./utils/server";
 import * as fs from 'fs';
 import * as https from 'https';
+import helmet from 'helmet';
 
 const app = createServer();
+app.use(helmet());
 
 let server;
 logger.info(`Server is using ${process.env.NODE_ENV}`);
