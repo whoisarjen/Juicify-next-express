@@ -1,5 +1,11 @@
-import { array, object, TypeOf } from 'zod'
-import { ExerciseSchema } from '../../../client/schema/exercise.schema'
+import { array, number, object, string, TypeOf } from 'zod'
+
+export const ExerciseSchema = object({
+    _id: string().optional(),
+    user_ID: string().optional(),
+    name: string().min(3),
+    l: number().optional(),
+})
 
 export const CreateExerciseSchema = object({
     body: object({
