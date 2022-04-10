@@ -17,3 +17,5 @@ headless CMS for blog
 Authority for sending emails
 
 Need to do smth with schema on server + client site
+
+tutorial for new users
