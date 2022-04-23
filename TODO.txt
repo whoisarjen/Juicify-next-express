@@ -19,3 +19,9 @@ Authority for sending emails
 Need to do smth with schema on server + client site
 
 tutorial for new users
+
+server
+
+synchro (something is off with after offline)
+
+password reset message is sending few times
