@@ -25,3 +25,5 @@ server
 synchro (something is off with after offline)
 
 password reset message is sending few times
+
+rewrite redux

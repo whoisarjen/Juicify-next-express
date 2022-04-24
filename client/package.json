@@ -25,7 +25,7 @@
     "date-fns": "^2.27.0",
     "fake-indexeddb": "^3.1.7",
     "material-ui": "^1.0.0-beta.47",
-    "next": "12.0.7",
+    "next": "12.1.5",
     "next-pwa": "^5.4.4",
     "next-translate": "^1.2.0",
     "quagga": "^0.12.1",

@@ -9,9 +9,7 @@ const Box = styled.aside`
 
 const SidebarRightLoggouted = () => {
     return (
-        <Box>
-            
-        </Box>
+        <Box />
     )
 }
 
