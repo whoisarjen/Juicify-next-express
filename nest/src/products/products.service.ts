@@ -1,15 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { CreateProductInput } from './dto/create-product.input';
 import { UpdateProductInput } from './dto/update-product.input';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import { Product, ProductDocument } from './entities/product.entity';
 
 @Injectable()
 export class ProductsService {
+  constructor(
+    @InjectModel(Product.name) private productModel: Model<ProductDocument>,
+  ) {}
+
   create(createProductInput: CreateProductInput) {
-    return 'This action adds a new product';
+    return this.productModel.create(createProductInput);
   }
 
   findAll() {
-    return `This action returns all products`;
+    return this.productModel.find().sort({ _id: -1 }).limit(10);
   }
 
   findOne(id: number) {
