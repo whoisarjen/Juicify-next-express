@@ -1,5 +1,4 @@
 #DB
 /node_modules
-build
-/build
+/dist
 .env
