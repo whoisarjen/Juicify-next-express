@@ -1,10 +1,10 @@
 import { ActivitySchemaProps } from "../../../schema/activity.schema";
-import { ProductSchemaProps } from "../../../schema/product.schema";
+import { PRODUCT_SCHEMA_PROPS } from "../../../schema/product.schema";
 import BaseCircular from "./DiagramCircularCaloriesProgress";
 import useCircular from "./useDiagramCircularCaloriesProgress";
 
 export interface DiagramCircularCaloriesProgressProps {
-    array: Array<Array<ProductSchemaProps & ActivitySchemaProps>>,
+    array: Array<Array<PRODUCT_SCHEMA_PROPS & ActivitySchemaProps>>,
     user: any
 }
 

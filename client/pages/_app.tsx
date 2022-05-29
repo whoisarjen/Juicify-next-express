@@ -6,24 +6,22 @@ import Layout from "../components/layout/Layout";
 import Socket from "../components/layout/Socket";
 import MUI from "../components/layout/MUI";
 import Notify from "../components/layout/Notify";
+import { UrqlClient, ProviderURQL } from "../utils/urql.utils";
 
-interface AppProps {
-    Component: any,
-    pageProps: any
-}
-
-const App = ({ Component, pageProps }: AppProps) => {
+const App = ({ Component, pageProps }: { Component: any, pageProps: any }) => {
     return (
         <MUI>
-            <Provider store={store}>
-                <Socket>
-                    <Notify>
-                        <Layout>
-                            <Component {...pageProps} />
-                        </Layout>
-                    </Notify>
-                </Socket>
-            </Provider>
+            <ProviderURQL value={UrqlClient}>
+                <Provider store={store}>
+                    <Socket>
+                        <Notify>
+                            <Layout>
+                                <Component {...pageProps} />
+                            </Layout>
+                        </Notify>
+                    </Socket>
+                </Provider>
+            </ProviderURQL>
         </MUI>
     );
 }

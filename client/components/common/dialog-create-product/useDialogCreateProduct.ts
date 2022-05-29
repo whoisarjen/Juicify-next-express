@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 import { DialogCreateProductProps } from "."
 import { useNotify } from "../../../hooks/useNotify"
 import { useAppSelector } from "../../../hooks/useRedux"
-import { ProductSchemaProps, ProductSchema } from "../../../schema/product.schema"
+import { PRODUCT_SCHEMA_PROPS, ProductSchema } from "../../../schema/product.schema"
 import { insertThoseIDStoDB } from "../../../utils/db.utils"
 
 const useDialogCreateProduct = ({ children, created, defaultBarcode = 0 }: DialogCreateProductProps) => {
@@ -16,11 +16,11 @@ const useDialogCreateProduct = ({ children, created, defaultBarcode = 0 }: Dialo
     const { success, error } = useNotify()
     const [isDialog, setIsDialog] = useState(false)
 
-    const { register, formState: { errors }, handleSubmit } = useForm<ProductSchemaProps>({
+    const { register, formState: { errors }, handleSubmit } = useForm<PRODUCT_SCHEMA_PROPS>({
         resolver: zodResolver(ProductSchema)
     })
 
-    const onSubmit = async (values: ProductSchemaProps) => {
+    const onSubmit = async (values: PRODUCT_SCHEMA_PROPS) => {
         try {
             const copyValues = { ...values }
             for (const key in copyValues) {

@@ -18,4 +18,4 @@ export const ProductSchema = object({
     how_many: preprocess((val) => Number(val), number()).optional(),
 })
 
-export type ProductSchemaProps = TypeOf<typeof ProductSchema>
+export type PRODUCT_SCHEMA_PROPS = TypeOf<typeof ProductSchema>

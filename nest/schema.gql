@@ -17,17 +17,28 @@ type Product {
 
   """Number of grams per 100g/ml"""
   f: Float
+
+  """Created at"""
+  createdAt: DateTime
+
+  """Last updated at"""
+  updatedAt: DateTime
 }
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type Query {
   products: [Product!]!
-  product(id: Int!): Product!
+  product(_id: String!): Product!
 }
 
 type Mutation {
   createProduct(createProductInput: CreateProductInput!): Product!
   updateProduct(updateProductInput: UpdateProductInput!): Product!
-  removeProduct(id: Int!): Product!
+  removeProduct(_id: String!): Product!
 }
 
 input CreateProductInput {
@@ -56,5 +67,9 @@ input UpdateProductInput {
 
   """Number of grams per 100g/ml"""
   f: Float
-  id: Int!
+  _id: String!
+}
+
+type Subscription {
+  productAdded: Product!
 }

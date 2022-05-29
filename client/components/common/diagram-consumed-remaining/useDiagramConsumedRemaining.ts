@@ -2,7 +2,7 @@ import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
 import { useState, useEffect, SyntheticEvent } from "react";
 import { DiagramConsumedRemainingProps } from ".";
-import { ProductSchemaProps } from "../../../schema/product.schema";
+import { PRODUCT_SCHEMA_PROPS } from "../../../schema/product.schema";
 import { getMacroByDay } from "../../../utils/user.utils";
 
 const useDiagramConsumedRemaining = ({ array, user }: DiagramConsumedRemainingProps) => {
@@ -24,7 +24,7 @@ const useDiagramConsumedRemaining = ({ array, user }: DiagramConsumedRemainingPr
 
             array.forEach(meal => {
                 if (meal.length) {
-                    meal.forEach((product: ProductSchemaProps) => {
+                    meal.forEach((product: PRODUCT_SCHEMA_PROPS) => {
                         if (product && product.how_many) {
                             if (product.p) o['Proteins']['value'] += product.p * product.how_many
                             if (product.c) o['Carbs']['value'] += product.c * product.how_many

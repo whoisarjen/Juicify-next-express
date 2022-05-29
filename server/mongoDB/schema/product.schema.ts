@@ -13,7 +13,7 @@ export const productSchema = object({
     checkMe: boolean().optional(),
 })
 
-export type productSchemaProps = TypeOf<typeof productSchema>
+export type PRODUCT_SCHEMA_PROPS = TypeOf<typeof productSchema>
 
 export const createProductSchema = object({
     body: object({

@@ -1,12 +1,12 @@
 import { ActivitySchemaProps } from "../../../schema/activity.schema";
-import { ProductSchemaProps } from "../../../schema/product.schema";
+import { PRODUCT_SCHEMA_PROPS } from "../../../schema/product.schema";
 import BaseBoxMeal from "./BoxMeal";
 import useMealBox from "./useBoxMeal";
 
 export interface BoxMealProps {
     children: any,
     index: number,
-    products: Array<ProductSchemaProps & ActivitySchemaProps>,
+    products: Array<PRODUCT_SCHEMA_PROPS & ActivitySchemaProps>,
     data: any,
 }
 

@@ -34,6 +34,20 @@ export class Product {
     description: 'Number of grams per 100g/ml',
   })
   f?: number;
+
+  @Prop({ nullable: true })
+  @Field(() => Date, {
+    nullable: true,
+    description: 'Created at',
+  })
+  createdAt?: Date;
+
+  @Prop({ nullable: true })
+  @Field(() => Date, {
+    nullable: true,
+    description: 'Last updated at',
+  })
+  updatedAt?: Date;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);

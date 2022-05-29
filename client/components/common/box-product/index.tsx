@@ -1,9 +1,9 @@
 import BaseBoxProduct from "./BoxProduct";
 import useAddProductBox from "./useBoxProduct";
-import { ProductSchemaProps } from "../../../schema/product.schema";
+import { PRODUCT_SCHEMA_PROPS } from "../../../schema/product.schema";
 
 export interface BoxProductProps {
-    product: ProductSchemaProps,
+    product: PRODUCT_SCHEMA_PROPS,
     refreshCheckedProducts: () => void,
     openMoreInformation: () => void
 }
