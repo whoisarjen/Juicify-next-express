@@ -6,11 +6,9 @@ import Layout from "../components/layout/Layout";
 import Socket from "../components/layout/Socket";
 import MUI from "../components/layout/MUI";
 import Notify from "../components/layout/Notify";
-import { ProviderURQL, useURQL } from "../hooks/useURQL";
+import { UrqlClient, ProviderURQL } from "../utils/urql.utils";
 
 const App = ({ Component, pageProps }: { Component: any, pageProps: any }) => {
-    const { UrqlClient } = useURQL()
-
     return (
         <MUI>
             <ProviderURQL value={UrqlClient}>
