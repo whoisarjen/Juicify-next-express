@@ -3,20 +3,8 @@
 # ------------------------------------------------------
 
 type Product {
-  """_id of product"""
-  _id: String!
-
-  """Name of product"""
-  name: String!
-
-  """Number of grams per 100g/ml"""
-  p: Float
-
-  """Number of grams per 100g/ml"""
-  c: Float
-
-  """Number of grams per 100g/ml"""
-  f: Float
+  """Example field (placeholder)"""
+  exampleField: Int!
 }
 
 type Query {
@@ -31,30 +19,12 @@ type Mutation {
 }
 
 input CreateProductInput {
-  """Name of product"""
-  name: String!
-
-  """Number of grams per 100g/ml"""
-  p: Float
-
-  """Number of grams per 100g/ml"""
-  c: Float
-
-  """Number of grams per 100g/ml"""
-  f: Float
+  """Example field (placeholder)"""
+  exampleField: Int!
 }
 
 input UpdateProductInput {
-  """Name of product"""
-  name: String
-
-  """Number of grams per 100g/ml"""
-  p: Float
-
-  """Number of grams per 100g/ml"""
-  c: Float
-
-  """Number of grams per 100g/ml"""
-  f: Float
+  """Example field (placeholder)"""
+  exampleField: Int
   id: Int!
 }
