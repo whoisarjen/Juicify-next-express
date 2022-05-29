@@ -10,7 +10,7 @@ import MenuItem from '@mui/material/MenuItem';
 import DialogCreateProduct from '../dialog-create-product';
 import BottomFlyingButton from '../button-submit-items';
 import DialogShowProductInformations from '../dialog-show-product-informations';
-import { PRODUCT_SCHEMA_PROPS } from '../../../schema/product.schema';
+import { ProductSchemaProps } from '../../../schema/product.schema';
 import styled from 'styled-components'
 import SlideUp from '../../transition/SlideUp';
 import { useDialogAddProductsProps } from './useDialogAddProducts';
@@ -90,7 +90,7 @@ const BaseDialogAddProducts = ({ children, isDialog, setIsDialog, t, dailyMeasur
                     />
                     <AddItemsTabs changeTab={(value) => setTab(value)} checkedLength={checked.length} />
                     {
-                        items?.length > 0 && items.map((product: PRODUCT_SCHEMA_PROPS) =>
+                        items?.length > 0 && items.map((product: ProductSchemaProps) =>
                             <AddProductsBox refreshCheckedProducts={() => setRefreshChecked(refreshChecked + 1)} product={product} key={product._id} openMoreInformation={() => setLoadedProduct(product)} />
                         )
                     }

@@ -1,5 +1,4 @@
 module.exports = {
-  indent: ["error", 4],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: 'tsconfig.json',

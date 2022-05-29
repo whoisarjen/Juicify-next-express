@@ -1,9 +1,9 @@
-import { PRODUCT_SCHEMA_PROPS } from "../../../schema/product.schema";
+import { ProductSchemaProps } from "../../../schema/product.schema";
 import BaseDiagramConsumedRemaining from "./DiagramConsumedRemaining";
 import useDiagramConsumedRemaining from "./useDiagramConsumedRemaining";
 
 export interface DiagramConsumedRemainingProps {
-    array: Array<Array<PRODUCT_SCHEMA_PROPS>>,
+    array: Array<Array<ProductSchemaProps>>,
     user: any
 }
 

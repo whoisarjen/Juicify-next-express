@@ -7,28 +7,27 @@ import { Product, ProductDocument } from './entities/product.entity';
 
 @Injectable()
 export class ProductsService {
-    constructor(
-        @InjectModel(Product.name) private productModel: Model<ProductDocument>,
-    ) {}
+  constructor(
+    @InjectModel(Product.name) private productModel: Model<ProductDocument>,
+  ) {}
 
-    async create(createProductInput: CreateProductInput) {
-        return await this.productModel.create(createProductInput);
-    }
+  create(createProductInput: CreateProductInput) {
+    return this.productModel.create(createProductInput);
+  }
 
-    async findAll() {
-        return await this.productModel.find().sort({ _id: -1 }).limit(10);
-    }
+  findAll() {
+    return this.productModel.find().sort({ _id: -1 }).limit(10);
+  }
 
-    findOne(_id: string) {
-        return `This action returns a #${_id} product`;
-    }
+  findOne(id: number) {
+    return `This action returns a #${id} product`;
+  }
 
-    update(_id: string, updateProductInput: UpdateProductInput) {
-        return `This action updates a #${_id} product`;
-    }
+  update(id: number, updateProductInput: UpdateProductInput) {
+    return `This action updates a #${id} product`;
+  }
 
-    async remove(_id: string) {
-        await this.productModel.deleteOne({ _id });
-        return { _id };
-    }
+  remove(id: number) {
+    return `This action removes a #${id} product`;
+  }
 }

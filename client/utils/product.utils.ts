@@ -1,5 +1,5 @@
 import { ActivitySchemaProps } from "../schema/activity.schema"
-import { PRODUCT_SCHEMA_PROPS } from "../schema/product.schema"
+import { ProductSchemaProps } from "../schema/product.schema"
 
 const getProductInformationsObject: any = {
     'p': 'Proteins',
@@ -13,12 +13,12 @@ const getProductInformationsObject: any = {
     'v': 'Verified'
 }
 
-export const getProductInformations = (object: PRODUCT_SCHEMA_PROPS & ActivitySchemaProps) => {
+export const getProductInformations = (object: ProductSchemaProps & ActivitySchemaProps) => {
     let newObject: any = {}
     Object.keys(getProductInformationsObject).forEach(x => {
         if (x != 'v') {
-            if (object[x as keyof PRODUCT_SCHEMA_PROPS]) {
-                newObject[getProductInformationsObject[x]] = object[x as keyof PRODUCT_SCHEMA_PROPS] + 'g'
+            if (object[x as keyof ProductSchemaProps]) {
+                newObject[getProductInformationsObject[x]] = object[x as keyof ProductSchemaProps] + 'g'
             } else {
                 newObject[getProductInformationsObject[x]] = '0g'
             }

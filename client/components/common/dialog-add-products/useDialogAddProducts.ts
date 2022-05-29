@@ -4,7 +4,7 @@ import { DialogAddProductsProps } from ".";
 import useFind from "../../../hooks/useFind";
 import { useAppDispatch, useAppSelector } from "../../../hooks/useRedux";
 import { refreshKey } from "../../../redux/features/key.slice";
-import { PRODUCT_SCHEMA_PROPS } from "../../../schema/product.schema";
+import { ProductSchemaProps } from "../../../schema/product.schema";
 import { insertThoseIDStoDBController } from "../../../utils/db.utils";
 import { deleteIndexedDB, getAllIndexedDB } from "../../../utils/indexedDB.utils";
 
@@ -31,9 +31,9 @@ const useDialogAddProducts = ({ children, index, dailyMeasurement }: DialogAddPr
     }
 
     const addProductsToDiary = async () => {
-        const array: Array<PRODUCT_SCHEMA_PROPS> = JSON.parse(JSON.stringify(checked))
+        const array: Array<ProductSchemaProps> = JSON.parse(JSON.stringify(checked))
         const time = new Date().getTime()
-        array.map(async (x: PRODUCT_SCHEMA_PROPS, i: number) => {
+        array.map(async (x: ProductSchemaProps, i: number) => {
             x.meal = meal
             x.product_ID = x._id
             x._id = 'XD' + time + i
